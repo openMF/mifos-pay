@@ -35,8 +35,9 @@ class KtorInterceptor(
                 context.header(BaseURL.HEADER_TENANT, plugin.configManager.getPlatformTenantId())
 
                 plugin.getToken()?.let { token ->
-                    if (token.isNotEmpty()) {
-                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $token"
+                    val sanitizedToken = sanitizeHeaderValue(token)
+                    if (sanitizedToken.isNotEmpty()) {
+                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $sanitizedToken"
                     }
                 }
             }
@@ -78,8 +79,9 @@ class KtorInterceptorRe(
                 context.header(BaseURL.HEADER_TENANT, plugin.configManager.getPlatformTenantId())
 
                 token?.let { token ->
-                    if (token.isNotEmpty()) {
-                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $token"
+                    val sanitizedToken = sanitizeHeaderValue(token)
+                    if (sanitizedToken.isNotEmpty()) {
+                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $sanitizedToken"
                     }
                 }
             }
@@ -102,4 +104,11 @@ class KtorInterceptorRe(
 class ConfigRe {
     lateinit var repository: UserPreferencesRepository
     lateinit var configManager: InstanceConfigManager
+}
+
+private fun sanitizeHeaderValue(value: String): String {
+    return value
+        .trim()
+        .replace("\r", "")
+        .replace("\n", "")
 }

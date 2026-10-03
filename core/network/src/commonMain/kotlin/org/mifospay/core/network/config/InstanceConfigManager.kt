@@ -19,6 +19,9 @@ class InstanceConfigManager(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) : MultiUrlConfigProvider {
     companion object {
+        private const val MAX_TENANT_ID_LENGTH = 64
+        private val VALID_TENANT_ID_REGEX = Regex("^[A-Za-z0-9_-]+$")
+
         // Default main instance configuration
         private val DEFAULT_MAIN_INSTANCE = ServerInstance(
             endpoint = "mifos-bank-2.mifos.community",
@@ -68,7 +71,7 @@ class InstanceConfigManager(
 
     fun getPath(): String = getCurrentInstance().path
 
-    fun getPlatformTenantId(): String = getCurrentInstance().platformTenantId
+    fun getPlatformTenantId(): String = sanitizeTenantId(getCurrentInstance().platformTenantId)
 
     fun getUrl(): String = getCurrentInstance().fullUrl
 
@@ -90,4 +93,18 @@ class InstanceConfigManager(
         getEndpoint(),
         getCurrentInterbankInstance().endpoint,
     )
+
+    private fun sanitizeTenantId(rawTenantId: String): String {
+        val normalized = rawTenantId
+            .trim()
+            .replace("\r", "")
+            .replace("\n", "")
+            .take(MAX_TENANT_ID_LENGTH)
+
+        return if (normalized.isNotEmpty() && VALID_TENANT_ID_REGEX.matches(normalized)) {
+            normalized
+        } else {
+            DEFAULT_MAIN_INSTANCE.platformTenantId
+        }
+    }
 }
