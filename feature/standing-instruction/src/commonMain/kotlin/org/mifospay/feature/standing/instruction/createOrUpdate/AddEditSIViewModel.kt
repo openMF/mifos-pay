@@ -274,8 +274,8 @@ internal class AddEditSIViewModel(
                 data.name.isBlank() && state.isAddMode -> showError("Name is Required")
 
                 data.amount.isBlank() && state.isAddMode -> showError("Amount is Required")
-                data.amount.any { !it.isDigit() } && state.isAddMode -> showError("Amount is Invalid")
-                data.amount.toDoubleOrNull() == null && state.isAddMode -> showError("Amount is Required")
+                data.amount.toDoubleOrNull() == null && state.isAddMode -> showError("Amount is Invalid")
+                data.amount.toDouble() <= 0 && state.isAddMode -> showError("Amount must be greater than 0")
                 data.transferType == 0L && state.isAddMode -> showError("Transfer Type is Required")
 
                 data.instructionType == 0L && state.isAddMode -> showError("Instruction Type is Required")
