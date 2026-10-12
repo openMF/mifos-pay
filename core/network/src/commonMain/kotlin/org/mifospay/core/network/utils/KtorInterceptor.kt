@@ -35,8 +35,9 @@ class KtorInterceptor(
                 context.header(BaseURL.HEADER_TENANT, plugin.configManager.getPlatformTenantId())
 
                 plugin.getToken()?.let { token ->
-                    if (token.isNotEmpty()) {
-                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $token"
+                    val sanitizedToken = sanitizeHeaderValue(token)
+                    if (sanitizedToken.isNotEmpty() && shouldAttachAuthorizationHeader(context.url.host, context.url.protocol.name)) {
+                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $sanitizedToken"
                     }
                 }
             }
@@ -78,8 +79,9 @@ class KtorInterceptorRe(
                 context.header(BaseURL.HEADER_TENANT, plugin.configManager.getPlatformTenantId())
 
                 token?.let { token ->
-                    if (token.isNotEmpty()) {
-                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $token"
+                    val sanitizedToken = sanitizeHeaderValue(token)
+                    if (sanitizedToken.isNotEmpty() && shouldAttachAuthorizationHeader(context.url.host, context.url.protocol.name)) {
+                        context.headers[BaseURL.HEADER_AUTHORIZATION] = "Basic $sanitizedToken"
                     }
                 }
             }
@@ -102,4 +104,21 @@ class KtorInterceptorRe(
 class ConfigRe {
     lateinit var repository: UserPreferencesRepository
     lateinit var configManager: InstanceConfigManager
+}
+
+private fun sanitizeHeaderValue(value: String): String {
+    return value
+        .trim()
+        .replace("\r", "")
+        .replace("\n", "")
+}
+
+private fun shouldAttachAuthorizationHeader(host: String, protocolName: String): Boolean {
+    return protocolName.equals("https", ignoreCase = true) || isLocalDevelopmentHost(host)
+}
+
+private fun isLocalDevelopmentHost(host: String): Boolean {
+    return host.equals("localhost", ignoreCase = true) ||
+        host == "127.0.0.1" ||
+        host == "10.0.2.2"
 }
