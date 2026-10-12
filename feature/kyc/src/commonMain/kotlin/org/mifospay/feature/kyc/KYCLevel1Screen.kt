@@ -194,7 +194,9 @@ private fun KYCLevel1ScreenContent(
                             TextButton(
                                 onClick = {
                                     showDialog = false
-                                    onAction(KycLevel1Action.DobChanged(dateState.selectedDateMillis!!))
+                                    dateState.selectedDateMillis?.let { millis ->
+                                        onAction(KycLevel1Action.DobChanged(millis))
+                                    }
                                 },
                                 enabled = confirmEnabled.value,
                             ) {
