@@ -8,15 +8,15 @@
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
-<!--
-    Backup/transfer policy for Android 12+ (API 31+). Mifos Pay stores tokens,
-    credentials and account data locally, so no user data must ever leave the
-    device through Auto Backup or device-to-device migration. Every backup domain
-    is excluded from both cloud backup and device transfer. For Android 11 and
-    lower the same intent is expressed via android:fullBackupContent="false" and
-    android:allowBackup="false" in AndroidManifest.xml (MW-SEC-015).
--->
 <data-extraction-rules>
+    <!--
+        Backup/transfer policy for Android 12+ (API 31+). Mifos Pay stores tokens,
+        credentials and account data locally, so no user data must ever leave the
+        device through Auto Backup or device-to-device migration. Every backup domain
+        is excluded from both cloud backup and device transfer. For Android 11 and
+        lower the same intent is expressed via android:fullBackupContent="false" and
+        android:allowBackup="false" in AndroidManifest.xml (MW-SEC-015).
+    -->
     <cloud-backup>
         <exclude domain="root" path="." />
         <exclude domain="file" path="." />
