@@ -11,7 +11,7 @@ package org.mifospay.shared.instance
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import template.core.base.ui.detectMultiTapGesture
+import kpt.core.base.ui.detectMultiTapGesture
 
 /**
  * Convenience wrapper for instance selector gesture detection.

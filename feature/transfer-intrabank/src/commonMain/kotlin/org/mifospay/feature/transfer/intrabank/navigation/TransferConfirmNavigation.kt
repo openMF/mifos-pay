@@ -16,7 +16,7 @@ import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import org.mifospay.feature.transfer.intrabank.confirm.TransferConfirmScreen
 import org.mifospay.feature.transfer.intrabank.confirm.TransferResult
-import template.core.base.ui.composableWithSlideTransitions
+import kpt.core.base.ui.nav.composableWithSlideTransitions
 
 /**
  * Type-safe route for the intra-bank transfer confirmation screen. Carries

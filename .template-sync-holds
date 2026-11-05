@@ -1,0 +1,99 @@
+.github/workflows/cla-check.yml	never-touch: org-managed CLA workflow (the org automation owns it); never synced, never proposed
+.github/CONTRIBUTING.md	queued upstream: fork-owned community file (contract has no .github/CONTRIBUTING.md fork rule)
+.run/cmp-ios.run.xml	queued upstream: iOS IDE run configuration (template ships none)
+cmp-ios/iosApp.xcodeproj/xcshareddata/xcschemes/cmp-ios.xcscheme	queued upstream: travels with .run/cmp-ios.run.xml
+build-logic/convention/src/main/kotlin/org/convention/Detekt.kt	queued upstream: detekt baseline seam (held = template 90ff6da6 + the fork baseline line)
+config/detekt/baseline.xml	queued upstream: travels with the detekt baseline seam
+cmp-ios/iosApp/GoogleService-Info.plist	queued upstream: iOS Firebase config has no fork-owned home in the contract
+cmp-navigation/src/commonMain/kotlin/cmp/navigation/ComposeApp.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
+cmp-navigation/src/commonMain/kotlin/cmp/navigation/AppViewModel.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
+cmp-navigation/src/commonMain/kotlin/cmp/navigation/security/AppLockGate.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
+cmp-navigation/src/commonMain/kotlin/cmp/navigation/security/PlatformAuthenticatorGate.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
+cmp-navigation/src/commonMain/kotlin/cmp/navigation/security/UnauthorizedDialogGate.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
+cmp-shared/src/commonMain/kotlin/cmp/shared/utils/KoinExt.kt	queued upstream: fork Koin splice has no cmp-shared seam (held = 3-way of template 90ff6da6 + fork)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/di/KoinModules.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/instance/GestureDetector.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/instance/InstanceSelectorScreen.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/instance/InstanceSelectorViewModel.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/MifosPayApp.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/MifosPayViewModel.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/navigation/LoginNavGraph.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/navigation/MifosNavGraph.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/navigation/MifosNavHost.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/navigation/PasscodeNavGraph.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/navigation/RootNavGraph.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/navigation/TransferOptionsNavigation.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/TransferOptionsViewModel.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/ui/components/TransferOptionsBottomSheet.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/ui/MifosApp.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/ui/MifosAppState.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+cmp-shared/src/commonMain/kotlin/org/mifospay/shared/utils/TopLevelDestination.kt	queued upstream: cmp-shared has no fork-owned commonMain package (mifos-pay app shell)
+core-base/platform/src/androidMain/kotlin/kpt/core/base/platform/PlatformBuildConfig.android.kt	queued upstream: PlatformBuildConfig.isDebug as a core-base/platform primitive
+core-base/platform/src/commonMain/kotlin/kpt/core/base/platform/PlatformBuildConfig.kt	queued upstream: PlatformBuildConfig.isDebug as a core-base/platform primitive
+core-base/platform/src/desktopMain/kotlin/kpt/core/base/platform/PlatformBuildConfig.desktop.kt	queued upstream: PlatformBuildConfig.isDebug as a core-base/platform primitive
+core-base/platform/src/iosMain/kotlin/kpt/core/base/platform/PlatformBuildConfig.ios.kt	queued upstream: PlatformBuildConfig.isDebug as a core-base/platform primitive
+core-base/platform/src/jsMain/kotlin/kpt/core/base/platform/PlatformBuildConfig.js.kt	queued upstream: PlatformBuildConfig.isDebug as a core-base/platform primitive
+core-base/platform/src/wasmJsMain/kotlin/kpt/core/base/platform/PlatformBuildConfig.wasmJs.kt	queued upstream: PlatformBuildConfig.isDebug as a core-base/platform primitive
+deployment/ios/firebase/README.md	queued upstream: template deleted the ios-firebase lane (#281) while DEPLOYMENT_MANIFEST + release workflow still reference it
+deployment/ios/firebase/config.yaml	queued upstream: template deleted the ios-firebase lane (#281) while DEPLOYMENT_MANIFEST + release workflow still reference it
+deployment/ios/firebase/lane.rb	queued upstream: template deleted the ios-firebase lane (#281) while DEPLOYMENT_MANIFEST + release workflow still reference it
+deployment/ios/firebase/secrets-needs.yaml	queued upstream: template deleted the ios-firebase lane (#281) while DEPLOYMENT_MANIFEST + release workflow still reference it
+deployment/ios/firebase/workflow-snippet.yml	queued upstream: template deleted the ios-firebase lane (#281) while DEPLOYMENT_MANIFEST + release workflow still reference it
+docs/images/graphs-kmp/dep_graph_core_analytics.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_common.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_data.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_datastore.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_designsystem.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_domain.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_model.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_network.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_core_ui.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_accounts.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_auth.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_editpassword.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_faq.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_finance.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_history.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_home.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_invoices.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_kyc.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_make_transfer.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_merchants.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_notification.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_payments.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_profile.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_qr.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_receipt.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_request_money.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_savedcards.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_send_money.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_settings.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_standing_instruction.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_feature_upi_setup.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_libs_mifos_passcode.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_mifospay_android.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_mifospay_desktop.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_mifospay_shared.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs-kmp/dep_graph_mifospay_web.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_analytics.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_common.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_data.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_datastore_proto.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_datastore.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_designsystem.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_model.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_network.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_core_ui.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_feature_auth.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_feature_passcode.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/graphs/dep_graph_mifospay.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/mifospay_logo_160.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/mifospay_logo_192.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/mifospay_logo_288.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/mifospay_logo_512.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/images/mifospay_logo.svg	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/LOAN_APPLICATION_ARCHITECTURE.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/QR_PAYMENT_ROUTING_APPROACH.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/readmes/Android.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/readmes/Linux.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+docs/readmes/Windows.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**

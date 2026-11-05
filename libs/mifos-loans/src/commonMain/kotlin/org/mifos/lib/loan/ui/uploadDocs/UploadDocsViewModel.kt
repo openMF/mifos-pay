@@ -26,7 +26,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.mifos.lib.loan.component.DocumentType
 import org.mifos.lib.loan.component.SignatureUploadType
 import org.mifospay.core.ui.utils.BaseViewModel
-import template.core.base.common.toBase64DataUri
+import kpt.core.base.common.toBase64DataUri
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 /**

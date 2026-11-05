@@ -16,6 +16,12 @@
 // String configuration notation is required — type-safe `libs.`/`projects.`/`compose.` accessors
 // are not generated for applied script plugins.
 
+// Fork plugins: this module's fork code uses Compose resources (`Res` / StringResource), so it needs the
+// Compose + Compose-compiler plugins. They lived in the template-owned build.gradle.kts plugins {} block,
+// which a sync full-copies; apply(plugin = …) here survives it (moved at the 90ff6da6 template sync).
+apply(plugin = "org.jetbrains.compose")
+apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+
 val libs = extensions.getByType<org.gradle.api.artifacts.VersionCatalogsExtension>().named("libs")
 
 dependencies {

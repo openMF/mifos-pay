@@ -139,8 +139,6 @@ check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
     """.trimIndent()
 }
 include(":sync")
-include(":core-base:analytics")
-include(":core:analytics")
 include(":feature:accounts")
 include(":feature:auth")
 include(":feature:autopay")

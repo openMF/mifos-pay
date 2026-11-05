@@ -16,8 +16,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.toRoute
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import template.core.base.ui.composableWithSlideTransitions
-import template.core.base.ui.composableWithStayTransitions
+import kpt.core.base.ui.nav.composableWithSlideTransitions
+import kpt.core.base.ui.nav.composableWithStayTransitions
 
 /**
  * String form of [RootPasscodeRoute], kept as a `const val` so it can be used

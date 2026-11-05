@@ -66,7 +66,7 @@ import org.mifospay.core.designsystem.component.MifosCard
 import org.mifospay.core.designsystem.component.MifosScaffold
 import org.mifospay.core.designsystem.component.MifosTopBar
 import org.mifospay.core.designsystem.icon.MifosIcons
-import template.core.base.common.toBase64DataUri
+import kpt.core.base.common.toBase64DataUri
 
 /**
  * Orchestrates the bottom sheet UI, transitioning between the document upload method selection

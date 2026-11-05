@@ -32,6 +32,9 @@ kotlin {
             implementation(projects.coreBase.ui)
             implementation(projects.coreBase.common)
             implementation(projects.coreBase.network)
+            // org.mifos.corebase.network (KtorHttpClient, ResultSuspendConverterFactory) moved from
+            // core-base/network (template-owned) to core/network at the 90ff6da6 template sync.
+            implementation(projects.core.network)
         }
 
         androidMain.dependencies {

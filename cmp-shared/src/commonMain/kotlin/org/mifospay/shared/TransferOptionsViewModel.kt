@@ -12,7 +12,7 @@ package org.mifospay.shared
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import template.core.base.ui.BaseViewModel
+import kpt.core.base.ui.viewmodel.BaseViewModel
 
 class TransferOptionsViewModel : BaseViewModel<TransferOptionState, Unit, Unit>(
     initialState = TransferOptionState(),
