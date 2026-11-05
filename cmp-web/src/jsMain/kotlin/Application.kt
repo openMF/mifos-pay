@@ -23,6 +23,7 @@ import org.jetbrains.skiko.wasm.onWasmReady
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
 
+    installWebNetworkMonitor()
     initKoin() // Set up Koin for dependency injection.
 
     // Apply stored language preference on startup

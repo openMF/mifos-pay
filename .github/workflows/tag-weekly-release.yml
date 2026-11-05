@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   tag-and-release:
-    uses: openMF/mifos-x-actionhub/.github/workflows/tag-weekly-release-v2.yaml@v1.0.63
+    uses: openMF/mifos-x-actionhub/.github/workflows/tag-weekly-release-v2.yaml@v1.0.72
     with:
       version_strategy:      calver-week
       starting_rung:         beta

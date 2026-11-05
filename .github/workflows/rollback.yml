@@ -24,7 +24,7 @@ on:
 
 jobs:
   rollback:
-    uses: openMF/mifos-x-actionhub/.github/workflows/rollback-v2.yaml@v1.0.63
+    uses: openMF/mifos-x-actionhub/.github/workflows/rollback-v2.yaml@v1.0.72
     with:
       platform:             ${{ inputs.platform }}
       rollback_to_version:  ${{ inputs.rollback_to_version }}

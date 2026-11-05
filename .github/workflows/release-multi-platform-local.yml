@@ -94,14 +94,14 @@ jobs:
   # matrix consumed by the `release` job's `strategy.matrix` below.
   resolve-variants:
     name: Resolve product flavors
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
     permissions:
       contents: read
     outputs:
       matrix: ${{ steps.resolve.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -147,7 +147,7 @@ jobs:
     # repo's dev branch in workspaces/mifos-x/ and the next dispatch picks
     # it up. No tag-cut needed for iteration. This is the validation base for
     # the additive `flavor` / `build_type` inputs before Phase 6 cuts @v1.0.47.
-    uses: openMF/mifos-x-actionhub/.github/workflows/release-multi-platform-v2.yaml@v1.0.63
+    uses: openMF/mifos-x-actionhub/.github/workflows/release-multi-platform-v2.yaml@v1.0.72
     with:
       version_tag:          ${{ inputs.version_tag }}
       android_package_name: cmp-android
@@ -242,7 +242,10 @@ jobs:
           rm -rf "$BUNDLE_DIR"
         fi
         if [ -n "${KEYSTORE_ALIAS:-}" ]; then echo "KEY_ALIAS=$KEYSTORE_ALIAS" >> "$GITHUB_ENV"; fi
-        if [ -n "${KEYSTORE_ALIAS_PASSWORD:-}" ]; then echo "KEY_PASSWORD=$KEYSTORE_ALIAS_PASSWORD" >> "$GITHUB_ENV"; fi
+        # Falls back to the STORE password — PKCS12 has no separate key password, and an
+        # EMPTY KEY_PASSWORD fails signing rather than being ignored.
+        if [ -n "${KEYSTORE_ALIAS_PASSWORD:-}" ]; then echo "KEY_PASSWORD=$KEYSTORE_ALIAS_PASSWORD" >> "$GITHUB_ENV"
+        elif [ -n "${KEYSTORE_PASSWORD:-}" ]; then echo "KEY_PASSWORD=$KEYSTORE_PASSWORD" >> "$GITHUB_ENV"; fi
         if [ -n "${KEYSTORE_PASSWORD:-}" ]; then
           echo "KEYSTORE_PATH=secrets/live/android/keystores/upload_keystore.keystore" >> "$GITHUB_ENV"
         fi

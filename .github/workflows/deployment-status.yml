@@ -12,7 +12,7 @@ on:
 
 jobs:
   status:
-    uses: openMF/mifos-x-actionhub/.github/workflows/deployment-status-v2.yaml@v1.0.63
+    uses: openMF/mifos-x-actionhub/.github/workflows/deployment-status-v2.yaml@v1.0.72
     with:
       promotion_log_path: 'deployment/PROMOTION_LOG.yaml'
       include_play_api:   false

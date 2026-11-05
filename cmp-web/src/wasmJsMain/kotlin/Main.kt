@@ -31,6 +31,7 @@ fun main() {
      * Initializes the Koin dependency injection framework.
      * This function sets up the necessary dependencies for the application to function correctly.
      */
+    installWebNetworkMonitor()
     initKoin()
 
     // Apply stored language preference on startup
