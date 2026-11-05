@@ -24,10 +24,9 @@ import kpt.core.data.user.impl.UserLogoutManagerImpl
 import kpt.core.database.AppDatabase
 import kpt.core.database.di.DatabaseModule
 import kpt.core.datastore.di.DatastoreModule
+import kpt.core.datastore.di.KptUserPreferencesQualifier
 import kpt.core.network.di.NetworkModule
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 /**
@@ -43,7 +42,7 @@ val DataModule = module {
     includes(platformModule, CommonModule, DatabaseModule, DatastoreModule, NetworkModule)
 
     single<NetworkMonitor> { NetworkMonitorProvider.install() }
-    singleOf(::UserDataRepositoryImpl) bind UserDataRepository::class
+    single<UserDataRepository> { UserDataRepositoryImpl(get(KptUserPreferencesQualifier)) }
 
     // Framework FetchedAtRepository — durable lastFetchedAt persistence backing
     // DataFreshnessIndicator timestamps. Room-only by design (no in-memory fallback).
@@ -55,7 +54,7 @@ val DataModule = module {
     // App-scoped CoroutineScope for cross-VM long-running coroutines (framework infra).
     single<CoroutineScope> { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
 
-    single<UserLogoutManager> { UserLogoutManagerImpl(get(), get(), get()) }
+    single<UserLogoutManager> { UserLogoutManagerImpl(get(KptUserPreferencesQualifier), get(), get()) }
 }
 
 expect val platformModule: Module

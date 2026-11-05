@@ -79,6 +79,8 @@ import org.mifospay.core.data.repositoryImpl.ThirdPartyTransferRepositoryImpl
 import org.mifospay.core.data.repositoryImpl.TwoFactorAuthRepositoryImpl
 import org.mifospay.core.data.repositoryImpl.UserRepositoryImpl
 import org.mifospay.core.data.repositoryImpl.UserVerificationRepositoryImpl
+import org.mifospay.core.data.util.MifosNetworkMonitorQualifier
+import org.mifospay.core.data.util.MifosTimeZoneMonitorQualifier
 import org.mifospay.core.data.util.NetworkMonitor
 import org.mifospay.core.data.util.QrTransferRouter
 import org.mifospay.core.data.util.TimeZoneMonitor
@@ -282,7 +284,11 @@ val RepositoryModule = module {
     // (b) is a no-op at runtime because Koin does not instantiate a
     // singleton until it is resolved. When the Fineract endpoint lands, a
     // hybrid impl can bridge both interfaces.
-    single<BillerRepository> { BillerRepositoryImpl(get(), get(ioDispatcher)) }
+    // Qualified: on JS / Wasm Koin keys by simple name, and this type shares it with
+    // org.mifospay.core.datastore.BillerRepository below — unqualified, one replaces the other.
+    single<BillerRepository>(named("org.mifospay.core.data.repository.BillerRepository")) {
+        BillerRepositoryImpl(get(), get(ioDispatcher))
+    }
 
     // Phase-4 Batch-A OFFLINE_LOCAL_ONLY Bill store binding (GOAL D12).
     // Replaces the multiplatform-settings impl that was previously bound in
@@ -304,8 +310,8 @@ val RepositoryModule = module {
 
     includes(platformModule)
     single<PlatformDependentDataModule> { getPlatformDataModule }
-    single<NetworkMonitor> { getPlatformDataModule.networkMonitor }
-    single<TimeZoneMonitor> { getPlatformDataModule.timeZoneMonitor }
+    single<NetworkMonitor>(MifosNetworkMonitorQualifier) { getPlatformDataModule.networkMonitor }
+    single<TimeZoneMonitor>(MifosTimeZoneMonitorQualifier) { getPlatformDataModule.timeZoneMonitor }
     single<LocalAssetRepository> {
         LocalAssetRepositoryImpl(
             ioDispatcher = get(qualifier = ioDispatcher),

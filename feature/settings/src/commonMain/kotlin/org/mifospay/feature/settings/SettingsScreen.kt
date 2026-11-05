@@ -60,6 +60,7 @@ import org.mifospay.core.designsystem.component.MifosLoadingDialog
 import org.mifospay.core.designsystem.component.MifosScaffold
 import org.mifospay.core.designsystem.icon.MifosIcons
 import org.mifospay.core.ui.utils.EventsEffect
+import org.mifospay.feature.settings.di.MifosSettingsViewModelQualifier
 import org.mifospay.feature.settings.language.LanguageDialog
 
 /**
@@ -99,7 +100,7 @@ internal fun SettingsScreenRoute(
     navigateToProfile: () -> Unit,
     entryStateHandle: SavedStateHandle,
     modifier: Modifier = Modifier,
-    viewmodel: SettingsViewModel = koinViewModel(),
+    viewmodel: SettingsViewModel = koinViewModel(qualifier = MifosSettingsViewModelQualifier),
 ) {
     val state by viewmodel.stateFlow.collectAsStateWithLifecycle()
     val authProvider = platformAuthenticationProvider.current

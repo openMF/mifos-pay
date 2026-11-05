@@ -15,6 +15,8 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifospay.core.common.MifosDispatchers
 import org.mifospay.core.data.util.ConnectivityManagerNetworkMonitor
+import org.mifospay.core.data.util.MifosNetworkMonitorQualifier
+import org.mifospay.core.data.util.MifosTimeZoneMonitorQualifier
 import org.mifospay.core.data.util.NetworkMonitor
 import org.mifospay.core.data.util.TimeZoneBroadcastMonitor
 import org.mifospay.core.data.util.TimeZoneMonitor
@@ -24,11 +26,11 @@ val AndroidDataModule = module {
     // The Store5 `kpt.core.data.infra.NetworkMonitor` is bound in DataModule via kmptoolkit's
     // `NetworkMonitorProvider.install()` (cmp-network-monitor 3.6.0+, which carries the
     // AndroidNetworkMonitor cold-start seed fix) — no per-platform override needed here.
-    single<NetworkMonitor> {
+    single<NetworkMonitor>(MifosNetworkMonitorQualifier) {
         ConnectivityManagerNetworkMonitor(androidContext(), get(named(MifosDispatchers.IO.name)))
     }
 
-    single<TimeZoneMonitor> {
+    single<TimeZoneMonitor>(MifosTimeZoneMonitorQualifier) {
         TimeZoneBroadcastMonitor(
             context = androidContext(),
             appScope = get(named("ApplicationScope")),

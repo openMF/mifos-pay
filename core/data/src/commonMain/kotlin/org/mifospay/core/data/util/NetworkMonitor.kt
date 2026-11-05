@@ -10,6 +10,7 @@
 package org.mifospay.core.data.util
 
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.qualifier.named
 
 /**
  * Utility for reporting app connectivity status
@@ -17,3 +18,10 @@ import kotlinx.coroutines.flow.Flow
 interface NetworkMonitor {
     val isOnline: Flow<Boolean>
 }
+
+/**
+ * Koin qualifier for this [NetworkMonitor]. On JS / Wasm Koin keys a binding by the type's simple
+ * name, so without it this binding and kmptoolkit's `NetworkMonitor` (bound by the template's
+ * DataModule) share one key and the app receives the wrong instance.
+ */
+val MifosNetworkMonitorQualifier = named("org.mifospay.core.data.util.NetworkMonitor")

@@ -17,19 +17,25 @@ import kpt.core.base.datastore.infra.SyncStatePersister
 import kpt.core.datastore.UserPreferencesRepository
 import kpt.core.datastore.UserPreferencesRepositoryImpl
 import org.koin.core.qualifier.named
-import org.koin.dsl.bind
 import org.koin.dsl.module
+
+/**
+ * Qualifies the template's [UserPreferencesRepository] binding. On JS / Wasm Koin keys a binding by
+ * the type's simple name, so a fork's own `UserPreferencesRepository` (any package) would otherwise
+ * share this key and one side would receive the other's instance.
+ */
+val KptUserPreferencesQualifier = named("kpt.core.datastore.UserPreferencesRepository")
 
 val DatastoreModule = module {
     includes(CommonModule, DatastoreBaseModule)
 
-    single {
+    single<UserPreferencesRepository>(KptUserPreferencesQualifier) {
         UserPreferencesRepositoryImpl(
             plainSettings = get<Settings>(named("plain")),
             secureSettings = get<Settings>(named("secure")),
             dispatcher = get(),
         )
-    } bind UserPreferencesRepository::class
+    }
 
     // Sync state persister — Settings-backed (same store as user prefs).
     // Read by Synchronizer at sync start; written on snapshot/changeList completion.

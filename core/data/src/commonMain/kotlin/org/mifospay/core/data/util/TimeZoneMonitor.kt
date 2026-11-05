@@ -11,6 +11,7 @@ package org.mifospay.core.data.util
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.TimeZone
+import org.koin.core.qualifier.named
 
 /**
  * Utility for reporting current timezone the device has set.
@@ -20,3 +21,10 @@ import kotlinx.datetime.TimeZone
 interface TimeZoneMonitor {
     val currentTimeZone: Flow<TimeZone>
 }
+
+/**
+ * Koin qualifier for this [TimeZoneMonitor]. On JS / Wasm Koin keys a binding by the type's simple
+ * name, so without it this binding and the template's `kpt.core.base.data.infra.TimeZoneMonitor`
+ * share one key and the app receives the wrong instance.
+ */
+val MifosTimeZoneMonitorQualifier = named("org.mifospay.core.data.util.TimeZoneMonitor")

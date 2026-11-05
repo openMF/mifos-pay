@@ -5,13 +5,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
-import cmp.shared.SharedApp
 import cmp.shared.utils.initKoin
 import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
 import org.jetbrains.compose.resources.configureWebResources
 import org.jetbrains.skiko.wasm.onWasmReady
+import org.mifospay.shared.MifosPaySharedApp
 
 /**
  * Main function.
@@ -63,13 +63,9 @@ fun main() {
              * Invokes the root composable of the application.
              * This function is responsible for setting up the entire UI structure of the app.
              */
-                SharedApp(
-                    updateScreenCapture = {},
-                    handleRecreate = {
-                        // Reload the page to apply locale changes
-                        window.location.reload()
-                    },
-                    handleThemeMode = {},
+                // The app's own shell, as on Android and desktop. The template's `SharedApp` passes
+                // no auth graph to RootNavScreen, so a signed-out user never leaves the splash.
+                MifosPaySharedApp(
                     handleAppLocale = { languageTag ->
                         if (languageTag != null) {
                             // Store language preference in localStorage
@@ -87,7 +83,6 @@ fun main() {
                         // Note: This will reload the page, and locale selection depends on browser settings
                         // window.location.reload()
                     },
-                    onSplashScreenRemoved = {},
                 )
             }
         }

@@ -39,9 +39,13 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 private val ioDispatcher = named(MifosDispatchers.IO.name)
 
+// On JS / Wasm Koin keys a binding by the type's simple name; the template's
+// kpt.core.base.network.SupabaseConfigClient is bound too, so this one needs its own key.
+private val supabaseConfigClient = named("org.mifos.corebase.network.SupabaseConfigClient")
+
 @OptIn(ExperimentalEncodingApi::class)
 val NetworkModule = module {
-    single {
+    single(supabaseConfigClient) {
         SupabaseConfigClient(
             credentials = SupabaseCredentialsImpl,
             logLevel = LogLevel.DEBUG,
@@ -49,7 +53,7 @@ val NetworkModule = module {
     }
 
     single {
-        SupabaseApiManager(supabaseClient = get())
+        SupabaseApiManager(supabaseClient = get(supabaseConfigClient))
     }
 
     single<InstanceConfigLoader> {

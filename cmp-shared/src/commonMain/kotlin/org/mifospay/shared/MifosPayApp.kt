@@ -31,6 +31,8 @@ import org.mifos.authenticator.passcode.PasscodeStep
 import org.mifos.feature.passcode.ROOT_MIFOS_PASSCODE_ROUTE
 import org.mifos.feature.passcode.navigateToReAuthMifosPasscodeScreen
 import org.mifospay.core.common.GlobalAuthManager
+import org.mifospay.core.data.util.MifosNetworkMonitorQualifier
+import org.mifospay.core.data.util.MifosTimeZoneMonitorQualifier
 import org.mifospay.core.data.util.NetworkMonitor
 import org.mifospay.core.data.util.TimeZoneMonitor
 import org.mifospay.core.designsystem.component.MifosDialogBox
@@ -80,8 +82,8 @@ import kotlin.time.TimeSource
 fun MifosPaySharedApp(
     modifier: Modifier = Modifier,
     handleAppLocale: (locale: String?) -> Unit,
-    networkMonitor: NetworkMonitor = koinInject(),
-    timeZoneMonitor: TimeZoneMonitor = koinInject(),
+    networkMonitor: NetworkMonitor = koinInject(MifosNetworkMonitorQualifier),
+    timeZoneMonitor: TimeZoneMonitor = koinInject(MifosTimeZoneMonitorQualifier),
 ) {
     val biometricStorageAdapter: BiometricStorageAdapter = koinInject()
     PlatformAuthenticatorCompositionProvider(

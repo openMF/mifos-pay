@@ -43,9 +43,13 @@ import org.mifospay.core.model.user.LanguageConfig
 import org.mifospay.core.model.user.toLanguage
 import org.mifospay.feature.settings.SettingsState
 import org.mifospay.feature.settings.SettingsViewModel
+import org.mifospay.feature.settings.di.MifosSettingsViewModelQualifier
 
 @Composable
-fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel()) {
+fun LanguageDialog(
+    onDismiss: () -> Unit,
+    viewModel: SettingsViewModel = koinViewModel(qualifier = MifosSettingsViewModelQualifier),
+) {
     val settingsUiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     LanguageDialogContent(
         onDismiss = onDismiss,
