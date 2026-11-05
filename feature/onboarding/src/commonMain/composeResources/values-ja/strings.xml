@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">スキップ</string>
+    <string name="feature_onboarding_skip_a11y">プライバシー設定へスキップ</string>
+    <string name="feature_onboarding_next">次へ</string>
+    <string name="feature_onboarding_page_of">%2$d ページ中 %1$d ページ目</string>
+    <string name="feature_onboarding_overview_title">お金のツールをひとつの場所に</string>
+    <string name="feature_onboarding_overview_body">ローン、請求書、金利、計算ツールがまとまっているので、必要な数字にいつでもワンタップでアクセスできます。</string>
+    <string name="feature_onboarding_track_title">支払期日を見逃さない</string>
+    <string name="feature_onboarding_track_body">ローンや請求書を管理し、各支払いの期日前にリマインダーを受け取れます。</string>
+    <string name="feature_onboarding_offline_title">電波がなくても大丈夫</string>
+    <string name="feature_onboarding_offline_body">保存したデータはこの端末に残り、オフラインでも使えます。変更内容はオンラインに戻ると同期されます。</string>
+    <string name="feature_onboarding_privacy_title">アプリの改善にご協力ください</string>
+    <string name="feature_onboarding_privacy_lead">どちらも、ご自身でオンにしない限りオフのままです。ワンタップで両方を許可するか、下で個別に選択してください。いずれの場合もすべての機能をご利用いただけます。</string>
+    <string name="feature_onboarding_analytics_label">利用状況データを共有</string>
+    <string name="feature_onboarding_analytics_body">どの画面や機能がどのくらいの頻度で使われているか。入力や保存した内容は一切含まれません。</string>
+    <string name="feature_onboarding_crash_label">クラッシュレポートを送信</string>
+    <string name="feature_onboarding_crash_body">アプリがクラッシュした際に、エラー内容、アプリのバージョン、端末の機種を送信し、問題の修正に役立てます。</string>
+    <string name="feature_onboarding_no_personal_data">アプリに入力した内容が送信されることは一切ありません。</string>
+    <string name="feature_onboarding_settings_later">この設定は後から「設定」で変更できます。</string>
+    <string name="feature_onboarding_connect_server">サーバーを設定</string>
+    <string name="feature_onboarding_agreement">本サービスをご利用いただくことで、%1$sおよび%2$sに同意したものとみなされます。</string>
+    <string name="feature_onboarding_terms">利用規約</string>
+    <string name="feature_onboarding_privacy_policy">プライバシーポリシー</string>
+    <string name="feature_onboarding_allow_get_started">許可して開始</string>
+    <string name="feature_onboarding_continue_without">共有せずに続行</string>
+    <string name="feature_onboarding_continue_choices">選択した内容で続行</string>
+    <string name="feature_onboarding_save_failed">選択内容を保存できませんでした。もう一度お試しください。</string>
+</resources>

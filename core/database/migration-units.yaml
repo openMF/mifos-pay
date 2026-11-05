@@ -1,0 +1,26 @@
+# migration-units.yaml — what the TEMPLATE may add to a fork's schema. owner: template, full-copies.
+#
+# Split out of app.yaml so the two authors never share a file. app.yaml is `owner: merge`: it holds
+# template declarations AND fork declarations, so a template edit landing next to a fork edit is a
+# 3-way merge waiting to happen. This file is template-only and full-copies; the fork's answer to it
+# lives in `migration-ledger.yaml`, which is fork-only and is never copied. Neither side writes the
+# other's file, so a template schema change is an append on the fork side, never a conflict.
+#
+# A unit carries NO version. Room's version is one monotonic integer and migrations are edges between
+# consecutive values, so if the template picked numbers it would collide with the fork's the moment
+# both migrated. Each fork applies a unit at ITS OWN next free version and records that in its
+# ledger — identity is the `id`, never the position, so the same unit can land at v14 in one fork and
+# v27 in another.
+#
+# ADDITIVE ONLY (enforced): a unit is replayed at an arbitrary slot, so it may only CREATE TABLE or
+# ADD COLUMN with a default. A rename or a conditional drop assumes a starting schema and breaks out
+# of position — which is why the demo's v8->v10 hop (it DROPs `samples`) is deliberately not a unit.
+#
+# Domain migrations are NOT units: they belong to whoever owns the domain and live in that fork's
+# ledger directly.
+migration_units:
+  - { id: framework-fetched-at,      adds_table: framework_fetched_at }
+  - { id: framework-submit-drafts,   adds_table: framework_submit_drafts }
+  - { id: drafts-unique-key,         adds_column: framework_submit_drafts.uniqueKey }
+  - { id: framework-write-conflicts, adds_table: framework_write_conflicts }
+  - { id: drafts-attempt-count,      adds_column: framework_submit_drafts.attemptCount }

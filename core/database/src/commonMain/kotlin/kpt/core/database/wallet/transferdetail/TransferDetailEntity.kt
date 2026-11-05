@@ -11,6 +11,7 @@ package kpt.core.database.wallet.transferdetail
 
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single account-transfer detail record — the Room mirror of the
@@ -40,6 +41,7 @@ import androidx.room3.PrimaryKey
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(tableName = "wallet_transfer_details")
 data class TransferDetailEntity(
     @PrimaryKey val transferId: Long,

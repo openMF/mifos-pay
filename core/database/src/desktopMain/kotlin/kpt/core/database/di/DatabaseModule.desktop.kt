@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.database.di
 
@@ -16,4 +16,8 @@ import org.koin.core.module.Module
 // Delegates to the template-owned platformDatabaseModule<T> (core-base/database), which owns
 // the desktop SQLite driver + IO dispatcher + fallback and resolves the OS data dir from
 // appDatabaseNaming.desktopDirName.
+/**
+ * Koin bindings for the desktop Room driver. The builder differs per platform (file path, bundled driver, in-memory),
+ * which is why this is an actual rather than one shared module.
+ */
 actual val platformModule: Module = platformDatabaseModule<AppDatabase>(appDatabaseNaming)

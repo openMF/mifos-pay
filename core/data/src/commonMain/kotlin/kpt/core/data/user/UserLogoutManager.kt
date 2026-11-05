@@ -5,12 +5,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.data.user
 
 import kotlinx.coroutines.flow.SharedFlow
 
+/**
+ * Coordinates logout across the app: wipes local state and notifies observers.
+ *
+ * Centralised so "what must be cleared on logout" is answered once. A feature clearing its own
+ * slice is how one gets missed.
+ */
 interface UserLogoutManager {
     /**
      * Observable flow of [LogoutEvent]s

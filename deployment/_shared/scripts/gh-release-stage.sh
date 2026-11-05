@@ -39,5 +39,5 @@ esac
 REPO_ARG=()
 [[ -n "${GITHUB_REPOSITORY:-}" ]] && REPO_ARG=(--repo "$GITHUB_REPOSITORY")
 
-gh release edit "$TAG" --prerelease="$PRERELEASE" --latest="$LATEST" "${REPO_ARG[@]}" >/dev/null
+gh release edit "$TAG" --prerelease="$PRERELEASE" --latest="$LATEST" ${REPO_ARG[@]+"${REPO_ARG[@]}"} >/dev/null
 echo "🏷  Release $TAG → prerelease=$PRERELEASE, latest=$LATEST"

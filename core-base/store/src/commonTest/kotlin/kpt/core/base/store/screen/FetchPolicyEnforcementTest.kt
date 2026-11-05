@@ -14,11 +14,10 @@ import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkInfo
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkStatus
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkType
 import kotlinx.coroutines.test.runTest
-import org.mobilenativefoundation.store.store5.Fetcher
-import org.mobilenativefoundation.store.store5.StoreBuilder
-import kpt.core.base.store.freshness.FreshnessSignal
 import kpt.core.base.store.fixtures.FakeNetworkMonitor
 import kpt.core.base.store.infra.FakeFetchedAtRepository
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.StoreBuilder
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs

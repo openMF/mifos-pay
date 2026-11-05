@@ -40,6 +40,8 @@ sealed interface ErrorCategory {
      * [Timeout.Connect] (408), or [QuotaExceeded] (402). The [httpCode] is the exact
      * status (e.g. `400`, `404`, `409`, `422`). Suggest surfacing the response body to
      * the user — these are usually input/validation errors, not infrastructure.
+     *
+     * @property httpCode the 4xx status. Non-null — a client error always arrives with a response.
      */
     data class ClientError(val httpCode: Int) : ErrorCategory
 
@@ -47,6 +49,9 @@ sealed interface ErrorCategory {
      * HTTP 5xx (other than [Timeout.Read] / 504) or upstream service error. The [httpCode]
      * is the exact status when available (e.g. `500`, `502`, `503`); null when categorized
      * heuristically without a parseable code. Suggest retry-with-backoff + status UX.
+     *
+     * @property httpCode the 5xx status, or null when the server failed without one (a dropped connection mid-
+     *   response).
      */
     data class Server(val httpCode: Int? = null) : ErrorCategory
 
@@ -161,7 +166,13 @@ private fun String.matchesNetworkClassName(): Boolean =
         contains("Connect", ignoreCase = true) ||
         contains("Timeout", ignoreCase = true) ||
         contains("UnknownHost", ignoreCase = true) ||
-        contains("SSLException", ignoreCase = true) ||
+        // `SSL`, not `SSLException`: the JVM's TLS failures are `SSLHandshakeException` /
+        // `SSLPeerUnverifiedException`, which do not contain "SSLException" — measured 2026-10-25,
+        // a server whose TLS was down categorized Generic and sign-in blamed the password.
+        contains("SSL", ignoreCase = true) ||
+        // java.io.EOFException (an IOException the name match cannot see) — the cause under that
+        // handshake failure: the peer closed the connection.
+        contains("EOFException", ignoreCase = true) ||
         contains("Offline", ignoreCase = true) ||
         contains("HttpRequestException", ignoreCase = true) ||
         contains("Socket", ignoreCase = true) ||
@@ -177,7 +188,11 @@ private fun String.extractHttpCode(): Int? =
     HTTP_CODE_REGEX.find(this)?.groupValues?.get(1)?.toIntOrNull()?.takeIf { it in 100..599 }
 
 private fun categorizeHttpCode(code: Int): ErrorCategory = when (code) {
-    401, 403 -> ErrorCategory.Auth
+    // 401 only. A 403 is "signed in, but not permitted" — signing in again cannot fix it, and as
+    // Auth it became ScreenState.Unauthenticated, which carries NO error, so the server's own reason
+    // ("User has no authority to READ collectionsheets") was replaced by generic copy. As a
+    // ClientError it renders as an error that keeps the server's message. Measured 2026-10-24.
+    401 -> ErrorCategory.Auth
     408 -> ErrorCategory.Timeout.Connect
     429 -> ErrorCategory.RateLimit
     402, 507 -> ErrorCategory.QuotaExceeded
@@ -187,9 +202,9 @@ private fun categorizeHttpCode(code: Int): ErrorCategory = when (code) {
     else -> ErrorCategory.Generic
 }
 
+// "Forbidden" is deliberately absent — see categorizeHttpCode: a 403 is not an authentication failure.
 private fun String.matchesAuthKeyword(): Boolean =
-    contains("Unauthorized", ignoreCase = true) ||
-        contains("Forbidden", ignoreCase = true)
+    contains("Unauthorized", ignoreCase = true)
 
 private fun String.matchesRateLimitKeyword(): Boolean =
     contains("Too Many Requests", ignoreCase = true) ||

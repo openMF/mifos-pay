@@ -29,7 +29,9 @@ import kotlin.time.Duration.Companion.hours
  * infra params into one clearly-named context owned by `core-base/store`.
  */
 class ScreenStreamContext(
+    /** Connectivity source, so the stream can tell offline apart from a request failure. */
     val networkMonitor: NetworkMonitor,
+    /** Last-fetched timestamps — the input to every freshness decision. */
     val fetchedAtRepository: FetchedAtRepository,
 )
 

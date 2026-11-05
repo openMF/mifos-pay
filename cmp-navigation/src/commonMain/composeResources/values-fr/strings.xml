@@ -2,9 +2,9 @@
 <!--
     Copyright 2024 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
@@ -13,18 +13,18 @@
     <string name="home">Accueil</string>
     <string name="profile">Profil</string>
     <string name="settings">Paramètres</string>
-    <string name="not_connected">⚠️ Vous n\'êtes pas connecté à Internet</string>
+    <string name="not_connected">⚠️ Vous n'êtes pas connecté à Internet</string>
 
     <!-- ===== Screen-state default copy ===== -->
     <string name="screenstate_empty_title">Rien à afficher</string>
-    <string name="screenstate_empty_message">Vos données apparaîtront ici dès qu\'elles seront disponibles.</string>
+    <string name="screenstate_empty_message">Vos données apparaîtront ici dès qu'elles seront disponibles.</string>
     <string name="screenstate_error_title">Une erreur est survenue</string>
     <string name="screenstate_error_retry">Réessayer</string>
     <string name="screenstate_nonet_title">Vous êtes hors ligne</string>
     <string name="screenstate_nonet_message">Nous réessaierons dès que vous serez reconnecté.</string>
     <string name="screenstate_nonet_retry">Réessayer maintenant</string>
     <string name="screenstate_captive_title">Connectez-vous au WiFi</string>
-    <string name="screenstate_captive_message">Votre réseau exige une connexion avant l\'accès.</string>
+    <string name="screenstate_captive_message">Votre réseau exige une connexion avant l'accès.</string>
     <string name="screenstate_captive_action">Ouvrir la page de connexion</string>
     <string name="error_category_network">Impossible de joindre le serveur. Vérifiez votre connexion.</string>
     <string name="error_category_auth">Votre session a expiré. Veuillez vous reconnecter.</string>

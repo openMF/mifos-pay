@@ -11,7 +11,8 @@ package kpt.core.store.wallet.office
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.office.OfficeDao
 import kpt.core.database.wallet.office.toDomain
@@ -22,6 +23,10 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `OfficeEntity`. Shared with the DAO's writes. */
 private const val OFFICES_TABLE = "wallet_offices"
@@ -75,10 +80,11 @@ private const val OFFICES_TABLE = "wallet_offices"
  * wallet-app surface (offices are managed by Fineract admin), so there is no
  * app-side write path here. There is no `Bookkeeper`.
  */
+@StoreProvider(id = "offices")
+@CacheKey(name = "ALL", key = "wallet_offices")
 fun provideOfficeStore(
     apiManager: SelfServiceApiManager,
     dao: OfficeDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<OfficesKey, List<Office>> = StoreFactory.createStore(
     fetcher = Fetcher.of { _: OfficesKey ->
         // Ktorfit returns Flow<List<Office>> — take the first (and only) emission.
@@ -86,7 +92,7 @@ fun provideOfficeStore(
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { _: OfficesKey ->
-            daoFlow(OFFICES_TABLE) { dao.observeAll() }
+            run { dao.observeAll() }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { _: OfficesKey, offices: List<Office> ->

@@ -28,12 +28,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Instant
 import kotlin.time.Clock
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 /**
  * Canary tests for [FetchPolicy.CACHE_FIRST_SWR] — the Phase 1 SWR read path.
@@ -153,9 +152,11 @@ class CacheFirstSwrTest {
             cacheKey = "test:swr-fresh-no-fetch",
             scope = backgroundScope,
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            reconnectDebounceMs = 0L, // suppress reconnect refresh path
+            // suppress reconnect refresh path
+            reconnectDebounceMs = 0L,
             userRefreshDebounceMs = 0L,
-            ttl = 24.hours, // any cache age « ttl → Fresh band
+            // any cache age « ttl → Fresh band
+            ttl = 24.hours,
         )
 
         stream.state.test {
@@ -233,7 +234,8 @@ class CacheFirstSwrTest {
             cacheKey = "test:swr-stale-swap",
             scope = backgroundScope,
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            reconnectDebounceMs = 0L, // suppress reconnect refresh path
+            // suppress reconnect refresh path
+            reconnectDebounceMs = 0L,
             userRefreshDebounceMs = 0L,
             ttl = 5.minutes,
             clock = object : Clock {
@@ -269,7 +271,7 @@ class CacheFirstSwrTest {
                 (
                     next is ScreenState.Content<List<String>> &&
                         (next as ScreenState.Content<List<String>>).data == listOf("stale-cached")
-                )
+                    )
             ) {
                 next = awaitItem()
             }
@@ -380,9 +382,17 @@ class CacheFirstSwrTest {
     fun forceFreshRoutesToFreshRequestUnderSwr() = runTest {
         var fetchCount = 0
         val store = StoreBuilder
-            .from<String, String>(fetcher = Fetcher.of { key -> fetchCount++; "fresh:$key" })
+            .from<String, String>(
+                fetcher = Fetcher.of { key ->
+                    fetchCount++
+                    "fresh:$key"
+                },
+            )
             .build()
-        store.streamData("k4").test { awaitItem(); cancelAndIgnoreRemainingEvents() }
+        store.streamData("k4").test {
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
 
         val before = fetchCount
         store.streamDataForPolicy("k4", FetchPolicy.CACHE_FIRST_SWR, forceFresh = true)
@@ -400,9 +410,17 @@ class CacheFirstSwrTest {
         // An offline-only screen must NEVER reach the network, even when a caller forces a refresh.
         var fetchCount = 0
         val store = StoreBuilder
-            .from<String, String>(fetcher = Fetcher.of { key -> fetchCount++; "fresh:$key" })
+            .from<String, String>(
+                fetcher = Fetcher.of { key ->
+                    fetchCount++
+                    "fresh:$key"
+                },
+            )
             .build()
-        store.streamData("k5").test { awaitItem(); cancelAndIgnoreRemainingEvents() }
+        store.streamData("k5").test {
+            awaitItem()
+            cancelAndIgnoreRemainingEvents()
+        }
 
         val before = fetchCount
         store.streamDataForPolicy("k5", FetchPolicy.CACHE_ONLY, forceFresh = true).first()

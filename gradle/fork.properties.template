@@ -288,8 +288,9 @@ store.macos.category=Productivity
 #
 # Find all four at: Partner Center → your app → Product management → Product identity
 #   https://partner.microsoft.com/dashboard/apps-and-games/overview
-# Consumed by: ./gradlew syncForkConfig → deployment/desktop/microsoft-store/
-#   StoreBroker.config.json (${ENV:MS_APP_ID}) AND the generated AppxManifest.xml.
+# Consumed at deploy time by deployment/_shared/scripts/fork-identity.sh, which renders the
+#   StoreBroker config (${ENV:MS_APP_ID} when unset) and the staged AppxManifest.xml into build/ —
+#   deployment/ itself is template-owned and never rewritten per fork.
 # CI: set each ENV var directly (these are non-secret → GitHub Actions *variables*,
 #   not secrets). fork.properties is gitignored and not read on CI.
 

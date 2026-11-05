@@ -118,6 +118,8 @@ class OfflineSubmitSyncerTest {
             )
             syncer.start()
             networkStatus.value = onlineWifi
+            // A persistent failure is retried up to the cap (backoff 1s, 2s) before it is FAILED.
+            testScheduler.advanceTimeBy(60_000) // past every backoff; backgroundScope work is not 'idle'-tracked
 
             val entries = outbox.entries
             val failEntry = entries.first { it.formKey == "fail_form" }
@@ -132,7 +134,7 @@ class OfflineSubmitSyncerTest {
     fun `entries already in RETRYING status are not picked up by syncer`() = runTest(UnconfinedTestDispatcher()) {
         val outbox = FakeSubmitOutbox<String>()
         val id = outbox.save(formKey, "payload")
-        outbox.markRetrying(id)  // simulate UI already claiming this entry
+        outbox.markRetrying(id) // simulate UI already claiming this entry
 
         val networkStatus = MutableStateFlow<NetworkStatus>(NetworkStatus.Unavailable)
         var submitCount = 0
@@ -261,4 +263,90 @@ class OfflineSubmitSyncerTest {
                 "${testScheduler.currentTime - before}ms",
         )
     }
+
+    // ─── retry within the cap ─────────────────────────────────────────────────
+
+    @Test
+    fun `a transient failure is retried within the cap and then lands`() = runTest(UnconfinedTestDispatcher()) {
+        // Before: the first exception was final — FAILED, never picked up again — so RetryPolicy's
+        // attempts were never used (an HTTP/2 stream reset at app start, device 2026-10-26).
+        val outbox = FakeSubmitOutbox<String>()
+        outbox.save(formKey, "payload")
+        val networkStatus = MutableStateFlow<NetworkStatus>(NetworkStatus.Unavailable)
+        var calls = 0
+        val syncer = backgroundScope.offlineSubmitSyncer<String, Unit>(
+            outbox = outbox,
+            networkStatusFlow = networkStatus,
+            submitBlock = { if (++calls == 1) throw RuntimeException("stream was reset: CANCEL") },
+        )
+        syncer.start()
+        networkStatus.value = onlineWifi
+        testScheduler.advanceTimeBy(60_000) // past every backoff; backgroundScope work is not 'idle'-tracked
+
+        assertEquals(2, calls)
+        assertEquals(SubmitOutboxStatus.SUBMITTED, outbox.entries.single().status)
+    }
+
+    @Test
+    fun `a persistent failure goes FAILED once its attempts are spent`() = runTest(UnconfinedTestDispatcher()) {
+        val outbox = FakeSubmitOutbox<String>()
+        outbox.save(formKey, "payload")
+        val networkStatus = MutableStateFlow<NetworkStatus>(NetworkStatus.Unavailable)
+        var calls = 0
+        val syncer = backgroundScope.offlineSubmitSyncer<String, Unit>(
+            outbox = outbox,
+            networkStatusFlow = networkStatus,
+            submitBlock = {
+                calls++
+                throw RuntimeException("rejected")
+            },
+            retryPolicy = RetryPolicy(maxAttempts = 3),
+        )
+        syncer.start()
+        networkStatus.value = onlineWifi
+        testScheduler.advanceTimeBy(60_000) // past every backoff; backgroundScope work is not 'idle'-tracked
+
+        assertEquals(3, calls, "exactly maxAttempts tries, no more")
+        assertEquals(SubmitOutboxStatus.FAILED, outbox.entries.single().status)
+    }
+
+    @Test
+    fun `a draft that becomes pending while online is sent without waiting for a reconnect`() =
+        runTest(UnconfinedTestDispatcher()) {
+            // Sync & Drafts' Retry requeues a FAILED row while online; before, nothing sent it
+            // until the connection next dropped and came back.
+            val outbox = FakeSubmitOutbox<String>()
+            val networkStatus = MutableStateFlow<NetworkStatus>(onlineWifi)
+            var calls = 0
+            val syncer = backgroundScope.offlineSubmitSyncer<String, Unit>(
+                outbox = outbox,
+                networkStatusFlow = networkStatus,
+                submitBlock = { calls++ },
+            )
+            syncer.start()
+
+            outbox.save(formKey, "kept while online")
+            testScheduler.advanceTimeBy(60_000)
+
+            assertEquals(1, calls)
+            assertEquals(SubmitOutboxStatus.SUBMITTED, outbox.entries.single().status)
+        }
+
+    @Test
+    fun `stopping the syncer mid-attempt puts the entry back to PENDING, not FAILED`() =
+        runTest(UnconfinedTestDispatcher()) {
+            val outbox = FakeSubmitOutbox<String>()
+            outbox.save(formKey, "payload")
+            val networkStatus = MutableStateFlow<NetworkStatus>(onlineWifi)
+            val gate = kotlinx.coroutines.CompletableDeferred<Unit>()
+            val job = backgroundScope.offlineSubmitSyncer<String, Unit>(
+                outbox = outbox,
+                networkStatusFlow = networkStatus,
+                submitBlock = { gate.await() },
+            ).start()
+
+            job.cancel()
+
+            assertEquals(SubmitOutboxStatus.PENDING, outbox.entries.single().status)
+        }
 }

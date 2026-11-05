@@ -5,14 +5,27 @@
 module VersionHelpers
   module_function
 
-  # Read the gradle-generated version.txt (produced by `./gradlew versionFile`).
-  # Prefers the absolute repo-root path (the task writes there); falls back to the legacy
-  # relative paths, then "1.0.0". The relative `../version.txt` broke when the fastlane CWD
-  # wasn't the repo parent, silently yielding 1.0.0. (2026-06-22 fix)
+  # Read version.txt — the version SOURCE OF TRUTH (written by `/idea-deploy [N]` + `./gradlew
+  # versionFile`). Resolve it ROBUSTLY: DEPLOYMENT_REPO_ROOT, then walk up from THIS file
+  # (deployment/_shared/lib) to the repo root (the dir with settings.gradle.kts), then CWD-relative.
+  # The prior relative-only lookup silently yielded "1.0.0" whenever the fastlane CWD wasn't the repo
+  # parent — which shipped a stale versionName even though version.txt was correct (2026-06-22 partial
+  # fix; full walk-up fix 2026-08-31).
   def gradle_version
-    root = defined?(DEPLOYMENT_REPO_ROOT) ? DEPLOYMENT_REPO_ROOT : nil
-    candidates = [root && File.join(root, "version.txt"), "../version.txt", "version.txt"].compact
-    path = candidates.find { |p| File.exist?(p) && !File.read(p).strip.empty? }
+    roots = []
+    if defined?(DEPLOYMENT_REPO_ROOT) && DEPLOYMENT_REPO_ROOT && !DEPLOYMENT_REPO_ROOT.to_s.empty?
+      roots << DEPLOYMENT_REPO_ROOT.to_s
+    end
+    dir = File.expand_path("../..", __dir__) # deployment/
+    8.times do
+      roots << dir
+      break if File.exist?(File.join(dir, "settings.gradle.kts")) || File.exist?(File.join(dir, "version.txt"))
+      parent = File.expand_path("..", dir)
+      break if parent == dir
+      dir = parent
+    end
+    candidates = roots.map { |r| File.join(r, "version.txt") } + ["../version.txt", "version.txt"]
+    path = candidates.uniq.find { |p| File.exist?(p) && !File.read(p).strip.empty? }
     path ? File.read(path).strip : "1.0.0"
   rescue StandardError
     "1.0.0"

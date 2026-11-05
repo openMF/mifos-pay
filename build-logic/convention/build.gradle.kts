@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -26,7 +35,6 @@ dependencies {
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.detekt.gradlePlugin)
-    compileOnly(libs.ktlint.gradlePlugin)
     compileOnly(libs.spotless.gradle)
     implementation(libs.truth)
     // SnakeYAML — lets SyncForkConfigPlugin parse app-profile/app.yaml + platforms/**/*.yaml
@@ -45,6 +53,8 @@ dependencies {
     // runtime classpath, letting CMPFeatureConventionPlugin apply it via pluginManager.apply(id)
     // to give every feature module the device-free verifyRoborazziDesktop render tier.
     implementation(libs.roborazzi.gradlePlugin)
+
+    testImplementation(libs.kotlin.test)
 }
 
 tasks {
@@ -72,6 +82,11 @@ gradlePlugin {
         register("androidApplication") {
             id = "org.convention.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
+        }
+
+        register("featureAggregate") {
+            id = "org.convention.feature.aggregate"
+            implementationClass = "FeatureAggregateConventionPlugin"
         }
 
         register("kmpFlavors") {
@@ -120,11 +135,6 @@ gradlePlugin {
             implementationClass = "SpotlessConventionPlugin"
             description = "Configures spotless for the project"
         }
-        register("ktlint") {
-            id = "org.convention.ktlint.plugin"
-            implementationClass = "KtlintConventionPlugin"
-            description = "Configures kotlinter for the project"
-        }
         register("kover") {
             id = "org.convention.kover.plugin"
             implementationClass = "KoverConventionPlugin"
@@ -137,7 +147,7 @@ gradlePlugin {
         }
 
         //  Room Plugin
-        register("KMPRoom"){
+        register("KMPRoom") {
             id = "mifos.kmp.room"
             implementationClass = "KMPRoomConventionPlugin"
             description = "Configures Room for the project"
@@ -155,10 +165,5 @@ gradlePlugin {
             description = "Wires the worker-kmp app plugin + the worker-compose-all bundle into a Compose Multiplatform module. Use on the module that hosts the consumer-facing workers + WorkScheduler."
         }
         // Supabase Config Plugin
-        register("supabaseConfig") {
-            id = "org.convention.kmp.supabase.config"
-            implementationClass = "SupabaseConfigConventionPlugin"
-            description = "Generates Supabase credentials from secrets file"
-        }
     }
 }

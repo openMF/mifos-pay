@@ -2,7 +2,7 @@
 //
 // cmp-ios/Package.swift — SwiftPM binary target for the KMP `ComposeApp` framework (E6).
 //
-// This is the SwiftPM replacement for the CocoaPods `pod 'cmp_shared'` dependency.
+// Declares the Kotlin `ComposeApp` framework as a SwiftPM binary dependency.
 // It exposes the Kotlin-exported `ComposeApp` framework — assembled as an XCFramework
 // by `cmp-shared/build.gradle.kts` (the `XCFramework("ComposeApp")` DSL) — as a Swift
 // package product the `iosApp` target links against.
@@ -19,7 +19,7 @@
 // (`cmp-ios/scripts/embed-xcframework.sh`) assembles, signs and embeds the
 // flavor-matched framework on every build. This manifest gives forks that prefer a
 // pure-SwiftPM consumption (or a Swift package that itself depends on ComposeApp) a
-// first-class binary target, with zero CocoaPods/Ruby toolchain.
+// first-class binary target, with no Ruby toolchain in the loop.
 import PackageDescription
 
 let package = Package(

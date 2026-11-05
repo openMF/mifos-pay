@@ -28,6 +28,10 @@ import kotlin.time.Instant
  */
 @OptIn(ExperimentalTime::class)
 object FreshnessBands {
+    /**
+     * Derives the freshness band from a last-synced instant and a TTL. Pure, so the banding rule is unit-testable
+     * without standing up a Store.
+     */
     fun bandFor(
         now: Instant,
         lastSyncedAt: Instant?,

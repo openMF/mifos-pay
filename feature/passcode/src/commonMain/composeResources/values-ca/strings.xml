@@ -12,15 +12,15 @@
     <string name="feature_passcode_biometric_error_lockout">Massa intents. Espera i torna-ho a provar.</string>
     <string name="feature_passcode_biometric_error_hardware_unavailable">El maquinari biomètric no està disponible temporalment. Torna-ho a provar més tard.</string>
     <string name="feature_passcode_biometric_error_not_enrolled">Cap dada biomètrica registrada en aquest dispositiu. Configura la biometria a la configuració del sistema.</string>
-    <string name="feature_passcode_biometric_error_timeout">L\'autenticació biomètrica ha expirat. Torna-ho a provar.</string>
-    <string name="feature_passcode_biometric_error_no_space">No hi ha prou emmagatzematge per completar l\'autenticació biomètrica.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Les dades de registre biomètric no són vàlides. Torna a activar la biometria des de la configuració de l\'app.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">No s\'ha pogut iniciar l\'autenticació biomètrica per arguments no vàlids.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">No s\'ha pogut iniciar el registre biomètric per arguments no vàlids.</string>
-    <string name="feature_passcode_biometric_error_unknown">S\'ha produït un error biomètric inesperat. Torna-ho a provar.</string>
+    <string name="feature_passcode_biometric_error_timeout">L'autenticació biomètrica ha expirat. Torna-ho a provar.</string>
+    <string name="feature_passcode_biometric_error_no_space">No hi ha prou emmagatzematge per completar l'autenticació biomètrica.</string>
+    <string name="feature_passcode_biometric_error_invalid_registration_data">Les dades de registre biomètric no són vàlides. Torna a activar la biometria des de la configuració de l'app.</string>
+    <string name="feature_passcode_biometric_error_invalid_arguments_auth">No s'ha pogut iniciar l'autenticació biomètrica per arguments no vàlids.</string>
+    <string name="feature_passcode_biometric_error_invalid_arguments_registration">No s'ha pogut iniciar el registre biomètric per arguments no vàlids.</string>
+    <string name="feature_passcode_biometric_error_unknown">S'ha produït un error biomètric inesperat. Torna-ho a provar.</string>
     <string name="feature_passcode_biometric_prompt_title">Desbloqueja Mifos Pay</string>
     <string name="feature_passcode_biometric_prompt_subtitle">Verifica la teva identitat per continuar</string>
-    <string name="feature_passcode_biometric_prompt_description">Utilitza l\'empremta, la cara o les credencials del dispositiu</string>
+    <string name="feature_passcode_biometric_prompt_description">Utilitza l'empremta, la cara o les credencials del dispositiu</string>
     <string name="feature_passcode_biometric_prompt_negative_button">Cancel·la</string>
 
     <!-- BiometricSetupScreen UI labels -->
@@ -29,10 +29,10 @@
     <string name="feature_passcode_biometric_setup_skip">Omet per ara</string>
 
     <!-- Legacy feature_passcode_* strings -->
-    <string name="feature_passcode_ok">D\'acord</string>
+    <string name="feature_passcode_ok">D'acord</string>
     <string name="feature_passcode_biometrics_usage_message">Utilitza la biometria (empremta o cara) per a un accés més ràpid i segur.</string>
-    <string name="feature_passcode_biometrics_not_set">La biometria no està configurada en aquest dispositiu. Activa l\'empremta digital o el reconeixement facial a la configuració del dispositiu i torna-ho a provar.</string>
+    <string name="feature_passcode_biometrics_not_set">La biometria no està configurada en aquest dispositiu. Activa l'empremta digital o el reconeixement facial a la configuració del dispositiu i torna-ho a provar.</string>
     <string name="feature_passcode_biometrics_available">Biometria no disponible en aquest dispositiu</string>
     <string name="feature_passcode_error">Error</string>
-    <string name="feature_passcode_user_not_registered_error_message">Les dades de registre biomètric no són vàlides. Torna a activar la biometria des de la configuració de l\'app.</string>
+    <string name="feature_passcode_user_not_registered_error_message">Les dades de registre biomètric no són vàlides. Torna a activar la biometria des de la configuració de l'app.</string>
 </resources>

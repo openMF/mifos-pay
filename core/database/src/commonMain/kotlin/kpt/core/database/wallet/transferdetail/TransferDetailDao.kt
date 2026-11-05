@@ -13,6 +13,7 @@ import androidx.room3.Dao
 import androidx.room3.Query
 import androidx.room3.Upsert
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_transfer_details` SINGLE-ROW-PER-KEY table.
@@ -31,6 +32,7 @@ import kotlinx.coroutines.flow.Flow
  *
  * N/A — [observeById] returns 0 or 1 row.
  */
+@DbDao
 @Dao
 interface TransferDetailDao {
 

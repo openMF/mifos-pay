@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kpt.core.base.database.invalidation.notifyingWrite
 import kpt.core.database.wallet.recentpayee.RecentPayeeDao
 import kpt.core.database.wallet.recentpayee.toDomain
 import kpt.core.database.wallet.recentpayee.toEntity
@@ -226,7 +225,7 @@ class RecentPayeeRepositoryImpl(
                 fetchedAtEpochMs = stamp,
             )
         }
-        notifyingWrite(RECENT_PAYEES_TABLE) {
+        run {
             dao.replacePage(sourceAccountId = accountId, entities = rows)
         }
     }

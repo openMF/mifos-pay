@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Bỏ qua</string>
+    <string name="feature_onboarding_skip_a11y">Chuyển đến tùy chọn quyền riêng tư</string>
+    <string name="feature_onboarding_next">Tiếp</string>
+    <string name="feature_onboarding_page_of">Trang %1$d / %2$d</string>
+    <string name="feature_onboarding_overview_title">Công cụ tài chính của bạn, tất cả ở một nơi</string>
+    <string name="feature_onboarding_overview_body">Khoản vay, hóa đơn, lãi suất và công cụ tính toán nằm cạnh nhau, nên con số bạn cần luôn chỉ cách một chạm.</string>
+    <string name="feature_onboarding_track_title">Không bao giờ lỡ hạn thanh toán</string>
+    <string name="feature_onboarding_track_body">Theo dõi khoản vay và hóa đơn, nhận lời nhắc trước mỗi kỳ thanh toán.</string>
+    <string name="feature_onboarding_offline_title">Mất sóng? Vẫn tiếp tục</string>
+    <string name="feature_onboarding_offline_body">Những gì bạn lưu sẽ ở lại trên thiết bị này và dùng được khi ngoại tuyến. Thay đổi sẽ đồng bộ khi bạn có mạng trở lại.</string>
+    <string name="feature_onboarding_privacy_title">Giúp cải thiện ứng dụng</string>
+    <string name="feature_onboarding_privacy_lead">Cả hai đều tắt trừ khi bạn bật lên. Cho phép cả hai chỉ với một chạm, hoặc chọn bên dưới — bạn vẫn có thể sử dụng mọi tính năng.</string>
+    <string name="feature_onboarding_analytics_label">Chia sẻ phân tích sử dụng</string>
+    <string name="feature_onboarding_analytics_body">Những màn hình và tính năng nào được sử dụng, và tần suất ra sao. Không bao giờ gồm nội dung bạn nhập hay lưu.</string>
+    <string name="feature_onboarding_crash_label">Gửi báo cáo sự cố</string>
+    <string name="feature_onboarding_crash_body">Khi ứng dụng gặp sự cố: lỗi, phiên bản ứng dụng và mẫu thiết bị, để chúng tôi khắc phục.</string>
+    <string name="feature_onboarding_no_personal_data">Mọi thứ bạn nhập trong ứng dụng đều không bao giờ được gửi đi.</string>
+    <string name="feature_onboarding_settings_later">Bạn có thể thay đổi sau trong Cài đặt.</string>
+    <string name="feature_onboarding_connect_server">Thiết lập máy chủ của bạn</string>
+    <string name="feature_onboarding_agreement">Khi sử dụng dịch vụ của chúng tôi, bạn chấp nhận %1$s và %2$s của chúng tôi.</string>
+    <string name="feature_onboarding_terms">Điều khoản &amp; Điều kiện</string>
+    <string name="feature_onboarding_privacy_policy">Chính sách quyền riêng tư</string>
+    <string name="feature_onboarding_allow_get_started">Cho phép và bắt đầu</string>
+    <string name="feature_onboarding_continue_without">Tiếp tục mà không chia sẻ</string>
+    <string name="feature_onboarding_continue_choices">Tiếp tục với lựa chọn của tôi</string>
+    <string name="feature_onboarding_save_failed">Không thể lưu lựa chọn của bạn. Vui lòng thử lại.</string>
+</resources>

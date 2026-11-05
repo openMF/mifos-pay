@@ -24,7 +24,8 @@ import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
 import kpt.core.database.wallet.transaction.TransactionDao
 import kpt.core.database.wallet.transaction.toDomain
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.selfaccounts.SelfAccountsKey
 import kpt.core.store.wallet.transferdetail.TransferDetailKey
 import org.mifospay.core.common.ScreenState
@@ -41,7 +42,7 @@ import org.mifospay.core.model.search.AccountResult
 import org.mifospay.core.network.FineractApiManager
 import org.mifospay.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 // TODO use self api for account operations later
 class AccountRepositoryImpl(
@@ -144,11 +145,11 @@ class AccountRepositoryImpl(
             key = SelfAccountsKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_self_accounts-$clientId",
+            cacheKey = AppCacheKeys.SelfAccounts.of(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.SELF_ACCOUNTS,
+            ttl = WalletStoreTtl.SELF_ACCOUNTS,
         )
     }
 
@@ -177,10 +178,10 @@ class AccountRepositoryImpl(
             key = TransferDetailKey(transferId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_transfer_details-$transferId",
+            cacheKey = AppCacheKeys.TransferDetail.of(transferId),
             scope = scope,
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.TRANSFER_DETAIL,
+            ttl = WalletStoreTtl.TRANSFER_DETAIL,
         )
     }
 

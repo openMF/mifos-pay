@@ -31,6 +31,8 @@ class SessionManager(
     private val clock: () -> Long = { currentTimeMillis() },
 ) {
     private val _isSessionActive = MutableStateFlow(false)
+
+    /** Whether a session is currently active. Flips false on timeout or explicit logout. */
     val isSessionActive: StateFlow<Boolean> = _isSessionActive.asStateFlow()
 
     @kotlin.concurrent.Volatile
@@ -77,5 +79,11 @@ class SessionManager(
     }
 }
 
+/**
+ * Wall-clock milliseconds, isolated here so session timeout arithmetic has ONE time source.
+ *
+ * Internal on purpose: session expiry must not be computed from an ad-hoc clock read elsewhere, or
+ * two call sites can disagree about whether the same session is still valid.
+ */
 internal fun currentTimeMillis(): Long =
     kotlin.time.Clock.System.now().toEpochMilliseconds()

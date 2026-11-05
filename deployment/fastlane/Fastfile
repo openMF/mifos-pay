@@ -23,6 +23,9 @@ require "openssl"
 if defined?(OpenSSL::SSL::OP_IGNORE_UNEXPECTED_EOF)
   OpenSSL::SSL::SSLContext.class_eval do
     alias_method :_orig_initialize, :initialize
+    # Patch Net::HTTP to tolerate an unexpected EOF during TLS shutdown.
+    # Apple's upload endpoints close the connection without a close_notify, which newer OpenSSL
+    # treats as an error and which surfaces as a spurious upload failure.
     def initialize(*args)
       _orig_initialize(*args)
       self.options |= OpenSSL::SSL::OP_IGNORE_UNEXPECTED_EOF

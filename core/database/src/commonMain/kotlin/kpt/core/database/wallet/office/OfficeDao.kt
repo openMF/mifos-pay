@@ -15,6 +15,7 @@ import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_offices` global-reference table.
@@ -40,6 +41,7 @@ import kotlinx.coroutines.flow.Flow
  * is O(N) at the caller anyway, so a name-sorted read matches the expected
  * pull-to-refresh list rendering order.
  */
+@DbDao
 @Dao
 interface OfficeDao {
 

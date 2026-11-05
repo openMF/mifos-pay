@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">Ancora niente qui</string>
+    <string name="screenstate_empty_message">Quando avrai dei dati, appariranno qui.</string>
+    <string name="screenstate_error_title">Qualcosa è andato storto</string>
+    <string name="screenstate_error_retry">Riprova</string>
+    <string name="screenstate_nonet_title">Sei offline</string>
+    <string name="screenstate_nonet_message">Riproveremo quando tornerai online.</string>
+    <string name="screenstate_nonet_retry">Riprova ora</string>
+    <string name="screenstate_captive_title">Accedi al Wi-Fi</string>
+    <string name="screenstate_captive_message">La tua rete richiede l'accesso prima di connetterti.</string>
+    <string name="screenstate_captive_action">Apri pagina di accesso</string>
+    <string name="error_category_network">Impossibile raggiungere il server. Controlla la connessione.</string>
+    <string name="error_category_auth">La tua sessione è scaduta. Accedi di nuovo.</string>
+    <string name="error_category_ratelimit">Troppe richieste. Attendi e riprova.</string>
+    <string name="error_category_server">I nostri server hanno un problema momentaneo. Riprova tra poco.</string>
+    <string name="error_category_timeout_connect">Timeout di connessione. Controlla la connessione e riprova.</string>
+    <string name="error_category_timeout_read">Il server ha impiegato troppo tempo a rispondere. Riprova a breve.</string>
+    <string name="error_category_quota">Hai raggiunto la quota. Esegui l'upgrade o attendi per continuare.</string>
+    <string name="error_category_client">Richiesta non riuscita. Riprova.</string>
+    <string name="error_category_generic">Qualcosa è andato storto</string>
+</resources>

@@ -1,19 +1,12 @@
 /*
- * Copyright 2022 The Android Open Source Project
+ * Copyright 2022 Mifos Initiative
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- *       https://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
-
 import com.android.build.api.dsl.ApplicationExtension
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import org.convention.libs
@@ -23,6 +16,12 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
+/**
+ * Adds Firebase (Analytics, Crashlytics, Performance) to an Android application module.
+ *
+ * Separate from the base application plugin so a fork that ships without Firebase simply does not apply it, rather
+ * than having to strip config out of a shared one.
+ */
 class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -36,13 +35,20 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibrary("firebase.crashlytics").get())
             }
 
+            // The Crashlytics mapping-file upload runs at release-build time and returns 400 (failing
+            // the WHOLE build) when the fork's Firebase app has no Crashlytics provisioned. Gate it on a
+            // gradle property — default true (backward-compatible for configured forks); an unconfigured
+            // fork sets `firebase.crashlytics.mappingUploadEnabled=false` in gradle.properties to skip it.
+            // (Was hardcoded `true`, which contradicted the comment's own "only if configured" intent.)
+            val crashlyticsMappingUpload = providers
+                .gradleProperty("firebase.crashlytics.mappingUploadEnabled")
+                .orNull?.toBooleanStrictOrNull() ?: true
             extensions.configure<ApplicationExtension> {
                 buildTypes.configureEach {
-                    // Disable the Crashlytics mapping file upload. This feature should only be
-                    // enabled if a Firebase backend is available and configured in
-                    // google-services.json.
+                    // Mapping-file upload only when a Firebase backend is available + configured in
+                    // google-services.json — governed by the gate above.
                     configure<CrashlyticsExtension> {
-                        mappingFileUploadEnabled = true
+                        mappingFileUploadEnabled = crashlyticsMappingUpload
                     }
                 }
             }

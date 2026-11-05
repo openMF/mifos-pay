@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.network
 
@@ -67,9 +67,13 @@ interface DynamicUrlConfigProvider {
  *     val STAGING = UrlType("STAGING")
  * }
  * ```
+ *
+ * @property key the access-point key, as declared in
+ *   `app-profile#network.access_points`.
  */
 @JvmInline
 value class UrlType(val key: String) {
+    /** Known url types. */
     companion object {
         /** The single generic default. Every project has at least this one. */
         val MAIN: UrlType = UrlType("MAIN")

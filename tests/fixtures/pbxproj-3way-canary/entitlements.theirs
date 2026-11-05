@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Keychain Sharing entitlement — REQUIRED by core-base/datastore's KeychainSettings
+	  (service "kpt.secure"). Without it iOS keychain access fails `errSecMissingEntitlement`
+	  (-34018) at launch and crashes the Koin graph (UserPreferencesRepositoryImpl ->
+	  UserDataRepositoryImpl -> AppViewModel). Affects every fork (the store is template code).
+	  $(AppIdentifierPrefix) is the team prefix on device / empty on the simulator; the app's
+	  own bundle-id group is always permitted by any provisioning profile.
+
+	  Forks that add "Sign in with Apple" also add:
+	      <key>com.apple.developer.applesignin</key><array><string>Default</string></array>
+	  but only after enabling the capability on their App ID (else automatic provisioning fails).
+	-->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)$(CFBundleIdentifier)</string>
+	</array>
+</dict>
+</plist>

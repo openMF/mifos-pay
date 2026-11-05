@@ -5,10 +5,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.network.factory
 
+import co.touchlab.kermit.Logger
 import de.jensklingenberg.ktorfit.Ktorfit
 import de.jensklingenberg.ktorfit.converter.Converter
 import de.jensklingenberg.ktorfit.converter.KtorfitResult
@@ -19,7 +20,6 @@ import io.ktor.client.statement.HttpResponse
 import kotlinx.serialization.SerializationException
 import kpt.core.base.network.NetworkError
 import kpt.core.base.network.NetworkResult
-import co.touchlab.kermit.Logger
 
 /**
  * A custom [Converter.Factory] for Ktorfit that provides a suspend

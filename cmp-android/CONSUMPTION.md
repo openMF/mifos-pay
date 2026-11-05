@@ -27,8 +27,8 @@ edits these files directly.
   `/secrets pull` — never hand-edit `build.gradle.kts` signing config.
 - **Screen-capture policy** — `MainActivity.updateScreenCapture` defaults `FLAG_SECURE` on for
   release builds; adjust the `BuildConfig.DEBUG` bypass if your fork's threat model differs.
-- **App behavior/UI** — add features via the `cmp-navigation` registries (`FeatureRegistry`,
-  `BackboneRegistry`, `TabRegistry`, `AppInitializers`), not by editing `AndroidApp`/`MainActivity`.
+- **App behavior/UI** — add features via the `cmp-navigation` registries (`ForkFeatureRegistry`,
+  `ForkBackboneRegistry`, `ForkTabRegistry`, `ForkInitializers`), not by editing `AndroidApp`/`MainActivity`.
 
 ## What to leave to sync
 

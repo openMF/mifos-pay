@@ -24,7 +24,7 @@ schema_version: "1.0"
 #              one of those cases.
 #   template:  template-authored FRAMEWORK code. A clean fork KEEPS it and a sync full-copies it, so
 #              the fork keeps receiving fixes. Do not edit these packages in a fork; extend them
-#              through the module's `Project*` seam instead.
+#              through the module's `Fork*` seam instead.
 #   fork:      the fork's OWN packages. Never deleted, never synced over. A fork's package needs NO
 #              row at all — undeclared IS fork — so a row here is self-documenting only.
 #
@@ -56,7 +56,7 @@ module: firebase
 # top-level package, a SIBLING of `config/` rather than anything inside it, so the strip is a single
 # plain row and the template surface below stays free of demo code.
 demo:
-  - { id: loans, status: exists }           # the worked example: Loans{Analytics,Crash}* for feature/loans
+  - { id: loans, status: removed }           # the worked example: Loans{Analytics,Crash}* for feature/loans
 
 # Kept by a clean fork, full-copied by a sync.
 # `config/` is the template-owned surface a fork EXTENDS rather than edits — the same meaning the

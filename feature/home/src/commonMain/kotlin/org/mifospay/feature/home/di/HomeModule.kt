@@ -13,6 +13,6 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifospay.feature.home.HomeViewModel
 
-val HomeModule = module {
+val MifosHomeModule = module {
     viewModelOf(::HomeViewModel)
 }

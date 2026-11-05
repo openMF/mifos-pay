@@ -11,7 +11,8 @@ package kpt.core.store.wallet.account
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.account.SavingAccountDetailDao
 import kpt.core.database.wallet.account.toDomain
@@ -27,6 +28,10 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `SavingAccountDetailEntity`. Shared with the DAO's writes. */
 private const val ACCOUNT_DETAIL_TABLE = "wallet_saving_account_details"
@@ -104,10 +109,11 @@ private const val ASSOC_TRANSACTIONS = "transactions"
  * `asScreenStream` `isEmpty = { ... }` predicate on the DetailScreen fires
  * `ScreenState.Loading` until the network fetch populates a row.
  */
+@StoreProvider(id = "accountDetail")
+@CacheKey(fn = "of", key = "wallet_saving_account_details-{accountId}", params = ["accountId:Long"])
 fun provideAccountDetailStore(
     apiManager: SelfServiceApiManager,
     dao: SavingAccountDetailDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<AccountDetailKey, SavingAccountDetail> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: AccountDetailKey ->
         // Ktorfit returns Flow<SavingsWithAssociationsEntity> for
@@ -119,7 +125,7 @@ fun provideAccountDetailStore(
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: AccountDetailKey ->
-            daoFlow(ACCOUNT_DETAIL_TABLE) { dao.observeById(key.accountId) }
+            run { dao.observeById(key.accountId) }
                 .map { row -> row?.toDomain() }
         },
         writer = { _: AccountDetailKey, detail: SavingAccountDetail ->

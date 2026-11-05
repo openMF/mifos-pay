@@ -2,9 +2,9 @@
 <!--
     Copyright 2026 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
@@ -23,5 +23,9 @@
     <string name="error_category_auth">आपका सत्र समाप्त हो गया है। कृपया पुनः साइन इन करें।</string>
     <string name="error_category_ratelimit">बहुत अधिक अनुरोध। कृपया प्रतीक्षा करें और पुनः प्रयास करें।</string>
     <string name="error_category_server">हमारे सर्वर में कुछ समस्या है। थोड़ी देर में पुनः प्रयास करें।</string>
+    <string name="error_category_timeout_connect">कनेक्शन का समय समाप्त। अपना कनेक्शन जांचें और पुनः प्रयास करें।</string>
+    <string name="error_category_timeout_read">सर्वर को उत्तर देने में बहुत समय लगा। कृपया थोड़ी देर में पुनः प्रयास करें।</string>
+    <string name="error_category_quota">आपका कोटा समाप्त हो गया। जारी रखने के लिए अपग्रेड करें या प्रतीक्षा करें।</string>
+    <string name="error_category_client">अनुरोध विफल रहा। कृपया पुनः प्रयास करें।</string>
     <string name="error_category_generic">कुछ गलत हो गया</string>
 </resources>

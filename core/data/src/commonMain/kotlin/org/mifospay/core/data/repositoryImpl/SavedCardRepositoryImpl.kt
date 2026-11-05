@@ -19,7 +19,8 @@ import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.savedcards.SavedCardKey
 import org.mifospay.core.common.ScreenState
 import org.mifospay.core.common.asScreenStateFlow
@@ -28,7 +29,7 @@ import org.mifospay.core.model.savedcards.CardPayload
 import org.mifospay.core.model.savedcards.SavedCard
 import org.mifospay.core.network.FineractApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 class SavedCardRepositoryImpl(
     private val apiManager: FineractApiManager,
@@ -73,11 +74,11 @@ class SavedCardRepositoryImpl(
             key = SavedCardKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_saved_cards-$clientId",
+            cacheKey = AppCacheKeys.SavedCards.of(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.SAVED_CARDS,
+            ttl = WalletStoreTtl.SAVED_CARDS,
         )
     }
 

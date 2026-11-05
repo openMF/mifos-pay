@@ -10,18 +10,17 @@
 package kpt.core.base.store.infra
 
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkInfo
-import kpt.core.base.store.freshness.FreshnessBand
-import kpt.core.base.store.freshness.FreshnessSignal
-import kpt.core.base.store.screen.ScreenState
-import kpt.core.base.store.screen.DataOrigin
-import kpt.core.base.store.screen.FetchPolicy
-import kpt.core.base.store.screen.StoreData
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkStatus
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkType
+import kpt.core.base.store.freshness.FreshnessBand
+import kpt.core.base.store.screen.DataOrigin
+import kpt.core.base.store.screen.FetchPolicy
+import kpt.core.base.store.screen.ScreenState
+import kpt.core.base.store.screen.StoreData
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertIs
 import kotlin.test.assertFalse
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Clock
@@ -108,7 +107,8 @@ class DecisionEngineTest {
             data = "<empty>",
             origin = DataOrigin.NETWORK,
             isEmpty = true,
-            isRefreshing = true, // The new flag combination this test guards.
+            // The new flag combination this test guards.
+            isRefreshing = true,
             error = null,
         )
         val result = DecisionEngine.decide(starvationFixEmission, unavailable)
@@ -227,7 +227,6 @@ class DecisionEngineTest {
         assertIs<ScreenState.Error>(result)
     }
 
-
     @Test
     fun `auth error - 401 message = Unauthenticated`() {
         val data = emptyStoreData(error = RuntimeException("HTTP 401 Unauthorized"))
@@ -236,10 +235,48 @@ class DecisionEngineTest {
     }
 
     @Test
-    fun `auth error - 403 message = Unauthenticated`() {
-        val data = emptyStoreData(error = RuntimeException("HTTP 403 Forbidden"))
-        val result = DecisionEngine.decide(data, available)
-        assertIs<ScreenState.Unauthenticated>(result)
+    fun `forbidden - 403 is an Error that keeps the server's reason, not Unauthenticated`() {
+        // Signed in, not permitted: signing in again cannot fix it, and Unauthenticated carries no
+        // error — so the reason the server gave would be lost.
+        val forbidden = RuntimeException("HTTP 403 Forbidden")
+        val result = DecisionEngine.decide(emptyStoreData(error = forbidden), available)
+        assertIs<ScreenState.Error>(result)
+        assertEquals(forbidden, result.error)
+    }
+
+    @Test
+    fun `an empty cached list with a fetch error is decided as no data`() {
+        // What an unfilled table emits before its first fetch. Measured 2026-10-24: a 403 rendered
+        // as "No reports found" because this was taken as content.
+        val failed = RuntimeException("HTTP 403 Forbidden")
+        val result = DecisionEngine.decide(listStoreData(emptyList(), DataOrigin.CACHE, error = failed), available)
+        assertIs<ScreenState.Error>(result)
+    }
+
+    @Test
+    fun `an empty list the NETWORK returned stays content`() {
+        val result = DecisionEngine.decide(listStoreData(emptyList(), DataOrigin.NETWORK, error = null), available)
+        assertIs<ScreenState.Content<List<String>>>(result)
+    }
+
+    @Test
+    fun `a non-empty cached list with a fetch error stays content`() {
+        val result = DecisionEngine.decide(
+            listStoreData(listOf("a"), DataOrigin.CACHE, error = RuntimeException("HTTP 500")),
+            available,
+        )
+        assertIs<ScreenState.Content<List<String>>>(result)
+    }
+
+    @Test
+    fun `an empty cached list offline still follows the offline rules`() {
+        // CACHE_FIRST_SWR offline: an expected transport failure must not block — Empty, as before.
+        val result = DecisionEngine.decide(
+            listStoreData(emptyList(), DataOrigin.CACHE, error = FakeIOException("Unable to resolve host")),
+            NetworkStatus.Unavailable,
+            FetchPolicy.CACHE_FIRST_SWR,
+        )
+        assertIs<ScreenState.Empty>(result)
     }
 
     @Test
@@ -317,8 +354,12 @@ class DecisionEngineTest {
 
     // === Helpers ===
 
+    private fun listStoreData(value: List<String>, origin: DataOrigin, error: Throwable?) =
+        StoreData(data = value, origin = origin, error = error)
+
     private fun emptyStoreData(error: Throwable? = null): StoreData<String> = StoreData(
-        data = "", // Sentinel — isEmpty=true means data is never used by DecisionEngine
+        // Sentinel — isEmpty=true means data is never used by DecisionEngine
+        data = "",
         origin = DataOrigin.NETWORK,
         isEmpty = true,
         error = error,

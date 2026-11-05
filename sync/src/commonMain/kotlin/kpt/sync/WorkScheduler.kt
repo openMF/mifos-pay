@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.sync
 
@@ -68,6 +68,26 @@ public interface WorkScheduler {
         uniqueName: String? = null,
         tags: List<String> = emptyList(),
     ): WorkHandle
+
+    /**
+     * A notification that repeats every [interval] (a daily reminder, a weekly digest) until cancelled.
+     * One-shot notifications forced callers to pre-schedule N of them and re-schedule on every launch,
+     * so reminders stopped when the app was not opened for N days.
+     *
+     * @param uniqueName required: re-scheduling under the same name UPDATES the existing periodic work
+     *   (keeps its timing, takes the new content) instead of stacking a second one on every app start.
+     * @param initialDelay before the first delivery, e.g. to align a daily reminder to a time of day.
+     *
+     * The default falls back to a single one-shot delivery, so an existing implementation (a test fake)
+     * keeps compiling; [kpt.sync.infra.DefaultWorkScheduler] schedules real periodic work.
+     */
+    public suspend fun schedulePeriodicNotification(
+        content: NotificationContent,
+        interval: Duration,
+        uniqueName: String,
+        initialDelay: Duration = Duration.ZERO,
+        tags: List<String> = emptyList(),
+    ): WorkHandle = scheduleNotification(content, initialDelay, WorkMode.Background, uniqueName, tags)
 
     /**
      * Observe a previously-enqueued work unit. Emits a [WorkStatus] every time

@@ -11,21 +11,15 @@ plugins {
     alias(libs.plugins.kmp.library.convention)
 }
 
-androidComponents {
-    finalizeDsl { ext ->
-        ext.withHostTest {
-            isReturnDefaultValues = true
-        }
-    }
-}
-
 kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.model)
             implementation(projects.core.common)
             implementation(projects.coreBase.common)
-            implementation(projects.coreBase.datastore)
+            // api, not implementation: core/ is the re-export boundary, so an app shell
+            // reaches core-base types THROUGH here (G-CORE-BASE-ENCAP).
+            api(projects.coreBase.datastore)
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
@@ -33,6 +27,16 @@ kotlin {
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.serialization)
             implementation(libs.multiplatform.settings.coroutines)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            // MapSettings — an in-memory Settings, so the review-counter tests exercise the real
+            // read/write path rather than a hand-rolled fake that could drift from it.
+            implementation(libs.multiplatform.settings.test)
+            // runTest — clearUserData() is suspend, and the sign-out contract (identity gone,
+            // device preferences kept) is only assertable by actually calling it.
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }
@@ -42,4 +46,10 @@ kotlin {
 // this file. That is what lets THIS build file be `owner: template` and FULL-COPY on a template
 // sync: the fork's deps live in a file the sync never touches, so a template plugin/version bump
 // can no longer drop them and no 3-way merge is needed.
+//
+// String `"commonMainImplementation"(...)` notation is used in the seam, not the type-safe
+// `libs.`/`projects.` accessors: those are NOT generated for `apply(from = ...)` script plugins.
+//
+// Guarded like feature-deps: a fork that adopted the template BEFORE this seam existed may not have
+// the file yet, and an unconditional apply would fail the whole configuration.
 project.file("module-deps.gradle.kts").takeIf { it.exists() }?.let { apply(from = it) }

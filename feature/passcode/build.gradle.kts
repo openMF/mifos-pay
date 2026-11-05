@@ -11,7 +11,6 @@ plugins {
     alias(libs.plugins.cmp.feature.convention)
 }
 
-
 kotlin {
     sourceSets {
         commonMain.dependencies {

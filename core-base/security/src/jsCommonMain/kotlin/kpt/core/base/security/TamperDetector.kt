@@ -9,11 +9,15 @@
  */
 package kpt.core.base.security
 
+/** Web (JS/WasmJS) implementation of `TamperDetector`. */
 actual class TamperDetector actual constructor() {
 
+    /** `isDeviceCompromised` on Web (JS/WasmJS). */
     actual fun isDeviceCompromised(): Boolean = false
 
+    /** `isDebuggerAttached` on Web (JS/WasmJS). */
     actual fun isDebuggerAttached(): Boolean = false
 
+    /** `isSignatureValid` on Web (JS/WasmJS). */
     actual fun isSignatureValid(): Boolean = true
 }

@@ -15,14 +15,17 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
+# Print a green success line.
 print_success() {
     echo -e "${GREEN}✓ $1${NC}"
 }
 
+# Print a cyan informational line.
 print_info() {
     echo -e "${CYAN}ℹ $1${NC}"
 }
 
+# Print a section header.
 print_section() {
     echo
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"

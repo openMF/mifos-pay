@@ -9,19 +9,7 @@
  */
 plugins {
     alias(libs.plugins.kmp.library.convention)
-    // Fork addition: AssetRepositoryImpl.kt's fallback (composeResources/files/countries.json)
-    // needs the `compose` extension for org.jetbrains.compose.resources.ExperimentalResourceApi.
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
-}
-
-androidComponents {
-    finalizeDsl { ext ->
-        ext.withHostTest {
-            isIncludeAndroidResources = true
-            isReturnDefaultValues = true
-        }
-    }
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -36,23 +24,22 @@ kotlin {
             // SyncManager, TimeZoneMonitor) so existing core/data consumers (features, sync,
             // cmp-android) keep the transitive visibility they had when it lived in core/data.
             api(projects.coreBase.data)
-            // api: core/data is auto-wired into every feature module via cmp.feature.convention
-            // (commonMainImplementation project(":core:data")) — re-exporting these means feature
-            // modules that read domain types (org.mifospay.core.model.*), UserPreferencesRepository
-            // (org.mifospay.core.datastore.*), or network DTOs (org.mifospay.core.network.model.*)
-            // get them for free instead of every feature module repeating its own
-            // implementation(projects.core.{model,datastore,network}) — features must never depend
-            // on core/network directly; core/data is the sole consumer/re-exporter of it.
+            implementation(projects.core.datastore)
+            implementation(projects.core.model)
+            implementation(projects.core.network)
             implementation(projects.core.firebase)
 
             implementation(projects.coreBase.common)
             implementation(projects.coreBase.network)
+            // CrashReporter — the sync orchestrators report a failed replay rather than
+            // swallowing it. core-base/store declares observability as `implementation`,
+            // so it is not transitively visible here.
+            implementation(project(":core-base:observability"))
             api(projects.core.store)
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
             api(libs.cmp.network.monitor)
-
         }
 
         androidMain.dependencies {
@@ -82,3 +69,44 @@ kotlin {
 // Guarded like feature-deps: a fork that adopted the template BEFORE this seam existed may not have
 // the file yet, and an unconditional apply would fail the whole configuration.
 project.file("module-deps.gradle.kts").takeIf { it.exists() }?.let { apply(from = it) }
+
+/*
+ * Web tests are disabled for this module.
+ *
+ * `core:data` reaches skiko through a LEGITIMATE edge - `core:store` exposes `core-base/ui`'s
+ * screen-state defaults (including Lottie animations) as `api`, and compottie pulls skiko. The
+ * generated JS/wasm test bundles therefore `import './skiko.mjs'`, but that file is only emitted
+ * for modules that apply the Compose plugin, which this one deliberately does not. Both
+ * environments fail identically with ERR_MODULE_NOT_FOUND - node AND headless Chrome - so this is
+ * not a matter of picking the right runtime.
+ *
+ * The tasks are turned off explicitly rather than left failing. The commonTest suite still runs on
+ * desktop, Android and iOS, so the logic is covered; what is lost is running it ON the web targets.
+ * Recovering that needs either the skiko edge gone from `core:store` (it is load-bearing today) or
+ * skiko's resources shipped for non-Compose consumers - a real change, not a config tweak.
+ */
+afterEvaluate {
+    val webTests = setOf("jsNodeTest", "jsBrowserTest", "wasmJsNodeTest", "wasmJsBrowserTest")
+    tasks.matching { it.name in webTests }.configureEach { enabled = false }
+}
+
+/*
+ * Repository Koin bindings, derived by :tools:data-ksp from @RepositoryBinding.
+ *
+ * Metadata-only: the bindings are ONE commonMain file every target shares. The generated dir goes on
+ * commonMain's srcDir so every per-target compilation sees it as ordinary source.
+ */
+dependencies {
+    add("kspCommonMainMetadata", project(":tools:data-ksp"))
+}
+
+kotlin.sourceSets.named("commonMain") {
+    kotlin.srcDir(layout.buildDirectory.dir("generated/ksp/metadata/commonMain/kotlin"))
+}
+
+// Everything that READS commonMain waits for the metadata pass — including the per-target ksp tasks,
+// which take the generated dir as an input and would otherwise race a half-written file.
+val kspCommonMetadata = "kspCommonMainKotlinMetadata"
+tasks.matching {
+    (it.name.startsWith("compileKotlin") || it.name.startsWith("ksp")) && it.name != kspCommonMetadata
+}.configureEach { dependsOn(kspCommonMetadata) }

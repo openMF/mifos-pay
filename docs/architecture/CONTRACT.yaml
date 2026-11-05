@@ -1,0 +1,282 @@
+# CONTRACT.yaml — the machine-scannable half of docs/architecture
+#
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+# WHAT THIS IS
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+# `docs/architecture/**` is the SINGLE SOURCE OF TRUTH for this template's architecture, for
+# humans and for AI. The other files there are prose — high-level narrative, rationale, style.
+# THIS file is the low-level contract they describe, written down in a form a scanner can read:
+# every module, every annotation, every processor, every generated aggregate, every seam.
+#
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+# WHY IT EXISTS
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+# The contract used to live only IMPLICITLY — scattered across Kotlin `annotation class`
+# declarations, KSP processors, corpus prose and generator prompt bodies. Nothing enumerated it,
+# so every consistency check had to INFER it, and inference is wrong in both directions.
+#
+# Measured 2026-09-16, the cost of that: `/kmp-project-template-retrain` kept the training corpus
+# perfectly current with the template, and the generators that must EMIT the taught patterns had
+# never heard of them —
+#
+#     @StoreProvider      corpus  2   owning generator  0
+#     @ApiBinding         corpus 12   owning generator  0
+#     @DbEntity           corpus  5   owning generator  0
+#     @RepositoryBinding  corpus  2   owning generator  0
+#     @FeatureDestination corpus  1   owning generator  0
+#
+# Five for five. Generators emitted the retired pre-KSP shapes — hand-appending
+# `AppStoreRegistry.kt` (a build artifact), hand-writing `single<XRepository>`, omitting
+# `@DbEntity` (an entity absent from the generated `@Database` compiles and throws at FIRST QUERY)
+# — while faithfully following their own instructions. The training was right and the trainee
+# never saw it.
+#
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+# HOW IT STAYS TRUE
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+# 1. VERIFIED AGAINST DISK, BOTH DIRECTIONS. `framework-verify-architecture-contract.sh` fails if
+#    an `annotation class` exists in source but not here, or is listed here and not in source —
+#    same for modules, processors and generated aggregates. This file cannot quietly go stale,
+#    and it cannot describe an architecture the code does not have.
+# 2. WRITE-GATED. The `architecture-contract-guard` PreToolUse hook blocks a change to the
+#    contract surface (a new `annotation class`, a new module directory, a new `tools/*-ksp`,
+#    a new `Generated*` aggregate) unless this file is updated in the same change.
+# 3. SCANNED BY RETRAIN. `/kmp-project-template-retrain` reads THIS, not scattered evidence, and
+#    drives corpus + generator currency from it bottom-to-top (core-base → core → feature).
+#
+# So: add an annotation, and the hook forces the row; the gate proves the row matches the code;
+# retrain propagates it into the corpus surface AND every generator that owns the module. There
+# is no manual training step and no place for a gap to hide.
+#
+# EDITING: this file is hand-maintained and machine-verified. Add the row when you add the code.
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+
+schema_version: 1
+generated_from: disk-extraction 2026-09-16
+verified_by: .claude-runtime/scripts/framework-verify-architecture-contract.sh
+
+# ── Layer order. Bottom-to-top; every scan walks it in this order. ────────────────────────────
+# core-base is framework-shared and READ-ONLY to generators — which is exactly why its guides
+# must be right: read-only governs who may WRITE there, never whether generators must be TAUGHT it.
+layers:
+  - id: core-base
+    role: framework-shared primitives; generators consume, never write
+    writable_by_generators: false
+  - id: core
+    role: fork-owned implementation; the codegen target
+    writable_by_generators: true
+  - id: feature
+    role: per-feature UI + ViewModel; nests one level on forks (feature/{group}/{feature})
+    writable_by_generators: true
+
+# ── Codegen contracts. An annotation that DRIVES GENERATION. ──────────────────────────────────
+# Every row must be (a) taught by the module's corpus surface and (b) present in every generator
+# that declares `OWNS` that module. `propagates_to` names the generators that must know it.
+codegen_contracts:
+  - annotation: StoreProvider
+    defined_in: core-base/store
+    target: FUNCTION
+    processor: store-ksp
+    generates: [config/AppStoreRegistry, config/AppStoreIds, di/GeneratedStoreBindings]
+    owns_module: core/store
+    propagates_to: [kmp-store-gen]
+    notes: >-
+      Declares qualifier, TTL and the logout purge in one place. `logout` drives BOTH the binding
+      and the purge, so they cannot disagree; `logout = false` only for a MutableStore, which
+      Store5 5.1 cannot register.
+
+  - annotation: CacheKey
+    defined_in: core-base/store
+    target: FUNCTION
+    processor: store-ksp
+    generates: [config/AppCacheKeys]
+    owns_module: core/store
+    propagates_to: [kmp-store-gen]
+    notes: >-
+      Keys nest per store because roles (LIST, item) repeat across stores and flat would collide.
+      A duplicate key STRING is a build error: two streams sharing a key share a fetched-at stamp.
+
+  - annotation: ApiBinding
+    defined_in: core-base/network
+    target: CLASS
+    processor: network-ksp
+    generates: [di/GeneratedApiBindings]
+    owns_module: core/network
+    propagates_to: [kmp-client-gen]
+    notes: >-
+      REST annotates the Ktorfit interface; Supabase annotates the IMPL (single
+      SupabaseConfigClient arg). Never build a second createSupabaseClient — the generated binding
+      hands annotated types a different instance carrying no session, so RLS calls resolve nothing.
+      One access point serves ANY number of different API types (a monolith backend binds ~22 to one
+      point). A bound TYPE may be bound only once, on any point: every binding is an unqualified
+      single<T>, so a second binding of the same type is a build error — it would silently replace the first.
+
+  - annotation: DbEntity
+    defined_in: core-base/database
+    target: CLASS
+    processor: database-ksp
+    generates: [config/AppDatabase]
+    owns_module: core/database
+    propagates_to: [kmp-client-gen]
+    notes: >-
+      The @Database entities list is built ONLY from annotated types. An entity with @Entity and
+      no @DbEntity is absent from the generated database: it compiles, ships, and throws at first
+      query. No build error, no file diff — the most expensive omission in the template.
+
+  - annotation: DbDao
+    defined_in: core-base/database
+    target: CLASS
+    processor: database-ksp
+    generates: [di/GeneratedDaoBindings]
+    owns_module: core/database
+    propagates_to: [kmp-client-gen]
+
+  - annotation: DbConverters
+    defined_in: core-base/database
+    target: CLASS
+    processor: database-ksp
+    generates: [di/GeneratedConverterBindings]
+    owns_module: core/database
+    propagates_to: [kmp-client-gen]
+
+  - annotation: RepositoryBinding
+    defined_in: core-base/data
+    target: CLASS
+    processor: data-ksp
+    generates: [di/GeneratedRepositoryBindings]
+    owns_module: core/data
+    propagates_to: [kmp-client-gen]
+    notes: >-
+      RepositoryModule carries ZERO domain imports by design — that is what lets a template sync
+      blind-copy it, and lets a stripped fork generate fewer bindings because deleting a package
+      takes its annotations with it. A hand-written single<XRepository> breaks both.
+
+  - annotation: DataProvider
+    defined_in: core-base/data
+    target: FUNCTION
+    processor: data-ksp
+    generates: [di/GeneratedRepositoryBindings, config/AppOutboxQualifiers]
+    owns_module: core/data
+    propagates_to: [kmp-client-gen]
+    notes: For types that cannot be built by their own constructor.
+
+  - annotation: FromStore
+    defined_in: core-base/data
+    target: VALUE_PARAMETER
+    processor: data-ksp
+    generates: []
+    owns_module: core/data
+    propagates_to: [kmp-client-gen]
+    notes: >-
+      Injects a store by its generated AppStoreIds const. Replaces the retired
+      get(qualifier = qualifier(AppStoreRegistry.X)) hand-wiring shape.
+
+  - annotation: FromQualifier
+    defined_in: core-base/data
+    target: VALUE_PARAMETER
+    processor: data-ksp
+    generates: []
+    owns_module: core/data
+    propagates_to: [kmp-client-gen]
+
+  - annotation: FeatureDestination
+    defined_in: core-base/ui
+    target: FUNCTION
+    processor: FeatureAggregateConventionPlugin
+    processor_kind: gradle-task
+    generates: [registry/GeneratedFeatureDestinations]
+    owns_module: feature
+    propagates_to: [kmp-screen-gen]
+    notes: >-
+      Scanned by :cmp-navigation:generateFeatureDestinations, so adding a feature no longer means
+      editing ForkFeatureRegistry. Signature MUST be NavGraphBuilder.(NavController) -> Unit. Without
+      it the module compiles, routes exist, and nothing can reach the feature. "Top-level" cannot
+      be read off the signature, which is why it is declared rather than inferred by convention.
+
+  - annotation: FeatureTab
+    defined_in: core/ui
+    target: CLASS
+    processor: FeatureAggregateConventionPlugin
+    processor_kind: gradle-task
+    generates: [registry/GeneratedFeatureTabs]
+    owns_module: feature
+    propagates_to: [kmp-screen-gen]
+
+# ── Non-codegen annotations. Present in source, deliberately NOT propagation targets. ─────────
+# Enumerated so the disk↔manifest check stays exhaustive: an unlisted `annotation class` fails the
+# gate, so every annotation must be classified as one or the other. That is what makes "we added
+# an annotation" impossible to miss — there is no third, silent category.
+non_codegen_annotations:
+  - annotation: ComponentDsl
+    defined_in: core-base/designsystem
+    kind: dsl-marker
+  - annotation: TopAppBarDsl
+    defined_in: core-base/designsystem
+    kind: dsl-marker
+  - annotation: ExperimentalScreenDataStreamTestingApi
+    defined_in: core-base/store
+    kind: opt-in
+  - annotation: Parcelize
+    defined_in: core-base/common
+    kind: platform-shim
+    notes: expect/actual multiplatform shim over the Android annotation.
+  - annotation: IgnoredOnParcel
+    defined_in: core-base/common
+    kind: platform-shim
+  - annotation: TypeParceler
+    defined_in: core-base/common
+    kind: platform-shim
+
+# ── KSP + Gradle processors on disk. ──────────────────────────────────────────────────────────
+processors:
+  - id: store-ksp
+    path: tools/store-ksp
+    reads: [StoreProvider, CacheKey]
+  - id: database-ksp
+    path: tools/database-ksp
+    reads: [DbEntity, DbDao, DbConverters]
+  - id: network-ksp
+    path: tools/network-ksp
+    reads: [ApiBinding]
+  - id: data-ksp
+    path: tools/data-ksp
+    reads: [RepositoryBinding, DataProvider, FromStore, FromQualifier]
+  - id: FeatureAggregateConventionPlugin
+    path: build-logic/convention/src/main/kotlin/FeatureAggregateConventionPlugin.kt
+    kind: gradle-task
+    reads: [FeatureDestination, FeatureTab]
+
+# ── Generated aggregates. BUILD ARTIFACTS — authoring any of these in source is a build break. ─
+# Room's own *_Impl / AutoMigration output is excluded: it is Room's, not this template's contract.
+generated_aggregates:
+  never_author_in_source:
+    - config/AppStoreRegistry
+    - config/AppStoreIds
+    - config/AppCacheKeys
+    - config/AppDatabase
+    - config/AppOutboxQualifiers
+    - di/GeneratedStoreBindings
+    - di/GeneratedApiBindings
+    - di/GeneratedDaoBindings
+    - di/GeneratedConverterBindings
+    - di/GeneratedRepositoryBindings
+    - registry/GeneratedFeatureDestinations
+    - registry/GeneratedFeatureTabs
+    - registry/GeneratedFeatureKoinBindings
+
+# ── Fork seams: hand-written by design, for what no annotation can produce. ───────────────────
+seams:
+  - path: core/network/**/di/ForkNetworkModule.kt
+    holds: network singles not derivable from an endpoint declaration (e.g. extra supabase-kt modules)
+  - path: core/data/**/di/RepositoryModule.kt
+    holds: >-
+      includes(GeneratedRepositoryBindings) plus infrastructure singles (NetworkMonitor,
+      UserDataSource, FetchedAtRepository, CoroutineScope, UserLogoutManager). A REPOSITORY never
+      belongs here.
+  - path: cmp-navigation/**/registry/ForkFeatureRegistry.kt
+    holds: fork-owned Koin module wiring; feature DESTINATIONS are generated, not registered here
+  - path: settings.local.gradle.kts
+    holds: >-
+      every fork-level include(":feature:..."). settings.gradle.kts is template-derived and
+      sync-dirs.sh overwrites it wholesale, so an include there is one sync from silent deletion.
+

@@ -28,7 +28,8 @@ import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.beneficiary.BeneficiaryKey
 import kpt.core.store.wallet.history.TransactionKey
 import org.mifospay.core.common.DateHelper
@@ -54,7 +55,7 @@ import org.mifospay.core.model.network.entity.user.User
 import org.mifospay.core.model.savingsaccount.Transaction
 import org.mifospay.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SelfServiceRepositoryImpl(
@@ -271,11 +272,11 @@ class SelfServiceRepositoryImpl(
             key = TransactionKey(accountId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_transactions-$accountId",
+            cacheKey = AppCacheKeys.History.of(accountId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.HISTORY,
+            ttl = WalletStoreTtl.HISTORY,
         )
     }
 
@@ -328,11 +329,11 @@ class SelfServiceRepositoryImpl(
             key = BeneficiaryKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_beneficiaries-$clientId",
+            cacheKey = AppCacheKeys.Beneficiary.of(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.BENEFICIARY,
+            ttl = WalletStoreTtl.BENEFICIARY,
         )
     }
 

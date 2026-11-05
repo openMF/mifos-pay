@@ -17,8 +17,9 @@
    timeouts, an optional `Auth` plugin (`AuthProviders`), and optional certificate pinning via a
    `CertificatePinConfig` (from `core-base/security`).
 3. For Supabase access points, `SupabaseClientFactory.clientFor(id)` builds and caches one
-   `SupabaseConfigClient` per declared `SUPABASE`-kind `AccessPoint`, resolving the anon key through a
-   fork-supplied `anonKeyFor: (id) -> String` lambda (backed by secrets, never hardcoded).
+   `SupabaseConfigClient` per declared `SUPABASE`-kind `AccessPoint`, reading its publishable key from the generated
+   `AccessPoint.supabase` (a BuildKonfig read, never hardcoded); bound in `NetworkBaseModule`. Sign-in
+   is not built in: an app that needs it adds kmp-supabase-auth through `SupabaseExtrasProvider`.
 4. Responses needing `Result<Success, Error>` wrapping register `ResultSuspendConverterFactory` /
    `ResultFlowConverterFactory` on the `Ktorfit.Builder`.
 

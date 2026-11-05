@@ -1,0 +1,24 @@
+# app.schema.yaml — who owns each key of app-profile/app.yaml when a fork syncs from the template.
+#
+# Owned by the TEMPLATE and synced to every fork unchanged. scripts/customization-surface.sh
+# (cs_merge_yaml_schema) reads it while merging app.yaml:
+#   fork            the fork's value stays; the template only adds keys the fork lacks, and moves a value
+#                   the fork never changed to a new template default
+#   template        the template's value always wins — a fork edit or deletion is replaced on sync
+#   union:<field>   a list merged row by row on that identity field: the fork's rows stay, new template
+#                   rows are added (`union:a|b` for rows identified by either field). A row the
+#                   template marks `owner: template` replaces the fork's copy of that row.
+# A path matches its longest declared prefix; `default:` covers the rest.
+#
+# A key the template REMOVES from app.yaml is removed from every fork on the next sync, whatever the
+# fork set it to — the key belonged to the template. Rename a key by adding the new one and removing the
+# old one in the same change, and migrate its value in syncForkConfig if forks set it. A key a fork
+# adds itself (never shipped by the template) is the fork's and is never removed.
+version: 1
+# Owner of every app.yaml key no row below matches.
+default: fork
+# Dotted app.yaml path → owner. The longest matching prefix wins.
+keys:
+  network.access_points: union:id   # the fork's endpoints + the template's shared/demo points
+  module_packages: template         # the registry of per-module manifests; the template ships the modules
+  media.root: template              # the media directory convention the generators read

@@ -26,7 +26,7 @@ scripts/white-label/doctor.sh --sync     # adopt the LATEST template end-to-end:
 
 | Stage | Script | Role |
 |---|---|---|
-| 1 customize | `customize.sh` | rename package/appId to the fork's (fresh clone only) |
+| 1 customize | `fork-init.sh` | rename package/appId to the fork's (fresh clone only) |
 | 2 identity | `derive.rb` | app-profile → `gradle/fork.properties` (derived, headered, zero-drift via config.rb MAP) |
 | 3 derive | `../../gradlew syncForkConfig` | Config.xcconfig · deployment metadata · icons · catalog appId |
 | 4 template | `sync-dirs.sh` | pull the latest template (fork files preserved via `../../customization-surface.yaml`) |
@@ -39,7 +39,7 @@ scripts/white-label/doctor.sh --sync     # adopt the LATEST template end-to-end:
 |---|---|---|
 | `doctor.sh` | `scripts/white-label-doctor.sh` | the one entry (RULE-WHITE-LABEL-DOCTOR-001) |
 | `derive.rb` | `scripts/white-label-derive.rb` | app-profile → fork.properties |
-| `customize.sh` | `customizer.sh` (root) | package rename |
+| `fork-init.sh` | `customizer.sh` (root) | package rename |
 | `firebase.sh` | `firebase-setup.sh` (root) | firebase registration |
 | `keystore.sh` | `keystore-manager.sh` (root) | keystore/secrets |
 | `sync-dirs.sh` | `sync-dirs.sh` (root) | template sync engine — `owner: template`, self-propagating |

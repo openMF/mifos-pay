@@ -32,13 +32,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.launch
 import kpt.core.base.store.error.ErrorCategory
 import kpt.core.base.store.error.categorize
 import kpt.core.base.store.freshness.FreshnessBand
 import kpt.core.base.store.freshness.FreshnessSignal
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 /**
  * Per-card freshness indicator: a small Material 3 info / clock / warning icon
@@ -134,6 +134,7 @@ const val FRESHNESS_INDICATOR_TEST_TAG: String = "freshness_indicator"
 /** Theme-agnostic tint slot — the composable resolves to a `MaterialTheme.colorScheme` color. */
 internal enum class FreshnessTint { Neutral, Tertiary, Error }
 
+/** The resolved (icon, tint) pair for one freshness band — the output of the mapping below. */
 internal data class FreshnessVisual(
     val icon: ImageVector,
     val tint: FreshnessTint,

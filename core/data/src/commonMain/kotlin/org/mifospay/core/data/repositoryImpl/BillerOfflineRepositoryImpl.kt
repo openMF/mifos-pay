@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kpt.core.base.database.invalidation.notifyingWrite
 import kpt.core.database.wallet.biller.BillerDao
 import kpt.core.database.wallet.biller.toDomain
 import kpt.core.database.wallet.biller.toEntity
@@ -116,7 +115,7 @@ class BillerOfflineRepositoryImpl(
             val duplicates = dao.countMatching(biller.name, biller.accountNumber)
             require(duplicates == 0) { "Biller with this name and account number already exists" }
             val toWrite = biller.toEntity(generatedIdFallback = generateBillerId())
-            notifyingWrite(BILLERS_TABLE) {
+            run {
                 dao.upsert(toWrite)
             }
             toWrite.toDomain()
@@ -128,7 +127,7 @@ class BillerOfflineRepositoryImpl(
             val existingId = requireNotNull(biller.id) { "Biller ID is required for update" }
             checkNotNull(dao.getById(existingId)) { "Biller not found" }
             val entity = biller.toEntity(generatedIdFallback = existingId)
-            notifyingWrite(BILLERS_TABLE) {
+            run {
                 dao.upsert(entity)
             }
             entity.toDomain()
@@ -137,7 +136,7 @@ class BillerOfflineRepositoryImpl(
 
     override suspend fun deleteBiller(id: String) {
         withContext(ioDispatcher) {
-            notifyingWrite(BILLERS_TABLE) {
+            run {
                 dao.deleteById(id)
             }
         }
@@ -179,7 +178,7 @@ class BillerOfflineRepositoryImpl(
 
     override suspend fun clearAllBillers() {
         withContext(ioDispatcher) {
-            notifyingWrite(BILLERS_TABLE) {
+            run {
                 dao.deleteAll()
             }
         }

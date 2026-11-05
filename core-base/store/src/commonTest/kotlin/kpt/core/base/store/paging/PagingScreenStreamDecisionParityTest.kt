@@ -10,14 +10,12 @@
 package kpt.core.base.store.paging
 
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkInfo
-import kpt.core.base.store.infra.FakeFetchedAtRepository
-import kpt.core.base.store.infra.DecisionEngine
-import kpt.core.base.store.freshness.FreshnessSignal
-import kpt.core.base.store.screen.DataOrigin
-import kpt.core.base.store.screen.StoreData
-import kpt.core.base.store.screen.ScreenState
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkStatus
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkType
+import kpt.core.base.store.infra.DecisionEngine
+import kpt.core.base.store.screen.DataOrigin
+import kpt.core.base.store.screen.ScreenState
+import kpt.core.base.store.screen.StoreData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -94,7 +92,9 @@ class PagingScreenStreamDecisionParityTest {
     @Test
     fun error_empty_offline_returnsNoNetwork() {
         val result = decideForPaging(
-            emptyList(), unavailable, isInitialLoading = false,
+            emptyList(),
+            unavailable,
+            isInitialLoading = false,
             error = RuntimeException("any error"),
         )
         assertIs<ScreenState.NoNetwork>(result)
@@ -104,7 +104,10 @@ class PagingScreenStreamDecisionParityTest {
     fun error_empty_online_nonNetworkError_returnsError() {
         val err = IllegalStateException("server fault")
         val result = decideForPaging(
-            emptyList(), available, isInitialLoading = false, error = err,
+            emptyList(),
+            available,
+            isInitialLoading = false,
+            error = err,
         )
         assertIs<ScreenState.Error>(result)
         assertEquals(err, result.error)
@@ -119,7 +122,10 @@ class PagingScreenStreamDecisionParityTest {
         // NoNetwork treatment, not generic "Something went wrong").
         val ioError = FakeIOExceptionForPaging("connection reset")
         val result = decideForPaging(
-            emptyList(), available, isInitialLoading = false, error = ioError,
+            emptyList(),
+            available,
+            isInitialLoading = false,
+            error = ioError,
         )
         assertIs<ScreenState.NoNetwork>(result)
     }
@@ -189,7 +195,9 @@ class PagingScreenStreamDecisionParityTest {
         // FreshnessIndicator; Content.isRefreshing reflects request lifecycle only.
         val items = listOf("a")
         val result = decideForPaging(
-            items, available, isInitialLoading = false,
+            items,
+            available,
+            isInitialLoading = false,
             error = RuntimeException("refresh failed"),
         )
         assertIs<ScreenState.Content<*>>(result)

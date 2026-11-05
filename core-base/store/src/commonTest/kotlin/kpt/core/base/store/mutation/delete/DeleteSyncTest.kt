@@ -19,9 +19,15 @@ import kotlin.test.assertTrue
 private class FakeBookkeeper<K : Any> : Bookkeeper<K> {
     val failed = mutableMapOf<K, Long>()
     override suspend fun getLastFailedSync(key: K): Long? = failed[key]
-    override suspend fun setLastFailedSync(key: K, timestamp: Long): Boolean { failed[key] = timestamp; return true }
+    override suspend fun setLastFailedSync(key: K, timestamp: Long): Boolean {
+        failed[key] = timestamp
+        return true
+    }
     override suspend fun clear(key: K): Boolean = failed.remove(key) != null
-    override suspend fun clearAll(): Boolean { failed.clear(); return true }
+    override suspend fun clearAll(): Boolean {
+        failed.clear()
+        return true
+    }
 }
 
 /** Tests the [DeleteSync] network-DELETE-with-sync primitive (SP-1/T3). */

@@ -39,6 +39,8 @@ SECRETS_DIR="$REPO_ROOT/secrets"
 # (live-wins-else-sample), so a secrets/ layout change is a one-file LAYOUT.yaml edit with
 # zero impact on this script. `_p <layout-key>` → absolute path to the resolved file.
 BS="$REPO_ROOT/deployment/scripts/build-secrets"
+# Resolve alias $1 (optionally for flavor $2) to an absolute path, via the build-secrets
+# resolver rather than a hardcoded layout. Returns non-zero when the alias is unknown.
 _p() {  # _p <layout-key> [flavor]  → absolute path to the resolved file
   local rel
   rel="$( cd "$REPO_ROOT" && "$BS" path "$1" ${2:+--flavor "$2"} 2>/dev/null )" || return 1

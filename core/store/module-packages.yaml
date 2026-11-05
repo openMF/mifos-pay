@@ -24,7 +24,7 @@ schema_version: "1.0"
 #              one of those cases.
 #   template:  template-authored FRAMEWORK code. A clean fork KEEPS it and a sync full-copies it, so
 #              the fork keeps receiving fixes. Do not edit these packages in a fork; extend them
-#              through the module's `Project*` seam instead.
+#              through the module's `Fork*` seam instead.
 #   fork:      the fork's OWN packages. Never deleted, never synced over. A fork's package needs NO
 #              row at all — undeclared IS fork — so a row here is self-documenting only.
 #
@@ -53,25 +53,23 @@ module: store
 
 # Deleted by `remove-demo.sh`; the row survives with `status: removed` as the record.
 demo:
-  - { id: alerts,    status: exists }       # OFFLINE_LOCAL_ONLY showcase
-  - { id: banking,   status: exists }       # OFFLINE_LOCAL_ONLY (loans + bill reminders)
-  - { id: calc,      status: exists }       # MEMORY_ONLY (amortization)
-  - { id: cloudtodo, status: exists }       # MUTABLE (write store + conflict resolver)
-  - { id: crypto,    status: exists }       # NETWORK_WITH_CACHE
-  - { id: currency,  status: exists }       # NETWORK_WITH_CACHE
-  - { id: economic,  status: exists }       # NETWORK_WITH_CACHE (FRED + World Bank)
-  - { id: emi,       status: exists }       # MEMORY_ONLY
-  - { id: exchange,  status: exists }       # NETWORK_ONLY
-  - { id: profile,   status: exists }       # MEMORY_ONLY
-  - { id: watchlist, status: exists }       # OFFLINE_LOCAL_ONLY
+  - { id: alerts,    status: removed }       # OFFLINE_LOCAL_ONLY showcase
+  - { id: banking,   status: removed }       # OFFLINE_LOCAL_ONLY (loans + bill reminders)
+  - { id: calc,      status: removed }       # MEMORY_ONLY (amortization)
+  - { id: cloudtodo, status: removed }       # MUTABLE (write store + conflict resolver)
+  - { id: crypto,    status: removed }       # NETWORK_WITH_CACHE
+  - { id: currency,  status: removed }       # NETWORK_WITH_CACHE
+  - { id: economic,  status: removed }       # NETWORK_WITH_CACHE (FRED + World Bank)
+  - { id: emi,       status: removed }       # MEMORY_ONLY
+  - { id: exchange,  status: removed }       # NETWORK_ONLY
+  - { id: profile,   status: removed }       # MEMORY_ONLY
+  - { id: watchlist, status: removed }       # OFFLINE_LOCAL_ONLY
 
 # Kept by a clean fork, full-copied by a sync.
 template:
-  - { id: config, status: exists }          # AppStoreRegistry / AppCacheKeys (generated) + the App*/Project* seams
+  - { id: config, status: exists }          # AppStoreRegistry / AppCacheKeys (generated) + the App*/Fork* seams
   - { id: di,     status: exists }          # StoreModule aggregator
   - { id: prefs,  status: exists }          # backs UserDataStore, which settings/profile depend on
 
 # THIS FORK's own packages. `/implement` registers here. Empty is normal on the template.
-fork:
-  - { id: infra, status: exists }         # fork Store5 infrastructure (DecisionEngine consumers, registry wiring)
-  - { id: wallet, status: exists }        # mifos-pay wallet stores (pocket, linkableaccount, transfer-detail, …)
+fork: []

@@ -9,7 +9,7 @@
  */
 package kpt.core.store.wallet.recentpayee
 
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.recentpayee.RecentPayeeDao
 import kpt.core.database.wallet.recentpayee.RecentPayeeEntity
@@ -61,10 +61,11 @@ private const val RECENT_PAYEES_TABLE = "wallet_recent_payees"
  * derived recent-payees. The cache manager's `Store.clear()` cascades to the
  * SoT's `deleteAll` lambda, which invokes [RecentPayeeDao.deleteAll].
  */
+@StoreProvider(id = "recentPayee")
 fun provideRecentPayeeStore(dao: RecentPayeeDao): Store<RecentPayeeKey, List<RecentPayeeEntity>> = StoreFactory.createOfflineStore(
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: RecentPayeeKey ->
-            daoFlow(RECENT_PAYEES_TABLE) { dao.observeBySourceAccount(key.sourceAccountId) }
+            run { dao.observeBySourceAccount(key.sourceAccountId) }
         },
         writer = { key: RecentPayeeKey, rows: List<RecentPayeeEntity> ->
             // Atomic page replacement — see [RecentPayeeDao.replacePage] KDoc

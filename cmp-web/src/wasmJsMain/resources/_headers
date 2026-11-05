@@ -1,0 +1,8 @@
+# Response headers for hosts that read a `_headers` file (Netlify). On Cloudflare Pages the
+# _worker.js beside this file sets the same headers (Pages skips _headers when a worker is present).
+# COOP + COEP make the page cross-origin isolated, so AppDatabaseFactory uses the WebWorker + OPFS
+# SQLite driver and data survives a reload. Without them (GitHub Pages cannot send headers) the app
+# falls back to an in-memory database. Same headers as webpack.config.d/dev-server-headers.js locally.
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp

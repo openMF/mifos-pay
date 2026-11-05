@@ -79,7 +79,10 @@ class DraftSubmitHandlerTest {
         var callCount = 0
 
         class IOException(msg: String) : RuntimeException(msg)
-        handler.submit("payload") { callCount++; throw IOException("timeout") }
+        handler.submit("payload") {
+            callCount++
+            throw IOException("timeout")
+        }
         testScheduler.advanceUntilIdle()
 
         handler.retry()
@@ -96,8 +99,14 @@ class DraftSubmitHandlerTest {
         val handler = draftSubmitHandler<String, String>(outbox, formKey)
         var callCount = 0
 
-        handler.submit("p1") { callCount++; "ok" }
-        handler.submit("p2") { callCount++; "ok" }  // should be ignored
+        handler.submit("p1") {
+            callCount++
+            "ok"
+        }
+        handler.submit("p2") {
+            callCount++
+            "ok"
+        } // should be ignored
         testScheduler.advanceUntilIdle()
 
         assertEquals(1, callCount, "Second submit while in-flight must be no-op")

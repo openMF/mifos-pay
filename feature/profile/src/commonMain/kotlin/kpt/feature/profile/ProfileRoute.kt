@@ -23,7 +23,7 @@ fun NavController.navigateToProfile(navOptions: NavOptions? = null) = navigate(P
 
 /**
  * The profile backbone destination. [profileBody] is the fork-owned inner content (default supplied by
- * `cmp-navigation`'s `BackboneRegistry.profileBody`); this template graph carries zero demo imports and
+ * `cmp-navigation`'s `ForkBackboneRegistry.profileBody`); this template graph carries zero demo imports and
  * forwards the opaque body into the [ProfileScreen] shell. (WS01 base-feature seam, epic AC7.)
  */
 fun NavGraphBuilder.profileDestination(profileBody: @Composable () -> Unit = {}) {

@@ -27,6 +27,8 @@ TARGETS="app-profile/deploy-targets.yaml"
 LOG="deploy-state/PROMOTION_LOG.yaml"
 
 violations=0
+# Record a manifest violation and keep going, so one run reports every problem
+# rather than only the first.
 viol() { echo "VIOLATION [$1]: $2" >&2; violations=$((violations + 1)); }
 
 [ -f "$CATALOG" ] || { echo "FATAL: missing template catalog $CATALOG" >&2; exit 1; }

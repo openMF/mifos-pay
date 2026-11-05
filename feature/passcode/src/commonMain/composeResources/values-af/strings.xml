@@ -17,7 +17,7 @@
     <string name="feature_passcode_biometric_error_invalid_registration_data">Biometriese registrasiedata is ongeldig. Aktiveer asseblief biometrie weer vanaf toepassingsinstellings.</string>
     <string name="feature_passcode_biometric_error_invalid_arguments_auth">Kon nie biometriese verifikasie begin nie weens ongeldige argumente.</string>
     <string name="feature_passcode_biometric_error_invalid_arguments_registration">Kon nie biometriese registrasie begin nie weens ongeldige argumente.</string>
-    <string name="feature_passcode_biometric_error_unknown">\'n Onverwagte biometriese fout het voorgekom. Probeer asseblief weer.</string>
+    <string name="feature_passcode_biometric_error_unknown">'n Onverwagte biometriese fout het voorgekom. Probeer asseblief weer.</string>
     <string name="feature_passcode_biometric_prompt_title">Ontsluit Mifos Pay</string>
     <string name="feature_passcode_biometric_prompt_subtitle">Verifieer jou identiteit om voort te gaan</string>
     <string name="feature_passcode_biometric_prompt_description">Gebruik jou vingerafdruk, gesig of toestelgeloofsbriewe</string>

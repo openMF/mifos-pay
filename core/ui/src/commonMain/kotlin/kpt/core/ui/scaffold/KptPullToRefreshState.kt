@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.ui.scaffold
 
@@ -26,6 +26,10 @@ import kpt.core.base.store.screen.ScreenState
  *    performed.
  */
 data class KptPullToRefreshState(
+    /**
+     * Whether the gesture is available at all. Separate from [isRefreshing] so a screen can disable pull-to-refresh
+     * (e.g. while offline) without faking an in-flight refresh.
+     */
     val isEnabled: Boolean,
     val isRefreshing: Boolean,
     val onRefresh: () -> Unit,

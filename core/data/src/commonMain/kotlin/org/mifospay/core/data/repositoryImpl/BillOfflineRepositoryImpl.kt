@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kpt.core.base.database.invalidation.notifyingWrite
 import kpt.core.database.wallet.bill.BillDao
 import kpt.core.database.wallet.bill.toDomain
 import kpt.core.database.wallet.bill.toEntity
@@ -104,7 +103,7 @@ class BillOfflineRepositoryImpl(
             val duplicates = dao.countMatching(bill.name, bill.billerId)
             require(duplicates == 0) { "Bill with this name and biller already exists" }
             val toWrite = bill.toEntity(generatedIdFallback = generateBillId())
-            notifyingWrite(BILLS_TABLE) {
+            run {
                 dao.upsert(toWrite)
             }
             toWrite.toDomain()
@@ -116,7 +115,7 @@ class BillOfflineRepositoryImpl(
             val existingId = requireNotNull(bill.id) { "Bill ID is required for update" }
             checkNotNull(dao.getById(existingId)) { "Bill not found" }
             val entity = bill.toEntity(generatedIdFallback = existingId)
-            notifyingWrite(BILLS_TABLE) {
+            run {
                 dao.upsert(entity)
             }
             entity.toDomain()
@@ -125,7 +124,7 @@ class BillOfflineRepositoryImpl(
 
     override suspend fun deleteBill(id: String) {
         withContext(ioDispatcher) {
-            notifyingWrite(BILLS_TABLE) {
+            run {
                 dao.deleteById(id)
             }
         }
@@ -147,7 +146,7 @@ class BillOfflineRepositoryImpl(
 
     override suspend fun clearAllBills() {
         withContext(ioDispatcher) {
-            notifyingWrite(BILLS_TABLE) {
+            run {
                 dao.deleteAll()
             }
         }

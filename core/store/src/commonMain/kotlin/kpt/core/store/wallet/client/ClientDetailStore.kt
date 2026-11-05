@@ -11,7 +11,8 @@ package kpt.core.store.wallet.client
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.client.ClientDetailDao
 import kpt.core.database.wallet.client.toDomain
@@ -27,6 +28,10 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `ClientDetailEntity`. Shared with the DAO's writes. */
 private const val CLIENT_DETAILS_TABLE = "wallet_client_details"
@@ -99,10 +104,11 @@ private const val CLIENT_DETAILS_TABLE = "wallet_client_details"
  * wants this mapping, lift it to `core/model` (its inputs are all in `core/network`
  * `entity/client`, its outputs in `core/model` `client`).
  */
+@StoreProvider(id = "clientDetail")
+@CacheKey(fn = "of", key = "wallet_client_details-{clientId}", params = ["clientId:Long"])
 fun provideClientDetailStore(
     apiManager: SelfServiceApiManager,
     dao: ClientDetailDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<ClientDetailKey, Client> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: ClientDetailKey ->
         // Ktorfit returns Flow<ClientEntity> — take the first (and only) emission,
@@ -111,7 +117,7 @@ fun provideClientDetailStore(
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: ClientDetailKey ->
-            daoFlow(CLIENT_DETAILS_TABLE) { dao.observeById(key.clientId) }
+            run { dao.observeById(key.clientId) }
                 .map { row -> row?.toDomain() }
         },
         writer = { _: ClientDetailKey, client: Client ->

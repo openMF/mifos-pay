@@ -12,7 +12,8 @@ package kpt.core.store.wallet.linkableaccount
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.linkableaccount.LinkableAccountDao
 import kpt.core.database.wallet.linkableaccount.toDomain
@@ -30,6 +31,10 @@ import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 import org.mifospay.core.model.savingsaccount.Status as SavingsStatus
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `LinkableAccountEntity`. Shared with the DAO's writes. */
 private const val LINKABLE_ACCOUNTS_TABLE = "wallet_linkable_accounts"
@@ -115,11 +120,12 @@ private const val LINKABLE_ACCOUNTS_TABLE = "wallet_linkable_accounts"
  * `PocketRepositoryImp.getAvailableAccountsToLink`. Keep in lockstep with the
  * matching inline mappers in `PocketStore.kt` (identical status decode logic).
  */
+@StoreProvider(id = "linkableAccounts")
+@CacheKey(fn = "of", key = "wallet_linkable_accounts-{clientId}", params = ["clientId:Long"])
 fun provideLinkableAccountsStore(
     apiManager: SelfServiceApiManager,
     dao: LinkableAccountDao,
     pocketDao: PocketDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<LinkableAccountKey, List<LinkableAccount>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: LinkableAccountKey ->
         // Step 1 — client-accounts envelope (per-client) for balance/product/status
@@ -146,8 +152,8 @@ fun provideLinkableAccountsStore(
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: LinkableAccountKey ->
             combine(
-                daoFlow(LINKABLE_ACCOUNTS_TABLE) { dao.observeByClient(key.clientId) },
-                daoFlow("wallet_pockets") { pocketDao.observeLinkedByClient(key.clientId) },
+                run { dao.observeByClient(key.clientId) },
+                run { pocketDao.observeLinkedByClient(key.clientId) },
             ) { allAccounts, linked ->
                 val linkedSet = linked.map { "${it.accountId}_${it.accountType}" }.toSet()
                 allAccounts

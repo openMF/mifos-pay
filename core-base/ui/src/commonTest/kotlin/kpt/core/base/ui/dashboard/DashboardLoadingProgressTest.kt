@@ -122,6 +122,36 @@ class DashboardLoadingProgressTest {
         assertFalse(result.hasAnyError)
     }
 
+    @OptIn(kotlin.time.ExperimentalTime::class)
+    @Test
+    fun oldestFetchedAt_isStalestContentTimestamp() {
+        val newer = kotlin.time.Instant.fromEpochSeconds(2000)
+        val older = kotlin.time.Instant.fromEpochSeconds(1000)
+        val states: List<ScreenState<String>> = listOf(
+            ScreenState.Content(data = "a", fetchedAt = newer),
+            ScreenState.Loading,
+            ScreenState.Content(data = "b", fetchedAt = older),
+        )
+        assertEquals(
+            older,
+            states.toDashboardProgressState().oldestFetchedAt,
+            "oldestFetchedAt is the stalest (min) Content fetchedAt across cards.",
+        )
+    }
+
+    @Test
+    fun oldestFetchedAt_nullWhenNoContentCarriesTimestamp() {
+        val states: List<ScreenState<String>> = listOf(
+            ScreenState.Loading,
+            ScreenState.Content(data = "x"),
+        )
+        assertEquals(
+            null,
+            states.toDashboardProgressState().oldestFetchedAt,
+            "With no fetchedAt on any card, the strip has no age to show and falls back to Loading.",
+        )
+    }
+
     @Test
     fun pureConversion_matchesFlowExtension() {
         val states: List<ScreenState<Any>> = listOf(

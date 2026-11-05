@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="app_name">KPT Design</string>
+    <string name="home">Trang chủ</string>
+    <string name="profile">Hồ sơ</string>
+    <string name="settings">Cài đặt</string>
+    <string name="not_connected">⚠️ Bạn chưa kết nối internet</string>
+    <string name="screenstate_empty_title">Chưa có gì ở đây</string>
+    <string name="screenstate_empty_message">Khi bạn có dữ liệu, dữ liệu sẽ hiển thị ở đây.</string>
+    <string name="screenstate_error_title">Đã xảy ra lỗi</string>
+    <string name="screenstate_error_retry">Thử lại</string>
+    <string name="screenstate_nonet_title">Bạn đang ngoại tuyến</string>
+    <string name="screenstate_nonet_message">Chúng tôi sẽ thử lại khi bạn kết nối lại.</string>
+    <string name="screenstate_nonet_retry">Thử lại ngay</string>
+    <string name="screenstate_captive_title">Đăng nhập Wi-Fi</string>
+    <string name="screenstate_captive_message">Mạng của bạn yêu cầu đăng nhập trước khi kết nối.</string>
+    <string name="screenstate_captive_action">Mở trang đăng nhập</string>
+    <string name="error_category_network">Không thể kết nối máy chủ. Hãy kiểm tra kết nối của bạn.</string>
+    <string name="error_category_auth">Phiên của bạn đã hết hạn. Vui lòng đăng nhập lại.</string>
+    <string name="error_category_ratelimit">Quá nhiều yêu cầu. Vui lòng đợi rồi thử lại.</string>
+    <string name="error_category_server">Máy chủ của chúng tôi đang gặp sự cố. Hãy thử lại sau ít phút.</string>
+    <string name="error_category_generic">Đã xảy ra lỗi</string>
+</resources>

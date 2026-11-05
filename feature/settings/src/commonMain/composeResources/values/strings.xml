@@ -28,7 +28,7 @@
 
     <!-- NotificationScreen — empty state -->
     <string name="feature_settings_notifications_empty_title">No notifications yet</string>
-    <string name="feature_settings_notifications_empty_message">You\'ll see bill reminders and rate alerts here.</string>
+    <string name="feature_settings_notifications_empty_message">You'll see bill reminders and rate alerts here.</string>
 
     <!-- Sync &amp; Drafts screen (template-level draft/sync inventory) -->
     <string name="feature_settings_sync_drafts_row">Sync &amp; Drafts</string>
@@ -46,7 +46,7 @@
     <string name="feature_settings_sync_drafts_discard">Discard</string>
     <string name="feature_settings_sync_drafts_prune">Prune expired</string>
     <string name="feature_settings_sync_drafts_discard_confirm_title">Discard draft?</string>
-    <string name="feature_settings_sync_drafts_discard_confirm_message">This permanently deletes the saved draft. This can\'t be undone.</string>
+    <string name="feature_settings_sync_drafts_discard_confirm_message">This permanently deletes the saved draft. This can't be undone.</string>
     <string name="feature_settings_sync_drafts_discard_confirm_cancel">Cancel</string>
 
     <string name="feature_settings_alert_disable_account">Are you sure you want to disable account?</string>

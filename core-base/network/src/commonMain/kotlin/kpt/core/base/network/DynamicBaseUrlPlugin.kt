@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.network
 
@@ -60,7 +60,12 @@ class DynamicBaseUrlPlugin private constructor(
     private val configProvider: DynamicUrlConfigProvider?,
     private val multiConfigProvider: MultiUrlConfigProvider?,
     private val urlType: UrlType,
+    private val staticBasePath: String,
 ) {
+    /**
+     * Ktor plugin installer — rewrites each request's base URL from the resolved access point, so an endpoint change
+     * needs no per-call wiring.
+     */
     companion object Plugin : HttpClientPlugin<DynamicBaseUrlConfig, DynamicBaseUrlPlugin> {
         override val key: AttributeKey<DynamicBaseUrlPlugin> =
             AttributeKey("DynamicBaseUrlPlugin")
@@ -71,6 +76,7 @@ class DynamicBaseUrlPlugin private constructor(
                 configProvider = config.configProvider,
                 multiConfigProvider = config.multiConfigProvider,
                 urlType = config.urlType,
+                staticBasePath = config.staticBaseUrl?.let { Url(it).encodedPath.trim('/') }.orEmpty(),
             )
         }
 
@@ -87,7 +93,7 @@ class DynamicBaseUrlPlugin private constructor(
                 }
 
                 val originalUrl = context.url.build()
-                val newUrl = rebuildUrl(originalUrl, currentBaseUrl)
+                val newUrl = rebuildUrl(originalUrl, currentBaseUrl, plugin.staticBasePath)
 
                 context.url.takeFrom(newUrl)
             }
@@ -97,7 +103,7 @@ class DynamicBaseUrlPlugin private constructor(
          * Rebuilds the request URL using the dynamic base URL while preserving
          * the original path and query parameters.
          */
-        private fun rebuildUrl(originalUrl: Url, baseUrl: String): Url {
+        private fun rebuildUrl(originalUrl: Url, baseUrl: String, staticBasePath: String): Url {
             val baseUrlParsed = Url(baseUrl)
 
             return URLBuilder().apply {
@@ -107,7 +113,17 @@ class DynamicBaseUrlPlugin private constructor(
 
                 // Combine base path with original path
                 val basePath = baseUrlParsed.encodedPath.trimEnd('/')
-                val originalPath = originalUrl.encodedPath.trimStart('/')
+                // The request was resolved against the client's STATIC base, so its path begins with
+                // that base's path. Keep only what follows it — otherwise the dynamic path is stacked
+                // ON the static one (`/fineract-provider/api/v1/1.0/field/v1/clients`).
+                val originalPath = originalUrl.encodedPath.trimStart('/').let { path ->
+                    when {
+                        staticBasePath.isEmpty() -> path
+                        path == staticBasePath -> ""
+                        path.startsWith("$staticBasePath/") -> path.removePrefix("$staticBasePath/")
+                        else -> path
+                    }
+                }
 
                 encodedPath = if (originalPath.isNotEmpty()) {
                     "$basePath/$originalPath"
@@ -131,6 +147,14 @@ class DynamicBaseUrlPlugin private constructor(
  * Configuration class for [DynamicBaseUrlPlugin].
  */
 class DynamicBaseUrlConfig {
+    /**
+     * The client's static base URL — the one requests are resolved against before this plugin runs.
+     * Its PATH is stripped from each request before the dynamic base is applied, so a server with an
+     * API path replaces the static one instead of being prefixed to it. `setupDefaultHttpClient`
+     * sets it; leave it null only for a client whose requests carry no base path.
+     */
+    var staticBaseUrl: String? = null
+
     /**
      * Simple config provider for single URL type applications.
      */

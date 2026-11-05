@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.motion
 
@@ -34,9 +34,11 @@ import kpt.core.base.designsystem.theme.motion
  */
 object KptFadeThrough {
 
+    /** Fade-through enter using the ambient theme motion. Composable — call from composition. */
     @Composable
     fun enter(): EnterTransition = enter(MaterialTheme.motion)
 
+    /** Fade-through enter using an explicit [motion], so it is callable outside composition. */
     fun enter(motion: Motion): EnterTransition = fadeIn(
         animationSpec = tween(
             durationMillis = motion.durationMedium2,
@@ -49,9 +51,11 @@ object KptFadeThrough {
         ),
     )
 
+    /** Fade-through exit using the ambient theme motion. */
     @Composable
     fun exit(): ExitTransition = exit(MaterialTheme.motion)
 
+    /** Fade-through exit using an explicit [motion]. */
     fun exit(motion: Motion): ExitTransition = fadeOut(
         animationSpec = tween(
             durationMillis = motion.durationShort4,

@@ -1,0 +1,56 @@
+# `feature/editpassword/`
+
+> Part of [`feature/`](../feature.md)  
+> **Measured:** 10 tracked files — 4× `.kt`, 3× `.xml`, 1× `.gitignore`, 1× `.md`, 1× `.kts`
+
+**4 Kotlin files** — 1 screen(s), 1 ViewModel(s).
+
+Screens: `EditPasswordScreen`
+
+ViewModels: `EditPasswordViewModel`
+
+### Docs in the tree
+
+| Path | |
+|---|---|
+| `feature/editpassword/README.md` | Edit Password Feature |
+
+<!-- tree-scaffold:end -->
+## Significance
+
+_Authored below this marker; regeneration never touches it._
+
+<!-- api-docs:begin module=feature/editpassword sha=109419dca8245d435523b6279ab4cf649929be0f -->
+## API reference
+
+_Generated from `feature/editpassword` at tree `109419dca824` by `scripts/docs/api-docs-gen.sh`._
+_Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
+
+This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
+here as a WORKED EXAMPLE: this is the shape a generator should produce for a new feature,
+with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
+rather than re-declaring what they already own.
+
+### `feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/di/EditPasswordModule.kt`
+
+```kotlin
+val EditPasswordModule = module
+```
+_No KDoc at source._
+
+### `feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/navigation/EditPasswordScreenNavigation.kt`
+
+```kotlin
+fun NavGraphBuilder.editPasswordScreen(
+```
+_No KDoc at source._
+
+```kotlin
+fun NavController.navigateToEditPassword()
+```
+_No KDoc at source._
+
+---
+
+_0 type(s), 3 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
+<!-- api-docs:end -->

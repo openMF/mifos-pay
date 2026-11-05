@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem.core
 
@@ -147,6 +147,9 @@ data class TopAppBarAction(
     val testTag: String? = null,
 )
 
+/**
+ * DSL marker for the top-app-bar builders, so a nested block cannot implicitly configure an outer bar.
+ */
 @DslMarker
 annotation class TopAppBarDsl
 

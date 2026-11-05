@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.designsystem.chart
 
@@ -31,6 +31,10 @@ import kpt.core.designsystem.theme.finance
  */
 object ChartTokens {
 
+    /**
+     * Six distinguishable series hues, in a fixed order so the same series keeps its colour across recompositions and
+     * across charts.
+     */
     @Composable
     @ReadOnlyComposable
     fun multiSeriesColors(): List<Color> {
@@ -45,16 +49,21 @@ object ChartTokens {
         )
     }
 
+    /** Text style for axis labels. */
     @Composable
     @ReadOnlyComposable
     fun axisLabelStyle(): TextStyle = MaterialTheme.typography.bodySmall.copy(
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 
+    /**
+     * Gridline colour — outline-variant at half alpha, so gridlines sit behind the data rather than competing with it.
+     */
     @Composable
     @ReadOnlyComposable
     fun gridlineColor(): Color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
 
+    /** Vertical gradient from [strokeColor] at 24% alpha down to transparent, for the fill under a line series. */
     fun areaFillBrush(strokeColor: Color): Brush = Brush.verticalGradient(
         colors = listOf(
             strokeColor.copy(alpha = 0.24f),
@@ -62,6 +71,9 @@ object ChartTokens {
         ),
     )
 
+    /** Line width for a data series. */
     val defaultStrokeWidth = 1.5.dp
+
+    /** Line width for an axis — deliberately thinner than [defaultStrokeWidth]. */
     val defaultAxisStrokeWidth = 1.0.dp
 }

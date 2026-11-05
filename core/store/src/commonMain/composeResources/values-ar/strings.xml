@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">لا يوجد شيء هنا بعد</string>
+    <string name="screenstate_empty_message">عندما تتوفر بيانات، ستظهر هنا.</string>
+    <string name="screenstate_error_title">حدث خطأ ما</string>
+    <string name="screenstate_error_retry">أعد المحاولة</string>
+    <string name="screenstate_nonet_title">أنت غير متصل</string>
+    <string name="screenstate_nonet_message">سنعيد المحاولة عند إعادة الاتصال.</string>
+    <string name="screenstate_nonet_retry">أعد المحاولة الآن</string>
+    <string name="screenstate_captive_title">سجّل الدخول إلى Wi-Fi</string>
+    <string name="screenstate_captive_message">تتطلب شبكتك تسجيل الدخول قبل الاتصال.</string>
+    <string name="screenstate_captive_action">افتح صفحة تسجيل الدخول</string>
+    <string name="error_category_network">تعذّر الوصول إلى الخادم. تحقّق من اتصالك.</string>
+    <string name="error_category_auth">انتهت جلستك. يُرجى تسجيل الدخول مرة أخرى.</string>
+    <string name="error_category_ratelimit">طلبات كثيرة جدًا. يُرجى الانتظار ثم المحاولة.</string>
+    <string name="error_category_server">خوادمنا تواجه مشكلة مؤقتة. حاول بعد قليل.</string>
+    <string name="error_category_timeout_connect">انتهت مهلة الاتصال. تحقّق من اتصالك وحاول مجددًا.</string>
+    <string name="error_category_timeout_read">استغرق الخادم وقتًا طويلاً للرد. حاول مجددًا بعد قليل.</string>
+    <string name="error_category_quota">لقد بلغت الحد المسموح. قم بالترقية أو انتظر للمتابعة.</string>
+    <string name="error_category_client">فشل الطلب. يُرجى المحاولة مرة أخرى.</string>
+    <string name="error_category_generic">حدث خطأ ما</string>
+</resources>

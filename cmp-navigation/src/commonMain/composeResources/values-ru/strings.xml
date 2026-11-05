@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="app_name">KPT Design</string>
+    <string name="home">Главная</string>
+    <string name="profile">Профиль</string>
+    <string name="settings">Настройки</string>
+    <string name="not_connected">⚠️ Нет подключения к интернету</string>
+    <string name="screenstate_empty_title">Здесь пока пусто</string>
+    <string name="screenstate_empty_message">Когда появятся данные, они отобразятся здесь.</string>
+    <string name="screenstate_error_title">Что-то пошло не так</string>
+    <string name="screenstate_error_retry">Повторить</string>
+    <string name="screenstate_nonet_title">Вы офлайн</string>
+    <string name="screenstate_nonet_message">Мы повторим попытку, когда связь восстановится.</string>
+    <string name="screenstate_nonet_retry">Повторить сейчас</string>
+    <string name="screenstate_captive_title">Войдите в сеть Wi-Fi</string>
+    <string name="screenstate_captive_message">Ваша сеть требует входа перед подключением.</string>
+    <string name="screenstate_captive_action">Открыть страницу входа</string>
+    <string name="error_category_network">Не удаётся связаться с сервером. Проверьте подключение.</string>
+    <string name="error_category_auth">Сеанс истёк. Войдите снова.</string>
+    <string name="error_category_ratelimit">Слишком много запросов. Подождите и повторите.</string>
+    <string name="error_category_server">На наших серверах сбой. Повторите чуть позже.</string>
+    <string name="error_category_generic">Что-то пошло не так</string>
+</resources>

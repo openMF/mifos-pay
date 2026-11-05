@@ -18,7 +18,8 @@ import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.account.AccountDetailKey
 import org.mifospay.core.common.Constants
 import org.mifospay.core.common.ScreenStateStream
@@ -36,7 +37,7 @@ import org.mifospay.core.model.savingsaccount.TransactionsEntity
 import org.mifospay.core.model.savingsaccount.UpdateSavingAccountEntity
 import org.mifospay.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 class SavingsAccountRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
@@ -101,10 +102,10 @@ class SavingsAccountRepositoryImpl(
             key = AccountDetailKey(accountId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_saving_account_details-$accountId",
+            cacheKey = AppCacheKeys.AccountDetail.of(accountId),
             scope = scope,
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.ACCOUNT_DETAIL,
+            ttl = WalletStoreTtl.ACCOUNT_DETAIL,
         )
     }
 

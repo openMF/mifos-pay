@@ -24,7 +24,7 @@ schema_version: "1.0"
 #              one of those cases.
 #   template:  template-authored FRAMEWORK code. A clean fork KEEPS it and a sync full-copies it, so
 #              the fork keeps receiving fixes. Do not edit these packages in a fork; extend them
-#              through the module's `Project*` seam instead.
+#              through the module's `Fork*` seam instead.
 #   fork:      the fork's OWN packages. Never deleted, never synced over. A fork's package needs NO
 #              row at all — undeclared IS fork — so a row here is self-documenting only.
 #
@@ -53,21 +53,21 @@ module: data
 
 # Deleted by `remove-demo.sh`; the row survives with `status: removed` as the record.
 demo:
-  - { id: alerts,    status: exists }       # price-alert repository + outbox + syncer
-  - { id: banking,   status: exists }       # loan + bill-reminder repositories, outboxes, syncers
-  - { id: calc,      status: exists }       # amortization calculator repository
-  - { id: cloudtodo, status: exists }       # MUTABLE repository, bookkeeper, orchestrator
-  - { id: crypto,    status: exists }       # coin market / detail repository
-  - { id: currency,  status: exists }       # exchange-rate repository
-  - { id: economic,  status: exists }       # FRED + World Bank repositories
-  - { id: emi,       status: exists }       # EMI calculator repository
-  - { id: profile,   status: exists }       # profile repository
-  - { id: watchlist, status: exists }       # watchlist repository
+  - { id: alerts,    status: removed }       # price-alert repository + outbox + syncer
+  - { id: banking,   status: removed }       # loan + bill-reminder repositories, outboxes, syncers
+  - { id: calc,      status: removed }       # amortization calculator repository
+  - { id: cloudtodo, status: removed }       # MUTABLE repository, bookkeeper, orchestrator
+  - { id: crypto,    status: removed }       # coin market / detail repository
+  - { id: currency,  status: removed }       # exchange-rate repository
+  - { id: economic,  status: removed }       # FRED + World Bank repositories
+  - { id: emi,       status: removed }       # EMI calculator repository
+  - { id: profile,   status: removed }       # profile repository
+  - { id: watchlist, status: removed }       # watchlist repository
 
 # Kept by a clean fork, full-copied by a sync.
 template:
   - { id: config, status: exists }          # the fork-extension seam — see config/README.md
-  - { id: di,    status: exists }           # DataModule aggregator + the ProjectRepositoryModule fork seam
+  - { id: di,    status: exists }           # DataModule aggregator + the ForkRepositoryModule fork seam
   - { id: infra, status: exists }           # sync/outbox test support
   - { id: user,  status: exists }           # UserDataRepository + logout manager
   - { id: util,  status: exists }           # shared flow helpers

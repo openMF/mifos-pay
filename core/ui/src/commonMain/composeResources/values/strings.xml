@@ -60,7 +60,7 @@
     <!-- HTTP Error Messages -->
     <string name="core_ui_error_msg_invalid_request">The request was invalid. Please check your input and try again.</string>
     <string name="core_ui_error_msg_unauthorized">You are not authorized. Please log in again.</string>
-    <string name="core_ui_error_msg_access_denied">You don\'t have permission to perform this action.</string>
+    <string name="core_ui_error_msg_access_denied">You don't have permission to perform this action.</string>
     <string name="core_ui_error_msg_not_found">The requested resource was not found.</string>
     <string name="core_ui_error_msg_request_timeout">The request timed out. Please try again.</string>
     <string name="core_ui_error_msg_conflict">There was a conflict with the current state. Please refresh and try again.</string>
@@ -96,7 +96,7 @@
 
     <!-- Missing External ID Info -->
     <string name="core_ui_interbank_unavailable_title">Inter-bank Transfer Unavailable</string>
-    <string name="core_ui_interbank_unavailable_message">Inter-bank transfer is not available for this account. The recipient\'s account external ID is missing.\n\nPlease ask the recipient to connect their phone number to their account to enable inter-bank transfers.</string>
+    <string name="core_ui_interbank_unavailable_message">Inter-bank transfer is not available for this account. The recipient's account external ID is missing.\n\nPlease ask the recipient to connect their phone number to their account to enable inter-bank transfers.</string>
     <string name="core_ui_understood">Understood</string>
 
     <!-- QR Amount Confirmation -->

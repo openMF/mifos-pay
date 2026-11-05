@@ -19,7 +19,8 @@ import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.standinginstruction.StandingInstructionKey
 import org.mifospay.core.common.ScreenState
 import org.mifospay.core.common.asScreenStateFlow
@@ -30,7 +31,7 @@ import org.mifospay.core.model.standinginstruction.StandingInstruction
 import org.mifospay.core.model.standinginstruction.StandingInstructionPayload
 import org.mifospay.core.network.FineractApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 class StandingInstructionRepositoryImpl(
     private val apiManager: FineractApiManager,
@@ -89,11 +90,11 @@ class StandingInstructionRepositoryImpl(
             key = StandingInstructionKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_standing_instructions-$clientId",
+            cacheKey = AppCacheKeys.StandingInstruction.of(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.STANDING_INSTRUCTION,
+            ttl = WalletStoreTtl.STANDING_INSTRUCTION,
         )
     }
 

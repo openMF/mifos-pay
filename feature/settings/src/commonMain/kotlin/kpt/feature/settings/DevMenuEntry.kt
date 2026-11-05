@@ -23,7 +23,7 @@ package kpt.feature.settings
  * because `cmp-navigation` already depends on `feature/settings`; homing it in
  * `cmp-navigation` would force `feature/settings -> cmp-navigation` and create a
  * circular module dependency. The dev-only registries in `cmp-navigation/registry`
- * (e.g. `ShowcaseRegistry`) import it from here.
+ * (e.g. `ForkShowcaseRegistry`) import it from here.
  */
 data class DevMenuEntry(
     val label: String,

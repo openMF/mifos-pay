@@ -8,17 +8,17 @@ only ever reads from:
 
 | Seam | Add | Read by |
 |---|---|---|
-| `FeatureRegistry` | your feature's Koin module + nav destinations | `KoinModules`, `AuthenticatedNavigation` |
-| `BackboneRegistry` | the home-tab body (default: demo dashboard) | the navbar graph |
-| `TabRegistry` | extra bottom-nav tabs | `AuthenticatedNavbarNavigationScreen` |
-| `AppInitializers` | app-startup hooks (analytics, crash reporting, …) | `cmp-shared`'s `initKoin` |
+| `ForkFeatureRegistry` | your feature's Koin module + nav destinations | `KoinModules`, `AuthenticatedNavigation` |
+| `ForkBackboneRegistry` | the home-tab body (default: demo dashboard) | the navbar graph |
+| `ForkTabRegistry` | extra bottom-nav tabs | `AuthenticatedNavbarNavigationScreen` |
+| `ForkInitializers` | app-startup hooks (analytics, crash reporting, …) | `cmp-shared`'s `initKoin` |
 
 ## Adding a feature
 
 1. `include(":feature:my-feature")` in `settings.local.gradle.kts` (fork-owned settings seam).
 2. Its Gradle dependency in `feature-deps.gradle.kts` (fork-owned build-dep seam — **not**
    `cmp-navigation/build.gradle.kts`, which `apply(from = …)`s it).
-3. Its module + nav graph entries in `FeatureRegistry.featureKoinModules` /
+3. Its module + nav graph entries in `ForkFeatureRegistry.featureKoinModules` /
    `featureDestinations`.
 
 None of that touches this module's own source, so a template sync (`/kmp-project-template-sync`)
@@ -33,4 +33,4 @@ feature/tab/dashboard/startup step, there is a registry seam for it instead (see
 
 Full mechanics + code samples: [`registry/README.md`](src/commonMain/kotlin/cmp/navigation/registry/README.md).
 
-Symbols: ComposeApp, AppViewModel, RootNavScreen, RootNavViewModel, AuthenticatedNavigation, KoinModules, FeatureRegistry, BackboneRegistry, TabRegistry, AppInitializers, ShowcaseRegistry
+Symbols: ComposeApp, AppViewModel, RootNavScreen, RootNavViewModel, AuthenticatedNavigation, KoinModules, ForkFeatureRegistry, ForkBackboneRegistry, ForkTabRegistry, ForkInitializers, ForkShowcaseRegistry

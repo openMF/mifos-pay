@@ -12,7 +12,7 @@ package org.mifospay.core.common
 /**
  * Function type for parsing an error response body into a user-friendly message.
  * Repositories provide custom parsing logic (e.g. parsing MifosError) that the
- * ScreenState error mappers ([asScreenStateFlow], [AppErrorMapper.mapErrorBody]) consume.
+ * ScreenState error mappers ([asScreenStateFlow], [MifosErrorMapper.mapErrorBody]) consume.
  */
 typealias ErrorBodyParser = suspend (responseBody: String, statusCode: Int) -> String
 

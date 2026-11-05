@@ -2,14 +2,15 @@
 # =============================================================================
 # scripts/secrets/_lib.sh — shared helpers for the platform-wise secrets toolkit
 # =============================================================================
-# SELF-CONTAINED: pure bash + awk, ZERO framework/vault/yq dependency. Any OSS
-# forker can run the toolkit after a plain `git clone`. The framework's
-# `/secrets-source-map` reads the SAME `secrets-needs.yaml` files (one-way) to
-# map source needs → org vault — but the source never imports the framework.
+# SELF-CONTAINED: bash + the repo's own stdlib-Ruby secrets resolver, ZERO framework/vault/yq
+# dependency. Any OSS forker can run the toolkit after a plain `git clone`.
 #
-# Source of truth: deployment/<platform>/<target>/secrets-needs.yaml#manual_inputs
-# Each manual_input declares: canonical (where the secret lands), source_hint
-# (how a human obtains it), gha_secret_var (the CI secret name), placeholder.
+# Source of truth: each deployment/<platform>/<target>/secrets-needs.yaml lists only WHICH
+# secrets/LAYOUT.yaml entries the target needs (`needs:`); LAYOUT holds every per-secret fact. The
+# rows below (canonical · how to obtain it · CI secret · placeholder) are expanded from those two at
+# run time by `deployment/_shared/lib/build_secrets.rb needs-expand` — nothing under deployment/
+# stores them, so a target file is identical in the template and every fork. A legacy v1 file (one
+# that still hand-authors vault_aliases/manual_inputs) is parsed directly, as before.
 # =============================================================================
 set -euo pipefail
 
@@ -40,9 +41,19 @@ secrets_needs_files() {
   find "$REPO_ROOT/$dir" -name secrets-needs.yaml 2>/dev/null | sort
 }
 
-# Parse manual_inputs from one needs file → TSV: canonical \t source_hint \t gha_secret_var \t placeholder
-# Pure awk; tolerates quoted/unquoted values + the leading "- " on the first key.
+SECRETS_RESOLVER="$REPO_ROOT/deployment/_shared/lib/build_secrets.rb"
+
+# Expand one v2 needs file via the resolver (stdout TSV, exit 0) — exit 3 means a legacy v1 file.
+_secrets_expand() {  # <file> <manual|vault>
+  ruby "$SECRETS_RESOLVER" needs-expand --file "$1" --kind "$2"
+}
+
+# One needs file → TSV: canonical \t source_hint \t gha_secret_var \t placeholder
 _secrets_parse_manual_inputs() {
+  local out rc
+  out="$(_secrets_expand "$1" manual)"; rc=$?
+  [ "$rc" -eq 3 ] || { [ -n "$out" ] && printf '%s\n' "$out"; return "$rc"; }
+  # legacy v1: pure awk; tolerates quoted/unquoted values + the leading "- " on the first key.
   awk '
     function strip(s){ sub(/^[ \t]*-?[ \t]*[A-Za-z_]+:[ \t]*/,"",s); sub(/^"/,"",s); sub(/"[ \t]*$/,"",s); sub(/^'\''/,"",s); sub(/'\''[ \t]*$/,"",s); sub(/[ \t]+$/,"",s); return s }
     /^[A-Za-z]/ { in_mi=0 }                         # any top-level key closes the block
@@ -58,8 +69,11 @@ _secrets_parse_manual_inputs() {
   ' "$1"
 }
 
-# Parse vault_aliases from one needs file → TSV: alias \t canonical
+# One needs file → TSV: alias \t canonical
 _secrets_parse_vault_aliases() {
+  local out rc
+  out="$(_secrets_expand "$1" vault)"; rc=$?
+  [ "$rc" -eq 3 ] || { [ -n "$out" ] && printf '%s\n' "$out"; return "$rc"; }
   awk '
     function strip(s){ sub(/^[ \t]*-?[ \t]*[A-Za-z_]+:[ \t]*/,"",s); sub(/^"/,"",s); sub(/"[ \t]*$/,"",s); sub(/^'\''/,"",s); sub(/'\''[ \t]*$/,"",s); sub(/[ \t]+$/,"",s); return s }
     /^[A-Za-z]/ { in_va=0 }
@@ -71,6 +85,9 @@ _secrets_parse_vault_aliases() {
 }
 
 # All (alias, canonical, platforms-csv) across every needs file, dedup'd by alias.
+# Print every alias declared across all platform manifests, de-duplicated.
+# De-duplicates on the CANONICAL name as well as the platform one, so an alias
+# listed under two platforms is reported once rather than twice.
 secrets_all_vault_aliases() {
   local p f plat
   local -A SEEN_CANON SEEN_PLAT

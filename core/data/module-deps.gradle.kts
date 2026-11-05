@@ -21,6 +21,12 @@
 // which a sync full-copies; apply(plugin = …) here survives it (moved at the 90ff6da6 template sync).
 apply(plugin = "org.jetbrains.compose")
 apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+// generateResClass=auto skips the Res class when the resources dependency is declared through this seam rather
+// than the build file, so force it: fork code imports <module>.generated.resources.Res.
+// Plugin classes are not on a script plugin's classpath, so go through the Groovy builder (string → enum coerced).
+extensions.getByName("compose").withGroovyBuilder {
+    getProperty("resources").withGroovyBuilder { setProperty("generateResClass", "Always") }
+}
 
 val libs = extensions.getByType<org.gradle.api.artifacts.VersionCatalogsExtension>().named("libs")
 

@@ -11,6 +11,7 @@ package kpt.core.database.wallet.savedcards
 
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single saved payment card — the Room mirror of the
@@ -62,6 +63,7 @@ import androidx.room3.Index
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_saved_cards",
     primaryKeys = ["id", "clientId"],

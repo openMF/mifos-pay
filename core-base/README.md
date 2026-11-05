@@ -64,7 +64,7 @@ the template-shared parts of `core/*` — follows this convention:
   `KptFlowRow`, `KptFlowColumn`, `KptSplitPane`, `KptSidebarLayout`,
   `KptResponsiveLayout` (`core-base/designsystem/layout/`).
 - **Components:** `KptButton` / `KptOutlinedButton` / `KptTextButton`,
-  `KptSnackbarHost`, `KptShimmerLoadingBox`, `KptShimmerListItem`,
+  `KptToastHost`, `KptShimmerLoadingBox`, `KptShimmerListItem`,
   `KptSlideTransition` (`core-base/designsystem/component/`).
 - **App bars:** `KptTopAppBar` (+ size variants `KptSmallTopAppBar` /
   `KptCenterAlignedTopAppBar` / `KptMediumTopAppBar` / `KptLargeTopAppBar`),
@@ -130,7 +130,7 @@ map it to its `Kpt*` equivalent by hand (the rename was 1:1).
 
 The minimum five steps to turn a fresh clone of this template into a branded,
 running app. For the long-form walkthrough see
-[`templates/FORK_QUICKSTART.md`](../docs/setup/FORK_QUICKSTART.md).
+[`templates/FORK_QUICKSTART.md`](../docs/architecture/tree/app-profile/fork-quickstart.md).
 
 1. **Rebrand identifiers** — edit the five `APP_*` keys in `gradle.properties`
    (`APP_ID_BASE`, `APP_NAME`, `APP_VERSION_BASE`, `APP_BUNDLE_DISPLAY_NAME`,
@@ -160,5 +160,5 @@ running app. For the long-form walkthrough see
    the demo build on a connected device / emulator.
 
 That's the floor. Everything else (icons, splash, push, deep links, store
-listings) layers on top — see the [Fork Quickstart](../docs/setup/FORK_QUICKSTART.md)
+listings) layers on top — see the [Fork Quickstart](../docs/architecture/tree/app-profile/fork-quickstart.md)
 for the expanded walkthrough.

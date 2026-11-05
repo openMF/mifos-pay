@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core-base:common"))
-            implementation(project(":core-base:security"))
+            implementation(project(":core-base:crypto"))
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.serialization)
             implementation(libs.multiplatform.settings.coroutines)
@@ -33,10 +33,33 @@ kotlin {
             implementation(libs.koin.android)
         }
 
+        // localStorage for the web secure store (WebSecureStore). Declared on the shared jsCommon
+        // source set because that is where the code lives; kotlinx-browser is in stdlib for js but
+        // a separate artifact for wasmJs, so the shared set needs it explicitly.
+        jsCommonMain.dependencies {
+            implementation(libs.kotlinx.browser)
+        }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.multiplatform.settings.test)
             implementation(libs.kotlinx.coroutines.test)
         }
     }
+}
+
+/*
+ * Run the wasm node tests.
+ *
+ * The build convention disables `wasmJsNodeTest` for every non-Compose module because their wasm
+ * bundles used to reference `skiko.mjs` without shipping it (ERR_MODULE_NOT_FOUND). This module no
+ * longer has any path to skiko: its crypto primitives now come from the Compose-free
+ * `core-base/crypto` instead of `core-base/security`, so the blanket exclusion no longer applies
+ * here and `SecureStoreCoreTest` can run on wasm as well as desktop, iOS and JS.
+ *
+ * If a future dependency reintroduces a Compose/skiko edge, this task fails loudly rather than
+ * silently losing the target - which is the point of enabling it explicitly.
+ */
+afterEvaluate {
+    tasks.matching { it.name == "wasmJsNodeTest" }.configureEach { enabled = true }
 }

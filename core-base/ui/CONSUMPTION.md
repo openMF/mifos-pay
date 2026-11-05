@@ -2,7 +2,7 @@
 
 > Framework-shared Compose primitives — `ScreenState`/`SubmitState` rendering, base ViewModels, and
 > navigation/motion helpers. There's no sibling `core/ui` wrapper for these; a fork's
-> `core/designsystem` supplies BRANDING (`AppScreenStateDefaults`) that these composables read via
+> `core/designsystem` supplies BRANDING (`KptScreenStateDefaults`) that these composables read via
 > `CompositionLocal`, but the composables themselves are consumed directly from feature screens.
 
 ## Call sequence
@@ -36,7 +36,7 @@
   connectivity/staleness UI; most screens get them for free through `ScreenContent`'s defaults rather
   than placing them manually.
 - Safe to extend: the `Default*Content` composables read `LocalScreenStateDefaults` — brand them via
-  `core/store`'s `AppScreenStateDefaults`, not by editing this module.
+  `core/store`'s `KptScreenStateDefaults`, not by editing this module.
 - Framework-owned, don't fork: `BaseViewModel`'s action/event channel plumbing and `ScreenContent`'s
   `AnimatedContent` transition-key logic — see the "Do NOT modify core-base/ui" note in the root
   `CLAUDE.md`.

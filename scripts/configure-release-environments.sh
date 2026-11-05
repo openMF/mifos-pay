@@ -173,6 +173,8 @@ fi
 # gating it makes EVERY rung require an approval click. `--production-only` strips it (and
 # the other test channels) below.
 declare -a ENVS=()
+# True when platform $1 was requested on the command line, so only the
+# environments for the selected platforms are created.
 has () { [[ ",$ONLY," == *",$1,"* ]]; }
 
 if has android; then
@@ -202,13 +204,13 @@ fi
 # distribution doesn't need an approval click. Recommended for most teams.
 if $PRODUCTION_ONLY; then
   declare -a FILTERED=()
-  for e in "${ENVS[@]}"; do
+  for e in ${ENVS[@]+"${ENVS[@]}"}; do
     case "$e" in
       *-internal|*-firebase|*-preview|*-prerelease) ;;   # skip test channels
       *) FILTERED+=("$e") ;;
     esac
   done
-  ENVS=("${FILTERED[@]}")
+  ENVS=(${FILTERED[@]+"${FILTERED[@]}"})
 fi
 
 [[ ${#ENVS[@]} -eq 0 ]] && { echo "❌ no environments selected (check --only / --production-only)" >&2; exit 2; }
@@ -232,7 +234,7 @@ $DRY_RUN && echo "   MODE:      DRY-RUN (no changes)"
 echo "════════════════════════════════════════════════════════════════"
 
 fail=0
-for env in "${ENVS[@]}"; do
+for env in ${ENVS[@]+"${ENVS[@]}"}; do
   wait=0
   is_top_rung "$env" && wait="$WAIT_PROD"
   body="$(printf '{"wait_timer":%s,"reviewers":[%s],"deployment_branch_policy":null}' "$wait" "$REVIEWERS_JSON")"

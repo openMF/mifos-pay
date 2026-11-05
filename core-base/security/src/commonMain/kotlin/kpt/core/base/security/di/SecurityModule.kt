@@ -9,8 +9,6 @@
  */
 package kpt.core.base.security.di
 
-import org.koin.core.module.Module
-import org.koin.dsl.module
 import kpt.core.base.security.BiometricAuthenticator
 import kpt.core.base.security.DeepLinkValidator
 import kpt.core.base.security.FailedAttemptTracker
@@ -21,6 +19,8 @@ import kpt.core.base.security.SecurityConfig
 import kpt.core.base.security.SecurityPolicy
 import kpt.core.base.security.SessionManager
 import kpt.core.base.security.TamperDetector
+import org.koin.core.module.Module
+import org.koin.dsl.module
 
 /**
  * Zero-config security Koin module. Auto-detects build type via
@@ -45,4 +45,11 @@ val SecurityModule = module {
     single { SecureAuthManager(get(), get(), get()) }
 }
 
+/**
+ * Per-target security bindings supplied by each `actual` — the keystore/keychain backing and the
+ * platform biometric prompt.
+ *
+ * Separate from the common module because these are the members that genuinely cannot be expressed
+ * in common code; everything else in `core-base/security` is shared.
+ */
 expect val platformSecurityModule: Module

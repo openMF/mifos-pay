@@ -14,11 +14,11 @@
     <string name="feature_settings_faq">FAQ</string>
     <string name="feature_settings_settings">Paramètres</string>
     <string name="feature_settings_change_password">Changer le mot de passe</string>
-    <string name="feature_settings_change_passcode">Changer le code d\'accès</string>
+    <string name="feature_settings_change_passcode">Changer le code d'accès</string>
     <string name="feature_settings_enable_biometrics">Activer la biométrie</string>
     <string name="feature_settings_disable_biometrics">Désactiver la biométrie</string>
-    <string name="feature_settings_biometrics_not_set">La biométrie n\'est pas configurée sur cet appareil</string>
-    <string name="feature_settings_biometrics_not_available">La biométrie n\'est pas disponible sur cet appareil</string>
+    <string name="feature_settings_biometrics_not_set">La biométrie n'est pas configurée sur cet appareil</string>
+    <string name="feature_settings_biometrics_not_available">La biométrie n'est pas disponible sur cet appareil</string>
     <string name="feature_settings_log_out">Se déconnecter</string>
     <string name="feature_settings_disable_account">Désactiver le compte</string>
     <string name="feature_settings_alert_disable_account_desc">Cela supprimera toutes les informations relatives à votre compte</string>

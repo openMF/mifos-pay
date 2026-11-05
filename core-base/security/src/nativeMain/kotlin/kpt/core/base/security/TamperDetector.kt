@@ -10,23 +10,26 @@
 package kpt.core.base.security
 
 import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.cinterop.toKString
 import platform.Foundation.NSFileManager
 import platform.posix.getenv
 
+/** Apple/native implementation of `TamperDetector`. */
 @OptIn(ExperimentalForeignApi::class)
 actual class TamperDetector actual constructor() {
 
+    /** `isDeviceCompromised` on Apple/native. */
     actual fun isDeviceCompromised(): Boolean {
         return checkJailbreakIndicators()
     }
 
+    /** `isDebuggerAttached` on Apple/native. */
     actual fun isDebuggerAttached(): Boolean {
         // sysctl-based debugger detection is possible but platform-specific.
         // Consumer apps can override with a more robust check.
         return false
     }
 
+    /** `isSignatureValid` on Apple/native. */
     actual fun isSignatureValid(): Boolean = true
 
     private fun checkJailbreakIndicators(): Boolean {

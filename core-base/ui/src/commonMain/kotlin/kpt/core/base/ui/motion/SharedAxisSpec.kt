@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.motion
 
@@ -53,7 +53,7 @@ internal object SharedAxisSpec {
      */
     fun isSymmetric(motion: Motion): Boolean =
         enterForwardSlideMs(motion) == exitForwardSlideMs(motion) &&
-        enterForwardFadeMs(motion) == exitForwardFadeMs(motion) &&
-        enterBackSlideMs(motion) == exitBackSlideMs(motion) &&
-        enterBackFadeMs(motion) == exitBackFadeMs(motion)
+            enterForwardFadeMs(motion) == exitForwardFadeMs(motion) &&
+            enterBackSlideMs(motion) == exitBackSlideMs(motion) &&
+            enterBackFadeMs(motion) == exitBackFadeMs(motion)
 }

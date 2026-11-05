@@ -15,6 +15,7 @@ import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_standing_instructions` LEDGER table.
@@ -36,6 +37,7 @@ import kotlinx.coroutines.flow.Flow
  * `id ASC` as tiebreaker. Names may be blank in the domain (nullable string
  * coalesced to ""); such rows sort to the front of the list.
  */
+@DbDao
 @Dao
 interface StandingInstructionDao {
 

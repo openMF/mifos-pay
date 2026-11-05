@@ -27,9 +27,12 @@ jobs:
           cp deployment/web/cloudflare-pages/_headers cmp-web/build/dist/js/productionExecutable/_headers
           cp deployment/web/cloudflare-pages/_redirects cmp-web/build/dist/js/productionExecutable/_redirects
 
+      - name: Resolve this fork's Cloudflare Pages project
+        run: echo "CF_PAGES_PROJECT=$(bash deployment/_shared/scripts/fork-identity.sh get web.cloudflare.project)" >> "$GITHUB_ENV"
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken:  ${{ secrets.CLOUDFLARE_PAGES_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command:   pages deploy cmp-web/build/dist/js/productionExecutable --project-name=YOUR_CLOUDFLARE_PAGES_PROJECT
+          command:   pages deploy cmp-web/build/dist/js/productionExecutable --project-name=${{ env.CF_PAGES_PROJECT }}

@@ -21,6 +21,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 cd "$PROJECT_ROOT"
 
+# The ONE bash reader of gradle/fork.properties (scripts/_shared/fork-props.sh). Replaces an
+# inline `grep | cut -d= | tr` that had neither head -1 nor inline-`#` stripping. Latent, not
+# live: today's bridge has neither, but an inline comment would have made this Team ID
+# `ABCD123456   # PLACEHOLDER — …` and a duplicated key would have concatenated values.
+# shellcheck source=../_shared/fork-props.sh
+. "$PROJECT_ROOT/scripts/_shared/fork-props.sh"
+
 # Print functions
 print_success() {
     echo -e "${GREEN}✓ $1${NC}"
@@ -79,7 +86,8 @@ APN_TEAM_ID=$(cat "$APN_TEAM_ID_FILE" 2>/dev/null | tr -d '\n\r')
 APN_KEY_PATH="$APN_KEY_FILE_PATH"
 
 # Read TEAM_ID from fork.properties for cross-check
-TEAM_ID=$(grep -E "^apple\.team\.id=" gradle/fork.properties 2>/dev/null | cut -d= -f2- | tr -d '\n\r')
+FORK_PROPERTIES="$PROJECT_ROOT/gradle/fork.properties"
+TEAM_ID="$(fp_get apple.team.id)"
 
 # Check APN configuration
 print_section "📋 Checking APN Configuration"

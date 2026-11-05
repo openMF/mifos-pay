@@ -15,6 +15,7 @@ import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_transactions` LEDGER table.
@@ -48,6 +49,7 @@ import kotlinx.coroutines.flow.Flow
  * Newest-first on `dateEpochMs` (nulls last), tiebreaker on `transactionId`.
  * Matches the existing UI's chronological rendering in `HistoryScreen`.
  */
+@DbDao
 @Dao
 interface TransactionDao {
 

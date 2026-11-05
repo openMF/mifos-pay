@@ -46,8 +46,14 @@ class DeleteSync<K : Any>(
             return false
         }
         return runCatching { deleteEndpoint(key) }.fold(
-            onSuccess = { bookkeeper.clear(key); true },
-            onFailure = { bookkeeper.setLastFailedSync(key, now()); false },
+            onSuccess = {
+                bookkeeper.clear(key)
+                true
+            },
+            onFailure = {
+                bookkeeper.setLastFailedSync(key, now())
+                false
+            },
         )
     }
 
@@ -61,7 +67,10 @@ class DeleteSync<K : Any>(
     suspend fun retry(key: K): Boolean {
         if (bookkeeper.getLastFailedSync(key) == null) return true
         return runCatching { deleteEndpoint(key) }.fold(
-            onSuccess = { bookkeeper.clear(key); true },
+            onSuccess = {
+                bookkeeper.clear(key)
+                true
+            },
             onFailure = { false },
         )
     }

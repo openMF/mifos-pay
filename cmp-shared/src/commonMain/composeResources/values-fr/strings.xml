@@ -16,10 +16,10 @@
     <string name="history">Historique</string>
     <string name="transaction_history">Historique des transactions</string>
     <string name="settings">Paramètres</string>
-    <string name="not_connected">⚠️ Vous n\'êtes pas connecté à Internet</string>
+    <string name="not_connected">⚠️ Vous n'êtes pas connecté à Internet</string>
     <string name="faq">FAQ</string>
     <string name="update">Mettre à jour</string>
-    <string name="select_instance">Sélectionner l\'instance</string>
+    <string name="select_instance">Sélectionner l'instance</string>
     <string name="main_server">Serveur principal</string>
     <string name="interbank_server">Serveur interbancaire</string>
     <string name="no_interbank_servers">Aucun serveur interbancaire disponible</string>

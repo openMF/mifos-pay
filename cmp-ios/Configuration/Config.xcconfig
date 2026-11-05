@@ -4,3 +4,9 @@
 APP_BUNDLE_ID = org.mifospay
 APP_NAME = Mifos Pay
 TEAM_ID = L432S2FZP5
+
+// Keychain Sharing entitlement — REQUIRED by core-base/datastore's KeychainSettings
+// (service "kpt.secure"). Without it iOS keychain access fails -34018 at launch and
+// crashes the Koin graph (UserPreferencesRepositoryImpl -> AppViewModel). Applies to
+// every flavor (project-level base config). Path relative to cmp-ios/ (SRCROOT).
+CODE_SIGN_ENTITLEMENTS = iosApp/iosApp.entitlements

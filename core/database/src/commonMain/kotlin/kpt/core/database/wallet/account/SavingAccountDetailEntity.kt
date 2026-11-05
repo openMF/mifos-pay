@@ -12,6 +12,7 @@ package kpt.core.database.wallet.account
 import androidx.room3.Entity
 import androidx.room3.Index
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single savings-account detail record — the Room mirror of the
@@ -70,6 +71,7 @@ import androidx.room3.PrimaryKey
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_saving_account_details",
     indices = [

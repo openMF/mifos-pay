@@ -26,7 +26,10 @@ CANARY_FLAVOR="canary"
 CANARY_VARIANT="canaryRelease"
 BACKUP="$(mktemp)"
 
+# Print a canary progress line.
 log()  { printf '  [canary] %s\n' "$*"; }
+# Print a canary failure and exit 1 immediately — a partially-run canary
+# proves nothing, so there is no continue-on-error path.
 fail() { printf '  [canary] FAIL: %s\n' "$*" >&2; exit 1; }
 
 # ── guard: the derivation surfaces must be clean BEFORE we start, so the
@@ -37,6 +40,8 @@ if [[ -n "$baseline_dirty" ]]; then
   fail "deployment/ or .github/ has uncommitted changes; commit or stash before running the canary."
 fi
 
+# Restore LocalFlavors.kt from the backup taken before injection.
+# On a trap, so an interrupted canary cannot leave a synthetic flavor behind.
 restore() {
   if [[ -f "$BACKUP" ]]; then
     cp "$BACKUP" "$LOCAL_FLAVORS"

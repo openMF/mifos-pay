@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.data.infra
 
@@ -26,6 +26,9 @@ import kotlinx.coroutines.flow.Flow
  *    scheduling is a follow-up).
  */
 interface SyncManager {
+    /** Whether a sync is in flight — drives the refreshing affordance without each screen tracking it. */
     val isSyncing: Flow<Boolean>
+
+    /** Requests a sync. Advisory: the manager may coalesce it with one already running. */
     fun requestSync()
 }

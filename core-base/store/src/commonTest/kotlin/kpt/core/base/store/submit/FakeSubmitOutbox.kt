@@ -121,6 +121,16 @@ class FakeSubmitOutbox<P> : SubmitOutbox<P> {
         }
     }
 
+    override fun observePendingIds(): kotlinx.coroutines.flow.Flow<Set<Long>> =
+        _entries.map { rows -> rows.filter { it.status == SubmitOutboxStatus.PENDING }.map { it.id }.toSet() }
+
+    // Mirrors `DraftDao.requeue`: back to PENDING, attemptCount kept.
+    override suspend fun requeue(id: Long, error: String?) {
+        _entries.value = _entries.value.map {
+            if (it.id == id) it.copy(status = SubmitOutboxStatus.PENDING, errorMessage = null) else it
+        }
+    }
+
     /** Test seam — force an entry's attemptCount to simulate prior failed cycles. */
     fun seedAttemptCount(id: Long, attempts: Int) {
         _entries.value = _entries.value.map {

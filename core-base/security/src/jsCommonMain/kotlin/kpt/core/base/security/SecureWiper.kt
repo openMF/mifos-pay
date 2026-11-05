@@ -11,13 +11,16 @@ package kpt.core.base.security
 
 import co.touchlab.kermit.Logger
 
+/** Web (JS/WasmJS) implementation of `SecureWiper`. */
 actual class SecureWiper actual constructor() {
 
+    /** `wipeSecureStorage` on Web (JS/WasmJS). */
     actual fun wipeSecureStorage() {
         Logger.w("SecureWiper") { "Secure storage wipe triggered" }
         // Clear localStorage/sessionStorage in browser context.
     }
 
+    /** `scrubMemory` on Web (JS/WasmJS). */
     actual fun scrubMemory(data: ByteArray) {
         for (i in data.indices) {
             data[i] = 0

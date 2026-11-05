@@ -49,6 +49,7 @@ fun Flow<List<ScreenState<*>>>.aggregateDashboardProgress(): Flow<DashboardProgr
  * Pure conversion from a list of per-card states to a single [DashboardProgressState].
  * Exposed so tests + non-Flow call sites can re-use the aggregation contract.
  */
+@OptIn(kotlin.time.ExperimentalTime::class)
 fun List<ScreenState<*>>.toDashboardProgressState(): DashboardProgressState =
     DashboardProgressState(
         loaded = count { it is ScreenState.Content<*> },
@@ -56,4 +57,6 @@ fun List<ScreenState<*>>.toDashboardProgressState(): DashboardProgressState =
         isAnyLoading = any { it is ScreenState.Loading },
         hasAnyError = any { it is ScreenState.Error || it is ScreenState.NoNetwork },
         hasAnyEmpty = any { it is ScreenState.Empty },
+        // Stalest loaded card drives the dashboard-level "Updated X ago" freshness signal.
+        oldestFetchedAt = mapNotNull { (it as? ScreenState.Content<*>)?.fetchedAt }.minOrNull(),
     )

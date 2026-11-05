@@ -11,7 +11,8 @@ signing: none
 distribution_groups: ["public"]
 retention: "indefinite"
 runners:
-  local: { command: "wrangler pages deploy ./cmp-web/build/dist/js/productionExecutable --project-name=YOUR_CLOUDFLARE_PAGES_PROJECT" }
+  # --project-name comes from gradle/fork.properties at run time (fork-identity.sh) — never committed here.
+  local: { command: "wrangler pages deploy ./cmp-web/build/dist/js/productionExecutable --project-name=$(bash deployment/_shared/scripts/fork-identity.sh get web.cloudflare.project)" }
   ci:    { workflow_snippet: workflow-snippet.yml }
 requires_confirm: false
 enabled_by_default: false

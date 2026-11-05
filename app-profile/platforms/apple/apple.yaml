@@ -2,6 +2,15 @@
 # Only values that DIFFER from the common app.yaml live here.
 apple:
   team_id: L432S2FZP5                        # apple.team.id — Apple Developer Team ID (gradle/libs.versions.toml#iosTeamId)
+  # The App Store NUMERIC id (not the bundle id). Deploy lanes already needed it; the APP needs it too,
+  # because `AppReviewManager.promptForCustomReview()` deep-links to the store listing and iOS has no
+  # bundle-id-based store URL. It lived in `deployment-layer/DEPLOYMENT_PROJECT_CONFIG.yaml` and
+  # hardcoded in `deployment/ios/testflight/lane.rb` — neither of which the running app can read.
+  #
+  # This is the PROJECT-scope SoT. `resolve-deploy-config.sh` keeps the three scopes in order for
+  # deploy time (deployment-layer override → here → _org/company.yaml), and `syncForkConfig` projects
+  # THIS value into the generated `core/platform/config/AppReviewConfig` for runtime.
+  app_store_id: ""                           # apple.app.store.id (numeric) — empty until Mifos Pay is published on the App Store
   match:
     git:
       url: git@github.com:openMF/ios-provisioning-profile.git   # apple.match.git.url — deployment/BOOTSTRAP.md
@@ -16,6 +25,10 @@ apple:
     internal_group: Internal Testers         # apple.testers.internal.group
     external_group: mifos-mobile-apps        # apple.testers.external.group — deployment/ios/testflight distribution_groups
     external_public_link: "true"             # apple.testers.external.public.link
+    # External TestFlight tester roster (emails — PUBLIC identifiers, not secrets). deployment/_shared/config.rb
+    # #sync_testflight_testers reads this list and adds each as an external beta tester on the group.
+    # For an org-shared roster, materialize this from your org SoT. Leave empty for public-link-only.
+    external_emails: []                      # apple.testers.external.emails — e.g. [alice@example.com, bob@example.com]
   keywords: 'wallet,payments,transfer,sendmoney,QRpay,invoice,card,linkbank,KYC,merchant'  # store.ios.keywords — real, from dev fastlane/metadata/ios/en-US/keywords.txt
   category: 'FINANCE'                          # store.ios.category — real, from dev fastlane/metadata/ios/primary_category.txt
   ios:

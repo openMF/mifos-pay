@@ -1,7 +1,16 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 import com.mobilebytelabs.kmpflavors.KmpFlavorExtension
 import org.apache.tools.ant.filters.ReplaceTokens
+import org.convention.forkPropFirst
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -58,7 +67,10 @@ kotlin {
                 implementation(libs.multiplatform.settings.coroutines)
 
                 implementation(libs.koin.core)
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.client.js)
+                // installWebNetworkMonitor() configures the monitor before Koin first touches it.
+                implementation(libs.cmp.network.monitor)
             }
         }
 
@@ -85,36 +97,34 @@ val webTitleSuffix = activeFlavorConfig?.webTitleSuffix?.orNull ?: ""
 // index.html link-preview / SEO meta is white-labelled from the app-profile store SoT, materialized to
 // gradle/fork.properties by syncForkConfig (task `syncForkConfig`). Without this the template's
 // mobile-wallet og:image URLs + "Kotlin Multiplatform Template" copy ship on every fork's web build.
-val forkProps = Properties()
-rootProject.file("gradle/fork.properties").let { f ->
-    if (f.exists()) f.inputStream().use { s -> forkProps.load(s) }
-}
-fun forkProp(vararg keys: String): String {
-    for (k in keys) {
-        val v = forkProps.getProperty(k)
-        if (!v.isNullOrBlank()) return v
-    }
-    return ""
-}
-val webDescription = forkProp("store.android.short.description", "store.subtitle").ifBlank { appDisplayName }
-val webKeywords    = forkProp("store.ios.keywords", "store.macos.keywords")
-val webCopyright   = forkProp("store.copyright", "org.copyright").ifBlank { appDisplayName }
-val webAuthor      = forkProp("org.name", "store.copyright").ifBlank { appDisplayName }
-val webUrl         = forkProp("web.custom.domain", "org.marketing.url", "org.support.url")
-val webOgImage     = "./og-image.png"   // materialized by syncForkConfig from app-profile/platforms/web/media
+// Read through the ONE Gradle-side reader (org.convention.KptAppProfileProperties). `forkPropFirst` keeps
+// this file's first-non-blank-wins semantics: each value has an ordered list of source keys.
+val webDescription = forkPropFirst("store.android.short.description", "store.subtitle").ifBlank { appDisplayName }
+val webKeywords = forkPropFirst("store.ios.keywords", "store.macos.keywords")
+val webCopyright = forkPropFirst("store.copyright", "org.copyright").ifBlank { appDisplayName }
+val webAuthor = forkPropFirst("org.name", "store.copyright").ifBlank { appDisplayName }
+val webUrl = forkPropFirst("web.custom.domain", "org.marketing.url", "org.support.url")
+val webOgImage = "./og-image.png" // materialized by syncForkConfig from app-profile/platforms/web/media
 
+// Only index.html carries @TOKEN@s. ReplaceTokens is a text filter: applied to the whole task it
+// re-encodes every binary in it as UTF-8 — including the skiko.wasm Compose copies in, which then
+// fails to compile and the app never renders (and favicon.ico / og-image.png are corrupted too).
 tasks.matching { it.name == "jsProcessResources" || it.name == "wasmJsProcessResources" }
     .configureEach {
-        (this as Copy).filter(
-            mapOf("tokens" to mapOf(
-                "APP_DISPLAY_NAME" to "$appDisplayName$webTitleSuffix",
-                "APP_DESCRIPTION"  to webDescription,
-                "APP_KEYWORDS"     to webKeywords,
-                "APP_COPYRIGHT"    to webCopyright,
-                "APP_AUTHOR"       to webAuthor,
-                "APP_URL"          to webUrl,
-                "OG_IMAGE"         to webOgImage,
-            )),
-            ReplaceTokens::class.java,
-        )
+        (this as Copy).filesMatching("index.html") {
+            filter(
+                mapOf(
+                    "tokens" to mapOf(
+                        "APP_DISPLAY_NAME" to "$appDisplayName$webTitleSuffix",
+                        "APP_DESCRIPTION" to webDescription,
+                        "APP_KEYWORDS" to webKeywords,
+                        "APP_COPYRIGHT" to webCopyright,
+                        "APP_AUTHOR" to webAuthor,
+                        "APP_URL" to webUrl,
+                        "OG_IMAGE" to webOgImage,
+                    ),
+                ),
+                ReplaceTokens::class.java,
+            )
+        }
     }

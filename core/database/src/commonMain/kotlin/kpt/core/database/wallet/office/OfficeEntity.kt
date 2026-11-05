@@ -11,6 +11,7 @@ package kpt.core.database.wallet.office
 
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single Fineract office — the Room mirror of the
@@ -49,6 +50,7 @@ import androidx.room3.PrimaryKey
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_offices",
 )

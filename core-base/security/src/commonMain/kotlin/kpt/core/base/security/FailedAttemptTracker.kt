@@ -27,8 +27,10 @@ class FailedAttemptTracker(
     @kotlin.concurrent.Volatile
     private var failedCount: Int = 0
 
+    /** Failed attempts so far in this run. */
     val currentFailedCount: Int get() = failedCount
 
+    /** Whether the lockout threshold has been reached. Recoverable — distinct from the wipe threshold. */
     val isLockedOut: Boolean get() = failedCount >= policy.lockAfterFailedAttempts
 
     /**
@@ -59,8 +61,20 @@ class FailedAttemptTracker(
     }
 }
 
+/**
+ * What the tracker did in response to a failed attempt — the caller's cue for what to show next.
+ *
+ * Escalates in order: the attempt was counted, the account locked, or the local data was wiped after
+ * the final permitted attempt. [DATA_WIPED] is terminal and irreversible, so a caller must treat it
+ * as a state change rather than an error message.
+ */
 enum class FailureAction {
+    /** The attempt was counted; the user may try again. */
     ATTEMPT_RECORDED,
+
+    /** The lockout threshold was reached. Recoverable. */
     LOCKED_OUT,
+
+    /** The wipe threshold was reached and local data has been destroyed. Terminal and irreversible. */
     DATA_WIPED,
 }

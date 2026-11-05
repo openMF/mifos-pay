@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 package org.convention
 
 import com.android.build.api.dsl.CommonExtension
@@ -55,7 +64,7 @@ internal fun Project.configureKotlinJvm() {
  */
 private fun Project.configureKotlin() {
     val jvmTargetVersion = JvmTarget.fromTarget(
-        libs.findVersion("javaVersion").get().requiredVersion
+        libs.findVersion("javaVersion").get().requiredVersion,
     )
     // Use withType to workaround https://youtrack.jetbrains.com/issue/KT-55947
     tasks.withType<KotlinCompile>().configureEach {

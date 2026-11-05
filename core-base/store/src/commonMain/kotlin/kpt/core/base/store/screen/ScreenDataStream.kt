@@ -12,9 +12,6 @@ package kpt.core.base.store.screen
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkMonitor
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkStatus
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.networkStatusDebouncedState
-import kotlin.time.Clock
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.hours
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -31,13 +28,16 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import org.mobilenativefoundation.store.store5.Store
-import org.mobilenativefoundation.store.store5.StoreReadRequest
 import kpt.core.base.store.freshness.FreshnessBand
 import kpt.core.base.store.freshness.FreshnessBands
 import kpt.core.base.store.freshness.FreshnessSignal
 import kpt.core.base.store.infra.DecisionEngine
 import kpt.core.base.store.infra.FetchedAtRepository
+import org.mobilenativefoundation.store.store5.Store
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import kotlin.time.Clock
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 
 /**
  * Default reconnect-debounce window for [asScreenStream]. Suppresses transient
@@ -87,13 +87,14 @@ const val DEFAULT_USER_REFRESH_DEBOUNCE_MS: Long = 1_000L
  * }
  * ```
  */
-@OptIn(kotlin.time.ExperimentalTime::class)
+
 /**
  * One-shot carrier for force-fresh intent between [ScreenDataStream]'s refresh entry points and the
  * `storeFlow` built in `asScreenStream`. Deliberately NOT a Flow: merging a second flow into the read
  * pipeline added an async subscription hop, and `refreshTrigger` has replay = 0, so a reconnect
  * `tryEmit` landing inside that window was dropped.
  */
+@OptIn(kotlin.time.ExperimentalTime::class)
 internal class ForceFreshLatch {
     var pending: Boolean = false
 
@@ -101,6 +102,14 @@ internal class ForceFreshLatch {
     fun consume(): Boolean = pending.also { pending = false }
 }
 
+/**
+ * One screen's read surface: a cold [ScreenState] flow plus the refresh/retry controls that drive it.
+ *
+ * This is what a repository returns and a ViewModel collects — the single seam where loading,
+ * empty, error, no-network and content are decided ONCE, so no screen re-derives them. Construct it
+ * via `Store.asScreenStream(…)` / `asPagingScreenStream(…)` rather than directly; the constructor is
+ * internal because the flow and the trigger must be wired consistently.
+ */
 class ScreenDataStream<T> internal constructor(
     /**
      * Cold Flow of ScreenState decisions. Consumer should call .stateIn() once.
@@ -142,8 +151,6 @@ class ScreenDataStream<T> internal constructor(
     private val forceLatch: ForceFreshLatch = ForceFreshLatch(),
 ) {
     private var lastRefreshMark: kotlin.time.TimeMark? = null
-
-
 
     /**
      * Trigger a network refresh. Preserves existing content while loading.
@@ -228,6 +235,14 @@ class ScreenDataStream<T> internal constructor(
     message = "This API is for unit tests of ScreenDataStream consumers only. " +
         "Do not call from production code.",
 )
+/**
+ * Opt-in marker for the testing-only [ScreenDataStream] constructors.
+ *
+ * Those entry points let a test supply an arbitrary state flow, which bypasses the Store that
+ * normally decides state — useful in a unit test, wrong in production, where it would silently
+ * detach a screen from its cache and freshness rules. Warning rather than error so a test can opt in
+ * locally without a module-wide flag.
+ */
 @Retention(AnnotationRetention.BINARY)
 annotation class ExperimentalScreenDataStreamTestingApi
 
@@ -243,7 +258,8 @@ fun <T> screenDataStreamForTesting(
     state: Flow<ScreenState<T>>,
     refreshTrigger: MutableSharedFlow<Unit> = MutableSharedFlow(extraBufferCapacity = 1),
     forceFreshTrigger: MutableSharedFlow<Unit> = MutableSharedFlow(extraBufferCapacity = 1),
-    userRefreshDebounceMs: Long = 0L, // tests don't want debounce by default
+    // tests don't want debounce by default
+    userRefreshDebounceMs: Long = 0L,
     timeSource: kotlin.time.TimeSource = kotlin.time.TimeSource.Monotonic,
     freshness: Flow<FreshnessSignal> = emptyFlow(),
 ): ScreenDataStream<T> = ScreenDataStream(

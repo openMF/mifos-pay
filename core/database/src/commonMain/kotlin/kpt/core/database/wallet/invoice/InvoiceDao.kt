@@ -15,6 +15,7 @@ import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_invoices` LEDGER table.
@@ -37,6 +38,7 @@ import kotlinx.coroutines.flow.Flow
  * datatable endpoint (Ktorfit shim preserved server row order; server tends
  * to return newest-first for datatables).
  */
+@DbDao
 @Dao
 interface InvoiceDao {
 

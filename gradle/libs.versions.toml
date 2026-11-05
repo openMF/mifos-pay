@@ -1,6 +1,6 @@
 [versions]
 buildkonfig = "0.21.2"
-kmpProductFlavors = "2.8.3"
+kmpProductFlavors = "2.10.0"
 
 # ── Fork Identity — edit ONLY these 5 lines, then run ./gradlew syncForkConfig ──────────────────
 # NOTE: module Android namespaces are no longer a fork property — they derive from the fixed
@@ -13,7 +13,7 @@ iosTeamId        = "L432S2FZP5"                      # Apple Developer Team ID
 # ─────────────────────────────────────────────────────────────────────────────────────────────────
 # Android
 androidDesugarJdkLibs = "2.1.5"
-androidGradlePlugin = "9.3.1"
+androidGradlePlugin = "9.4.0"
 androidTools = "32.3.1"
 compileSdk = "37"
 minSdk = "26"
@@ -40,7 +40,6 @@ androidxCoreSplashscreen = "1.2.0"
 androidxWork = "2.11.2"
 androidxMetrics = "1.0.0"
 androidxNavigation = "2.9.2"
-cmpPdfGenerator = "3.5.10"
 kotlinxHtml = "0.12.0"
 navigationevent = "1.0.1"
 androidxProfileinstaller = "1.4.1"
@@ -67,7 +66,7 @@ bouncycastle = "1.84"
 
 # Utility Dependencies
 dependencyGuard = "0.5.0"
-googleOss = "17.5.1"
+googleOss = "17.5.3"
 googleOssPlugin = "0.12.0"
 review = "2.0.2"
 appUpdate = "2.1.0"
@@ -76,7 +75,7 @@ integrity = "1.6.0"
 # Static Analysis & Code Formatting
 ktlint = "14.2.0"
 detekt = "1.23.8"
-spotlessVersion = "8.8.0"
+spotlessVersion = "8.10.2"
 turbine = "1.2.1"
 twitter-detekt-compose = "0.0.26"
 moduleGraph = "2.9.0"
@@ -89,8 +88,8 @@ secrets = "2.0.1"
 typesafeConventions = "0.5.0"
 
 # Kotlin KMP Dependencies
-kotlin = "2.4.0"
-kover = "0.9.8"
+kotlin = "2.4.20"
+kover = "0.9.9"
 kotlinInject = "0.9.0"
 kotlinxBrowser = "0.5.0"
 kotlinxCoroutines = "1.11.0"
@@ -104,7 +103,7 @@ ktorVersion = "3.5.1"
 ktorfit = "2.7.5"
 
 # Supabase
-supabase = "3.6.0"
+supabase = "3.8.0"
 
 # Koin CMP Dependencies
 koin = "4.2.2"
@@ -119,10 +118,10 @@ mokkery = "3.4.2"
 # 3.5.9: cmp-network-monitor accuracy overhaul (seed fix incl. no-plan/captive-portal, HTTP-204
 # validation, injectable ConnectivityProvider) — MobileByteLabs/KmpToolkit#150. Replaces the
 # mifos-pay-local jordond experiment.
-kmptoolkit = "3.5.11"
+kmptoolkit = "3.5.34"
 
 # CMP Libraries
-compose-plugin = "1.11.1"
+compose-plugin = "1.12.0"
 coil = "3.5.0"
 backHandlerVersion = "2.5.0"
 constraintLayout = "0.8.0"
@@ -164,17 +163,17 @@ packageNamespace = "org.mifospay"
 packageVersion = "1.0.0"
 
 # Store 5
-store = "5.1.0-alpha08"
+store = "5.1.0-alpha10"
 
 #Room 3
-room = "3.0.0"
+room = "3.1.0-alpha01"
 sqliteBundled = "2.7.0"
 sqliteWeb = "2.7.0"
 
 # worker-kmp — single-API background + foreground worker scheduling across
 # Android / iOS / Desktop / Web. See https://github.com/MobileByteLabs/worker-kmp.
 # Pin tracks last published release on Maven Central.
-worker-version = "4.0.6"
+worker-version = "4.0.7"
 # KMPNotifier — Kotlin Multiplatform local + push notifications (Android/iOS/Desktop/Web).
 kmpnotifier = "2.0.0"
 
@@ -197,6 +196,7 @@ zxingVersion = "3.5.3"
 
 composablePreviewScanner = "0.9.1"
 skie = "0.10.4"
+cmpSupabaseAuth = "0.3.3"
 [libraries]
 kmp-product-flavors-plugin = { group = "io.github.mobilebytelabs.kmpflavors", name = "flavor-plugin", version.ref = "kmpProductFlavors" }
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
@@ -208,7 +208,7 @@ androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", ve
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidxBrowser" }
-cmp-pdf-generator = { module = "io.github.mobilebytelabs:cmp-pdf-generator", version.ref = "cmpPdfGenerator" }
+cmp-pdf-generator = { module = "io.github.mobilebytelabs:cmp-pdf-generator", version.ref = "kmptoolkit" }
 
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -500,6 +500,20 @@ roborazzi-composeDesktop = { group = "io.github.takahirom.roborazzi", name = "ro
 composablePreviewScanner-common = { group = "io.github.sergio-sastre.ComposablePreviewScanner", name = "common", version.ref = "composablePreviewScanner" }
 composablePreviewScanner-jvm = { group = "io.github.sergio-sastre.ComposablePreviewScanner", name = "jvm", version.ref = "composablePreviewScanner" }
 roborazzi-gradlePlugin = { group = "io.github.takahirom.roborazzi", name = "roborazzi-gradle-plugin", version.ref = "roborazzi" }
+supabase-auth = { group = "io.github.jan-tennert.supabase", name = "auth-kt", version.ref = "supabase" }
+cmp-supabase-auth = { group = "io.github.mobilebytelabs", name = "cmp-supabase-auth", version.ref = "cmpSupabaseAuth" }
+cmp-supabase-auth-compose = { group = "io.github.mobilebytelabs", name = "cmp-supabase-auth-compose", version.ref = "cmpSupabaseAuth" }
+cmp-open-url = { module = "io.github.mobilebytelabs:cmp-open-url", version.ref = "kmptoolkit" }
+cmp-inapp-update = { module = "io.github.mobilebytelabs:cmp-in-app-update", version.ref = "kmptoolkit" }
+cmp-deep-link = { module = "io.github.mobilebytelabs:cmp-deep-link", version.ref = "kmptoolkit" }
+cmp-app-review = { module = "io.github.mobilebytelabs:cmp-app-review", version.ref = "kmptoolkit" }
+cmp-clipboard = { module = "io.github.mobilebytelabs:cmp-clipboard", version.ref = "kmptoolkit" }
+cmp-app-intents = { module = "io.github.mobilebytelabs:cmp-app-intents", version.ref = "kmptoolkit" }
+cmp-bubble = { module = "io.github.mobilebytelabs:cmp-bubble", version.ref = "kmptoolkit" }
+cmp-toast = { module = "io.github.mobilebytelabs:cmp-toast", version.ref = "kmptoolkit" }
+cmp-share-compose = { module = "io.github.mobilebytelabs:cmp-share-compose", version.ref = "kmptoolkit" }
+cmp-intent-launcher-compose = { module = "io.github.mobilebytelabs:cmp-intent-launcher-compose", version.ref = "kmptoolkit" }
+cmp-app-intents-compose = { module = "io.github.mobilebytelabs:cmp-app-intents-compose", version.ref = "kmptoolkit" }
 [bundles]
 androidx-compose-ui-test = [
     "androidx-compose-ui-test",

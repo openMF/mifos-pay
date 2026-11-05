@@ -19,7 +19,8 @@ import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.client.ClientDetailKey
 import org.mifospay.core.common.ScreenState
 import org.mifospay.core.common.asScreenStateFlow
@@ -36,7 +37,7 @@ import org.mifospay.core.model.network.entity.client.ClientAccountsEntity
 import org.mifospay.core.network.FineractApiManager
 import org.mifospay.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 class ClientRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
@@ -90,10 +91,10 @@ class ClientRepositoryImpl(
             key = ClientDetailKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_client_details-$clientId",
+            cacheKey = AppCacheKeys.ClientDetail.of(clientId),
             scope = scope,
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.CLIENT_DETAIL,
+            ttl = WalletStoreTtl.CLIENT_DETAIL,
         )
     }
 

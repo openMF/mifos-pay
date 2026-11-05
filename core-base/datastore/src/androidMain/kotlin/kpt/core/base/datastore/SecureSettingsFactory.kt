@@ -15,7 +15,12 @@ import androidx.security.crypto.MasterKey
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 
+/** Android implementation of `SecureSettingsFactory`. */
 actual class SecureSettingsFactory(private val context: Context) {
+    /**
+     * Android secure settings, backed by EncryptedSharedPreferences with a Keystore-held master key. Synchronous: the
+     * key never leaves the Keystore but reads do not need to await it.
+     */
     actual fun create(): Settings {
         val masterKey = MasterKey.Builder(context)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)

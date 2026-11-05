@@ -12,6 +12,7 @@ package kpt.core.database.wallet.bill
 import androidx.room3.Entity
 import androidx.room3.Index
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a user-defined bill — the Room mirror of the
@@ -57,6 +58,7 @@ import androidx.room3.PrimaryKey
  *   AutoPay configuration fields.
  * @property createdAt / [updatedAt] Epoch-millis timestamps set by the mapper.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_autopay_bills",
     indices = [

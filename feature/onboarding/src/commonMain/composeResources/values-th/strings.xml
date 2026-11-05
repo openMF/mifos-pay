@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">ข้าม</string>
+    <string name="feature_onboarding_skip_a11y">ข้ามไปยังตัวเลือกความเป็นส่วนตัว</string>
+    <string name="feature_onboarding_next">ถัดไป</string>
+    <string name="feature_onboarding_page_of">หน้า %1$d จาก %2$d</string>
+    <string name="feature_onboarding_overview_title">เครื่องมือการเงินของคุณ รวมไว้ในที่เดียว</string>
+    <string name="feature_onboarding_overview_body">สินเชื่อ บิล อัตราดอกเบี้ย และเครื่องคำนวณอยู่รวมกัน ตัวเลขที่ต้องการจึงอยู่ห่างแค่แตะเดียว</string>
+    <string name="feature_onboarding_track_title">ไม่พลาดวันครบกำหนด</string>
+    <string name="feature_onboarding_track_body">ติดตามสินเชื่อและบิล พร้อมรับการแจ้งเตือนก่อนถึงกำหนดชำระแต่ละครั้ง</string>
+    <string name="feature_onboarding_offline_title">ไม่มีสัญญาณ? ใช้งานต่อได้</string>
+    <string name="feature_onboarding_offline_body">ข้อมูลที่คุณบันทึกจะอยู่ในอุปกรณ์นี้และใช้งานแบบออฟไลน์ได้ การเปลี่ยนแปลงจะซิงค์เมื่อกลับมาออนไลน์</string>
+    <string name="feature_onboarding_privacy_title">ช่วยปรับปรุงแอป</string>
+    <string name="feature_onboarding_privacy_lead">ทั้งสองตัวเลือกจะปิดอยู่ เว้นแต่คุณจะเปิดเอง อนุญาตทั้งสองได้ในแตะเดียว หรือเลือกด้านล่าง — คุณยังคงใช้งานได้ทุกฟีเจอร์</string>
+    <string name="feature_onboarding_analytics_label">แชร์ข้อมูลการใช้งาน</string>
+    <string name="feature_onboarding_analytics_body">หน้าจอและฟีเจอร์ใดที่มีการใช้งาน และบ่อยเพียงใด ไม่รวมสิ่งที่คุณพิมพ์หรือบันทึก</string>
+    <string name="feature_onboarding_crash_label">ส่งรายงานข้อขัดข้อง</string>
+    <string name="feature_onboarding_crash_body">เมื่อแอปขัดข้อง: ข้อผิดพลาด เวอร์ชันแอป และรุ่นอุปกรณ์ เพื่อให้เราแก้ไขได้</string>
+    <string name="feature_onboarding_no_personal_data">สิ่งที่คุณป้อนในแอปจะไม่ถูกส่งออกไปเลย</string>
+    <string name="feature_onboarding_settings_later">คุณสามารถเปลี่ยนแปลงได้ภายหลังในการตั้งค่า</string>
+    <string name="feature_onboarding_connect_server">ตั้งค่าเซิร์ฟเวอร์ของคุณ</string>
+    <string name="feature_onboarding_agreement">การใช้บริการของเราถือว่าคุณยอมรับ%1$sและ%2$sของเรา</string>
+    <string name="feature_onboarding_terms">ข้อกำหนดและเงื่อนไข</string>
+    <string name="feature_onboarding_privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="feature_onboarding_allow_get_started">อนุญาตและเริ่มต้นใช้งาน</string>
+    <string name="feature_onboarding_continue_without">ดำเนินการต่อโดยไม่แชร์</string>
+    <string name="feature_onboarding_continue_choices">ดำเนินการต่อตามที่เลือก</string>
+    <string name="feature_onboarding_save_failed">ไม่สามารถบันทึกตัวเลือกของคุณได้ โปรดลองอีกครั้ง</string>
+</resources>

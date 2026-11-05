@@ -5,10 +5,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.platform.garbage
 
+/** `garbageCollector` on Android. */
 @Suppress("ExplicitGarbageCollectionCall")
 actual val garbageCollector: () -> Unit
     get() = { Runtime.getRuntime().gc() }

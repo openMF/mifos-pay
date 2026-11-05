@@ -18,7 +18,8 @@ import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.notification.NotificationKey
 import org.mifospay.core.common.ScreenState
 import org.mifospay.core.common.asScreenStateFlow
@@ -26,7 +27,7 @@ import org.mifospay.core.data.repository.NotificationRepository
 import org.mifospay.core.model.notification.Notification
 import org.mifospay.core.network.FineractApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 class NotificationRepositoryImpl(
     private val apiManager: FineractApiManager,
@@ -75,11 +76,11 @@ class NotificationRepositoryImpl(
             key = NotificationKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_notifications-$clientId",
+            cacheKey = AppCacheKeys.Notification.of(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.NOTIFICATION,
+            ttl = WalletStoreTtl.NOTIFICATION,
         )
     }
 }

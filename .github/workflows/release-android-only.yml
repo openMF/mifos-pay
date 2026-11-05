@@ -16,7 +16,7 @@ on:
 
 jobs:
   version:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
     outputs:
       tag: ${{ steps.c.outputs.tag }}
     steps:
@@ -30,9 +30,16 @@ jobs:
 
   release-android:
     needs: version
-    uses: therajanmaurya/mifos-x-actionhub-publish-android-kmp/.github/workflows/release.yaml@v2.0.12
+    uses: therajanmaurya/mifos-x-actionhub-publish-android-kmp/.github/workflows/release.yaml@v2.0.30
     with:
       android_package_name: cmp-android
       version_tag: ${{ needs.version.outputs.tag }}
       starting_rung: ${{ inputs.android_rung }}
+      # REQUIRED — the deploy lanes live in deployment/fastlane/Fastfile, not at the root.
+      # The root fastlane/Fastfile defines exactly ONE lane (`ios build_ios`, for the PR check),
+      # so with fastlane_cwd left at its default '.' this workflow resolves `fastlane android
+      # deployInternal` against a Fastfile that has no `android` platform at all and dies with
+      # "Could not find lane" — after a full build. Asserted by RT-7 of
+      # scripts/product-health/checks/ruby-toolchain-coherence.sh, which scans every caller.
+      fastlane_cwd: deployment
     secrets: inherit

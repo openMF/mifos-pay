@@ -11,17 +11,49 @@ identity:
   app_id: org.mifospay                    # SoT for appId; mirrored to gradle/libs.versions.toml
   app_name: Mifos Pay                      # Android app_name, iOS CFBundleDisplayName, settings footer
   namespace: org.mifospay                 # mirrors app_id
+  # Apex domain the ARCHITECTURE DOCS publish under, as `docs.<this value>`. OPTIONAL and UNSET by
+  # default: with no value the docs workflow still deploys, to the Cloudflare Pages `*.pages.dev`
+  # URL it gets for free, and simply attaches no custom domain. It is declared here rather than
+  # derived from `app_id` because a reversed package id is not a domain a fork necessarily owns —
+  # guessing one would publish to a host nobody controls and hand out a link that never resolves.
+  # The Pages PROJECT name is always `docs-<fork.project.name>`, so it is unique without this.
+  docs_domain: ""                          # e.g. "mifos.org" → docs.mifos.org
 
 # Per-flavor network endpoints + demo credentials + log tag. syncForkConfig emits these into
 # gradle/fork.properties (network.base.url.{demo,prod} / demo.username / demo.password / log.tag),
 # which KMPFlavorsConventionPlugin reads into per-flavor BuildConfig (BASE_URL / DEMO_USERNAME /
 # DEMO_PASSWORD / LOG_TAG). Blank falls back to the template default baked into the plugin. (B4)
 network:
+  # Extra BuildKonfig fields for `core/network` that are NOT tied to an access point (analytics keys,
+  # feature flags). An access point's `publishable_key_env:`/`api_key_env:` already generates its own field —
+  # declare those on the point, not here. Both feed the `syncForkConfig:buildkonfig` region of
+  # `core/network/build.gradle.kts`, so a declared key ALWAYS has a matching BuildKonfig field
+  # (NAP-8); the value is read at build time from the env var or local.properties, never committed.
+  #
+  #   build_config_fields:
+  #     - name: MY_ANALYTICS_KEY      # the BuildKonfig constant
+  #       from_env: MY_ANALYTICS_KEY  # env var / local.properties key (defaults to `name`)
+  build_config_fields: []
   demo_base_url: https://demo.openmf.org    # demo-flavor Mifos X platform endpoint
   prod_base_url: https://api.openmf.org      # prod-flavor Mifos X platform endpoint
   demo_username: demo
   demo_password: demo
   log_tag: MifosPay
+  # Network privacy (GDPR: a log line is personal data once a body holds a name, account or token).
+  # Every key is optional; ABSENT = the secure default shown. syncForkConfig projects this onto
+  # AppAccessPoints.policy, which core-base applies to every access point's client.
+  logging:
+    release: none            # none | info | headers — `body` is refused: release builds never log bodies
+    debug: body              # none | info | headers | body — debug builds never ship
+    # Query parameters masked in logged URLs, on top of the built-in credential names
+    # (api_key, token, access_token, password, secret, signature, code, …).
+    redact_query_params: []
+  # CORS relay that WEB builds route `proxied_host` calls through. `/cors` is the site's OWN relay —
+  # cmp-web's _worker.js on Cloudflare Pages, which forwards only to the declared proxied hosts — so no
+  # third party sees the traffic. An https:// URL names an external relay instead, which is a
+  # third-party processor (declare it in the privacy policy). Omit for none. Hosts without a relay
+  # (GitHub Pages) cannot serve `/cors`, so proxied calls fail there and the screen shows its error.
+  web_cors_proxy: /cors
   # Declarative access-point topology — every REST + Supabase endpoint the app talks to, in ONE place.
   # mifos-pay talks to a single Mifos X (Fineract) platform API; the per-flavor BASE_URL above
   # (demo/prod) is what KMPFlavorsConventionPlugin actually wires into BuildConfig today — this
@@ -32,6 +64,45 @@ network:
       type: rest
       base_url: https://api.openmf.org/
       loggable_host: api.openmf.org
+      auth: none                    # mifos-pay sets its own Fineract headers in KtorInterceptor (fork network stack)
+    - id: lwmswhoxvvoagzkqxiyd
+      owner: template
+      type: supabase
+      # The project REF is the public identity in https://<ref>.supabase.co — it is the access-point
+      # id, the package name under core/network, and the @ApiBinding argument, all the same string.
+      # Rename all three together: network-ksp matches the annotation against the declared ids, so a
+      # package rename alone leaves @ApiBinding naming an id app-profile no longer declares.
+      base_url: https://lwmswhoxvvoagzkqxiyd.supabase.co
+      auth: none                    # Supabase authenticates with its publishable key + gotrue, not an Authorization header we set
+      loggable_host: lwmswhoxvvoagzkqxiyd.supabase.co
+      publishable_key_env: SUPABASE_PUBLISHABLE_KEY   # secrets/LAYOUT.yaml#supabase_publishable_key; empty sample → "" → client inert
+# ── Module package ownership ────────────────────────────────────────────────────────────────────
+#
+# Each module declares its own packages in `core/<module>/module-packages.yaml`, next to the code it
+# describes, using the three-value vocabulary `demo | template | fork`. They are NOT inlined here.
+#
+# Why not here: this file is `owner: merge` — it carries template AND fork declarations, so a
+# template edit landing beside a fork edit is a 3-way merge waiting to happen. A per-module file is
+# TEMPLATE-ONLY and full-copies, the same split that took Room's `migration-units.yaml` out of this
+# file. The module that gains a package is now the module whose file changes.
+#
+# `module_packages` below is the CONNECTION: the modules whose declarations make up this app. It is
+# what tells a reader (and `/kmp-project-template-sync`) where to look, and it is asserted against
+# what is on disk by G-CORE-PKG, so a module cannot be added here without its file — or the reverse.
+module_packages:
+  - core/common/module-packages.yaml
+  - core/data/module-packages.yaml
+  - core/database/module-packages.yaml
+  - core/datastore/module-packages.yaml
+  - core/designsystem/module-packages.yaml
+  - core/domain/module-packages.yaml
+  - core/firebase/module-packages.yaml
+  - core/model/module-packages.yaml
+  - core/network/module-packages.yaml
+  - core/platform/module-packages.yaml
+  - core/store/module-packages.yaml
+  - core/ui/module-packages.yaml
+  - feature/module-packages.yaml
 
 org:
   name: Mifos Initiative
@@ -43,6 +114,14 @@ org:
   marketing_url: ""                        # matches dev's real (blank) marketing_url.txt
   privacy_url: https://openmf.github.io/privacy_policy_mifos_mobile.html   # real, from dev fastlane/metadata/ios/en-US/privacy_url.txt
   support_url: https://mifos.org/resources/support/   # real, from dev fastlane/metadata/ios/en-US/support_url.txt
+  # The fork's OWN named links (community chat, product site, status page …) for its own screens —
+  # `name: https://…`. syncForkConfig generates core/model/.../config/AppOrgLinks.kt, read as
+  # `AppOrgLinks["community"]`. The template reads none, so it ships none.
+  links: {}
+  # Org-shared vault-alias prefix (`<ws>-<suffix>`): syncForkConfig maps the template's `mifos-x-*`
+  # aliases to `<secrets_namespace>-*`. Keep `mifos-x` for any openMF/Mifos-family fork; a fork in
+  # another org sets its own workspace slug (e.g. `mbs`).
+  secrets_namespace: mifos-x
 
 legal:
   company_name: Mifos Initiative
@@ -106,6 +185,74 @@ store:
     demo_user: "andromeda"
     demo_password: "password"
   app_description: Mifos Pay                   # desktop packaging description (app.description)
+# In-app review prompting — NOT the `store.review` block above.
+#
+# `store.review` is the App STORE review TEAM's contact + demo notes, read at submission time.
+# This is the running app asking a user to rate it. The names sit one word apart and the meanings do
+# not overlap at all, so they are deliberately separate top-level keys rather than nested siblings.
+#
+# `syncForkConfig` projects this into the generated `core/platform/config/AppReviewConfig`, which
+# `AppViewModel` reads. Store identity is NOT duplicated here — it resolves from
+# `platforms/apple/apple.yaml#apple.app_store_id` (iOS) and `identity.app_id` (Android).
+in_app_review:
+  enabled: true
+  # These guard the CUSTOM path. The native prompt is rate-limited by the OS itself, but
+  # `promptForCustomReview()` deep-links to the store and would otherwise fire whenever asked.
+  min_launches: 5                            # never on first launch — before the app has earned it
+  min_days_since_install: 3
+  cooldown_days: 90                          # after a prompt, do not ask again inside this window
+# The repository's community files. The org's devops and security teams set them up per repository —
+# not the template and not this repo's tooling — so a template sync never writes them
+# (`strategy: repo-files` in customization-surface.yaml). Each file declares who may EDIT it:
+#   access: read            locked (default; also when a file or this block is absent)
+#   access: write           editable — optionally `writers: [github-login, …]` to name who
+# The framework workspace's `_org/company.yaml#repo_files.<file>` overrides a file's entry here.
+# Other spellings share an entry: Contributing.md → CONTRIBUTING.md; LICENCE / LICENSE.md → LICENSE.
+# A file outside the repo root is keyed by its repo-relative path (.github/workflows/cla-check.yml).
+repo_files:
+  managed_by: org
+  files:
+    CODE_OF_CONDUCT.md: { access: read }
+    CONTRIBUTING.md:    { access: read }
+    LICENSE:            { access: read }
+    SECURITY.md:        { access: read }
+    .github/workflows/cla-check.yml: { access: read }   # the org's CLA bot workflow
+# Where this repository's work is tracked — read by /idea-jira (the ticket ↔ code audit) and the
+# /flow-to-tickets-* commands. Fork-owned: a fork sets ITS OWN board here. `repo` names the repository
+# the board belongs to, so a fork that inherited the template's block is refused instead of auditing
+# the template's tickets against the fork's code.
+tracking:
+  jira:
+    site: mifosforge.jira.com           # Jira Cloud site (no scheme)
+    project_key: KMPPT                  # the project whose issues are audited
+    board_id: 63                        # https://mifosforge.jira.com/jira/software/c/projects/KMPPT/boards/63
+    repo: openMF/kmp-project-template   # the repository this board tracks
+# App security defaults. `./gradlew syncForkConfig` projects this block into
+# core/model/.../config/AppSecurityConfig.kt, which UserData.DEFAULT reads.
+security:
+  # Whether a FRESH install allows screenshots + screen recording (false = FLAG_SECURE on Android, the
+  # window also hidden from the recents thumbnail). It is only the starting value: the user's own
+  # choice (Settings → "Allow screen capture") is persisted by core/datastore and wins from then on.
+  # Debug builds always allow capture so QA / device-test tooling can screenshot.
+  screen_capture_allowed_by_default: false
+  # Whether a FRESH install starts signed in. `true` for an app with no login (this template's demo);
+  # a fork whose app has a login sets `false` so a first run lands on sign-in. Only the starting value:
+  # sign-in / sign-out persist through core/datastore. ABSENT means `true` (unlike screen capture),
+  # so an older app.yaml without this key keeps today's behaviour instead of flipping to signed-out.
+  signed_in_by_default: true
+  # Whether a FRESH install starts with UserData.firstTimeUser = true, so RootNavViewModel shows onboarding
+  # once before anything else (until the onboarding screen calls setFirstTimeState(false)). The template
+  # ships feature/onboarding (three intro pages + the analytics / crash-report consent page) but keeps it
+  # off by default; set `true` to show it on first run. ABSENT means `false`.
+  first_run_onboarding: false
+# Privacy consent (GDPR Art. 6(1)(a) / 7): analytics and crash reporting are CONSENT-based processing, so
+# they must start OFF and be as easy to withdraw as to give (Settings → Privacy). These are only the
+# starting values for a fresh install; the user's own choice is persisted by core/datastore and wins.
+# ABSENT = false. Set `true` only where you rely on another lawful basis and have documented it (DPIA).
+# Nothing is collected before the stored choice is read: core-base starts Firebase with collection off.
+privacy:
+  analytics_enabled_by_default: false
+  crash_reporting_enabled_by_default: false
 
 media:
   root: media

@@ -1,0 +1,20 @@
+---
+# Repo-root bundler config — the ONE vendor tree every app root shares.
+#
+# Committed on purpose, exactly like deployment/.bundle/config. BUNDLE_PATH is relative to
+# each bundler app root, and this repo has two of them (here, and deployment/ — fastlane
+# resolves lanes from a `fastlane/` subdirectory of cwd). deployment/ points at `../vendor/bundle`;
+# this one points at the same tree from the root's own perspective, so `bundle install` from
+# EITHER root materializes the identical 135M gem set ONCE instead of two copies that drift.
+#
+# Untracked, this fixes only the machine that wrote it: a fresh clone gets no `path` setting at
+# all, root `bundle install` scatters gems into the global gem dir, and the two roots diverge
+# again — the same defect in a new location. Asserted by RT-6 in
+# scripts/product-health/checks/ruby-toolchain-coherence.sh.
+#
+# NOTE (CI): ruby/setup-ruby with `bundler-cache: true` runs `bundle config set --local path
+# <cwd>/vendor/bundle` and OVERWRITES the app-root config it runs in. CI therefore ignores these
+# values by design — it has only ever one bundler root per job (`working-directory: deployment`),
+# so there is nothing to deduplicate there. This file is a local-development invariant. The thing
+# that DOES matter in CI is asserted by RT-7.
+BUNDLE_PATH: "vendor/bundle"

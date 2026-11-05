@@ -20,6 +20,11 @@ cell() { # <fixture> <template:1/0> <expected-exit> <label>
   else
     out="$(env -u TEMPLATE_SELF_BUILD FORK_PROPERTIES="$HERE/$fx/gradle/fork.properties" HEALTH_ROOT="$HERE/$fx" bash "$CHECK" 2>&1)"; rc=$?
   fi
+  # A leg expected to FAIL must emit a diagnostic — exit 1 with silent output means the check bailed
+  # (missing fixture / unset var) instead of detecting the identity leak under test.
+  if [ "$exp" = "1" ] && ! printf '%s' "$out" | grep -qE '❌|✗'; then
+    echo "   ❌ $lbl → exit $rc but produced no diagnostic (check bailed, did not detect)"; rc_ok=1; return
+  fi
   if [ "$rc" = "$exp" ]; then
     echo "   ✅ $lbl → exit $rc (expected $exp)"
   else

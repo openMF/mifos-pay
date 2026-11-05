@@ -380,7 +380,7 @@
     <ID>ReturnCount:AmountUtils.kt$AmountUtils$fun formatAmountForInput(amount: String): String</ID>
     <ID>ReturnCount:AmountUtils.kt$AmountUtils$fun isValidAmountInput(input: String): Boolean</ID>
     <ID>ReturnCount:AmountUtils.kt$AmountUtils$fun validateAndFormatAmountInput(input: String): String</ID>
-    <ID>ReturnCount:AppErrorMapper.kt$AppErrorMapper$fun &lt;T&gt; mapError( throwable: Throwable, userMessage: String? = null, ): ScreenState&lt;T&gt;</ID>
+    <ID>ReturnCount:KptErrorMapper.kt$KptErrorMapper$fun &lt;T&gt; mapError( throwable: Throwable, userMessage: String? = null, ): ScreenState&lt;T&gt;</ID>
     <ID>ReturnCount:CameraView.kt$ScannerCameraCoordinator$@OptIn(ExperimentalForeignApi::class, BetaInteropApi::class) fun prepare(layer: CALayer, allowedMetadataTypes: List&lt;AVMetadataObjectType&gt;)</ID>
     <ID>ReturnCount:CardNumberFilter.kt$CreditCardVisualTransformation.AmexOffsetMapping$override fun originalToTransformed(offset: Int): Int</ID>
     <ID>ReturnCount:CardNumberFilter.kt$CreditCardVisualTransformation.AmexOffsetMapping$override fun transformedToOriginal(offset: Int): Int</ID>

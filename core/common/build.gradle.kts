@@ -9,11 +9,6 @@
  */
 plugins {
     alias(libs.plugins.kmp.library.convention)
-    alias(libs.plugins.kotlin.parcelize)
-    // Fork addition: StringResourceSerializer + DialogManager/DialogMessage need the `compose`
-    // extension (compose.components.resources) for org.jetbrains.compose.resources.StringResource.
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {

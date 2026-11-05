@@ -1,0 +1,24 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+
+// SPIKE — KSP processor deriving Koin API bindings from @ApiBinding.
+// Plain JVM: a symbol processor runs on the build classpath, never ships in the app.
+plugins {
+    kotlin("jvm")
+}
+
+dependencies {
+    implementation("com.google.devtools.ksp:symbol-processing-api:${libs.versions.ksp.get()}")
+    testImplementation(libs.kotlin.test)
+}
+
+tasks.test {
+    useJUnitPlatform()
+}

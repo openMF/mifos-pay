@@ -193,6 +193,9 @@ get_android_app_id() {
         grep "$package_name" | awk '{print $4}' | head -1
 }
 
+# Print the Firebase app id for iOS bundle id $1, or nothing when it is not registered.
+# Empty output is the "not registered yet" signal the caller branches on, which is why
+# firebase's stderr is discarded rather than surfaced.
 get_ios_app_id() {
     local bundle_id=$1
     firebase apps:list IOS --project="$FIREBASE_PROJECT_ID" 2>/dev/null | \

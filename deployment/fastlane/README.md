@@ -198,6 +198,14 @@ Sync Desktop store listings — no binary upload (GitHub Release + Mac App Store
 
 Promote an existing TestFlight build to App Store review — no rebuild, no re-upload. Mirrors Android's promote_to_production.
 
+### ios attachAppStoreSubscriptions
+
+```sh
+[bundle exec] fastlane ios attachAppStoreSubscriptions
+```
+
+Attach the app's subscriptions to the App Store review submission (no-op when there are none)
+
 ### ios uploadAppStore
 
 ```sh
@@ -280,7 +288,7 @@ Frame + upload iOS screenshots (generation is handled by /release)
 [bundle exec] fastlane ios syncListing
 ```
 
-Sync App Store listing (metadata + screenshots) — no build, no binary upload, no submission
+OVERRIDE App Store listing TEXT (name/subtitle/keywords/description) from the promoted deck — no build, no submission. Screenshots are overridden separately by the deploy runtime via asc-upload-screenshots.rb (reliable clear-and-replace).
 
 ### ios uploadTestFlight
 

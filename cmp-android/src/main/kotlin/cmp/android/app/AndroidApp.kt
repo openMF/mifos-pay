@@ -5,13 +5,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.android.app
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import cmp.android.app.fork.onForkCreate
 import cmp.shared.utils.initKoin
 import coil3.ImageLoader
 import coil3.PlatformContext
@@ -51,6 +52,9 @@ class AndroidApp : Application(), SingletonImageLoader.Factory, KoinComponent {
         // This ensures the app always launches with the user's chosen language,
         // regardless of system settings or device language.
         restoreSavedLanguage()
+
+        // The fork's own Android startup (cmp/android/app/fork/ForkAndroidHooks.kt, fork-owned).
+        onForkCreate()
     }
 
     /**

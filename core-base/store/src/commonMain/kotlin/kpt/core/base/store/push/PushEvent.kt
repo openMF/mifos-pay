@@ -28,12 +28,26 @@ package kpt.core.base.store.push
  */
 sealed interface PushEvent<K, V> {
 
-    /** A new entity arrived from the server. */
+    /**
+     * A new entity arrived from the server.
+     *
+     * @property key identity of the new record.
+     * @property value the record itself, already mapped to the domain model.
+     */
     data class Insert<K, V>(val key: K, val value: V) : PushEvent<K, V>
 
-    /** An existing entity was modified server-side. */
+    /**
+     * An existing entity was modified server-side.
+     *
+     * @property key identity of the changed record.
+     * @property value its new state, already mapped to the domain model.
+     */
     data class Update<K, V>(val key: K, val value: V) : PushEvent<K, V>
 
-    /** An entity was removed server-side. */
+    /**
+     * An entity was removed server-side.
+     *
+     * @property key identity of the removed record. There is no value left to carry.
+     */
     data class Delete<K, V>(val key: K) : PushEvent<K, V>
 }

@@ -8,8 +8,7 @@
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
-import java.util.Properties
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.convention.forkProp
 
 /*
  * Copyright 2025 Mifos Initiative
@@ -42,6 +41,20 @@ kotlin {
             implementation(projects.coreBase.designsystem)
             implementation(libs.cmp.network.monitor.compose)
             implementation(libs.cmp.intent.launcher)
+
+            // Compose surfaces for the cores wired in core-base/platform. `api`, not
+            // `implementation`: these exist to be CALLED from feature screens, and the feature
+            // convention plugin already gives every feature core-base:ui — so exposing them here is
+            // what makes ShareButton / ShareSheet / AppIntentsRegistry / rememberSupportsIntent
+            // reachable without each feature declaring anything.
+            //
+            // Their composables call the libraries' global entry points (Share.share, AppIntents…)
+            // rather than the CompositionLocals these modules also export, so nothing here needs the
+            // toolkit locals provided. The template's own locals in kpt.core.base.platform stay
+            // canonical — see the note in LocalManagerProviders.kt about the name collision.
+            api(libs.cmp.share.compose)
+            api(libs.cmp.intent.launcher.compose)
+            api(libs.cmp.app.intents.compose)
 
             implementation(compose.ui)
             implementation(compose.material3)
@@ -97,10 +110,8 @@ compose.resources {
 // `gradle/fork.properties#app.display.name` — the build-bridge that syncForkConfig generates from the
 // SoT `app-profile/app.yaml#identity.app_name`. AppInfo.appDisplayName exposes it as the single
 // common-code read point, so a fork rebrands in app-profile, not in per-feature strings.xml.
-val coreBaseUiForkProps = Properties().apply {
-    val f = rootProject.file("gradle/fork.properties")
-    if (f.exists()) f.inputStream().use { load(it) }
-}
+// Read through the ONE Gradle-side reader (org.convention.KptAppProfileProperties).
+val coreBaseUiAppDisplayName = forkProp("app.display.name", "App Toolkit")
 
 buildkonfig {
     packageName = "kpt.core.base.ui"
@@ -108,7 +119,22 @@ buildkonfig {
         buildConfigField(
             STRING,
             "APP_DISPLAY_NAME",
-            coreBaseUiForkProps.getProperty("app.display.name").orEmpty().ifBlank { "App Toolkit" },
+            coreBaseUiAppDisplayName,
         )
     }
+}
+
+// commonTest gets the multiplatform `runComposeUiTest` API, the desktop (JVM) target gets the JUnit4
+// runner that executes it — the same three lines `core-base/designsystem` declares, by COORDINATE
+// rather than through the `compose.*` accessors, which avoids the experimental-accessor opt-in.
+//
+// This module owns `ScreenContent` and its two wrappers and had NO render test of any kind, which is
+// how `RefreshableScreenContent` shipped forwarding none of `ScreenContent`'s state slots: nothing
+// could compose it and observe that a caller's `empty` never appeared. A state-rendering library
+// with no way to render it in a test cannot catch that class of defect.
+dependencies {
+    val composeVersion = libs.versions.compose.plugin.get()
+    add("commonTestImplementation", "org.jetbrains.compose.ui:ui-test:$composeVersion")
+    add("desktopTestImplementation", "org.jetbrains.compose.ui:ui-test-junit4:$composeVersion")
+    add("desktopTestImplementation", compose.desktop.currentOs)
 }

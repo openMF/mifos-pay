@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">跳过</string>
+    <string name="feature_onboarding_skip_a11y">跳至隐私选项</string>
+    <string name="feature_onboarding_next">下一步</string>
+    <string name="feature_onboarding_page_of">第 %1$d 页，共 %2$d 页</string>
+    <string name="feature_onboarding_overview_title">理财工具，尽在一处</string>
+    <string name="feature_onboarding_overview_body">贷款、账单、利率和计算器集中呈现，所需数字一触即达。</string>
+    <string name="feature_onboarding_track_title">不再错过还款日</string>
+    <string name="feature_onboarding_track_body">随时掌握贷款和账单，每笔款项到期前都会收到提醒。</string>
+    <string name="feature_onboarding_offline_title">没有信号？照常使用</string>
+    <string name="feature_onboarding_offline_body">您保存的内容存储在本设备上，离线也能使用。恢复联网后会自动同步更改。</string>
+    <string name="feature_onboarding_privacy_title">帮助改进应用</string>
+    <string name="feature_onboarding_privacy_lead">除非您主动开启，否则两项均为关闭状态。您可以一键全部允许，或在下方选择 — 无论如何都可以使用全部功能。</string>
+    <string name="feature_onboarding_analytics_label">分享使用情况分析</string>
+    <string name="feature_onboarding_analytics_body">使用了哪些界面和功能，以及使用频率。绝不包含您输入或保存的内容。</string>
+    <string name="feature_onboarding_crash_label">发送崩溃报告</string>
+    <string name="feature_onboarding_crash_body">应用崩溃时：发送错误信息、应用版本和设备型号，以便我们修复问题。</string>
+    <string name="feature_onboarding_no_personal_data">您在应用中输入的任何内容都不会被发送。</string>
+    <string name="feature_onboarding_settings_later">您稍后可以在“设置”中更改此项。</string>
+    <string name="feature_onboarding_connect_server">设置服务器</string>
+    <string name="feature_onboarding_agreement">使用我们的服务即表示您接受我们的%1$s和%2$s。</string>
+    <string name="feature_onboarding_terms">条款和条件</string>
+    <string name="feature_onboarding_privacy_policy">隐私政策</string>
+    <string name="feature_onboarding_allow_get_started">允许并开始使用</string>
+    <string name="feature_onboarding_continue_without">不分享并继续</string>
+    <string name="feature_onboarding_continue_choices">按我的选择继续</string>
+    <string name="feature_onboarding_save_failed">无法保存您的选择，请重试。</string>
+</resources>

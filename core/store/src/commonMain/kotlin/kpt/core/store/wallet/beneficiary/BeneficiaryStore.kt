@@ -11,7 +11,8 @@ package kpt.core.store.wallet.beneficiary
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.beneficiary.BeneficiaryDao
 import kpt.core.database.wallet.beneficiary.toDomain
@@ -22,6 +23,10 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `BeneficiaryEntity`. Shared with the DAO's writes. */
 private const val BENEFICIARIES_TABLE = "wallet_beneficiaries"
@@ -72,10 +77,11 @@ private const val BENEFICIARIES_TABLE = "wallet_beneficiaries"
  * they call their existing online repository methods and the server-echoed row
  * appears here on the next refresh cycle. There is no `Bookkeeper`.
  */
+@StoreProvider(id = "beneficiary")
+@CacheKey(fn = "of", key = "wallet_beneficiaries-{clientId}", params = ["clientId:Long"])
 fun provideBeneficiaryStore(
     apiManager: SelfServiceApiManager,
     dao: BeneficiaryDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<BeneficiaryKey, List<Beneficiary>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: BeneficiaryKey ->
         // Ktorfit returns Flow<List<Beneficiary>> — take the first (and only) emission.
@@ -83,7 +89,7 @@ fun provideBeneficiaryStore(
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: BeneficiaryKey ->
-            daoFlow(BENEFICIARIES_TABLE) { dao.observeByClient(key.clientId) }
+            run { dao.observeByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: BeneficiaryKey, beneficiaries: List<Beneficiary> ->

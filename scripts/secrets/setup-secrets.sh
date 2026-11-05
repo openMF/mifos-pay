@@ -21,6 +21,9 @@ platforms="${1:-}"; force=0
 [ -z "$platforms" ] && { echo "usage: $0 <${SECRETS_PLATFORMS// /|}|all> [--force]"; exit 2; }
 [ "$platforms" = all ] && platforms="$SECRETS_PLATFORMS"
 
+# Write stdin to repo-relative path $1 with mode $2 (default 0600).
+# Creates parent directories and chmods AFTER writing, so a secret is never briefly
+# world-readable between creation and the mode change.
 _write_file() {  # path  mode(0600|0644)
   local dest="$REPO_ROOT/$1" mode="${2:-0600}"
   mkdir -p "$(dirname "$dest")"; cat > "$dest"; chmod "$mode" "$dest"

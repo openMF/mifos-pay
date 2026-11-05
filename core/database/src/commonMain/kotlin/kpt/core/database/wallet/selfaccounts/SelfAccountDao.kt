@@ -15,6 +15,7 @@ import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_self_accounts` LEDGER table.
@@ -38,6 +39,7 @@ import kotlinx.coroutines.flow.Flow
  * `toAccount()`; a stable name/id order keeps the QR-generation-picker
  * rendering deterministic across refresh cycles).
  */
+@DbDao
 @Dao
 interface SelfAccountDao {
 

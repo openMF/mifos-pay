@@ -10,8 +10,8 @@
 -->
 <resources>
     <string name="feature_passcode_biometric_error_lockout">ਬਹੁਤ ਸਾਰੀਆਂ ਕੋਸ਼ਿਸ਼ਾਂ। ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">ਬਾਇਓਮੀਟ੍ਰਿਕ ਹਾਰਡਵੇਅਰ ਅਸਥਾਈ ਤੌਰ \'ਤੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਕੋਈ ਬਾਇਓਮੀਟ੍ਰਿਕ ਦਰਜ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਬਾਇਓਮੀਟ੍ਰਿਕਸ ਸੈੱਟਅੱਪ ਕਰੋ।</string>
+    <string name="feature_passcode_biometric_error_hardware_unavailable">ਬਾਇਓਮੀਟ੍ਰਿਕ ਹਾਰਡਵੇਅਰ ਅਸਥਾਈ ਤੌਰ 'ਤੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
+    <string name="feature_passcode_biometric_error_not_enrolled">ਇਸ ਡਿਵਾਈਸ 'ਤੇ ਕੋਈ ਬਾਇਓਮੀਟ੍ਰਿਕ ਦਰਜ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਬਾਇਓਮੀਟ੍ਰਿਕਸ ਸੈੱਟਅੱਪ ਕਰੋ।</string>
     <string name="feature_passcode_biometric_error_timeout">ਬਾਇਓਮੀਟ੍ਰਿਕ ਪ੍ਰਮਾਣਿਕਤਾ ਦਾ ਸਮਾਂ ਖਤਮ ਹੋ ਗਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="feature_passcode_biometric_error_no_space">ਬਾਇਓਮੀਟ੍ਰਿਕ ਪ੍ਰਮਾਣਿਕਤਾ ਪੂਰੀ ਕਰਨ ਲਈ ਲੋੜੀਂਦੀ ਸਟੋਰੇਜ ਨਹੀਂ ਹੈ।</string>
     <string name="feature_passcode_biometric_error_invalid_registration_data">ਬਾਇਓਮੀਟ੍ਰਿਕ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਡਾਟਾ ਅਯੋਗ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਐਪ ਸੈਟਿੰਗਾਂ ਤੋਂ ਬਾਇਓਮੀਟ੍ਰਿਕਸ ਨੂੰ ਮੁੜ-ਸਮਰੱਥ ਕਰੋ।</string>

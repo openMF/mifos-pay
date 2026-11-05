@@ -18,12 +18,19 @@ package kpt.core.base.security
  */
 actual class BiometricAuthenticator actual constructor() {
 
+    /** `isAvailable` on Android. */
     actual fun isAvailable(): Boolean {
         // Requires PackageManager.FEATURE_FINGERPRINT or BiometricManager check.
         // Consumer apps should inject their own check.
         return false
     }
 
+    /**
+     * Prompts via AndroidX BiometricPrompt, falling back to device credential where no biometric is enrolled.
+     *
+     * @param reason shown in the system sheet — the OS renders it, so it must read as user-facing copy rather than a
+     * log line.
+     */
     actual suspend fun authenticate(reason: String): BiometricResult {
         // Consumer apps override with BiometricPrompt integration.
         return BiometricResult.Unavailable

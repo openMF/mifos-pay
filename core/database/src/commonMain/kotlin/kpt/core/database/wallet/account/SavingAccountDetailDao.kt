@@ -14,6 +14,7 @@ import androidx.room3.Insert
 import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_saving_account_details` SINGLE-ROW-PER-KEY table.
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.Flow
  *
  * N/A — [observeById] returns 0 or 1 row.
  */
+@DbDao
 @Dao
 interface SavingAccountDetailDao {
 

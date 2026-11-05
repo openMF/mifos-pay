@@ -1,0 +1,276 @@
+# app-profile/app.yaml — fork-owned white-label deployment SoT (COMMON, platform-agnostic).
+#
+# This is the SINGLE source of truth for all fork-owned deployment data (text + media).
+# Edit HERE — never gradle/fork.properties (now a generated/fallback build-bridge).
+# deployment/ reads this via deployment/_shared/config.rb (AppProfile.get).
+# `sync-dirs.sh` NEVER rewrites app-profile/** (owner: fork in customization-surface.yaml).
+#
+# Platform-DIFFERENT values live in app-profile/platforms/<platform>/*.yaml — no duplication.
+
+identity:
+  app_id: org.mifos.kmp.template          # REFERENCE example identity — the template ships as the Mifos "Money Toolkit" working demo (a fork re-brands via customize / app-profile). SoT for appId; mirrored to gradle/libs.versions.toml.
+  app_name: Money Toolkit                  # REFERENCE app display name (Android app_name, iOS CFBundleDisplayName, settings footer)
+  namespace: org.mifos.kmp.template       # mirrors app_id
+
+# Per-flavor network endpoints + demo credentials + log tag. syncForkConfig emits these into
+# gradle/fork.properties (network.base.url.{demo,prod} / demo.username / demo.password / log.tag),
+# which KMPFlavorsConventionPlugin reads into per-flavor BuildConfig (BASE_URL / DEMO_USERNAME /
+# DEMO_PASSWORD / LOG_TAG). Blank falls back to the template default baked into the plugin. (B4)
+network:
+  # Extra BuildKonfig fields for `core/network` that are NOT tied to an access point (analytics keys,
+  # feature flags). An access point's `publishable_key_env:`/`api_key_env:` already generates its own field —
+  # declare those on the point, not here. Both feed the `syncForkConfig:buildkonfig` region of
+  # `core/network/build.gradle.kts`, so a declared key ALWAYS has a matching BuildKonfig field
+  # (NAP-8); the value is read at build time from the env var or local.properties, never committed.
+  #
+  #   build_config_fields:
+  #     - name: MY_ANALYTICS_KEY      # the BuildKonfig constant
+  #       from_env: MY_ANALYTICS_KEY  # env var / local.properties key (defaults to `name`)
+  build_config_fields: []
+  demo_base_url: https://demo.example.com   # PLACEHOLDER — fork sets its demo endpoint
+  prod_base_url: https://api.example.com     # PLACEHOLDER — fork sets its prod endpoint
+  demo_username: demo
+  demo_password: demo
+  log_tag: MoneyToolkit
+  # Declarative access-point topology — every REST + Supabase endpoint the app talks to, in ONE place.
+  # This is the SoT for core/network's AccessPointRegistry AND for the generated DI wiring: declare an
+  # endpoint here, run `./gradlew syncForkConfig`, and the only thing left to write is the API type.
+  #
+  # Per-entry fields:
+  #   id             stable key referenced by restApi("<id>") / supabaseApi("<id>").
+  #   type           rest | supabase  → AccessPointKind.
+  #   base_url       transport base URL (REST) or project URL (Supabase).
+  #   loggable_host  host enabled for HTTP logging.
+  #   proxied_host   optional — route via the platform proxy (CORS-blocked hosts).
+  #   secret_alias   optional — vault alias for a REQUEST-time key (e.g. FRED's @Query api_key).
+  #   api            optional — FQN of the API type. Declaring it GENERATES the Koin binding into
+  #                  core/network/.../demo/di/GeneratedApiBindings.kt, so a fork writes ONLY the type:
+  #                    rest      → `restApi("<id>") { it.create<Simple>() }`  (Ktorfit factory by convention)
+  #                    supabase  → `supabaseApi("<id>") { <Simple>(it) }`     (single-arg ctor taking
+  #                                SupabaseConfigClient)
+  #                  Omit `api` for an endpoint that is declared but not yet wired.
+  #   publishable_key_env  supabase only — env / local.properties key holding the publishable key. Generated into
+  #                  the AccessPoint supabase spec as a BuildKonfig read, so no key is ever committed. Omit and
+  #                  the point resolves to an empty key (client stays inert, isConfigured == false).
+  #
+  # syncForkConfig regenerates AppAccessPoints.points, AppUrlTypes, the AccessPoint supabase spec and
+  # GeneratedApiBindings from this list. (B3, epic pure-white-label-store5-network)
+  # Every access point declares `owner:` — the ONE field that decides its lifecycle:
+  #
+  #   owner: fork      the CONSUMER's endpoint. Kept by the customizer, never touched by a sync.
+  #   owner: template  the template's own showcase. `scripts/remove-demo.sh` DELETES the entry AND
+  #                    its `kpt/core/network/<id>/` package, so "forking = starting clean" is a
+  #                    declared property of each endpoint rather than a positional comment fence the
+  #                    strip has to parse (such a fence could not express `project`, whose point
+  #                    sat outside it while its `api:` sat inside).
+  #
+  # `main`/`staging` are `fork`: they are placeholders for the CONSUMER's own backend, and
+  # `UrlType.MAIN` is the framework default in core-base/network — every fork needs one.
+  access_points:
+    - id: main
+      auth: none
+      owner: fork
+      type: rest
+      base_url: https://api.example.com/
+      loggable_host: api.example.com
+    - id: staging
+      auth: none
+      owner: fork
+      type: rest
+      base_url: https://staging.example.com/
+      loggable_host: staging.example.com
+    # ── template showcase — removed wholesale by the customizer ──────────────────────────────
+    # A fork declares its OWN Supabase point named for its project (id -> package), so this one is
+    # `template`: it goes with the showcase rather than being rebranded in place.
+    - id: project
+      auth: none
+      owner: template
+      type: supabase
+      base_url: https://project.supabase.co
+      loggable_host: project.supabase.co
+      publishable_key_env: MY_SUPABASE_KEY
+      # publishable_key_env: SUPABASE_PUBLISHABLE_KEY_DATA   # a fork uncomments this on ITS OWN point and supplies
+      # the env var / local.properties entry; without it the row generates "" and the client is inert.
+    - id: jsonplaceholder            # WRITABLE, for the Store5 MUTABLE archetype
+      auth: none
+      owner: template
+      type: rest
+      base_url: https://jsonplaceholder.typicode.com/
+      loggable_host: jsonplaceholder.typicode.com
+    - id: frankfurter                # FX / currency exchange rates
+      auth: none
+      owner: template
+      type: rest
+      base_url: https://api.frankfurter.dev/
+      loggable_host: api.frankfurter.dev
+    - id: coingecko                  # crypto market data
+      auth: none
+      owner: template
+      type: rest
+      base_url: https://api.coingecko.com/
+      loggable_host: api.coingecko.com
+    - id: fred                       # US Federal Reserve economic data
+      auth: none
+      owner: template
+      type: rest
+      base_url: https://api.stlouisfed.org/
+      loggable_host: api.stlouisfed.org
+      proxied_host: api.stlouisfed.org   # blocks direct CORS calls → route via platform proxy
+      secret_alias: mifos-x-fred-api-key # request-time API key — from the vault (secrets-manifest.yaml),
+                                         # materialized to local.properties → BuildKonfig.FRED_API_KEY
+    - id: worldbank                  # World Bank macro indicators
+      auth: none
+      owner: template
+      type: rest
+      base_url: https://api.worldbank.org/
+      loggable_host: api.worldbank.org
+
+# ── Room database — the fork's OWN schema additions (white-label seam, E1/C7) ────────────────
+# Declare entities/DAOs/migrations HERE rather than hand-editing `core/database/**/AppDatabase.kt`:
+# `./gradlew syncForkConfig` projects them into that file's `fork-imports` / `fork-entities` /
+# `fork-migrations` / `fork-daos` regions after every sync, so template schema updates and fork
+# schema additions never share a merge hunk. (AppDatabase.kt is still `owner: merge` — full-copy
+# additionally needs the DEMO declarations to leave the file; see customization-surface.yaml.)
+#
+# Adding a fork table is: write the @Entity + @Dao, declare them below, bump
+# ForkDatabaseConfig.VERSION_OFFSET, add the matching auto_migration hop, re-run syncForkConfig.
+#
+#   database:
+#     entities:
+#       - com.acme.core.database.invoice.InvoiceEntity
+#     daos:
+#       - name: invoiceDao
+#         type: com.acme.core.database.invoice.InvoiceDao
+#     auto_migrations:
+#       - {from: 13, to: 14}                     # optional `spec:` FQN for a @DeleteTable/@RenameColumn spec
+#     type_converters:
+#       - com.acme.core.database.invoice.MoneyConverters
+#
+# Empty on the template: the demo showcase's own tables live in the `demo:` fenced regions of
+# AppDatabase.kt and are stripped by `scripts/remove-demo.sh`, not declared here.
+database:
+  entities:
+    # demo:begin — the showcase's tables. remove-demo.sh strips this fence, so a cleaned fork
+    # regenerates AppDatabase with only the framework `infra` entities.
+    - kpt.core.database.currency.entity.ExchangeRatesEntity
+    - kpt.core.database.crypto.entity.CoinMarketEntity
+    - kpt.core.database.crypto.entity.CoinDetailEntity
+    - kpt.core.database.currency.entity.RateHistoryEntity
+    - kpt.core.database.watchlist.entity.WatchlistEntity
+    - kpt.core.database.banking.entity.LoanEntity
+    - kpt.core.database.banking.entity.BillReminderEntity
+    - kpt.core.database.alerts.AlertEntity
+    - kpt.core.database.economic.InterestRateSeriesEntity
+    - kpt.core.database.cloudtodo.CloudTodoEntity
+    # demo:end
+  daos:
+    # demo:begin
+    - {name: exchangeRatesDao, type: kpt.core.database.currency.dao.ExchangeRatesDao}
+    - {name: cloudTodoDao, type: kpt.core.database.cloudtodo.CloudTodoDao}
+    - {name: coinMarketDao, type: kpt.core.database.crypto.dao.CoinMarketDao}
+    - {name: coinDetailDao, type: kpt.core.database.crypto.dao.CoinDetailDao}
+    - {name: rateHistoryDao, type: kpt.core.database.currency.dao.RateHistoryDao}
+    - {name: watchlistDao, type: kpt.core.database.watchlist.dao.WatchlistDao}
+    - {name: loanDao, type: kpt.core.database.banking.dao.LoanDao}
+    - {name: billReminderDao, type: kpt.core.database.banking.dao.BillReminderDao}
+    - {name: alertDao, type: kpt.core.database.alerts.AlertDao}
+    - {name: interestRateSeriesDao, type: kpt.core.database.economic.InterestRateSeriesDao}
+    # demo:end
+  # TEMPLATE-owned: WHAT the template may add to a fork's schema. Deliberately carries NO version
+  # numbers — each fork applies a unit at ITS OWN next free version and records that in the
+  # fork-owned `app-profile/migration-ledger.yaml`. Identity is the `id`, not a position, which is
+  # what lets the same unit land at v14 in one fork and v27 in another without either colliding.
+  #
+  # ADDITIVE ONLY (enforced): a unit is applied at an arbitrary slot, so it may only CREATE TABLE or
+  # ADD COLUMN with a default. A rename or a conditional drop assumes a starting schema and breaks
+  # when replayed out of position.
+  #
+  # Domain migrations are NOT units — they belong to whoever owns the domain and live directly in
+  # that fork's own ledger.
+  migration_units:
+    - { id: framework-fetched-at,      adds_table: framework_fetched_at }
+    - { id: framework-submit-drafts,   adds_table: framework_submit_drafts }
+    - { id: drafts-unique-key,         adds_column: framework_submit_drafts.uniqueKey }
+    - { id: framework-write-conflicts, adds_table: framework_write_conflicts }
+    - { id: drafts-attempt-count,      adds_column: framework_submit_drafts.attemptCount }
+  packages:
+    # demo:begin
+    - { id: alerts,     owner: template }
+    - { id: banking,    owner: template }
+    - { id: cloudtodo,  owner: template }
+    - { id: crypto,     owner: template }
+    - { id: currency,   owner: template }
+    - { id: economic,   owner: template }
+    - { id: watchlist,  owner: template }
+    - { id: migrations, owner: template }   # the template's own schema-history specs
+    # demo:end
+
+org:
+  name: Mifos Initiative
+  email: team@mifos.org
+  first_name: Mifos
+  last_name: Initiative
+  phone: "+19078675309"
+  copyright: "© 2026 Mifos Initiative. All rights reserved."   # desktop / Mac App Store packaging copyright (org.copyright)
+  marketing_url: https://mifos.org
+  privacy_url: https://raw.githubusercontent.com/openMF/kmp-project-template/main/legal/output/privacy-policy.md
+  support_url: https://github.com/openMF/kmp-project-template
+
+legal:
+  company_name: Mifos Initiative
+  jurisdiction: United States
+  effective_date: June 6, 2026
+  contact_email: team@mifos.org
+
+keystore_dn:
+  org_unit: Mobile
+  city: Arusha
+  state: Arusha
+  country: TZ
+
+store:
+  primary_locale: en-US
+  # REFERENCE store listing — the Mifos "Money Toolkit" working-example copy the template ships.
+  # A fork MUST author its own (product-health store-listing / B8 warn while the Mifos reference
+  # copy remains on a fork; on the template repo it is the intended committed state).
+  title: 'Money Toolkit'                      # app display name (App Store name / Play title)
+  subtitle: 'Loan Tracker & Finance Tools'    # short subtitle (App Store)
+  promotional_text: 'Loans, EMI, bills, interest rates & currency — all offline. No login, no account, no ads. Free personal finance tools by Mifos Initiative.'
+  description: 'Track your loans, calculate EMIs, set bill reminders, and watch live interest rates — all 100% offline. No login. No account. No internet required.\n\nMoney Toolkit is a free personal finance companion for everyday financial decisions. Every calculation happens on your device. Your data never leaves your phone.\n\n— TOOLS INCLUDED —\n\nLoan Tracker\nAdd and manage personal loans. Track principal, interest rate, EMI amount, and due date for every loan you owe — stored locally, fully private.\n\nEMI Calculator\nEnter any loan amount, annual interest rate, and tenure to get your monthly payment instantly. Works offline, no server call.\n\nAffordability Calculator\nKnow before you borrow. Enter your income and maximum monthly EMI to see the largest loan you can safely take on.\n\nBill Reminders\nSet recurring reminders for rent, electricity, subscriptions, and loan payments. Get notified before the due date — no cloud sync needed.\n\nAmortization Schedule\nSee the complete month-by-month repayment breakdown for any loan: principal paid, interest paid, and outstanding balance at every step.\n\nLoan Comparison\nEvaluating two loan offers? Compare total cost, monthly payment, and total interest side-by-side before you sign.\n\nInterest Rates\nLive US Federal Reserve benchmark rates — federal funds rate, mortgage rates, treasury yields — via the free FRED API. Requires a free FRED key (fred.stlouisfed.org); shows a clear empty state without one.\n\nCountry Macro Data\nGDP growth, inflation (CPI), and unemployment rates for countries worldwide from World Bank Open Data. No API key needed.\n\nCurrency Exchange Rates\nLive foreign exchange rates for any base currency — useful for travel, international transfers, or tracking money across borders.\n\n— WHY MONEY TOOLKIT —\n\nNo login or account — open the app and start immediately.\nWorks offline — calculators, loan tracking, and bill reminders need no internet.\nNo ads, no tracking, no analytics — your financial data stays on your device.\nNo subscription — free forever.\nOpen source — MIT licensed. Code available on GitHub.\n\nBuilt by the Mifos Initiative, a nonprofit with 15+ years of experience building financial tools for underserved communities worldwide.\n\nGitHub: https://github.com/openMF/kmp-project-template'
+  release_notes: 'First release of Money Toolkit.\n\nIncludes: Loan Tracker, EMI Calculator, Affordability Calculator, Bill Reminders, Amortization Schedule, Loan Comparison, Live Interest Rates (FRED), Country Macro Indicators, and Currency Exchange Rates.\n\nEverything works offline. No account or login required.'
+  copyright: 'Copyright © 2025 Mifos Initiative'
+  age_rating: '4+'                            # iOS + macOS App Store age rating (store.ios.age.rating)
+  review:
+    notes: 'No login or account is required. All features work fully offline.\n\nApp features available for review:\n• Loan Tracker — add personal loans, track principal, EMI amounts, and due dates locally\n• EMI Calculator — compute monthly payments for any loan amount, rate, and tenure\n• Affordability Calculator — determine the maximum loan amount based on income and EMI budget\n• Bill Reminders — set recurring bill reminders with in-app notification scheduling\n• Amortization Schedule — view the full month-by-month payment breakdown for any loan\n• Loan Comparison — side-by-side total-cost comparison for up to two loan scenarios\n• Interest Rates — US Federal Reserve rate data (FRED API; a free key is needed for live data — the screen shows a clear empty state without it)\n• Country Macro Indicators — GDP, CPI, and unemployment data from World Bank Open Data (no key needed)\n• Currency Rates — live foreign exchange rates by base currency\n\nNo demo credentials are needed. No backend. No personal data is collected or transmitted. This is an open-source Kotlin Multiplatform reference implementation.'
+    first_name: 'Mifos'                        # App Store review contact (mirrors org.first_name)
+    last_name: 'Initiative'                    # App Store review contact (mirrors org.last_name)
+    demo_user: ""                            # store.review.demo.user (blank — no login)
+    demo_password: ""                        # store.review.demo.password
+  app_description: Money Toolkit desktop     # desktop packaging description (app.description)
+
+media:
+  root: media
+
+# ── Deploy targets — fork-facing PLATFORM on/off intent ───────────────────────
+# This block is the FORK-owned answer to "which PLATFORMS does my fork ship?".
+# It is COARSE (one row per platform) and pairs with the template-owned, FINE-grained
+# deployment/DEPLOYMENT_MANIFEST.yaml (one row per deploy TARGET, e.g. android-firebase,
+# ios-testflight, desktop-msi-signed).
+#
+#   • app.yaml#targets      → which PLATFORMS a fork ships   (this file, owner: fork)
+#   • DEPLOYMENT_MANIFEST    → which TARGETS exist per platform (owner: merge — new template
+#                              targets propagate on sync; the fork keeps its enabled/tier)
+#
+# A concrete deploy TARGET is active iff BOTH hold:
+#   (1) its platform is enabled here in app.yaml#targets, AND
+#   (2) the target's own `enabled:` is true in DEPLOYMENT_MANIFEST.yaml.
+# The two coexist at different granularity — neither replaces the other.
+# NOTE: macOS deploy targets live UNDER the manifest's `desktop` platform (mac-app-store,
+# mac-testflight, dmg-notarized) — there is no separate `macos` platform block in the manifest.
+targets:
+  android: { enabled: true, tier: internal }
+  ios:     { enabled: true, tier: internal }
+  macos:   { enabled: true, tier: internal }
+  web:     { enabled: true, tier: internal }
+  windows: { enabled: true, tier: internal }
+  ubuntu:  { enabled: true, tier: internal }

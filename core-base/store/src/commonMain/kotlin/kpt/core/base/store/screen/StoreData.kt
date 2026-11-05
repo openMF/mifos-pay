@@ -76,4 +76,3 @@ enum class DataOrigin {
     /** Data was served from Store's in-memory cache. */
     MEMORY,
 }
-

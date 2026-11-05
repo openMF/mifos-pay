@@ -9,19 +9,19 @@
  */
 package kpt.core.base.store.submit
 
+import kpt.core.base.store.error.ErrorCategory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
-import kpt.core.base.store.error.ErrorCategory
 
 class SubmitStateExtensionsTest {
 
-    private val idle: SubmitState<String>       = SubmitState.Idle
+    private val idle: SubmitState<String> = SubmitState.Idle
     private val submitting: SubmitState<String> = SubmitState.Submitting()
-    private val submitted: SubmitState<String>  = SubmitState.Submitted("result")
-    private val failed: SubmitState<String>     = SubmitState.Failed(
+    private val submitted: SubmitState<String> = SubmitState.Submitted("result")
+    private val failed: SubmitState<String> = SubmitState.Failed(
         error = RuntimeException("oops"),
         category = ErrorCategory.Generic,
     )

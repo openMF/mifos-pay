@@ -1,4 +1,7 @@
 # deployment/web/cloudflare-pages/wrangler.toml
-name = "YOUR_CLOUDFLARE_PAGES_PROJECT"
+# `name` is a neutral placeholder and stays one in every fork: every deploy passes
+# --project-name=<gradle/fork.properties web.cloudflare.project> (see config.yaml / workflow-snippet.yml),
+# which takes precedence. deployment/ is template-owned and never rewritten per fork.
+name = "your-app-web"
 compatibility_date = "2026-06-01"
 pages_build_output_dir = "../../../cmp-web/build/dist/js/productionExecutable"

@@ -20,13 +20,13 @@ import io.github.vinceglb.filekit.readBytes
 import io.github.vinceglb.filekit.size
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kpt.core.base.common.toBase64DataUri
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_upload_file_error
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.lib.loan.component.DocumentType
 import org.mifos.lib.loan.component.SignatureUploadType
 import org.mifospay.core.ui.utils.BaseViewModel
-import kpt.core.base.common.toBase64DataUri
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 /**

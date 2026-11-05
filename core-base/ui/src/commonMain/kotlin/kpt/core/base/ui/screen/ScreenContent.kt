@@ -134,7 +134,7 @@ fun <T> ScreenContent(
  * owns the whole state machine. Mirrors [kpt.core.base.ui.paging.PagingScreenContent].
  *
  * Same slot/override precedence as the base overload: per-call slot lambda → [LocalScreenStateDefaults]
- * (the app-wide defaults branded in `core/store` `AppScreenStateDefaults`) → library default. So the
+ * (the app-wide defaults branded in `core/store` `KptScreenStateDefaults`) → library default. So the
  * state UIs can be set per-screen here AND globally in `core/store`.
  *
  * Best for PASSTHROUGH reads (the stream already decides Empty via its `isEmpty`). Features that
@@ -195,6 +195,12 @@ private fun ScreenState<*>.transitionKey(): String = when (this) {
 // Pass an explicit `config` argument to override per-call without going through
 // CompositionLocal.
 
+/**
+ * The framework's loading rendering — spinner, skeleton or branded animation, per [config].
+ *
+ * A fork brands every screen's loading state at once by supplying its own `ScreenStateDefaults`
+ * through `LocalScreenStateDefaults`; pass [config] only to override a single call site.
+ */
 @Composable
 fun DefaultLoadingContent(
     modifier: Modifier = Modifier,
@@ -246,6 +252,12 @@ private fun SkeletonLoadingContent(
     }
 }
 
+/**
+ * The framework's empty rendering — for a successful read that returned nothing.
+ *
+ * Distinct from error on purpose: "no results" is a valid outcome, and showing a retry affordance
+ * for it invites the user to retry something that already worked.
+ */
 @Composable
 fun DefaultEmptyContent(
     modifier: Modifier = Modifier,
@@ -288,6 +300,12 @@ fun DefaultEmptyContent(
     }
 }
 
+/**
+ * The framework's offline rendering, shown when the failure was connectivity rather than the request.
+ *
+ * Separate from [DefaultErrorContent] because the remedy differs: the user reconnects, rather than
+ * being told something went wrong with a retry that cannot succeed yet.
+ */
 @Composable
 fun DefaultNoNetworkContent(
     onRetry: () -> Unit,
@@ -336,6 +354,12 @@ fun DefaultNoNetworkContent(
     }
 }
 
+/**
+ * The framework's error rendering, with the retry affordance wired to the screen's stream.
+ *
+ * Copy comes from the mapped `ErrorCategory`, not the raw throwable, so a user never sees an
+ * exception message and every screen phrases the same failure the same way.
+ */
 @Composable
 fun DefaultErrorContent(
     error: Throwable,
@@ -414,6 +438,12 @@ private fun ActionRow(
 
 // ── Visual renderer ──────────────────────────────────────────────────────
 
+/**
+ * Renders a `ScreenStateVisual` — vector, painter or Lottie — at a uniform size.
+ *
+ * Exists so the four Default*Content composables share one visual path: without it each would
+ * branch over the visual type itself and they would drift in sizing and tint.
+ */
 @Composable
 internal fun ScreenStateVisualRenderer(
     visual: ScreenStateVisual,
@@ -422,7 +452,8 @@ internal fun ScreenStateVisualRenderer(
     when (visual) {
         is ScreenStateVisual.Vector -> Icon(
             imageVector = visual.image,
-            contentDescription = null, // parent layout owns contentDescription via semantics
+            // parent layout owns contentDescription via semantics
+            contentDescription = null,
             modifier = modifier,
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
         )

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.data.infra
 
@@ -28,8 +28,10 @@ import kotlin.time.ExperimentalTime
  * canonical set on every call).
  */
 interface Synchronizer {
+    /** The per-feature last-synced versions, so a sync resumes rather than re-reading everything. */
     suspend fun getChangeListVersions(): ChangeListVersions
 
+    /** Updates the stored versions after a successful sync. */
     suspend fun updateChangeListVersions(update: ChangeListVersions.() -> ChangeListVersions)
 
     /** Convenience: call `someSyncable.sync()` to run [Syncable.syncWith] against this. */
@@ -41,8 +43,13 @@ interface Synchronizer {
  * from updates and to advance the per-feature version pointer.
  */
 interface NetworkChange {
+    /** Identity of the changed record. */
     val id: String
+
+    /** Version this change was published at — the cursor a later sync resumes from. */
     val changeListVersion: Int
+
+    /** Whether the change is a deletion, which must be applied rather than fetched. */
     val isDelete: Boolean
 }
 
@@ -53,6 +60,10 @@ interface NetworkChange {
  * defaults. Per-key payload extensibility is a follow-up.
  */
 interface Syncable {
+    /**
+     * Syncs this entity using [synchronizer]. Returns false if the sync could not complete, so the caller leaves the
+     * stored version untouched and retries.
+     */
     suspend fun syncWith(synchronizer: Synchronizer): Boolean
 }
 

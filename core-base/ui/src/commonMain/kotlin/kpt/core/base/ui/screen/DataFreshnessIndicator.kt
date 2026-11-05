@@ -126,6 +126,12 @@ private fun UpdatingBanner(
     }
 }
 
+/**
+ * Builds the refreshing label, appending how stale the showing data is when [fetchedAt] is known.
+ *
+ * A null timestamp means nothing has been fetched yet, so there is no age to report — "Refreshing…"
+ * alone, never "Last updated never".
+ */
 @OptIn(ExperimentalTime::class)
 internal fun buildUpdatingText(fetchedAt: Instant?): String {
     if (fetchedAt == null) return "Refreshing…"
@@ -133,6 +139,12 @@ internal fun buildUpdatingText(fetchedAt: Instant?): String {
     return "Refreshing · Last updated ${formatDurationAgo(age)}"
 }
 
+/**
+ * Formats an age as a coarse relative string ("just now", "5m ago", "2h ago", "3d ago").
+ *
+ * Deliberately coarse: a freshness hint that ticks by the second draws attention to itself instead
+ * of to the data.
+ */
 internal fun formatDurationAgo(duration: kotlin.time.Duration): String {
     val seconds = duration.inWholeSeconds
     return when {

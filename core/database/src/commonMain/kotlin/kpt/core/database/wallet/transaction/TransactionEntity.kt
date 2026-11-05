@@ -12,6 +12,7 @@ package kpt.core.database.wallet.transaction
 import androidx.room3.Entity
 import androidx.room3.Index
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single financial transaction — the Room mirror of the
@@ -70,6 +71,7 @@ import androidx.room3.PrimaryKey
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future "stale-row eviction" prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_transactions",
     indices = [

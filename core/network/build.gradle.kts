@@ -8,20 +8,15 @@
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.convention.readSecretValue
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.kmp.library.convention)
     alias(libs.plugins.ktrofit)
     alias(libs.plugins.buildkonfig)
-    alias(libs.plugins.kmp.supabase.config)
     id("kotlinx-serialization")
     id("com.google.devtools.ksp")
-    // Fork addition: SupabaseInstanceConfigLoader's fallback config (composeResources/files/
-    // instances_config_default.json) needs the `compose` extension for org.jetbrains.compose.
-    // resources.ExperimentalResourceApi + the generated `Res` accessor.
-    alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
 }
 
 val localProps = Properties().apply {
@@ -34,33 +29,18 @@ buildkonfig {
     // `kpt.core.network.BuildKonfig` is imported without ceremony.
     packageName = "kpt.core.network"
     defaultConfigs {
-        // FRED_API_KEY is a VAULT-managed client secret, NOT a hardcoded key. It is declared as the
-        // `mifos-x-fred-api-key` alias (category env_var_client) in secrets-manifest.yaml, and the "fred"
-        // access point in app-profile/app.yaml references it. `/secrets pull` materializes it to
-        // local.properties (the sanctioned KMP env_var_client target, RULE-SECRETS-LAYOUT-001); CI reads
-        // the FRED_API_KEY env var (from `/secrets sync-to-ci`). A compiled-in client key must be read at
-        // build time — this IS that sanctioned read, so no secret value ever lives in a tracked file.
+        // syncForkConfig:buildkonfig:begin — GENERATED from `app-profile/app.yaml`: one field per
+        // access point declaring `publishable_key_env:`/`api_key_env:`, plus every `network.build_config_fields`
+        // entry. DO NOT HAND-EDIT — declare the key in app-profile and re-run `./gradlew syncForkConfig`.
+        // Values are read at BUILD time — the env var (CI), then the secrets/LAYOUT.yaml `kind: value` row whose
+        // source_env matches (secrets/live/ else the secrets/sample/ fake), then local.properties (legacy).
+        // No secret is committed.
         buildConfigField(
-            STRING, "FRED_API_KEY",
-            System.getenv("FRED_API_KEY") ?: localProps.getProperty("FRED_API_KEY", ""),
+            STRING,
+            "SUPABASE_PUBLISHABLE_KEY",
+            System.getenv("SUPABASE_PUBLISHABLE_KEY") ?: project.readSecretValue("supabase_publishable_key") ?: localProps.getProperty("SUPABASE_PUBLISHABLE_KEY", ""),
         )
-    }
-}
-
-// Supabase credentials are sourced dynamically from the gitignored `secrets/live/supabase/supabaseCredentialsFile.json`
-// (url + anonKey) via the shared SupabaseConfigConventionPlugin — the project's established secrets
-// mechanism — which generates `kpt.core.network.config.SupabaseCredentials`. When the file is absent
-// (the toolkit ships no Supabase project) it generates empty creds, so SupabaseConfigClient stays inert.
-supabaseConfig {
-    packageName = "kpt.core.network.config"
-}
-
-androidComponents {
-    finalizeDsl { ext ->
-        ext.withHostTest {
-            isReturnDefaultValues = true
-            isIncludeAndroidResources = true
-        }
+        // syncForkConfig:buildkonfig:end
     }
 }
 
@@ -110,6 +90,9 @@ kotlin {
 
 dependencies {
     add("kspCommonMainMetadata", libs.ktorfit.ksp)
+    // Koin API bindings, derived from @ApiBinding on the API types. Metadata-only: the bindings are
+    // ONE commonMain file every target shares, unlike ktorfit's per-target `create*Api()` factories.
+    add("kspCommonMainMetadata", project(":tools:network-ksp"))
     add("kspAndroid", libs.ktorfit.ksp)
     add("kspJs", libs.ktorfit.ksp)
     add("kspWasmJs", libs.ktorfit.ksp)
@@ -130,3 +113,40 @@ dependencies {
 // Guarded like feature-deps: a fork that adopted the template BEFORE this seam existed may not have
 // the file yet, and an unconditional apply would fail the whole configuration.
 project.file("module-deps.gradle.kts").takeIf { it.exists() }?.let { apply(from = it) }
+
+/*
+ * The access-point KINDS, passed to :tools:network-ksp.
+ *
+ * A class cannot know whether its endpoint is REST or Supabase in a given fork — that is the point's
+ * `type:`, and the whole endpoint topology (URL, kind, owner, secrets) deliberately stays in
+ * app-profile as per-fork deployment config. `@ApiBinding` carries only the class<->point link, so
+ * the processor still needs the kind to pick the binding shape. Feeding the DECLARED ids in also
+ * makes an `@ApiBinding("typo")` a build error instead of a binding that fails at Koin graph
+ * construction on a device.
+ */
+val accessPointKinds = providers.provider {
+    val yaml = rootProject.file("app-profile/app.yaml")
+    if (!yaml.isFile) return@provider ""
+    val rows = mutableListOf<String>()
+    var inPoints = false
+    var id: String? = null
+    yaml.forEachLine { raw ->
+        val line = raw.substringBefore('#').trimEnd()
+        when {
+            line.matches(Regex("^  access_points:\\s*$")) -> inPoints = true
+            line.matches(Regex("^  [a-zA-Z_]+:.*$")) -> inPoints = false
+            line.matches(Regex("^[a-zA-Z_]+:.*$")) -> inPoints = false
+            inPoints -> {
+                Regex("^\\s*- id:\\s*([A-Za-z0-9_-]+)").find(line)?.let { id = it.groupValues[1] }
+                Regex("^\\s*type:\\s*([a-z]+)").find(line)?.let { m ->
+                    id?.let { rows += "$it:${m.groupValues[1]}" }
+                }
+            }
+        }
+    }
+    rows.joinToString("|")
+}
+
+ksp {
+    arg("kpt.network.accessPointKinds", accessPointKinds.get())
+}

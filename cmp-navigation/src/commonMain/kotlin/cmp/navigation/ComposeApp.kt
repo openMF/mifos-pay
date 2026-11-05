@@ -5,17 +5,21 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import cmp.navigation.registry.ForkAppShell
 import cmp.navigation.rootnav.RootNavScreen
 import cmp.navigation.security.AppLockGate
 import cmp.navigation.security.PlatformAuthenticatorGate
@@ -147,61 +151,80 @@ fun ComposeApp(
     // platform default is used, so Navigation's Bundle-typed back-stack state is
     // never rejected. Feature modules carry zero retention code.
     //
-    // (d) Biometric composition provider MUST wrap the theme + nav tree so
-    // every descendant that reads `LocalBiometricAuthenticator` (aliased in
-    // `PlatformAuthenticatorGate`) resolves — otherwise
-    // passcode/settings-biometrics/transfer-auth crashes at compose time.
-    PlatformAuthenticatorGate {
-        KptTheme(
-            darkTheme = uiState.darkTheme,
-            androidTheme = uiState.isAndroidTheme,
-            useDynamicColor = uiState.isDynamicColorsEnabled,
-        ) {
-            // (a) Background re-auth lock — the gate installs a lifecycle
-            // observer that calls `AppViewModel.markBackgrounded()` on
-            // `ON_STOP` and `AppViewModel.checkBackgroundLock()` on
-            // `ON_RESUME`. The VM (not the composable) evaluates the three
-            // qualifying conditions and emits `AppEvent.ReAuthRequired` which
-            // the EventsEffect above routes.
-            AppLockGate(
-                onBackgrounded = { viewModel.markBackgrounded() },
-                onForegrounded = { viewModel.checkBackgroundLock(thresholdMs = 15_000L) },
-            )
+    // RTL layout direction (template): `handleAppLocale` switches the platform locale, which mirrors
+    // the layout on Android only; providing LocalLayoutDirection from the SAME locale makes every
+    // target agree.
+    val layoutDirection = if (isRtlLanguage(uiState.localeName)) {
+        LayoutDirection.Rtl
+    } else {
+        LayoutDirection.Ltr
+    }
 
-            // (b) 401 forced-logout dialog — render is state-driven so the
-            // gate compiles down to a no-op when the flag is `false`.
-            UnauthorizedDialogGate(
-                showUnauthorizedDialog = uiState.showUnauthorizedDialog,
-                onForcedLogout = { viewModel.forcedLogout() },
-                onDismiss = { viewModel.dismissUnauthorizedDialog() },
-            )
+    CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
+        // Fork-owned ForkAppShell seam (template) — wrap + theme overrides. The ROOT stays the fork's
+        // RootNavScreen call below: it takes the fork shell's auth-graph / content / logout callbacks,
+        // which ForkAppShell.root's (modifier, onSplashScreenRemoved) signature cannot carry.
+        ForkAppShell.wrap {
+            // (d) Biometric composition provider MUST wrap the theme + nav tree so
+            // every descendant that reads `LocalBiometricAuthenticator` (aliased in
+            // `PlatformAuthenticatorGate`) resolves — otherwise
+            // passcode/settings-biometrics/transfer-auth crashes at compose time.
+            PlatformAuthenticatorGate {
+                KptTheme(
+                    darkTheme = ForkAppShell.darkThemeOverride ?: uiState.darkTheme,
+                    androidTheme = uiState.isAndroidTheme,
+                    useDynamicColor = ForkAppShell.dynamicColorOverride ?: uiState.isDynamicColorsEnabled,
+                ) {
+                    // (a) Background re-auth lock — the gate installs a lifecycle
+                    // observer that calls `AppViewModel.markBackgrounded()` on
+                    // `ON_STOP` and `AppViewModel.checkBackgroundLock()` on
+                    // `ON_RESUME`. The VM (not the composable) evaluates the three
+                    // qualifying conditions and emits `AppEvent.ReAuthRequired` which
+                    // the EventsEffect above routes.
+                    AppLockGate(
+                        onBackgrounded = { viewModel.markBackgrounded() },
+                        onForegrounded = { viewModel.checkBackgroundLock(thresholdMs = 15_000L) },
+                    )
 
-            RootNavScreen(
-                modifier = modifier,
-                // Reuse the SAME AppViewModel singleton `koinViewModel()`
-                // resolves both here and inside `RootNavScreen` — Koin returns
-                // the process-wide singleton on both call sites, so
-                // RootNavScreen's `EventsEffect(appViewModel.eventFlow)` and
-                // ComposeApp's `EventsEffect(viewModel.eventFlow)` above
-                // subscribe to the same SharedFlow. `AppEvent.LogoutRequested`
-                // is handled ONLY here (fan-out via `onSessionLogOut`);
-                // `AppEvent.ReAuthRequired` is handled ONLY in RootNavScreen
-                // (needs the NavHostController that's created inside it).
-                appViewModel = viewModel,
-                onSplashScreenRemoved = onSplashScreenRemoved,
-                authGraphBuilder = authGraphBuilder,
-                authGraphRoute = authGraphRoute,
-                authenticatedContent = authenticatedContent,
-                onSessionLogOut = onSessionLogOut,
-            )
+                    // (b) 401 forced-logout dialog — render is state-driven so the
+                    // gate compiles down to a no-op when the flag is `false`.
+                    UnauthorizedDialogGate(
+                        showUnauthorizedDialog = uiState.showUnauthorizedDialog,
+                        onForcedLogout = { viewModel.forcedLogout() },
+                        onDismiss = { viewModel.dismissUnauthorizedDialog() },
+                    )
 
-            // T5 — Supabase multi-instance selector overlay. The concrete
-            // `InstanceSelectorScreen` is supplied by the outer shell so
-            // `:cmp-navigation` doesn't need to depend on `:cmp-shared` (which
-            // already depends on us). Default caller = no-op.
-            if (uiState.showInstanceSelector) {
-                instanceSelectorOverlay { viewModel.dismissInstanceSelectorSheet() }
+                    RootNavScreen(
+                        modifier = modifier,
+                        // Same AppViewModel instance here and inside RootNavScreen, so both
+                        // EventsEffects subscribe to one SharedFlow. LogoutRequested is handled
+                        // ONLY here (onSessionLogOut); ReAuthRequired ONLY in RootNavScreen.
+                        appViewModel = viewModel,
+                        onSplashScreenRemoved = onSplashScreenRemoved,
+                        authGraphBuilder = authGraphBuilder,
+                        authGraphRoute = authGraphRoute,
+                        authenticatedContent = authenticatedContent,
+                        onSessionLogOut = onSessionLogOut,
+                    )
+
+                    // T5 — Supabase multi-instance selector overlay, supplied by the outer shell.
+                    if (uiState.showInstanceSelector) {
+                        instanceSelectorOverlay { viewModel.dismissInstanceSelectorSheet() }
+                    }
+                }
             }
         }
     }
 }
+
+/** BCP-47 language subtags written right-to-left. */
+private val RTL_LANGUAGES = setOf("ar", "he", "iw", "fa", "ur", "ps", "sd", "ckb", "yi", "dv")
+
+/**
+ * True when [languageTag] (e.g. "ar", "ar-EG") is a right-to-left language.
+ * A null tag means "follow the system", which the platform resolves itself — treated as LTR here
+ * because on Android the platform has already mirrored, and on other targets there is no app
+ * override to honour.
+ */
+private fun isRtlLanguage(languageTag: String?): Boolean =
+    languageTag != null && RTL_LANGUAGES.contains(languageTag.substringBefore('-').lowercase())

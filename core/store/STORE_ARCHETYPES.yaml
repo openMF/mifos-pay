@@ -1,0 +1,91 @@
+# STORE_ARCHETYPES.yaml — machine-readable archetype ↔ showcase contract
+# ─────────────────────────────────────────────────────────────────────────────
+# The template exists to demonstrate all 8 Store5 archetypes end-to-end. That contract used to live
+# ONLY as prose in CLAUDE.md, so a well-meaning "make everything cache-first" refactor could delete an
+# archetype's only showcase and every test still went green. This file is the source of truth; the
+# CLAUDE.md table is a human-readable projection of it.
+#
+# Enforced by `scripts/product-health/checks/store-archetype-coverage.sh`:
+#   AC-1 every archetype declares ≥1 showcase
+#   AC-2 every showcase file exists
+#   AC-3 every showcase actually calls its declared factory (grep, no reflection — KMP-safe)
+#   AC-4 every showcase declaring `cache_first: false` carries a non-empty `reason`
+#
+# `cache_first` is DECLARED, never inferred. An audit asking "do we always read cache first?" must
+# read this field — a `false` here is deliberate archetype behaviour, NOT a defect to fix. Two of the
+# eight archetypes are non-cache-first BY DEFINITION (MEMORY_ONLY has no durable cache;
+# NETWORK_ONLY reads network-first with cache only as a failure fallback).
+#
+# Changing a showcase's factory REQUIRES updating this file — that is the point. If you are moving an
+# archetype to a different demo store, edit the row; if you are removing its last showcase, AC-1 fails
+# and you must nominate a replacement first.
+# ─────────────────────────────────────────────────────────────────────────────
+
+version: 1
+
+# The eight Store5 archetypes, each with its factory, fetch policy and showcase feature.
+# The MACHINE-READABLE contract: product-health's store-archetype-coverage check fails the
+# build when an archetype loses its last showcase, so this file is what keeps every archetype
+# provably exercised rather than merely documented.
+archetypes:
+  NETWORK_WITH_CACHE:
+    factory: createStore
+    cache_first: true
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/currency/impl/ExchangeRatesStore.kt
+      - core/store/src/commonMain/kotlin/kpt/core/store/economic/impl/InterestRateSeriesStore.kt
+
+  NETWORK_ONLY:
+    factory: createStore
+    cache_first: false
+    reason: >-
+      A spot FX rate is the canonical case where stale data actively misleads. Reads go
+      network-first via `fresh(fallBackToSourceOfTruth = true)`; the cache is a failure fallback
+      only. Deliberate — do not "fix" to CACHE_FIRST_SWR, that deletes this archetype's showcase.
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/exchange/impl/SpotRateLookupStore.kt
+
+  CACHE_ONLY:
+    factory: createOfflineStore
+    cache_first: true
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/banking/impl/LoansStore.kt
+      - core/store/src/commonMain/kotlin/kpt/core/store/banking/impl/BillRemindersStore.kt
+      - core/store/src/commonMain/kotlin/kpt/core/store/alerts/impl/AlertsStore.kt
+      - core/store/src/commonMain/kotlin/kpt/core/store/watchlist/impl/WatchlistStore.kt
+
+  OFFLINE_LOCAL_ONLY:
+    factory: createOfflineMutableStore
+    cache_first: true
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/alerts/impl/AlertsStore.kt
+      - core/store/src/commonMain/kotlin/kpt/core/store/banking/impl/LoansStore.kt
+
+  MEMORY_ONLY:
+    factory: createMemoryStore
+    cache_first: false
+    reason: >-
+      No SourceOfTruth by definition — the cache is in-memory and dies with the process, so a cold
+      start always refetches. Acceptable here: World Bank macro data is cheap public data on a 7-day
+      TTL with an annual publishing cadence. Deliberate — converting this to Room deletes the only
+      MEMORY_ONLY showcase in the template.
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/economic/impl/MacroIndicatorStore.kt
+
+  PERIODIC:
+    factory: createStore
+    cache_first: true
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/currency/impl/ExchangeRatesStore.kt
+
+  LOAD_ONCE:
+    factory: createOfflineStore
+    cache_first: true
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/banking/impl/LoansStore.kt
+
+  MUTABLE:
+    factory: createMutableStore
+    cache_first: true
+    showcases:
+      - core/store/src/commonMain/kotlin/kpt/core/store/cloudtodo/impl/CloudTodoStore.kt

@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.platform.PlatformBuildConfig
+import kpt.core.base.ui.detectMultiTapGesture
 import mifos_pay.feature.auth.generated.resources.Res
 import mifos_pay.feature.auth.generated.resources.feature_auth_connected_to
 import mifos_pay.feature.auth.generated.resources.feature_auth_login
@@ -56,7 +57,6 @@ import org.mifospay.core.designsystem.theme.styleNormal18sp
 import org.mifospay.core.ui.MifosPasswordField
 import org.mifospay.core.ui.MifosProgressIndicatorOverlay
 import org.mifospay.core.ui.utils.EventsEffect
-import kpt.core.base.ui.detectMultiTapGesture
 
 @Composable
 internal fun LoginScreen(

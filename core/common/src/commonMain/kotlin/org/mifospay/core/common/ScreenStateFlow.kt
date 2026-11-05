@@ -27,7 +27,7 @@ typealias ScreenStateStream<T> = Flow<ScreenState<T>>
 /**
  * Convert a `Flow<T>` (typically the raw Ktorfit API flow) into a
  * `Flow<ScreenState<T>>`, emitting [ScreenState] variants and routing
- * terminal errors through [AppErrorMapper].
+ * terminal errors through [MifosErrorMapper].
  */
 fun <T> Flow<T>.asScreenStateFlow(
     isEmpty: (T) -> Boolean = { false },
@@ -36,11 +36,11 @@ fun <T> Flow<T>.asScreenStateFlow(
         if (isEmpty(value)) ScreenState.Empty else ScreenState.Content(data = value)
     }
         .onStart { emit(ScreenState.Loading) }
-        .catch { e -> emit(AppErrorMapper.mapError(e)) }
+        .catch { e -> emit(MifosErrorMapper.mapError(e)) }
 
 /**
  * Body-parsing overload — routes ktor 4xx/5xx exceptions through
- * [AppErrorMapper.mapErrorBody] so the server's Mifos-error JSON is
+ * [MifosErrorMapper.mapErrorBody] so the server's Mifos-error JSON is
  * lifted into `HttpStatusException.userMessage`.
  */
 fun <T> Flow<T>.asScreenStateFlow(
@@ -51,7 +51,7 @@ fun <T> Flow<T>.asScreenStateFlow(
         if (isEmpty(value)) ScreenState.Empty else ScreenState.Content(data = value)
     }
         .onStart { emit(ScreenState.Loading) }
-        .catch { e -> emit(AppErrorMapper.mapErrorBody<T>(e, errorBodyParser)) }
+        .catch { e -> emit(MifosErrorMapper.mapErrorBody<T>(e, errorBodyParser)) }
 
 /**
  * Extension on `Flow<ScreenState<T>>` mirroring the template's

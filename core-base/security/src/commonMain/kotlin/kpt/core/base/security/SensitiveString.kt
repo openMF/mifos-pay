@@ -36,7 +36,9 @@ class SensitiveString(private val chars: CharArray) : AutoCloseable {
 
     override fun hashCode(): Int = chars.contentHashCode()
 
+    /** Construction helpers. */
     companion object {
+        /** Wraps [value] so it is not printed by `toString()` or captured in a crash report. */
         fun fromString(value: String): SensitiveString =
             SensitiveString(value.toCharArray())
     }

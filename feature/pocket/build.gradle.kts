@@ -20,6 +20,7 @@
  *
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
+
 plugins {
     alias(libs.plugins.cmp.feature.convention)
 }

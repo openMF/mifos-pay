@@ -11,12 +11,12 @@ package kpt.core.base.store.paging
 
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.first
-import org.mobilenativefoundation.store.store5.Store
-import org.mobilenativefoundation.store.store5.StoreReadRequest
-import org.mobilenativefoundation.store.store5.StoreReadResponse
 import kpt.core.base.store.screen.DataOrigin
 import kpt.core.base.store.screen.toDataOrigin
 import kpt.core.base.store.screen.toThrowable
+import org.mobilenativefoundation.store.store5.Store
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.StoreReadResponse
 
 /**
  * Key for paginated Store requests.
@@ -33,7 +33,12 @@ data class PageKey(
     val pageSize: Int = DEFAULT_PAGE_SIZE,
     val query: String? = null,
 ) {
+    /** Shared paging defaults. */
     companion object {
+        /**
+         * Rows fetched per page when a caller does not specify. Matched to a typical screenful so the first page fills
+         * the viewport without a second round-trip.
+         */
         const val DEFAULT_PAGE_SIZE = 20
 
         /** First page with default size. */
@@ -142,11 +147,20 @@ sealed class StorePageResult<out T> {
      *   you re-open a screen that simply re-reads from cache.
      */
     data class Success<T>(
+        /** The rows in this page. */
         val items: List<T>,
+        /** Cursor for the previous page, or null at the start of the list. */
         val prevKey: Int?,
+        /** Cursor for the next page, or null once the list is exhausted — this is what ends infinite scroll. */
         val nextKey: Int?,
         val fromNetwork: Boolean = false,
     ) : StorePageResult<T>()
 
+    /**
+     * A page that failed to load. The footer maps [error] to copy via its `ErrorCategory`, so an offline page-load
+     * reads as offline rather than as a server fault.
+     *
+     * @property error the failure that ended this page load. Transient: the page is retried, not skipped.
+     */
     data class Error(val error: Throwable) : StorePageResult<Nothing>()
 }

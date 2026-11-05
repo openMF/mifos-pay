@@ -1,0 +1,44 @@
+# migration-ledger.yaml — the FORK's Room schema state. owner: fork, never synced.
+#
+# WHY THIS FILE EXISTS
+# Room's schema version is ONE monotonic integer and migrations are edges between consecutive
+# values, so two independent authors incrementing it will collide. The previous scheme
+# (`VERSION = TEMPLATE_BASE_VERSION + VERSION_OFFSET`) did not separate them — it relabelled a
+# shared counter. Concretely: a fork at base 13 + offset 1 ships v14; the template then adds its own
+# migration and bumps base to 14; the fork computes 15 while installed devices sit at 14, and Room
+# finds no 14 -> 15 edge. It only ever worked while exactly one side migrated.
+#
+# THE SPLIT
+#   app.yaml#migration_units[]   TEMPLATE-owned. WHAT the template can add, with a stable id and NO
+#                                version numbers. Full-copies on sync.
+#   this file                    FORK-owned. WHERE each unit landed in THIS fork's sequence.
+#
+# The two sides write to different files, so a template schema change is an append here, never a
+# merge conflict — the same separation that makes `feature-deps.gradle.kts` work.
+#
+# APPEND-ONLY. `./gradlew syncForkConfig` adds a row for any unit not already in `baseline_units` or
+# `migrations`, at this fork's next free version. It MUST NOT renumber an existing row: a shipped
+# `from`/`to` edge is a contract with every installed device, and renumbering strands them.
+
+# Effective Room schema version. Owned outright by this fork — the template does not contribute to it.
+version: 10
+
+# The template's framework tables as mifos-pay's v1 schema already had them (schemas/1.json:
+# store_bookkeeper, framework_fetched_at, framework_submit_drafts with uniqueKey).
+baseline_units: [framework-fetched-at, framework-submit-drafts, drafts-unique-key]
+
+# mifos-pay's shipped lineage (schemas/{1,6,7,8,9}.json) — recorded at the 90ff6da6 template sync, when
+# AppDatabase stopped being hand-written. 1→6 is the consolidated additive wallet-table edge; 2..5 were
+# never exported. The 9→10 edge lands the template's framework_write_conflicts table AND the
+# framework_submit_drafts.attemptCount column in ONE schema step (core-base's DraftEntity already carries
+# the column, so a v10 schema without it cannot be produced); the ledger has one unit per row, so the
+# second unit is recorded under folded_units.
+migrations:
+  - { from: 1, to: 6,  unit: wallet-tables }
+  - { from: 6, to: 7,  unit: wallet-linkable-accounts }
+  - { from: 7, to: 8,  unit: wallet-transfer-details }
+  - { from: 8, to: 9,  unit: wallet-pocket-columns }
+  - { from: 9, to: 10, unit: framework-write-conflicts }
+
+folded_units:
+  - { unit: drafts-attempt-count, edge: "9->10" }

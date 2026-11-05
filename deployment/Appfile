@@ -12,8 +12,17 @@
 _root  = File.expand_path("..", __dir__)
 _toml  = (File.read(File.join(_root, "gradle/libs.versions.toml")) rescue "")
 _props = (File.read(File.join(_root, "gradle/fork.properties")) rescue "")
+# app_identifier stays FILE-FIRST on purpose: libs.versions.toml#appId is the bundle id the build
+# actually compiled against, so letting an env var win here would sign an artifact under an id it
+# was not built with. ENV is the fallback for a checkout without a materialised catalog.
 _app_id = _toml[/^\s*appId\s*=\s*"([^"]+)"/, 1] || ENV["APP_IDENTIFIER"]
-_team   = _props[/^\s*apple\.team\.id\s*=\s*(.+)$/, 1]&.strip || ENV["APPLE_TEAM_ID"]
+# team_id is ENV-FIRST, matching _shared/project_config.rb:100 (`ENV["APPLE_TEAM_ID"] || FORK[...]`)
+# and the documented `# ENV override:` convention used for every other overridable identity value
+# there. It was the lone file-first reader: with both present and disagreeing — a CI job exporting
+# APPLE_TEAM_ID for one team against a fork.properties carrying another — Appfile and
+# project_config.rb would have resolved DIFFERENT signing teams for the same deploy. Unlike the
+# bundle id, nothing bakes the team id at build time (it is signing-time only), so env may win.
+_team   = ENV["APPLE_TEAM_ID"] || _props[/^\s*apple\.team\.id\s*=\s*(.+)$/, 1]&.strip
 
 # Android
 json_key_file(File.join(_root, "secrets/live/android/play/playStorePublishServiceCredentialsFile.json"))

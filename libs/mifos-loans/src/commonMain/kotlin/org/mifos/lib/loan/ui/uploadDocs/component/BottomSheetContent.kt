@@ -49,6 +49,7 @@ import com.niyajali.compose.sign.exportSignature
 import com.niyajali.compose.sign.rememberSignatureState
 import io.github.vinceglb.filekit.dialogs.compose.util.encodeToByteArray
 import kotlinx.coroutines.launch
+import kpt.core.base.common.toBase64DataUri
 import kpt.core.base.designsystem.theme.KptTheme
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.attach
@@ -66,7 +67,6 @@ import org.mifospay.core.designsystem.component.MifosCard
 import org.mifospay.core.designsystem.component.MifosScaffold
 import org.mifospay.core.designsystem.component.MifosTopBar
 import org.mifospay.core.designsystem.icon.MifosIcons
-import kpt.core.base.common.toBase64DataUri
 
 /**
  * Orchestrates the bottom sheet UI, transitioning between the document upload method selection

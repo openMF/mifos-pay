@@ -9,6 +9,7 @@
  */
 plugins {
     alias(libs.plugins.kmp.core.base.library.convention)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -24,7 +25,14 @@ kotlin {
             // restApi<T> DSL registers Koin singles + resolves the AccessPointRegistry via get().
             api(libs.koin.core)
             implementation(projects.coreBase.security)
+            // NetworkConfigRepository persists runtime network-config changes in the app's plain settings.
+            implementation(libs.multiplatform.settings)
             api(libs.supabase.postgrest)
+            // api-exported (not just postgrest) so any fork whose backend is Supabase-with-auth can
+            // install(Auth) + reference client.auth (RLS-gated RPCs needing a real auth.uid(),
+            // OAuth/email sign-in, anonymous guest sessions) WITHOUT adding the dep to a template-owned
+            // build file that a sync would clobber. The supabase-auth catalog alias already ships.
+            api(libs.supabase.auth)
         }
 
         androidMain.dependencies {

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:OptIn(ExperimentalSerializationApi::class, ExperimentalSettingsApi::class)
 
@@ -13,8 +13,6 @@ package kpt.core.base.datastore.infra
 
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.Settings
-import com.russhwolf.settings.serialization.decodeValueOrNull
-import com.russhwolf.settings.serialization.encodeValue
 import kotlinx.serialization.ExperimentalSerializationApi
 
 /**
@@ -29,26 +27,31 @@ import kotlinx.serialization.ExperimentalSerializationApi
  * writes.
  */
 interface SyncStatePersister {
+    /** Reads the stored versions; an empty map means nothing has synced yet. */
     suspend fun read(): ChangeListVersions
+
+    /** Persists the versions after a successful sync. */
     suspend fun write(versions: ChangeListVersions)
 }
 
 private const val SYNC_VERSIONS_KEY = "sync_change_list_versions"
 
+/**
+ * [SyncStatePersister] backed by multiplatform-settings — the per-feature last-synced version map,
+ * serialised under a single key.
+ *
+ * Survives process restart but not a data wipe, which is the correct durability: losing it makes the
+ * next sync re-read from the beginning rather than silently skipping a change list.
+ */
 class SettingsSyncStatePersister(
     private val plainSettings: Settings,
 ) : SyncStatePersister {
 
-    override suspend fun read(): ChangeListVersions = plainSettings.decodeValueOrNull(
-        key = SYNC_VERSIONS_KEY,
-        serializer = ChangeListVersions.serializer(),
-    ) ?: ChangeListVersions()
+    // JSON, not `encodeValue`: its decoder drops the defaulted `versions` map (see [putJson]).
+    override suspend fun read(): ChangeListVersions =
+        plainSettings.getJsonOrNull(ChangeListVersions.serializer(), SYNC_VERSIONS_KEY) ?: ChangeListVersions()
 
     override suspend fun write(versions: ChangeListVersions) {
-        plainSettings.encodeValue(
-            key = SYNC_VERSIONS_KEY,
-            serializer = ChangeListVersions.serializer(),
-            value = versions,
-        )
+        plainSettings.putJson(ChangeListVersions.serializer(), SYNC_VERSIONS_KEY, versions)
     }
 }

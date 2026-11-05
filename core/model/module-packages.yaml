@@ -24,7 +24,7 @@ schema_version: "1.0"
 #              one of those cases.
 #   template:  template-authored FRAMEWORK code. A clean fork KEEPS it and a sync full-copies it, so
 #              the fork keeps receiving fixes. Do not edit these packages in a fork; extend them
-#              through the module's `Project*` seam instead.
+#              through the module's `Fork*` seam instead.
 #   fork:      the fork's OWN packages. Never deleted, never synced over. A fork's package needs NO
 #              row at all — undeclared IS fork — so a row here is self-documenting only.
 #
@@ -53,16 +53,16 @@ module: model
 
 # Deleted by `remove-demo.sh`; the row survives with `status: removed` as the record.
 demo:
-  - { id: alerts,    status: exists }       # price-alert models
-  - { id: banking,   status: exists }       # loans, bill reminders, amortization rows
-  - { id: calc,      status: exists }       # amortization breakdown
-  - { id: cloudtodo, status: exists }       # MUTABLE-store showcase model
-  - { id: crypto,    status: exists }       # coin market / detail
-  - { id: currency,  status: exists }       # exchange rates, countries
-  - { id: economic,  status: exists }       # FRED series + World Bank indicators
-  - { id: emi,       status: exists }       # EMI result
-  - { id: profile,   status: exists }       # profile info
-  - { id: watchlist, status: exists }       # watchlist items
+  - { id: alerts,    status: removed }       # price-alert models
+  - { id: banking,   status: removed }       # loans, bill reminders, amortization rows
+  - { id: calc,      status: removed }       # amortization breakdown
+  - { id: cloudtodo, status: removed }       # MUTABLE-store showcase model
+  - { id: crypto,    status: removed }       # coin market / detail
+  - { id: currency,  status: removed }       # exchange rates, countries
+  - { id: economic,  status: removed }       # FRED series + World Bank indicators
+  - { id: emi,       status: removed }       # EMI result
+  - { id: profile,   status: removed }       # profile info
+  - { id: watchlist, status: removed }       # watchlist items
 
 # Kept by a clean fork, full-copied by a sync.
 template:

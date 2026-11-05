@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Overslaan</string>
+    <string name="feature_onboarding_skip_a11y">Doorgaan naar de privacykeuzes</string>
+    <string name="feature_onboarding_next">Volgende</string>
+    <string name="feature_onboarding_page_of">Pagina %1$d van %2$d</string>
+    <string name="feature_onboarding_overview_title">Uw geldtools, op één plek</string>
+    <string name="feature_onboarding_overview_body">Leningen, rekeningen, rentes en rekenhulpen staan naast elkaar, zodat het getal dat u nodig hebt altijd één tik verwijderd is.</string>
+    <string name="feature_onboarding_track_title">Mis nooit meer een vervaldatum</string>
+    <string name="feature_onboarding_track_body">Houd leningen en rekeningen bij en ontvang een herinnering voordat elke betaling vervalt.</string>
+    <string name="feature_onboarding_offline_title">Geen bereik? Gewoon doorgaan</string>
+    <string name="feature_onboarding_offline_body">Wat u opslaat, blijft op dit apparaat en werkt offline. Wijzigingen worden gesynchroniseerd zodra u weer online bent.</string>
+    <string name="feature_onboarding_privacy_title">Help de app te verbeteren</string>
+    <string name="feature_onboarding_privacy_lead">Beide staan uit, tenzij u ze zelf inschakelt. Sta beide met één tik toe of kies hieronder — u kunt alles nog steeds gebruiken.</string>
+    <string name="feature_onboarding_analytics_label">Gebruiksstatistieken delen</string>
+    <string name="feature_onboarding_analytics_body">Welke schermen en functies worden gebruikt, en hoe vaak. Nooit wat u typt of opslaat.</string>
+    <string name="feature_onboarding_crash_label">Crashrapporten versturen</string>
+    <string name="feature_onboarding_crash_body">Als de app crasht: de fout, de appversie en het apparaatmodel, zodat we het kunnen oplossen.</string>
+    <string name="feature_onboarding_no_personal_data">Niets wat u in de app invoert, wordt ooit verstuurd.</string>
+    <string name="feature_onboarding_settings_later">U kunt dit later wijzigen in Instellingen.</string>
+    <string name="feature_onboarding_connect_server">Uw server instellen</string>
+    <string name="feature_onboarding_agreement">Door onze dienst te gebruiken, accepteert u onze %1$s en ons %2$s.</string>
+    <string name="feature_onboarding_terms">Algemene voorwaarden</string>
+    <string name="feature_onboarding_privacy_policy">Privacybeleid</string>
+    <string name="feature_onboarding_allow_get_started">Toestaan en beginnen</string>
+    <string name="feature_onboarding_continue_without">Doorgaan zonder te delen</string>
+    <string name="feature_onboarding_continue_choices">Doorgaan met mijn keuzes</string>
+    <string name="feature_onboarding_save_failed">Uw keuzes konden niet worden opgeslagen. Probeer het opnieuw.</string>
+</resources>

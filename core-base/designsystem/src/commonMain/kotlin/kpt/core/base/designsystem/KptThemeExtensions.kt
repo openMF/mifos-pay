@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem
 
@@ -99,6 +99,10 @@ fun KptSpacing.paddingValues(
     bottom: Dp = md,
 ): PaddingValues = PaddingValues(start = start, top = top, end = end, bottom = bottom)
 
+/**
+ * Adapts a [KptTypography] to Material 3's `Typography`, so Kpt components and raw Material
+ * components render the same type.
+ */
 @Composable
 fun KptTypography.toMaterial3Typography(fontFamily: FontFamily? = FontFamily.Default): Typography {
     return Typography(
@@ -164,6 +168,12 @@ fun KptTypography.toMaterial3Typography(fontFamily: FontFamily? = FontFamily.Def
     )
 }
 
+/**
+ * Adapts a Material 3 `Typography` into a [KptTypography], applying [fontFamily] to every style.
+ *
+ * The bridge for a fork that already themes with `MaterialTheme` — its existing scale drives the
+ * Kpt components without maintaining the type twice.
+ */
 fun Typography.toKptTypography(fontFamily: FontFamily? = FontFamily.Default): KptTypography =
     KptTypographyImpl(
         displayLarge = this.displayLarge.copy(fontFamily = fontFamily),
@@ -251,6 +261,9 @@ fun KptTypography.toMaterial3Typography(): Typography {
     )
 }
 
+/**
+ * Adapts a Material 3 `Typography` into a [KptTypography], keeping each style's own font family.
+ */
 fun Typography.toKptTypography(): KptTypography = KptTypographyImpl(
     displayLarge = this.displayLarge,
     displayMedium = this.displayMedium,
@@ -327,6 +340,9 @@ fun KptColorScheme.toMaterial3ColorScheme(): ColorScheme {
     )
 }
 
+/**
+ * Adapts a Material 3 `ColorScheme` into a [KptColorScheme] — role for role, no colour invented.
+ */
 fun ColorScheme.toKptColorScheme(): KptColorScheme = KptColorSchemeImpl(
     primary = this.primary,
     onPrimary = this.onPrimary,
@@ -380,6 +396,9 @@ fun KptShapes.toMaterial3Shapes(): Shapes {
     )
 }
 
+/**
+ * Adapts a Material 3 `Shapes` into a [KptShapes].
+ */
 fun Shapes.toKptShapes(): KptShapes = KptShapesImpl(
     extraSmall = this.extraSmall,
     small = this.small,

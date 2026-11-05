@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.kmp.library.convention)
     alias(libs.plugins.cmp.feature.convention)
     alias(libs.plugins.kmp.koin.convention)
+    id("org.convention.feature.aggregate")
 }
 
 kotlin {
@@ -20,7 +21,7 @@ kotlin {
             // Core Modules
             implementation(projects.core.data)
             implementation(projects.core.database)
-            implementation(projects.core.network) // E1: FeatureRegistry wires the relocated DemoNetworkModule (core/network/demo/di)
+            implementation(projects.core.network) // E1: ForkFeatureRegistry wires the relocated DemoNetworkModule (core/network/demo/di)
             implementation(projects.core.model)
             implementation(projects.core.common)
             implementation(projects.core.datastore)
@@ -46,16 +47,26 @@ kotlin {
             implementation(libs.mifos.authenticator.passcode)
             // Fork addition: KoinModules wires org.mifospay.core.domain.di.DomainModule.
             implementation(projects.core.domain)
+            // KptRootScaffold's snackbarHost slot defaults to KptToastHost, so the app-wide
+            // transient-message surface exists without every screen wiring one.
+            // Routed through core/designsystem, which re-exports core-base/designsystem with
+            // api(...). An app shell must not reach core-base directly (G-CORE-BASE-ENCAP).
 
             // Backbone shell features (template-owned) — always present in every fork.
             implementation(projects.feature.home)
             implementation(projects.feature.profile)
             implementation(projects.feature.settings)
+            // First-run onboarding, installed by RootNavScreen (shown only when first_run_onboarding is on).
+            implementation(projects.feature.onboarding)
             // Fork feature-module deps come from the fork-owned `feature-deps.gradle.kts` seam
             // (applied at the bottom of this file, S7/F4). A fork adds a feature there, never here.
             implementation(projects.sync)
 
             // put your multiplatform dependencies here
+            // Deep links (home-screen widgets + external app:// URIs) — cmp-deep-link (KmpToolkit,
+            // commonMain). Android capture is auto-init (ContentProvider); RootNavScreen collects
+            // DeepLinkHandler.lastReceived and dispatches through the fork-owned ForkDeepLinkRegistry seam.
+            implementation(libs.cmp.deep.link)
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
             implementation(compose.foundation)

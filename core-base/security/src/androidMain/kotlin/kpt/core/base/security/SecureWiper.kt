@@ -12,8 +12,10 @@ package kpt.core.base.security
 import co.touchlab.kermit.Logger
 import java.util.Arrays
 
+/** Android implementation of `SecureWiper`. */
 actual class SecureWiper actual constructor() {
 
+    /** `wipeSecureStorage` on Android. */
     actual fun wipeSecureStorage() {
         Logger.w("SecureWiper") { "Secure storage wipe triggered" }
         // Consumer apps should clear EncryptedSharedPreferences,
@@ -21,6 +23,7 @@ actual class SecureWiper actual constructor() {
         // clear Room database here.
     }
 
+    /** `scrubMemory` on Android. */
     actual fun scrubMemory(data: ByteArray) {
         Arrays.fill(data, 0.toByte())
     }

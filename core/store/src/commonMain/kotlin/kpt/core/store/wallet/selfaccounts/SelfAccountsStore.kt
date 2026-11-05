@@ -11,7 +11,8 @@ package kpt.core.store.wallet.selfaccounts
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.selfaccounts.SelfAccountDao
 import kpt.core.database.wallet.selfaccounts.toDomain
@@ -24,6 +25,10 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `SelfAccountEntity`. Shared with the DAO's writes. */
 private const val SELF_ACCOUNTS_TABLE = "wallet_self_accounts"
@@ -90,10 +95,11 @@ private const val SAVINGS_FIELDS = "savingsAccounts"
  * the store body is self-contained and the fetcher lambda doesn't need to reach
  * across module boundaries. Same pattern as `PocketStore`'s inline mappers.
  */
+@StoreProvider(id = "selfAccounts")
+@CacheKey(fn = "of", key = "wallet_self_accounts-{clientId}", params = ["clientId:Long"])
 fun provideSelfAccountsStore(
     apiManager: SelfServiceApiManager,
     dao: SelfAccountDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<SelfAccountsKey, List<Account>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: SelfAccountsKey ->
         // Ktorfit returns Flow<ClientAccountsEntity> for getAccounts — take the
@@ -105,7 +111,7 @@ fun provideSelfAccountsStore(
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: SelfAccountsKey ->
-            daoFlow(SELF_ACCOUNTS_TABLE) { dao.observeByClient(key.clientId) }
+            run { dao.observeByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: SelfAccountsKey, accounts: List<Account> ->

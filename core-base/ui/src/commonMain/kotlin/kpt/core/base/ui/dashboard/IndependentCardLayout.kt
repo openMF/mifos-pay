@@ -86,44 +86,44 @@ fun <T> IndependentCardLayout(
             // The per-card state body: ScreenContent drives loading/empty/no-network/error/content.
             val cardBody: @Composable () -> Unit = {
                 ScreenContent(
-                state = state,
-                onRetry = { onRetry(index) },
-                refreshingIndicator = refreshingIndicator,
-                onDismiss = cardDismiss,
-                // Per-card slots: use the consumer's compact slot when provided, else the
-                // full-size defaults wired to THIS card's retry/dismiss (identical to prior behavior).
-                loading = if (loading != null) {
-                    { loading(index) }
-                } else {
-                    { DefaultLoadingContent() }
-                },
-                empty = if (empty != null) {
-                    { empty(index) }
-                } else {
-                    { DefaultEmptyContent() }
-                },
-                noNetwork = if (noNetwork != null) {
-                    { captive -> noNetwork(index, captive) }
-                } else {
-                    { captive ->
-                        DefaultNoNetworkContent(
-                            onRetry = { onRetry(index) },
-                            isCaptivePortal = captive,
-                            onDismiss = cardDismiss,
-                        )
-                    }
-                },
-                error = if (error != null) {
-                    { throwable -> error(index, throwable) }
-                } else {
-                    { throwable ->
-                        DefaultErrorContent(
-                            throwable,
-                            onRetry = { onRetry(index) },
-                            onDismiss = cardDismiss,
-                        )
-                    }
-                },
+                    state = state,
+                    onRetry = { onRetry(index) },
+                    refreshingIndicator = refreshingIndicator,
+                    onDismiss = cardDismiss,
+                    // Per-card slots: use the consumer's compact slot when provided, else the
+                    // full-size defaults wired to THIS card's retry/dismiss (identical to prior behavior).
+                    loading = if (loading != null) {
+                        { loading(index) }
+                    } else {
+                        { DefaultLoadingContent() }
+                    },
+                    empty = if (empty != null) {
+                        { empty(index) }
+                    } else {
+                        { DefaultEmptyContent() }
+                    },
+                    noNetwork = if (noNetwork != null) {
+                        { captive -> noNetwork(index, captive) }
+                    } else {
+                        { captive ->
+                            DefaultNoNetworkContent(
+                                onRetry = { onRetry(index) },
+                                isCaptivePortal = captive,
+                                onDismiss = cardDismiss,
+                            )
+                        }
+                    },
+                    error = if (error != null) {
+                        { throwable -> error(index, throwable) }
+                    } else {
+                        { throwable ->
+                            DefaultErrorContent(
+                                throwable,
+                                onRetry = { onRetry(index) },
+                                onDismiss = cardDismiss,
+                            )
+                        }
+                    },
                 ) { data, freshness ->
                     content(index, data, freshness)
                 }

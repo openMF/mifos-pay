@@ -22,9 +22,9 @@ on:
 jobs:
   demo-convention:
     name: Demo Convention
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       # Pure bash + grep + find — no Java/Gradle. Fails on any demo⇄framework
       # separation drift so `scripts/white-label/customize.sh --clean` stays a safe, source-valid removal.
       - name: Verify demo⇄framework separation convention
@@ -34,6 +34,49 @@ jobs:
       # openMF/Mifos signing+org identity — Apple 90288) + appid-consistency (FAILs if fork.properties
       # app.id drifted from libs.versions.toml appId) + store-listing (WARNs on un-authored copy).
       # The upstream template itself sets TEMPLATE_SELF_BUILD=1 so its fork-only checks skip.
+      # gradle/fork.properties is gitignored (per-fork filled-in values: signing DN, Apple team id,
+      # demo creds), so on a fresh CI clone it does not exist — and the checks below then fall back
+      # to gradle/fork.properties.template and short-circuit. appid-consistency and fork-identity
+      # were therefore never actually ENFORCED in CI, which is precisely the drift they exist to
+      # catch, and white-label-derived WARNed on every run with nothing able to clear it.
+      #
+      # Derive it from the app-profile SoT instead of committing it. derive.rb is pure Ruby (no JDK,
+      # no Gradle — this job stays a ~10s bash job) and emits only NON-placeholder values, so nothing
+      # sensitive is materialised: unfilled signing fields stay absent and read as the declared '^$'
+      # placeholder. Committing the file instead would put apple.team.id / demo.password / the
+      # keystore DN in git and give the derived bridge a second source of truth alongside app-profile.
+      # Honour .ruby-version (3.3.6) instead of whatever Ruby the runner image happens to ship.
+      # derive.rb needs no gems (stdlib `yaml` only), so bundler-cache stays off and this adds ~5s.
+      # Without it CI silently runs a different interpreter than the one the repo declares and
+      # every other surface uses — and deployment/_shared/*.rb already relies on 3.0+ syntax, so
+      # the first 3.3-only construct in a CI-run script would fail in CI alone. RT-8 of
+      # scripts/product-health/checks/ruby-toolchain-coherence.sh warns on exactly this mismatch,
+      # and the step below runs that check — so pinning here is also what keeps it quiet.
+      # `ruby-version` is deliberately unset: this action's documented default ('default') resolves
+      # the version FROM .ruby-version — so the declared 3.3.6 is honoured without restating it here
+      # and creating a second place to update. (There is no `ruby-version-file` input at this pin.)
+      - name: Setup Ruby (honours .ruby-version)
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b  # v1.321.0
+        with:
+          bundler-cache: false
+
+      # xcodeproj — the ONLY gem this job needs, and it is needed for one reason: without it the
+      # pbxproj-merge canary cannot exercise scripts/white-label/merge-pbxproj.rb and downgrades
+      # itself to a WARN. That check is what stops a regression in the Xcode-project 3-way from
+      # reaching a fork, where the symptom is a silently deleted target rather than a build error,
+      # so leaving it unexercised upstream would make it decorative exactly where it matters.
+      #
+      # `gem install` rather than `bundler-cache: true`: bundler would install the whole fastlane
+      # tree (~1-2 min) for a job that is otherwise ~10s. xcodeproj pulls only CFPropertyList /
+      # nanaimo / claide / colored2 / atomos and adds a few seconds. `|| true` keeps a transient
+      # rubygems outage from failing the quality gate on something this job can degrade around —
+      # the check WARNs on its own when the gem is missing.
+      - name: Install xcodeproj (pbxproj-merge canary only)
+        run: gem install xcodeproj --no-document || true
+
+      - name: Derive fork.properties from app-profile (SoT → build bridge)
+        run: ruby scripts/white-label/derive.rb
+
       - name: Product health (fork.properties sanity)
         env:
           TEMPLATE_SELF_BUILD: ${{ github.repository == 'openMF/kmp-project-template' && '1' || '' }}
@@ -41,47 +84,47 @@ jobs:
 
   spotless:
     name: Spotless
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with: { distribution: zulu, java-version: '17' }
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v5
       - run: ./gradlew spotlessCheck
 
   detekt:
     name: Detekt
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with: { distribution: zulu, java-version: '17' }
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v5
       - run: ./gradlew detekt
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with: { name: detekt-reports, path: '**/build/reports/detekt/**' }
 
   dependency-guard:
     name: Dependency Guard
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with: { distribution: zulu, java-version: '17' }
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v5
       - run: ./gradlew dependencyGuard
 
   coverage:
     name: Kover Coverage
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with: { distribution: zulu, java-version: '17' }
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v5
       - name: Run tests + Kover XML report
         run: ./gradlew koverXmlReport
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with: { name: kover-report, path: '**/build/reports/kover/**' }

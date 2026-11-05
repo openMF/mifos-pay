@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="app_name">KPT Design</string>
+    <string name="home">Start</string>
+    <string name="profile">Profiel</string>
+    <string name="settings">Instellingen</string>
+    <string name="not_connected">⚠️ Je hebt geen internetverbinding</string>
+    <string name="screenstate_empty_title">Hier is nog niets</string>
+    <string name="screenstate_empty_message">Zodra je gegevens hebt, verschijnen ze hier.</string>
+    <string name="screenstate_error_title">Er is iets misgegaan</string>
+    <string name="screenstate_error_retry">Opnieuw proberen</string>
+    <string name="screenstate_nonet_title">Je bent offline</string>
+    <string name="screenstate_nonet_message">We proberen het opnieuw zodra je weer verbinding hebt.</string>
+    <string name="screenstate_nonet_retry">Nu opnieuw proberen</string>
+    <string name="screenstate_captive_title">Aanmelden bij wifi</string>
+    <string name="screenstate_captive_message">Je netwerk vereist dat je je aanmeldt voordat je verbinding maakt.</string>
+    <string name="screenstate_captive_action">Aanmeldpagina openen</string>
+    <string name="error_category_network">Kan de server niet bereiken. Controleer je verbinding.</string>
+    <string name="error_category_auth">Je sessie is verlopen. Meld je opnieuw aan.</string>
+    <string name="error_category_ratelimit">Te veel verzoeken. Wacht even en probeer het opnieuw.</string>
+    <string name="error_category_server">Onze servers hebben even een probleem. Probeer het zo weer.</string>
+    <string name="error_category_generic">Er is iets misgegaan</string>
+</resources>

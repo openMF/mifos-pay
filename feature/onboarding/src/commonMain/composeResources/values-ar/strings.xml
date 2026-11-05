@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">تخطٍّ</string>
+    <string name="feature_onboarding_skip_a11y">الانتقال مباشرةً إلى خيارات الخصوصية</string>
+    <string name="feature_onboarding_next">التالي</string>
+    <string name="feature_onboarding_page_of">الصفحة %1$d من %2$d</string>
+    <string name="feature_onboarding_overview_title">أدواتك المالية في مكان واحد</string>
+    <string name="feature_onboarding_overview_body">القروض والفواتير والأسعار والحاسبات جنبًا إلى جنب، فيكون الرقم الذي تحتاجه دائمًا على بُعد نقرة.</string>
+    <string name="feature_onboarding_track_title">لا تفوّت أي موعد استحقاق</string>
+    <string name="feature_onboarding_track_body">تابع قروضك وفواتيرك، واحصل على تذكير قبل موعد استحقاق كل دفعة.</string>
+    <string name="feature_onboarding_offline_title">لا توجد تغطية؟ تابع</string>
+    <string name="feature_onboarding_offline_body">ما تحفظه يبقى على هذا الجهاز ويعمل دون اتصال. وتُزامَن التغييرات عند عودتك إلى الاتصال.</string>
+    <string name="feature_onboarding_privacy_title">ساعدنا في تحسين التطبيق</string>
+    <string name="feature_onboarding_privacy_lead">كلا الخيارين معطّل ما لم تفعّله بنفسك. اسمح بكليهما بنقرة واحدة، أو اختر أدناه — ويمكنك استخدام جميع الميزات في كل الأحوال.</string>
+    <string name="feature_onboarding_analytics_label">مشاركة تحليلات الاستخدام</string>
+    <string name="feature_onboarding_analytics_body">الشاشات والميزات المستخدَمة ومدى تكرار استخدامها. دون أي شيء تكتبه أو تحفظه.</string>
+    <string name="feature_onboarding_crash_label">إرسال تقارير الأعطال</string>
+    <string name="feature_onboarding_crash_body">عند تعطّل التطبيق: الخطأ وإصدار التطبيق وطراز الجهاز، لنتمكن من إصلاحه.</string>
+    <string name="feature_onboarding_no_personal_data">لا يُرسَل أبدًا أي شيء تُدخله في التطبيق.</string>
+    <string name="feature_onboarding_settings_later">يمكنك تغيير ذلك لاحقًا من الإعدادات.</string>
+    <string name="feature_onboarding_connect_server">إعداد الخادم</string>
+    <string name="feature_onboarding_agreement">باستخدامك خدمتنا، فإنك توافق على %1$s و%2$s.</string>
+    <string name="feature_onboarding_terms">الشروط والأحكام</string>
+    <string name="feature_onboarding_privacy_policy">سياسة الخصوصية</string>
+    <string name="feature_onboarding_allow_get_started">السماح والبدء</string>
+    <string name="feature_onboarding_continue_without">المتابعة دون مشاركة</string>
+    <string name="feature_onboarding_continue_choices">المتابعة بخياراتي</string>
+    <string name="feature_onboarding_save_failed">تعذّر حفظ خياراتك. يُرجى المحاولة مرة أخرى.</string>
+</resources>

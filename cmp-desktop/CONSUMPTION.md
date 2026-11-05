@@ -1,6 +1,6 @@
 # Consuming `cmp-desktop` in a fork
 
-`cmp-desktop` is the JVM app-shell — a single `main()` (`src/jvmMain/kotlin/main.kt`) that opens a
+`cmp-desktop` is the JVM app-shell — a single `main()` (`src/jvmMain/kotlin/Main.kt`) that opens a
 Compose Desktop `Window` and renders `cmp-shared`'s `SharedApp`. There is no per-screen desktop
 code; everything renders through the shared Compose UI.
 

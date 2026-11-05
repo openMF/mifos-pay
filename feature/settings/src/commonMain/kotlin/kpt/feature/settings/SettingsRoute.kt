@@ -33,7 +33,7 @@ fun NavController.navigateToSyncAndDrafts(navOptions: NavOptions? = null) = navi
 
 /**
  * The settings backbone destination. [settingsBody] is the fork-owned inner content (default supplied by
- * `cmp-navigation`'s `BackboneRegistry.settingsBody`, which wires the back / sync-and-drafts / dev-menu
+ * `cmp-navigation`'s `ForkBackboneRegistry.settingsBody`, which wires the back / sync-and-drafts / dev-menu
  * callbacks into the demo body); this template graph forwards the opaque body. (WS01 base-feature seam,
  * epic AC7 — mirrors the `home` shell/seam split.)
  */

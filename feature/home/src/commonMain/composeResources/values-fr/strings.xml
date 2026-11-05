@@ -10,15 +10,15 @@
 -->
 <resources>
     <string name="feature_home_loading">Chargement</string>
-    <string name="start_sending_your_money_tax_free">Commencez à envoyer de l\'argent sans taxe!</string>
-    <string name="feature_home_desc">Mifos Pay est le meilleur endroit pour recevoir et envoyer de l\'argent. Commencez à économiser maintenant!</string>
+    <string name="start_sending_your_money_tax_free">Commencez à envoyer de l'argent sans taxe!</string>
+    <string name="feature_home_desc">Mifos Pay est le meilleur endroit pour recevoir et envoyer de l'argent. Commencez à économiser maintenant!</string>
     <string name="feature_home_wallet_balance">Solde du portefeuille</string>
     <string name="feature_home_view_more">Voir plus</string>
     <string name="feature_home_mark_default">Définir par défaut</string>
     <string name="feature_home_request">Recevoir</string>
-    <string name="feature_home_request_money">Demander de l\'argent</string>
+    <string name="feature_home_request_money">Demander de l'argent</string>
     <string name="feature_home_send">Envoyer</string>
-    <string name="feature_home_send_money">Envoyer de l\'argent</string>
+    <string name="feature_home_send_money">Envoyer de l'argent</string>
     <string name="feature_home_account_type">Type de compte</string>
     <string name="home_filter_transactions">Filtrer les transactions</string>
     <string name="home_transaction_history">Historique des transactions</string>

@@ -18,7 +18,7 @@
     <string name="feature_history_error_oops">Oups !</string>
     <string name="feature_history_empty">Votre historique de transactions est vide</string>
     <string name="feature_history_empty_filter">Votre historique de transactions est vide pour les filtres sélectionnés</string>
-    <string name="feature_history_error">Une erreur inattendue s\'est produite. Veuillez réessayer.</string>
+    <string name="feature_history_error">Une erreur inattendue s'est produite. Veuillez réessayer.</string>
     <string name="feature_history_all">Tout</string>
     <string name="feature_history_credits">Crédits</string>
     <string name="feature_history_debits">Débits</string>

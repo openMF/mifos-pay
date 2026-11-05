@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.android.app
 
@@ -16,18 +16,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import cmp.shared.SharedApp
 import io.github.mobilebytelabs.kmptoolkit.firebase.analytics.AnalyticsHelper
 import io.github.mobilebytelabs.kmptoolkit.firebase.analytics.AppLifecycleTracker
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
-import kpt.core.base.data.infra.NetworkMonitor
+import kotlinx.coroutines.launch
 import kpt.core.base.platform.update.AppUpdateManager
-import kpt.core.base.platform.update.AppUpdateManagerImpl
 import kpt.core.base.ui.util.ShareUtils
 import kpt.core.data.user.UserDataRepository
 import org.koin.android.ext.android.inject
@@ -43,11 +46,14 @@ import java.util.Locale
 @Suppress("UnusedPrivateProperty")
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appUpdateManager: AppUpdateManager
+    // INJECTED, not constructed. `platformModule` already binds
+    // `single<AppUpdateManager> { AppUpdateManagerImpl() }`, so building one here produced a SECOND
+    // instance and left that binding dead on Android — anything resolving AppUpdateManager from Koin
+    // (or reading LocalAppUpdateManager) talked to a different object than the one this activity
+    // drives through onCreate/onResume.
+    private val appUpdateManager: AppUpdateManager by inject()
 
     private val userPreferencesRepository: UserDataRepository by inject()
-
-    private val networkMonitor: NetworkMonitor by inject()
 
     private val analyticsHelper: AnalyticsHelper by inject()
     private val lifecycleTracker by lazy { AppLifecycleTracker(analyticsHelper) }
@@ -57,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen().setKeepOnScreenCondition { shouldShowSplashScreen }
 
         super.onCreate(savedInstanceState)
-        appUpdateManager = AppUpdateManagerImpl(this)
 
         val darkThemeConfigFlow = userPreferencesRepository.observeDarkThemeConfig
 
@@ -69,54 +74,56 @@ class MainActivity : AppCompatActivity() {
         analyticsHelper.setUserId(deviceData)
 
         setContent {
-            val status by networkMonitor.isOnline.collectAsStateWithLifecycle(false)
-
-            if (status) {
-                appUpdateManager.checkForAppUpdate()
-            }
-
+            // The update CHECK moved to AppViewModel.init (commonMain) so every platform performs
+            // it, not just Android. What stays here is `checkForResumeUpdateState()` in onResume —
+            // genuinely an Android lifecycle concern, because Play's flexible update can be
+            // interrupted by backgrounding and must be re-offered on return.
             lifecycleTracker.markAppLaunchComplete()
 
-            SharedApp(
-                updateScreenCapture = ::updateScreenCapture,
-                handleRecreate = ::handleRecreate,
-                handleThemeMode = {
-                    AppCompatDelegate.setDefaultNightMode(it)
-                },
-                handleAppLocale = { localeTag ->
-                    val currentLocales = AppCompatDelegate.getApplicationLocales()
-                    val newLocales = if (localeTag != null) {
-                        LocaleListCompat.forLanguageTags(localeTag)
-                    } else {
-                        // System Default: clear app-specific locale
-                        LocaleListCompat.getEmptyLocaleList()
-                    }
-
-                    // Only update if the locale has actually changed
-                    if (currentLocales != newLocales) {
-                        AppCompatDelegate.setApplicationLocales(newLocales)
-                        // Update Locale.setDefault for non-UI formatting
-                        if (localeTag != null) {
-                            // Use forLanguageTag to properly parse locales like "en-GB", "pt-BR"
-                            Locale.setDefault(Locale.forLanguageTag(localeTag))
+            // Expose every Compose testTag as an Android resource id, so Maestro `id:` selectors and UI
+            // Automator can find the tags generators emit. Android-only, so it lives here, once, at the root.
+            Box(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) {
+                SharedApp(
+                    updateScreenCapture = ::updateScreenCapture,
+                    handleRecreate = ::handleRecreate,
+                    handleThemeMode = {
+                        AppCompatDelegate.setDefaultNightMode(it)
+                    },
+                    handleAppLocale = { localeTag ->
+                        val currentLocales = AppCompatDelegate.getApplicationLocales()
+                        val newLocales = if (localeTag != null) {
+                            LocaleListCompat.forLanguageTags(localeTag)
                         } else {
-                            // Reset to true system default locale from device configuration
-                            // Use Resources.getSystem() to get device locale unaffected by app overrides
-                            val systemLocale = Resources.getSystem().configuration.locales[0]
-                            Locale.setDefault(systemLocale)
+                            // System Default: clear app-specific locale
+                            LocaleListCompat.getEmptyLocaleList()
                         }
-                    }
-                },
-                onSplashScreenRemoved = {
-                    shouldShowSplashScreen = false
-                },
-            )
+
+                        // Only update if the locale has actually changed
+                        if (currentLocales != newLocales) {
+                            AppCompatDelegate.setApplicationLocales(newLocales)
+                            // Update Locale.setDefault for non-UI formatting
+                            if (localeTag != null) {
+                                // Use forLanguageTag to properly parse locales like "en-GB", "pt-BR"
+                                Locale.setDefault(Locale.forLanguageTag(localeTag))
+                            } else {
+                                // Reset to true system default locale from device configuration
+                                // Use Resources.getSystem() to get device locale unaffected by app overrides
+                                val systemLocale = Resources.getSystem().configuration.locales[0]
+                                Locale.setDefault(systemLocale)
+                            }
+                        }
+                    },
+                    onSplashScreenRemoved = {
+                        shouldShowSplashScreen = false
+                    },
+                )
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        appUpdateManager.checkForResumeUpdateState()
+        lifecycleScope.launch { appUpdateManager.checkForResumeUpdateState() }
         lifecycleTracker.onEnterBackground()
     }
 
@@ -133,8 +140,9 @@ class MainActivity : AppCompatActivity() {
         // Debug builds always allow screen capture so QA / device-test tooling (adb
         // screencap, screen recordings, Android Studio Profiler captures) work without
         // toggling the user-facing "Allow screen capture" preference. Release builds
-        // honor the user preference — FLAG_SECURE is on by default for production
-        // because this is a fintech app (loan balances, EMI amounts, account names).
+        // honor the user preference. Its fresh-install default comes from
+        // app-profile/app.yaml#security.screen_capture_allowed_by_default (false = FLAG_SECURE
+        // on, the template's choice for a finance app showing balances and account names).
         val allow = isScreenCaptureAllowed || BuildConfig.DEBUG
         if (allow) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)

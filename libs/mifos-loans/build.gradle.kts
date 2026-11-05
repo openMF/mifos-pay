@@ -14,7 +14,6 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-
 // namespace auto-derives from baseNamespace + module path via kmp.library.convention.
 kotlin {
     sourceSets {

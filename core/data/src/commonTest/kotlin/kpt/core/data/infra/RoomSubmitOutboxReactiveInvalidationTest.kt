@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.data.infra
 
@@ -24,9 +24,9 @@ import kotlin.test.assertNull
  * [FakeDraftDao] returns **cold snapshot** flows that never self-re-emit, modelling Room 3
  * alpha05 on wasmJs (the `InvalidationTracker` does not fan out to a live collector after a
  * write). These assertions can only pass because the outbox now:
- *  - wraps `observePending*` / `observeAllByFormKey` reads in `daoFlow(DRAFTS_TABLE) { ... }`, and
+ *  - exposes `observePending*` / `observeAllByFormKey` as plain Room `Flow`s, and
  *  - wraps every write (`save`, `saveByUniqueKey`, `mark*`, `delete*`) in
- *    `notifyingWrite(DRAFTS_TABLE) { ... }`.
+ *    a plain DAO write.
  *
  * On the pre-fix code — raw `dao.observePending*` reads + raw writes — the draft-status badge
  * on web would never advance past its first emission. Regression guard for that defect class.

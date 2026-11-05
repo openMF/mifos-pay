@@ -9,16 +9,16 @@
  */
 package kpt.core.base.store.paging
 
-import kpt.core.base.store.error.OfflineException
-import kpt.core.base.store.fixtures.FakeNetworkMonitor
-import kpt.core.base.store.infra.FakeFetchedAtRepository
-import kpt.core.base.store.screen.ScreenState
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkInfo
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkStatus
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkType
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kpt.core.base.store.error.OfflineException
+import kpt.core.base.store.fixtures.FakeNetworkMonitor
+import kpt.core.base.store.infra.FakeFetchedAtRepository
+import kpt.core.base.store.screen.ScreenState
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.StoreBuilder
 import kotlin.test.Test
@@ -88,7 +88,8 @@ class PagingScreenStreamOfflineTest {
         stream.loadNextPage()
         val err = stream.loadMoreError.firstNonNullValue()
         assertEquals(
-            originalError.message, err.message,
+            originalError.message,
+            err.message,
             "Online: original error message must be preserved (not re-typed).",
         )
         assertTrue(
@@ -194,4 +195,3 @@ class PagingScreenStreamOfflineTest {
  * Useful for tests that need to wait for a fire-and-forget coroutine to set an error.
  */
 private suspend fun <T : Any> StateFlow<T?>.firstNonNullValue(): T = first { it != null }!!
-

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.util
 
@@ -16,7 +16,9 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import java.awt.Desktop
 import java.net.URI
 
+/** Desktop (JVM) implementation of `ShareUtils`. */
 actual object ShareUtils {
+    /** `shareText` on Desktop (JVM). */
     @OptIn(DelicateCoroutinesApi::class)
     actual suspend fun shareText(text: String) {
         FileKit.saveImageToGallery(
@@ -25,6 +27,7 @@ actual object ShareUtils {
         )
     }
 
+    /** `shareImage` on Desktop (JVM). */
     actual suspend fun shareImage(
         title: String,
         image: androidx.compose.ui.graphics.ImageBitmap,
@@ -37,6 +40,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `shareImage` on Desktop (JVM). */
     actual suspend fun shareImage(title: String, byte: ByteArray) {
         FileKit.saveImageToGallery(
             bytes = byte,
@@ -44,6 +48,7 @@ actual object ShareUtils {
         )
     }
 
+    /** `openUrl` on Desktop (JVM). */
     actual fun openUrl(url: String) {
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -54,10 +59,12 @@ actual object ShareUtils {
         }
     }
 
+    /** `openAppInfo` on Desktop (JVM). */
     actual fun openAppInfo() {
         // Not applicable on Desktop; no-op
     }
 
+    /** `callPhone` on Desktop (JVM). */
     actual fun callPhone(number: String) {
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
@@ -68,6 +75,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `sendEmail` on Desktop (JVM). */
     actual fun sendEmail(to: String, subject: String?, body: String?) {
         val q = mutableListOf<String>()
         subject?.let { q.add("subject=" + java.net.URLEncoder.encode(it, Charsets.UTF_8)) }
@@ -83,6 +91,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `sendViaSMS` on Desktop (JVM). */
     actual fun sendViaSMS(number: String, message: String) {
         val encodedMessage = java.net.URLEncoder.encode(message, Charsets.UTF_8)
         val smsUrl = if (number.isNotEmpty()) {
@@ -99,6 +108,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `copyText` on Desktop (JVM). */
     actual fun copyText(text: String) {
         try {
             val clipboard = java.awt.Toolkit.getDefaultToolkit().systemClipboard
@@ -109,6 +119,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `shareApp` on Desktop (JVM). */
     actual suspend fun shareApp(storeLink: String, message: String) {
         val shareContent = if (message.isNotEmpty()) {
             "$message\n$storeLink"

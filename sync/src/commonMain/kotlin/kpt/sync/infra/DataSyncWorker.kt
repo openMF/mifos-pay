@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:OptIn(io.github.mobilebytelabs.worker.ExperimentalWorkerApi::class)
 
@@ -19,14 +19,18 @@ import kpt.core.base.datastore.infra.ChangeListVersions
 import kpt.core.base.datastore.infra.SyncStatePersister
 
 /**
- * Single data-sync worker. Implements [Synchronizer] so [Syncable] collaborators can read +
+ * Single data-sync worker. Implements [Synchronizer] so its two [Syncable]
+ * collaborators ([CurrencyRepository], [MacroIndicatorsRepository]) can read +
  * write [ChangeListVersions] through `this` without an extra abstraction.
  *
- * This fork has no periodic-refresh [Syncable] collaborators of its own (per-screen Store5
- * FetchPolicy handles network freshness instead — see `core/store/README.md`); the template's
- * demo currency/economic-indicator syncers were stripped with the rest of the demo scaffolding.
- * Add a real [Syncable] here (constructor-injected, matching [SyncModule]'s binding) if a
- * future feature needs generic background data sync.
+ * **No `getAll<Syncable>()`** — the two repos are constructor-injected as named interfaces. Adding a third
+ * Syncable (e.g. FRED interest rates) requires editing this class signature +
+ * the [SyncModule] binding — not a runtime discovery.
+ *
+ * The `awaitAll` shape means partial failure is full failure — if one repo
+ * throws, the entire sync is `Result.retry()`. This matches NiA's surface
+ * (single `Flow<Boolean>` to observers) and is what the template's home
+ * dashboard expects.
  */
 public class DataSyncWorker(
     context: WorkerContext,

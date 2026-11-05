@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.navigation.rootnav
 
@@ -86,24 +86,34 @@ class RootNavViewModel(
     }
 }
 
+/** The resolved top-level destination. */
 sealed class RootNavState {
+    /** Sign-in is required. */
     data object Auth : RootNavState()
 
+    /** Onboarding has not been completed. */
     data object ShowOnboarding : RootNavState()
 
+    /** Still resolving — the initial state, never a resting one. */
     data object Splash : RootNavState()
 
+    /** Signed in, but the app-lock has not been satisfied. */
     data object UserLocked : RootNavState()
 
+    /** Signed in and unlocked — the app proper. */
     data class UserUnlocked(
+        /** Who is signed in. */
         val activeUserId: String,
     ) : RootNavState()
 }
 
+/** What the root nav can be asked to do. */
 sealed class RootNavAction {
 
+    /** Actions raised by the ViewModel's own collectors, never by the UI. */
     sealed class Internal {
 
+        /** Auth state or preferences changed; re-resolve the destination. */
         data class UserStateUpdateReceive(
             val userInfo: UserInfo,
             val isUnauthorized: Boolean,

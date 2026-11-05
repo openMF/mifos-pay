@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.store.infra.impl
 
@@ -13,13 +13,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
-import kpt.core.base.database.invalidation.daoFlow
-import kpt.core.base.database.invalidation.notifyingWrite
+import kpt.core.base.database.infra.dao.DraftDao
+import kpt.core.base.database.infra.entity.DraftEntity
 import kpt.core.base.store.submit.SubmitOutbox
 import kpt.core.base.store.submit.SubmitOutboxEntry
 import kpt.core.base.store.submit.SubmitOutboxStatus
-import kpt.core.base.database.infra.dao.DraftDao
-import kpt.core.base.database.infra.entity.DraftEntity
 
 /**
  * Room-backed [SubmitOutbox] that persists form payloads across process death.
@@ -37,15 +35,20 @@ import kpt.core.base.database.infra.entity.DraftEntity
  * @param P Payload type. Must be annotated with `@Serializable`.
  * @param dao The Room DAO for the `framework_submit_drafts` table.
  * @param serializer Kotlinx serializer for [P]. Obtain via `P.serializer()`.
+ * @param ownsFormKey Which `formKey`s this outbox's [getAllPending] returns. The table is shared by
+ *   every form, and each form's `OfflineSubmitSyncer` replays [getAllPending] with ITS serializer —
+ *   so an app with two outboxes must scope them, or a row of one form that happens to decode as
+ *   the other's payload is replayed as the wrong thing. Default = all rows (one-outbox apps).
  */
 class RoomSubmitOutbox<P>(
     private val dao: DraftDao,
     private val serializer: KSerializer<P>,
+    private val ownsFormKey: (String) -> Boolean = { true },
 ) : SubmitOutbox<P> {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    override suspend fun save(formKey: String, payload: P): Long = notifyingWrite(DRAFTS_TABLE) {
+    override suspend fun save(formKey: String, payload: P): Long = run {
         val nowMs = currentTimeMillis()
         val existing = dao.getPendingByFormKey(formKey)
         if (existing != null) {
@@ -65,7 +68,7 @@ class RoomSubmitOutbox<P>(
     }
 
     override suspend fun saveByUniqueKey(formKey: String, uniqueKey: String, payload: P): Long =
-        notifyingWrite(DRAFTS_TABLE) {
+        run {
             val nowMs = currentTimeMillis()
             val existing = dao.getPendingByUniqueKey(formKey, uniqueKey)
             if (existing != null) {
@@ -91,32 +94,40 @@ class RoomSubmitOutbox<P>(
         dao.getPendingByUniqueKey(formKey, uniqueKey)?.toEntry()
 
     override fun observePending(formKey: String): Flow<SubmitOutboxEntry<P>?> =
-        daoFlow(DRAFTS_TABLE) { dao.observePendingByFormKey(formKey) }.map { it?.toEntry() }
+        dao.observePendingByFormKey(formKey).map { it?.toEntry() }
 
     override fun observePendingByUniqueKey(formKey: String, uniqueKey: String): Flow<SubmitOutboxEntry<P>?> =
-        daoFlow(DRAFTS_TABLE) { dao.observePendingByUniqueKey(formKey, uniqueKey) }.map { it?.toEntry() }
+        dao.observePendingByUniqueKey(formKey, uniqueKey).map { it?.toEntry() }
 
     override fun observeAllByFormKey(formKey: String): Flow<List<SubmitOutboxEntry<P>>> =
-        daoFlow(DRAFTS_TABLE) { dao.observeAllByFormKey(formKey) }.map { rows -> rows.mapNotNull { it.toEntry() } }
+        dao.observeAllByFormKey(formKey).map { rows -> rows.mapNotNull { it.toEntry() } }
 
-    override suspend fun getAllPending(): List<SubmitOutboxEntry<P>> = dao.getAllPending().mapNotNull { it.toEntry() }
+    override fun observePendingIds(): Flow<Set<Long>> = dao.observeAll().map { rows ->
+        rows.filter { it.status == SubmitOutboxStatus.PENDING.name && ownsFormKey(it.formKey) }.map { it.id }.toSet()
+    }
+
+    override suspend fun getAllPending(): List<SubmitOutboxEntry<P>> =
+        dao.getAllPending().filter { ownsFormKey(it.formKey) }.mapNotNull { it.toEntry() }
 
     override suspend fun markRetrying(id: Long) =
-        notifyingWrite(DRAFTS_TABLE) { dao.markRetrying(id, currentTimeMillis()) }
+        dao.markRetrying(id, currentTimeMillis())
 
     override suspend fun markSubmitted(id: Long) =
-        notifyingWrite(DRAFTS_TABLE) { dao.markSubmitted(id, currentTimeMillis()) }
+        dao.markSubmitted(id, currentTimeMillis())
 
     override suspend fun markFailed(id: Long, error: String?) =
-        notifyingWrite(DRAFTS_TABLE) { dao.markFailed(id, currentTimeMillis(), error) }
+        dao.markFailed(id, currentTimeMillis(), error)
+
+    override suspend fun requeue(id: Long, error: String?) =
+        dao.requeue(id, currentTimeMillis())
 
     override suspend fun deleteByFormKey(formKey: String) =
-        notifyingWrite(DRAFTS_TABLE) { dao.deleteByFormKey(formKey) }
+        dao.deleteByFormKey(formKey)
 
     override suspend fun deleteByUniqueKey(formKey: String, uniqueKey: String) =
-        notifyingWrite(DRAFTS_TABLE) { dao.deleteByUniqueKey(formKey, uniqueKey) }
+        dao.deleteByUniqueKey(formKey, uniqueKey)
 
-    override suspend fun deleteAll() = notifyingWrite(DRAFTS_TABLE) { dao.deleteAll() }
+    override suspend fun deleteAll() = dao.deleteAll()
 
     private fun DraftEntity.toEntry(): SubmitOutboxEntry<P>? = runCatching {
         SubmitOutboxEntry(
@@ -133,6 +144,3 @@ class RoomSubmitOutbox<P>(
 }
 
 private fun currentTimeMillis(): Long = kotlin.time.Clock.System.now().toEpochMilliseconds()
-
-/** Room `@Entity(tableName = …)` for [DraftEntity] — drives the wasmJs invalidation bridge. */
-private const val DRAFTS_TABLE = "framework_submit_drafts"

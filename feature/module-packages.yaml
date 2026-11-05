@@ -1,0 +1,76 @@
+schema_version: "1.0"
+# ─────────────────────────────────────────────────────────────────────────────
+# feature/ — module-packages.yaml
+#
+# WHAT THIS IS
+# The registry of FEATURE MODULES: what the template ships as showcase, what a clean fork keeps, and
+# what THIS FORK added. One file for the whole directory, not one per module — a feature module is
+# wholly fork-owned (`feature/** -> fork` in customization-surface.yaml), so its lifecycle is a
+# property of the MODULE, not of packages inside it. Per-module files would have been 17 copies of
+# the same one-line fact.
+#
+# The core/ modules are different and DO have per-module files: there the template and the fork share
+# a module, so lifecycle has to be stated per package.
+#
+# ── SECTIONS ─────────────────────────────────────────────────────────────────
+#   demo:      template SHOWCASE modules. `include()`d inside the demo begin/end marker fence
+#              in settings.gradle.kts, so `scripts/remove-demo.sh` deletes the whole directory. The
+#              ROW SURVIVES with `status: removed` — that record is what lets
+#              `/kmp-project-template-sync` tell "stripped on purpose" from "went missing".
+#   template:  template-authored code a clean fork keeps AND a sync full-copies. Nothing in this
+#              directory is template today — see the `Platform.*.kt` note under `fork:`.
+#   fork:      THIS FORK's own feature modules. Never deleted, never synced over. Always present,
+#              even when empty: it is where `/implement` registers a feature it adds.
+#
+# ── FIELDS ───────────────────────────────────────────────────────────────────
+#   id:        the directory under `feature/<id>/`.
+#   status:    DERIVED FROM DISK, never hand-maintained. `remove-demo.sh --apply` rewrites it.
+#                exists | removed (a demo row the customizer deleted) | missing (real drift)
+#
+# ── HOW TO UPDATE ────────────────────────────────────────────────────────────
+#   /implement adds a feature  -> add a row under `fork:` in the same change, and `include()` it in
+#                                 settings.gradle.kts OUTSIDE the demo fence.
+#   template ships a showcase  -> row under `demo:`, and include() INSIDE the fence.
+#   never                      -> hand-edit `status:`; it is recomputed and will be overwritten.
+#
+# Audited by scripts/product-health/checks/core-package-ownership.sh.
+# ─────────────────────────────────────────────────────────────────────────────
+directory: feature
+
+
+# Deleted wholesale by `remove-demo.sh`; the row survives with `status: removed`.
+demo:
+  - { id: add-to-watchlist, status: removed }
+  - { id: alerts,           status: removed }
+  - { id: amortization,     status: removed }
+  - { id: bills,            status: removed }
+  - { id: calculators,      status: removed }
+  - { id: cloudtodo,        status: removed }
+  - { id: crypto,           status: removed }
+  - { id: currency-rates,   status: removed }
+  - { id: emi-calculator,   status: removed }
+  - { id: loans,            status: removed }
+  - { id: macro,            status: removed }
+  - { id: rates,            status: removed }
+  - { id: showcase,         status: removed }
+  - { id: watchlist,        status: removed }
+
+# Nothing here is template-owned. The backbone starters moved to `fork:` below.
+template: []
+
+# THIS FORK's own feature modules. `/implement` registers here.
+#
+# home / profile / settings ship as a WORKING starting point and the fork OWNS them: redesign the
+# screens in place, using the shipped code as the base. A sync never overwrites that work.
+# cmp-navigation's ForkBackboneRegistry seams (homeBody / settingsBody / profileBody) still exist and
+# still work — they are simply no longer the only sanctioned way in.
+#
+# THE TRADE: these modules no longer receive upstream fixes. That is the cost of owning them.
+# The one exception is `feature/settings/**/Platform*.kt` — the expect/actual shims stay
+# template-owned (see customization-surface.yaml), because nobody redesigns a platform shim and a
+# fork missing an `actual` for a newly-added KMP target would simply stop compiling.
+fork:
+  - { id: home,             status: exists }
+  - { id: profile,          status: exists }
+  - { id: settings,         status: exists }
+  - { id: onboarding,       status: exists }

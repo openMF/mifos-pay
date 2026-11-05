@@ -39,8 +39,6 @@
 # Dependency Directories
 # ==============================================================================
 **/node_modules/
-**/Pods/
-**/.cocoapods/
 **/DerivedData/
 **/Carthage/
 **/vendor/
@@ -104,7 +102,6 @@
 **/*.xcworkspace/
 **/*.dSYM/
 **/*.ipa
-**/Pods/
 **/PrivateHeaders/
 
 # Desktop

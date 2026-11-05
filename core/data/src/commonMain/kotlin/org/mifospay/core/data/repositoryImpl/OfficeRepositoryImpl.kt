@@ -16,7 +16,8 @@ import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.office.OfficesKey
 import org.mifospay.core.common.ScreenStateStream
 import org.mifospay.core.common.asScreenStateFlow
@@ -24,7 +25,7 @@ import org.mifospay.core.data.repository.OfficeRepository
 import org.mifospay.core.model.office.Office
 import org.mifospay.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Store
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 class OfficeRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
@@ -64,11 +65,11 @@ class OfficeRepositoryImpl(
             key = OfficesKey,
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_offices",
+            cacheKey = AppCacheKeys.Offices.ALL,
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.OFFICES,
+            ttl = WalletStoreTtl.OFFICES,
         )
     }
 }

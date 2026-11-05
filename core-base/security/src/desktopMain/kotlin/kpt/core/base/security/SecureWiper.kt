@@ -13,8 +13,10 @@ import co.touchlab.kermit.Logger
 import java.io.File
 import java.util.Arrays
 
+/** Desktop (JVM) implementation of `SecureWiper`. */
 actual class SecureWiper actual constructor() {
 
+    /** `wipeSecureStorage` on Desktop (JVM). */
     actual fun wipeSecureStorage() {
         Logger.w("SecureWiper") { "Secure storage wipe triggered" }
         val secureDir = File(System.getProperty("user.home"), ".mifos-secure")
@@ -28,6 +30,7 @@ actual class SecureWiper actual constructor() {
         }
     }
 
+    /** `scrubMemory` on Desktop (JVM). */
     actual fun scrubMemory(data: ByteArray) {
         Arrays.fill(data, 0.toByte())
     }

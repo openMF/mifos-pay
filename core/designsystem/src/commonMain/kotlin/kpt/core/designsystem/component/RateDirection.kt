@@ -5,9 +5,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.designsystem.component
 
 /** Direction of a rate / price / metric change relative to the prior period. */
-enum class RateDirection { Up, Down, Flat }
+enum class RateDirection {
+    /** Rate rose. */
+    Up,
+
+    /** Rate fell. */
+    Down,
+
+    /** Rate is unchanged. Distinct from an unknown change — this states that it did not move. */
+    Flat,
+}

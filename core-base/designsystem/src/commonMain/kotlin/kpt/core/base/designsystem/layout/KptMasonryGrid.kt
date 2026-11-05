@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem.layout
 
@@ -17,6 +17,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.util.fastMap
 import kpt.core.base.designsystem.theme.KptTheme
 
+/**
+ * Staggered grid for items of differing heights, packing each column independently.
+ */
 @Composable
 fun KptMasonryGrid(
     columns: Int,

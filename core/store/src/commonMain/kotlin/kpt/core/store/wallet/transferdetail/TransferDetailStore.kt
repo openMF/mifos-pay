@@ -11,7 +11,8 @@ package kpt.core.store.wallet.transferdetail
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.transferdetail.TransferDetailDao
 import kpt.core.database.wallet.transferdetail.toDomain
@@ -22,6 +23,10 @@ import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `TransferDetailEntity`. Shared with the DAO's writes. */
 private const val TRANSFER_DETAIL_TABLE = "wallet_transfer_details"
@@ -74,10 +79,11 @@ private const val TRANSFER_DETAIL_TABLE = "wallet_transfer_details"
  * `asScreenStream` consumer stays `ScreenState.Loading` until the network fetch
  * populates a row.
  */
+@StoreProvider(id = "transferDetail")
+@CacheKey(fn = "of", key = "wallet_transfer_details-{transferId}", params = ["transferId:Long"])
 fun provideTransferDetailStore(
     selfManager: SelfServiceApiManager,
     dao: TransferDetailDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<TransferDetailKey, TransferDetail> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: TransferDetailKey ->
         // Ktorfit returns Flow<TransferDetail> for getAccountTransfer — take the
@@ -88,7 +94,7 @@ fun provideTransferDetailStore(
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: TransferDetailKey ->
-            daoFlow(TRANSFER_DETAIL_TABLE) { dao.observeById(key.transferId) }
+            run { dao.observeById(key.transferId) }
                 .map { row -> row?.toDomain() }
         },
         writer = { _: TransferDetailKey, detail: TransferDetail ->

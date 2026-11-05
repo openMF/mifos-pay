@@ -53,20 +53,35 @@ enum class ConflictResolution {
  * serializers), keeping the gateway free of any JSON dependency.
  */
 data class ConflictReport(
+    /** Domain entity the conflict is on (`loans`, `bills`) — scopes a conflict to its feature. */
     val entity: String,
+    /** Identity of the specific record that conflicted. */
     val key: String,
+    /** The value the device tried to write, serialised. Kept verbatim so the user's edit is never lost. */
     val localPayloadJson: String,
+    /** The value the server already held, serialised — the other side of the conflict. */
     val serverPayloadJson: String,
+    /** Route to the form that can resolve this, so the UI can navigate straight there. Null when none. */
     val formRoute: String?,
 )
 
 /** A single recorded write conflict awaiting user resolution. */
 data class ConflictEntry(
+    /** Inbox row id. */
     val id: String,
+    /** Domain entity the conflict is on. */
     val entity: String,
+    /** Identity of the record that conflicted. */
     val key: String,
+    /** The value the device tried to write, serialised. */
     val localPayloadJson: String,
+    /** The value the server already held, serialised. */
     val serverPayloadJson: String,
+    /**
+     * Route that reopens the form where this conflict can be resolved, or null when the conflict has no editable
+     * surface. Null means the inbox can only offer keep-mine / keep-theirs.
+     */
     val formRoute: String?,
+    /** When the conflict was recorded, epoch millis — drives ordering and staleness in the inbox. */
     val recordedAtMs: Long,
 )

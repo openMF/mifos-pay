@@ -14,6 +14,13 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.js.Js
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.http.URLBuilder
+import kotlinx.browser.window
+
+/**
+ * A relay given as a path (`/cors`) is served by the site itself — resolve it against the page's
+ * origin. An absolute URL (`https://corsproxy.io`) is used as-is.
+ */
+internal fun resolveProxyBase(base: String): String = if (base.startsWith("/")) window.location.origin + base else base
 
 private class WebApiProxyConfig {
     var proxyBaseUrl: String = "https://corsproxy.io"
@@ -41,19 +48,20 @@ private val WebApiProxyPlugin = createClientPlugin("WebApiProxy", ::WebApiProxyC
     onRequest { request, _ ->
         if (request.url.host in proxyConfig.hosts) {
             val originalUrl = request.url.build().toString()
-            val proxyMeta = URLBuilder(proxyConfig.proxyBaseUrl)
+            val proxyMeta = URLBuilder(resolveProxyBase(proxyConfig.proxyBaseUrl))
             request.url.apply {
                 protocol = proxyMeta.protocol
                 host = proxyMeta.host
                 port = proxyMeta.port
-                // Embed the complete target URL in encodedPath as "/?{targetUrl}".
-                // ["", "?$originalUrl"] joins to "/?$originalUrl" (empty first segment → leading /).
-                // Segments are used as-is (no re-encoding); clearing parameters ensures Ktor
-                // appends no extra "?key=" to the URL.
+                // Embed the complete target URL after the relay's own path, as "/<path>/?{targetUrl}".
+                // The empty first segment gives the leading /. Segments are used as-is (no
+                // re-encoding); clearing parameters ensures Ktor appends no extra "?key=" to the URL.
                 // Result: https://corsproxy.io/?https://api.target.com/path?param=value
+                //     or  https://<this site>/cors/?https://api.target.com/path?param=value
                 parameters.clear()
                 encodedParameters.clear()
-                encodedPathSegments = listOf("", "?$originalUrl")
+                val relayPath = proxyMeta.encodedPathSegments.filter { it.isNotEmpty() }
+                encodedPathSegments = listOf("") + relayPath + "?$originalUrl"
             }
         }
     }
@@ -71,6 +79,7 @@ internal actual fun HttpClientConfig<*>.installProxyPlugin(
     }
 }
 
+/** `httpClient` on Web (WasmJS). */
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Js) {
     config(this)
 }

@@ -11,7 +11,8 @@ package kpt.core.store.wallet.pocket
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.pocket.PocketDao
 import kpt.core.database.wallet.pocket.toDomain
@@ -33,6 +34,10 @@ import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 import org.mifospay.core.model.savingsaccount.Status as SavingsStatus
+
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /** Room `@Entity(tableName = …)` for `PocketEntity`. Shared with the DAO's writes. */
 private const val POCKETS_TABLE = "wallet_pockets"
@@ -127,10 +132,12 @@ private const val POCKETS_TABLE = "wallet_pockets"
  * `org.mifospay.core.data.mapper.pocket.PocketAccountMapper`. Keep the two
  * in lockstep if either grows fields.
  */
+@StoreProvider(id = "pocket")
+@CacheKey(fn = "linked", key = "wallet_pockets_linked-{clientId}", params = ["clientId:Long"])
+@CacheKey(fn = "detailed", key = "wallet_pockets_detailed-{clientId}", params = ["clientId:Long"])
 fun providePocketStore(
     apiManager: SelfServiceApiManager,
     dao: PocketDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<PocketKey, List<DetailedPocketAccount>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: PocketKey ->
         try {
@@ -196,7 +203,7 @@ fun providePocketStore(
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: PocketKey ->
-            daoFlow(POCKETS_TABLE) { dao.observeLinkedByClient(key.clientId) }
+            run { dao.observeLinkedByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: PocketKey, pockets: List<DetailedPocketAccount> ->

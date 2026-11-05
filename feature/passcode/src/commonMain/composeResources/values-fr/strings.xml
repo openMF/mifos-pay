@@ -11,28 +11,28 @@
 <resources>
     <string name="feature_passcode_biometric_error_lockout">Trop de tentatives. Veuillez patienter et réessayer.</string>
     <string name="feature_passcode_biometric_error_hardware_unavailable">Le matériel biométrique est temporairement indisponible. Veuillez réessayer plus tard.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Aucune biométrie n\'est enregistrée sur cet appareil. Veuillez configurer la biométrie dans les paramètres système.</string>
-    <string name="feature_passcode_biometric_error_timeout">L\'authentification biométrique a expiré. Veuillez réessayer.</string>
-    <string name="feature_passcode_biometric_error_no_space">Espace de stockage insuffisant pour terminer l\'authentification biométrique.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Les données d\'enregistrement biométrique sont invalides. Veuillez réactiver la biométrie depuis les paramètres de l\'application.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Impossible de démarrer l\'authentification biométrique en raison d\'arguments invalides.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Impossible de démarrer l\'enregistrement biométrique en raison d\'arguments invalides.</string>
-    <string name="feature_passcode_biometric_error_unknown">Une erreur biométrique inattendue s\'est produite. Veuillez réessayer.</string>
+    <string name="feature_passcode_biometric_error_not_enrolled">Aucune biométrie n'est enregistrée sur cet appareil. Veuillez configurer la biométrie dans les paramètres système.</string>
+    <string name="feature_passcode_biometric_error_timeout">L'authentification biométrique a expiré. Veuillez réessayer.</string>
+    <string name="feature_passcode_biometric_error_no_space">Espace de stockage insuffisant pour terminer l'authentification biométrique.</string>
+    <string name="feature_passcode_biometric_error_invalid_registration_data">Les données d'enregistrement biométrique sont invalides. Veuillez réactiver la biométrie depuis les paramètres de l'application.</string>
+    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Impossible de démarrer l'authentification biométrique en raison d'arguments invalides.</string>
+    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Impossible de démarrer l'enregistrement biométrique en raison d'arguments invalides.</string>
+    <string name="feature_passcode_biometric_error_unknown">Une erreur biométrique inattendue s'est produite. Veuillez réessayer.</string>
     <string name="feature_passcode_biometric_prompt_title">Déverrouiller Mifos Pay</string>
     <string name="feature_passcode_biometric_prompt_subtitle">Vérifiez votre identité pour continuer</string>
-    <string name="feature_passcode_biometric_prompt_description">Utilisez votre empreinte, votre visage ou les identifiants de l\'appareil</string>
+    <string name="feature_passcode_biometric_prompt_description">Utilisez votre empreinte, votre visage ou les identifiants de l'appareil</string>
     <string name="feature_passcode_biometric_prompt_negative_button">Annuler</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Sécurisez votre application</string>
     <string name="feature_passcode_biometric_setup_confirm">Configurer la biométrie</string>
-    <string name="feature_passcode_biometric_setup_skip">Ignorer pour l\'instant</string>
+    <string name="feature_passcode_biometric_setup_skip">Ignorer pour l'instant</string>
 
     <!-- Legacy feature_passcode_* strings -->
     <string name="feature_passcode_ok">OK</string>
     <string name="feature_passcode_biometrics_usage_message">Utilisez la biométrie (empreinte ou visage) pour un accès plus rapide et sécurisé.</string>
-    <string name="feature_passcode_biometrics_not_set">La biométrie n\'est pas configurée sur cet appareil. Veuillez activer l\'empreinte ou la reconnaissance faciale dans les paramètres de l\'appareil, puis réessayez.</string>
+    <string name="feature_passcode_biometrics_not_set">La biométrie n'est pas configurée sur cet appareil. Veuillez activer l'empreinte ou la reconnaissance faciale dans les paramètres de l'appareil, puis réessayez.</string>
     <string name="feature_passcode_biometrics_available">Biométrie non disponible sur cet appareil</string>
     <string name="feature_passcode_error">Erreur</string>
-    <string name="feature_passcode_user_not_registered_error_message">Les données d\'enregistrement biométrique sont invalides. Veuillez réactiver la biométrie depuis les paramètres de l\'application.</string>
+    <string name="feature_passcode_user_not_registered_error_message">Les données d'enregistrement biométrique sont invalides. Veuillez réactiver la biométrie depuis les paramètres de l'application.</string>
 </resources>

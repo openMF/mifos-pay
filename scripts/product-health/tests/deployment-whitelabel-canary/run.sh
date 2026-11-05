@@ -25,7 +25,16 @@ if [ "$g" -eq 0 ]; then echo "   ✅ GREEN exit 0 (expected 0)"; else echo "   �
 echo "── RED ──"
 out="$(run "$HERE/red")"; r=$?
 printf '%s\n' "$out" | sed 's/^/   /'
-if [ "$r" -eq 1 ]; then echo "   ✅ RED exit 1 (expected 1)"; else echo "   ❌ RED exit $r (expected 1)"; rc_ok=1; fi
+# Assert the SPECIFIC rule (B2), not just exit 1: this fixture would also fail B1 if app-profile
+# went missing, so an exit-code-only assertion cannot tell "B2 caught the leaked literal" from
+# "something else broke" — and a vacuously-passing B2 would look identical.
+if [ "$r" -ne 1 ]; then
+  echo "   ❌ RED exit $r (expected 1)"; rc_ok=1
+elif printf '%s' "$out" | grep -q 'B2'; then
+  echo "   ✅ RED exit 1 on B2 (identity literal in template-owned deployment logic)"
+else
+  echo "   ❌ RED failed, but not on B2:"; printf '%s' "$out" | grep '❌' | sed 's/^/        /'; rc_ok=1
+fi
 
 echo ""
 [ "$rc_ok" -eq 0 ] && echo "canary: PASS" || echo "canary: FAIL"

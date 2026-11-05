@@ -9,7 +9,6 @@
  */
 package kpt.core.base.store.submit
 
-import kpt.core.base.store.freshness.FreshnessSignal
 import kpt.core.base.store.screen.ScreenState
 import kotlin.test.Test
 import kotlin.test.assertEquals

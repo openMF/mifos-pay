@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 // ── Workspace Library Linker (managed by /lib-integrate) ──────────────────
 // Edit lib-integrate.properties to add/remove libraries. Never edit this block.
 // Path-existence guard: if library not cloned locally → silently uses Maven Central.
@@ -10,9 +19,9 @@ val pathToEntries = mutableMapOf<String, MutableList<LibEntry>>()
 libProps.stringPropertyNames()
     .filter { it.endsWith(".local") && libProps[it] == "true" }
     .forEach { key ->
-        val lib      = key.removeSuffix(".local")
-        val path     = libProps["$lib.path"]     as? String ?: return@forEach
-        val module   = libProps["$lib.module"]   as? String ?: return@forEach
+        val lib = key.removeSuffix(".local")
+        val path = libProps["$lib.path"] as? String ?: return@forEach
+        val module = libProps["$lib.module"] as? String ?: return@forEach
         val artifact = libProps["$lib.artifact"] as? String ?: return@forEach
         // Normalize ".." segments before existence check -- Java's File.exists()
         // doesn't collapse ".." past filesystem root on Windows, so the bare
@@ -112,14 +121,20 @@ include(":core:model")
 include(":core:network")
 include(":core:platform")
 include(":core:store")
+include(":tools:store-ksp")
+include(":tools:database-ksp")
+include(":tools:network-ksp")
+include(":tools:data-ksp")
 include(":core:ui")
 
 include(":feature:home")
 include(":feature:profile")
 include(":feature:settings")
+include(":feature:onboarding")
 
 include(":core-base:firebase")
 include(":core-base:common")
+include(":core-base:crypto")
 include(":core-base:data")
 include(":core-base:database")
 include(":core-base:datastore")
@@ -139,35 +154,6 @@ check(JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
     """.trimIndent()
 }
 include(":sync")
-include(":feature:accounts")
-include(":feature:auth")
-include(":feature:autopay")
-include(":feature:beneficiary")
-include(":feature:editpassword")
-include(":feature:faq")
-include(":feature:fast-mpay")
-include(":feature:finance")
-include(":feature:history")
-include(":feature:invoices")
-include(":feature:kyc")
-include(":feature:make-transfer")
-include(":feature:merchants")
-include(":feature:mpay-qr-scan")
-include(":feature:mpay-qr")
-include(":feature:notification")
-include(":feature:passcode")
-include(":feature:payments")
-include(":feature:pocket")
-include(":feature:qr")
-include(":feature:receipt")
-include(":feature:savedcards")
-include(":feature:send-money")
-include(":feature:standing-instruction")
-include(":feature:transfer-interbank")
-include(":feature:transfer-intrabank")
-include(":feature:upi-setup")
-include(":libs:mifos-loans")
-include(":libs")
 
 // Fork-owned module-include seam (B1/T11 white-label). A fork adds its own `include(":feature:x")`
 // lines in `settings.local.gradle.kts` — never in this template-synced file. Guarded so a `--clean`

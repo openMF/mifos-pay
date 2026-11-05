@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.data.user
 
@@ -14,5 +14,6 @@ package kpt.core.data.user
  * that was successfully logged out.
  */
 data class LogoutEvent(
+    /** Who logged out. Carried so a listener can purge exactly that user's caches rather than everything. */
     val loggedOutUserId: Long,
 )

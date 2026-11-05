@@ -13,7 +13,7 @@
    `KptMaterialTheme(theme = ...) { }` — it provides both the `KptTheme.*` CompositionLocals and a
    derived Material3 `ColorScheme`/`Typography`/`Shapes` in one composable.
 2. **Reach for a base component before hand-rolling one** — `KptTopAppBar` (+ `kptTopAppBar { }`
-   builder), `KptButton`, `AppCard`, `HeroCard`, `KptSnackbarHost`, `KptShimmerLoadingBox`,
+   builder), `KptButton`, `AppCard`, `HeroCard`, `KptToastHost`, `KptShimmerLoadingBox`,
    `KptProgress`/`KptProgressRenderer` (+ `ProgressSizeSpec`), `BounceAnimation`, `SlideTransition`.
    These are brand-agnostic — `core/designsystem` composes them, it doesn't reimplement them.
 3. **Use the responsive layout primitives** for adaptive UI instead of hand-rolled breakpoints —

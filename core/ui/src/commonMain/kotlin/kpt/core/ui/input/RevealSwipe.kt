@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.ui.input
 
@@ -71,6 +71,12 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
+/**
+ * Swipe-to-reveal row: drag aside to expose actions (delete, archive) behind the content.
+ *
+ * The revealed actions must ALSO be reachable another way — a swipe is invisible to a screen
+ * reader and unavailable to keyboard or pointer users.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Suppress("LongMethod", "CyclomaticComplexMethod", "MaxLineLength", "LongParameterList")
 @Composable
@@ -275,6 +281,10 @@ fun RevealSwipe(
     )
 }
 
+/**
+ * Unstyled [RevealSwipe] core — gesture and offset handling with no chrome, for a caller that wants
+ * its own presentation.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BaseRevealSwipe(
@@ -469,6 +479,9 @@ private fun <T> T.or(orValue: T, whenClosure: T.() -> Boolean): T {
 
 private fun Float.nonNaNorZero() = if (isNaN()) 0f else this
 
+/**
+ * Which side(s) a row may be dragged toward to reveal its actions.
+ */
 enum class RevealDirection {
     /**
      * Can be dismissed by swiping in the reading direction.
@@ -537,10 +550,15 @@ fun rememberRevealState(
     }
 }
 
+/**
+ * Current offset and reveal state of one [RevealSwipe] row; hoist it to reset a row programmatically.
+ */
 @Suppress("DEPRECATION")
 @OptIn(ExperimentalFoundationApi::class)
 data class RevealState(
+    /** How far the row can slide, exposing the action behind it. */
     val maxRevealDp: Dp = 75.dp,
+    /** Which swipe directions are allowed. An empty set makes the row immovable. */
     val directions: Set<RevealDirection>,
     private val density: Density,
     private val initialValue: RevealValue = RevealValue.Default,
@@ -550,6 +568,7 @@ data class RevealState(
     private val decayAnimationSpec: DecayAnimationSpec<Float>,
     private val confirmValueChange: (newValue: RevealValue) -> Boolean = { true },
 ) {
+    /** The underlying drag state, exposed so a caller can animate the row closed after acting on it. */
     @OptIn(ExperimentalFoundationApi::class)
     val anchoredDraggableState: AnchoredDraggableState<RevealValue> = AnchoredDraggableState(
         initialValue = initialValue,

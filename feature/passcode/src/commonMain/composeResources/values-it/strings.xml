@@ -10,12 +10,12 @@
 -->
 <resources>
     <string name="feature_passcode_biometric_error_lockout">Troppi tentativi. Attendi e riprova.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">L\'hardware biometrico è temporaneamente non disponibile. Riprova più tardi.</string>
+    <string name="feature_passcode_biometric_error_hardware_unavailable">L'hardware biometrico è temporaneamente non disponibile. Riprova più tardi.</string>
     <string name="feature_passcode_biometric_error_not_enrolled">Nessun dato biometrico registrato su questo dispositivo. Configura la biometria nelle impostazioni di sistema.</string>
-    <string name="feature_passcode_biometric_error_timeout">L\'autenticazione biometrica è scaduta. Riprova.</string>
-    <string name="feature_passcode_biometric_error_no_space">Spazio di archiviazione insufficiente per completare l\'autenticazione biometrica.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">I dati di registrazione biometrica non sono validi. Riattiva la biometria dalle impostazioni dell\'app.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Impossibile avviare l\'autenticazione biometrica a causa di argomenti non validi.</string>
+    <string name="feature_passcode_biometric_error_timeout">L'autenticazione biometrica è scaduta. Riprova.</string>
+    <string name="feature_passcode_biometric_error_no_space">Spazio di archiviazione insufficiente per completare l'autenticazione biometrica.</string>
+    <string name="feature_passcode_biometric_error_invalid_registration_data">I dati di registrazione biometrica non sono validi. Riattiva la biometria dalle impostazioni dell'app.</string>
+    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Impossibile avviare l'autenticazione biometrica a causa di argomenti non validi.</string>
     <string name="feature_passcode_biometric_error_invalid_arguments_registration">Impossibile avviare la registrazione biometrica a causa di argomenti non validi.</string>
     <string name="feature_passcode_biometric_error_unknown">Si è verificato un errore biometrico imprevisto. Riprova.</string>
     <string name="feature_passcode_biometric_prompt_title">Sblocca Mifos Pay</string>
@@ -31,8 +31,8 @@
     <!-- Legacy feature_passcode_* strings -->
     <string name="feature_passcode_ok">OK</string>
     <string name="feature_passcode_biometrics_usage_message">Usa la biometria (impronta o volto) per un accesso più rapido e sicuro.</string>
-    <string name="feature_passcode_biometrics_not_set">La biometria non è configurata su questo dispositivo. Attiva l\'impronta digitale o il riconoscimento facciale nelle impostazioni del dispositivo e riprova.</string>
+    <string name="feature_passcode_biometrics_not_set">La biometria non è configurata su questo dispositivo. Attiva l'impronta digitale o il riconoscimento facciale nelle impostazioni del dispositivo e riprova.</string>
     <string name="feature_passcode_biometrics_available">Biometria non disponibile su questo dispositivo</string>
     <string name="feature_passcode_error">Errore</string>
-    <string name="feature_passcode_user_not_registered_error_message">I dati di registrazione biometrica non sono validi. Riattiva la biometria dalle impostazioni dell\'app.</string>
+    <string name="feature_passcode_user_not_registered_error_message">I dati di registrazione biometrica non sono validi. Riattiva la biometria dalle impostazioni dell'app.</string>
 </resources>

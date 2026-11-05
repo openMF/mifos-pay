@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.database.infra.entity
 
@@ -26,6 +26,14 @@ import androidx.room3.PrimaryKey
  */
 @Entity(tableName = "framework_fetched_at")
 data class FetchedAtEntity(
+    /**
+     * The store key this timestamp belongs to — the same string the Store uses, so freshness is addressed exactly like
+     * data.
+     */
     @PrimaryKey val storeKey: String,
+    /**
+     * When the key was last fetched successfully, epoch millis. Every TTL and freshness band is measured from this, so
+     * a failed fetch must NOT update it.
+     */
     val lastFetchedMillis: Long,
 )

@@ -1,0 +1,22 @@
+# package-ledger.yaml — the FORK's record of what it did to the template's declared packages.
+#
+# owner: fork — never synced over, never deleted by a strict-mirror sync. The template's
+# `core/*/module-packages.yaml` + `feature/module-packages.yaml` are template-owned and full-copied:
+# they describe the TEMPLATE's tree. A fork that strips a demo package, or keeps one the customizer
+# would remove, records it HERE instead of editing those files (an edit there is lost on every sync).
+#
+# Read by scripts/product-health/checks/core-package-ownership.sh: for a package listed here, MP-7
+# checks the disk against THIS status instead of the template file's. The fork's OWN packages need no
+# row at all — they resolve `fork` through each module's catch-all, and the check accepts that.
+#
+#   status:  removed — the fork stripped it (the customizer, remove-demo.sh)
+#            kept    — the fork keeps a package the template marks demo
+#            absent  — the fork never had it
+#
+# packages:
+#   - { module: core/model, id: alerts, status: removed }
+#   - { module: feature,    id: loans,  status: removed }
+packages:
+  # mifos-pay declares no `staging` access point (app-profile network.access_points), so the template-shipped
+  # placeholder package was removed at the 90ff6da6 sync (NAP-9).
+  - { module: core/network, id: staging, status: removed }

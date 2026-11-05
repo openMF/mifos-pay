@@ -29,7 +29,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 
 /**
  * The backbone home graph. [homeBody] is the fork-owned home content (default supplied by
- * `cmp-navigation`'s `BackboneRegistry.homeBody`); this template graph carries zero demo imports.
+ * `cmp-navigation`'s `ForkBackboneRegistry.homeBody`); this template graph carries zero demo imports.
  */
 fun NavGraphBuilder.homeGraph(
     onSettingsClick: () -> Unit,

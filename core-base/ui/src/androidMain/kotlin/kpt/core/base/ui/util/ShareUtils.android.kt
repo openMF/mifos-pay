@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.util
 
@@ -31,6 +31,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
+/** Android implementation of `ShareUtils`. */
 actual object ShareUtils {
 
     private var activityProvider: () -> Activity = {
@@ -41,10 +42,12 @@ actual object ShareUtils {
         )
     }
 
+    /** `setActivityProvider` on Android. */
     fun setActivityProvider(provider: () -> Activity) {
         activityProvider = provider
     }
 
+    /** `shareText` on Android. */
     actual suspend fun shareText(text: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
@@ -54,6 +57,7 @@ actual object ShareUtils {
         activityProvider.invoke().startActivity(intentChooser)
     }
 
+    /** `shareImage` on Android. */
     actual suspend fun shareImage(title: String, image: ImageBitmap) {
         val context = activityProvider.invoke().application.baseContext
 
@@ -70,6 +74,7 @@ actual object ShareUtils {
         activityProvider.invoke().startActivity(shareIntent)
     }
 
+    /** `shareImage` on Android. */
     @OptIn(ExperimentalResourceApi::class)
     actual suspend fun shareImage(title: String, byte: ByteArray) {
         val context = activityProvider.invoke().application.baseContext
@@ -108,6 +113,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `openUrl` on Android. */
     actual fun openUrl(url: String) {
         val context = ShareUtils.activityProvider.invoke().application.baseContext
         val uri = url.let { url.toUri() }
@@ -118,6 +124,7 @@ actual object ShareUtils {
         context.startActivity(intent)
     }
 
+    /** `openAppInfo` on Android. */
     actual fun openAppInfo() {
         val context = activityProvider.invoke().application.baseContext
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -127,6 +134,7 @@ actual object ShareUtils {
         context.startActivity(intent)
     }
 
+    /** `callPhone` on Android. */
     actual fun callPhone(number: String) {
         val context = activityProvider.invoke().application.baseContext
         val uri = Uri.parse("tel:$number")
@@ -137,6 +145,7 @@ actual object ShareUtils {
         context.startActivity(intent)
     }
 
+    /** `sendEmail` on Android. */
     actual fun sendEmail(to: String, subject: String?, body: String?) {
         val context = activityProvider.invoke().application.baseContext
         val uriBuilder = StringBuilder("mailto:").append(to)
@@ -153,6 +162,7 @@ actual object ShareUtils {
         context.startActivity(intent)
     }
 
+    /** `sendViaSMS` on Android. */
     actual fun sendViaSMS(number: String, message: String) {
         val context = activityProvider.invoke().application.baseContext
         val uri = if (number.isNotEmpty()) {
@@ -168,6 +178,7 @@ actual object ShareUtils {
         context.startActivity(intent)
     }
 
+    /** `copyText` on Android. */
     actual fun copyText(text: String) {
         val context = activityProvider.invoke().application.baseContext
         val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
@@ -184,6 +195,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `shareApp` on Android. */
     actual suspend fun shareApp(storeLink: String, message: String) {
         val shareContent = if (message.isNotEmpty()) {
             "$message\n$storeLink"

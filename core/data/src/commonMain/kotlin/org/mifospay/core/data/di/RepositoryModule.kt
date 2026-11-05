@@ -98,7 +98,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-3 LEDGER store wiring (GOAL D13). Named-qualifier
             // from AppStoreRegistry.SelfAccounts; NetworkMonitor +
             // FetchedAtRepository bound by DataModule.
-            selfAccountsStore = get(kpt.core.store.AppStoreRegistry.SelfAccounts),
+            selfAccountsStore = get(kpt.core.store.config.AppStoreRegistry.SelfAccounts),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
             // transfer-detail Store5 vertical (GOAL D13) — makes the
@@ -107,7 +107,7 @@ val RepositoryModule = module {
             // StoreModule (`kpt.core.store.di.StoreModule`) via
             // `get<AppDatabase>().transactionDao` and is used by getTransaction(...)
             // to read the cached ledger row offline-first.
-            transferDetailStore = get(kpt.core.store.AppStoreRegistry.TransferDetail),
+            transferDetailStore = get(kpt.core.store.config.AppStoreRegistry.TransferDetail),
             transactionDao = get(),
         )
     }
@@ -123,7 +123,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-2 SINGLE-ROW-PER-KEY store wiring (GOAL D13). Named-qualifier
             // from AppStoreRegistry.ClientDetail; NetworkMonitor + FetchedAtRepository
             // bound by DataModule (kpt.core.data.di.DataModule).
-            clientDetailStore = get(kpt.core.store.AppStoreRegistry.ClientDetail),
+            clientDetailStore = get(kpt.core.store.config.AppStoreRegistry.ClientDetail),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
         )
@@ -136,7 +136,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-2 LEDGER store wiring (GOAL D13). Named-qualifier from
             // AppStoreRegistry.Invoice; NetworkMonitor + FetchedAtRepository
             // bound by DataModule.
-            invoiceStore = get(kpt.core.store.AppStoreRegistry.Invoice),
+            invoiceStore = get(kpt.core.store.config.AppStoreRegistry.Invoice),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
         )
@@ -150,7 +150,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-2 LEDGER store wiring (GOAL D13). Named-qualifier from
             // AppStoreRegistry.Notification; NetworkMonitor + FetchedAtRepository
             // bound by DataModule.
-            notificationStore = get(kpt.core.store.AppStoreRegistry.Notification),
+            notificationStore = get(kpt.core.store.config.AppStoreRegistry.Notification),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
         )
@@ -175,7 +175,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-1 LEDGER store wiring (GOAL D13). Named-qualifier from
             // AppStoreRegistry.SavedCards; NetworkMonitor + FetchedAtRepository
             // bound by DataModule (kpt.core.data.di.DataModule).
-            savedCardStore = get(kpt.core.store.AppStoreRegistry.SavedCards),
+            savedCardStore = get(kpt.core.store.config.AppStoreRegistry.SavedCards),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
         )
@@ -187,7 +187,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-1 SINGLE-ROW-PER-KEY store wiring (GOAL D13). Named-qualifier from
             // AppStoreRegistry.AccountDetail; NetworkMonitor + FetchedAtRepository
             // bound by DataModule (kpt.core.data.di.DataModule).
-            accountDetailStore = get(kpt.core.store.AppStoreRegistry.AccountDetail),
+            accountDetailStore = get(kpt.core.store.config.AppStoreRegistry.AccountDetail),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
         )
@@ -200,13 +200,13 @@ val RepositoryModule = module {
             // Phase-4 Batch-A LEDGER store wiring (GOAL D13). Named-qualifier from
             // AppStoreRegistry.History; NetworkMonitor + FetchedAtRepository bound by
             // DataModule (kpt.core.data.di.DataModule).
-            historyStore = get(kpt.core.store.AppStoreRegistry.History),
+            historyStore = get(kpt.core.store.config.AppStoreRegistry.History),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
             // Phase-5 Batch-1 LEDGER store wiring (GOAL D13). Named-qualifier from
             // AppStoreRegistry.Beneficiary; the same NetworkMonitor + FetchedAtRepository
             // instances are re-used by every store-backed method on this impl.
-            beneficiaryStore = get(kpt.core.store.AppStoreRegistry.Beneficiary),
+            beneficiaryStore = get(kpt.core.store.config.AppStoreRegistry.Beneficiary),
         )
     }
     single<StandingInstructionRepository> {
@@ -216,7 +216,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-3 LEDGER store wiring (GOAL D13). Named-qualifier
             // from AppStoreRegistry.StandingInstruction; NetworkMonitor +
             // FetchedAtRepository bound by DataModule.
-            standingInstructionStore = get(kpt.core.store.AppStoreRegistry.StandingInstruction),
+            standingInstructionStore = get(kpt.core.store.config.AppStoreRegistry.StandingInstruction),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
         )
@@ -234,7 +234,7 @@ val RepositoryModule = module {
             // Phase-5 Batch-3 LEDGER store wiring (GOAL D13). Named-qualifier
             // from AppStoreRegistry.Offices; NetworkMonitor + FetchedAtRepository
             // bound by DataModule.
-            officesStore = get(kpt.core.store.AppStoreRegistry.Offices),
+            officesStore = get(kpt.core.store.config.AppStoreRegistry.Offices),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
         )
@@ -250,8 +250,8 @@ val RepositoryModule = module {
             // and is used by `getAvailableAccountsToLink` to read the already-linked
             // set from the Room SoT snapshot (pre-store this used the in-memory
             // detailedPocketCache which is now removed).
-            pocketStore = get(kpt.core.store.AppStoreRegistry.Pocket),
-            linkableAccountsStore = get(kpt.core.store.AppStoreRegistry.LinkableAccounts),
+            pocketStore = get(kpt.core.store.config.AppStoreRegistry.Pocket),
+            linkableAccountsStore = get(kpt.core.store.config.AppStoreRegistry.LinkableAccounts),
             storeNetworkMonitor = get(),
             fetchedAtRepository = get(),
             pocketDao = get(),

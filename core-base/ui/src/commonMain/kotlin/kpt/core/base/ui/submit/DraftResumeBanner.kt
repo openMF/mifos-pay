@@ -24,6 +24,11 @@ import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.component.KptButton
 import kpt.core.base.designsystem.component.KptTextButton
 import kpt.core.base.store.submit.DraftResumeState
+import kpt.core.base.ui.generated.resources.Res
+import kpt.core.base.ui.generated.resources.draft_discard
+import kpt.core.base.ui.generated.resources.draft_resume
+import kpt.core.base.ui.generated.resources.draft_unsaved
+import org.jetbrains.compose.resources.stringResource
 
 /**
  * Banner that surfaces a saved draft when [state] is [DraftResumeState.HasDraft].
@@ -65,17 +70,17 @@ fun DraftResumeBanner(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = "You have an unsaved draft",
+                text = stringResource(Res.string.draft_unsaved),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = Modifier.weight(1f),
             )
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 KptTextButton(onClick = onDiscard) {
-                    Text("Discard")
+                    Text(stringResource(Res.string.draft_discard))
                 }
                 KptButton(onClick = onResume) {
-                    Text("Resume")
+                    Text(stringResource(Res.string.draft_resume))
                 }
             }
         }

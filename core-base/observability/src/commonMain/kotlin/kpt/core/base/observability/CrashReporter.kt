@@ -95,9 +95,18 @@ interface CrashReporter {
  * didn't catch them (e.g. a guard at the root of a coroutine scope catching CancellationException).
  */
 enum class CrashSeverity {
+    /** Verbose detail, useful only while debugging. */
     Debug,
+
+    /** Normal operational events. */
     Info,
+
+    /** Something unexpected that the app recovered from. */
     Warning,
+
+    /** A failure the user is likely to have noticed. */
     Error,
+
+    /** A failure the app cannot continue past. */
     Fatal,
 }

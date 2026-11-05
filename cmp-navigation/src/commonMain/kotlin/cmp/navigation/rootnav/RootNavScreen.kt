@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.navigation.rootnav
 
@@ -31,23 +31,29 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import cmp.navigation.AppEvent
 import cmp.navigation.AppViewModel
 import cmp.navigation.authenticated.AuthenticatedGraphRoute
 import cmp.navigation.authenticated.authenticatedGraph
 import cmp.navigation.authenticated.navigateToAuthenticatedGraph
+import cmp.navigation.registry.ForkDeepLinkRegistry
 import cmp.navigation.splash.SplashRoute
 import cmp.navigation.splash.navigateToSplash
 import cmp.navigation.splash.splashDestination
 import cmp.navigation.ui.rememberKptNavController
 import cmp.navigation.utils.toObjectNavigationRoute
+import com.mobilebytelabs.kmptoolkit.deeplink.DeepLinkHandler
 import kpt.core.base.designsystem.theme.motion
 import kpt.core.base.ui.KptConnectivityBanner
 import kpt.core.base.ui.effects.EventsEffect
 import kpt.core.base.ui.util.NonNullEnterTransitionProvider
 import kpt.core.base.ui.util.NonNullExitTransitionProvider
 import kpt.core.base.ui.util.RootTransitionProviders
+import kpt.feature.onboarding.OnboardingRoute
+import kpt.feature.onboarding.navigateToOnboarding
+import kpt.feature.onboarding.onboardingDestination
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.feature.passcode.biometricSetupScreen
 import org.mifos.feature.passcode.navigateToBiometricSetupScreen
@@ -177,7 +183,9 @@ fun RootNavScreen(
                 popExitTransition = { pickExit(fadeThroughExit, noExit)(this) },
             ) {
                 splashDestination()
-//            onboardingDestination()
+                // First-run onboarding (feature/onboarding, template) — installed once here; only reached when
+                // app-profile security.first_run_onboarding is true (the fork RootNavViewModel never emits it).
+                onboardingDestination()
 
                 // (Task item 3) Login/auth graph — injected by SharedApp as
                 // `loginNavGraph(navController, onShowInstanceSelector = appViewModel::showInstanceSelectorSheet)`.
@@ -249,6 +257,26 @@ fun RootNavScreen(
         }
     }
 
+    // Deep-link routing (fork-provided via ForkDeepLinkRegistry — the template ships no links). Inbound URIs are
+    // captured by cmp-deep-link (KmpToolkit): Android auto-init reads the launch / onNewIntent Intent.data
+    // with NO Activity wiring, parsed onto DeepLinkHandler. We read the retained lastReceived (a StateFlow
+    // that survives the Splash → graph handoff, so a cold-start widget tap isn't dropped) and dispatch it
+    // through the fork's ForkDeepLinkRegistry ONLY once the user is authenticated AND the authenticated graph is
+    // on-screen — otherwise the root-state navigation below (which pops to the graph start) would discard the
+    // destination. Held (not cleared) until then, so a first-run link resolves after Splash / onboarding.
+    val pendingDeepLink by DeepLinkHandler.lastReceived.collectAsStateWithLifecycle()
+    val deepLinkBackStackEntry by navController.currentBackStackEntryAsState()
+    LaunchedEffect(pendingDeepLink, deepLinkBackStackEntry, state) {
+        val link = pendingDeepLink ?: return@LaunchedEffect
+        val atAuthenticatedRoot = deepLinkBackStackEntry?.destination?.rootLevelRoute() ==
+            AuthenticatedGraphRoute.toObjectNavigationRoute()
+        if (state is RootNavState.UserUnlocked && atAuthenticatedRoot &&
+            ForkDeepLinkRegistry.route(link, navController)
+        ) {
+            DeepLinkHandler.clear()
+        }
+    }
+
     // (Task item 4) RootNavState → target route.
     // `authGraphRoute` is a plain string (fork's `MifosNavGraph.LOGIN_GRAPH`);
     // `SplashRoute` / `AuthenticatedGraphRoute` are typed serializable data
@@ -256,8 +284,8 @@ fun RootNavScreen(
     // uniformly so the short-circuit `currentRoute == targetRoute` comparison
     // (process-death restore path) works for all branches.
     val targetRoute: String = when (state) {
-        // SetLanguageRoute — fork never emits ShowOnboarding.
-        RootNavState.ShowOnboarding -> ""
+        // Template first-run onboarding; the fork RootNavViewModel never emits ShowOnboarding.
+        RootNavState.ShowOnboarding -> OnboardingRoute.toObjectNavigationRoute()
         RootNavState.Auth -> authGraphRoute
         RootNavState.Splash -> SplashRoute.toObjectNavigationRoute()
         // UserUnlockRoute.Standard — fork never emits UserLocked (see
@@ -307,7 +335,7 @@ fun RootNavScreen(
                 navController.navigate(authGraphRoute, rootNavOptions)
             }
             // navController.navigateToSetLanguage(rootNavOptions)
-            RootNavState.ShowOnboarding -> {}
+            RootNavState.ShowOnboarding -> navController.navigateToOnboarding(rootNavOptions)
             // navController.navigateToUserUnlock(rootNavOptions)
             // TODO(phase-2-nav): when the fork wires an app-locked branch, route
             // here to `ROOT_MIFOS_PASSCODE_ROUTE` (already registered above).

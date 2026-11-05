@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:Suppress("ktlint:standard:filename", "MatchingDeclarationName")
 
@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainCoroutineDispatcher
 import kotlinx.coroutines.SupervisorJob
 
+/** Non-Android targets implementation of `DispatcherManagerImpl`. */
 class DispatcherManagerImpl : DispatcherManager {
     override val default: CoroutineDispatcher = Dispatchers.Default
 

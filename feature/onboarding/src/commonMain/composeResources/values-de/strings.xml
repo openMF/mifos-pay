@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Überspringen</string>
+    <string name="feature_onboarding_skip_a11y">Zu den Datenschutzoptionen springen</string>
+    <string name="feature_onboarding_next">Weiter</string>
+    <string name="feature_onboarding_page_of">Seite %1$d von %2$d</string>
+    <string name="feature_onboarding_overview_title">Ihre Finanz-Tools an einem Ort</string>
+    <string name="feature_onboarding_overview_body">Kredite, Rechnungen, Zinssätze und Rechner liegen direkt nebeneinander – die Zahl, die Sie brauchen, ist immer nur einen Tipp entfernt.</string>
+    <string name="feature_onboarding_track_title">Keinen Fälligkeitstermin mehr verpassen</string>
+    <string name="feature_onboarding_track_body">Behalten Sie Kredite und Rechnungen im Blick und lassen Sie sich vor jeder fälligen Zahlung erinnern.</string>
+    <string name="feature_onboarding_offline_title">Kein Netz? Einfach weitermachen</string>
+    <string name="feature_onboarding_offline_body">Was Sie speichern, bleibt auf diesem Gerät und funktioniert offline. Änderungen werden synchronisiert, sobald Sie wieder online sind.</string>
+    <string name="feature_onboarding_privacy_title">Helfen Sie, die App zu verbessern</string>
+    <string name="feature_onboarding_privacy_lead">Beides ist deaktiviert, solange Sie es nicht selbst aktivieren. Erlauben Sie beides mit einem Tippen oder wählen Sie unten aus – Sie können trotzdem alle Funktionen nutzen.</string>
+    <string name="feature_onboarding_analytics_label">Nutzungsanalysen teilen</string>
+    <string name="feature_onboarding_analytics_body">Welche Bildschirme und Funktionen wie oft genutzt werden. Niemals, was Sie eingeben oder speichern.</string>
+    <string name="feature_onboarding_crash_label">Absturzberichte senden</string>
+    <string name="feature_onboarding_crash_body">Bei einem Absturz der App: der Fehler, die App-Version und das Gerätemodell, damit wir ihn beheben können.</string>
+    <string name="feature_onboarding_no_personal_data">Nichts, was Sie in der App eingeben, wird jemals gesendet.</string>
+    <string name="feature_onboarding_settings_later">Sie können dies später in den Einstellungen ändern.</string>
+    <string name="feature_onboarding_connect_server">Server einrichten</string>
+    <string name="feature_onboarding_agreement">Mit der Nutzung unseres Dienstes akzeptieren Sie unsere %1$s und unsere %2$s.</string>
+    <string name="feature_onboarding_terms">Allgemeinen Geschäftsbedingungen</string>
+    <string name="feature_onboarding_privacy_policy">Datenschutzerklärung</string>
+    <string name="feature_onboarding_allow_get_started">Erlauben und loslegen</string>
+    <string name="feature_onboarding_continue_without">Ohne Teilen fortfahren</string>
+    <string name="feature_onboarding_continue_choices">Mit meiner Auswahl fortfahren</string>
+    <string name="feature_onboarding_save_failed">Ihre Auswahl konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.</string>
+</resources>

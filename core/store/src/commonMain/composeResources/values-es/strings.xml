@@ -2,9 +2,9 @@
 <!--
     Copyright 2026 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
@@ -23,5 +23,9 @@
     <string name="error_category_auth">Tu sesión expiró. Inicia sesión de nuevo.</string>
     <string name="error_category_ratelimit">Demasiadas solicitudes. Espera e inténtalo de nuevo.</string>
     <string name="error_category_server">Nuestros servidores están teniendo problemas. Inténtalo más tarde.</string>
+    <string name="error_category_timeout_connect">Se agotó el tiempo de conexión. Comprueba tu conexión e inténtalo de nuevo.</string>
+    <string name="error_category_timeout_read">El servidor tardó demasiado en responder. Inténtalo en breve.</string>
+    <string name="error_category_quota">Has alcanzado tu cuota. Mejora tu plan o espera para continuar.</string>
+    <string name="error_category_client">La solicitud falló. Inténtalo de nuevo.</string>
     <string name="error_category_generic">Algo salió mal</string>
 </resources>

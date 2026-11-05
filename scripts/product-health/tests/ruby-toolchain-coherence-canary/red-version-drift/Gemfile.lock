@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    fastlane (2.239.0)
+
+PLATFORMS
+  arm64-darwin-23
+  x86_64-linux
+
+RUBY VERSION
+   ruby 3.3.6
+
+BUNDLED WITH
+   2.7.2

@@ -110,6 +110,9 @@ PASS=0
 FAIL=0
 declare -a FAIL_ROWS=()
 
+# True when $1 looks like text, per file(1).
+# Used to decide WHICH placeholder probe applies: a text secret carries a
+# `# CLAUDE-PLACEHOLDER` first line, a binary one a magic prefix.
 is_text_file() {
     # Returns 0 if file looks like text (ASCII / UTF-8 / regular text file)
     local f="$1"
@@ -117,6 +120,7 @@ is_text_file() {
     file -b "$f" 2>/dev/null | grep -qiE 'text|ASCII|UTF-8|JSON|XML|YAML|empty'
 }
 
+# True when text file $1 is still the shipped placeholder rather than a real secret.
 check_placeholder_text() {
     local f="$1"
     local first_line
@@ -124,6 +128,8 @@ check_placeholder_text() {
     [ "$first_line" = "# CLAUDE-PLACEHOLDER" ] && return 0 || return 1
 }
 
+# True when binary file $1 still carries the placeholder magic prefix.
+# Checks the first 16 bytes only, so it is safe on a large keystore.
 check_placeholder_binary() {
     local f="$1"
     local first16
@@ -178,7 +184,7 @@ if [ "$FAIL" -gt 0 ]; then
     echo
     echo "❌ manual-preflight: FAIL"
     echo
-    for row in "${FAIL_ROWS[@]}"; do
+    for row in ${FAIL_ROWS[@]+"${FAIL_ROWS[@]}"}; do
         IFS='|' read -r r_canon r_hint r_placeholder r_gha r_reason <<< "$row"
         echo "[FAIL] needs[].canonical=$r_canon"
         echo "       source_hint:    $r_hint"

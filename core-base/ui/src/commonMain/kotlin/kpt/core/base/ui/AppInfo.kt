@@ -1,13 +1,13 @@
 /*
- * Copyright 2026 Your Organization Name
+ * Copyright 2026 Mifos Initiative
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui
-
-import kpt.core.base.ui.BuildKonfig
 
 /**
  * The SINGLE common-code accessor for the app's user-facing display name.
@@ -21,5 +21,9 @@ import kpt.core.base.ui.BuildKonfig
  * fork rebrands in app-profile only; the display name flows here automatically.
  */
 object AppInfo {
+    /**
+     * The fork's display name, from `app-profile` via BuildKonfig — never hardcoded, so a rebrand needs no code
+     * change.
+     */
     val appDisplayName: String get() = BuildKonfig.APP_DISPLAY_NAME
 }

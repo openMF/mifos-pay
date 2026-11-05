@@ -33,6 +33,12 @@ import kpt.core.base.store.screen.ScreenState
  * Store5 stream reports an in-flight refresh, the M3 indicator shows automatically. `onRefresh`
  * is invoked when the user pulls; the stream overload defaults it to `stream.refresh()`.
  *
+ * Every one of [ScreenContent]'s state slots — [loading], [empty], [noNetwork], [error],
+ * [onDismiss] — is forwarded, matching the sibling `PagingScreenContent`. A screen that brands one
+ * of them (an app-specific empty card, say) keeps the pull gesture; it used to have to choose,
+ * because these parameters did not exist here and the inner `ScreenContent` always rendered the
+ * framework defaults.
+ *
  * For infinite-scroll paginated lists prefer `PagingScreenContent` (it coordinates load-more with
  * refresh); for dashboards whose refresh is owned by `KptScaffold`, keep the app-level gesture and
  * use plain `ScreenContent`. This wrapper is for a single-source screen that owns its own refresh.
@@ -53,6 +59,15 @@ fun <T> RefreshableScreenContent(
     stream: ScreenDataStream<T>,
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit = stream::refresh,
+    onDismiss: (() -> Unit)? = null,
+    loading: @Composable () -> Unit = { DefaultLoadingContent() },
+    empty: @Composable () -> Unit = { DefaultEmptyContent() },
+    noNetwork: @Composable (isCaptivePortal: Boolean) -> Unit = { captive ->
+        DefaultNoNetworkContent(onRefresh, isCaptivePortal = captive, onDismiss = onDismiss)
+    },
+    error: @Composable (Throwable) -> Unit = {
+        DefaultErrorContent(it, onRefresh, onDismiss = onDismiss)
+    },
     content: @Composable (data: T, freshnessSignal: FreshnessSignal) -> Unit,
 ) {
     val state by stream.state.collectAsStateWithLifecycle(ScreenState.Loading)
@@ -60,6 +75,11 @@ fun <T> RefreshableScreenContent(
         state = state,
         onRefresh = onRefresh,
         modifier = modifier,
+        onDismiss = onDismiss,
+        loading = loading,
+        empty = empty,
+        noNetwork = noNetwork,
+        error = error,
         content = content,
     )
 }
@@ -81,6 +101,15 @@ fun <T> RefreshableScreenContent(
     state: ScreenState<T>,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
+    onDismiss: (() -> Unit)? = null,
+    loading: @Composable () -> Unit = { DefaultLoadingContent() },
+    empty: @Composable () -> Unit = { DefaultEmptyContent() },
+    noNetwork: @Composable (isCaptivePortal: Boolean) -> Unit = { captive ->
+        DefaultNoNetworkContent(onRefresh, isCaptivePortal = captive, onDismiss = onDismiss)
+    },
+    error: @Composable (Throwable) -> Unit = {
+        DefaultErrorContent(it, onRefresh, onDismiss = onDismiss)
+    },
     content: @Composable (data: T, freshnessSignal: FreshnessSignal) -> Unit,
 ) {
     val isRefreshing = (state as? ScreenState.Content)?.freshnessSignal?.isRefreshing == true
@@ -89,13 +118,20 @@ fun <T> RefreshableScreenContent(
         onRefresh = onRefresh,
         modifier = modifier,
     ) {
-        // ScreenContent owns the loading / empty / no-network / error / content rendering; the
-        // in-content refreshing banner is suppressed here because PullToRefreshBox already shows
-        // the M3 pull indicator, avoiding a duplicate progress affordance.
+        // ScreenContent owns the loading / empty / no-network / error / content rendering, and
+        // every one of its slots is forwarded so a screen that brands one is not forced to give
+        // up the pull gesture to do it. The in-content refreshing banner is the single exception:
+        // it is suppressed because PullToRefreshBox already shows the M3 pull indicator, and two
+        // progress affordances for one fetch is worse than none.
         ScreenContent(
             state = state,
             onRetry = onRefresh,
             refreshingIndicator = null,
+            onDismiss = onDismiss,
+            loading = loading,
+            empty = empty,
+            noNetwork = noNetwork,
+            error = error,
             content = content,
         )
     }

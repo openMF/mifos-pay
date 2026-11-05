@@ -11,8 +11,8 @@ package kpt.core.base.store.error
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 import kotlin.test.assertIs
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class ErrorCategoryTest {
@@ -85,6 +85,16 @@ class ErrorCategoryTest {
     }
 
     @Test
+    fun categorize_tlsHandshakeFailure_returnsNetwork() {
+        // javax.net.ssl.SSLHandshakeException does not contain "SSLException"; its cause, an
+        // EOFException, contains no transport pattern either. Measured on device 2026-10-25.
+        class EOFException : RuntimeException()
+        class SSLHandshakeException(cause: Throwable) : RuntimeException("connection closed", cause)
+        assertEquals(ErrorCategory.Network, categorize(SSLHandshakeException(EOFException())))
+        assertEquals(ErrorCategory.Network, categorize(EOFException()))
+    }
+
+    @Test
     fun categorize_ktorJsEngineFailure_returnsNetwork() {
         // Ktor's JS and wasmJs engines wrap EVERY JavaScript-side failure in
         //   class JsError(origin: dynamic) : Throwable("Error from javascript[...]")
@@ -143,8 +153,9 @@ class ErrorCategoryTest {
             ErrorCategory.Auth,
             categorize(RuntimeException("HTTP 401 Unauthorized")),
         )
+        // 403 is NOT Auth: signed in, not permitted. It is a client error that keeps its reason.
         assertEquals(
-            ErrorCategory.Auth,
+            ErrorCategory.ClientError(403),
             categorize(RuntimeException("403 Forbidden")),
         )
     }

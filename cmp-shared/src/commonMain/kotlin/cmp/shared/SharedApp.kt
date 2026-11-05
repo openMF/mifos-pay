@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.shared
 
@@ -18,6 +18,7 @@ import kpt.core.base.platform.context.LocalContext
 import kpt.core.base.ui.util.LocalImageLoaderProvider
 import kpt.core.base.ui.util.getDefaultImageLoader
 
+/** The shared app root every platform entry point renders. */
 @Composable
 fun SharedApp(
     updateScreenCapture: (isScreenCaptureAllowed: Boolean) -> Unit,

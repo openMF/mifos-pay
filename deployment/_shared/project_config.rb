@@ -63,6 +63,7 @@ module FastlaneConfig
       result
     end
 
+    # Parse a `key=value` properties file into a hash, skipping comments and blank lines.
     def self.parse_props(path)
       props = {}
       File.readlines(path).each do |line|
@@ -73,6 +74,9 @@ module FastlaneConfig
       props
     end
 
+    # Parse the `[versions]` table of a TOML catalog into a hash.
+    # A deliberately minimal reader — the deployment layer must work with no TOML gem on a
+    # bare CI runner.
     def self.parse_toml_versions(path)
       result = {}
       File.readlines(path).each do |line|
@@ -98,6 +102,10 @@ module FastlaneConfig
     _privacy_url   = ENV["APP_PRIVACY_URL"]      || FORK["org.privacy.url"]
 
     _team_id          = ENV["APPLE_TEAM_ID"]    || FORK["apple.team.id"]
+    # App Store NUMERIC id. `ios_config[:apple_id]` was READ by the TestFlight lane but never
+    # DEFINED here, so its `|| "6744892773"` fallback was not a fallback — it was the value,
+    # on every fork. SoT is app-profile/platforms/apple/apple.yaml#apple.app_store_id.
+    _apple_id         = ENV["APPLE_APP_STORE_ID"] || FORK["apple.app.store.id"]
     _match_git_url    = ENV["MATCH_GIT_URL"]    || FORK["apple.match.git.url"]
     _match_git_branch = ENV["MATCH_GIT_BRANCH"] || "master"
 
@@ -131,6 +139,9 @@ module FastlaneConfig
         file:         ENV["ANDROID_STORE_FILE"]    || "upload_keystore.keystore",
         password:     ENV["ANDROID_STORE_PASSWORD"] || "",
         key_alias:    ENV["ANDROID_KEY_ALIAS"]     || "release-key",
+        # PKCS12 has no separate key password (keytool discards `-keypass` at creation), so
+        # this falls back to the STORE password rather than "". Empty is not "unset" — it is
+        # a measured signing failure ("key associated with <alias> not a private key").
         key_password: ENV["ANDROID_KEY_PASSWORD"]  || ENV["ANDROID_STORE_PASSWORD"] || "",
       },
       firebase: {
@@ -150,7 +161,7 @@ module FastlaneConfig
         groups: (ENV["FIREBASE_GROUPS"] || FORK["firebase.groups"])&.split(","),
       },
       project_path:    "cmp-ios/iosApp.xcodeproj",
-      # E6 — no CocoaPods `.xcworkspace`; the app is a plain `.xcodeproj` (SwiftPM/XCFramework).
+      # E6 — no generated `.xcworkspace`; the app is a plain `.xcodeproj` (SwiftPM/XCFramework).
       plist_path:      "cmp-ios/iosApp/Info.plist",
       scheme:          "iosApp",
       output_name:     "iosApp.ipa",
@@ -166,6 +177,8 @@ module FastlaneConfig
     IOS_SHARED = {
       # ENV override: APPLE_TEAM_ID
       team_id:    _team_id,
+      # ENV override: APPLE_APP_STORE_ID
+      apple_id:   _apple_id,
       ci_provider: "circleci",
       app_store_connect: {
         # ENV overrides: APPSTORE_KEY_ID / APPSTORE_ISSUER_ID / APPSTORE_KEY_PATH
@@ -239,7 +252,8 @@ module FastlaneConfig
           demo_password: ENV["APPSTORE_DEMO_PASSWORD"] || "",
           notes:         "Thank you for reviewing our app!",
         },
-        submit_for_review:                 true,
+        # SUBMIT via _shared/scripts/asc-appstore-submit.rb, not deliver (RULE-DEPLOY-APPSTORE-AUTOSUBMIT-001).
+        submit_for_review:                 false,
         automatic_release:                 true,
         phased_release:                    false,
         skip_app_version_update:           false,
@@ -275,8 +289,11 @@ module FastlaneConfig
 
     # ── Helpers ────────────────────────────────────────────────────────────────
     def self.android_package_name = ANDROID[:package_name]
+    # The iOS bundle id — the same value as the Android applicationId, from app-profile.
     def self.ios_bundle_identifier = IOS[:app_identifier]
+    # Path to the Firebase service-account JSON, or nil when this fork has no Firebase target.
     def self.firebase_credentials_file = SHARED[:firebase_service_credentials]
+    # The resolved iOS build configuration: bundle id, team, Match settings and ASC key paths.
     def self.ios_config = IOS.merge(IOS_SHARED)
   end
 
@@ -299,6 +316,7 @@ module FastlaneConfig
       }.freeze,
     }.freeze
 
+    # Signing configuration for the given platform, merged from the shared and platform YAMLs.
     def self.get_signing_config(options = {})
       {
         storeFile:     options[:store_file]     || ENV["ANDROID_STORE_FILE"]     || ProjectConfig::ANDROID[:keystore][:file],
@@ -350,6 +368,7 @@ module FastlaneConfig
     AndroidConfig.get_signing_config(options)
   end
 
+  # Firebase configuration for the given platform, or nil when it is not configured.
   def self.get_firebase_config(platform, type = :prod)
     case platform
     when :android

@@ -155,6 +155,9 @@ if [ -f "$DEPGUARD_PROPS" ] && grep -q "\.local=true" "$DEPGUARD_PROPS"; then
     rm -f "${DEPGUARD_PROPS}.sed-bak"
     DEPGUARD_RESTORE=1
 fi
+# Put the dependency-guard properties file back after the push check.
+# Registered on a trap, so an interrupted run does not leave the repo with a
+# modified gradle.properties that a later build would silently pick up.
 restore_depguard() {
     if [ "$DEPGUARD_RESTORE" = "1" ] && [ -f "${DEPGUARD_PROPS}.prepush.bak" ]; then
         mv "${DEPGUARD_PROPS}.prepush.bak" "$DEPGUARD_PROPS"
@@ -192,12 +195,12 @@ GRADLE_FLAGS=(
 
 echo ""
 echo "→ Phase 2: parallel build (${#GRADLE_TASK_ARGS[@]} tasks)"
-printf '    %s\n' "${GRADLE_TASK_ARGS[@]}"
+printf '    %s\n' ${GRADLE_TASK_ARGS[@]+"${GRADLE_TASK_ARGS[@]}"}
 
-if ./gradlew "${GRADLE_TASK_ARGS[@]}" "${GRADLE_FLAGS[@]}"; then
-    successful_tasks+=("${GRADLE_TASK_ARGS[@]}")
+if ./gradlew ${GRADLE_TASK_ARGS[@]+"${GRADLE_TASK_ARGS[@]}"} "${GRADLE_FLAGS[@]}"; then
+    successful_tasks+=(${GRADLE_TASK_ARGS[@]+"${GRADLE_TASK_ARGS[@]}"})
 else
-    failed_tasks+=("${GRADLE_TASK_ARGS[@]}")
+    failed_tasks+=(${GRADLE_TASK_ARGS[@]+"${GRADLE_TASK_ARGS[@]}"})
 
     if [ "$AUTO_FIX_MODE" = "1" ]; then
         echo ""
@@ -231,7 +234,7 @@ else
 fi
 echo "──────────────────────────────────────────────"
 echo "Successful tasks: ${#successful_tasks[@]}"
-for t in "${successful_tasks[@]}"; do echo "  ✅ $t"; done
+for t in ${successful_tasks[@]+"${successful_tasks[@]}"}; do echo "  ✅ $t"; done
 
 if [ "${#healed_tasks[@]}" -gt 0 ]; then
     echo ""

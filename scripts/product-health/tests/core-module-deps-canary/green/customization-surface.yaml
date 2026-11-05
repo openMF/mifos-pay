@@ -1,0 +1,5 @@
+ownership:
+  - glob: "**/core/*/module-deps.gradle.kts"
+    owner: fork
+  - glob: "**/core/**/build.gradle.kts"
+    owner: template

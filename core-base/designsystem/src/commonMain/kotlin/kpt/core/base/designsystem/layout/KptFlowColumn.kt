@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem.layout
 
@@ -18,8 +18,12 @@ import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.util.fastForEach
+import androidx.compose.ui.util.fastForEachIndexed
 import kotlin.math.max
 
+/**
+ * Column that wraps into additional columns when content exceeds the available height.
+ */
 @Composable
 fun KptFlowColumn(
     modifier: Modifier = Modifier,
@@ -88,15 +92,23 @@ fun KptFlowColumn(
 
         layout(crossAxisLayoutSize, mainAxisLayoutSize) {
             sequences.forEachIndexed { sequenceIndex, placeables ->
-                val childCrossAxisPosition = crossAxisPositions[sequenceIndex]
-                var childMainAxisPosition = 0
+                val columnCrossAxisSize = crossAxisSizes[sequenceIndex]
+                val columnCrossAxisPosition = crossAxisPositions[sequenceIndex]
 
-                placeables.fastForEach { placeable ->
+                // Honour the declared arrangement — both parameters were accepted and ignored, so
+                // `verticalArrangement = Arrangement.Center` laid out identically to `Top`.
+                val heights = IntArray(placeables.size) { placeables[it].height }
+                val positions = IntArray(placeables.size)
+                with(verticalArrangement) {
+                    arrange(mainAxisLayoutSize, heights, positions)
+                }
+
+                placeables.fastForEachIndexed { index, placeable ->
                     placeable.place(
-                        x = childCrossAxisPosition,
-                        y = childMainAxisPosition,
+                        x = columnCrossAxisPosition +
+                            horizontalAlignment.align(placeable.width, columnCrossAxisSize, layoutDirection),
+                        y = positions[index],
                     )
-                    childMainAxisPosition += placeable.height
                 }
             }
         }

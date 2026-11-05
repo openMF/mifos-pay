@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-
 kotlin {
     sourceSets {
         commonMain.dependencies {
@@ -25,6 +24,36 @@ kotlin {
             // in nonAndroidMain (Android keeps its native ACTION_SEND/ACTION_VIEW path).
             implementation(libs.cmp.share)
             implementation(libs.cmp.intent.launcher)
+            implementation(libs.cmp.open.url)
+            implementation(libs.cmp.inapp.update)
+            // Review, clipboard, app-intents, bubble and PDF. Each resolves the target itself, so
+            // none needs an expect/actual here. All but review are bound in platformModule as the
+            // toolkit's own types rather than behind a template wrapper — see the note there.
+            // `api`, not `implementation`: these types appear in this module's PUBLIC signatures —
+            // LocalClipboardManager / LocalBubbleManager / LocalPdfManager / LocalAppIntentsManager
+            // are typed with them, and AppReviewManager.capabilities returns AppReviewCapabilities.
+            // Declared `implementation` they compile here but a consumer reading
+            // `LocalClipboardManager.current` cannot name the type it gets back.
+            api(libs.cmp.app.review)
+            api(libs.cmp.clipboard)
+            api(libs.cmp.app.intents)
+            api(libs.cmp.bubble)
+            api(libs.cmp.pdf.generator)
+            // Bound (not rendered) here: toastModule binds ONE ToastHostState and exposes the same
+            // instance as ToastDispatcher, so a ViewModel injecting the dispatcher and the
+            // KptToastHost rendering the state share one queue. The composable lives in
+            // core-base/designsystem.
+            implementation(libs.cmp.toast)
+            // Needed to PROVIDE these libraries' own CompositionLocals from LocalManagerProvider.
+            // They default to constructing a separate impl when unprovided, so a fork importing the
+            // toolkit's LocalShareManager instead of the template's would get a second object with
+            // no error. Providing them here points both names at the same DI-bound instance.
+            implementation(libs.cmp.share.compose)
+            implementation(libs.cmp.intent.launcher.compose)
+            implementation(libs.cmp.app.intents.compose)
+            // The CompositionLocals read their managers OUT of Koin rather than constructing a
+            // second copy — platformModule is the single owner. Same pattern as core-base/security.
+            implementation(libs.koin.compose)
 
             // Explicit (rather than transitive via compose.runtime) — nonAndroidMain
             // IntentManagerImpl owns its own CoroutineScope for fire-and-forget dispatch.
@@ -41,11 +70,15 @@ kotlin {
 
             implementation(compose.material3)
 
-            implementation(libs.review)
-            implementation(libs.review.ktx)
+            // Play Core review (libs.review / libs.review.ktx) was removed here: cmp-app-review
+            // brings its own Play In-App Review path on Android and a real implementation on every
+            // other target, replacing the non-Android no-op. With review no longer needing an
+            // Activity, no manager is Activity-bound and LocalManagerProvider's android/nonAndroid
+            // split is now a single commonMain implementation.
+        }
 
-            implementation(libs.app.update.ktx)
-            implementation(libs.app.update)
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }

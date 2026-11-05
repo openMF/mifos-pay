@@ -1,0 +1,104 @@
+# .github/workflows/docs-check.yml — the PULL REQUEST half of keeping docs in step with source.
+#
+# Split out of docs-refresh.yml so a pull request produces exactly ONE check. Both halves lived in
+# one workflow with `if: github.event_name == 'pull_request'` guards, which GitHub reports as three
+# checks on every PR — one real result and two permanently "skipped" rows. A skipped row is not free:
+# it reads as something that might have run, and it buries the row that matters.
+#
+# Merging them into a single JOB would have been the other way to get one row, and is worse: a job
+# carries ONE `permissions:` block, so the publish half's `contents: write` + `pull-requests: write`
+# would apply to every pull-request run too. Separate workflows keep each half at least privilege.
+#
+# CHECK ONLY — this must never push to a contributor's branch: a fork PR has no write token, and
+# rewriting someone's branch mid-review is hostile. Drift is reported with the exact stale pages and
+# the one command that fixes them.
+#
+# WHY IT ONLY NEEDS BASH
+# The generator lives in the TEMPLATE (scripts/docs/), not in the framework, precisely so this job
+# needs no framework checkout, no JDK, and no Gradle — and so every fork inherits the same capability.
+name: Docs · API reference
+run-name: "📚 Docs check · ${{ github.event.pull_request.title || github.ref_name }}"
+
+on:
+  pull_request:
+    paths:
+      - 'core-base/**/*.kt'
+      - 'core/**/*.kt'
+      # A NEW MODULE arrives as a new directory + build file, which no *.kt pattern above matches on
+      # its own — and a new module is exactly the case the scaffold exists to handle.
+      - 'core-base/*/build.gradle.kts'
+      - 'core/*/build.gradle.kts'
+      # The docs now cover the WHOLE tree (scripts/docs/tree-scaffold.sh), so a change anywhere that has
+      # a page has to re-run the check. Watching only core*/ left a page for `feature/` — the largest
+      # area in the repo — able to go stale with CI silent, which is the drift the gate exists to catch.
+      - 'feature/**'
+      - 'cmp-*/**'
+      - 'deployment/**'
+      - 'app-profile/**'
+      - 'build-logic/**'
+      - 'tools/**'
+      - 'sync/**'
+      - 'legal/**'
+      - 'gradle/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'docs/**'
+      - '.github/workflows/**'
+
+concurrency:
+  group: docs-check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Docs are current with source
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Audit the documentation end to end
+        run: |
+          set -euo pipefail
+          chmod +x scripts/docs/*.sh
+          # doc-audit.sh is the SUPERSET: it runs the currency check plus area/unit coverage, authored
+          # substance, authored-reference resolution, repo-wide links and symbol coverage. Running only
+          # `refresh.sh --check` here verified the half of the docs that had just been re-derived, which
+          # is guaranteed to match — the other five checks are the ones that can actually fail.
+          if ! bash scripts/docs/doc-audit.sh; then
+            {
+              echo "### 📚 Documentation audit failed"
+              echo
+              echo "See the step log for the named gaps. Locally:"
+              echo
+              echo '```bash'
+              echo 'bash scripts/docs/doc-audit.sh'
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "✅ documentation audit complete" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify generated docs match source
+        run: |
+          set -euo pipefail
+          if ! bash scripts/docs/refresh.sh --check; then
+            {
+              echo "### 📚 Docs are out of step with source"
+              echo
+              echo "This PR changes Kotlin under \`core-base/\` or \`core/\` without refreshing the"
+              echo "generated API reference. The pages listed above are derived from KDoc + signatures,"
+              echo "so they cannot be updated by hand."
+              echo
+              echo '```bash'
+              echo 'bash scripts/docs/refresh.sh'
+              echo '```'
+              echo
+              echo "Then commit the result. Prose outside the \`<!-- api-docs -->\` markers is never touched."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "✅ generated docs match source" >> "$GITHUB_STEP_SUMMARY"
+

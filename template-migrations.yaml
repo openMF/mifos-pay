@@ -1,0 +1,212 @@
+# template-migrations.yaml — the STRUCTURAL migrations this template has made. owner: template.
+#
+# WHY THIS FILE EXISTS
+# `app-profile/app.yaml#migration_units[]` + `app-profile/migration-ledger.yaml` already solve this
+# shape for ROOM SCHEMA: the template declares WHAT it can add, the fork records WHERE it landed. The
+# same split was missing for the repo's own STRUCTURE, and structure is where a sync actually hurts —
+# dependencies moving out of `build.gradle.kts`, registration moving to KSP annotations, the engine
+# moving out of the source root. Each of those changed what a file MEANS, so a fork that has not
+# adopted one gets a mechanically-correct sync that deletes its work.
+#
+# Without this record the knowledge lived only in the template's git history, which means
+# `/kmp-project-template-sync` had to REDISCOVER each migration from the fork's symptoms every run —
+# detectors inferring backwards to a cause the template already knew. A fork is not behind on "12
+# modules missing a file"; it is behind on ONE migration, which has an order, a reason, and a fix.
+#
+# HOW IT IS USED
+# `/kmp-project-template-sync` STEP 0.ANALYZE reads this, runs each `detect`, and produces an ORDERED
+# adoption plan for the chosen fork. `blocking: true` rows must be adopted BEFORE the mechanical sync,
+# because the sync is what destroys the un-migrated shape.
+#
+# APPEND-ONLY, and `order` is the adoption sequence, not the authoring date — a later migration may
+# have to land first. Never renumber a shipped row: forks record adoption against these ids.
+#
+# Adding a row is part of making the structural change, not paperwork after it. A migration with no
+# `detect` is not finished: it cannot be found in a fork, so it cannot be adopted on purpose.
+
+schema: 1
+
+migrations:
+  - id: whitelabel-engine-layout
+    order: 10
+    title: the sync engine moved from the source root into scripts/white-label/
+    why: >
+      `sync-dirs.sh`, `fork-init.sh`, `keystore.sh` and `firebase.sh` sat at the repo root. They are
+      the white-label lifecycle, not app code, and root-level scripts collide with whatever a fork
+      keeps at its own root. A fork left on the flat layout runs a STALE ENGINE: the sync self-updates
+      `scripts/white-label/sync-dirs.sh`, so the root copy it actually executes never advances.
+    detect: test -f "$SRC/sync-dirs.sh" && ! test -f "$SRC/scripts/white-label/sync-dirs.sh"
+    migrate: >
+      Delete the root copies; the sync materializes scripts/white-label/ via STEP 0 BOOTSTRAP. Verify
+      by re-running with --dry-run and confirming the engine reports its own self-update.
+    blocking: true
+
+  - id: module-deps-seam
+    order: 20
+    title: a fork's own dependencies move out of build.gradle.kts into <module>/module-deps.gradle.kts
+    why: >
+      `build.gradle.kts` became TEMPLATE-owned so the template can evolve plugins/KSP/version wiring
+      freely, and template-owned means FULL-COPY. A fork with dependencies still inline there loses
+      them on the next sync — silently, because the build only breaks later at the first unresolved
+      symbol. The seam is applied by build.gradle.kts itself
+      (`project.file("module-deps.gradle.kts").takeIf { it.exists() }?.let { apply(from = it) }`),
+      so creating it is additive and safe to do before the sync.
+    detect: .claude-runtime/scripts/sync-module-scaffold-audit.sh   # MS-1 missing file · MS-2 inline deps
+    migrate: >
+      Per module: create <module>/module-deps.gradle.kts, MOVE the fork-only dependency lines into it
+      (the delta against the template's build.gradle.kts — not the template's own, which the full-copy
+      legitimately replaces), then prove the Gradle graph is byte-identical before/after with
+      `./gradlew :<module>:dependencies --configuration commonMainImplementation`. Never verify by
+      inspection, and never stop the daemon (RULE-BUILD-WARMTH-001).
+    blocking: true
+
+  - id: ksp-registration
+    order: 30
+    title: Store/Database/Network/Data registration moves from hand-written modules to annotations + KSP
+    why: >
+      Four processors under tools/ now generate nine aggregates (AppStoreRegistry, AppCacheKeys,
+      AppDatabase, Generated*Bindings …), so the files that used to ACCUMULATE a fork's entries are
+      pure template SHELLS. A fork that predates this still registers by hand; the shell full-copies
+      and those registrations vanish with a GREEN build — the code they referenced still compiles, the
+      stores simply never bind at runtime.
+    detect: .claude-runtime/scripts/sync-ksp-shell-audit.sh   # KS-1 hand-authored aggregate · KS-2 extended shell
+    migrate: >
+      ORDER MATTERS AND IS COUNTER-INTUITIVE. A fork in this state has no tools/ at all — the four
+      processors arrive WITH the sync — so the migration CANNOT be done first. Sequence it INSIDE the
+      sync branch: run the sync (tools/ + the shells land, the extended shells are overwritten), then
+      BEFORE building re-add each registration as an annotation on its provider, recovering the
+      overwritten bodies from the pre-sync commit rather than from memory, then build and count the
+      generated bindings against the manual set. Merging with that step undone loses them silently.
+    blocking: false   # cannot be pre-done; enforced inside the sync branch instead
+
+  - id: template-first-ownership
+    order: 40
+    title: customization-surface.yaml defaults to template; fork territory is declared explicitly
+    why: >
+      The catch-all was `owner: fork`, so every path nobody had classified was preserved and the
+      template could never deliver anything new into it. Template-first inverts that: the template
+      owns what is not claimed. The flip is only safe once every fork-owned path has an EXPLICIT rule,
+      which is why it ships with the contract rather than as a fork-side edit.
+    detect: >-   # the catch-all still fork
+      awk '/glob: "\*\*"$/{getline; print; exit}' "$SRC/customization-surface.yaml" | grep -q "owner: fork"
+    migrate: >
+      Adopt the template's customization-surface.yaml AND scripts/customization-surface.sh together —
+      they are one atomic pair and the engine's STEP 0 self-guard HALTs on a mismatched pair
+      ("you pulled the fork-preservation flip without the ownership fix"). The sync bootstraps both.
+    blocking: false   # the sync's own bootstrap performs it
+
+  - id: platform-shells-3way
+    order: 50
+    title: build-logic + the four cmp-* application shells become merge (3-way), not template
+    why: >
+      A platform shell is the one place fork-specific PLATFORM WIRING has nowhere else to live — there
+      is no module-deps.gradle.kts equivalent for an Xcode target, an entitlement, or a plist key.
+      Under full-copy a fork's widget extension, app-group and OAuth URL scheme were deleted outright.
+      Paired with pbxproj-3way and plist-union so the merge is structural rather than line-based.
+    detect: .claude-runtime/scripts/sync-ownership-transition.sh   # hardening/loosening transitions
+    migrate: >
+      No fork-side pre-work. The contract change plus the merge strategies land together via the
+      sync's bootstrap; verify afterwards that the fork's platform targets still exist (open the
+      Xcode project, confirm every target and its build phases).
+    blocking: false
+
+  - id: ownership-naming-2026-11
+    order: 60
+    title: ownership readable from file names — Kpt* template · KptFork* merge · Fork* fork
+    why: >
+      A fork developer could not tell from a file whether an edit there survives the next sync. The
+      seams and template files were renamed so the name says the owner (ownership-naming.sh holds the
+      name and the contract together). A fork still on the old names breaks: template-owned files now
+      call ForkStoreModule, ForkFeatureRegistry, … and a renamed merge-owned file loses its 3-way base.
+    detect: test -f "$SRC/core/store/src/commonMain/kotlin/kpt/core/store/di/ProjectStoreModule.kt"
+    migrate: >
+      No fork-side pre-work: the sync applies the `words:` / `files:` rows below itself
+      (scripts/white-label/template-migrations.sh), before any merge — identifiers rewritten, files
+      renamed, the fork's content kept, and a renamed merge file merged against its base under the old
+      path. `words: "Old -> New"` rewrites the whole-word identifier in tracked text files and renames
+      a file named Old.<ext>; `files: "a -> b"` moves a path and rewrites the path string. A file
+      carrying the marker `template-migrations: keep` (a fixture that needs the OLD names) is skipped.
+    blocking: false   # the sync applies it
+    words:
+      # fork-owned seams
+      - "ProjectRepositoryModule -> ForkRepositoryModule"
+      - "ProjectNetworkModule -> ForkNetworkModule"
+      - "ProjectDatabaseModule -> ForkDatabaseModule"
+      - "ProjectDatastoreModule -> ForkDatastoreModule"
+      - "ProjectStoreModule -> ForkStoreModule"
+      - "ProjectErrorMapper -> ForkErrorMapper"
+      - "ProjectScreenStateDefaults -> ForkScreenStateDefaults"
+      - "ProjectPreferencesRepository -> ForkPreferencesRepository"
+      - "ProjectPreferencesRepositoryImpl -> ForkPreferencesRepositoryImpl"
+      - "AppInitializers -> ForkInitializers"
+      - "BackboneRegistry -> ForkBackboneRegistry"
+      - "TabRegistry -> ForkTabRegistry"
+      - "ShowcaseRegistry -> ForkShowcaseRegistry"
+      - "FeatureRegistry -> ForkFeatureRegistry"
+      - "DeepLinkRegistry -> ForkDeepLinkRegistry"
+      # template-owned
+      - "AppErrorMapper -> KptErrorMapper"
+      - "AppScreenStateDefaults -> KptScreenStateDefaults"
+      - "ProjectExtensions -> KptGradleExtensions"
+      - "ProjectNetworkHeaders -> KptNetworkHeaders"
+      - "ForkProperties -> KptAppProfileProperties"
+      - "ForkSeamTest -> KptSeamContractTest"
+      - "AppErrorMapperSeamTest -> KptErrorMapperSeamTest"
+    files:
+      # template-owned (the file declares appStoreModule; `StoreModule` is core-base's identifier)
+      - "core/store/src/commonMain/kotlin/kpt/core/store/di/StoreModule.kt -> core/store/src/commonMain/kotlin/kpt/core/store/di/KptStoreModule.kt"
+      # merge-owned — forks edit them (cappy, healld-health, status-saver, reels-downloader, field officer)
+      - "core/ui/src/commonMain/kotlin/kpt/core/ui/scaffold/KptScaffold.kt -> core/ui/src/commonMain/kotlin/kpt/core/ui/scaffold/KptForkScaffold.kt"
+      - "cmp-navigation/src/commonMain/kotlin/cmp/navigation/ui/KptRootScaffold.kt -> cmp-navigation/src/commonMain/kotlin/cmp/navigation/ui/KptForkRootScaffold.kt"
+      # ktlint file-name rule (PascalCase); the facade class stays MainKt, so mainClass is unchanged
+      - "cmp-desktop/src/jvmMain/kotlin/main.kt -> cmp-desktop/src/jvmMain/kotlin/Main.kt"
+
+  - id: ios-platform-bridges-seam
+    order: 70
+    title: Swift-only platform bridges reach the fork through viewController(platformBridges:)
+    why: >
+      The template-owned ViewController.kt took no parameter, so a fork that needed an object only Swift
+      can create (PayCraft's StoreKit 2 shim) edited the template file — `viewController(storeKit2Bridge:)`
+      in reels-downloader and steady — and every sync overwrote it. The template now takes
+      `platformBridges: List<Any>` and hands it to the fork-owned `List<Any>.onForkIosConfigure()`
+      (cmp-shared kpt/shared/fork/ForkIosHooks.kt, seeded once); ContentView.swift is merge-owned so the
+      fork's argument survives. A fork still on its own parameter fails to compile after the sync.
+    detect: grep -q 'fun viewController(storeKit2Bridge' "$SRC/cmp-shared/src/nativeMain/kotlin/kpt/shared/ViewController.kt"
+    migrate: >
+      Before the sync, move the fork's bridge handling into kpt/shared/fork/ForkIosHooks.kt
+      (`filterIsInstance<StoreKit2Bridge>().firstOrNull()?.let { loadKoinModules(paycraftStoreKit2BillingModule(it)) }`),
+      change ContentView.swift to `viewController(platformBridges: [PayCraftStoreKit2()])` (iOS 15+, `[]`
+      otherwise), and drop ViewController.kt from .template-sync-holds so the template copy lands.
+    blocking: true    # the sync replaces ViewController.kt; the fork's call site must already use the seam
+
+  - id: onboarding-root-install
+    order: 80
+    title: feature/onboarding ships with the template and RootNavScreen installs it on the root graph
+    why: >
+      The template now includes :feature:onboarding in settings.gradle.kts, depends on it from
+      cmp-navigation, and RootNavScreen installs `onboardingDestination()` on the root graph for
+      RootNavState.ShowOnboarding. A fork that already shipped its OWN feature/onboarding wired it itself —
+      installed from another nav file (AuthNavigation.kt's authNavGraph), included in
+      settings.local.gradle.kts, with a feature-deps.gradle.kts edge — and often with a required parameter
+      (`onboardingDestination(onOpenServerConfig: () -> Unit)`). feature/** is fork-owned, so the fork's
+      module survives the sync, but the 3-way RootNavScreen gains the template's no-argument call: a
+      compile error against the fork's signature, and once that compiles, a second install of the same
+      route — a duplicate-destination crash at runtime.
+    detect: >-
+      grep -qE '^[[:space:]]*include\(":feature:onboarding"\)' "$SRC/settings.local.gradle.kts" 2>/dev/null
+      || grep -qE '^[[:space:]]*"[A-Za-z]+"\(project\(":feature:onboarding"\)\)' "$SRC/feature-deps.gradle.kts" 2>/dev/null
+      || grep -rlE --include='*.kt' '^[[:space:]]*onboardingDestination\(' "$SRC" 2>/dev/null
+      | grep -vE '/build/|/src/[A-Za-z]*Test/|/feature/onboarding/|/rootnav/RootNavScreen\.kt$' | grep -q .
+    migrate: >
+      Inside the sync branch, after the merge and BEFORE building: (1) move the fork's install into
+      RootNavScreen — replace the template's `onboardingDestination()` with the fork's call and callbacks
+      (`onboardingDestination(onOpenServerConfig = navController::navigateToServerConfig)`) and delete the
+      install from the fork's own nav file, so the route is installed exactly once; (2) drop
+      `include(":feature:onboarding")` from settings.local.gradle.kts and the `:feature:onboarding` edge
+      from feature-deps.gradle.kts — the template's settings.gradle.kts and cmp-navigation build now carry
+      both. Keep the fork's own feature/onboarding content where it diverges (it is fork-owned and the sync
+      leaves it alone); giving the fork's parameters the template's defaults
+      (`onOpenServerConfig: (() -> Unit)? = null`) keeps the shared call site compiling across future
+      syncs. Verify by building, then launching a fresh install and confirming first run opens onboarding
+      once and back does not return to a second copy.
+    blocking: false   # the include and edge cannot be dropped before the template's settings.gradle.kts lands; enforced inside the sync branch

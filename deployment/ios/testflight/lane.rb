@@ -33,7 +33,7 @@ platform :ios do
 
     pilot(
       api_key:                              Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      apple_id:                             ios_config[:apple_id] || "6744892773",
+      apple_id:                             ios_config[:apple_id],
       ipa:                                  ipa_path,
       beta_app_review_info:                 testflight_config[:beta_app_review_info].dup,
       beta_app_feedback_email:              testflight_config[:beta_app_feedback_email],
@@ -77,8 +77,8 @@ platform :ios do
     setup_ci_if_needed
     load_api_key(options)
 
-    # E6 — assemble the Kotlin `ComposeApp` XCFramework (SwiftPM/XCFramework; the
-    # CocoaPods-free replacement for the old pod-install step) so the `iosApp.xcodeproj`
+    # E6 — assemble the Kotlin `ComposeApp` XCFramework (SwiftPM/XCFramework) so the
+    # `iosApp.xcodeproj`
     # archive links the framework the app's Package.swift binary target + embed
     # Run-Script phase consume. Staging → Release slice.
     assemble_ios_xcframework(build_ty.to_s)
@@ -111,6 +111,25 @@ platform :ios do
       bundle_identifier:     ios_config[:app_identifier],
       profile_name:          "match AppStore #{ios_config[:app_identifier]}",
     )
+
+    # EVERY app-extension target needs its OWN profile (its bundle id is a distinct App ID).
+    # Discovered from the .xcodeproj — extension names are fork-specific, never hardcoded.
+    # Without this the archive fails late with
+    #   `"<Ext>" requires a provisioning profile with the <capability> feature`.
+    ios_extension_targets(
+      ios_config[:project_path], ios_config[:app_identifier], build_ty.to_s.capitalize
+    ).each do |ext|
+      UI.message("🔏 signing app-extension target #{ext[:name]} → #{ext[:bundle_id]}")
+      update_code_signing_settings(
+        use_automatic_signing: false,
+        path:                  ios_config[:project_path],
+        team_id:               ios_config[:team_id],
+        code_sign_identity:    "Apple Distribution",
+        targets:               [ext[:name]],
+        bundle_identifier:     ext[:bundle_id],
+        profile_name:          "match AppStore #{ext[:bundle_id]}",
+      )
+    end
 
     gradle_version = get_version_from_gradle(sanitize_for_appstore: true)
 
@@ -154,39 +173,44 @@ platform :ios do
     # this mirrors the macOS `desktop_testflight` lane, which uploads cleanly because
     # it sets zero app-level beta metadata. Only BUILD-level "What to Test"
     # (localized_build_info) is set — it's created together with the new build.
-    # Every TestFlight deploy now distributes to BOTH the internal (team) and external
-    # ({org}-mobile-apps) groups AND submits for Apple beta review, with export compliance
-    # answered so the build is immediately usable (never stuck "Missing Compliance"). Group
-    # NAMES are the org SoT — workspaces/{ws}/_org/company.yaml#org_identity.apple_testflight_
-    # {internal,testers}_group, folded into app-profile → resolved by TESTERS[:ios]. The
-    # sync_testflight_testers call above already ENSURED both groups exist (creating any missing
-    # one). Internal reaches every build automatically (has_access_to_all_builds); external needs
-    # this explicit distribution + review submission. External beta review REQUIRES a valid
-    # beta_app_review_info.contact_phone (org SoT deploy_contact.phone) — Apple rejects an empty one.
-    testers   = FastlaneConfig::IosConfig::TESTERS[:ios]
-    tf_groups = [testers[:internal_group], testers[:external_group]]
-                  .map { |g| g.to_s.strip }.reject(&:empty?).uniq
-    UI.important("👥 Distributing to TestFlight groups: #{tf_groups.join(', ')} — and submitting for beta review")
+    # Every TestFlight deploy reaches BOTH the internal (team) and external ({org}-mobile-apps)
+    # groups — but as TWO SEPARATE, resilient phases, NOT one merged pilot call.
+    #
+    # WHY SPLIT (the "internal-yes / external-no" defect this heals, user-flagged 2026-08-27):
+    # the old lane merged upload + external-distribute + submit_beta_review into ONE pilot call.
+    # Internal groups are has_access_to_all_builds, so they receive the binary the instant it
+    # finishes processing — the upload alone satisfies internal. External needs group assignment
+    # + Apple beta-review submission, which happens LATER in the same call. When that review step
+    # hiccups (a transient Spaceship 409/timeout, a not-yet-propagated BetaAppLocalization, an
+    # export-compliance race) it RAISES *after* the binary is already up: internal has the build,
+    # external assignment + review never land → exactly "added to internal, not external". So the
+    # binary upload and the external distribution are now DECOUPLED: a review hiccup can never cost
+    # the internal upload, and external is a distinct retryable phase (identical to the proven
+    # promoteToExternalBeta Stage-2 path, reused below — one code path, no duplication).
+    uploaded_build = latest_build_number + 1
 
+    # PHASE 1 — reliable INTERNAL upload. No external group, no beta-review in THIS call
+    # (skip_submission: true). Internal testers auto-receive via all-builds once processing ends.
     pilot(
       api_key:                           Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-      distribute_external:               true,
-      notify_external_testers:           true,
-      groups:                            tf_groups,
-      submit_beta_review:                true,
-      skip_submission:                   false,
-      skip_waiting_for_build_processing: false,   # MUST wait for processing to submit for review
+      distribute_external:               false,
+      skip_submission:                   true,   # external distribution + beta review are PHASE 2
+      skip_waiting_for_build_processing: false,  # wait so PHASE 2 can submit for review immediately
       wait_processing_interval:          testflight_config[:wait_processing_interval],
       wait_processing_timeout_duration:  testflight_config[:wait_processing_timeout_duration],
       expire_previous_builds:            testflight_config[:expire_previous_builds],
       uses_non_exempt_encryption:        testflight_config[:uses_non_exempt_encryption],
-      beta_app_review_info:              testflight_config[:beta_app_review_info]&.dup,
-      reject_build_waiting_for_review:   true,
       changelog:                         releaseNotes,
       localized_build_info:              localized_build_info,
     )
+    UI.success("✅ PHASE 1 — uploaded build #{uploaded_build} to TestFlight; internal testers auto-receive via all-builds access.")
 
-    UI.success("✅ Uploaded to TestFlight, distributed to internal + external (#{tf_groups.join(', ')}), and submitted for beta review!")
+    # PHASE 2 — ALWAYS distribute to EXTERNAL + submit Apple beta review, reusing the proven
+    # promoteToExternalBeta path (assign external group → submit_beta_review → export compliance).
+    # Guarantees every I1 reaches BOTH groups; a review hiccup here is isolated from PHASE 1.
+    promoteToExternalBeta(options.merge(build_number: uploaded_build.to_s, changelog: releaseNotes))
+
+    UI.success("✅ Uploaded to TestFlight and distributed to BOTH internal + external — external submitted for Apple beta review.")
   end
 
   desc "Stage 1 → Stage 2 promotion: distribute an already-uploaded TF build to external testers (no rebuild, no re-upload). Triggers Apple's beta review (~24h)."
@@ -217,6 +241,17 @@ platform :ios do
                       testflight_config[:external_groups] ||
                       ["External Beta"]
 
+    # Pin each group NAME to the external group's ID. pilot selects with
+    # `BetaGroup#matches_identifiers?` = `identifiers.include?(name) || identifiers.include?(id)` —
+    # NAME-ONLY matching with no internal/external awareness. A name shared by an internal AND an
+    # external group (supported by ASC, and a common org convention) therefore matches BOTH, and
+    # `add_beta_groups` fails the whole call on the internal one with Apple's
+    # `Cannot add internal group to a build.` An id selects exactly one group.
+    external_groups = external_groups.map do |n|
+      (app_for_groups ||= Spaceship::ConnectAPI::App.find(ios_config[:app_identifier]))
+        .get_beta_groups(filter: { name: n }).to_a.find { |g| !g.is_internal_group }&.id || n
+    end
+
     UI.important("📦 Promoting TF build #{build_number} → external testers (#{external_groups.join(', ')})")
 
     # pilot in distribute-only mode — Spaceship updates the build's group
@@ -224,6 +259,7 @@ platform :ios do
     pilot(
       api_key:                              Actions.lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
       app_identifier:                       ios_config[:app_identifier],
+      app_platform:                         "ios",   # distribute_only has no upload to infer platform from → pilot prompts interactively without this (crashes in non-interactive/CI)
       build_number:                         build_number,
       distribute_only:                      true,
       distribute_external:                  true,

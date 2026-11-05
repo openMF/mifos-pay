@@ -14,7 +14,7 @@ and `SharedApp` for the root UI. It is where per-platform app classes (`AndroidA
   `KoinModules.allModules`, then runs `WorkerKmpAuto.install()` (worker-kmp codegen shim —
   wires every `@WorkerKmpWorkers` declaration on every platform from this one commonMain call),
   `initSyncNotifier()` (KMPNotifier local-notification setup), and
-  `AppInitializers.runAll()` (the fork's registered startup hooks).
+  `ForkInitializers.runAll()` (the fork's registered startup hooks).
 - **`WorkerDeclarations.kt`** — template-owned (`owner: template`) `@WorkerKmpWorkers` site listing
   the base workers (`DataSyncWorker`, `NotificationWorker`).
 - **`ForkWorkerDeclarations.kt`** — the fork-owned (`owner: fork`) sibling seam; the KSP processor
@@ -29,8 +29,8 @@ and `SharedApp` for the root UI. It is where per-platform app classes (`AndroidA
 - **Background workers** — annotate `forkWorkerDeclarations()` in `ForkWorkerDeclarations.kt` with
   `@WorkerKmpWorkers(workers = [MyWorker::class])`.
 - **Startup hooks, features, tabs, dashboard** — these are NOT wired here; they go through
-  `cmp-navigation`'s registries (`AppInitializers`, `FeatureRegistry`, `BackboneRegistry`,
-  `TabRegistry`), which `initKoin()`/`ComposeApp` read from.
+  `cmp-navigation`'s registries (`ForkInitializers`, `ForkFeatureRegistry`, `ForkBackboneRegistry`,
+  `ForkTabRegistry`), which `initKoin()`/`ComposeApp` read from.
 
 ## What to leave to sync
 

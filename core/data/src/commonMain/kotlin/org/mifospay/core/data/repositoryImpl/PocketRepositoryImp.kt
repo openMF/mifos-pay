@@ -23,7 +23,8 @@ import kpt.core.base.store.screen.asScreenStream
 import kpt.core.database.wallet.pocket.PocketDao
 import kpt.core.database.wallet.pocket.toDomain
 import kpt.core.database.wallet.pocket.toPendingLinkEntity
-import kpt.core.store.AppStoreRegistry
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.linkableaccount.LinkableAccountKey
 import kpt.core.store.wallet.pocket.PocketKey
 import org.mifospay.core.data.repository.PocketRepository
@@ -35,7 +36,7 @@ import org.mifospay.core.model.pocket.PocketAccount
 import org.mifospay.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
-import kpt.core.data.infra.NetworkMonitor as StoreNetworkMonitor
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 class PocketRepositoryImp(
     private val dataManager: SelfServiceApiManager,
@@ -68,11 +69,11 @@ class PocketRepositoryImp(
             key = PocketKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_pockets_detailed-$clientId",
+            cacheKey = AppCacheKeys.Pocket.detailed(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.NETWORK_ONLY,
-            ttl = AppStoreRegistry.Ttl.POCKET,
+            ttl = WalletStoreTtl.POCKET,
         )
     }
 
@@ -95,11 +96,11 @@ class PocketRepositoryImp(
             key = PocketKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_pockets_linked-$clientId",
+            cacheKey = AppCacheKeys.Pocket.linked(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.POCKET,
+            ttl = WalletStoreTtl.POCKET,
         )
     }
 
@@ -234,11 +235,11 @@ class PocketRepositoryImp(
             key = LinkableAccountKey(clientId),
             networkMonitor = netMon,
             fetchedAtRepository = fetchedAtRepo,
-            cacheKey = "wallet_linkable_accounts-$clientId",
+            cacheKey = AppCacheKeys.LinkableAccounts.of(clientId),
             scope = scope,
             isEmpty = { it.isEmpty() },
             fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
-            ttl = AppStoreRegistry.Ttl.LINKABLE_ACCOUNTS,
+            ttl = WalletStoreTtl.LINKABLE_ACCOUNTS,
         )
     }
 }

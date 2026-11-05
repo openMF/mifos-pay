@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.util
 
@@ -18,10 +18,10 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.navigation.NavBackStackEntry
-import kotlin.jvm.JvmSuppressWildcards
 import kpt.core.base.designsystem.theme.Motion
 import kpt.core.base.ui.motion.KptFadeThrough
 import kpt.core.base.ui.motion.KptSharedAxis
+import kotlin.jvm.JvmSuppressWildcards
 
 /**
  * Function type for providing nullable enter transitions in navigation.
@@ -248,12 +248,25 @@ object TransitionProviders {
      * dependency direction) and lifting the providers from `val` to `fun(motion: Motion)`.
      */
     object Kpt {
+        /** Enter transitions for a destination arriving on screen. */
         object Enter {
             /** Hardcoded aliases — kept for callers that don't have a `Motion` in scope. */
             val sharedAxisForward: EnterTransitionProvider = TransitionProviders.Enter.pushLeft
+
+            /** Back shared-axis — the mirror of the forward move, for returning. */
             val sharedAxisBack: EnterTransitionProvider = TransitionProviders.Enter.pushRight
+
+            /** Fade-through — a lateral move between peers with no spatial relationship. */
             val fadeThrough: EnterTransitionProvider = TransitionProviders.Enter.fadeIn
+
+            /** Slide-up — a modal-style arrival. */
             val slideUp: EnterTransitionProvider = TransitionProviders.Enter.slideUp
+
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving.
+             */
             val stay: EnterTransitionProvider = TransitionProviders.Enter.stay
 
             /**
@@ -265,12 +278,24 @@ object TransitionProviders {
             fun sharedAxisForward(motion: Motion): EnterTransitionProvider = {
                 KptSharedAxis.enterForward(motion).takeIf { isSameGraphNavigation }
             }
+
+            /**
+             * Back shared-axis — the mirror of the forward move, for returning. Theme-aware: takes its duration and
+             * easing from [Motion].
+             */
             fun sharedAxisBack(motion: Motion): EnterTransitionProvider = {
                 KptSharedAxis.enterBack(motion).takeIf { isSameGraphNavigation }
             }
+
+            /**
+             * Fade-through — a lateral move between peers with no spatial relationship. Theme-aware: takes its
+             * duration and easing from [Motion].
+             */
             fun fadeThrough(motion: Motion): EnterTransitionProvider = {
                 KptFadeThrough.enter(motion).takeIf { isSameGraphNavigation }
             }
+
+            /** Slide-up — a modal-style arrival. Theme-aware: takes its duration and easing from [Motion]. */
             fun slideUp(motion: Motion): EnterTransitionProvider = {
                 slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Up,
@@ -280,6 +305,11 @@ object TransitionProviders {
             // "stay" holds 0.99 alpha so Compose doesn't optimize it away — duration must
             // match the longest concurrent transition so the held side doesn't blink in/out
             // while the other side animates.
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving. Theme-aware: takes its duration and easing from [Motion].
+             */
             fun stay(motion: Motion): EnterTransitionProvider = {
                 fadeIn(
                     animationSpec = tween(motion.durationLong1),
@@ -288,28 +318,66 @@ object TransitionProviders {
             }
         }
 
+        /** Exit transitions for a destination leaving the screen. */
         object Exit {
+            /** Forward shared-axis — the motion for going DEEPER into a flow. */
             val sharedAxisForward: ExitTransitionProvider = TransitionProviders.Exit.pushLeft
+
+            /** Back shared-axis — the mirror of the forward move, for returning. */
             val sharedAxisBack: ExitTransitionProvider = TransitionProviders.Exit.pushRight
+
+            /** Fade-through — a lateral move between peers with no spatial relationship. */
             val fadeThrough: ExitTransitionProvider = TransitionProviders.Exit.fadeOut
+
+            /** Slide-down — paired with the slide-up enter. */
             val slideDown: ExitTransitionProvider = TransitionProviders.Exit.slideDown
+
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving.
+             */
             val stay: ExitTransitionProvider = TransitionProviders.Exit.stay
 
+            /**
+             * Forward shared-axis — the motion for going DEEPER into a flow. Theme-aware: takes its duration and
+             * easing from [Motion].
+             */
             fun sharedAxisForward(motion: Motion): ExitTransitionProvider = {
                 KptSharedAxis.exitForward(motion).takeIf { isSameGraphNavigation }
             }
+
+            /**
+             * Back shared-axis — the mirror of the forward move, for returning. Theme-aware: takes its duration and
+             * easing from [Motion].
+             */
             fun sharedAxisBack(motion: Motion): ExitTransitionProvider = {
                 KptSharedAxis.exitBack(motion).takeIf { isSameGraphNavigation }
             }
+
+            /**
+             * Fade-through — a lateral move between peers with no spatial relationship. Theme-aware: takes its
+             * duration and easing from [Motion].
+             */
             fun fadeThrough(motion: Motion): ExitTransitionProvider = {
                 KptFadeThrough.exit(motion).takeIf { isSameGraphNavigation }
             }
+
+            /**
+             * Slide-down — paired with the slide-up enter. Theme-aware: takes its duration and easing from [Motion].
+             */
             fun slideDown(motion: Motion): ExitTransitionProvider = {
                 slideOutOfContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Down,
                     animationSpec = tween(motion.durationLong1, easing = motion.easingEmphasized),
                 ).takeIf { isSameGraphNavigation }
             }
+
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving. Theme-aware: takes its duration and easing from [Motion].
+             */
             fun stay(motion: Motion): ExitTransitionProvider = {
                 fadeOut(
                     animationSpec = tween(motion.durationLong1),
@@ -319,8 +387,6 @@ object TransitionProviders {
         }
     }
 }
-
-
 
 /**
  * Contains standard "transition providers" that may be used to specify the [EnterTransition] and
@@ -500,13 +566,28 @@ object RootTransitionProviders {
      * See [TransitionProviders.Kpt] for the wider rationale + the theme-token follow-up note.
      */
     object Kpt {
+        /** Enter transitions for a ROOT-level destination — non-null, so the graph always has one. */
         object Enter {
             /** Hardcoded aliases — kept for callers that don't have a `Motion` in scope. */
             val sharedAxisForward: NonNullEnterTransitionProvider = RootTransitionProviders.Enter.pushLeft
+
+            /** Back shared-axis — the mirror of the forward move, for returning. */
             val sharedAxisBack: NonNullEnterTransitionProvider = RootTransitionProviders.Enter.pushRight
+
+            /** Fade-through — a lateral move between peers with no spatial relationship. */
             val fadeThrough: NonNullEnterTransitionProvider = RootTransitionProviders.Enter.fadeIn
+
+            /** Slide-up — a modal-style arrival. */
             val slideUp: NonNullEnterTransitionProvider = RootTransitionProviders.Enter.slideUp
+
+            /** No transition at all — an instant cut. */
             val none: NonNullEnterTransitionProvider = RootTransitionProviders.Enter.none
+
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving.
+             */
             val stay: NonNullEnterTransitionProvider = RootTransitionProviders.Enter.stay
 
             /**
@@ -517,18 +598,36 @@ object RootTransitionProviders {
             fun sharedAxisForward(motion: Motion): NonNullEnterTransitionProvider = {
                 KptSharedAxis.enterForward(motion)
             }
+
+            /**
+             * Back shared-axis — the mirror of the forward move, for returning. Theme-aware: takes its duration and
+             * easing from [Motion].
+             */
             fun sharedAxisBack(motion: Motion): NonNullEnterTransitionProvider = {
                 KptSharedAxis.enterBack(motion)
             }
+
+            /**
+             * Fade-through — a lateral move between peers with no spatial relationship. Theme-aware: takes its
+             * duration and easing from [Motion].
+             */
             fun fadeThrough(motion: Motion): NonNullEnterTransitionProvider = {
                 KptFadeThrough.enter(motion)
             }
+
+            /** Slide-up — a modal-style arrival. Theme-aware: takes its duration and easing from [Motion]. */
             fun slideUp(motion: Motion): NonNullEnterTransitionProvider = {
                 slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Up,
                     animationSpec = tween(motion.durationLong1, easing = motion.easingEmphasized),
                 )
             }
+
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving. Theme-aware: takes its duration and easing from [Motion].
+             */
             fun stay(motion: Motion): NonNullEnterTransitionProvider = {
                 fadeIn(
                     animationSpec = tween(motion.durationLong1),
@@ -537,29 +636,69 @@ object RootTransitionProviders {
             }
         }
 
+        /** Exit transitions for a ROOT-level destination — non-null, so the graph always has one. */
         object Exit {
+            /** Forward shared-axis — the motion for going DEEPER into a flow. */
             val sharedAxisForward: NonNullExitTransitionProvider = RootTransitionProviders.Exit.pushLeft
+
+            /** Back shared-axis — the mirror of the forward move, for returning. */
             val sharedAxisBack: NonNullExitTransitionProvider = RootTransitionProviders.Exit.pushRight
+
+            /** Fade-through — a lateral move between peers with no spatial relationship. */
             val fadeThrough: NonNullExitTransitionProvider = RootTransitionProviders.Exit.fadeOut
+
+            /** Slide-down — paired with the slide-up enter. */
             val slideDown: NonNullExitTransitionProvider = RootTransitionProviders.Exit.slideDown
+
+            /** No transition at all — an instant cut. */
             val none: NonNullExitTransitionProvider = RootTransitionProviders.Exit.none
+
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving.
+             */
             val stay: NonNullExitTransitionProvider = RootTransitionProviders.Exit.stay
 
+            /**
+             * Forward shared-axis — the motion for going DEEPER into a flow. Theme-aware: takes its duration and
+             * easing from [Motion].
+             */
             fun sharedAxisForward(motion: Motion): NonNullExitTransitionProvider = {
                 KptSharedAxis.exitForward(motion)
             }
+
+            /**
+             * Back shared-axis — the mirror of the forward move, for returning. Theme-aware: takes its duration and
+             * easing from [Motion].
+             */
             fun sharedAxisBack(motion: Motion): NonNullExitTransitionProvider = {
                 KptSharedAxis.exitBack(motion)
             }
+
+            /**
+             * Fade-through — a lateral move between peers with no spatial relationship. Theme-aware: takes its
+             * duration and easing from [Motion].
+             */
             fun fadeThrough(motion: Motion): NonNullExitTransitionProvider = {
                 KptFadeThrough.exit(motion)
             }
+
+            /**
+             * Slide-down — paired with the slide-up enter. Theme-aware: takes its duration and easing from [Motion].
+             */
             fun slideDown(motion: Motion): NonNullExitTransitionProvider = {
                 slideOutOfContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Down,
                     animationSpec = tween(motion.durationLong1, easing = motion.easingEmphasized),
                 )
             }
+
+            /**
+             * Hold this side still while the other animates. Holds 0.99 alpha so Compose cannot optimise the
+             * transition away, and runs for the LONGEST concurrent duration so the held side does not blink while its
+             * counterpart is still moving. Theme-aware: takes its duration and easing from [Motion].
+             */
             fun stay(motion: Motion): NonNullExitTransitionProvider = {
                 fadeOut(
                     animationSpec = tween(motion.durationLong1),

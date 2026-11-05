@@ -11,6 +11,7 @@ package kpt.core.database.wallet.linkableaccount
 
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single account that a client CAN link into a pocket — the
@@ -64,6 +65,7 @@ import androidx.room3.Index
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's
  *   writer for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_linkable_accounts",
     primaryKeys = ["clientId", "accountType", "accountId"],
