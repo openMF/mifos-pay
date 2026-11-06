@@ -9,15 +9,17 @@ Screens: `AddEditBeneficiaryScreen`, `BeneficiaryListScreen`
 
 ViewModels: `AddEditBeneficiaryViewModel`, `BeneficiaryListViewModel`, `DeleteBeneficiaryViewModel`
 
+**Consumes:** `core/store/repository`
+
 <!-- tree-scaffold:end -->
 ## Significance
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/beneficiary sha=ec775c57f6dcdb71a031dfa576d51260503838ea -->
+<!-- api-docs:begin module=feature/beneficiary sha=06c9fd31964f56dbaa4d9dbf7401d638daf27bcc -->
 ## API reference
 
-_Generated from `feature/beneficiary` at tree `ec775c57f6dc` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/beneficiary` at tree `06c9fd31964f` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -25,14 +27,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/addupdatebeneficiary/BeneficiaryAddEditType.kt`
+### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/BeneficiaryAddEditType.kt`
 
 ```kotlin
 sealed class BeneficiaryAddEditType
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:174</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:173</code></summary>
 
 ```kotlin
 
@@ -46,14 +48,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/addupdatebeneficiary/BeneficiaryNavigation.kt`
+### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/BeneficiaryNavigation.kt`
 
 ```kotlin
 data class BeneficiaryAddEditArgs(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:66</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:65</code></summary>
 
 ```kotlin
 ) : BaseViewModel<AEBState, AEBEvent, AEBAction>(
@@ -77,14 +79,14 @@ fun NavController.navigateToBeneficiaryAddEdit(
 ```
 _No KDoc at source._
 
-### `feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt`
+### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt`
 
 ```kotlin
 fun DeleteBeneficiaryBottomSheet(
 ```
 Bottom sheet composable for delete beneficiary flow.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/list/BeneficiaryListScreen.kt:106</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:105</code></summary>
 
 ```kotlin
 
@@ -98,14 +100,14 @@ Bottom sheet composable for delete beneficiary flow.
 
 </details>
 
-### `feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryViewModel.kt`
+### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryViewModel.kt`
 
 ```kotlin
 class DeleteBeneficiaryViewModel(
 ```
 ViewModel for handling beneficiary deletion. This is a standalone ViewModel that manages the delete flow independently from the beneficiary list, preventing unwanted list refreshes during the delete confirmation flow.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/di/BeneficiaryModule.kt:21</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt:20</code></summary>
 
 ```kotlin
     viewModelOf(::AddEditBeneficiaryViewModel)
@@ -121,7 +123,7 @@ data class DeleteBeneficiaryState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt:56</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt:55</code></summary>
 
 ```kotlin
 @Composable
@@ -145,14 +147,14 @@ sealed interface DeleteBeneficiaryAction
 ```
 _No KDoc at source._
 
-### `feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/di/BeneficiaryModule.kt`
+### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt`
 
 ```kotlin
 val BeneficiaryModule = module
 ```
 _No KDoc at source._
 
-### `feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/list/BeneficiaryListScreen.kt`
+### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt`
 
 ```kotlin
 fun BeneficiaryListScreen(
@@ -174,14 +176,14 @@ fun PreviewBeneficiaryListScreen()
 ```
 _No KDoc at source._
 
-### `feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/list/BeneficiaryListViewModel.kt`
+### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListViewModel.kt`
 
 ```kotlin
 class BeneficiaryListViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/di/BeneficiaryModule.kt:20</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt:19</code></summary>
 
 ```kotlin
 val BeneficiaryModule = module {
@@ -203,7 +205,7 @@ sealed interface BeneficiaryListEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/list/BeneficiaryListScreen.kt:95</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:94</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -222,7 +224,7 @@ sealed interface BeneficiaryListAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/list/BeneficiaryListScreen.kt:142</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:141</code></summary>
 
 ```kotlin
     state: ScreenState<List<Beneficiary>>,

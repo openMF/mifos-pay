@@ -76,7 +76,7 @@ val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager> =
 ```
 Reads and writes the system clipboard, plus history, change observation and URL detection. Typed as the toolkit's `ClipboardManager` rather than a template wrapper — see the note in `platformModule`.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantScreen.kt:167</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:166</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -107,7 +107,7 @@ expect object PlatformBuildConfig
 ```
 Provides build configuration information across all platforms. Named PlatformBuildConfig to avoid conflicts with Android's generated BuildConfig.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginScreen.kt:229</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:228</code></summary>
 
 ```kotlin
 
@@ -149,7 +149,7 @@ expect val LocalContext: ProvidableCompositionLocal<AppContext>
 ```
 A composition local that provides the current `AppContext` to the composition tree. This allows composable functions to access the platform-specific context without explicit parameters.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/org/mifospay/feature/mpay/qr/scan/CameraPermissionState.android.kt:32</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/CameraPermissionState.android.kt:32</code></summary>
 
 ```kotlin
     val accPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
@@ -294,7 +294,7 @@ enum class MimeType(val value: String, vararg val extensions: String)
 ```
 Represents standardized MIME (Multipurpose Internet Mail Extensions) types for various file formats.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrViewModel.kt:307</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:307</code></summary>
 
 ```kotlin
                     fileName = "qr_code.png",

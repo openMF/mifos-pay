@@ -9,6 +9,8 @@ Screens: `AddEditCardScreen`, `CardDetailScreen`, `CardsScreen`
 
 ViewModels: `AddEditCardViewModel`, `CardDetailViewModel`, `CardsScreenViewModel`
 
+**Consumes:** `core/store/repository`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `AddEditCardViewModel`, `CardDetailViewModel`, `CardsScreenViewModel
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/savedcards sha=22c3a33d6857735e25735d30566b860cce9b5769 -->
+<!-- api-docs:begin module=feature/savedcards sha=2106b7782965aa6b20155fdb0f74655de16e6008 -->
 ## API reference
 
-_Generated from `feature/savedcards` at tree `22c3a33d6857` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/savedcards` at tree `2106b7782965` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,21 +33,21 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreen.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt`
 
 ```kotlin
 fun CardsScreen(
 ```
 Known Issue, On deleting card, state isn't updating automatically whereas on adding or updating, card state is updating properly, This issue will be fixed soon.
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreenViewModel.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreenViewModel.kt`
 
 ```kotlin
 class CardsScreenViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreen.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt:77</code></summary>
 
 ```kotlin
     navigateToAddEdit: (CardAddEditType) -> Unit,
@@ -63,7 +65,7 @@ data class CardState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreen.kt:120</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt:119</code></summary>
 
 ```kotlin
 @Composable
@@ -82,7 +84,7 @@ sealed interface CardEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreen.kt:88</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt:87</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -101,7 +103,7 @@ sealed interface CardAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreen.kt:103</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt:102</code></summary>
 
 ```kotlin
         dialogState = state.dialogState,
@@ -115,14 +117,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/components/CardConfig.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/components/CardConfig.kt`
 
 ```kotlin
 object CardConfig
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/components/CreditCard.kt:119</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/components/CreditCard.kt:118</code></summary>
 
 ```kotlin
                 androidx.compose.animation.AnimatedVisibility(
@@ -144,7 +146,7 @@ _No KDoc at source._
 - `val spaceBetweenDots = 8.dp`
 - `val spaceBetweenGroups = 16.dp`
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/components/CardNumberFilter.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/components/CardNumberFilter.kt`
 
 ```kotlin
 class CreditCardVisualTransformation(
@@ -156,7 +158,7 @@ fun getCardNumberTransformation(cardNumber: String, isMasked: Boolean): VisualTr
 ```
 _No KDoc at source._
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/components/ColorUtils.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/components/ColorUtils.kt`
 
 ```kotlin
 fun Color.toHsl(): FloatArray
@@ -173,14 +175,14 @@ fun Color.setSaturation(newSaturation: Float): Color
 ```
 _No KDoc at source._
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/createOrUpdate/AddEditCardNavigation.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/createOrUpdate/AddEditCardNavigation.kt`
 
 ```kotlin
 data class CardAddEditArgs(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/createOrUpdate/AddEditCardViewModel.kt:49</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/createOrUpdate/AddEditCardViewModel.kt:48</code></summary>
 
 ```kotlin
     initialState = savedStateHandle.getSerialized(ADD_EDIT_CARD_STATE_KEY) ?: run {
@@ -204,7 +206,7 @@ fun NavController.navigateToCardAddEdit(
 ```
 _No KDoc at source._
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/createOrUpdate/AddEditCardScreen.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/createOrUpdate/AddEditCardScreen.kt`
 
 ```kotlin
 fun CreditCardColorSelector(
@@ -216,14 +218,14 @@ fun ColorSelector(
 ```
 _No KDoc at source._
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/createOrUpdate/CardAddEditType.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/createOrUpdate/CardAddEditType.kt`
 
 ```kotlin
 sealed class CardAddEditType
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreen.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt:75</code></summary>
 
 ```kotlin
 fun CardsScreen(
@@ -237,7 +239,7 @@ fun CardsScreen(
 
 </details>
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/details/CardDetailNavigation.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/details/CardDetailNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.cardDetailRoute(
@@ -249,14 +251,14 @@ fun NavController.navigateToCardDetails(cardId: Long)
 ```
 _No KDoc at source._
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/di/SavedCardsModule.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/di/SavedCardsModule.kt`
 
 ```kotlin
 val SavedCardsModule = module
 ```
 _No KDoc at source._
 
-### `feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/utils/CreditCardUtils.kt`
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/utils/CreditCardUtils.kt`
 
 ```kotlin
 object CreditCardUtils
@@ -284,7 +286,7 @@ enum class CardMaskStyle
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/components/CreditCard.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/components/CreditCard.kt:75</code></summary>
 
 ```kotlin
             AnimatedCardNumberInput(
@@ -303,7 +305,7 @@ enum class CardType(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/org/mifospay/feature/savedcards/CardsScreen.kt:266</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt:265</code></summary>
 
 ```kotlin
             },

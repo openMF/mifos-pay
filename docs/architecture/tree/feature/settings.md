@@ -9,7 +9,7 @@ Screens: `LanguageScreen`, `NotificationScreen`, `SettingsScreen`, `SyncAndDraft
 
 ViewModels: `SettingsViewModel`, `SyncAndDraftsViewModel`
 
-**Consumes:** `core/store/user`
+**Consumes:** `core/store/repository`, `core/store/user`
 
 ### Docs in the tree
 
@@ -31,10 +31,10 @@ The **sync-and-drafts** screen makes the offline write queue visible, which is t
 `UserEditableSettings` is deliberately narrower than `UserData`, so a settings screen cannot write a
 session or lock field it has no business touching.
 
-<!-- api-docs:begin module=feature/settings sha=aa9e5e119ac03071fc27fd4328c181d7f5292a28 -->
+<!-- api-docs:begin module=feature/settings sha=99e23ec474d28a5f24d4b2456b8b3b64d5422eba -->
 ## API reference
 
-_Generated from `feature/settings` at tree `aa9e5e119ac0` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/settings` at tree `99e23ec474d2` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -56,7 +56,7 @@ fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinVie
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/SettingsScreen.kt:345</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:345</code></summary>
 
 ```kotlin
 
@@ -74,7 +74,7 @@ fun LanguageDialog(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/SettingsScreen.kt:345</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:345</code></summary>
 
 ```kotlin
 
@@ -92,7 +92,7 @@ fun LanguageChooserRow(text: String, selected: Boolean, onClick: () -> Unit, mod
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/language/LanguageScreen.kt:106</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/language/LanguageScreen.kt:109</code></summary>
 
 ```kotlin
     Column(Modifier.selectableGroup()) {
@@ -161,13 +161,13 @@ val SettingsModule = module
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/di/SettingsModule.kt:16</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/di/SettingsModule.kt:22</code></summary>
 
 ```kotlin
-import org.mifospay.feature.settings.SettingsViewModel
+val MifosSettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
 
 val SettingsModule = module {
-    viewModelOf(::SettingsViewModel)
+    viewModelOf(::SettingsViewModel) { qualifier = MifosSettingsViewModelQualifier }
 }
 ```
 
@@ -246,7 +246,7 @@ sealed interface SettingsAction
 ```
 Preference-mutation intents accepted by `SettingsViewModel`.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/SettingsScreen.kt:115</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:115</code></summary>
 
 ```kotlin
         disableBiometricsResult?.let { result ->
@@ -366,7 +366,46 @@ Append-only test-tag registry for the settings feature. Consumed by Compose UI t
 - `const val SCREEN: String = "sync_and_drafts_screen"` — Root scaffold — always rendered regardless of content state.
 - `const val PRUNE: String = "sync_and_drafts_prune"` — The manual "Prune expired" button (rendered only when there is content).
 
-### `feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/SettingsViewModel.kt`
+### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/di/SettingsModule.kt`
+
+```kotlin
+val MifosSettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
+```
+Koin qualifier for this feature's `SettingsViewModel`. On JS / Wasm Koin keys a binding by the type's simple name, and the template's `kpt.feature.settings.SettingsViewModel` is bound too.
+
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:102</code></summary>
+
+```kotlin
+    entryStateHandle: SavedStateHandle,
+    modifier: Modifier = Modifier,
+    viewmodel: SettingsViewModel = koinViewModel(qualifier = MifosSettingsViewModelQualifier),
+) {
+    val state by viewmodel.stateFlow.collectAsStateWithLifecycle()
+    val authProvider = platformAuthenticationProvider.current
+    val isRegistered by authProvider.isRegistered.collectAsStateWithLifecycle()
+```
+
+</details>
+
+```kotlin
+val SettingsModule = module
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsModule.kt:15</code></summary>
+
+```kotlin
+import org.koin.dsl.module
+
+val SettingsModule = module {
+    viewModelOf(::SettingsViewModel)
+    viewModelOf(::SyncAndDraftsViewModel)
+}
+```
+
+</details>
+
+### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsViewModel.kt`
 
 ```kotlin
 class SettingsViewModel(
@@ -392,7 +431,7 @@ data class SettingsState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/language/LanguageScreen.kt:60</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/language/LanguageScreen.kt:63</code></summary>
 
 ```kotlin
 @Composable
@@ -411,7 +450,7 @@ sealed interface DialogState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:133</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:132</code></summary>
 
 ```kotlin
                     is SubmitState.Submitting -> {
@@ -430,7 +469,7 @@ sealed interface SettingsEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/SettingsScreen.kt:126</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:126</code></summary>
 
 ```kotlin
     EventsEffect(viewmodel) { event ->
@@ -462,30 +501,10 @@ _No KDoc at source._
 
 </details>
 
-### `feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/di/SettingsModule.kt`
+### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/language/LanguageScreen.kt`
 
 ```kotlin
-val SettingsModule = module
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsModule.kt:15</code></summary>
-
-```kotlin
-import org.koin.dsl.module
-
-val SettingsModule = module {
-    viewModelOf(::SettingsViewModel)
-    viewModelOf(::SyncAndDraftsViewModel)
-}
-```
-
-</details>
-
-### `feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/language/LanguageScreen.kt`
-
-```kotlin
-fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel())
+fun LanguageDialog(
 ```
 _No KDoc at source._
 
@@ -527,7 +546,7 @@ _No KDoc at source._
 
 </details>
 
-### `feature/settings/src/commonMain/kotlin/org/mifospay/feature/settings/navigation/SettingsNavigation.kt`
+### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/navigation/SettingsNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToSettings(navOptions: NavOptions? = null)
@@ -541,5 +560,5 @@ Registers the settings destination. Hoists the destination's own `androidx.lifec
 
 ---
 
-_18 type(s), 25 function(s)/property(ies); 15 carry KDoc at source; 0 authored example(s); 20 live call site(s)._
+_18 type(s), 26 function(s)/property(ies); 16 carry KDoc at source; 0 authored example(s); 21 live call site(s)._
 <!-- api-docs:end -->

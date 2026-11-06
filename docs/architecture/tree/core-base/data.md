@@ -120,7 +120,7 @@ typealias NetworkMonitor = io.github.mobilebytelabs.kmptoolkit.networkmonitor.Ne
 ```
 Backward-compatible typealias — existing consumers keep their import. Delegates to cmp-network-monitor's full-featured NetworkMonitor interface.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/org/mifospay/core/data/di/AndroidPlatformDependentDataModule.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:25</code></summary>
 
 ```kotlin
     private val scope: CoroutineScope,
@@ -241,12 +241,14 @@ interface TimeZoneMonitor
 ```
 Utility for reporting current timezone the device has set. It always emits at least once with default setting and then for each TZ change.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/PlatformDependentDataModule.android.kt:27</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:29</code></summary>
 
 ```kotlin
-    includes(CommonModule)
+    }
 
-    singleOf(::TimeZoneMonitorImpl) bind TimeZoneMonitor::class
+    override val timeZoneMonitor: TimeZoneMonitor by lazy {
+        TimeZoneBroadcastMonitor(context, scope, dispatcher)
+    }
 }
 ```
 

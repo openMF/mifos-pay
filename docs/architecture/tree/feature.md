@@ -1,7 +1,7 @@
 # `feature/`
 
 > **Kind:** Kotlin Multiplatform module group  
-> **Measured:** 764 tracked files — 417× `.kt`, 239× `.xml`, 29× `.kts`, 25× `.md`, 24× `.png`
+> **Measured:** 765 tracked files — 417× `.kt`, 239× `.xml`, 29× `.kts`, 25× `.md`, 24× `.png`
 
 ## Shape
 
@@ -36,6 +36,7 @@
 | `feature/receipt/` | 11 |
 | `feature/editpassword/` | 10 |
 | `feature/finance/` | 6 |
+| (files at the root) | 1 |
 
 ## Modules
 

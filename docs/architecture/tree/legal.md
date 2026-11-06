@@ -1,12 +1,13 @@
 # `legal/`
 
 > **Kind:** Generated legal documents  
-> **Measured:** 4 tracked files — 2× `.sh`, 2× `.md`
+> **Measured:** 6 tracked files — 4× `.md`, 2× `.sh`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
+| `legal/output/` | 2 |
 | `legal/_shared/` | 1 |
 | (files at the root) | 1 |
 | `legal/privacy-policy/` | 1 |
@@ -18,6 +19,8 @@ _Authored beside the code, where the module's own consumers read them._
 
 | Path | |
 |---|---|
+| `legal/output/privacy-policy.md` | Privacy Policy — Mifos Pay |
+| `legal/output/terms.md` | Terms of Service — Mifos Pay |
 | `legal/privacy-policy/template.md` | Privacy Policy — ${APP_NAME} |
 | `legal/terms/template.md` | Terms of Service — ${APP_NAME} |
 

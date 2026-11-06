@@ -9,9 +9,9 @@
  */
 package kpt.core.network
 
-import kpt.core.network.services.ClientService
-import kpt.core.network.services.PocketService
-import kpt.core.network.services.ShareAccountService
+import kpt.core.network.main.services.ClientService
+import kpt.core.network.main.services.PocketService
+import kpt.core.network.main.services.ShareAccountService
 interface PocketDataManager {
     val clientsApi: ClientService
     val pocketApi: PocketService

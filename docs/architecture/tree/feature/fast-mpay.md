@@ -9,15 +9,17 @@ Screens: `FastMpayScreen`
 
 ViewModels: `FastMpayViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 <!-- tree-scaffold:end -->
 ## Significance
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/fast-mpay sha=266d6eb365ef8d4671ea79b0f05e642a9f9c6365 -->
+<!-- api-docs:begin module=feature/fast-mpay sha=1e1b204bfed7c5553920e1529e2de2ef46741898 -->
 ## API reference
 
-_Generated from `feature/fast-mpay` at tree `266d6eb365ef` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/fast-mpay` at tree `1e1b204bfed7` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -25,14 +27,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayProcessor.kt`
+### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayProcessor.kt`
 
 ```kotlin
 class FastMpayProcessor(
 ```
 Central processor for QR code data. Receives `QrCodeData` and determines the appropriate navigation target based on `QrCodeData.type`.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayViewModel.kt:36</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayViewModel.kt:36</code></summary>
 
 ```kotlin
 class FastMpayViewModel(
@@ -45,14 +47,14 @@ class FastMpayViewModel(
 
 </details>
 
-### `feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayScreen.kt`
+### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayScreen.kt`
 
 ```kotlin
 fun FastMpayScreen(
 ```
 Fast MPay processing screen. This screen acts as a routing hub - it receives encoded QR data via navigation, decodes and processes it using `FastMpayProcessor`, and immediately navigates to the appropriate destination based on the QR type.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/navigation/FastMpayNavigation.kt:77</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/navigation/FastMpayNavigation.kt:76</code></summary>
 
 ```kotlin
         ),
@@ -66,14 +68,14 @@ Fast MPay processing screen. This screen acts as a routing hub - it receives enc
 
 </details>
 
-### `feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayViewModel.kt`
+### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayViewModel.kt`
 
 ```kotlin
 class FastMpayViewModel(
 ```
 ViewModel for fast MPay QR code processing. Receives encoded QR data from navigation, decodes it, processes it using `FastMpayProcessor`, and emits the navigation result.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayScreen.kt:71</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayScreen.kt:70</code></summary>
 
 ```kotlin
     onError: (String) -> Unit,
@@ -101,21 +103,21 @@ sealed interface FastMpayAction
 ```
 _No KDoc at source._
 
-### `feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/di/FastMpayModule.kt`
+### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/di/FastMpayModule.kt`
 
 ```kotlin
 val FastMpayModule = module
 ```
 _No KDoc at source._
 
-### `feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/model/QrProcessResult.kt`
+### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/model/QrProcessResult.kt`
 
 ```kotlin
 sealed interface QrProcessResult
 ```
 Sealed interface representing the result of processing a QR code. Used by `FastMpayProcessor` to determine navigation target based on `QrCodeData.type`.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayProcessor.kt:82</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayProcessor.kt:81</code></summary>
 
 ```kotlin
      * @return [QrProcessResult] indicating where to navigate.
@@ -129,7 +131,7 @@ Sealed interface representing the result of processing a QR code. Used by `FastM
 
 </details>
 
-### `feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/navigation/FastMpayNavigation.kt`
+### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/navigation/FastMpayNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToFastMpay(

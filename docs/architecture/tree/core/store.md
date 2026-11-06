@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_STORE.md`
-> **Measured:** 42 Kotlin files, 2 test files
+> **Measured:** 40 Kotlin files, 2 test files
 
 ## Codegen contracts owned here
 
@@ -23,30 +23,11 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/store sha=f0deddfad1a7ae162cd6dfc2f4b02371bfe5ebbc -->
+<!-- api-docs:begin module=core/store sha=b5b774385efc0175d81ab8db2d12c5b7402aafec -->
 ## API reference
 
-_Generated from `core/store` at tree `f0deddfad1a7` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/store` at tree `b5b774385efc` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
-
-### `core/store/src/commonMain/kotlin/kpt/core/store/KptErrorMapper.kt`
-
-```kotlin
-fun mapErrorToUserMessage(error: Throwable): String = when (val cat = categorize(error))
-```
-Application-level error → user-facing message mapper. Two flavours: - `mapErrorToUserMessage` — non-Composable, hardcoded English fallback. Used when the consumer is outside a composition (e.g.
-
-```kotlin
-fun rememberAppErrorMessageFor(): (Throwable) -> String
-```
-Composable factory that resolves per-category copy via `stringResource(...)`, returning a pure-Kotlin `(Throwable) -> String` lambda safe to pass through to `kpt.core.base.ui.screen.ScreenStateError.messageFor` (which is invoked from inside composition where these strings are already memoised). Reuses `categorize` to bucket the error, then picks the localized string.
-
-### `core/store/src/commonMain/kotlin/kpt/core/store/KptScreenStateDefaults.kt`
-
-```kotlin
-fun appScreenStateDefaults(): ScreenStateDefaults
-```
-!! THIS IS THE FORK CUSTOMIZATION POINT !! Edit this file to brand your app's empty / error / no-network / loading visuals. Do NOT edit `core-base/store` or `core-base/ui` — they're framework-shared.
 
 ### `core/store/src/commonMain/kotlin/kpt/core/store/config/ForkErrorMapper.kt`
 
@@ -227,7 +208,7 @@ object WalletStoreTtl
 ```
 Freshness windows for mifos-pay's wallet stores.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/AccountRepositoryImpl.kt:151</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:152</code></summary>
 
 ```kotlin
             isEmpty = { it.isEmpty() },
@@ -262,7 +243,7 @@ data class AccountDetailKey(val accountId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `accountDetail` store — one savings-account detail record per key.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/SavingsAccountRepositoryImpl.kt:49</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavingsAccountRepositoryImpl.kt:50</code></summary>
 
 ```kotlin
     // store harness continue to compile; getAccountDetail(...) — the legacy
@@ -297,7 +278,7 @@ data class BeneficiaryKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `beneficiary` store — one page of beneficiaries per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:77</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:78</code></summary>
 
 ```kotlin
     // the store harness continue to compile; getBeneficiaryList() — the legacy
@@ -332,7 +313,7 @@ data class ClientDetailKey(val clientId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `clientDetail` store — one client-info record per key.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/ClientRepositoryImpl.kt:50</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt:51</code></summary>
 
 ```kotlin
     // store harness continue to compile; getClientInfo(...) — the legacy
@@ -367,7 +348,7 @@ data class TransactionKey(val accountId: Long)
 ```
 Store5 key for the LEDGER `history` store — one page of transactions per savings account.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:69</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:70</code></summary>
 
 ```kotlin
     // to construct them; getTransactions(...) — the legacy asScreenStateFlow path — is
@@ -388,7 +369,7 @@ data class InvoiceKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `invoices` store — one page of invoices per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/InvoiceRepositoryImpl.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InvoiceRepositoryImpl.kt:42</code></summary>
 
 ```kotlin
     // the store harness continue to compile; getInvoices(...) — the legacy
@@ -416,7 +397,7 @@ data class LinkableAccountKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `linkableAccounts` store — one page of accounts eligible to link into the client's pocket, per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/PocketRepositoryImp.kt:45</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:46</code></summary>
 
 ```kotlin
     private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
@@ -444,7 +425,7 @@ data class NotificationKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `notifications` store — one page of notifications per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/NotificationRepositoryImpl.kt:39</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/NotificationRepositoryImpl.kt:40</code></summary>
 
 ```kotlin
     // the store harness continue to compile; fetchNotifications() — the legacy
@@ -479,7 +460,7 @@ data object OfficesKey
 ```
 Store5 key for the LEDGER `offices` store — the WHOLE Fineract office list.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/OfficeRepositoryImpl.kt:36</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/OfficeRepositoryImpl.kt:37</code></summary>
 
 ```kotlin
     // Nullable-default so existing unit tests without the store harness continue
@@ -500,7 +481,7 @@ data class PocketKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `pockets` store — one page of linked pocket accounts per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/PocketRepositoryImp.kt:43</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:44</code></summary>
 
 ```kotlin
     private val dataManager: SelfServiceApiManager,
@@ -556,7 +537,7 @@ data class SavedCardKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `savedCards` store — one page of saved payment cards per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/SavedCardRepositoryImpl.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavedCardRepositoryImpl.kt:42</code></summary>
 
 ```kotlin
     // the store harness continue to compile; getSavedCards(...) — the legacy
@@ -584,7 +565,7 @@ data class SelfAccountsKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `selfAccounts` store — one page of the authenticated user's own accounts per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/AccountRepositoryImpl.kt:56</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:57</code></summary>
 
 ```kotlin
     // store harness continue to compile; getSelfAccounts(...) — the legacy
@@ -612,7 +593,7 @@ data class StandingInstructionKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `standingInstruction` store — one page of standing instructions per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt:43</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt:44</code></summary>
 
 ```kotlin
     // store harness continue to compile; getAllStandingInstructions(...) — the
@@ -640,7 +621,7 @@ data class TransferDetailKey(val transferId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `transferDetail` store — one account-transfer detail record per key. Mirrors `AccountDetailKey`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/AccountRepositoryImpl.kt:63</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:64</code></summary>
 
 ```kotlin
     // store harness continue to compile; the legacy getAccountTransfer(...) —
@@ -663,5 +644,5 @@ Build the SINGLE-ROW-PER-KEY read `Store` for account-transfer details (GOAL D13
 
 ---
 
-_19 type(s), 41 function(s)/property(ies); 60 carry KDoc at source; 4 authored example(s); 19 live call site(s)._
+_19 type(s), 38 function(s)/property(ies); 57 carry KDoc at source; 4 authored example(s); 19 live call site(s)._
 <!-- api-docs:end -->

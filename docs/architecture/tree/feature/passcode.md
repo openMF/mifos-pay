@@ -9,15 +9,17 @@ Screens: `BiometricsSetupScreen`
 
 ViewModels: `MifosPasscodeViewModel`
 
+**Consumes:** `core/store/repository`
+
 <!-- tree-scaffold:end -->
 ## Significance
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/passcode sha=97fc3851bc7a630eb56cecca0051ac72cda3001f -->
+<!-- api-docs:begin module=feature/passcode sha=6db75860c52c00974bc9cb9c6249d2895ef3bbad -->
 ## API reference
 
-_Generated from `feature/passcode` at tree `97fc3851bc7a` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/passcode` at tree `6db75860c52c` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -32,7 +34,7 @@ class BiometricErrorMessages(
 ```
 Pre-resolved localized strings for each `BiometricError` case, bundled so callers can map errors to strings outside a `@Composable` context — e.g.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:92</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:91</code></summary>
 
 ```kotlin
 
@@ -55,7 +57,7 @@ data class BiometricPromptStrings(
 ```
 Pre-resolved OS-prompt strings passed to `PlatformAuthenticator.registerUser(...)` and `PlatformAuthenticationProvider.onAuthenticatorClick(...)` — the v2.3.0-beta library requires these as caller-supplied parameters.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:93</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:92</code></summary>
 
 ```kotlin
     val platformAuthenticationProvider = platformAuthenticationProvider.current
@@ -81,7 +83,7 @@ fun BiometricsKey(
 ```
 Platform-aware biometric unlock button rendered in the `PasscodeScreen`'s `externalAuthButton` slot.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:244</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:243</code></summary>
 
 ```kotlin
         externalAuthButton = if (allowBiometricAuth) {
@@ -135,7 +137,7 @@ class BiometricSetupScreenViewmodel(
 ```
 ViewModel for `BiometricSetupScreen`. Drives the `PlatformAuthenticationProvider.registerUser` call against the platform authenticator.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:77</code></summary>
 
 ```kotlin
     onBiometricsRegistrationSuccess: () -> Unit,
@@ -154,7 +156,7 @@ data class BiometricSetupScreenState(
 ```
 UI state for `BiometricSetupScreenViewmodel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:127</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:126</code></summary>
 
 ```kotlin
 @Composable
@@ -173,7 +175,7 @@ sealed interface BiometricSetupScreenAction
 ```
 Actions dispatched to `BiometricSetupScreenViewmodel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:107</code></summary>
 
 ```kotlin
         onSetupBiometrics = {
@@ -192,7 +194,7 @@ sealed interface BiometricSetupScreenEvent
 ```
 One-shot navigation events emitted by `BiometricSetupScreenViewmodel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:99</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreen.kt:98</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -280,7 +282,7 @@ class MifosPasscodeViewModel(
 ```
 ViewModel for `MifosPasscode`. Owns the glue between: - `PasscodeManager` (passcode library) — provides step/state and emits `PasscodeResult`s on creation, verify, change, forget.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:99</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:98</code></summary>
 
 ```kotlin
     allowBackNavigation: Boolean = false,
@@ -303,7 +305,7 @@ sealed interface PasscodeDialogState
 ```
 Dialog variants surfaced by `MifosPasscodeViewModel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:177</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:176</code></summary>
 
 ```kotlin
         onConfirm = {
@@ -322,7 +324,7 @@ sealed interface MifosPasscodeAction
 ```
 Actions dispatched to `MifosPasscodeViewModel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:150</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:149</code></summary>
 
 ```kotlin
             when (event) {
@@ -341,7 +343,7 @@ sealed interface MifosPasscodeEvent
 ```
 One-shot events emitted by `MifosPasscodeViewModel` to the screen.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:133</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscode.kt:132</code></summary>
 
 ```kotlin
         viewModel.eventFlow.collect { event ->
@@ -360,7 +362,7 @@ One-shot events emitted by `MifosPasscodeViewModel` to the screen.
 ```kotlin
 val MifosAuthenticatorModule = module
 ```
-Koin module exposing the `:feature:passcode` ViewModels. Included by the top-level `org.mifospay.shared.di.KoinModules` aggregator.
+Koin module exposing the `:feature:passcode` ViewModels. Included by the top-level `cmp.navigation.registry.app.di.KoinModules` aggregator.
 
 ---
 

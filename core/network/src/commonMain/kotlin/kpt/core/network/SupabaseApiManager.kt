@@ -9,7 +9,7 @@
  */
 package kpt.core.network
 
-import kpt.core.network.services.AppConfigService
+import kpt.core.network.main.services.AppConfigService
 import org.mifos.corebase.network.SupabaseConfigClient
 /**
  * API manager for Supabase services.

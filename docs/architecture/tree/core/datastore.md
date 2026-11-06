@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_DATASTORE.md`
-> **Measured:** 32 Kotlin files, 2 test files
+> **Measured:** 30 Kotlin files, 2 test files
 
 ## Principal types
 
@@ -14,11 +14,282 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/datastore sha=68d05ad049c3b9cc5cff76f36073274d55137d07 -->
+<!-- api-docs:begin module=core/datastore sha=a0d0c3e66d36b2877d82c77c9e6a5fed08334fef -->
 ## API reference
 
-_Generated from `core/datastore` at tree `68d05ad049c3` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/datastore` at tree `a0d0c3e66d36` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesDataSource.kt`
+
+```kotlin
+class AutoPayPreferencesDataSource(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepositoryImpl.kt:21</code></summary>
+
+```kotlin
+import kpt.core.model.autopay.UpcomingPayment
+class AutoPayPreferencesRepositoryImpl(
+    private val autoPayPreferencesDataSource: AutoPayPreferencesDataSource,
+    private val ioDispatcher: CoroutineDispatcher,
+    unconfinedDispatcher: CoroutineDispatcher,
+) : AutoPayPreferencesRepository {
+    private val unconfinedScope = CoroutineScope(unconfinedDispatcher)
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepository.kt`
+
+```kotlin
+interface AutoPayPreferencesRepository
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepositoryImpl.kt:24</code></summary>
+
+```kotlin
+    private val ioDispatcher: CoroutineDispatcher,
+    unconfinedDispatcher: CoroutineDispatcher,
+) : AutoPayPreferencesRepository {
+    private val unconfinedScope = CoroutineScope(unconfinedDispatcher)
+
+    override val isAutoPayEnabled: StateFlow<Boolean> = autoPayPreferencesDataSource.isAutoPayEnabled
+```
+
+</details>
+
+- `val isAutoPayEnabled: StateFlow<Boolean>` — AutoPay enabled state
+- `val cachedAutoPaySchedules: Flow<List<AutoPay>>` — Cached AutoPay schedules
+- `val cachedUpcomingPayments: Flow<List<UpcomingPayment>>` — Cached upcoming payments
+- `val cachedAutoPayHistory: Flow<List<AutoPayHistory>>` — Cached AutoPay history
+- `val lastSyncTimestamp: StateFlow<Long>` — Last sync timestamp
+- `suspend fun updateAutoPayEnabled(enabled: Boolean)` — Update AutoPay enabled state
+- `suspend fun cacheAutoPaySchedules(schedules: List<AutoPay>)` — Cache AutoPay schedules
+- `suspend fun cacheUpcomingPayments(payments: List<UpcomingPayment>)` — Cache upcoming payments
+- `suspend fun cacheAutoPayHistory(history: List<AutoPayHistory>)` — Cache AutoPay history
+- `suspend fun updateLastSyncTimestamp(timestamp: Long)` — Update last sync timestamp
+- `suspend fun clearCache()` — Clear all cached data
+- `suspend fun getCachedAutoPaySchedule(autoPayId: Long): AutoPay?` — Get cached AutoPay schedule by ID
+- `suspend fun isCacheStale(maxAgeMinutes: Long = 30): Boolean` — Check if cache is stale (older than specified time)
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepositoryImpl.kt`
+
+```kotlin
+class AutoPayPreferencesRepositoryImpl(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/PreferenceModule.kt:55</code></summary>
+
+```kotlin
+
+    single<AutoPayPreferencesRepository> {
+        AutoPayPreferencesRepositoryImpl(
+            autoPayPreferencesDataSource = get(),
+            ioDispatcher = get(named(MifosDispatchers.IO.name)),
+            unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
+        )
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillDataSource.kt`
+
+```kotlin
+class BillDataSource(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillRepositoryImpl.kt:22</code></summary>
+
+```kotlin
+ */
+class BillRepositoryImpl(
+    private val billDataSource: BillDataSource,
+) : BillRepository {
+
+    override fun getAllBills(): Flow<List<Bill>> {
+        return billDataSource.bills
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillRepository.kt`
+
+```kotlin
+interface BillRepository
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:40</code></summary>
+
+```kotlin
+class AddBillViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val billRepository: BillRepository,
+    private val billerRepository: BillerRepository,
+) : BaseViewModel<AddBillState, AddBillEvent, AddBillAction>(
+    initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AddBillState(),
+) {
+```
+
+</details>
+
+- `fun getAllBills(): Flow<List<Bill>>` — Get all saved bills
+- `suspend fun getBillById(id: String): Bill?` — Get bill by ID
+- `suspend fun saveBill(bill: Bill): Bill` — Save a new bill. Returns the saved bill or throws on failure.
+- `suspend fun updateBill(bill: Bill): Bill` — Update an existing bill. Returns the updated bill or throws on failure.
+- `suspend fun deleteBill(id: String)` — Delete a bill. Throws on failure.
+- `suspend fun searchBillsByName(query: String): List<Bill>` — Search bills by name
+- `suspend fun clearAllBills()` — Clear all bills. Throws on failure.
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillRepositoryImpl.kt`
+
+```kotlin
+class BillRepositoryImpl(
+```
+TODO: This implementation currently uses local storage (Multiplatform Settings) for bill data.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt:44</code></summary>
+
+```kotlin
+ * models according to the actual API contract.
+ */
+class BillRepositoryImpl(
+    private val apiManager: FineractApiManager,
+    private val ioDispatcher: CoroutineDispatcher,
+) : BillRepository {
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillerDataSource.kt`
+
+```kotlin
+class BillerDataSource(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillerRepositoryImpl.kt:23</code></summary>
+
+```kotlin
+ */
+class BillerRepositoryImpl(
+    private val billerDataSource: BillerDataSource,
+) : BillerRepository {
+
+    override fun getAllBillers(): Flow<List<Biller>> {
+        return billerDataSource.billers
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillerRepository.kt`
+
+```kotlin
+interface BillerRepository
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:41</code></summary>
+
+```kotlin
+    savedStateHandle: SavedStateHandle,
+    private val billRepository: BillRepository,
+    private val billerRepository: BillerRepository,
+) : BaseViewModel<AddBillState, AddBillEvent, AddBillAction>(
+    initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AddBillState(),
+) {
+```
+
+</details>
+
+- `fun getAllBillers(): Flow<List<Biller>>` — Get all saved billers
+- `suspend fun getBillerById(id: String): Biller?` — Get biller by ID
+- `suspend fun saveBiller(biller: Biller): Biller` — Save a new biller. Returns the saved biller or throws on failure.
+- `suspend fun updateBiller(biller: Biller): Biller` — Update an existing biller. Returns the updated biller or throws on failure.
+- `suspend fun deleteBiller(id: String)` — Delete a biller. Throws on failure.
+- `suspend fun getBillersByCategory(category: BillerCategory): List<Biller>` — Get billers by category
+- `suspend fun searchBillersByName(query: String): List<Biller>` — Search billers by name
+- `suspend fun isBillerExists(name: String, accountNumber: String): Boolean` — Check if biller exists by name and account number
+- `suspend fun clearAllBillers()` — Clear all billers. Throws on failure.
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillerRepositoryImpl.kt`
+
+```kotlin
+class BillerRepositoryImpl(
+```
+TODO: This implementation currently uses local storage (Multiplatform Settings) for biller data.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:289</code></summary>
+
+```kotlin
+    // kpt.core.datastore.BillerRepository below — unqualified, one replaces the other.
+    single<BillerRepository>(named("kpt.core.data.repository.BillerRepository")) {
+        BillerRepositoryImpl(get(), get(ioDispatcher))
+    }
+
+    // Phase-4 Batch-A OFFLINE_LOCAL_ONLY Bill store binding (GOAL D12).
+    // Replaces the multiplatform-settings impl that was previously bound in
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt`
+
+```kotlin
+fun ClientPreferences.toClientInfo(): Client
+```
+_No KDoc at source._
+
+```kotlin
+fun Client.toClientPreferences(): ClientPreferences
+```
+_No KDoc at source._
+
+```kotlin
+fun RolePreferences.toRoleInfo(): RoleInfo
+```
+_No KDoc at source._
+
+```kotlin
+fun RoleInfo.toRolePreferences(): RolePreferences
+```
+_No KDoc at source._
+
+```kotlin
+fun UserInfoPreferences.toUserInfo(): UserInfo
+```
+_No KDoc at source._
+
+```kotlin
+fun UserInfo.toUserInfoPreferences(): UserInfoPreferences
+```
+_No KDoc at source._
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/UserPreferencesDataSource.kt`
+
+```kotlin
+class UserPreferencesDataSource(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:41</code></summary>
+
+```kotlin
+            secureSettings = get<Settings>(named("secure")),
+            dispatcher = get<DispatcherManager>(),
+            preferenceManager = get<UserPreferencesDataSource>(),
+            ioDispatcher = get(named(MifosDispatchers.IO.name)),
+            unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
+        )
+    }
+```
+
+</details>
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/UserPreferencesRepository.kt`
 
@@ -27,16 +298,16 @@ interface UserPreferencesRepository
 ```
 Repository interface for managing user preferences with reactive capabilities. This interface provides reactive access to user preferences including theme settings, dark mode configuration, and dynamic color preferences.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:46</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/FastMpayProcessorTest.kt:49</code></summary>
 
 ```kotlin
-@OptIn(ExperimentalCoroutinesApi::class)
-class AccountViewModel(
-    private val userRepository: UserPreferencesRepository,
-    private val repository: SelfServiceRepository,
-    private val json: Json,
-) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
-    initialState = run {
+    private val testDispatcher = StandardTestDispatcher()
+    private lateinit var fakeSelfServiceRepository: FakeSelfServiceRepository
+    private lateinit var fakeUserPreferencesRepository: FakeUserPreferencesRepository
+    private lateinit var fakeOfficeRepository: FakeOfficeRepository
+    private lateinit var processor: FastMpayProcessor
+
+    @BeforeTest
 ```
 
 </details>
@@ -64,16 +335,16 @@ class UserPreferencesRepositoryImpl(
 ```
 Splits user data storage between plain (UI preferences) and secure (credentials/auth state) Settings backends.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/DatastoreModule.kt:36</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:272</code></summary>
 
 ```kotlin
 
-    single {
-        UserPreferencesRepositoryImpl(
-            plainSettings = get<Settings>(named("plain")),
-            secureSettings = get<Settings>(named("secure")),
-            dispatcher = get(),
-        )
+/** The template's own preferences over in-memory settings — the fake's framework half. */
+private fun templatePreferences(): UserPreferencesRepository = UserPreferencesRepositoryImpl(
+    plainSettings = MapSettings(),
+    secureSettings = MapSettings(),
+    dispatcher = object : DispatcherManager {
+        override val default = Dispatchers.Unconfined
 ```
 
 </details>
@@ -105,6 +376,13 @@ val DataModule = module {
 val ForkDatastoreModule = module
 ```
 THE FORK'S datastore DI seam. Empty on the neutral template — this is yours to fill. `DatastoreModule` beside it is `owner: template` and FULL-COPIES on a sync, so a binding added there is replaced on the next adopt.
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/PreferenceModule.kt`
+
+```kotlin
+val PreferencesModule = module
+```
+_No KDoc at source._
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/infra/ChangeListVersions.kt`
 
@@ -167,6 +445,69 @@ _No KDoc at source._
 
 </details>
 
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/model/ClientPreferences.kt`
+
+```kotlin
+data class ClientPreferences(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:18</code></summary>
+
+```kotlin
+import kpt.core.model.user.RoleInfo
+import kpt.core.model.user.UserInfo
+fun ClientPreferences.toClientInfo(): Client {
+    return Client(
+        id = id,
+        accountNo = accountNo,
+        externalId = externalId,
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/model/RolePreferences.kt`
+
+```kotlin
+data class RolePreferences(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:58</code></summary>
+
+```kotlin
+}
+
+fun RolePreferences.toRoleInfo(): RoleInfo {
+    return RoleInfo(
+        id = id,
+        name = name,
+        description = description,
+```
+
+</details>
+
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/model/UserInfoPreferences.kt`
+
+```kotlin
+data class UserInfoPreferences(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:76</code></summary>
+
+```kotlin
+}
+
+fun UserInfoPreferences.toUserInfo(): UserInfo {
+    return UserInfo(
+        username = username,
+        userId = userId,
+        base64EncodedAuthenticationKey = base64EncodedAuthenticationKey,
+```
+
+</details>
+
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/prefs/AppReviewPromptStore.kt`
 
 ```kotlin
@@ -220,62 +561,46 @@ class SettingsAppReviewPromptStore(
 ```kotlin
 interface ForkPreferencesRepository : UserPreferencesRepository
 ```
-THE FORK'S preferences. Extends the framework's — this is yours to fill.
+The wallet's preferences, extending the framework's `UserPreferencesRepository`.
 
-<details><summary>Example</summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:45</code></summary>
 
 ```kotlin
-interface ForkPreferencesRepository : UserPreferencesRepository {
-    val observeMyFlag: Flow<Boolean>
-    suspend fun setMyFlag(enabled: Boolean)
-}
-override suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig) {
-    analytics.log("theme_changed")
-    delegate.setDarkThemeConfig(darkThemeConfig)
-}
+@OptIn(ExperimentalCoroutinesApi::class)
+class AccountViewModel(
+    private val userRepository: ForkPreferencesRepository,
+    private val repository: SelfServiceRepository,
+    private val json: Json,
+) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
+    initialState = run {
 ```
 
 </details>
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:31</code></summary>
-
-```kotlin
- */
-val ForkDatastoreModule = module {
-    single<ForkPreferencesRepository> {
-        ForkPreferencesRepositoryImpl(
-            delegate = get<UserPreferencesRepository>(),
-            // The SAME instances the framework's impl uses — an ownership boundary, not a second
-            // store. Namespace fork keys so they cannot collide with a future framework preference.
-```
-
-</details>
+- `val userInfo: Flow<UserInfo>` — The signed-in self-service user.
+- `val token: StateFlow<String?>` — The session's base64 authentication key, or null when signed out.
+- `val client: StateFlow<Client?>` — The signed-in user's client record.
+- `val clientId: StateFlow<Long?>` — The signed-in user's client id.
+- `val defaultAccount: StateFlow<DefaultAccount?>` — The account payments default to.
+- `val defaultAccountId: StateFlow<Long?>` — The id of `defaultAccount`.
+- `val selectedInstance: StateFlow<ServerInstance?>` — The Fineract instance the app is connected to.
+- `val selectedInterbankInstance: StateFlow<InterbankServer?>` — The interbank (payment hub) instance the app is connected to.
+- `val accountExternalIds: StateFlow<Map<Long, String>>` — External ids of the user's accounts, by account id.
+- `val language: StateFlow<Language>` — The wallet's display language.
+- `suspend fun updateToken(token: String)` — Stores the session token after sign-in.
+- `suspend fun updateUserInfo(user: UserInfo)` — Stores the signed-in user.
+- `suspend fun setLanguage(language: Language)` — Stores the wallet's display language.
+- `suspend fun updateClientInfo(client: Client)` — Stores the signed-in user's client record.
+  _…more members; read the file._
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/prefs/ForkPreferencesRepositoryImpl.kt`
 
 ```kotlin
 class ForkPreferencesRepositoryImpl(
 ```
-Fork implementation of `ForkPreferencesRepository`. `owner: fork` — never synced.
+Implementation of `ForkPreferencesRepository`. `owner: fork` — never synced. `by delegate` forwards every framework preference to the template's implementation, so this class stays complete when the template adds one.
 
-<details><summary>Example</summary>
-
-```kotlin
-override val observeMyFlag: Flow<Boolean> =
-    MutableStateFlow(plainSettings.getBoolean(KEY_MY_FLAG, false))
-
-override suspend fun setMyFlag(enabled: Boolean) = withContext(dispatcher.io) {
-    plainSettings.putBoolean(KEY_MY_FLAG, enabled)
-}
-override suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig) {
-    analytics.log("theme_changed")
-    delegate.setDarkThemeConfig(darkThemeConfig)
-}
-```
-
-</details>
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:34</code></summary>
 
 ```kotlin
 val ForkDatastoreModule = module {
@@ -296,16 +621,16 @@ interface UserPreferencesRepository
 ```
 Repository interface for managing user preferences with reactive capabilities. This interface provides reactive access to user preferences including theme settings, dark mode configuration, and dynamic color preferences.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:46</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/FastMpayProcessorTest.kt:49</code></summary>
 
 ```kotlin
-@OptIn(ExperimentalCoroutinesApi::class)
-class AccountViewModel(
-    private val userRepository: UserPreferencesRepository,
-    private val repository: SelfServiceRepository,
-    private val json: Json,
-) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
-    initialState = run {
+    private val testDispatcher = StandardTestDispatcher()
+    private lateinit var fakeSelfServiceRepository: FakeSelfServiceRepository
+    private lateinit var fakeUserPreferencesRepository: FakeUserPreferencesRepository
+    private lateinit var fakeOfficeRepository: FakeOfficeRepository
+    private lateinit var processor: FastMpayProcessor
+
+    @BeforeTest
 ```
 
 </details>
@@ -333,420 +658,21 @@ class UserPreferencesRepositoryImpl(
 ```
 Splits user data storage between plain (UI preferences) and secure (credentials/auth state) Settings backends.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/UserPreferencesRepositoryImpl.kt:41</code></summary>
-
-```kotlin
- * stores using a write-before-delete strategy to prevent data loss.
- */
-class UserPreferencesRepositoryImpl(
-    private val plainSettings: Settings,
-    private val secureSettings: Settings,
-    private val dispatcher: DispatcherManager,
-) : UserPreferencesRepository {
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/AutoPayPreferencesDataSource.kt`
-
-```kotlin
-class AutoPayPreferencesDataSource(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/AutoPayPreferencesRepositoryImpl.kt:22</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:272</code></summary>
 
 ```kotlin
 
-class AutoPayPreferencesRepositoryImpl(
-    private val autoPayPreferencesDataSource: AutoPayPreferencesDataSource,
-    private val ioDispatcher: CoroutineDispatcher,
-    unconfinedDispatcher: CoroutineDispatcher,
-) : AutoPayPreferencesRepository {
-    private val unconfinedScope = CoroutineScope(unconfinedDispatcher)
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/AutoPayPreferencesRepository.kt`
-
-```kotlin
-interface AutoPayPreferencesRepository
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/AutoPayPreferencesRepositoryImpl.kt:25</code></summary>
-
-```kotlin
-    private val ioDispatcher: CoroutineDispatcher,
-    unconfinedDispatcher: CoroutineDispatcher,
-) : AutoPayPreferencesRepository {
-    private val unconfinedScope = CoroutineScope(unconfinedDispatcher)
-
-    override val isAutoPayEnabled: StateFlow<Boolean> = autoPayPreferencesDataSource.isAutoPayEnabled
-```
-
-</details>
-
-- `val isAutoPayEnabled: StateFlow<Boolean>` — AutoPay enabled state
-- `val cachedAutoPaySchedules: Flow<List<AutoPay>>` — Cached AutoPay schedules
-- `val cachedUpcomingPayments: Flow<List<UpcomingPayment>>` — Cached upcoming payments
-- `val cachedAutoPayHistory: Flow<List<AutoPayHistory>>` — Cached AutoPay history
-- `val lastSyncTimestamp: StateFlow<Long>` — Last sync timestamp
-- `suspend fun updateAutoPayEnabled(enabled: Boolean)` — Update AutoPay enabled state
-- `suspend fun cacheAutoPaySchedules(schedules: List<AutoPay>)` — Cache AutoPay schedules
-- `suspend fun cacheUpcomingPayments(payments: List<UpcomingPayment>)` — Cache upcoming payments
-- `suspend fun cacheAutoPayHistory(history: List<AutoPayHistory>)` — Cache AutoPay history
-- `suspend fun updateLastSyncTimestamp(timestamp: Long)` — Update last sync timestamp
-- `suspend fun clearCache()` — Clear all cached data
-- `suspend fun getCachedAutoPaySchedule(autoPayId: Long): AutoPay?` — Get cached AutoPay schedule by ID
-- `suspend fun isCacheStale(maxAgeMinutes: Long = 30): Boolean` — Check if cache is stale (older than specified time)
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/AutoPayPreferencesRepositoryImpl.kt`
-
-```kotlin
-class AutoPayPreferencesRepositoryImpl(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/di/PreferenceModule.kt:65</code></summary>
-
-```kotlin
-
-    single<AutoPayPreferencesRepository> {
-        AutoPayPreferencesRepositoryImpl(
-            autoPayPreferencesDataSource = get(),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
-            unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
-        )
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillDataSource.kt`
-
-```kotlin
-class BillDataSource(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillRepositoryImpl.kt:23</code></summary>
-
-```kotlin
- */
-class BillRepositoryImpl(
-    private val billDataSource: BillDataSource,
-) : BillRepository {
-
-    override fun getAllBills(): Flow<List<Bill>> {
-        return billDataSource.bills
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillRepository.kt`
-
-```kotlin
-interface BillRepository
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillViewModel.kt:40</code></summary>
-
-```kotlin
-class AddBillViewModel(
-    savedStateHandle: SavedStateHandle,
-    private val billRepository: BillRepository,
-    private val billerRepository: BillerRepository,
-) : BaseViewModel<AddBillState, AddBillEvent, AddBillAction>(
-    initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AddBillState(),
-) {
-```
-
-</details>
-
-- `fun getAllBills(): Flow<List<Bill>>` — Get all saved bills
-- `suspend fun getBillById(id: String): Bill?` — Get bill by ID
-- `suspend fun saveBill(bill: Bill): Bill` — Save a new bill. Returns the saved bill or throws on failure.
-- `suspend fun updateBill(bill: Bill): Bill` — Update an existing bill. Returns the updated bill or throws on failure.
-- `suspend fun deleteBill(id: String)` — Delete a bill. Throws on failure.
-- `suspend fun searchBillsByName(query: String): List<Bill>` — Search bills by name
-- `suspend fun clearAllBills()` — Clear all bills. Throws on failure.
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillRepositoryImpl.kt`
-
-```kotlin
-class BillRepositoryImpl(
-```
-TODO: This implementation currently uses local storage (Multiplatform Settings) for bill data.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/BillRepositoryImpl.kt:44</code></summary>
-
-```kotlin
- * models according to the actual API contract.
- */
-class BillRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : BillRepository {
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillerDataSource.kt`
-
-```kotlin
-class BillerDataSource(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillerRepositoryImpl.kt:24</code></summary>
-
-```kotlin
- */
-class BillerRepositoryImpl(
-    private val billerDataSource: BillerDataSource,
-) : BillerRepository {
-
-    override fun getAllBillers(): Flow<List<Biller>> {
-        return billerDataSource.billers
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillerRepository.kt`
-
-```kotlin
-interface BillerRepository
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillViewModel.kt:41</code></summary>
-
-```kotlin
-    savedStateHandle: SavedStateHandle,
-    private val billRepository: BillRepository,
-    private val billerRepository: BillerRepository,
-) : BaseViewModel<AddBillState, AddBillEvent, AddBillAction>(
-    initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AddBillState(),
-) {
-```
-
-</details>
-
-- `fun getAllBillers(): Flow<List<Biller>>` — Get all saved billers
-- `suspend fun getBillerById(id: String): Biller?` — Get biller by ID
-- `suspend fun saveBiller(biller: Biller): Biller` — Save a new biller. Returns the saved biller or throws on failure.
-- `suspend fun updateBiller(biller: Biller): Biller` — Update an existing biller. Returns the updated biller or throws on failure.
-- `suspend fun deleteBiller(id: String)` — Delete a biller. Throws on failure.
-- `suspend fun getBillersByCategory(category: BillerCategory): List<Biller>` — Get billers by category
-- `suspend fun searchBillersByName(query: String): List<Biller>` — Search billers by name
-- `suspend fun isBillerExists(name: String, accountNumber: String): Boolean` — Check if biller exists by name and account number
-- `suspend fun clearAllBillers()` — Clear all billers. Throws on failure.
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/BillerRepositoryImpl.kt`
-
-```kotlin
-class BillerRepositoryImpl(
-```
-TODO: This implementation currently uses local storage (Multiplatform Settings) for biller data.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/di/RepositoryModule.kt:285</code></summary>
-
-```kotlin
-    // singleton until it is resolved. When the Fineract endpoint lands, a
-    // hybrid impl can bridge both interfaces.
-    single<BillerRepository> { BillerRepositoryImpl(get(), get(ioDispatcher)) }
-
-    // Phase-4 Batch-A OFFLINE_LOCAL_ONLY Bill store binding (GOAL D12).
-    // Replaces the multiplatform-settings impl that was previously bound in
-    // `core/datastore/di/PreferenceModule.kt` — that binding is REMOVED in
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/PreferencesMapper.kt`
-
-```kotlin
-fun ClientPreferences.toClientInfo(): Client
-```
-_No KDoc at source._
-
-```kotlin
-fun Client.toClientPreferences(): ClientPreferences
-```
-_No KDoc at source._
-
-```kotlin
-fun RolePreferences.toRoleInfo(): RoleInfo
-```
-_No KDoc at source._
-
-```kotlin
-fun RoleInfo.toRolePreferences(): RolePreferences
-```
-_No KDoc at source._
-
-```kotlin
-fun UserInfoPreferences.toUserInfo(): UserInfo
-```
-_No KDoc at source._
-
-```kotlin
-fun UserInfo.toUserInfoPreferences(): UserInfoPreferences
-```
-_No KDoc at source._
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/UserPreferencesDataSource.kt`
-
-```kotlin
-class UserPreferencesDataSource(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/UserPreferencesRepositoryImpl.kt:29</code></summary>
-
-```kotlin
-
-class UserPreferencesRepositoryImpl(
-    private val preferenceManager: UserPreferencesDataSource,
-    // manage-pocket linkable-accounts Store5 migration: the pre-migration
-    // `pocketPreferencesDataSource` constructor arg (upstream PR #2057
-    // multiplatform-settings cache for pocket_accounts / detailed_pocket_accounts /
-    // linkable_accounts) is REMOVED. This branch never wired that DataSource
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/UserPreferencesRepository.kt`
-
-```kotlin
-interface UserPreferencesRepository
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:46</code></summary>
-
-```kotlin
-@OptIn(ExperimentalCoroutinesApi::class)
-class AccountViewModel(
-    private val userRepository: UserPreferencesRepository,
-    private val repository: SelfServiceRepository,
-    private val json: Json,
-) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
-    initialState = run {
-```
-
-</details>
-
-- `val userInfo: Flow<UserInfo>`
-- `val token: StateFlow<String?>`
-- `val client: StateFlow<Client?>`
-- `val clientId: StateFlow<Long?>`
-- `val authToken: String?`
-- `val defaultAccount: StateFlow<DefaultAccount?>`
-- `val defaultAccountId: StateFlow<Long?>`
-- `val selectedInstance: StateFlow<ServerInstance?>`
-- `val selectedInterbankInstance: StateFlow<InterbankServer?>`
-- `val accountExternalIds: StateFlow<Map<Long, String>>`
-- `val language: StateFlow<Language>`
-- `suspend fun updateToken(token: String)`
-- `suspend fun updateUserInfo(user: UserInfo)`
-- `suspend fun setLanguage(language: Language)`
-  _…more members; read the file._
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/UserPreferencesRepositoryImpl.kt`
-
-```kotlin
-class UserPreferencesRepositoryImpl(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/UserPreferencesRepositoryImpl.kt:41</code></summary>
-
-```kotlin
- * stores using a write-before-delete strategy to prevent data loss.
- */
-class UserPreferencesRepositoryImpl(
-    private val plainSettings: Settings,
-    private val secureSettings: Settings,
-    private val dispatcher: DispatcherManager,
-) : UserPreferencesRepository {
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/di/PreferenceModule.kt`
-
-```kotlin
-val PreferencesModule = module
-```
-_No KDoc at source._
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/model/ClientPreferences.kt`
-
-```kotlin
-data class ClientPreferences(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/PreferencesMapper.kt:19</code></summary>
-
-```kotlin
-import org.mifospay.core.model.user.UserInfo
-
-fun ClientPreferences.toClientInfo(): Client {
-    return Client(
-        id = id,
-        accountNo = accountNo,
-        externalId = externalId,
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/model/RolePreferences.kt`
-
-```kotlin
-data class RolePreferences(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/PreferencesMapper.kt:59</code></summary>
-
-```kotlin
-}
-
-fun RolePreferences.toRoleInfo(): RoleInfo {
-    return RoleInfo(
-        id = id,
-        name = name,
-        description = description,
-```
-
-</details>
-
-### `core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/model/UserInfoPreferences.kt`
-
-```kotlin
-data class UserInfoPreferences(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/org/mifospay/core/datastore/PreferencesMapper.kt:77</code></summary>
-
-```kotlin
-}
-
-fun UserInfoPreferences.toUserInfo(): UserInfo {
-    return UserInfo(
-        username = username,
-        userId = userId,
-        base64EncodedAuthenticationKey = base64EncodedAuthenticationKey,
+/** The template's own preferences over in-memory settings — the fake's framework half. */
+private fun templatePreferences(): UserPreferencesRepository = UserPreferencesRepositoryImpl(
+    plainSettings = MapSettings(),
+    secureSettings = MapSettings(),
+    dispatcher = object : DispatcherManager {
+        override val default = Dispatchers.Unconfined
 ```
 
 </details>
 
 ---
 
-_27 type(s), 84 function(s)/property(ies); 60 carry KDoc at source; 2 authored example(s); 27 live call site(s)._
+_25 type(s), 84 function(s)/property(ies); 74 carry KDoc at source; 0 authored example(s); 25 live call site(s)._
 <!-- api-docs:end -->

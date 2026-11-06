@@ -9,15 +9,17 @@ Screens: `BankTransferScreen`, `ContactsPickerScreen`, `PayAnyoneScreen`, `Payee
 
 ViewModels: `BankTransferViewModel`, `PayAnyoneViewModel`, `PayeeDetailsViewModel`, `PaymentChatHistoryViewModel`, `PaymentDetailsViewModel`, `PaymentProcessingViewModel`, `PaymentSuccessViewModel`, `SearchIfscViewModel`, `SendMoneyOptionsViewModel`, `SendMoneyViewModel`, `UpiPinViewModel`, `UpiTransactionHistoryViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 <!-- tree-scaffold:end -->
 ## Significance
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/send-money sha=89cd24f0e3e26d849463cd7482177e2a886ad153 -->
+<!-- api-docs:begin module=feature/send-money sha=f6d285e705bbaefe4feab18f5000d2a5c2ff1c0f -->
 ## API reference
 
-_Generated from `feature/send-money` at tree `89cd24f0e3e2` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/send-money` at tree `f6d285e705bb` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -25,14 +27,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/AmountUtils.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/AmountUtils.kt`
 
 ```kotlin
 object AmountUtils
 ```
 Utility functions for converting between paise and rupees Navigation parameters use paise (stored as string) for precision UI displays use rupees with 2 decimal places
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayeeDetailsScreen.kt:568</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:567</code></summary>
 
 ```kotlin
     val isAmountValid = if (state.isUpiCode) {
@@ -62,14 +64,14 @@ Utility functions for converting between paise and rupees Navigation parameters 
 - `val amount = rupees.toDoubleOrNull()`
   _…more members; read the file._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt`
 
 ```kotlin
 fun BankTransferScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:267</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:266</code></summary>
 
 ```kotlin
         route = BANK_TRANSFER_ROUTE,
@@ -83,14 +85,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferViewModel.kt`
 
 ```kotlin
 class BankTransferViewModel : BaseViewModel<BankTransferState, BankTransferEvent, BankTransferAction>(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferScreen.kt:93</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:92</code></summary>
 
 ```kotlin
     onSearchIfscClick: () -> Unit,
@@ -108,7 +110,7 @@ data class BankAccount(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferScreen.kt:620</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:619</code></summary>
 
 ```kotlin
             BankAccountSelectionList(
@@ -127,7 +129,7 @@ data class BankTransferState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferScreen.kt:215</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:214</code></summary>
 
 ```kotlin
 @Composable
@@ -146,7 +148,7 @@ sealed interface BankTransferEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferScreen.kt:100</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:99</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -165,7 +167,7 @@ sealed interface BankTransferAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferScreen.kt:125</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:124</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_bank_transfer),
@@ -179,14 +181,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/Contact.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/Contact.kt`
 
 ```kotlin
 enum class ContactType
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneScreen.kt:435</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:434</code></summary>
 
 ```kotlin
                 name = contact.name,
@@ -205,7 +207,7 @@ data class Contact(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillerScreen.kt:125</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:124</code></summary>
 
 ```kotlin
 
@@ -219,14 +221,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/ContactNotFoundDialog.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/ContactNotFoundDialog.kt`
 
 ```kotlin
 fun ContactNotFoundDialog(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneScreen.kt:298</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:297</code></summary>
 
 ```kotlin
 
@@ -240,14 +242,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/ContactNotFoundLoading.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/ContactNotFoundLoading.kt`
 
 ```kotlin
 fun ContactNotFoundLoading(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneScreen.kt:265</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:264</code></summary>
 
 ```kotlin
                 }
@@ -260,14 +262,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/ContactPermissionState.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/ContactPermissionState.kt`
 
 ```kotlin
 interface ContactPermissionState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/ContactPermissionState.android.kt:26</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionState.android.kt:26</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalPermissionsApi::class)
@@ -290,7 +292,7 @@ enum class ContactPermissionStatus
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/ContactPermissionState.android.kt:42</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionState.android.kt:42</code></summary>
 
 ```kotlin
     private val context: Context,
@@ -309,14 +311,14 @@ expect fun rememberContactPermissionState(): ContactPermissionState
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/ContactRepository.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/ContactRepository.kt`
 
 ```kotlin
 interface ContactRepository
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/ContactRepository.android.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactRepository.android.kt:19</code></summary>
 
 ```kotlin
 
@@ -337,17 +339,17 @@ expect fun rememberContactRepository(): ContactRepository
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/ContactsPickerScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/ContactsPickerScreen.kt`
 
 ```kotlin
 expect fun ContactPermissionHandler()
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/ContactPermissionHandler.android.kt:16</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionHandler.android.kt:15</code></summary>
 
 ```kotlin
-
+import kpt.core.designsystem.component.PermissionBox
 @Composable
 actual fun ContactPermissionHandler() {
     PermissionBox(
@@ -363,7 +365,7 @@ fun ContactsPickerScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:319</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:318</code></summary>
 
 ```kotlin
         route = CONTACTS_PICKER_ROUTE,
@@ -382,14 +384,14 @@ fun ContactsPickerScreenPreview()
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt`
 
 ```kotlin
 fun PayAnyoneScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:304</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:303</code></summary>
 
 ```kotlin
     ) { backStackEntry ->
@@ -408,14 +410,14 @@ fun PayAnyoneScreenPreview()
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneViewModel.kt`
 
 ```kotlin
 class PayAnyoneViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneScreen.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:75</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -438,7 +440,7 @@ enum class SharingOption
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/SharingHelper.android.kt:30</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/SharingHelper.android.kt:30</code></summary>
 
 ```kotlin
      */
@@ -457,7 +459,7 @@ data class ContactSearchResult(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneScreen.kt:318</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:317</code></summary>
 
 ```kotlin
 @Composable
@@ -481,7 +483,7 @@ sealed interface PayAnyoneAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayAnyoneScreen.kt:136</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:135</code></summary>
 
 ```kotlin
                         value = state.inputValue,
@@ -495,14 +497,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayeeDetailsScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt`
 
 ```kotlin
 fun PayeeDetailsScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:341</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:340</code></summary>
 
 ```kotlin
         ),
@@ -566,14 +568,14 @@ fun AddBankAccountItemPreview()
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayeeDetailsViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsViewModel.kt`
 
 ```kotlin
 class PayeeDetailsViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayeeDetailsScreen.kt:103</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:102</code></summary>
 
 ```kotlin
     onNavigateToFineractPayment: (PayeeDetailsState) -> Unit,
@@ -592,7 +594,7 @@ data class PayeeDetailsState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayeeDetailsScreen.kt:99</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:98</code></summary>
 
 ```kotlin
 fun PayeeDetailsScreen(
@@ -611,7 +613,7 @@ sealed interface PayeeDetailsEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayeeDetailsScreen.kt:109</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:108</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -630,7 +632,7 @@ sealed interface PayeeDetailsAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PayeeDetailsScreen.kt:122</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:121</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_payee_details_title),
@@ -644,14 +646,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentChatHistoryScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryScreen.kt`
 
 ```kotlin
 fun PaymentChatHistoryScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:462</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:461</code></summary>
 
 ```kotlin
         route = PAYMENT_CHAT_HISTORY_ROUTE,
@@ -670,7 +672,7 @@ enum class UserType
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentChatHistoryViewModel.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:51</code></summary>
 
 ```kotlin
         private fun createPlaceholderState(): PaymentChatHistoryState {
@@ -689,7 +691,7 @@ data class PaymentTransaction(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentChatHistoryViewModel.kt:73</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:73</code></summary>
 
 ```kotlin
                     date = "25 Sept 2025, 3:15 PM",
@@ -708,7 +710,7 @@ data class PaymentHistoryGroup(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentChatHistoryViewModel.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:68</code></summary>
 
 ```kotlin
          */
@@ -727,7 +729,7 @@ data class PaymentChatHistoryState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentChatHistoryViewModel.kt:22</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:22</code></summary>
 
 ```kotlin
  */
@@ -741,14 +743,14 @@ class PaymentChatHistoryViewModel :
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentChatHistoryViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt`
 
 ```kotlin
 class PaymentChatHistoryViewModel :
 ```
 ViewModel for the Payment Chat History screen Manages payment history state and user interactions Currently uses placeholder data for demonstration
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentChatHistoryScreen.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryScreen.kt:67</code></summary>
 
 ```kotlin
     onTransactionClick: (String) -> Unit,
@@ -772,14 +774,14 @@ sealed interface PaymentChatHistoryAction
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentDetailsScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.kt`
 
 ```kotlin
 expect fun PaymentDetailsScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/PaymentDetailsScreen.android.kt:31</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.android.kt:30</code></summary>
 
 ```kotlin
  */
@@ -798,14 +800,14 @@ fun PaymentDetailsScreenPreview()
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentDetailsState.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsState.kt`
 
 ```kotlin
 data class PaymentDetailsState(
 ```
 Data class representing the state of the Payment Details screen Contains all necessary information for displaying comprehensive payment details
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentDetailsScreen.kt:223</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.kt:222</code></summary>
 
 ```kotlin
 @Composable
@@ -819,14 +821,14 @@ private fun ProfileAndRecipientSection(
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentDetailsViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsViewModel.kt`
 
 ```kotlin
 class PaymentDetailsViewModel :
 ```
 ViewModel for the Payment Details screen Manages payment details state and provides comprehensive transaction information Currently uses placeholder data for demonstration purposes
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/PaymentDetailsScreen.android.kt:37</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.android.kt:36</code></summary>
 
 ```kotlin
     onShareScreenshot: () -> Unit,
@@ -850,14 +852,14 @@ sealed interface PaymentDetailsAction
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentProcessingScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt`
 
 ```kotlin
 fun PaymentProcessingScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:413</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:412</code></summary>
 
 ```kotlin
         ),
@@ -881,14 +883,14 @@ fun PaymentProcessingContentPreview()
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentProcessingViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingViewModel.kt`
 
 ```kotlin
 class PaymentProcessingViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentProcessingScreen.kt:46</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:45</code></summary>
 
 ```kotlin
     onPaymentFailed: (String) -> Unit,
@@ -907,7 +909,7 @@ data class PaymentProcessingState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentProcessingScreen.kt:83</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:82</code></summary>
 
 ```kotlin
 @Composable
@@ -926,7 +928,7 @@ sealed interface PaymentProcessingEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentProcessingScreen.kt:52</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:51</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -945,14 +947,14 @@ sealed interface PaymentProcessingAction
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentSuccessScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt`
 
 ```kotlin
 expect fun PaymentSuccessScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/PaymentSuccessScreen.android.kt:32</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.android.kt:31</code></summary>
 
 ```kotlin
  */
@@ -996,14 +998,14 @@ fun ActionButtonsPreview()
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentSuccessViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessViewModel.kt`
 
 ```kotlin
 class PaymentSuccessViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/PaymentSuccessScreen.android.kt:37</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.android.kt:36</code></summary>
 
 ```kotlin
     onNavigateToSendMoneyOptions: () -> Unit,
@@ -1022,7 +1024,7 @@ data class PaymentSuccessState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentSuccessScreen.kt:149</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:148</code></summary>
 
 ```kotlin
 @Composable
@@ -1041,7 +1043,7 @@ sealed interface PaymentSuccessEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentSuccessScreen.kt:77</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:76</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1060,7 +1062,7 @@ sealed interface PaymentSuccessAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentSuccessScreen.kt:134</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:133</code></summary>
 
 ```kotlin
                 ActionButtons(
@@ -1074,14 +1076,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PhoneNumberUtils.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PhoneNumberUtils.kt`
 
 ```kotlin
 object PhoneNumberUtils
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/ContactRepository.android.kt:30</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactRepository.android.kt:30</code></summary>
 
 ```kotlin
     override suspend fun getContacts(): List<Contact> {
@@ -1106,14 +1108,14 @@ _No KDoc at source._
 - `fun normalizePhoneNumberForSearch(phoneNumber: String): String` — Normalizes a phone number for search purposes by removing country code and spaces This allows searching with or without +91 prefix
 - `fun normalizeSearchQuery(query: String): String` — Normalizes a search query for phone number matching Removes +91 prefix and spaces to match against normalized phone numbers
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/QrScanner.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/QrScanner.kt`
 
 ```kotlin
 interface QrScanner
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/PlayScannerModule.kt:27</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PlayScannerModule.kt:27</code></summary>
 
 ```kotlin
     }
@@ -1134,7 +1136,7 @@ expect val ScannerModule: Module
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/QrScanner.android.kt:57</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/QrScanner.android.kt:57</code></summary>
 
 ```kotlin
 }
@@ -1145,14 +1147,14 @@ actual val ScannerModule: Module
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SearchIfscScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt`
 
 ```kotlin
 fun SearchIfscScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:281</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:280</code></summary>
 
 ```kotlin
         route = SEARCH_IFSC_ROUTE,
@@ -1166,14 +1168,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SearchIfscViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscViewModel.kt`
 
 ```kotlin
 class SearchIfscViewModel : BaseViewModel<SearchIfscState, SearchIfscEvent, SearchIfscAction>(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SearchIfscScreen.kt:69</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:68</code></summary>
 
 ```kotlin
     onIfscSelected: (IfscCode) -> Unit,
@@ -1192,7 +1194,7 @@ data class IfscCode(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/BankTransferViewModel.kt:231</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferViewModel.kt:230</code></summary>
 
 ```kotlin
     data object NavigateToNext : BankTransferEvent
@@ -1211,7 +1213,7 @@ data class DummyBank(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SearchIfscScreen.kt:282</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:281</code></summary>
 
 ```kotlin
 @Composable
@@ -1230,7 +1232,7 @@ data class DummyBankBranch(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SearchIfscScreen.kt:354</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:353</code></summary>
 
 ```kotlin
 @Composable
@@ -1254,7 +1256,7 @@ sealed interface SearchIfscEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SearchIfscScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:79</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1273,7 +1275,7 @@ sealed interface SearchIfscAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SearchIfscScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:101</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_search_ifsc),
@@ -1287,14 +1289,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt`
 
 ```kotlin
 fun SendMoneyOptionsScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:245</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:244</code></summary>
 
 ```kotlin
         route = SEND_MONEY_OPTIONS_ROUTE,
@@ -1313,7 +1315,7 @@ data class TransactionItem(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/components/TransactionList.kt:69</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/components/TransactionList.kt:69</code></summary>
 
 ```kotlin
             key = { _, it -> it.transactionId },
@@ -1327,14 +1329,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt`
 
 ```kotlin
 class SendMoneyOptionsViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsScreen.kt:77</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:76</code></summary>
 
 ```kotlin
     onUpiTransactionHistoryClick: () -> Unit,
@@ -1358,7 +1360,7 @@ sealed interface SendMoneyOptionsEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsScreen.kt:83</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:82</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1377,7 +1379,7 @@ sealed interface SendMoneyOptionsAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsScreen.kt:113</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:112</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_title),
@@ -1391,14 +1393,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt`
 
 ```kotlin
 fun SendMoneyScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:221</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:220</code></summary>
 
 ```kotlin
         ),
@@ -1412,14 +1414,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyViewModel.kt`
 
 ```kotlin
 class SendMoneyViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyScreen.kt:96</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:95</code></summary>
 
 ```kotlin
     showTopBar: Boolean = true,
@@ -1437,7 +1439,7 @@ data class SendMoneyState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyScreen.kt:142</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:141</code></summary>
 
 ```kotlin
 @Composable
@@ -1456,7 +1458,7 @@ sealed interface ViewState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:82</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:81</code></summary>
 
 ```kotlin
         .mapLatest { screenState ->
@@ -1475,7 +1477,7 @@ sealed interface SendMoneyEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyScreen.kt:103</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:102</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1494,7 +1496,7 @@ sealed interface SendMoneyAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyScreen.kt:125</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:124</code></summary>
 
 ```kotlin
         dialogState = state.dialogState,
@@ -1508,14 +1510,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SharingHelper.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SharingHelper.kt`
 
 ```kotlin
 interface SharingHelper
 ```
 Common interface for sharing invite messages across platforms
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/SharingHelper.android.kt:20</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/SharingHelper.android.kt:20</code></summary>
 
 ```kotlin
  * Android-specific implementation for sharing invite messages via SMS and WhatsApp
@@ -1536,7 +1538,7 @@ object DefaultSharingHelper : SharingHelper
 ```
 Default implementation that does nothing (for platforms without sharing support)
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/SharingHelper.android.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/SharingHelper.android.kt:108</code></summary>
 
 ```kotlin
         AndroidSharingHelper(context)
@@ -1553,14 +1555,14 @@ expect fun getSharingHelper(): SharingHelper
 ```
 Factory function to get the appropriate sharing helper for the current platform
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiPinScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinScreen.kt`
 
 ```kotlin
 data class PaymentDetails(
 ```
 Data class representing payment details for UPI transactions
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiPinViewModel.kt:39</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinViewModel.kt:38</code></summary>
 
 ```kotlin
         }
@@ -1579,7 +1581,7 @@ fun UpiPinScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:383</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:382</code></summary>
 
 ```kotlin
         ),
@@ -1593,14 +1595,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiPinViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinViewModel.kt`
 
 ```kotlin
 class UpiPinViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiPinScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinScreen.kt:79</code></summary>
 
 ```kotlin
     onUpiPinEntered: (String, String, String, Boolean) -> Unit,
@@ -1628,7 +1630,7 @@ sealed interface UpiPinAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiPinScreen.kt:125</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinScreen.kt:124</code></summary>
 
 ```kotlin
                         bankAccountDetails = state.paymentDetails,
@@ -1642,14 +1644,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiTransactionHistoryScreen.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt`
 
 ```kotlin
 fun UpiTransactionHistoryScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt:476</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:475</code></summary>
 
 ```kotlin
         route = UPI_TRANSACTION_HISTORY_ROUTE,
@@ -1668,7 +1670,7 @@ data class UpiTransaction(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiTransactionHistoryViewModel.kt:87</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryViewModel.kt:86</code></summary>
 
 ```kotlin
     }
@@ -1687,7 +1689,7 @@ data class MonthTransactionGroup(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiTransactionHistoryViewModel.kt:87</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryViewModel.kt:86</code></summary>
 
 ```kotlin
     }
@@ -1701,14 +1703,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiTransactionHistoryViewModel.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryViewModel.kt`
 
 ```kotlin
 class UpiTransactionHistoryViewModel() : BaseViewModel<UpiTransactionHistoryState, UpiTransactionHistoryEvent, UpiTransactionHistoryAction>(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiTransactionHistoryScreen.kt:57</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:56</code></summary>
 
 ```kotlin
     onBackClick: () -> Unit,
@@ -1732,7 +1734,7 @@ sealed class UpiTransactionHistoryAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiTransactionHistoryScreen.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:75</code></summary>
 
 ```kotlin
                 searchQuery = state.searchQuery,
@@ -1751,7 +1753,7 @@ sealed class UpiTransactionHistoryEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/UpiTransactionHistoryScreen.kt:63</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:62</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1765,14 +1767,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/di/SendMoneyModule.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/di/SendMoneyModule.kt`
 
 ```kotlin
 val SendMoneyModule = module
 ```
 _No KDoc at source._
 
-### `feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/navigation/SendNavigation.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToPaymentDetailsScreen(

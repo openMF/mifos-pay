@@ -16,11 +16,708 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/ui sha=b30eb11463350de075358095dbdd16a373507b40 -->
+<!-- api-docs:begin module=core/ui sha=b874720234897aa72090c010c574cc05f8e7194a -->
 ## API reference
 
-_Generated from `core/ui` at tree `b30eb1146335` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/ui` at tree `b87472023489` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/AmountEditText.kt`
+
+```kotlin
+fun AmountEditText(
+```
+AmountEditText - Generic amount input component with validation
+
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/TransferDetailsScreen.kt:175</code></summary>
+
+```kotlin
+                        color = KptTheme.colorScheme.onSurfaceVariant,
+                    )
+                    AmountEditText(
+                        value = amountLocal,
+                        onValueChange = { doubleAmount ->
+                            onAmountChanged.invoke(doubleAmount.toString())
+                            amountLocal = doubleAmount.toString()
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/AvatarBox.kt`
+
+```kotlin
+fun AvatarBox(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:372</code></summary>
+
+```kotlin
+                },
+                leadingContent = {
+                    AvatarBox(
+                        icon = MifosIcons.Bank,
+                        backgroundColor = KptTheme.colorScheme.secondaryContainer,
+                    )
+                },
+```
+
+</details>
+
+```kotlin
+fun AvatarBox(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:372</code></summary>
+
+```kotlin
+                },
+                leadingContent = {
+                    AvatarBox(
+                        icon = MifosIcons.Bank,
+                        backgroundColor = KptTheme.colorScheme.secondaryContainer,
+                    )
+                },
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/DevicePreviews.kt`
+
+```kotlin
+annotation class DevicePreviews
+```
+Multipreview annotation that represents various device sizes. Add this annotation to a composable to render various devices.
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/EmptyContentScreen.kt:237</code></summary>
+
+```kotlin
+}
+
+@DevicePreviews
+@Composable
+fun EmptyContentScreenDrawableImagePreview() {
+    MifosTheme {
+        EmptyContentScreen(
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/DropdownBox.kt`
+
+```kotlin
+fun DropdownBox(
+```
+Prefer to use when text field is not read only
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:136</code></summary>
+
+```kotlin
+                )
+
+                DropdownBox(
+                    expanded = showBillerDropdown,
+                    label = "Select Biller *",
+                    value = state.formData.billerName ?: "Select a biller",
+                    readOnly = true,
+```
+
+</details>
+
+```kotlin
+fun ExposedDropdownBox(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:324</code></summary>
+
+```kotlin
+
+                // Country Dropdown
+                ExposedDropdownBox(
+                    expanded = isCountryDropdownExpanded,
+                    label = stringResource(Res.string.feature_auth_country),
+                    value = state.countryInput,
+                    onExpandChange = { isCountryDropdownExpanded = it },
+```
+
+</details>
+
+```kotlin
+fun DropdownBoxItem(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:332</code></summary>
+
+```kotlin
+                ) {
+                    state.countriesWithStates.keys.forEach { country ->
+                        DropdownBoxItem(
+                            text = country,
+                            onClick = {
+                                onAction(SignUpAction.CountryInputChange(country))
+                                isCountryDropdownExpanded = false
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/EmptyContentScreen.kt`
+
+```kotlin
+fun EmptyContentScreen(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+
+```kotlin
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
+                        modifier = Modifier,
+                        iconTint = KptTheme.colorScheme.error,
+```
+
+</details>
+
+```kotlin
+fun EmptyContentScreen(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+
+```kotlin
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
+                        modifier = Modifier,
+                        iconTint = KptTheme.colorScheme.error,
+```
+
+</details>
+
+```kotlin
+fun EmptyContentScreen(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+
+```kotlin
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
+                        modifier = Modifier,
+                        iconTint = KptTheme.colorScheme.error,
+```
+
+</details>
+
+```kotlin
+fun EmptyContentScreen(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+
+```kotlin
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
+                        modifier = Modifier,
+                        iconTint = KptTheme.colorScheme.error,
+```
+
+</details>
+
+```kotlin
+fun EmptyContentScreen(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+
+```kotlin
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
+                        modifier = Modifier,
+                        iconTint = KptTheme.colorScheme.error,
+```
+
+</details>
+
+```kotlin
+fun EmptyContentScreenDrawableImagePreview()
+```
+_No KDoc at source._
+
+```kotlin
+fun EmptyContentScreenImageVectorPreview()
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ErrorBottomSheet.kt`
+
+```kotlin
+enum class ErrorType
+```
+Type of error to display in the bottom sheet. Determines the icon and color scheme used.
+
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:249</code></summary>
+
+```kotlin
+                title = stringResource(Res.string.feature_make_transfer_oops_title),
+                message = stringResource(dialogState.message),
+                errorType = ErrorType.VALIDATION,
+                onDismiss = onDismissRequest,
+                dismissButtonText = stringResource(Res.string.feature_transfer_cancel),
+            )
+        }
+```
+
+</details>
+
+```kotlin
+fun ErrorBottomSheet(
+```
+A professional error bottom sheet that displays error information with appropriate icons, colors, and action buttons.
+
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:246</code></summary>
+
+```kotlin
+        }
+        is TransferConfirmState.DialogState.Error.ValidationError -> {
+            ErrorBottomSheet(
+                title = stringResource(Res.string.feature_make_transfer_oops_title),
+                message = stringResource(dialogState.message),
+                errorType = ErrorType.VALIDATION,
+                onDismiss = onDismissRequest,
+```
+
+</details>
+
+```kotlin
+fun ErrorBottomSheet(
+```
+Overload for simple error messages without UiError.
+
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:246</code></summary>
+
+```kotlin
+        }
+        is TransferConfirmState.DialogState.Error.ValidationError -> {
+            ErrorBottomSheet(
+                title = stringResource(Res.string.feature_make_transfer_oops_title),
+                message = stringResource(dialogState.message),
+                errorType = ErrorType.VALIDATION,
+                onDismiss = onDismissRequest,
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ErrorMessageProviderImpl.kt`
+
+```kotlin
+class ErrorMessageProviderImpl : ErrorMessageProvider
+```
+Default implementation of `ErrorMessageProvider` that uses Compose resources. This implementation provides localized error messages for HTTP status codes and network errors. It uses suspend functions to load string resources.
+
+<details><summary>Example</summary>
+
+```kotlin
+val provider = ErrorMessageProviderImpl()
+val uiError = UiError.from(exception, provider)
+```
+
+</details>
+
+```kotlin
+val DefaultErrorMessageProvider: ErrorMessageProvider = ErrorMessageProviderImpl()
+```
+Singleton instance of `ErrorMessageProviderImpl` for easy access.
+
+<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/EditPasswordViewModel.kt:94</code></summary>
+
+```kotlin
+
+                    is SubmitState.Failed -> {
+                        val uiError = submitState.error.toUiError(DefaultErrorMessageProvider)
+                        mutableStateFlow.update {
+                            it.copy(dialogState = EditPasswordDialog.ApiError(uiError))
+                        }
+                        submitPassword.reset()
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ErrorScreenContent.kt`
+
+```kotlin
+fun ErrorScreenContent(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/transactions/SpecificTransactionsScreen.kt:104</code></summary>
+
+```kotlin
+
+                is STState.ViewState.Error -> {
+                    ErrorScreenContent(
+                        modifier = Modifier.align(Alignment.Center),
+                        title = stringResource(Res.string.feature_history_error_oops),
+                        subTitle = stringResource(Res.string.feature_history_error),
+                    )
+```
+
+</details>
+
+```kotlin
+fun ErrorContentScreenDrawableImagePreview()
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ExpiryDateInput.kt`
+
+```kotlin
+fun ExpiryDateInput(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/DebitCardScreenContent.kt:83</code></summary>
+
+```kotlin
+        Spacer(modifier = Modifier.height(8.dp))
+
+        ExpiryDateInput(
+            date = expiryDate,
+            onDateChange = { expiryDate = it },
+            onDone = {
+                onDone(cardNumber, "month, year", expiryDate)
+```
+
+</details>
+
+```kotlin
+fun FormattedDateView(
+```
+_No KDoc at source._
+
+```kotlin
+fun ExpiryDateInputPreview()
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/HeadingTitle.kt`
+
+```kotlin
+fun VerifyStepHeader(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/DebitCardScreen.kt:80</code></summary>
+
+```kotlin
+            ),
+        ) {
+            VerifyStepHeader("Debit Card Details ", verificationStatus)
+            if (isContentVisible) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+```
+
+</details>
+
+```kotlin
+fun VerifyStepHeaderVerifiedPreview()
+```
+_No KDoc at source._
+
+```kotlin
+fun VerifyStepHeaderUnverifiedPreview()
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/InfoBottomSheet.kt`
+
+```kotlin
+enum class InfoType
+```
+Type of information to display in the bottom sheet. Determines the icon and color scheme used.
+
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayScreen.kt:201</code></summary>
+
+```kotlin
+            title = stringResource(Res.string.core_ui_different_bank_title),
+            message = stringResource(Res.string.core_ui_different_bank_message),
+            infoType = InfoType.WARNING,
+            onDismiss = {
+                showBankMismatchSheet = false
+                bankMismatchData = null
+            },
+```
+
+</details>
+
+```kotlin
+fun InfoBottomSheet(
+```
+A professional info bottom sheet that displays informational content with appropriate icons, colors, and action buttons. Similar to `ErrorBottomSheet` but for informational/warning scenarios rather than errors.
+
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayScreen.kt:198</code></summary>
+
+```kotlin
+    if (showBankMismatchSheet && bankMismatchData != null) {
+        val mismatchData = bankMismatchData
+        InfoBottomSheet(
+            title = stringResource(Res.string.core_ui_different_bank_title),
+            message = stringResource(Res.string.core_ui_different_bank_message),
+            infoType = InfoType.WARNING,
+            onDismiss = {
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/LocalTimeZone.kt`
+
+```kotlin
+val LocalTimeZone = compositionLocalOf { TimeZone.currentSystemDefault() }
+```
+TimeZone that can be provided with the TimeZoneMonitor. This way, it's not needed to pass every single composable the time zone to show in UI.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosDivider.kt`
+
+```kotlin
+fun MifosDivider(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:416</code></summary>
+
+```kotlin
+
+                            if (index != filteredLocalList.size - 1) {
+                                MifosDivider(
+                                    color = KptTheme.colorScheme.outlineVariant,
+                                )
+                            }
+                        }
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt`
+
+```kotlin
+fun MifosPasswordField(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
+
+```kotlin
+        )
+        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
+        MifosPasswordField(
+            label = stringResource(Res.string.feature_auth_password),
+            value = state.password,
+            onValueChange = {
+                onAction(LoginAction.PasswordChanged(it))
+```
+
+</details>
+
+```kotlin
+fun MifosPasswordField(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
+
+```kotlin
+        )
+        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
+        MifosPasswordField(
+            label = stringResource(Res.string.feature_auth_password),
+            value = state.password,
+            onValueChange = {
+                onAction(LoginAction.PasswordChanged(it))
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosProgressIndicator.kt`
+
+```kotlin
+fun MifosProgressIndicator(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:190</code></summary>
+
+```kotlin
+        ) {
+            when (state) {
+                is AccountState.ViewState.Loading -> MifosProgressIndicator()
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+```
+
+</details>
+
+```kotlin
+fun MifosProgressIndicatorMini(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:926</code></summary>
+
+```kotlin
+
+            if (transactionsLoading) {
+                MifosProgressIndicatorMini()
+            } else {
+                if (transactions != null && transactions.isEmpty()) {
+                    Text(
+                        text = stringResource(Res.string.home_no_transactions_found),
+```
+
+</details>
+
+```kotlin
+fun MifosProgressIndicatorOverlay(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:105</code></summary>
+
+```kotlin
+
+    if (state.dialogState is LoginState.DialogState.Loading) {
+        MifosProgressIndicatorOverlay()
+    }
+}
+
+@Composable
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosSearchBar.kt`
+
+```kotlin
+fun MifosSearchBar(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:206</code></summary>
+
+```kotlin
+    modifier: Modifier = Modifier,
+) {
+    MifosSearchBar(
+        query = query,
+        placeHolder = stringResource(Res.string.feature_merchants_search),
+        onQueryChange = onQueryChange,
+        onSearch = onSearch,
+```
+
+</details>
+
+```kotlin
+fun SimpleSearchBar(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:153</code></summary>
+
+```kotlin
+                Spacer(Modifier.height(KptTheme.spacing.sm))
+
+                SimpleSearchBar(
+                    query = "",
+                    placeHolder = stringResource(Res.string.feature_select_account_placeholder),
+                    onQueryChange = {},
+                    onClick = {
+```
+
+</details>
+
+```kotlin
+fun PreviewMifosSearchBar()
+```
+_No KDoc at source._
+
+```kotlin
+fun PreviewSimpleSearchBar()
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosSmallChip.kt`
+
+```kotlin
+fun MifosSmallChip(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:500</code></summary>
+
+```kotlin
+@Composable
+private fun StatusChip(label: String, color: Color) {
+    MifosSmallChip(
+        label = label,
+        containerColor = color,
+        contentColor = KptTheme.colorScheme.scrim,
+    )
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosUserImage.kt`
+
+```kotlin
+fun MifosUserImage(
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt`
+
+```kotlin
+fun NavGraphBuilder.composableWithSlideTransitions(
+```
+_No KDoc at source._
+
+```kotlin
+fun NavGraphBuilder.composableWithStayTransitions(
+```
+_No KDoc at source._
+
+```kotlin
+fun NavGraphBuilder.composableWithPushTransitions(
+```
+_No KDoc at source._
+
+```kotlin
+fun NavGraphBuilder.composableWithRootPushTransitions(
+```
+_No KDoc at source._
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/NavigationItem.kt`
 
@@ -50,6 +747,313 @@ fun KptBottomBar(
 - `val graphRoute: String` — Route of the tab's graph.
 - `val startDestinationRoute: String` — Route of the tab's start destination.
 - `val testTag: String` — The test tag of the tab.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/NonLetterColorVisualTransformation.kt`
+
+```kotlin
+fun nonLetterColorVisualTransformation(): VisualTransformation
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/OtpTextField.kt`
+
+```kotlin
+fun OtpTextField(
+```
+Pure digit collector — it does NOT decide correctness itself. `onOtpEntered` fires once `otpCount` digits are typed (or on IME-done); the caller verifies the code against the real backend (e.g.
+
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/OtpScreen.kt:108</code></summary>
+
+```kotlin
+
+            is OtpRequestState.Sent, OtpRequestState.Idle -> {
+                OtpTextField(
+                    onOtpEntered = onOtpEntered,
+                    modifier = Modifier.padding(top = KptTheme.spacing.lg),
+                    isError = otpVerifyState is OtpVerifyState.Failed,
+                    errorMessage = "Invalid OTP — please try again",
+```
+
+</details>
+
+```kotlin
+fun CharView(
+```
+_No KDoc at source._
+
+```kotlin
+fun PreviewOtpTextField()
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/PasswordStrengthIndicator.kt`
+
+```kotlin
+fun CombinedPasswordErrorCard(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:253</code></summary>
+
+```kotlin
+                )
+                Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
+                CombinedPasswordErrorCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    errors = state.passwordFeedback,
+                    passwordStrengthState = state.passwordStrengthState,
+                    currentCharacterCount = state.passwordInput.length,
+```
+
+</details>
+
+```kotlin
+fun PasswordStrengthIndicator(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/EditPasswordScreen.kt:143</code></summary>
+
+```kotlin
+                showPasswordChange = { showPassword = !showPassword },
+            )
+            PasswordStrengthIndicator(
+                modifier = Modifier,
+                state = state.passwordStrengthState,
+                currentCharacterCount = state.newPasswordInput.length,
+            )
+```
+
+</details>
+
+```kotlin
+enum class PasswordStrengthState
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:273</code></summary>
+
+```kotlin
+        if (action.password.isEmpty()) {
+            mutableStateFlow.update {
+                it.copy(passwordStrengthState = PasswordStrengthState.NONE)
+            }
+        } else {
+            passwordStrengthJob = viewModelScope.launch {
+                val result = PasswordChecker.getPasswordStrengthResult(action.password)
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/RevealSwipe.kt`
+
+```kotlin
+fun RevealSwipe(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:297</code></summary>
+
+```kotlin
+    )
+
+    RevealSwipe(
+        modifier = modifier,
+        state = state,
+        shape = KptTheme.shapes.small,
+        backgroundCardStartColor = KptTheme.colorScheme.tertiary,
+```
+
+</details>
+
+```kotlin
+fun BaseRevealSwipe(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/input/RevealSwipe.kt:147</code></summary>
+
+```kotlin
+    var pressOffset by remember { mutableStateOf(DpOffset.Zero) }
+
+    BaseRevealSwipe(
+        shape = shape,
+        backgroundCardStartColor = backgroundCardStartColor,
+        backgroundCardEndColor = backgroundCardEndColor,
+        card = card,
+```
+
+</details>
+
+```kotlin
+enum class RevealDirection
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:294</code></summary>
+
+```kotlin
+    val state = rememberRevealState(
+        maxRevealDp = if (account.status.submittedAndPendingApproval) 105.dp else 75.dp,
+        directions = setOf(RevealDirection.EndToStart),
+    )
+
+    RevealSwipe(
+        modifier = modifier,
+```
+
+</details>
+
+```kotlin
+enum class RevealValue
+```
+Possible values of `RevealState`.
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/input/RevealSwipe.kt:238</code></summary>
+
+```kotlin
+                        {
+                            val isOpen =
+                                state.anchoredDraggableState.targetValue != RevealValue.Default
+                            // if open, just close. No click event.
+                            if (isOpen) {
+                                closeOnContentClickHandler()
+                            } else {
+```
+
+</details>
+
+```kotlin
+fun rememberRevealState(
+```
+Create and `remember` a `RevealState` with the default animation clock.
+
+```kotlin
+data class RevealState(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:292</code></summary>
+
+```kotlin
+    onClickViewAccount: (Long) -> Unit,
+) {
+    val state = rememberRevealState(
+        maxRevealDp = if (account.status.submittedAndPendingApproval) 105.dp else 75.dp,
+        directions = setOf(RevealDirection.EndToStart),
+    )
+```
+
+</details>
+
+```kotlin
+suspend fun RevealState.reset()
+```
+Reset the component to the default position, with an animation.
+
+```kotlin
+suspend fun RevealState.resetFast()
+```
+Reset the component to the default position, with an animation.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ScrollableTabRow.kt`
+
+```kotlin
+fun MifosScrollableTabRow(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/finance/src/commonMain/kotlin/kpt/feature/finance/FinanceScreen.kt:28</code></summary>
+
+```kotlin
+
+    Column(modifier = modifier.fillMaxSize()) {
+        MifosScrollableTabRow(
+            tabContents = tabContents,
+            pagerState = pagerState,
+        )
+    }
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/TransactionFilterBottomSheet.kt`
+
+```kotlin
+fun TransactionFilterBottomSheet(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:160</code></summary>
+
+```kotlin
+                }
+                if (state.showFilter) {
+                    TransactionFilterBottomSheet(
+                        selectedAccount = state.selectedAccount,
+                        accounts = state.accounts,
+                        selectedTransactionType = state.selectedTransactionType,
+                        onAccountSelected = {
+```
+
+</details>
+
+```kotlin
+fun TransactionTypeFilter(
+```
+_No KDoc at source._
+
+```kotlin
+fun FilterAccountDropDown(
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/TransactionHistoryCard.kt`
+
+```kotlin
+fun TransactionHistoryCard(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:210</code></summary>
+
+```kotlin
+
+        item {
+            TransactionHistoryCard(
+                transactions = savingAccountDetail.transactions,
+                onViewTransaction = onViewTransaction,
+                showLeadingIcon = true,
+                showViewAll = false,
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/TransactionItemCard.kt`
+
+```kotlin
+fun TransactionItemCard(
+```
+_No KDoc at source._
+
+```kotlin
+fun TransactionItem(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/components/TransactionList.kt:69</code></summary>
+
+```kotlin
+            key = { _, it -> it.transactionId },
+        ) { i, items ->
+            TransactionItem(
+                transaction = items,
+                modifier = Modifier,
+                onClick = {
+                    onAction(HistoryAction.ViewTransaction(it))
+```
+
+</details>
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/bottombar/KptBottomBar.kt`
 
@@ -114,7 +1118,7 @@ fun PasswordStrengthIndicator(
 ```
 Live strength meter for a password field, from `PasswordChecker`'s verdict. Advisory only: it reflects the rules, it does not enforce them — validation belongs at submit.
 
-<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/EditPasswordScreen.kt:144</code></summary>
+<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/EditPasswordScreen.kt:143</code></summary>
 
 ```kotlin
                 showPasswordChange = { showPassword = !showPassword },
@@ -133,7 +1137,7 @@ enum class PasswordStrengthState
 ```
 Rendered strength bands, from weakest to strongest.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:274</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:273</code></summary>
 
 ```kotlin
         if (action.password.isEmpty()) {
@@ -154,7 +1158,7 @@ fun RevealSwipe(
 ```
 Swipe-to-reveal row: drag aside to expose actions (delete, archive) behind the content. The revealed actions must ALSO be reachable another way — a swipe is invisible to a screen reader and unavailable to keyboard or pointer users.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:298</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:297</code></summary>
 
 ```kotlin
     )
@@ -173,7 +1177,7 @@ fun BaseRevealSwipe(
 ```
 Unstyled `RevealSwipe` core — gesture and offset handling with no chrome, for a caller that wants its own presentation.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/RevealSwipe.kt:140</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/RevealSwipe.kt:140</code></summary>
 
 ```kotlin
     var pressOffset by remember { mutableStateOf(DpOffset.Zero) }
@@ -192,7 +1196,7 @@ enum class RevealDirection
 ```
 Which side(s) a row may be dragged toward to reveal its actions.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:295</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:294</code></summary>
 
 ```kotlin
     val state = rememberRevealState(
@@ -211,7 +1215,7 @@ enum class RevealValue
 ```
 Possible values of `RevealState`.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/RevealSwipe.kt:230</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/RevealSwipe.kt:230</code></summary>
 
 ```kotlin
                         {
@@ -235,7 +1239,7 @@ data class RevealState(
 ```
 Current offset and reveal state of one `RevealSwipe` row; hoist it to reset a row programmatically.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:293</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:292</code></summary>
 
 ```kotlin
     onClickViewAccount: (Long) -> Unit,
@@ -359,7 +1363,7 @@ data class FloatingActionButtonContent(
 ```
 Declarative FAB spec — icon, description and click — so a caller configures the FAB without passing a composable slot.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosScaffold.kt:52</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosScaffold.kt:52</code></summary>
 
 ```kotlin
     topBarTitle: String? = null,
@@ -440,6 +1444,208 @@ KptScaffold(
 
 </details>
 
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utility/AddBtnChip.kt`
+
+```kotlin
+fun AddCardChip(
+```
+_No KDoc at source._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utility/DialogState.kt`
+
+```kotlin
+data class DialogState(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:132</code></summary>
+
+```kotlin
+                    is SubmitState.Submitting -> {
+                        mutableStateFlow.update {
+                            it.copy(dialogState = AccountState.DialogState.Loading)
+                        }
+                    }
+
+                    is SubmitState.Submitted -> {
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utility/DialogType.kt`
+
+```kotlin
+enum class DialogType
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utility/DialogState.kt:13</code></summary>
+
+```kotlin
+
+data class DialogState(
+    val type: DialogType = DialogType.NONE,
+    val onConfirm: () -> Unit = {},
+)
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utility/TabContent.kt`
+
+```kotlin
+data class TabContent(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/finance/src/commonMain/kotlin/kpt/feature/finance/FinanceScreen.kt:22</code></summary>
+
+```kotlin
+@Composable
+internal fun FinanceRoute(
+    tabContents: List<TabContent>,
+    modifier: Modifier = Modifier,
+) {
+    val pagerState = rememberPagerState(pageCount = { tabContents.size })
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/AuthenticationUtils.kt`
+
+```kotlin
+object AuthenticationUtils
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreenViewmodel.kt:75</code></summary>
+
+```kotlin
+            val client = mutableStateFlow.value.client
+            val result = platformAuthenticationProvider.registerUser(
+                userName = client?.id?.run { toString() } ?: AuthenticationUtils.DEFAULT_USER_ID,
+                emailId = client?.emailAddress ?: AuthenticationUtils.DEFAULT_USER_EMAIL,
+                displayName = client?.displayName ?: AuthenticationUtils.DEFAULT_DISPLAY_NAME,
+                title = promptStrings.title,
+                subtitle = promptStrings.subtitle,
+```
+
+</details>
+
+- `const val DEFAULT_USER_ID = "mifosUser"`
+- `const val DEFAULT_USER_EMAIL = "mifospay@mifos.org"`
+- `const val DEFAULT_DISPLAY_NAME = "Mifos Pay User"`
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/BackgroundEvent.kt`
+
+```kotlin
+interface BackgroundEvent
+```
+Almost all the events in the app involve navigation or toasts. To prevent accidentally navigating to the same view twice, by default, events are ignored if the view is not currently resumed.
+
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:70</code></summary>
+
+```kotlin
+    data object NavigateToFineractPayments : SendMoneyOptionsEvent
+    data object NavigateToAutoPay : SendMoneyOptionsEvent
+    data class QrCodeScanned(val data: String) : SendMoneyOptionsEvent, BackgroundEvent
+    data class NavigateToPayeeDetails(val qrCodeData: String) : SendMoneyOptionsEvent, BackgroundEvent
+}
+
+sealed interface SendMoneyOptionsAction {
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/BaseViewModel.kt`
+
+```kotlin
+abstract class BaseViewModel<S, E, A>(
+```
+A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:48</code></summary>
+
+```kotlin
+    private val repository: SelfServiceRepository,
+    private val json: Json,
+) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
+    initialState = run {
+        val clientId = userRepository.clientId.value
+        val defaultAccount = userRepository.defaultAccountId.value
+```
+
+</details>
+
+- `val stateFlow: StateFlow<S> = mutableStateFlow.asStateFlow()` — A `StateFlow` representing state updates.
+- `val eventFlow: Flow<E> = eventChannel.receiveAsFlow()` — A `Flow` of one-shot events. These may be received and consumed by only a single consumer. Any additional consumers will receive no events.
+- `val actionChannel: SendChannel<A> = internalActionChannel` — A `SendChannel` for sending actions to the ViewModel for processing.
+- `fun trySendAction(action: A)` — Convenience method for sending an action to the `actionChannel`.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/EventsEffect.kt`
+
+```kotlin
+fun <E> EventsEffect(
+```
+Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:110</code></summary>
+
+```kotlin
+    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel) { event ->
+        when (event) {
+            is AccountEvent.OnAddEditSavingsAccount -> {
+                onAddEditSavingsAccount(event.type)
+            }
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/LifecycleEventEffect.kt`
+
+```kotlin
+fun LivecycleEventEffect(
+```
+Creates a side effect to observe lifecycle events.
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/effects/LifecycleEventEffect.kt:24</code></summary>
+
+```kotlin
+ */
+@Composable
+fun LivecycleEventEffect(
+    onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) -> Unit,
+) {
+    val eventHandler = rememberUpdatedState(onEvent)
+    val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/LottieConstants.kt`
+
+```kotlin
+object LottieConstants
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosProgressIndicator.kt:41</code></summary>
+
+```kotlin
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.JsonString(
+            Res.readBytes(LottieConstants.LOADING_ANIMATION).decodeToString(),
+        )
+    }
+    val progress by animateLottieCompositionAsState(composition)
+```
+
+</details>
+
+- `const val LOADING_ANIMATION = "files/loading_animation.json"`
+
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/PasswordChecker.kt`
 
 ```kotlin
@@ -447,7 +1653,7 @@ object PasswordChecker
 ```
 Scores a password against the app's rules and explains what is missing. Pure and platform-free, so the same verdict drives the indicator and any validation.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:266</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:265</code></summary>
 
 ```kotlin
             it.copy(
@@ -480,7 +1686,7 @@ sealed class PasswordStrengthResult
 ```
 The verdict: a strength band plus the unmet requirements, so the UI can say WHAT to fix rather than only that it is weak.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:253</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:252</code></summary>
 
 ```kotlin
             }
@@ -501,7 +1707,7 @@ enum class PasswordStrength
 ```
 Password strength bands used by `PasswordChecker`.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:288</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:287</code></summary>
 
 ```kotlin
             is PasswordStrengthResult.Success -> {
@@ -527,1305 +1733,14 @@ fun PasswordStrength.toInt(): Int = when (this)
 ```
 Converts the given `PasswordStrength` to an `Int`.
 
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/AmountEditText.kt`
-
-```kotlin
-fun AmountEditText(
-```
-AmountEditText - Generic amount input component with validation
-
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/org/mifospay/feature/transfer/interbank/screens/TransferDetailsScreen.kt:176</code></summary>
-
-```kotlin
-                        color = KptTheme.colorScheme.onSurfaceVariant,
-                    )
-                    AmountEditText(
-                        value = amountLocal,
-                        onValueChange = { doubleAmount ->
-                            onAmountChanged.invoke(doubleAmount.toString())
-                            amountLocal = doubleAmount.toString()
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/AvatarBox.kt`
-
-```kotlin
-fun AvatarBox(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:373</code></summary>
-
-```kotlin
-                },
-                leadingContent = {
-                    AvatarBox(
-                        icon = MifosIcons.Bank,
-                        backgroundColor = KptTheme.colorScheme.secondaryContainer,
-                    )
-                },
-```
-
-</details>
-
-```kotlin
-fun AvatarBox(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:373</code></summary>
-
-```kotlin
-                },
-                leadingContent = {
-                    AvatarBox(
-                        icon = MifosIcons.Bank,
-                        backgroundColor = KptTheme.colorScheme.secondaryContainer,
-                    )
-                },
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/DevicePreviews.kt`
-
-```kotlin
-annotation class DevicePreviews
-```
-Multipreview annotation that represents various device sizes. Add this annotation to a composable to render various devices.
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/EmptyContentScreen.kt:238</code></summary>
-
-```kotlin
-}
-
-@DevicePreviews
-@Composable
-fun EmptyContentScreenDrawableImagePreview() {
-    MifosTheme {
-        EmptyContentScreen(
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/DropdownBox.kt`
-
-```kotlin
-fun DropdownBox(
-```
-Prefer to use when text field is not read only
-
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillScreen.kt:136</code></summary>
-
-```kotlin
-                )
-
-                DropdownBox(
-                    expanded = showBillerDropdown,
-                    label = "Select Biller *",
-                    value = state.formData.billerName ?: "Select a biller",
-                    readOnly = true,
-```
-
-</details>
-
-```kotlin
-fun ExposedDropdownBox(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupScreen.kt:325</code></summary>
-
-```kotlin
-
-                // Country Dropdown
-                ExposedDropdownBox(
-                    expanded = isCountryDropdownExpanded,
-                    label = stringResource(Res.string.feature_auth_country),
-                    value = state.countryInput,
-                    onExpandChange = { isCountryDropdownExpanded = it },
-```
-
-</details>
-
-```kotlin
-fun DropdownBoxItem(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupScreen.kt:333</code></summary>
-
-```kotlin
-                ) {
-                    state.countriesWithStates.keys.forEach { country ->
-                        DropdownBoxItem(
-                            text = country,
-                            onClick = {
-                                onAction(SignUpAction.CountryInputChange(country))
-                                isCountryDropdownExpanded = false
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/EmptyContentScreen.kt`
-
-```kotlin
-fun EmptyContentScreen(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:194</code></summary>
-
-```kotlin
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
-                        modifier = Modifier,
-                        iconTint = KptTheme.colorScheme.error,
-```
-
-</details>
-
-```kotlin
-fun EmptyContentScreen(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:194</code></summary>
-
-```kotlin
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
-                        modifier = Modifier,
-                        iconTint = KptTheme.colorScheme.error,
-```
-
-</details>
-
-```kotlin
-fun EmptyContentScreen(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:194</code></summary>
-
-```kotlin
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
-                        modifier = Modifier,
-                        iconTint = KptTheme.colorScheme.error,
-```
-
-</details>
-
-```kotlin
-fun EmptyContentScreen(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:194</code></summary>
-
-```kotlin
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
-                        modifier = Modifier,
-                        iconTint = KptTheme.colorScheme.error,
-```
-
-</details>
-
-```kotlin
-fun EmptyContentScreen(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:194</code></summary>
-
-```kotlin
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
-                        modifier = Modifier,
-                        iconTint = KptTheme.colorScheme.error,
-```
-
-</details>
-
-```kotlin
-fun EmptyContentScreenDrawableImagePreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun EmptyContentScreenImageVectorPreview()
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/ErrorBottomSheet.kt`
-
-```kotlin
-enum class ErrorType
-```
-Type of error to display in the bottom sheet. Determines the icon and color scheme used.
-
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:249</code></summary>
-
-```kotlin
-                title = stringResource(Res.string.feature_make_transfer_oops_title),
-                message = stringResource(dialogState.message),
-                errorType = ErrorType.VALIDATION,
-                onDismiss = onDismissRequest,
-                dismissButtonText = stringResource(Res.string.feature_transfer_cancel),
-            )
-        }
-```
-
-</details>
-
-```kotlin
-fun ErrorBottomSheet(
-```
-A professional error bottom sheet that displays error information with appropriate icons, colors, and action buttons.
-
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:246</code></summary>
-
-```kotlin
-        }
-        is TransferConfirmState.DialogState.Error.ValidationError -> {
-            ErrorBottomSheet(
-                title = stringResource(Res.string.feature_make_transfer_oops_title),
-                message = stringResource(dialogState.message),
-                errorType = ErrorType.VALIDATION,
-                onDismiss = onDismissRequest,
-```
-
-</details>
-
-```kotlin
-fun ErrorBottomSheet(
-```
-Overload for simple error messages without UiError.
-
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:246</code></summary>
-
-```kotlin
-        }
-        is TransferConfirmState.DialogState.Error.ValidationError -> {
-            ErrorBottomSheet(
-                title = stringResource(Res.string.feature_make_transfer_oops_title),
-                message = stringResource(dialogState.message),
-                errorType = ErrorType.VALIDATION,
-                onDismiss = onDismissRequest,
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/ErrorMessageProviderImpl.kt`
-
-```kotlin
-class ErrorMessageProviderImpl : ErrorMessageProvider
-```
-Default implementation of `ErrorMessageProvider` that uses Compose resources. This implementation provides localized error messages for HTTP status codes and network errors. It uses suspend functions to load string resources.
-
-<details><summary>Example</summary>
-
-```kotlin
-val provider = ErrorMessageProviderImpl()
-val uiError = UiError.from(exception, provider)
-```
-
-</details>
-
-```kotlin
-val DefaultErrorMessageProvider: ErrorMessageProvider = ErrorMessageProviderImpl()
-```
-Singleton instance of `ErrorMessageProviderImpl` for easy access.
-
-<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/EditPasswordViewModel.kt:95</code></summary>
-
-```kotlin
-
-                    is SubmitState.Failed -> {
-                        val uiError = submitState.error.toUiError(DefaultErrorMessageProvider)
-                        mutableStateFlow.update {
-                            it.copy(dialogState = EditPasswordDialog.ApiError(uiError))
-                        }
-                        submitPassword.reset()
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/ErrorScreenContent.kt`
-
-```kotlin
-fun ErrorScreenContent(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/transactions/SpecificTransactionsScreen.kt:105</code></summary>
-
-```kotlin
-
-                is STState.ViewState.Error -> {
-                    ErrorScreenContent(
-                        modifier = Modifier.align(Alignment.Center),
-                        title = stringResource(Res.string.feature_history_error_oops),
-                        subTitle = stringResource(Res.string.feature_history_error),
-                    )
-```
-
-</details>
-
-```kotlin
-fun ErrorContentScreenDrawableImagePreview()
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/ExpiryDateInput.kt`
-
-```kotlin
-fun ExpiryDateInput(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/DebitCardScreenContent.kt:84</code></summary>
-
-```kotlin
-        Spacer(modifier = Modifier.height(8.dp))
-
-        ExpiryDateInput(
-            date = expiryDate,
-            onDateChange = { expiryDate = it },
-            onDone = {
-                onDone(cardNumber, "month, year", expiryDate)
-```
-
-</details>
-
-```kotlin
-fun FormattedDateView(
-```
-_No KDoc at source._
-
-```kotlin
-fun ExpiryDateInputPreview()
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/HeadingTitle.kt`
-
-```kotlin
-fun VerifyStepHeader(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/DebitCardScreen.kt:81</code></summary>
-
-```kotlin
-            ),
-        ) {
-            VerifyStepHeader("Debit Card Details ", verificationStatus)
-            if (isContentVisible) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-```
-
-</details>
-
-```kotlin
-fun VerifyStepHeaderVerifiedPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun VerifyStepHeaderUnverifiedPreview()
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/InfoBottomSheet.kt`
-
-```kotlin
-enum class InfoType
-```
-Type of information to display in the bottom sheet. Determines the icon and color scheme used.
-
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayScreen.kt:202</code></summary>
-
-```kotlin
-            title = stringResource(Res.string.core_ui_different_bank_title),
-            message = stringResource(Res.string.core_ui_different_bank_message),
-            infoType = InfoType.WARNING,
-            onDismiss = {
-                showBankMismatchSheet = false
-                bankMismatchData = null
-            },
-```
-
-</details>
-
-```kotlin
-fun InfoBottomSheet(
-```
-A professional info bottom sheet that displays informational content with appropriate icons, colors, and action buttons. Similar to `ErrorBottomSheet` but for informational/warning scenarios rather than errors.
-
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayScreen.kt:199</code></summary>
-
-```kotlin
-    if (showBankMismatchSheet && bankMismatchData != null) {
-        val mismatchData = bankMismatchData
-        InfoBottomSheet(
-            title = stringResource(Res.string.core_ui_different_bank_title),
-            message = stringResource(Res.string.core_ui_different_bank_message),
-            infoType = InfoType.WARNING,
-            onDismiss = {
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/LocalTimeZone.kt`
-
-```kotlin
-val LocalTimeZone = compositionLocalOf { TimeZone.currentSystemDefault() }
-```
-TimeZone that can be provided with the TimeZoneMonitor. This way, it's not needed to pass every single composable the time zone to show in UI.
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosDivider.kt`
-
-```kotlin
-fun MifosDivider(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:417</code></summary>
-
-```kotlin
-
-                            if (index != filteredLocalList.size - 1) {
-                                MifosDivider(
-                                    color = KptTheme.colorScheme.outlineVariant,
-                                )
-                            }
-                        }
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosPasswordField.kt`
-
-```kotlin
-fun MifosPasswordField(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginScreen.kt:191</code></summary>
-
-```kotlin
-        )
-        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
-        MifosPasswordField(
-            label = stringResource(Res.string.feature_auth_password),
-            value = state.password,
-            onValueChange = {
-                onAction(LoginAction.PasswordChanged(it))
-```
-
-</details>
-
-```kotlin
-fun MifosPasswordField(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginScreen.kt:191</code></summary>
-
-```kotlin
-        )
-        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
-        MifosPasswordField(
-            label = stringResource(Res.string.feature_auth_password),
-            value = state.password,
-            onValueChange = {
-                onAction(LoginAction.PasswordChanged(it))
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosProgressIndicator.kt`
-
-```kotlin
-fun MifosProgressIndicator(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:191</code></summary>
-
-```kotlin
-        ) {
-            when (state) {
-                is AccountState.ViewState.Loading -> MifosProgressIndicator()
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-```
-
-</details>
-
-```kotlin
-fun MifosProgressIndicatorMini(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/org/mifospay/feature/home/HomeScreen.kt:922</code></summary>
-
-```kotlin
-
-            if (transactionsLoading) {
-                MifosProgressIndicatorMini()
-            } else {
-                if (transactions != null && transactions.isEmpty()) {
-                    Text(
-                        text = stringResource(Res.string.home_no_transactions_found),
-```
-
-</details>
-
-```kotlin
-fun MifosProgressIndicatorOverlay(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginScreen.kt:106</code></summary>
-
-```kotlin
-
-    if (state.dialogState is LoginState.DialogState.Loading) {
-        MifosProgressIndicatorOverlay()
-    }
-}
-
-@Composable
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosSearchBar.kt`
-
-```kotlin
-fun MifosSearchBar(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantScreen.kt:207</code></summary>
-
-```kotlin
-    modifier: Modifier = Modifier,
-) {
-    MifosSearchBar(
-        query = query,
-        placeHolder = stringResource(Res.string.feature_merchants_search),
-        onQueryChange = onQueryChange,
-        onSearch = onSearch,
-```
-
-</details>
-
-```kotlin
-fun SimpleSearchBar(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:154</code></summary>
-
-```kotlin
-                Spacer(Modifier.height(KptTheme.spacing.sm))
-
-                SimpleSearchBar(
-                    query = "",
-                    placeHolder = stringResource(Res.string.feature_select_account_placeholder),
-                    onQueryChange = {},
-                    onClick = {
-```
-
-</details>
-
-```kotlin
-fun PreviewMifosSearchBar()
-```
-_No KDoc at source._
-
-```kotlin
-fun PreviewSimpleSearchBar()
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosSmallChip.kt`
-
-```kotlin
-fun MifosSmallChip(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:501</code></summary>
-
-```kotlin
-@Composable
-private fun StatusChip(label: String, color: Color) {
-    MifosSmallChip(
-        label = label,
-        containerColor = color,
-        contentColor = KptTheme.colorScheme.scrim,
-    )
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosUserImage.kt`
-
-```kotlin
-fun MifosUserImage(
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/NavGraphBuilderExtensions.kt`
-
-```kotlin
-fun NavGraphBuilder.composableWithSlideTransitions(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.composableWithStayTransitions(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.composableWithPushTransitions(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.composableWithRootPushTransitions(
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/NonLetterColorVisualTransformation.kt`
-
-```kotlin
-fun nonLetterColorVisualTransformation(): VisualTransformation
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/OtpTextField.kt`
-
-```kotlin
-fun OtpTextField(
-```
-Pure digit collector — it does NOT decide correctness itself. `onOtpEntered` fires once `otpCount` digits are typed (or on IME-done); the caller verifies the code against the real backend (e.g.
-
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/OtpScreen.kt:109</code></summary>
-
-```kotlin
-
-            is OtpRequestState.Sent, OtpRequestState.Idle -> {
-                OtpTextField(
-                    onOtpEntered = onOtpEntered,
-                    modifier = Modifier.padding(top = KptTheme.spacing.lg),
-                    isError = otpVerifyState is OtpVerifyState.Failed,
-                    errorMessage = "Invalid OTP — please try again",
-```
-
-</details>
-
-```kotlin
-fun CharView(
-```
-_No KDoc at source._
-
-```kotlin
-fun PreviewOtpTextField()
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/PasswordStrengthIndicator.kt`
-
-```kotlin
-fun CombinedPasswordErrorCard(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupScreen.kt:254</code></summary>
-
-```kotlin
-                )
-                Spacer(modifier = Modifier.height(KptTheme.spacing.xs))
-                CombinedPasswordErrorCard(
-                    modifier = Modifier.fillMaxWidth(),
-                    errors = state.passwordFeedback,
-                    passwordStrengthState = state.passwordStrengthState,
-                    currentCharacterCount = state.passwordInput.length,
-```
-
-</details>
-
-```kotlin
-fun PasswordStrengthIndicator(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/EditPasswordScreen.kt:144</code></summary>
-
-```kotlin
-                showPasswordChange = { showPassword = !showPassword },
-            )
-            PasswordStrengthIndicator(
-                modifier = Modifier,
-                state = state.passwordStrengthState,
-                currentCharacterCount = state.newPasswordInput.length,
-            )
-```
-
-</details>
-
-```kotlin
-enum class PasswordStrengthState
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:274</code></summary>
-
-```kotlin
-        if (action.password.isEmpty()) {
-            mutableStateFlow.update {
-                it.copy(passwordStrengthState = PasswordStrengthState.NONE)
-            }
-        } else {
-            passwordStrengthJob = viewModelScope.launch {
-                val result = PasswordChecker.getPasswordStrengthResult(action.password)
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/RevealSwipe.kt`
-
-```kotlin
-fun RevealSwipe(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:298</code></summary>
-
-```kotlin
-    )
-
-    RevealSwipe(
-        modifier = modifier,
-        state = state,
-        shape = KptTheme.shapes.small,
-        backgroundCardStartColor = KptTheme.colorScheme.tertiary,
-```
-
-</details>
-
-```kotlin
-fun BaseRevealSwipe(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/input/RevealSwipe.kt:147</code></summary>
-
-```kotlin
-    var pressOffset by remember { mutableStateOf(DpOffset.Zero) }
-
-    BaseRevealSwipe(
-        shape = shape,
-        backgroundCardStartColor = backgroundCardStartColor,
-        backgroundCardEndColor = backgroundCardEndColor,
-        card = card,
-```
-
-</details>
-
-```kotlin
-enum class RevealDirection
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:295</code></summary>
-
-```kotlin
-    val state = rememberRevealState(
-        maxRevealDp = if (account.status.submittedAndPendingApproval) 105.dp else 75.dp,
-        directions = setOf(RevealDirection.EndToStart),
-    )
-
-    RevealSwipe(
-        modifier = modifier,
-```
-
-</details>
-
-```kotlin
-enum class RevealValue
-```
-Possible values of `RevealState`.
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/input/RevealSwipe.kt:238</code></summary>
-
-```kotlin
-                        {
-                            val isOpen =
-                                state.anchoredDraggableState.targetValue != RevealValue.Default
-                            // if open, just close. No click event.
-                            if (isOpen) {
-                                closeOnContentClickHandler()
-                            } else {
-```
-
-</details>
-
-```kotlin
-fun rememberRevealState(
-```
-Create and `remember` a `RevealState` with the default animation clock.
-
-```kotlin
-data class RevealState(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:293</code></summary>
-
-```kotlin
-    onClickViewAccount: (Long) -> Unit,
-) {
-    val state = rememberRevealState(
-        maxRevealDp = if (account.status.submittedAndPendingApproval) 105.dp else 75.dp,
-        directions = setOf(RevealDirection.EndToStart),
-    )
-```
-
-</details>
-
-```kotlin
-suspend fun RevealState.reset()
-```
-Reset the component to the default position, with an animation.
-
-```kotlin
-suspend fun RevealState.resetFast()
-```
-Reset the component to the default position, with an animation.
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/ScrollableTabRow.kt`
-
-```kotlin
-fun MifosScrollableTabRow(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/finance/src/commonMain/kotlin/org/mifospay/feature/finance/FinanceScreen.kt:29</code></summary>
-
-```kotlin
-
-    Column(modifier = modifier.fillMaxSize()) {
-        MifosScrollableTabRow(
-            tabContents = tabContents,
-            pagerState = pagerState,
-        )
-    }
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/TransactionFilterBottomSheet.kt`
-
-```kotlin
-fun TransactionFilterBottomSheet(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryScreen.kt:161</code></summary>
-
-```kotlin
-                }
-                if (state.showFilter) {
-                    TransactionFilterBottomSheet(
-                        selectedAccount = state.selectedAccount,
-                        accounts = state.accounts,
-                        selectedTransactionType = state.selectedTransactionType,
-                        onAccountSelected = {
-```
-
-</details>
-
-```kotlin
-fun TransactionTypeFilter(
-```
-_No KDoc at source._
-
-```kotlin
-fun FilterAccountDropDown(
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/TransactionHistoryCard.kt`
-
-```kotlin
-fun TransactionHistoryCard(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:211</code></summary>
-
-```kotlin
-
-        item {
-            TransactionHistoryCard(
-                transactions = savingAccountDetail.transactions,
-                onViewTransaction = onViewTransaction,
-                showLeadingIcon = true,
-                showViewAll = false,
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/TransactionItemCard.kt`
-
-```kotlin
-fun TransactionItemCard(
-```
-_No KDoc at source._
-
-```kotlin
-fun TransactionItem(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/components/TransactionList.kt:69</code></summary>
-
-```kotlin
-            key = { _, it -> it.transactionId },
-        ) { i, items ->
-            TransactionItem(
-                transaction = items,
-                modifier = Modifier,
-                onClick = {
-                    onAction(HistoryAction.ViewTransaction(it))
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utility/AddBtnChip.kt`
-
-```kotlin
-fun AddCardChip(
-```
-_No KDoc at source._
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utility/DialogState.kt`
-
-```kotlin
-data class DialogState(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:133</code></summary>
-
-```kotlin
-                    is SubmitState.Submitting -> {
-                        mutableStateFlow.update {
-                            it.copy(dialogState = AccountState.DialogState.Loading)
-                        }
-                    }
-
-                    is SubmitState.Submitted -> {
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utility/DialogType.kt`
-
-```kotlin
-enum class DialogType
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utility/DialogState.kt:13</code></summary>
-
-```kotlin
-
-data class DialogState(
-    val type: DialogType = DialogType.NONE,
-    val onConfirm: () -> Unit = {},
-)
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utility/TabContent.kt`
-
-```kotlin
-data class TabContent(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/finance/src/commonMain/kotlin/org/mifospay/feature/finance/FinanceScreen.kt:23</code></summary>
-
-```kotlin
-@Composable
-internal fun FinanceRoute(
-    tabContents: List<TabContent>,
-    modifier: Modifier = Modifier,
-) {
-    val pagerState = rememberPagerState(pageCount = { tabContents.size })
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/AuthenticationUtils.kt`
-
-```kotlin
-object AuthenticationUtils
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreenViewmodel.kt:76</code></summary>
-
-```kotlin
-            val client = mutableStateFlow.value.client
-            val result = platformAuthenticationProvider.registerUser(
-                userName = client?.id?.run { toString() } ?: AuthenticationUtils.DEFAULT_USER_ID,
-                emailId = client?.emailAddress ?: AuthenticationUtils.DEFAULT_USER_EMAIL,
-                displayName = client?.displayName ?: AuthenticationUtils.DEFAULT_DISPLAY_NAME,
-                title = promptStrings.title,
-                subtitle = promptStrings.subtitle,
-```
-
-</details>
-
-- `const val DEFAULT_USER_ID = "mifosUser"`
-- `const val DEFAULT_USER_EMAIL = "mifospay@mifos.org"`
-- `const val DEFAULT_DISPLAY_NAME = "Mifos Pay User"`
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/BackgroundEvent.kt`
-
-```kotlin
-interface BackgroundEvent
-```
-Almost all the events in the app involve navigation or toasts. To prevent accidentally navigating to the same view twice, by default, events are ignored if the view is not currently resumed.
-
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsViewModel.kt:71</code></summary>
-
-```kotlin
-    data object NavigateToFineractPayments : SendMoneyOptionsEvent
-    data object NavigateToAutoPay : SendMoneyOptionsEvent
-    data class QrCodeScanned(val data: String) : SendMoneyOptionsEvent, BackgroundEvent
-    data class NavigateToPayeeDetails(val qrCodeData: String) : SendMoneyOptionsEvent, BackgroundEvent
-}
-
-sealed interface SendMoneyOptionsAction {
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/BaseViewModel.kt`
-
-```kotlin
-abstract class BaseViewModel<S, E, A>(
-```
-A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:49</code></summary>
-
-```kotlin
-    private val repository: SelfServiceRepository,
-    private val json: Json,
-) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
-    initialState = run {
-        val clientId = userRepository.clientId.value
-        val defaultAccount = userRepository.defaultAccountId.value
-```
-
-</details>
-
-- `val stateFlow: StateFlow<S> = mutableStateFlow.asStateFlow()` — A `StateFlow` representing state updates.
-- `val eventFlow: Flow<E> = eventChannel.receiveAsFlow()` — A `Flow` of one-shot events. These may be received and consumed by only a single consumer. Any additional consumers will receive no events.
-- `val actionChannel: SendChannel<A> = internalActionChannel` — A `SendChannel` for sending actions to the ViewModel for processing.
-- `fun trySendAction(action: A)` — Convenience method for sending an action to the `actionChannel`.
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/EventsEffect.kt`
-
-```kotlin
-fun <E> EventsEffect(
-```
-Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:111</code></summary>
-
-```kotlin
-    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
-
-    EventsEffect(viewModel) { event ->
-        when (event) {
-            is AccountEvent.OnAddEditSavingsAccount -> {
-                onAddEditSavingsAccount(event.type)
-            }
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/LifecycleEventEffect.kt`
-
-```kotlin
-fun LivecycleEventEffect(
-```
-Creates a side effect to observe lifecycle events.
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/effects/LifecycleEventEffect.kt:24</code></summary>
-
-```kotlin
- */
-@Composable
-fun LivecycleEventEffect(
-    onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) -> Unit,
-) {
-    val eventHandler = rememberUpdatedState(onEvent)
-    val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/LottieConstants.kt`
-
-```kotlin
-object LottieConstants
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosProgressIndicator.kt:42</code></summary>
-
-```kotlin
-    val composition by rememberLottieComposition {
-        LottieCompositionSpec.JsonString(
-            Res.readBytes(LottieConstants.LOADING_ANIMATION).decodeToString(),
-        )
-    }
-    val progress by animateLottieCompositionAsState(composition)
-```
-
-</details>
-
-- `const val LOADING_ANIMATION = "files/loading_animation.json"`
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/PasswordChecker.kt`
-
-```kotlin
-object PasswordChecker
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:266</code></summary>
-
-```kotlin
-            it.copy(
-                passwordInput = action.password,
-                passwordFeedback = PasswordChecker.getPasswordFeedback(action.password)
-                    .toPersistentList(),
-            )
-        }
-        // Update password strength:
-```
-
-</details>
-
-- `fun getPasswordStrengthResult(password: String): PasswordStrengthResult`
-- `val length = password.length`
-- `val hasUpperCase = password.any { it.isUpperCase() }`
-- `val hasLowerCase = password.any { it.isLowerCase() }`
-- `val hasNumbers = password.any { it.isDigit() }`
-- `val hasSymbols = password.any { !it.isLetterOrDigit() }`
-- `val numTypesPresent =`
-- `val entropyBits = calculateEntropy(password)`
-- `val charPool = 26 + 26 + 10 + 33 // lowercase + uppercase + digits + symbols`
-- `fun getPasswordFeedback(password: String): List<String>`
-- `val feedback = mutableListOf<String>()`
-
-```kotlin
-sealed class PasswordStrengthResult
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:253</code></summary>
-
-```kotlin
-            }
-
-            is ReceivePasswordStrengthResult -> handlePasswordStrengthResult(action)
-
-            is SignUpAction.SubmitClick -> handleSubmitClick()
-
-            is SignUpAction.LoadCountries -> loadCountriesFromJson()
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/PasswordStrength.kt`
-
-```kotlin
-enum class PasswordStrength
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:288</code></summary>
-
-```kotlin
-            is PasswordStrengthResult.Success -> {
-                val updatedState = when (result.passwordStrength) {
-                    PasswordStrength.LEVEL_0 -> PasswordStrengthState.WEAK_1
-                    PasswordStrength.LEVEL_1 -> PasswordStrengthState.WEAK_2
-                    PasswordStrength.LEVEL_2 -> PasswordStrengthState.WEAK_3
-                    PasswordStrength.LEVEL_3 -> PasswordStrengthState.GOOD
-                    PasswordStrength.LEVEL_4 -> PasswordStrengthState.STRONG
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/PasswordStrengthExtensions.kt`
-
-```kotlin
-fun Int.toPasswordStrengthOrNull(): PasswordStrength? =
-```
-Converts the given `Int` to a `PasswordStrength`. A `null` value is returned if this value is not in the [0, 4] range.
-
-```kotlin
-fun PasswordStrength.toInt(): Int =
-```
-Converts the given `PasswordStrength` to an `Int`.
-
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/ScreenshotUtils.kt`
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/ScreenshotUtils.kt`
 
 ```kotlin
 expect object ScreenshotUtils
 ```
 Platform-specific utilities for taking screenshots of Compose screens. This expect declaration should be implemented for each platform to handle the specifics of screenshot functionality.
 
-<details><summary>Used in the template — <code>core/ui/src/androidMain/kotlin/org/mifospay/core/ui/utils/ScreenshotUtils.android.kt:33</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/androidMain/kotlin/kpt/core/ui/utils/ScreenshotUtils.android.kt:34</code></summary>
 
 ```kotlin
  * including the ability to exclude specific UI elements and generate context-aware filenames.
@@ -1846,7 +1761,7 @@ data class ScreenshotContextDetails(
 ```
 Context details for screenshots to enable better file naming.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/org/mifospay/feature/send/money/PaymentDetailsScreen.android.kt:59</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.android.kt:58</code></summary>
 
 ```kotlin
 
@@ -1860,14 +1775,14 @@ Context details for screenshots to enable better file naming.
 
 </details>
 
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/ShareUtils.kt`
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/ShareUtils.kt`
 
 ```kotlin
 expect object ShareUtils
 ```
 Platform-specific utilities for sharing content such as text and files. This expect declaration should be implemented for each platform (e.g., Android, iOS) to handle the specifics of sharing functionality.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrViewModel.kt:303</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:303</code></summary>
 
 ```kotlin
     private fun shareQrCode(data: ByteArray) {
@@ -1889,7 +1804,7 @@ enum class MimeType
 ```
 Represents supported MIME types for file sharing.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrViewModel.kt:307</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:307</code></summary>
 
 ```kotlin
                     fileName = "qr_code.png",
@@ -1908,7 +1823,7 @@ data class ShareFileModel(
 ```
 Model representing a file to be shared.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrViewModel.kt:304</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:304</code></summary>
 
 ```kotlin
         viewModelScope.launch {
@@ -1922,7 +1837,7 @@ Model representing a file to be shared.
 
 </details>
 
-### `core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt`
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt`
 
 ```kotlin
 typealias EnterTransitionProvider =
@@ -2029,7 +1944,7 @@ object TransitionProviders
 ```
 Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a typical composable destination.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/NavGraphBuilderExtensions.kt:31</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:30</code></summary>
 
 ```kotlin
         arguments = arguments,
@@ -2088,6 +2003,91 @@ Contains standard "transition providers" that may be used to specify the `EnterT
 - `val delayMs = totalTransitionDurationMs / 7`
 - `val slideWithoutDelayMs = totalTransitionDurationMs - delayMs`
   _…more members; read the file._
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/fork/PasswordChecker.kt`
+
+```kotlin
+object PasswordChecker
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:265</code></summary>
+
+```kotlin
+            it.copy(
+                passwordInput = action.password,
+                passwordFeedback = PasswordChecker.getPasswordFeedback(action.password)
+                    .toPersistentList(),
+            )
+        }
+        // Update password strength:
+```
+
+</details>
+
+- `fun getPasswordStrengthResult(password: String): PasswordStrengthResult`
+- `val length = password.length`
+- `val hasUpperCase = password.any { it.isUpperCase() }`
+- `val hasLowerCase = password.any { it.isLowerCase() }`
+- `val hasNumbers = password.any { it.isDigit() }`
+- `val hasSymbols = password.any { !it.isLetterOrDigit() }`
+- `val numTypesPresent =`
+- `val entropyBits = calculateEntropy(password)`
+- `val charPool = 26 + 26 + 10 + 33 // lowercase + uppercase + digits + symbols`
+- `fun getPasswordFeedback(password: String): List<String>`
+- `val feedback = mutableListOf<String>()`
+
+```kotlin
+sealed class PasswordStrengthResult
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:252</code></summary>
+
+```kotlin
+            }
+
+            is ReceivePasswordStrengthResult -> handlePasswordStrengthResult(action)
+
+            is SignUpAction.SubmitClick -> handleSubmitClick()
+
+            is SignUpAction.LoadCountries -> loadCountriesFromJson()
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/fork/PasswordStrength.kt`
+
+```kotlin
+enum class PasswordStrength
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:287</code></summary>
+
+```kotlin
+            is PasswordStrengthResult.Success -> {
+                val updatedState = when (result.passwordStrength) {
+                    PasswordStrength.LEVEL_0 -> PasswordStrengthState.WEAK_1
+                    PasswordStrength.LEVEL_1 -> PasswordStrengthState.WEAK_2
+                    PasswordStrength.LEVEL_2 -> PasswordStrengthState.WEAK_3
+                    PasswordStrength.LEVEL_3 -> PasswordStrengthState.GOOD
+                    PasswordStrength.LEVEL_4 -> PasswordStrengthState.STRONG
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/fork/PasswordStrengthExtensions.kt`
+
+```kotlin
+fun Int.toPasswordStrengthOrNull(): PasswordStrength? =
+```
+Converts the given `Int` to a `PasswordStrength`. A `null` value is returned if this value is not in the [0, 4] range.
+
+```kotlin
+fun PasswordStrength.toInt(): Int =
+```
+Converts the given `PasswordStrength` to an `Int`.
 
 ---
 

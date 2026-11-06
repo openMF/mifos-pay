@@ -14,23 +14,23 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/domain sha=4685efd032e4de10057d9cb819076cbbf6cefb42 -->
+<!-- api-docs:begin module=core/domain sha=cf44e9622601a6ca8dcf2028897d983852ca16e9 -->
 ## API reference
 
-_Generated from `core/domain` at tree `4685efd032e4` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/domain` at tree `cf44e9622601` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
-### `core/domain/src/commonMain/kotlin/org/mifospay/core/domain/LoginUseCase.kt`
+### `core/domain/src/commonMain/kotlin/kpt/core/domain/LoginUseCase.kt`
 
 ```kotlin
 class LoginUseCase(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginViewModel.kt:32</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:31</code></summary>
 
 ```kotlin
-
+import org.jetbrains.compose.resources.getString
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val instanceConfigManager: InstanceConfigManager,
@@ -41,7 +41,7 @@ class LoginViewModel(
 
 </details>
 
-### `core/domain/src/commonMain/kotlin/org/mifospay/core/domain/di/DomainModule.kt`
+### `core/domain/src/commonMain/kotlin/kpt/core/domain/di/DomainModule.kt`
 
 ```kotlin
 val DomainModule = module

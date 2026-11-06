@@ -177,7 +177,7 @@ IndependentCardLayout(states = cards, onRetry = vm::onRetryCard) { i, content ->
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -196,7 +196,7 @@ fun List<ScreenState<*>>.toDashboardProgressState(): DashboardProgressState =
 ```
 Pure conversion from a list of per-card states to a single `DashboardProgressState`. Exposed so tests + non-Flow call sites can re-use the aggregation contract.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:89</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:88</code></summary>
 
 ```kotlin
                     // dedicated Empty ViewState variant exists here).
@@ -316,7 +316,7 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:111</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:110</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -335,7 +335,7 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:111</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:110</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -356,7 +356,7 @@ fun LivecycleEventEffect(
 ```
 Creates a side effect to observe lifecycle events.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/LifecycleEventEffect.kt:24</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/LifecycleEventEffect.kt:24</code></summary>
 
 ```kotlin
  */
@@ -408,7 +408,7 @@ fun FreshnessIndicator(
 ```
 Per-card freshness indicator: a small Material 3 info / clock / warning icon anchored to a `TooltipBox`.
 
-<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/screens/ManagePocketScreen.kt:251</code></summary>
+<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/ManagePocketScreen.kt:250</code></summary>
 
 ```kotlin
                             )
@@ -737,7 +737,7 @@ ScreenStateVisual.Lottie(spec = {
 
 </details>
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/KptScreenStateDefaults.kt:83</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/config/KptScreenStateDefaults.kt:86</code></summary>
 
 ```kotlin
             loading = ScreenStateLoading.Skeleton(rowCount = 5),
@@ -833,7 +833,7 @@ fun SavingsScreen(vm: SavingsViewModel) {
 
 </details>
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/list/BeneficiaryListScreen.kt:180</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:179</code></summary>
 
 ```kotlin
         // the stream's pre-decided `ScreenState`. Only the Content list body is
@@ -861,7 +861,7 @@ ScreenContent(stream = viewModel.alerts) { alerts, _ -> LazyColumn { … } }
 
 </details>
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/list/BeneficiaryListScreen.kt:180</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:179</code></summary>
 
 ```kotlin
         // the stream's pre-decided `ScreenState`. Only the Content list body is
@@ -1003,7 +1003,7 @@ data class ScreenStateEmpty(
 ```
 Configuration for the empty state.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/KptScreenStateDefaults.kt:82</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/config/KptScreenStateDefaults.kt:85</code></summary>
 
 ```kotlin
         ScreenStateDefaults(
@@ -1022,7 +1022,7 @@ data class ScreenStateError(
 ```
 Configuration for the error state.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/KptScreenStateDefaults.kt:87</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/config/KptScreenStateDefaults.kt:90</code></summary>
 
 ```kotlin
                 message = emptyMessage,
@@ -1051,10 +1051,10 @@ data class ScreenStateNoNetwork(
 ```
 Configuration for the no-network state, including captive-portal variant. When the rendered state is `isCaptivePortal == true`, `DefaultNoNetworkContent` surfaces a primary CTA button labelled `captivePortalActionText`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/KptScreenStateDefaults.kt:95</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/config/KptScreenStateDefaults.kt:96</code></summary>
 
 ```kotlin
-                //   onShown = { error -> AppTelemetry.recordError("screen_state_error", error) },
+                retryText = errorRetry,
             ),
             noNetwork = ScreenStateNoNetwork(
                 message = nonetMessage,
@@ -1088,7 +1088,7 @@ sealed interface ScreenStateLoading
 ```
 Loading-state strategy. Library ships `Spinner` and `Skeleton`; consumers can supply `Custom`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/KptScreenStateDefaults.kt:81</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/config/KptScreenStateDefaults.kt:84</code></summary>
 
 ```kotlin
     ) {
@@ -1107,7 +1107,7 @@ sealed interface ScreenStateVisual
 ```
 Visual element for empty/error/no-network states. Sealed: extend by adding a new variant here and a branch in `ScreenStateVisualRenderer`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/KptScreenStateDefaults.kt:83</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/config/KptScreenStateDefaults.kt:86</code></summary>
 
 ```kotlin
             loading = ScreenStateLoading.Skeleton(rowCount = 5),
@@ -1501,7 +1501,7 @@ expect fun TrackScrollJank(scrollableState: ScrollableState, stateName: String)
 ```
 Reports dropped frames during scrolling of `scrollableState`, tagged `stateName` so one screen's jank is attributable in a trace.
 
-<details><summary>Used in the template — <code>core/ui/src/androidMain/kotlin/kpt/core/ui/utils/JankStatsExtensions.kt:71</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/androidMain/kotlin/kpt/core/ui/JankStatsExtensions.kt:74</code></summary>
 
 ```kotlin
  */
@@ -1522,7 +1522,7 @@ expect object ShareUtils
 ```
 Platform-specific utility for sharing content with other applications. This expect class requires platform-specific implementations.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrViewModel.kt:303</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:303</code></summary>
 
 ```kotlin
     private fun shareQrCode(data: ByteArray) {
@@ -1573,7 +1573,7 @@ typealias EnterTransitionProvider =
 ```
 Function type for providing nullable enter transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination enters the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt:23</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:23</code></summary>
 
 ```kotlin
 import kotlin.jvm.JvmSuppressWildcards
@@ -1592,7 +1592,7 @@ typealias ExitTransitionProvider =
 ```
 Function type for providing nullable exit transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination exits the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt:26</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:26</code></summary>
 
 ```kotlin
     (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)
@@ -1611,7 +1611,7 @@ typealias NonNullEnterTransitionProvider =
 ```
 Function type for providing non-null enter transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination enters the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:29</code></summary>
 
 ```kotlin
     (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)
@@ -1630,7 +1630,7 @@ typealias NonNullExitTransitionProvider =
 ```
 Function type for providing non-null exit transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination exits the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:32</code></summary>
 
 ```kotlin
     (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition)
@@ -1649,7 +1649,7 @@ val DEFAULT_STAY_TRANSITION_TIME_MS: Int =
 ```
 The default transition time (in milliseconds) for all "stay"/no-op transitions in the `TransitionProviders`. This should be at least as large as any other transition that might also be happening during a navigation.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt:60</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:60</code></summary>
 
 ```kotlin
  * navigation.
@@ -1673,7 +1673,7 @@ object TransitionProviders
 ```
 Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a typical composable destination.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/NavGraphBuilderExtensions.kt:31</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:30</code></summary>
 
 ```kotlin
         arguments = arguments,
@@ -1708,7 +1708,7 @@ object RootTransitionProviders
 ```
 Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a root `NavHost`, which requires a non-null value.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt:92</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:92</code></summary>
 
 ```kotlin
          */
@@ -1745,7 +1745,7 @@ interface BackgroundEvent
 ```
 Almost all the events in the app involve navigation or toasts. To prevent accidentally navigating to the same view twice, by default, events are ignored if the view is not currently resumed.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsViewModel.kt:71</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:70</code></summary>
 
 ```kotlin
     data object NavigateToFineractPayments : SendMoneyOptionsEvent
@@ -1813,7 +1813,7 @@ abstract class BaseViewModel<S, E, A>(
 ```
 A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:49</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:48</code></summary>
 
 ```kotlin
     private val repository: SelfServiceRepository,

@@ -11,7 +11,7 @@ package cmp.navigation.registry
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import cmp.navigation.registry.app.di.ForkAppModules
+import cmp.navigation.registry.app.ForkAppModules
 import kpt.core.data.di.ForkRepositoryModule
 import kpt.core.database.di.ForkDatabaseModule
 import kpt.core.datastore.di.ForkDatastoreModule

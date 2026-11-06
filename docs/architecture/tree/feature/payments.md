@@ -20,10 +20,10 @@ ViewModels: `TransferViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/payments sha=28fc85666e29240dd77350d96a2dd85f02a46348 -->
+<!-- api-docs:begin module=feature/payments sha=4eea3e806c8e65b9b7f7307ddb71186f8a1639f8 -->
 ## API reference
 
-_Generated from `feature/payments` at tree `28fc85666e29` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/payments` at tree `4eea3e806c8e` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,7 +31,7 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/PaymentNavigation.kt`
+### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToPayments(navOptions: NavOptions) = navigate(PAYMENTS_ROUTE, navOptions)
@@ -43,14 +43,14 @@ fun NavGraphBuilder.paymentsScreen(
 ```
 _No KDoc at source._
 
-### `feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/PaymentsScreen.kt`
+### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentsScreen.kt`
 
 ```kotlin
 fun PaymentsRoute(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/PaymentNavigation.kt:26</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentNavigation.kt:25</code></summary>
 
 ```kotlin
 ) {
@@ -67,21 +67,21 @@ enum class PaymentsScreenContents
 ```
 _No KDoc at source._
 
-### `feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/RequestScreen.kt`
+### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt`
 
 ```kotlin
 fun RequestScreen(
 ```
 _No KDoc at source._
 
-### `feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/TransferViewModel.kt`
+### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/TransferViewModel.kt`
 
 ```kotlin
 class TransferViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/RequestScreen.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:50</code></summary>
 
 ```kotlin
     showQr: () -> Unit,
@@ -99,7 +99,7 @@ data class TransferState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/RequestScreen.kt:77</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:76</code></summary>
 
 ```kotlin
 @Composable
@@ -118,7 +118,7 @@ sealed interface TransferEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/RequestScreen.kt:58</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:57</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -137,7 +137,7 @@ sealed interface TransferAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/RequestScreen.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:77</code></summary>
 
 ```kotlin
 private fun RequestScreenContent(
@@ -151,14 +151,14 @@ private fun RequestScreenContent(
 
 </details>
 
-### `feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/di/PaymentsModule.kt`
+### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/di/PaymentsModule.kt`
 
 ```kotlin
 val PaymentsModule = module
 ```
 _No KDoc at source._
 
-### `feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/selectTransferType/SelectTransferTypeNavigation.kt`
+### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/selectTransferType/SelectTransferTypeNavigation.kt`
 
 ```kotlin
 data object SelectTransferTypeRoute
@@ -175,14 +175,14 @@ fun NavGraphBuilder.selectTransferTypeScreen(
 ```
 _No KDoc at source._
 
-### `feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/selectTransferType/SelectTransferTypeScreen.kt`
+### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/selectTransferType/SelectTransferTypeScreen.kt`
 
 ```kotlin
 fun SelectTransferTypeScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/org/mifospay/feature/payments/selectTransferType/SelectTransferTypeNavigation.kt:29</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/selectTransferType/SelectTransferTypeNavigation.kt:29</code></summary>
 
 ```kotlin
 ) {

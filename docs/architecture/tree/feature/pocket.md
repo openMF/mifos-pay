@@ -9,6 +9,8 @@ Screens: `ManagePocketScreen`, `PocketDashboardScreen`
 
 ViewModels: `ManagePocketViewModel`, `PocketDashboardViewModel`
 
+**Consumes:** `core/store/repository`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `ManagePocketViewModel`, `PocketDashboardViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/pocket sha=a8c39860b8bc84ffb7bad46302b299c46b6530d1 -->
+<!-- api-docs:begin module=feature/pocket sha=586f3d16991ba3f1421df482e7de7ba4104ca707 -->
 ## API reference
 
-_Generated from `feature/pocket` at tree `a8c39860b8bc` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/pocket` at tree `586f3d16991b` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +33,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/di/PocketModule.kt`
+### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/di/PocketModule.kt`
 
 ```kotlin
 val PocketModule = module
 ```
 _No KDoc at source._
 
-### `feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/navigation/ManagePocketRoute.kt`
+### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/navigation/ManagePocketRoute.kt`
 
 ```kotlin
 fun NavController.navigateToManagePocket()
@@ -50,7 +52,7 @@ fun NavGraphBuilder.managePocketDestination(
 ```
 _No KDoc at source._
 
-### `feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/navigation/PocketDashboardRoute.kt`
+### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/navigation/PocketDashboardRoute.kt`
 
 ```kotlin
 fun NavController.navigateToPocketDashboard()
@@ -62,14 +64,14 @@ fun NavGraphBuilder.pocketDashboardScreen(
 ```
 _No KDoc at source._
 
-### `feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/screens/PocketDashboardScreen.kt`
+### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/PocketDashboardScreen.kt`
 
 ```kotlin
 fun AccountStatus.toColor(): Color =
 ```
 _No KDoc at source._
 
-### `feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/viewmodels/PocketDashboardViewModel.kt`
+### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/viewmodels/PocketDashboardViewModel.kt`
 
 ```kotlin
 data class PocketDashboardState(
@@ -81,7 +83,7 @@ data class DetailedPocket(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/pocket/src/commonTest/kotlin/org/mifospay/feature/pocket/screens/PocketDashboardScreenTest.kt:47</code></summary>
+<details><summary>Used in the template — <code>feature/pocket/src/commonTest/kotlin/kpt/feature/pocket/screens/PocketDashboardScreenTest.kt:47</code></summary>
 
 ```kotlin
             totalBalance = "MX$ 10,000.00",

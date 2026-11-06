@@ -9,8 +9,8 @@
  */
 package kpt.core.network.di
 
-import kpt.core.network.localAssets.JvmLocalAssetManager
-import kpt.core.network.localAssets.LocalAssetManager
+import kpt.core.network.main.localAssets.JvmLocalAssetManager
+import kpt.core.network.main.localAssets.LocalAssetManager
 import org.koin.dsl.module
 val LocalModule = module {
     single<LocalAssetManager> {

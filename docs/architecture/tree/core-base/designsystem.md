@@ -48,7 +48,7 @@ KptMaterialTheme {
 
 </details>
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayScreen.kt:330</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayScreen.kt:329</code></summary>
 
 ```kotlin
 @org.jetbrains.compose.ui.tooling.preview.Preview
@@ -78,7 +78,7 @@ KptMaterialTheme(
 
 </details>
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayScreen.kt:330</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayScreen.kt:329</code></summary>
 
 ```kotlin
 @org.jetbrains.compose.ui.tooling.preview.Preview
@@ -107,7 +107,7 @@ KptMaterialTheme(themeBuilder = { isDark ->
 
 </details>
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/org/mifospay/feature/fastmpay/FastMpayScreen.kt:330</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayScreen.kt:329</code></summary>
 
 ```kotlin
 @org.jetbrains.compose.ui.tooling.preview.Preview
@@ -144,7 +144,7 @@ KptTheme {
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:198</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:197</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
@@ -855,7 +855,7 @@ enum class SlideDirection
 ```
 Direction a `KptSlideTransition` enters from.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/utils/Transition.kt:274</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:274</code></summary>
 
 ```kotlin
         val slideUp: NonNullEnterTransitionProvider = {
@@ -997,7 +997,7 @@ interface Clickable
 ```
 Mixed into components that respond to a tap. `interactionSource` is exposed so a caller can hoist ripple/press state — a component that owns it privately cannot participate in a parent's interaction handling.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantsItem.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantsItem.kt:44</code></summary>
 
 ```kotlin
 ) {
@@ -1120,7 +1120,7 @@ interface Animatable
 ```
 Mixed into components with a tunable transition. See `theme/Motion.kt` for the shared durations; overriding per component is what makes an app's motion feel inconsistent.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/LoadingWheel.kt:62</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/LoadingWheel.kt:61</code></summary>
 
 ```kotlin
     // Specifies the float animation for slowly drawing out the lines on entering
@@ -1176,16 +1176,13 @@ interface KptColorScheme
 ```
 The full Material 3 color role set. Roles, not literal colors — a component asks for `onSurfaceVariant`, never a hex value, so light and dark themes and a fork's palette all work without touching the component.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/KptTheme.kt:50</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/ColorScheme.kt:226</code></summary>
 
 ```kotlin
-        androidTheme -> if (darkTheme) darkColorScheme() else lightColorScheme()
-        else -> if (darkTheme) darkScheme else lightScheme
-    }.toKptColorScheme()
+)
 
-    val mifosTypography = Typography().toKptTypography(fontFamily)
-
-    val themeProvider = KptThemeProviderImpl(
+val lightKptColorScheme = LightDefaultColorScheme.toKptColorScheme()
+val darkKptColorScheme = DarkDefaultColorScheme.toKptColorScheme()
 ```
 
 </details>
@@ -1246,7 +1243,7 @@ interface KptShapes
 ```
 The corner-shape scale, from `extraSmall` to `extraLarge`, applied by component size rather than chosen per call site.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/ThemeExtensions.kt:33</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/ThemeExtensions.kt:33</code></summary>
 
 ```kotlin
  */
@@ -1988,7 +1985,7 @@ object KptTheme
 ```
 Composition-local accessor for the active design language — `KptTheme.colors`, `.typography`, `.shapes`, `.spacing`, `.elevation`. The read side of the theme; `kptTheme` is the write side.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:198</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:197</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),

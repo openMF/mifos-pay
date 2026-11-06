@@ -239,16 +239,16 @@ val stagingClient = httpClient {
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt:28</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:101</code></summary>
 
 ```kotlin
- * without recreating the HTTP client.
- */
-class DynamicBaseUrlPlugin private constructor(
-    private val configProvider: DynamicUrlConfigProvider?,
-    private val multiConfigProvider: MultiUrlConfigProvider?,
-    private val urlType: MultiUrlConfigProvider.UrlType,
-) {
+                            socketTimeoutMillis = 30_000
+                        }
+                        install(DynamicBaseUrlPlugin) {
+                            multiConfigProvider = configManager
+                            urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
+                        }
+                        install(KtorInterceptor) {
 ```
 
 </details>
@@ -294,16 +294,16 @@ val client = httpClient(
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt:104</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:89</code></summary>
 
 ```kotlin
- * A dynamic list that provides loggable hosts from a [DynamicUrlConfigProvider].
- */
-class DynamicLoggableHosts(
-    private val configProvider: DynamicUrlConfigProvider,
-) : AbstractList<String>() {
-
-    override val size: Int
+                            baseUrl = "https://placeholder.local/",
+                            // Dynamic loggable hosts - reads current endpoints from configManager
+                            loggableHosts = DynamicLoggableHosts(configManager),
+                        ),
+                    ).config {
+                        // Fail-fast connect/request timeouts. The corebase default sets
+                        // request+socket to 60s but no connectTimeout; a shorter connect
 ```
 
 </details>
@@ -617,7 +617,7 @@ enum class NetworkError
 ```
 Represents standardized error types for remote or network operations. This enum is typically used with the `NetworkResult.Error` variant to describe what kind of failure occurred.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/KptErrorMapper.kt:56</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:56</code></summary>
 
 ```kotlin
                 ScreenState.Unauthenticated
@@ -748,15 +748,16 @@ if (configClient.isConfigured) {
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/lwmswhoxvvoagzkqxiyd/appserverconfig/api/impl/ServerInstanceApiImpl.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt:19</code></summary>
 
 ```kotlin
-@ApiBinding("lwmswhoxvvoagzkqxiyd")
-class ServerInstanceApiImpl(
-    private val supabase: SupabaseConfigClient,
-) : ServerInstanceApi {
-
-    override val isConfigured: Boolean get() = supabase.isConfigured
+ */
+class SupabaseApiManager(
+    private val supabaseClient: SupabaseConfigClient,
+) {
+    val appConfigService by lazy {
+        AppConfigService(supabaseClient.postgrest)
+    }
 ```
 
 </details>

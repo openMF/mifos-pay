@@ -30,7 +30,7 @@ import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillStatus
 import kpt.core.model.autopay.RecurrencePattern
 import kpt.core.network.FineractApiManager
-import kpt.core.network.services.BillStatisticsResponse
+import kpt.core.network.main.services.BillStatisticsResponse
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

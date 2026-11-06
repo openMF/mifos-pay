@@ -9,6 +9,8 @@ Screens: `EditProfileScreen`, `ProfileScreen`
 
 ViewModels: `EditProfileViewModel`, `ProfileViewModel`
 
+**Consumes:** `core/store/repository`
+
 ### Docs in the tree
 
 | Path | |
@@ -23,10 +25,10 @@ only the app's display name, yet it is a real domain model rather than a raw `St
 replaces the *fetcher*, not the screen. Swapping in a signed-in user means widening the model and
 returning it from the store, with the ViewModel and composable untouched.
 
-<!-- api-docs:begin module=feature/profile sha=78193e5e185dc9e445ffacf95bfe71bce7003998 -->
+<!-- api-docs:begin module=feature/profile sha=446ca11efe2b83c9618d40da0a9d418855012cf3 -->
 ## API reference
 
-_Generated from `feature/profile` at tree `78193e5e185d` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/profile` at tree `446ca11efe2b` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -74,14 +76,14 @@ Append-only test-tag registry for the profile feature. Consumed by Compose UI te
 
 - `const val SCREEN: String = "profile_screen"` — Root scaffold — always rendered regardless of content state.
 
-### `feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/components/ProfileCard.kt`
+### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/components/ProfileCard.kt`
 
 ```kotlin
 fun ProfileDetailsCard(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/ProfileScreen.kt:143</code></summary>
+<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/fork/ProfileScreen.kt:146</code></summary>
 
 ```kotlin
         ProfileImage(bitmap = clientImage)
@@ -99,14 +101,14 @@ fun ProfileItem(
 ```
 _No KDoc at source._
 
-### `feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/components/ProfileImage.kt`
+### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/components/ProfileImage.kt`
 
 ```kotlin
 fun ProfileImage(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/ProfileScreen.kt:141</code></summary>
+<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/fork/ProfileScreen.kt:144</code></summary>
 
 ```kotlin
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
@@ -125,7 +127,7 @@ fun EditableProfileImage(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/edit/EditProfileScreen.kt:120</code></summary>
+<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileScreen.kt:119</code></summary>
 
 ```kotlin
         ) {
@@ -139,21 +141,21 @@ _No KDoc at source._
 
 </details>
 
-### `feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/di/ProfileModule.kt`
+### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/di/ProfileModule.kt`
 
 ```kotlin
 val ProfileModule = module
 ```
 _No KDoc at source._
 
-### `feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/edit/EditProfileViewModel.kt`
+### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileViewModel.kt`
 
 ```kotlin
 sealed interface EditProfileEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/edit/EditProfileScreen.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileScreen.kt:67</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -172,7 +174,7 @@ sealed interface EditProfileAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/edit/EditProfileScreen.kt:90</code></summary>
+<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileScreen.kt:89</code></summary>
 
 ```kotlin
             dialogState = state.dialogState,
@@ -186,14 +188,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/navigation/EditProfileNavigation.kt`
+### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/navigation/EditProfileNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToEditProfile(navOptions: NavOptions? = null) =
 ```
 _No KDoc at source._
 
-### `feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/navigation/ProfileNavigation.kt`
+### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/navigation/ProfileNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToProfile(navOptions: NavOptions? = null)

@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_NETWORK.md`
-> **Measured:** 80 Kotlin files, 13 test files
+> **Measured:** 84 Kotlin files, 14 test files
 
 ## Codegen contracts owned here
 
@@ -22,11 +22,139 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/network sha=7f2411dd1d29836044c23b53a5073ed9dc1f810b -->
+<!-- api-docs:begin module=core/network sha=dbc09033f81a57ff6a05c6a98a237aa6cdb3db07 -->
 ## API reference
 
-_Generated from `core/network` at tree `7f2411dd1d29` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/network` at tree `dbc09033f81a` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/FineractApiManager.kt`
+
+```kotlin
+class FineractApiManager(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:49</code></summary>
+
+```kotlin
+// TODO use self api for account operations later
+class AccountRepositoryImpl(
+    private val apiManager: FineractApiManager,
+    private val selfManager: SelfServiceApiManager,
+    private val ioDispatcher: CoroutineDispatcher,
+    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
+    // store-backed getSelfAccountsScreen(...) can consume Store5 via
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/InterBankApiManager.kt`
+
+```kotlin
+class InterBankApiManager(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:27</code></summary>
+
+```kotlin
+import kpt.core.network.InterBankApiManager
+class InterBankRepositoryImpl(
+    private val apiManager: InterBankApiManager,
+    private val ioDispatcher: CoroutineDispatcher,
+) : InterBankRepository {
+
+    override suspend fun fetchParticipant(
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt`
+
+```kotlin
+class KtorfitClient(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/data/src/commonTest/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryTest.kt:155</code></summary>
+
+```kotlin
+ */
+private val fakeSelfServiceApiManager = SelfServiceApiManager(
+    KtorfitClient(
+        Ktorfit.Builder()
+            .httpClient(HttpClient())
+            .baseUrl("https://example.com/")
+            .build(),
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/PocketDataManager.kt`
+
+```kotlin
+interface PocketDataManager
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SelfServiceApiManager.kt:14</code></summary>
+
+```kotlin
+class SelfServiceApiManager(
+    private val ktorfitClient: KtorfitClient,
+) : PocketDataManager {
+    val authenticationApi by lazy { ktorfitClient.authenticationApi }
+
+    override val clientsApi by lazy { ktorfitClient.clientsApi }
+```
+
+</details>
+
+- `val clientsApi: ClientService`
+- `val pocketApi: PocketService`
+- `val shareAccountApi: ShareAccountService`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/SelfServiceApiManager.kt`
+
+```kotlin
+class SelfServiceApiManager(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:50</code></summary>
+
+```kotlin
+class AccountRepositoryImpl(
+    private val apiManager: FineractApiManager,
+    private val selfManager: SelfServiceApiManager,
+    private val ioDispatcher: CoroutineDispatcher,
+    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
+    // store-backed getSelfAccountsScreen(...) can consume Store5 via
+    // asScreenStream(...). Nullable-default so existing unit tests without the
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt`
+
+```kotlin
+class SupabaseApiManager(
+```
+API manager for Supabase services. Similar to FineractApiManager but for Supabase-based APIs.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/SupabaseInstanceConfigLoader.kt:28</code></summary>
+
+```kotlin
+ */
+class SupabaseInstanceConfigLoader(
+    private val supabaseApiManager: SupabaseApiManager,
+    private val ioDispatcher: CoroutineDispatcher,
+    private val json: Json,
+) : InstanceConfigLoader {
+```
+
+</details>
 
 ### `core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt`
 
@@ -84,6 +212,51 @@ Project-level catalogue of named API endpoints for runtime base-URL switching (s
 - `val LWMSWHOXVVOAGZKQXIYD: UrlType = UrlType("LWMSWHOXVVOAGZKQXIYD")` — `lwmswhoxvvoagzkqxiyd` — Supabase access point.
 - `val all: List<UrlType> = listOf(` — Every declared endpoint type, in app-profile order.
 
+### `core/network/src/commonMain/kotlin/kpt/core/network/config/InstanceConfigLoader.kt`
+
+```kotlin
+interface InstanceConfigLoader
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/SupabaseInstanceConfigLoader.kt:31</code></summary>
+
+```kotlin
+    private val ioDispatcher: CoroutineDispatcher,
+    private val json: Json,
+) : InstanceConfigLoader {
+
+    override suspend fun fetchInstancesConfig(): InstancesConfig {
+        if (!supabaseApiManager.isConfigured) {
+            return loadFallbackConfig()
+```
+
+</details>
+
+- `suspend fun fetchInstancesConfig(): InstancesConfig`
+- `fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/config/InstanceConfigManager.kt`
+
+```kotlin
+class InstanceConfigManager(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:32</code></summary>
+
+```kotlin
+class LoginViewModel(
+    private val loginUseCase: LoginUseCase,
+    private val instanceConfigManager: InstanceConfigManager,
+    savedStateHandle: SavedStateHandle,
+) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
+    initialState = savedStateHandle.getSerialized(KEY_STATE)
+        ?: LoginState(dialogState = null),
+```
+
+</details>
+
 ### `core/network/src/commonMain/kotlin/kpt/core/network/config/KptNetworkHeaders.kt`
 
 ```kotlin
@@ -117,6 +290,27 @@ object KptNetworkHeaders : DefaultHeaderProvider {
     // Every declared endpoint's Koin binding, GENERATED from app-profile#network.access_points into
     // the sibling [GeneratedApiBindings] (same package — no import, so this file keeps its zero-demo
     // -imports property and stays blind-copyable on a template sync). It lives HERE rather than in the
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/config/SupabaseInstanceConfigLoader.kt`
+
+```kotlin
+class SupabaseInstanceConfigLoader(
+```
+Instance config loader that fetches configuration from Supabase. Uses SupabaseApiManager for API interactions.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:63</code></summary>
+
+```kotlin
+
+    single<InstanceConfigLoader> {
+        SupabaseInstanceConfigLoader(
+            supabaseApiManager = get(),
+            ioDispatcher = get(ioDispatcher),
+            json = get(),
+        )
 ```
 
 </details>
@@ -155,12 +349,99 @@ includes(kmpSupabaseAuthNetwork(authConfig) { get<SupabaseClientFactory>().requi
 
 </details>
 
+### `core/network/src/commonMain/kotlin/kpt/core/network/di/LocalModule.kt`
+
+```kotlin
+val LocalModule = module
+```
+_No KDoc at source._
+
 ### `core/network/src/commonMain/kotlin/kpt/core/network/di/NetworkModule.kt`
 
 ```kotlin
 val NetworkModule = module
 ```
 Koin module for `core/network` — the Ktorfit API bindings over the shared client.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/RepositoryModule.kt:39</code></summary>
+
+```kotlin
+ */
+val DataModule = module {
+    includes(platformModule, CommonModule, DatabaseModule, DatastoreModule, NetworkModule)
+
+    // Every repository's Koin binding, GENERATED from `@RepositoryBinding` on the implementation.
+    // Emitted into this same package, so this file needs no import and keeps its zero-demo-reference
+    // property — which is what lets a template sync blind-copy it. A stripped fork simply generates
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/di/Qualifier.kt`
+
+```kotlin
+val SelfClient = named("SelfClient")
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:78</code></summary>
+
+```kotlin
+    }
+
+    single<KtorfitClient>(qualifier = SelfClient) {
+        val preferencesRepository = get<ForkPreferencesRepository>()
+        val configManager = get<InstanceConfigManager>()
+        KtorfitClient(
+            Ktorfit.Builder()
+```
+
+</details>
+
+```kotlin
+val BaseClient = named("BaseClient")
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:116</code></summary>
+
+```kotlin
+    }
+
+    single<KtorfitClient>(qualifier = BaseClient) {
+        val configManager = get<InstanceConfigManager>()
+        KtorfitClient(
+            Ktorfit.Builder()
+                .httpClient(
+```
+
+</details>
+
+```kotlin
+val InterBankClient = named("InterBankClient")
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:157</code></summary>
+
+```kotlin
+    }
+
+    single<KtorfitClient>(qualifier = InterBankClient) {
+        val configManager = get<InstanceConfigManager>()
+        KtorfitClient(
+            Ktorfit.Builder()
+                .httpClient(
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt`
+
+```kotlin
+val NetworkModule = module
+```
+_No KDoc at source._
 
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/RepositoryModule.kt:39</code></summary>
 
@@ -244,6 +525,856 @@ data class RemoteDemoAccountDto(val role: String, val username: String, val pass
 ```
 A PUBLISHED demo sign-in of a public demo instance — public by design, not a credential to protect.
 
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/LocalAssetDataSource.kt`
+
+```kotlin
+interface LocalAssetDataSource
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/MifosLocalAssetDataSource.kt:20</code></summary>
+
+```kotlin
+    private val ioDispatcher: CoroutineDispatcher,
+    private val networkJson: Json,
+) : LocalAssetDataSource {
+
+    override suspend fun getCountries(): List<Country> {
+        return emptyList()
+    }
+```
+
+</details>
+
+- `suspend fun getCountries(): List<Country>`
+- `suspend fun getStateList(): List<State>`
+- `suspend fun getBanks(): List<String>`
+- `suspend fun getCities(): List<City>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/LocalAssetManager.kt`
+
+```kotlin
+fun interface LocalAssetManager
+```
+_No KDoc at source._
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/MifosLocalAssetDataSource.kt`
+
+```kotlin
+class MifosLocalAssetDataSource(
+```
+_No KDoc at source._
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/AccountTransfersService.kt`
+
+```kotlin
+interface AccountTransfersService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:54</code></summary>
+
+```kotlin
+    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
+
+    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
+
+    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
+
+    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
+```
+
+</details>
+
+- `fun getTransaction(`
+- `fun getAccountTransfer(@Path("transferId") transferId: Int): Flow<TransferDetail>`
+- `fun searchAccounts(`
+- `suspend fun makeTransfer(`
+- `fun getAccountTransferTemplate(): Flow<AccountOptionsTemplate>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/AppConfigService.kt`
+
+```kotlin
+class AppConfigService(
+```
+Service for interacting with app_config table in Supabase.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt:22</code></summary>
+
+```kotlin
+) {
+    val appConfigService by lazy {
+        AppConfigService(supabaseClient.postgrest)
+    }
+
+    val isConfigured: Boolean get() = supabaseClient.isConfigured
+}
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/AuthenticationService.kt`
+
+```kotlin
+interface AuthenticationService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:40</code></summary>
+
+```kotlin
+    ktorfit: Ktorfit,
+) {
+    internal val authenticationApi by lazy { ktorfit.createAuthenticationService() }
+
+    internal val clientsApi by lazy { ktorfit.createClientService() }
+
+    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
+```
+
+</details>
+
+- `suspend fun authenticate(@Body authPayload: AuthenticationPayload): User`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/AutoPayService.kt`
+
+```kotlin
+interface AutoPayService
+```
+TODO: Sync with backend team and update service layer according to finalized API contract, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:72</code></summary>
+
+```kotlin
+    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
+
+    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
+
+    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
+
+    internal val interBankApi by lazy { ktorfit.createInterBankService() }
+```
+
+</details>
+
+- `fun getAutoPayTemplate(` — Get AutoPay template for creating new AutoPay schedules
+- `fun getAllAutoPaySchedules(` — Get all AutoPay schedules for a client
+- `fun getAutoPaySchedule(` — Get AutoPay schedule by ID
+- `suspend fun createAutoPaySchedule(` — Create a new AutoPay schedule
+- `suspend fun updateAutoPaySchedule(` — Update an existing AutoPay schedule
+- `suspend fun deleteAutoPaySchedule(` — Delete an AutoPay schedule
+- `suspend fun pauseAutoPaySchedule(` — Pause an AutoPay schedule
+- `suspend fun resumeAutoPaySchedule(` — Resume a paused AutoPay schedule
+- `fun getAutoPayHistory(` — Get AutoPay payment history
+- `fun getUpcomingPayments(` — Get upcoming payments for all AutoPay schedules
+- `fun getAutoPayStatistics(` — Get AutoPay statistics for dashboard
+
+```kotlin
+data class AutoPayStatisticsResponse(
+```
+_No KDoc at source._
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/BeneficiaryService.kt`
+
+```kotlin
+interface BeneficiaryService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:74</code></summary>
+
+```kotlin
+    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
+
+    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
+
+    internal val interBankApi by lazy { ktorfit.createInterBankService() }
+
+    internal val officeApi by lazy { ktorfit.createOfficeService() }
+```
+
+</details>
+
+- `fun beneficiaryList(): Flow<List<Beneficiary>>`
+- `suspend fun beneficiaryTemplate(): Flow<BeneficiaryTemplate>`
+- `suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryPayload)`
+- `suspend fun updateBeneficiary(`
+- `suspend fun deleteBeneficiary(@Path("beneficiaryId") beneficiaryId: Long): Unit`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/BillService.kt`
+
+```kotlin
+interface BillService
+```
+TODO: Update endpoint paths when backend APIs are finalized, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:82</code></summary>
+
+```kotlin
+    internal val billerApi by lazy { ktorfit.createBillerService() }
+
+    internal val billApi by lazy { ktorfit.createBillService() }
+
+    internal val pocketApi by lazy { ktorfit.createPocketService() }
+
+    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
+```
+
+</details>
+
+- `fun getAllBills(@Query("clientId") clientId: Long): Flow<List<Bill>>`
+- `suspend fun getBillById(@Path("billId") billId: String): Flow<Bill>`
+- `suspend fun createBill(@Body bill: Bill): Flow<Bill>`
+- `suspend fun updateBill(`
+- `suspend fun deleteBill(@Path("billId") billId: String): Flow<Unit>`
+- `suspend fun getBillsByStatus(@Path("status") status: BillStatus): Flow<List<Bill>>`
+- `suspend fun getBillsByBillerId(@Path("billerId") billerId: String): Flow<List<Bill>>`
+- `suspend fun getBillsByRecurrencePattern(@Path("pattern") pattern: RecurrencePattern): Flow<List<Bill>>`
+- `suspend fun searchBillsByName(@Query("query") query: String): Flow<List<Bill>>`
+- `suspend fun getOverdueBills(): Flow<List<Bill>>`
+- `suspend fun getUpcomingBills(`
+- `suspend fun updateBillStatus(`
+- `fun getBillStatistics(@Query("clientId") clientId: Long): Flow<BillStatisticsResponse>`
+- `suspend fun clearAllBills(): Flow<Unit>`
+
+```kotlin
+data class BillStatisticsResponse(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt:168</code></summary>
+
+```kotlin
+        return apiManager.billApi
+            .getBillStatistics(clientId)
+            .map { response: BillStatisticsResponse ->
+                BillStatistics(
+                    totalBills = response.totalBills,
+                    activeBills = response.activeBills,
+                    overdueBills = response.overdueBills,
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/BillerService.kt`
+
+```kotlin
+interface BillerService
+```
+TODO: Update endpoint paths when backend APIs are finalized, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:80</code></summary>
+
+```kotlin
+    internal val officeApi by lazy { ktorfit.createOfficeService() }
+
+    internal val billerApi by lazy { ktorfit.createBillerService() }
+
+    internal val billApi by lazy { ktorfit.createBillService() }
+
+    internal val pocketApi by lazy { ktorfit.createPocketService() }
+```
+
+</details>
+
+- `fun getAllBillers(): Flow<List<Biller>>`
+- `suspend fun getBillerById(@Path("billerId") billerId: String): Flow<Biller>`
+- `suspend fun createBiller(@Body biller: Biller): Flow<Biller>`
+- `suspend fun updateBiller(`
+- `suspend fun deleteBiller(@Path("billerId") billerId: String): Flow<Unit>`
+- `suspend fun getBillersByCategory(`
+- `suspend fun searchBillersByName(`
+- `suspend fun isBillerExists(`
+- `suspend fun clearAllBillers(): Flow<Unit>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/ClientService.kt`
+
+```kotlin
+interface ClientService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:42</code></summary>
+
+```kotlin
+    internal val authenticationApi by lazy { ktorfit.createAuthenticationService() }
+
+    internal val clientsApi by lazy { ktorfit.createClientService() }
+
+    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
+
+    internal val searchApi by lazy { ktorfit.createSearchService() }
+```
+
+</details>
+
+- `suspend fun clients(): Flow<Page<ClientEntity>>`
+- `suspend fun getClientForId(@Path("clientId") clientId: Long): ClientEntity`
+- `fun getClient(@Path("clientId") clientId: Long): Flow<ClientEntity>`
+- `suspend fun updateClient(`
+- `fun getClientImage(@Path("clientId") clientId: Long): Flow<String>`
+- `suspend fun updateClientImage(`
+- `suspend fun getClientAccounts(@Path("clientId") clientId: Long): ClientAccountsEntity`
+- `fun getAccounts(`
+- `suspend fun createClient(@Body newClient: NewClientEntity): ClientResponseEntity`
+- `suspend fun deleteClient(@Path("clientId") clientId: Int): ClientResponseEntity`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/DocumentService.kt`
+
+```kotlin
+interface DocumentService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:48</code></summary>
+
+```kotlin
+    internal val searchApi by lazy { ktorfit.createSearchService() }
+
+    internal val documentApi by lazy { ktorfit.createDocumentService() }
+
+    internal val runReportApi by lazy { ktorfit.createRunReportService() }
+
+    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
+```
+
+</details>
+
+- `suspend fun getDocuments(`
+- `suspend fun createDocument(`
+- `suspend fun createDocumentFile(`
+- `suspend fun downloadDocument(` — This Service is for downloading the Document with EntityType and EntityId and Document Id Rest End Point : https://demo.openmf.org/fineract-provider/api/v1/{entityType}/{entityId}/documents/ {documentId}/attachment
+- `suspend fun removeDocument(` — This Service is for Deleting the Document with EntityType and EntityId and Document Id.
+- `suspend fun updateDocument(` — This Service for Updating the Document with EntityType and EntityId and Document Id.
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/InterBankService.kt`
+
+```kotlin
+interface InterBankService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:76</code></summary>
+
+```kotlin
+    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
+
+    internal val interBankApi by lazy { ktorfit.createInterBankService() }
+
+    internal val officeApi by lazy { ktorfit.createOfficeService() }
+
+    internal val billerApi by lazy { ktorfit.createBillerService() }
+```
+
+</details>
+
+- `suspend fun fetchParticipant(`
+- `suspend fun fetchPartyInfo(`
+- `suspend fun interBankMakeTransfer(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/InvoiceService.kt`
+
+```kotlin
+interface InvoiceService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:60</code></summary>
+
+```kotlin
+    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
+
+    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
+
+    internal val userApi by lazy { ktorfit.createUserService() }
+
+    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
+```
+
+</details>
+
+- `fun getInvoices(@Path("clientId") clientId: Long): Flow<List<Invoice>>`
+- `fun getInvoice(`
+- `suspend fun addInvoice(`
+- `suspend fun updateInvoice(`
+- `suspend fun deleteInvoice(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/KYCLevel1Service.kt`
+
+```kotlin
+interface KYCLevel1Service
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:58</code></summary>
+
+```kotlin
+    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
+
+    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
+
+    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
+
+    internal val userApi by lazy { ktorfit.createUserService() }
+```
+
+</details>
+
+- `fun fetchKYCLevel1Details(@Path("clientId") clientId: Long): Flow<List<KYCLevel1Details>>`
+- `suspend fun addKYCLevel1Details(`
+- `suspend fun updateKYCLevel1Details(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/NotificationService.kt`
+
+```kotlin
+interface NotificationService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:66</code></summary>
+
+```kotlin
+    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
+
+    internal val notificationApi by lazy { ktorfit.createNotificationService() }
+
+    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
+
+    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
+```
+
+</details>
+
+- `fun fetchNotifications(@Query("isRead") isRead: Boolean): Flow<NotificationPayload>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/OfficeService.kt`
+
+```kotlin
+interface OfficeService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:78</code></summary>
+
+```kotlin
+    internal val interBankApi by lazy { ktorfit.createInterBankService() }
+
+    internal val officeApi by lazy { ktorfit.createOfficeService() }
+
+    internal val billerApi by lazy { ktorfit.createBillerService() }
+
+    internal val billApi by lazy { ktorfit.createBillService() }
+```
+
+</details>
+
+- `fun getOffices(): Flow<List<Office>>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/PocketService.kt`
+
+```kotlin
+interface PocketService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:84</code></summary>
+
+```kotlin
+    internal val billApi by lazy { ktorfit.createBillService() }
+
+    internal val pocketApi by lazy { ktorfit.createPocketService() }
+
+    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
+}
+```
+
+</details>
+
+- `suspend fun getPocketAccounts(): PocketResponseDto`
+- `suspend fun linkAccounts(`
+- `suspend fun delinkAccounts(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/RegistrationService.kt`
+
+```kotlin
+interface RegistrationService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:44</code></summary>
+
+```kotlin
+    internal val clientsApi by lazy { ktorfit.createClientService() }
+
+    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
+
+    internal val searchApi by lazy { ktorfit.createSearchService() }
+
+    internal val documentApi by lazy { ktorfit.createDocumentService() }
+```
+
+</details>
+
+- `suspend fun registerUser(@Body registerPayload: RegisterPayload)`
+- `suspend fun verifyUser(@Body userVerify: UserVerify)`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/RunReportService.kt`
+
+```kotlin
+interface RunReportService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:50</code></summary>
+
+```kotlin
+    internal val documentApi by lazy { ktorfit.createDocumentService() }
+
+    internal val runReportApi by lazy { ktorfit.createRunReportService() }
+
+    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
+
+    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
+```
+
+</details>
+
+- `suspend fun getTransactionReceipt(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/SavedCardService.kt`
+
+```kotlin
+interface SavedCardService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:56</code></summary>
+
+```kotlin
+    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
+
+    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
+
+    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
+
+    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
+```
+
+</details>
+
+- `fun getSavedCards(@Path("clientId") clientId: Long): Flow<List<SavedCard>>`
+- `fun getSavedCard(`
+- `suspend fun addSavedCard(`
+- `suspend fun updateCard(`
+- `suspend fun deleteCard(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/SavingsAccountsService.kt`
+
+```kotlin
+interface SavingsAccountsService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:68</code></summary>
+
+```kotlin
+    internal val notificationApi by lazy { ktorfit.createNotificationService() }
+
+    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
+
+    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
+
+    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
+```
+
+</details>
+
+- `fun getSavingsWithAssociations(`
+- `suspend fun getSavingsAccounts(`
+- `suspend fun createSavingsAccount(@Body savingAccount: CreateNewSavingEntity)`
+- `suspend fun updateSavingsAccount(`
+- `suspend fun blockUnblockAccount(`
+- `suspend fun getSavingAccountTransaction(`
+- `suspend fun payViaMobile(@Path("accountId") accountId: Long): Flow<TransactionsEntity>`
+- `fun getSavingAccountTemplate(@Query("clientId") clientId: Long): Flow<SavingAccountTemplate>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/SearchService.kt`
+
+```kotlin
+interface SearchService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:46</code></summary>
+
+```kotlin
+    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
+
+    internal val searchApi by lazy { ktorfit.createSearchService() }
+
+    internal val documentApi by lazy { ktorfit.createDocumentService() }
+
+    internal val runReportApi by lazy { ktorfit.createRunReportService() }
+```
+
+</details>
+
+- `suspend fun searchResources(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/ShareAccountService.kt`
+
+```kotlin
+interface ShareAccountService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:86</code></summary>
+
+```kotlin
+    internal val pocketApi by lazy { ktorfit.createPocketService() }
+
+    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
+}
+```
+
+</details>
+
+- `fun getShareAccountDetails(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/StandingInstructionService.kt`
+
+```kotlin
+interface StandingInstructionService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:70</code></summary>
+
+```kotlin
+    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
+
+    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
+
+    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
+
+    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
+```
+
+</details>
+
+- `fun getStandingInstructionTemplate(`
+- `fun getAllStandingInstructions(`
+- `fun getStandingInstruction(`
+- `suspend fun createStandingInstruction(`
+- `suspend fun deleteStandingInstruction(`
+- `suspend fun updateStandingInstruction(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/ThirdPartyTransferService.kt`
+
+```kotlin
+interface ThirdPartyTransferService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:64</code></summary>
+
+```kotlin
+    internal val userApi by lazy { ktorfit.createUserService() }
+
+    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
+
+    internal val notificationApi by lazy { ktorfit.createNotificationService() }
+
+    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
+```
+
+</details>
+
+- `suspend fun accountTransferTemplate(): AccountOptionsTemplate`
+- `suspend fun makeTransfer(@Body transferPayload: TransferPayload): TPTResponse`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/TwoFactorAuthService.kt`
+
+```kotlin
+interface TwoFactorAuthService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:52</code></summary>
+
+```kotlin
+    internal val runReportApi by lazy { ktorfit.createRunReportService() }
+
+    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
+
+    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
+
+    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
+```
+
+</details>
+
+- `suspend fun deliveryMethods(): Flow<List<DeliveryMethod>>`
+- `suspend fun requestOTP(@Query("deliveryMethod") deliveryMethod: String): Flow<String>`
+- `suspend fun validateToken(@Query("token") token: String): Flow<AccessToken>`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/UserService.kt`
+
+```kotlin
+interface UserService
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:62</code></summary>
+
+```kotlin
+    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
+
+    internal val userApi by lazy { ktorfit.createUserService() }
+
+    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
+
+    internal val notificationApi by lazy { ktorfit.createNotificationService() }
+```
+
+</details>
+
+- `suspend fun users(): Flow<List<UserWithRole>>`
+- `suspend fun createUser(@Body user: NewUserEntity): CommonResponse`
+- `suspend fun updateUser(`
+- `suspend fun updateUserPassword(`
+- `suspend fun deleteUser(`
+- `suspend fun getUser(): Flow<UserWithRole>`
+- `suspend fun assignClientToUser(`
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/utils/ApiEndPoints.kt`
+
+```kotlin
+object ApiEndPoints
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/AccountTransfersService.kt:26</code></summary>
+
+```kotlin
+interface AccountTransfersService {
+
+    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}/transactions/{transactionId}")
+    fun getTransaction(
+        @Path("accountId") clientId: Long,
+        @Path("transactionId") transactionId: Long,
+    ): Flow<TransactionsEntity>
+```
+
+</details>
+
+- `const val AUTHENTICATION = "authentication"`
+- `const val AUTHENTICATION_OAUTH = "oauth/token"`
+- `const val REGISTRATION = "registration"`
+- `const val CLIENTS = "clients"`
+- `const val SAVINGS_ACCOUNTS = "savingsaccounts"`
+- `const val TRANSACTIONS = "transactions"`
+- `const val RECURRING_ACCOUNTS = "recurringdepositaccounts"`
+- `const val SEARCH = "search"`
+- `const val BENEFICIARIES = "beneficiaries"`
+- `const val ACCOUNT_TRANSFER = "accounttransfers"`
+- `const val DOCUMENTS = "documents"`
+- `const val DATATABLES = "datatables"`
+- `const val TWOFACTOR = "twofactor"`
+- `const val RUN_REPORT = "runreports"`
+  _…more members; read the file._
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/utils/BaseURL.kt`
+
+```kotlin
+class BaseURL(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:75</code></summary>
+
+```kotlin
+
+    single {
+        BaseURL(configManager = get())
+    }
+
+    single<KtorfitClient>(qualifier = SelfClient) {
+        val preferencesRepository = get<ForkPreferencesRepository>()
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/utils/FlowConverterFactory.kt`
+
+```kotlin
+public class FlowConverterFactory : Converter.Factory
+```
+Factory that enables the use of Flow<T> as return type
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:111</code></summary>
+
+```kotlin
+                    },
+                )
+                .converterFactories(FlowConverterFactory())
+                .build(),
+        )
+    }
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/utils/KtorInterceptor.kt`
+
+```kotlin
+class KtorInterceptor(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:105</code></summary>
+
+```kotlin
+                            urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
+                        }
+                        install(KtorInterceptor) {
+                            getToken = { preferencesRepository.authToken }
+                            this.configManager = configManager
+                        }
+                    },
+```
+
+</details>
+
+```kotlin
+class Config
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt:274</code></summary>
+
+```kotlin
+                    htmlContent = html,
+                    fileName = "transaction_history.pdf",
+                    pageConfig = PageConfig(),
+                )
+            } catch (e: PdfError) {
+                sendEvent(HistoryEvent.PdfExportError(message = "Couldn't export PDF: ${e.message}"))
+            }
+```
+
+</details>
+
+```kotlin
+class KtorInterceptorRe(
+```
+_No KDoc at source._
+
+```kotlin
+class ConfigRe
+```
+_No KDoc at source._
+
 ### `core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt`
 
 ```kotlin
@@ -251,7 +1382,7 @@ class DynamicBaseUrlPlugin private constructor(
 ```
 Ktor plugin that dynamically sets the base URL for each request based on a `DynamicUrlConfigProvider` or `MultiUrlConfigProvider`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:94</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:101</code></summary>
 
 ```kotlin
                             socketTimeoutMillis = 30_000
@@ -289,7 +1420,7 @@ class DynamicLoggableHosts(
 ```
 A dynamic list that provides loggable hosts from a `DynamicUrlConfigProvider`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:82</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:89</code></summary>
 
 ```kotlin
                             baseUrl = "https://placeholder.local/",
@@ -375,7 +1506,7 @@ enum class NetworkError
 ```
 Represents standardized error types for remote or network operations. This enum is typically used with the `NetworkResult.Error` variant to describe what kind of failure occurred.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/KptErrorMapper.kt:56</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:56</code></summary>
 
 ```kotlin
                 ScreenState.Unauthenticated
@@ -416,15 +1547,16 @@ class SupabaseConfigClient(
 ```
 Generic Supabase client wrapper for configuration/data fetching. Projects provide their own credentials implementation.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/lwmswhoxvvoagzkqxiyd/appserverconfig/api/impl/ServerInstanceApiImpl.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt:19</code></summary>
 
 ```kotlin
-@ApiBinding("lwmswhoxvvoagzkqxiyd")
-class ServerInstanceApiImpl(
-    private val supabase: SupabaseConfigClient,
-) : ServerInstanceApi {
-
-    override val isConfigured: Boolean get() = supabase.isConfigured
+ */
+class SupabaseApiManager(
+    private val supabaseClient: SupabaseConfigClient,
+) {
+    val appConfigService by lazy {
+        AppConfigService(supabaseClient.postgrest)
+    }
 ```
 
 </details>
@@ -483,1137 +1615,6 @@ class ResultSuspendConverterFactory : Converter.Factory {
 ```
 
 </details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/FineractApiManager.kt`
-
-```kotlin
-class FineractApiManager(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/AccountRepositoryImpl.kt:48</code></summary>
-
-```kotlin
-// TODO use self api for account operations later
-class AccountRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val selfManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getSelfAccountsScreen(...) can consume Store5 via
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/InterBankApiManager.kt`
-
-```kotlin
-class InterBankApiManager(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/InterBankRepositoryImpl.kt:28</code></summary>
-
-```kotlin
-
-class InterBankRepositoryImpl(
-    private val apiManager: InterBankApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : InterBankRepository {
-
-    override suspend fun fetchParticipant(
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt`
-
-```kotlin
-class KtorfitClient(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/data/src/commonTest/kotlin/org/mifospay/core/data/repositoryImpl/PocketRepositoryTest.kt:155</code></summary>
-
-```kotlin
- */
-private val fakeSelfServiceApiManager = SelfServiceApiManager(
-    KtorfitClient(
-        Ktorfit.Builder()
-            .httpClient(HttpClient())
-            .baseUrl("https://example.com/")
-            .build(),
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/PocketDataManager.kt`
-
-```kotlin
-interface PocketDataManager
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/SelfServiceApiManager.kt:14</code></summary>
-
-```kotlin
-class SelfServiceApiManager(
-    private val ktorfitClient: KtorfitClient,
-) : PocketDataManager {
-    val authenticationApi by lazy { ktorfitClient.authenticationApi }
-
-    override val clientsApi by lazy { ktorfitClient.clientsApi }
-```
-
-</details>
-
-- `val clientsApi: ClientService`
-- `val pocketApi: PocketService`
-- `val shareAccountApi: ShareAccountService`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/SelfServiceApiManager.kt`
-
-```kotlin
-class SelfServiceApiManager(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/AccountRepositoryImpl.kt:49</code></summary>
-
-```kotlin
-class AccountRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val selfManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getSelfAccountsScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without the
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/SupabaseApiManager.kt`
-
-```kotlin
-class SupabaseApiManager(
-```
-API manager for Supabase services. Similar to FineractApiManager but for Supabase-based APIs.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/config/SupabaseInstanceConfigLoader.kt:29</code></summary>
-
-```kotlin
- */
-class SupabaseInstanceConfigLoader(
-    private val supabaseApiManager: SupabaseApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    private val json: Json,
-) : InstanceConfigLoader {
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/config/InstanceConfigLoader.kt`
-
-```kotlin
-interface InstanceConfigLoader
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/config/SupabaseInstanceConfigLoader.kt:32</code></summary>
-
-```kotlin
-    private val ioDispatcher: CoroutineDispatcher,
-    private val json: Json,
-) : InstanceConfigLoader {
-
-    override suspend fun fetchInstancesConfig(): InstancesConfig {
-        if (!supabaseApiManager.isConfigured) {
-            return loadFallbackConfig()
-```
-
-</details>
-
-- `suspend fun fetchInstancesConfig(): InstancesConfig`
-- `fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/config/InstanceConfigManager.kt`
-
-```kotlin
-class InstanceConfigManager(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginViewModel.kt:33</code></summary>
-
-```kotlin
-class LoginViewModel(
-    private val loginUseCase: LoginUseCase,
-    private val instanceConfigManager: InstanceConfigManager,
-    savedStateHandle: SavedStateHandle,
-) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
-    initialState = savedStateHandle.getSerialized(KEY_STATE)
-        ?: LoginState(dialogState = null),
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/config/SupabaseInstanceConfigLoader.kt`
-
-```kotlin
-class SupabaseInstanceConfigLoader(
-```
-Instance config loader that fetches configuration from Supabase. Uses SupabaseApiManager for API interactions.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:56</code></summary>
-
-```kotlin
-
-    single<InstanceConfigLoader> {
-        SupabaseInstanceConfigLoader(
-            supabaseApiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            json = get(),
-        )
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/di/LocalModule.kt`
-
-```kotlin
-val LocalModule = module
-```
-_No KDoc at source._
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt`
-
-```kotlin
-val NetworkModule = module
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/RepositoryModule.kt:39</code></summary>
-
-```kotlin
- */
-val DataModule = module {
-    includes(platformModule, CommonModule, DatabaseModule, DatastoreModule, NetworkModule)
-
-    // Every repository's Koin binding, GENERATED from `@RepositoryBinding` on the implementation.
-    // Emitted into this same package, so this file needs no import and keeps its zero-demo-reference
-    // property — which is what lets a template sync blind-copy it. A stripped fork simply generates
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/di/Qualifier.kt`
-
-```kotlin
-val SelfClient = named("SelfClient")
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:71</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = SelfClient) {
-        val preferencesRepository = get<UserPreferencesRepository>()
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-```
-
-</details>
-
-```kotlin
-val BaseClient = named("BaseClient")
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:109</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = BaseClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-```
-
-</details>
-
-```kotlin
-val InterBankClient = named("InterBankClient")
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:150</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = InterBankClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/localAssets/LocalAssetDataSource.kt`
-
-```kotlin
-interface LocalAssetDataSource
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/localAssets/MifosLocalAssetDataSource.kt:21</code></summary>
-
-```kotlin
-    private val ioDispatcher: CoroutineDispatcher,
-    private val networkJson: Json,
-) : LocalAssetDataSource {
-
-    override suspend fun getCountries(): List<Country> {
-        return emptyList()
-    }
-```
-
-</details>
-
-- `suspend fun getCountries(): List<Country>`
-- `suspend fun getStateList(): List<State>`
-- `suspend fun getBanks(): List<String>`
-- `suspend fun getCities(): List<City>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/localAssets/LocalAssetManager.kt`
-
-```kotlin
-fun interface LocalAssetManager
-```
-_No KDoc at source._
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/localAssets/MifosLocalAssetDataSource.kt`
-
-```kotlin
-class MifosLocalAssetDataSource(
-```
-_No KDoc at source._
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/AccountTransfersService.kt`
-
-```kotlin
-interface AccountTransfersService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:55</code></summary>
-
-```kotlin
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
-
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
-
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
-
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
-```
-
-</details>
-
-- `fun getTransaction(`
-- `fun getAccountTransfer(@Path("transferId") transferId: Int): Flow<TransferDetail>`
-- `fun searchAccounts(`
-- `suspend fun makeTransfer(`
-- `fun getAccountTransferTemplate(): Flow<AccountOptionsTemplate>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/AppConfigService.kt`
-
-```kotlin
-class AppConfigService(
-```
-Service for interacting with app_config table in Supabase.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/SupabaseApiManager.kt:23</code></summary>
-
-```kotlin
-) {
-    val appConfigService by lazy {
-        AppConfigService(supabaseClient.postgrest)
-    }
-
-    val isConfigured: Boolean get() = supabaseClient.isConfigured
-}
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/AuthenticationService.kt`
-
-```kotlin
-interface AuthenticationService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:41</code></summary>
-
-```kotlin
-    ktorfit: Ktorfit,
-) {
-    internal val authenticationApi by lazy { ktorfit.createAuthenticationService() }
-
-    internal val clientsApi by lazy { ktorfit.createClientService() }
-
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
-```
-
-</details>
-
-- `suspend fun authenticate(@Body authPayload: AuthenticationPayload): User`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/AutoPayService.kt`
-
-```kotlin
-interface AutoPayService
-```
-TODO: Sync with backend team and update service layer according to finalized API contract, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:73</code></summary>
-
-```kotlin
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
-
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
-
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
-
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
-```
-
-</details>
-
-- `fun getAutoPayTemplate(` — Get AutoPay template for creating new AutoPay schedules
-- `fun getAllAutoPaySchedules(` — Get all AutoPay schedules for a client
-- `fun getAutoPaySchedule(` — Get AutoPay schedule by ID
-- `suspend fun createAutoPaySchedule(` — Create a new AutoPay schedule
-- `suspend fun updateAutoPaySchedule(` — Update an existing AutoPay schedule
-- `suspend fun deleteAutoPaySchedule(` — Delete an AutoPay schedule
-- `suspend fun pauseAutoPaySchedule(` — Pause an AutoPay schedule
-- `suspend fun resumeAutoPaySchedule(` — Resume a paused AutoPay schedule
-- `fun getAutoPayHistory(` — Get AutoPay payment history
-- `fun getUpcomingPayments(` — Get upcoming payments for all AutoPay schedules
-- `fun getAutoPayStatistics(` — Get AutoPay statistics for dashboard
-
-```kotlin
-data class AutoPayStatisticsResponse(
-```
-_No KDoc at source._
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/BeneficiaryService.kt`
-
-```kotlin
-interface BeneficiaryService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:75</code></summary>
-
-```kotlin
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
-
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
-
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
-
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
-```
-
-</details>
-
-- `fun beneficiaryList(): Flow<List<Beneficiary>>`
-- `suspend fun beneficiaryTemplate(): Flow<BeneficiaryTemplate>`
-- `suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryPayload)`
-- `suspend fun updateBeneficiary(`
-- `suspend fun deleteBeneficiary(@Path("beneficiaryId") beneficiaryId: Long): Unit`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/BillService.kt`
-
-```kotlin
-interface BillService
-```
-TODO: Update endpoint paths when backend APIs are finalized, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:83</code></summary>
-
-```kotlin
-    internal val billerApi by lazy { ktorfit.createBillerService() }
-
-    internal val billApi by lazy { ktorfit.createBillService() }
-
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
-
-    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
-```
-
-</details>
-
-- `fun getAllBills(@Query("clientId") clientId: Long): Flow<List<Bill>>`
-- `suspend fun getBillById(@Path("billId") billId: String): Flow<Bill>`
-- `suspend fun createBill(@Body bill: Bill): Flow<Bill>`
-- `suspend fun updateBill(`
-- `suspend fun deleteBill(@Path("billId") billId: String): Flow<Unit>`
-- `suspend fun getBillsByStatus(@Path("status") status: BillStatus): Flow<List<Bill>>`
-- `suspend fun getBillsByBillerId(@Path("billerId") billerId: String): Flow<List<Bill>>`
-- `suspend fun getBillsByRecurrencePattern(@Path("pattern") pattern: RecurrencePattern): Flow<List<Bill>>`
-- `suspend fun searchBillsByName(@Query("query") query: String): Flow<List<Bill>>`
-- `suspend fun getOverdueBills(): Flow<List<Bill>>`
-- `suspend fun getUpcomingBills(`
-- `suspend fun updateBillStatus(`
-- `fun getBillStatistics(@Query("clientId") clientId: Long): Flow<BillStatisticsResponse>`
-- `suspend fun clearAllBills(): Flow<Unit>`
-
-```kotlin
-data class BillStatisticsResponse(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/BillRepositoryImpl.kt:168</code></summary>
-
-```kotlin
-        return apiManager.billApi
-            .getBillStatistics(clientId)
-            .map { response: BillStatisticsResponse ->
-                BillStatistics(
-                    totalBills = response.totalBills,
-                    activeBills = response.activeBills,
-                    overdueBills = response.overdueBills,
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/BillerService.kt`
-
-```kotlin
-interface BillerService
-```
-TODO: Update endpoint paths when backend APIs are finalized, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:81</code></summary>
-
-```kotlin
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
-
-    internal val billerApi by lazy { ktorfit.createBillerService() }
-
-    internal val billApi by lazy { ktorfit.createBillService() }
-
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
-```
-
-</details>
-
-- `fun getAllBillers(): Flow<List<Biller>>`
-- `suspend fun getBillerById(@Path("billerId") billerId: String): Flow<Biller>`
-- `suspend fun createBiller(@Body biller: Biller): Flow<Biller>`
-- `suspend fun updateBiller(`
-- `suspend fun deleteBiller(@Path("billerId") billerId: String): Flow<Unit>`
-- `suspend fun getBillersByCategory(`
-- `suspend fun searchBillersByName(`
-- `suspend fun isBillerExists(`
-- `suspend fun clearAllBillers(): Flow<Unit>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/ClientService.kt`
-
-```kotlin
-interface ClientService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:43</code></summary>
-
-```kotlin
-    internal val authenticationApi by lazy { ktorfit.createAuthenticationService() }
-
-    internal val clientsApi by lazy { ktorfit.createClientService() }
-
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
-
-    internal val searchApi by lazy { ktorfit.createSearchService() }
-```
-
-</details>
-
-- `suspend fun clients(): Flow<Page<ClientEntity>>`
-- `suspend fun getClientForId(@Path("clientId") clientId: Long): ClientEntity`
-- `fun getClient(@Path("clientId") clientId: Long): Flow<ClientEntity>`
-- `suspend fun updateClient(`
-- `fun getClientImage(@Path("clientId") clientId: Long): Flow<String>`
-- `suspend fun updateClientImage(`
-- `suspend fun getClientAccounts(@Path("clientId") clientId: Long): ClientAccountsEntity`
-- `fun getAccounts(`
-- `suspend fun createClient(@Body newClient: NewClientEntity): ClientResponseEntity`
-- `suspend fun deleteClient(@Path("clientId") clientId: Int): ClientResponseEntity`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/DocumentService.kt`
-
-```kotlin
-interface DocumentService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:49</code></summary>
-
-```kotlin
-    internal val searchApi by lazy { ktorfit.createSearchService() }
-
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
-
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
-
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
-```
-
-</details>
-
-- `suspend fun getDocuments(`
-- `suspend fun createDocument(`
-- `suspend fun createDocumentFile(`
-- `suspend fun downloadDocument(` — This Service is for downloading the Document with EntityType and EntityId and Document Id Rest End Point : https://demo.openmf.org/fineract-provider/api/v1/{entityType}/{entityId}/documents/ {documentId}/attachment
-- `suspend fun removeDocument(` — This Service is for Deleting the Document with EntityType and EntityId and Document Id.
-- `suspend fun updateDocument(` — This Service for Updating the Document with EntityType and EntityId and Document Id.
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/InterBankService.kt`
-
-```kotlin
-interface InterBankService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:77</code></summary>
-
-```kotlin
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
-
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
-
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
-
-    internal val billerApi by lazy { ktorfit.createBillerService() }
-```
-
-</details>
-
-- `suspend fun fetchParticipant(`
-- `suspend fun fetchPartyInfo(`
-- `suspend fun interBankMakeTransfer(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/InvoiceService.kt`
-
-```kotlin
-interface InvoiceService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:61</code></summary>
-
-```kotlin
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
-
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
-
-    internal val userApi by lazy { ktorfit.createUserService() }
-
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
-```
-
-</details>
-
-- `fun getInvoices(@Path("clientId") clientId: Long): Flow<List<Invoice>>`
-- `fun getInvoice(`
-- `suspend fun addInvoice(`
-- `suspend fun updateInvoice(`
-- `suspend fun deleteInvoice(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/KYCLevel1Service.kt`
-
-```kotlin
-interface KYCLevel1Service
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:59</code></summary>
-
-```kotlin
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
-
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
-
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
-
-    internal val userApi by lazy { ktorfit.createUserService() }
-```
-
-</details>
-
-- `fun fetchKYCLevel1Details(@Path("clientId") clientId: Long): Flow<List<KYCLevel1Details>>`
-- `suspend fun addKYCLevel1Details(`
-- `suspend fun updateKYCLevel1Details(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/NotificationService.kt`
-
-```kotlin
-interface NotificationService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:67</code></summary>
-
-```kotlin
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
-
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
-
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
-
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
-```
-
-</details>
-
-- `fun fetchNotifications(@Query("isRead") isRead: Boolean): Flow<NotificationPayload>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/OfficeService.kt`
-
-```kotlin
-interface OfficeService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:79</code></summary>
-
-```kotlin
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
-
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
-
-    internal val billerApi by lazy { ktorfit.createBillerService() }
-
-    internal val billApi by lazy { ktorfit.createBillService() }
-```
-
-</details>
-
-- `fun getOffices(): Flow<List<Office>>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/PocketService.kt`
-
-```kotlin
-interface PocketService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:85</code></summary>
-
-```kotlin
-    internal val billApi by lazy { ktorfit.createBillService() }
-
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
-
-    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
-}
-```
-
-</details>
-
-- `suspend fun getPocketAccounts(): PocketResponseDto`
-- `suspend fun linkAccounts(`
-- `suspend fun delinkAccounts(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/RegistrationService.kt`
-
-```kotlin
-interface RegistrationService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:45</code></summary>
-
-```kotlin
-    internal val clientsApi by lazy { ktorfit.createClientService() }
-
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
-
-    internal val searchApi by lazy { ktorfit.createSearchService() }
-
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
-```
-
-</details>
-
-- `suspend fun registerUser(@Body registerPayload: RegisterPayload)`
-- `suspend fun verifyUser(@Body userVerify: UserVerify)`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/RunReportService.kt`
-
-```kotlin
-interface RunReportService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:51</code></summary>
-
-```kotlin
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
-
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
-
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
-
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
-```
-
-</details>
-
-- `suspend fun getTransactionReceipt(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/SavedCardService.kt`
-
-```kotlin
-interface SavedCardService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:57</code></summary>
-
-```kotlin
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
-
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
-
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
-
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
-```
-
-</details>
-
-- `fun getSavedCards(@Path("clientId") clientId: Long): Flow<List<SavedCard>>`
-- `fun getSavedCard(`
-- `suspend fun addSavedCard(`
-- `suspend fun updateCard(`
-- `suspend fun deleteCard(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/SavingsAccountsService.kt`
-
-```kotlin
-interface SavingsAccountsService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:69</code></summary>
-
-```kotlin
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
-
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
-
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
-
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
-```
-
-</details>
-
-- `fun getSavingsWithAssociations(`
-- `suspend fun getSavingsAccounts(`
-- `suspend fun createSavingsAccount(@Body savingAccount: CreateNewSavingEntity)`
-- `suspend fun updateSavingsAccount(`
-- `suspend fun blockUnblockAccount(`
-- `suspend fun getSavingAccountTransaction(`
-- `suspend fun payViaMobile(@Path("accountId") accountId: Long): Flow<TransactionsEntity>`
-- `fun getSavingAccountTemplate(@Query("clientId") clientId: Long): Flow<SavingAccountTemplate>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/SearchService.kt`
-
-```kotlin
-interface SearchService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:47</code></summary>
-
-```kotlin
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
-
-    internal val searchApi by lazy { ktorfit.createSearchService() }
-
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
-
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
-```
-
-</details>
-
-- `suspend fun searchResources(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/ShareAccountService.kt`
-
-```kotlin
-interface ShareAccountService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:87</code></summary>
-
-```kotlin
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
-
-    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
-}
-```
-
-</details>
-
-- `fun getShareAccountDetails(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/StandingInstructionService.kt`
-
-```kotlin
-interface StandingInstructionService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:71</code></summary>
-
-```kotlin
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
-
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
-
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
-
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
-```
-
-</details>
-
-- `fun getStandingInstructionTemplate(`
-- `fun getAllStandingInstructions(`
-- `fun getStandingInstruction(`
-- `suspend fun createStandingInstruction(`
-- `suspend fun deleteStandingInstruction(`
-- `suspend fun updateStandingInstruction(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/ThirdPartyTransferService.kt`
-
-```kotlin
-interface ThirdPartyTransferService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:65</code></summary>
-
-```kotlin
-    internal val userApi by lazy { ktorfit.createUserService() }
-
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
-
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
-
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
-```
-
-</details>
-
-- `suspend fun accountTransferTemplate(): AccountOptionsTemplate`
-- `suspend fun makeTransfer(@Body transferPayload: TransferPayload): TPTResponse`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/TwoFactorAuthService.kt`
-
-```kotlin
-interface TwoFactorAuthService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:53</code></summary>
-
-```kotlin
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
-
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
-
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
-
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
-```
-
-</details>
-
-- `suspend fun deliveryMethods(): Flow<List<DeliveryMethod>>`
-- `suspend fun requestOTP(@Query("deliveryMethod") deliveryMethod: String): Flow<String>`
-- `suspend fun validateToken(@Query("token") token: String): Flow<AccessToken>`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/services/UserService.kt`
-
-```kotlin
-interface UserService
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/KtorfitClient.kt:63</code></summary>
-
-```kotlin
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
-
-    internal val userApi by lazy { ktorfit.createUserService() }
-
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
-
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
-```
-
-</details>
-
-- `suspend fun users(): Flow<List<UserWithRole>>`
-- `suspend fun createUser(@Body user: NewUserEntity): CommonResponse`
-- `suspend fun updateUser(`
-- `suspend fun updateUserPassword(`
-- `suspend fun deleteUser(`
-- `suspend fun getUser(): Flow<UserWithRole>`
-- `suspend fun assignClientToUser(`
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/utils/ApiEndPoints.kt`
-
-```kotlin
-object ApiEndPoints
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/services/AccountTransfersService.kt:27</code></summary>
-
-```kotlin
-interface AccountTransfersService {
-
-    @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}/transactions/{transactionId}")
-    fun getTransaction(
-        @Path("accountId") clientId: Long,
-        @Path("transactionId") transactionId: Long,
-    ): Flow<TransactionsEntity>
-```
-
-</details>
-
-- `const val AUTHENTICATION = "authentication"`
-- `const val AUTHENTICATION_OAUTH = "oauth/token"`
-- `const val REGISTRATION = "registration"`
-- `const val CLIENTS = "clients"`
-- `const val SAVINGS_ACCOUNTS = "savingsaccounts"`
-- `const val TRANSACTIONS = "transactions"`
-- `const val RECURRING_ACCOUNTS = "recurringdepositaccounts"`
-- `const val SEARCH = "search"`
-- `const val BENEFICIARIES = "beneficiaries"`
-- `const val ACCOUNT_TRANSFER = "accounttransfers"`
-- `const val DOCUMENTS = "documents"`
-- `const val DATATABLES = "datatables"`
-- `const val TWOFACTOR = "twofactor"`
-- `const val RUN_REPORT = "runreports"`
-  _…more members; read the file._
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/utils/BaseURL.kt`
-
-```kotlin
-class BaseURL(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:68</code></summary>
-
-```kotlin
-
-    single {
-        BaseURL(configManager = get())
-    }
-
-    single<KtorfitClient>(qualifier = SelfClient) {
-        val preferencesRepository = get<UserPreferencesRepository>()
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/utils/FlowConverterFactory.kt`
-
-```kotlin
-public class FlowConverterFactory : Converter.Factory
-```
-Factory that enables the use of Flow<T> as return type
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:104</code></summary>
-
-```kotlin
-                    },
-                )
-                .converterFactories(FlowConverterFactory())
-                .build(),
-        )
-    }
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifospay/core/network/utils/KtorInterceptor.kt`
-
-```kotlin
-class KtorInterceptor(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/di/NetworkModule.kt:98</code></summary>
-
-```kotlin
-                            urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
-                        }
-                        install(KtorInterceptor) {
-                            getToken = { preferencesRepository.authToken }
-                            this.configManager = configManager
-                        }
-                    },
-```
-
-</details>
-
-```kotlin
-class Config
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryViewModel.kt:275</code></summary>
-
-```kotlin
-                    htmlContent = html,
-                    fileName = "transaction_history.pdf",
-                    pageConfig = PageConfig(),
-                )
-            } catch (e: PdfError) {
-                sendEvent(HistoryEvent.PdfExportError(message = "Couldn't export PDF: ${e.message}"))
-            }
-```
-
-</details>
-
-```kotlin
-class KtorInterceptorRe(
-```
-_No KDoc at source._
-
-```kotlin
-class ConfigRe
-```
-_No KDoc at source._
 
 ---
 

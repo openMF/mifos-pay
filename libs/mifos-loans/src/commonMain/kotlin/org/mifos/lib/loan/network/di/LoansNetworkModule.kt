@@ -12,8 +12,8 @@ package org.mifos.lib.loan.network.di
 import de.jensklingenberg.ktorfit.Ktorfit
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.network.config.InstanceConfigManager
-import kpt.core.network.utils.FlowConverterFactory
-import kpt.core.network.utils.KtorInterceptor
+import kpt.core.network.main.utils.FlowConverterFactory
+import kpt.core.network.main.utils.KtorInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.corebase.network.DynamicBaseUrlPlugin

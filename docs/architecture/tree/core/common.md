@@ -16,82 +16,20 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/common sha=1536573322c61a01494c290ad4683adab8ca6a0c -->
+<!-- api-docs:begin module=core/common sha=f11fcb7f306eee58bc8ecfd9454d84bcd668c89b -->
 ## API reference
 
-_Generated from `core/common` at tree `1536573322c6` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/common` at tree `f11fcb7f306e` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
-### `core/common/src/commonMain/kotlin/kpt/core/common/FormatDate.kt`
-
-```kotlin
-fun formatDate(millis: Long): String
-```
-_No KDoc at source._
-
-### `core/common/src/commonMain/kotlin/kpt/core/common/FormatDuration.kt`
-
-```kotlin
-fun formatTimeAgo(instant: Instant?): String?
-```
-Returns a human-readable "X ago" label for a past `instant`, e.g. "just now", "5m ago", "2h ago", "3d ago". Returns `null` when `instant` is null.
-
-### `core/common/src/commonMain/kotlin/kpt/core/common/FormatNumber.kt`
-
-```kotlin
-fun Double.formatDecimal(places: Int): String
-```
-_No KDoc at source._
-
-```kotlin
-fun Double.formatGrouped(places: Int): String
-```
-_No KDoc at source._
-
-```kotlin
-fun Long.formatGrouped(): String
-```
-_No KDoc at source._
-
-### `core/common/src/commonMain/kotlin/kpt/core/common/format/FormatDate.kt`
-
-```kotlin
-fun formatDate(millis: Long): String
-```
-Formats an epoch-millis timestamp for display in the device's locale.
-
-### `core/common/src/commonMain/kotlin/kpt/core/common/format/FormatDuration.kt`
-
-```kotlin
-fun formatTimeAgo(instant: Instant?): String?
-```
-Returns a human-readable "X ago" label for a past `instant`, e.g. "just now", "5m ago", "2h ago", "3d ago". Returns `null` when `instant` is null.
-
-### `core/common/src/commonMain/kotlin/kpt/core/common/format/FormatNumber.kt`
-
-```kotlin
-fun Double.formatDecimal(places: Int): String
-```
-Formats to exactly `places` decimals, zero-padded so a column of figures stays aligned. Hand-rolled because `String.format` is JVM-only — it fails to link on Kotlin/JS and Native, so a shared UI cannot use it.
-
-```kotlin
-fun Double.formatGrouped(places: Int): String
-```
-Formats with `,` thousands separators and exactly `places` decimals — the money/quantity form.
-
-```kotlin
-fun Long.formatGrouped(): String
-```
-Formats a whole number with `,` thousands separators — counts and sizes, no fractional part.
-
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/Constants.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/Constants.kt`
 
 ```kotlin
 object Constants
 ```
 Created by naman on 17/6/17.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/mobileVerify/MobileVerificationViewModel.kt:192</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:191</code></summary>
 
 ```kotlin
             val result = searchRepository.searchResources(
@@ -121,14 +59,14 @@ Created by naman on 17/6/17.
 - `const val ERROR_UPLOADING_DOCS = "Error uploading docs."`
   _…more members; read the file._
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/CurrencyFormatter.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/CurrencyFormatter.kt`
 
 ```kotlin
 expect object CurrencyFormatter
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:248</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:247</code></summary>
 
 ```kotlin
                 Text(text = stringResource(Res.string.feature_accounts_detail_account_balance))
@@ -150,7 +88,7 @@ fun <T> List<T>.toArrayList(): ArrayList<T>
 ```
 _No KDoc at source._
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/DateAsStringSerializer.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/DateAsStringSerializer.kt`
 
 ```kotlin
 object DateAsStringSerializer : KSerializer<String>
@@ -169,7 +107,7 @@ data class Transfer(
 
 </details>
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/org/mifospay/core/model/savingsaccount/Transfer.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/Transfer.kt:20</code></summary>
 
 ```kotlin
     val currency: Currency? = null,
@@ -203,7 +141,7 @@ data class UserPreferences(
 
 </details>
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:575</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:574</code></summary>
 
 ```kotlin
     @Transient val dialogState: DialogState? = null,
@@ -217,14 +155,14 @@ data class UserPreferences(
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/DateHelper.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/DateHelper.kt`
 
 ```kotlin
 object DateHelper
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:429</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:428</code></summary>
 
 ```kotlin
             val externalId: String = "",
@@ -254,7 +192,7 @@ _No KDoc at source._
 - `val finalFormat = LocalDateTime.Format { byUnicodePattern(format) }`
   _…more members; read the file._
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/DebugUtil.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/DebugUtil.kt`
 
 ```kotlin
 object DebugUtil
@@ -264,14 +202,14 @@ _No KDoc at source._
 - `fun log(vararg objects: Any): Array<out Any>`
 - `val stringToPrint = objects.joinToString(", ")`
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/ErrorBodyParser.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/ErrorBodyParser.kt`
 
 ```kotlin
 typealias ErrorBodyParser = suspend (responseBody: String, statusCode: Int) -> String
 ```
 Function type for parsing an error response body into a user-friendly message. Repositories provide custom parsing logic (e.g.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/KptErrorMapper.kt:105</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:105</code></summary>
 
 ```kotlin
     suspend fun <T> mapErrorBody(
@@ -290,14 +228,14 @@ val defaultErrorBodyParser: ErrorBodyParser = { body, _ ->
 ```
 Default error body parser that returns the response body as-is or a generic message.
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/ErrorHandler.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/ErrorHandler.kt`
 
 ```kotlin
 interface ErrorMessageProvider
 ```
 Interface for providing localized error messages. Implement this interface in the UI module to provide string resources.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/ErrorMessageProviderImpl.kt:54</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/ErrorMessageProviderImpl.kt:53</code></summary>
 
 ```kotlin
  * ```
@@ -343,7 +281,7 @@ MifosDialogBox(
 
 </details>
 
-<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/EditPasswordViewModel.kt:95</code></summary>
+<details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/EditPasswordViewModel.kt:94</code></summary>
 
 ```kotlin
 
@@ -362,14 +300,14 @@ fun Throwable.toUiError(provider: ErrorMessageProvider): UiError = UiError.from(
 ```
 Extension function to convert any `Throwable` to a `UiError`.
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/Exceptions.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/Exceptions.kt`
 
 ```kotlin
 class HttpStatusException(
 ```
 Exception thrown when an HTTP request fails with a specific status code. Use this to differentiate between client errors (4xx) and server errors (5xx).
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/ErrorHandler.kt:66</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ErrorHandler.kt:66</code></summary>
 
 ```kotlin
         fun from(throwable: Throwable, provider: ErrorMessageProvider): UiError {
@@ -388,7 +326,7 @@ class NetworkException(message: String) : Exception(message)
 ```
 Exception thrown when a network operation fails due to connectivity issues.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/ErrorHandler.kt:73</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ErrorHandler.kt:73</code></summary>
 
 ```kotlin
                 )
@@ -402,14 +340,14 @@ Exception thrown when a network operation fails due to connectivity issues.
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/FileUtils.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/FileUtils.kt`
 
 ```kotlin
 interface FileUtils
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/FileUtils.android.kt:13</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/FileUtils.android.kt:13</code></summary>
 
 ```kotlin
 
@@ -432,7 +370,7 @@ class CommonFileUtils : FileUtils
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/FileUtils.android.kt:13</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/FileUtils.android.kt:13</code></summary>
 
 ```kotlin
 
@@ -442,14 +380,45 @@ actual fun createPlatformFileUtils(): FileUtils = CommonFileUtils()
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/GlobalAuthManager.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/FormatDate.kt`
+
+```kotlin
+fun formatDate(millis: Long): String
+```
+_No KDoc at source._
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/FormatDuration.kt`
+
+```kotlin
+fun formatTimeAgo(instant: Instant?): String?
+```
+Returns a human-readable "X ago" label for a past `instant`, e.g. "just now", "5m ago", "2h ago", "3d ago". Returns `null` when `instant` is null.
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/FormatNumber.kt`
+
+```kotlin
+fun Double.formatDecimal(places: Int): String
+```
+_No KDoc at source._
+
+```kotlin
+fun Double.formatGrouped(places: Int): String
+```
+_No KDoc at source._
+
+```kotlin
+fun Long.formatGrouped(): String
+```
+_No KDoc at source._
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/GlobalAuthManager.kt`
 
 ```kotlin
 object GlobalAuthManager
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifospay/core/network/utils/KtorInterceptor.kt:46</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/utils/KtorInterceptor.kt:45</code></summary>
 
 ```kotlin
             scope.responsePipeline.intercept(HttpResponsePipeline.After) {
@@ -467,51 +436,14 @@ _No KDoc at source._
 - `fun markUnauthorized()`
 - `fun reset()`
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/KptErrorMapper.kt`
-
-```kotlin
-object KptErrorMapper
-```
-Central mapper — Throwable / feature error handlers → `ScreenState.Error` / `ScreenState.NoNetwork` / `ScreenState.Unauthenticated`.
-
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/ScreenStateFlow.kt:39</code></summary>
-
-```kotlin
-    }
-        .onStart { emit(ScreenState.Loading) }
-        .catch { e -> emit(KptErrorMapper.mapError(e)) }
-
-/**
- * Body-parsing overload — routes ktor 4xx/5xx exceptions through
- * [KptErrorMapper.mapErrorBody] so the server's Mifos-error JSON is
-```
-
-</details>
-
-- `fun <T> mapError(` — Blocking (non-suspending) mapper — use when no response body is available or the caller has already parsed a user-facing message.
-- `val status = throwable.response.status.value`
-- `val status = throwable.response.status.value`
-- `suspend fun <T> mapErrorBody(` — Suspending mapper — parses the ktor response body via `errorBodyParser` to extract a user-facing message when possible.
-- `val status = throwable.response.status.value`
-- `val body = readBodyOrEmpty(throwable)`
-- `val parsed = errorBodyParser(body, status)`
-- `val status = throwable.response.status.value`
-- `val body = readBodyOrEmpty(throwable)`
-- `val parsed = errorBodyParser(body, status)`
-
-```kotlin
-fun <T> Throwable.toScreenState(userMessage: String? = null): ScreenState<T> =
-```
-Convert a raw `Throwable` to a `ScreenState` via `KptErrorMapper`.
-
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/MifosDispatchers.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/MifosDispatchers.kt`
 
 ```kotlin
 annotation class Dispatcher(val mifosDispatcher: MifosDispatchers)
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/org/mifospay/feature/auth/login/LoginViewModelTest.kt:52</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:50</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -530,7 +462,7 @@ enum class MifosDispatchers
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/di/MpayQrModule.kt:25</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/di/MpayQrModule.kt:24</code></summary>
 
 ```kotlin
             pocketRepository = get(),
@@ -548,7 +480,7 @@ annotation class ApplicationScope
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/di/DispatchersModule.kt:31</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:30</code></summary>
 
 ```kotlin
     single<CoroutineDispatcher>(named(MifosDispatchers.Default.name)) { Dispatchers.Default }
@@ -561,14 +493,51 @@ _No KDoc at source._
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/Parcelize.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt`
+
+```kotlin
+object MifosErrorMapper
+```
+Central mapper — Throwable / feature error handlers → `ScreenState.Error` / `ScreenState.NoNetwork` / `ScreenState.Unauthenticated`.
+
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ScreenStateFlow.kt:39</code></summary>
+
+```kotlin
+    }
+        .onStart { emit(ScreenState.Loading) }
+        .catch { e -> emit(MifosErrorMapper.mapError(e)) }
+
+/**
+ * Body-parsing overload — routes ktor 4xx/5xx exceptions through
+ * [MifosErrorMapper.mapErrorBody] so the server's Mifos-error JSON is
+```
+
+</details>
+
+- `fun <T> mapError(` — Blocking (non-suspending) mapper — use when no response body is available or the caller has already parsed a user-facing message.
+- `val status = throwable.response.status.value`
+- `val status = throwable.response.status.value`
+- `suspend fun <T> mapErrorBody(` — Suspending mapper — parses the ktor response body via `errorBodyParser` to extract a user-facing message when possible.
+- `val status = throwable.response.status.value`
+- `val body = readBodyOrEmpty(throwable)`
+- `val parsed = errorBodyParser(body, status)`
+- `val status = throwable.response.status.value`
+- `val body = readBodyOrEmpty(throwable)`
+- `val parsed = errorBodyParser(body, status)`
+
+```kotlin
+fun <T> Throwable.toScreenState(userMessage: String? = null): ScreenState<T> =
+```
+Convert a raw `Throwable` to a `ScreenState` via `MifosErrorMapper`.
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/Parcelize.kt`
 
 ```kotlin
 expect annotation class Parcelize()
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:19</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:19</code></summary>
 
 ```kotlin
 import kotlinx.parcelize.TypeParceler
@@ -587,7 +556,7 @@ expect interface Parcelable
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:21</code></summary>
 
 ```kotlin
 actual typealias Parcelize = Parcelize
@@ -606,7 +575,7 @@ expect annotation class IgnoredOnParcel()
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:23</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:23</code></summary>
 
 ```kotlin
 actual typealias Parcelable = Parcelable
@@ -625,7 +594,7 @@ expect interface Parceler<P>
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:25</code></summary>
 
 ```kotlin
 actual typealias IgnoredOnParcel = IgnoredOnParcel
@@ -647,7 +616,7 @@ expect annotation class TypeParceler<T, P : Parceler<in T>>()
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:27</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:27</code></summary>
 
 ```kotlin
 actual typealias Parceler<P> = Parceler<P>
@@ -664,7 +633,7 @@ expect class Parcel
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:29</code></summary>
 
 ```kotlin
 actual typealias TypeParceler<T, P> = TypeParceler<T, P>
@@ -674,19 +643,19 @@ actual typealias Parcel = Parcel
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/ScreenState.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/ScreenState.kt`
 
 ```kotlin
 sealed interface ScreenState<out T>
 ```
 Unified UI state produced by fork repositories (and, once Phase 4 lands, by `Store<Key, Output>.asScreenStream(...)`). Replaces the legacy `DataState` sealed class as the single fork-wide read-side model.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:75</code></summary>
 
 ```kotlin
             } else {
                 flowOf(
-                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<org.mifospay.core.model.account.AccountContent>,
+                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<kpt.core.model.account.AccountContent>,
                 )
             }
         }
@@ -715,17 +684,17 @@ val ScreenState<*>.errorOrNull: Throwable?
 ```
 Extract the wrapped throwable when the state is `ScreenState.Error`.
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/ScreenStateFlow.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/ScreenStateFlow.kt`
 
 ```kotlin
 typealias ScreenStateStream<T> = Flow<ScreenState<T>>
 ```
 Fork-wide alias for `Flow<ScreenState<T>>` — the read-side stream shape every Phase-3 repository exposes to its ViewModels.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repository/AssetRepository.kt:15</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AssetRepository.kt:14</code></summary>
 
 ```kotlin
-
+import kpt.core.common.ScreenStateStream
 interface AssetRepository {
     fun getCountriesWithStates(): ScreenStateStream<Map<String, List<String>>>
 }
@@ -736,19 +705,19 @@ interface AssetRepository {
 ```kotlin
 fun <T> Flow<T>.asScreenStateFlow(
 ```
-Convert a `Flow<T>` (typically the raw Ktorfit API flow) into a `Flow<ScreenState<T>>`, emitting `ScreenState` variants and routing terminal errors through `KptErrorMapper`.
+Convert a `Flow<T>` (typically the raw Ktorfit API flow) into a `Flow<ScreenState<T>>`, emitting `ScreenState` variants and routing terminal errors through `MifosErrorMapper`.
 
 ```kotlin
 fun <T> Flow<T>.asScreenStateFlow(
 ```
-Body-parsing overload — routes ktor 4xx/5xx exceptions through `KptErrorMapper.mapErrorBody` so the server's Mifos-error JSON is lifted into `HttpStatusException.userMessage`.
+Body-parsing overload — routes ktor 4xx/5xx exceptions through `MifosErrorMapper.mapErrorBody` so the server's Mifos-error JSON is lifted into `HttpStatusException.userMessage`.
 
 ```kotlin
 fun <T, R> Flow<ScreenState<T>>.mapContent(transform: (T) -> R): Flow<ScreenState<R>> =
 ```
 Extension on `Flow<ScreenState<T>>` mirroring the template's `mapContent { data, freshness -> R }` — the freshness slot is dropped because Phase-3 lacks the FreshnessSignal engine. Phase-4 replaces this with the template's two-arg lambda.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -767,7 +736,7 @@ fun <T> Flow<ScreenState<T>>.emptyIfContent(
 ```
 Template-parity `emptyIfContent` — flips `ScreenState.Content` whose data satisfies `predicate` to `ScreenState.Empty`. Applied AFTER the upstream repository has already emitted; use for business-level empty (e.g. `list.isEmpty()`).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -781,7 +750,7 @@ Template-parity `emptyIfContent` — flips `ScreenState.Content` whose data sati
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/StringProvider.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/StringProvider.kt`
 
 ```kotlin
 interface StringProvider
@@ -797,7 +766,7 @@ val message = stringProvider.get(Res.string.feature_auth_error_email_required)
 
 </details>
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/signup/SignupViewModel.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:77</code></summary>
 
 ```kotlin
     private val clientRepository: ClientRepository,
@@ -818,10 +787,10 @@ class DefaultStringProvider : StringProvider
 ```
 Default implementation of `StringProvider` that uses Compose Multiplatform’s `getString`. This class is meant to be used in runtime environments where resource resolution is supported.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/di/DispatchersModule.kt:24</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:23</code></summary>
 
 ```kotlin
-
+import org.koin.dsl.module
 val stringProviderModule = module {
     single<StringProvider> { DefaultStringProvider() }
 }
@@ -832,7 +801,7 @@ val DispatchersModule = module {
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/StringResourceSerializer.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/StringResourceSerializer.kt`
 
 ```kotlin
 object StringResourceSerializer : KSerializer<StringResource>
@@ -851,7 +820,7 @@ data class DialogState(
 
 </details>
 
-<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/org/mifospay/feature/profile/edit/EditProfileViewModel.kt:402</code></summary>
+<details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileViewModel.kt:401</code></summary>
 
 ```kotlin
             @Serializable
@@ -876,7 +845,7 @@ A registry that maps resource keys to their corresponding StringResource objects
 - `fun register(resourceKey: String, stringResource: StringResource)`
 - `fun getResource(resourceKey: String): StringResource?`
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/di/DispatchersModule.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt`
 
 ```kotlin
 val stringProviderModule = module
@@ -893,7 +862,7 @@ expect val ioDispatcherModule: Module
 ```
 _No KDoc at source._
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/dialogManager/DialogManager.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/dialogManager/DialogManager.kt`
 
 ```kotlin
 object DialogManager
@@ -907,14 +876,14 @@ A singleton for managing dialog state across the app. It works with `DialogMessa
 - `fun showMessage(message: StringResource)` — Shows a localized string resource message in a dialog.
 - `fun showMessage(message: DialogMessage)` — Allows setting any `DialogMessage` manually.
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/dialogManager/DialogMessage.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/dialogManager/DialogMessage.kt`
 
 ```kotlin
 sealed interface DialogMessage
 ```
 Represents the possible types of dialog messages shown in the application. Used in combination with `DialogManager` to control dialog visibility and content.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/org/mifospay/core/common/dialogManager/DialogManager.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/dialogManager/DialogManager.kt:25</code></summary>
 
 ```kotlin
 object DialogManager {
@@ -928,7 +897,38 @@ object DialogManager {
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/utils/ListExtensions.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/format/FormatDate.kt`
+
+```kotlin
+fun formatDate(millis: Long): String
+```
+Formats an epoch-millis timestamp for display in the device's locale.
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/format/FormatDuration.kt`
+
+```kotlin
+fun formatTimeAgo(instant: Instant?): String?
+```
+Returns a human-readable "X ago" label for a past `instant`, e.g. "just now", "5m ago", "2h ago", "3d ago". Returns `null` when `instant` is null.
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/format/FormatNumber.kt`
+
+```kotlin
+fun Double.formatDecimal(places: Int): String
+```
+Formats to exactly `places` decimals, zero-padded so a column of figures stays aligned. Hand-rolled because `String.format` is JVM-only — it fails to link on Kotlin/JS and Native, so a shared UI cannot use it.
+
+```kotlin
+fun Double.formatGrouped(places: Int): String
+```
+Formats with `,` thousands separators and exactly `places` decimals — the money/quantity form.
+
+```kotlin
+fun Long.formatGrouped(): String
+```
+Formats a whole number with `,` thousands separators — counts and sizes, no fractional part.
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/utils/ListExtensions.kt`
 
 ```kotlin
 fun formatAsBulletPoints(lines: List<String>): String
@@ -951,7 +951,7 @@ println(result)
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/utils/OpenForMokkery.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/utils/OpenForMokkery.kt`
 
 ```kotlin
 annotation class OpenForMokkery
@@ -976,21 +976,21 @@ allOpen {
 
 </details>
 
-<details><summary>Used in the template — <code>core/domain/src/commonMain/kotlin/org/mifospay/core/domain/LoginUseCase.kt:20</code></summary>
+<details><summary>Used in the template — <code>core/domain/src/commonMain/kotlin/kpt/core/domain/LoginUseCase.kt:19</code></summary>
 
 ```kotlin
-import org.mifospay.core.model.user.UserInfo
-
+import kpt.core.datastore.prefs.ForkPreferencesRepository
+import kpt.core.model.user.UserInfo
 @OpenForMokkery
 class LoginUseCase(
     private val repository: AuthenticationRepository,
     private val clientRepository: ClientRepository,
-    private val userPreferencesRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: ForkPreferencesRepository,
 ```
 
 </details>
 
-### `core/common/src/commonMain/kotlin/org/mifospay/core/common/utils/StringExtensions.kt`
+### `core/common/src/commonMain/kotlin/kpt/core/common/utils/StringExtensions.kt`
 
 ```kotlin
 fun String.isValidEmail(): Boolean = contains("@")

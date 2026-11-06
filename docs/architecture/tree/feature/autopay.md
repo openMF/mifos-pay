@@ -9,6 +9,8 @@ Screens: `AddBillScreen`, `AddBillerScreen`, `AutoPayHistoryScreen`, `AutoPaySch
 
 ViewModels: `AddBillViewModel`, `AddBillerViewModel`, `AutoPayHistoryViewModel`, `AutoPayScheduleDetailsViewModel`, `AutoPayScheduleManagementViewModel`, `AutoPaySettingsViewModel`, `AutoPayViewModel`, `BillListViewModel`, `BillerListViewModel`, `EditBillViewModel`, `EditBillerViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `AddBillViewModel`, `AddBillerViewModel`, `AutoPayHistoryViewModel`,
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/autopay sha=811e4601062c27648327ebd8d782b91624b107b0 -->
+<!-- api-docs:begin module=feature/autopay sha=11c284ad19b44fa41aff3997a9770909caa07bfb -->
 ## API reference
 
-_Generated from `feature/autopay` at tree `811e4601062c` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/autopay` at tree `11c284ad19b4` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +33,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt`
 
 ```kotlin
 fun AddBillScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:256</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:256</code></summary>
 
 ```kotlin
 
@@ -52,14 +54,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt`
 
 ```kotlin
 class AddBillViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:80</code></summary>
 
 ```kotlin
     onNavigateToBillList: () -> Unit,
@@ -83,7 +85,7 @@ sealed interface AddBillEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillScreen.kt:89</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:89</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -102,7 +104,7 @@ sealed interface AddBillAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillScreen.kt:96</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:96</code></summary>
 
 ```kotlin
 
@@ -116,14 +118,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillerScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt`
 
 ```kotlin
 fun AddBillerScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:219</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:219</code></summary>
 
 ```kotlin
         ),
@@ -137,14 +139,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillerViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt`
 
 ```kotlin
 class AddBillerViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillerScreen.kt:55</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:54</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -167,7 +169,7 @@ sealed interface AddBillerEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillerScreen.kt:62</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:61</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -186,7 +188,7 @@ sealed interface AddBillerAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillerScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:101</code></summary>
 
 ```kotlin
                     label = "Biller Name *",
@@ -200,14 +202,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayHistoryScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt`
 
 ```kotlin
 fun AutoPayHistoryScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:190</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:190</code></summary>
 
 ```kotlin
         ),
@@ -220,14 +222,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayHistoryViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryViewModel.kt`
 
 ```kotlin
 class AutoPayHistoryViewModel(
 ```
 ViewModel for AutoPay history screen. This ViewModel provides read-only access to AutoPay history data. Users can view, search, and filter history but cannot edit or delete entries.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayHistoryScreen.kt:50</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:49</code></summary>
 
 ```kotlin
 fun AutoPayHistoryScreen(
@@ -255,7 +257,7 @@ sealed interface AutoPayHistoryAction
 ```
 _No KDoc at source._
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt`
 
 ```kotlin
 object AutoPayNavigation
@@ -343,14 +345,14 @@ fun NavGraphBuilder.autoPayGraph(
 ```
 _No KDoc at source._
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleDetailsScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt`
 
 ```kotlin
 fun AutoPayScheduleDetailsScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:204</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:204</code></summary>
 
 ```kotlin
         ),
@@ -363,14 +365,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleDetailsViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsViewModel.kt`
 
 ```kotlin
 class AutoPayScheduleDetailsViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleDetailsScreen.kt:49</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:48</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -394,7 +396,7 @@ sealed interface AutoPayScheduleDetailsEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleDetailsScreen.kt:118</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:117</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -413,7 +415,7 @@ sealed interface AutoPayScheduleDetailsAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleDetailsScreen.kt:105</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:104</code></summary>
 
 ```kotlin
                 onPauseResume = {
@@ -427,14 +429,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleManagementScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt`
 
 ```kotlin
 fun AutoPayScheduleManagementScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:160</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:160</code></summary>
 
 ```kotlin
 
@@ -448,14 +450,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleManagementViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementViewModel.kt`
 
 ```kotlin
 class AutoPayScheduleManagementViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleManagementScreen.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:68</code></summary>
 
 ```kotlin
     onNavigateToBillList: () -> Unit,
@@ -479,7 +481,7 @@ sealed interface AutoPayScheduleManagementEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleManagementScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:80</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -498,7 +500,7 @@ sealed interface AutoPayScheduleManagementAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleManagementScreen.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:75</code></summary>
 
 ```kotlin
         isEnabled = true,
@@ -512,14 +514,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt`
 
 ```kotlin
 fun AutoPayScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:129</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:129</code></summary>
 
 ```kotlin
 ) {
@@ -533,14 +535,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPaySettingsScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt`
 
 ```kotlin
 fun AutoPayPreferencesScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:175</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:175</code></summary>
 
 ```kotlin
 
@@ -553,14 +555,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPaySettingsViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsViewModel.kt`
 
 ```kotlin
 class AutoPayPreferencesViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPaySettingsScreen.kt:48</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:47</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -584,7 +586,7 @@ sealed interface AutoPayPreferencesEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPaySettingsScreen.kt:54</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:53</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -603,7 +605,7 @@ sealed interface AutoPayPreferencesAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPaySettingsScreen.kt:89</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:88</code></summary>
 
 ```kotlin
                     settings = state.globalSettings,
@@ -617,7 +619,7 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayUtils.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayUtils.kt`
 
 ```kotlin
 fun Bill.toAutoPaySchedule(): AutoPaySchedule
@@ -669,14 +671,14 @@ fun List<Bill>.calculateUpcomingPayments(): List<UpcomingPayment>
 ```
 Calculates upcoming payments for bills with AutoPay enabled
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayViewModel.kt`
 
 ```kotlin
 class AutoPayViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScreen.kt:64</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:63</code></summary>
 
 ```kotlin
     showTopBar: Boolean = true,
@@ -695,7 +697,7 @@ data class AutoPayState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScreen.kt:122</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:121</code></summary>
 
 ```kotlin
 @Composable
@@ -714,7 +716,7 @@ data class AutoPaySchedule(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleDetailsScreen.kt:129</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:128</code></summary>
 
 ```kotlin
 @Composable
@@ -733,7 +735,7 @@ data class UpcomingPayment(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScreen.kt:524</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:523</code></summary>
 
 ```kotlin
 @Composable
@@ -752,7 +754,7 @@ enum class AutoPayStatus
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleDetailsScreen.kt:104</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:103</code></summary>
 
 ```kotlin
                 modifier = Modifier.padding(paddingValues),
@@ -771,7 +773,7 @@ enum class PaymentStatus
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayHistoryScreen.kt:146</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:145</code></summary>
 
 ```kotlin
     val statusColor = when (currentStatus) {
@@ -790,7 +792,7 @@ sealed interface AutoPayEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:107</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -809,7 +811,7 @@ sealed interface AutoPayAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScreen.kt:71</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:70</code></summary>
 
 ```kotlin
         isEnabled = true,
@@ -823,14 +825,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillListScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt`
 
 ```kotlin
 fun BillListScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:274</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:274</code></summary>
 
 ```kotlin
 
@@ -844,14 +846,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillListViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListViewModel.kt`
 
 ```kotlin
 class BillListViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillListScreen.kt:65</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:65</code></summary>
 
 ```kotlin
     onNavigateToAutopay: () -> Unit,
@@ -875,7 +877,7 @@ sealed interface BillListEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillListScreen.kt:133</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:133</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -894,7 +896,7 @@ sealed interface BillListAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillListScreen.kt:72</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:72</code></summary>
 
 ```kotlin
         isEnabled = true,
@@ -908,14 +910,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillerListScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt`
 
 ```kotlin
 fun BillerListScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:228</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:228</code></summary>
 
 ```kotlin
 
@@ -929,14 +931,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillerListViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListViewModel.kt`
 
 ```kotlin
 class BillerListViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillerListScreen.kt:61</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:60</code></summary>
 
 ```kotlin
     onNavigateToAddBiller: () -> Unit,
@@ -960,7 +962,7 @@ sealed interface BillerListEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillerListScreen.kt:69</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:68</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -979,7 +981,7 @@ sealed interface BillerListAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/BillerListScreen.kt:110</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:109</code></summary>
 
 ```kotlin
                         onValueChange = {
@@ -993,14 +995,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt`
 
 ```kotlin
 fun EditBillScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:297</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:297</code></summary>
 
 ```kotlin
         ),
@@ -1014,14 +1016,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillViewModel.kt`
 
 ```kotlin
 class EditBillViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillScreen.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:78</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -1045,7 +1047,7 @@ sealed interface EditBillEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillScreen.kt:87</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:87</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1064,7 +1066,7 @@ sealed interface EditBillAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillScreen.kt:121</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:121</code></summary>
 
 ```kotlin
                     label = "Bill Name *",
@@ -1078,14 +1080,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillerScreen.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt`
 
 ```kotlin
 fun EditBillerScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayNavigation.kt:250</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:250</code></summary>
 
 ```kotlin
         ),
@@ -1098,14 +1100,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillerViewModel.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerViewModel.kt`
 
 ```kotlin
 class EditBillerViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillerScreen.kt:54</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:53</code></summary>
 
 ```kotlin
 fun EditBillerScreen(
@@ -1128,7 +1130,7 @@ sealed interface EditBillerEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillerScreen.kt:61</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:60</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1147,7 +1149,7 @@ sealed interface EditBillerAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/EditBillerScreen.kt:91</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:90</code></summary>
 
 ```kotlin
                 label = "Biller Name *",
@@ -1161,7 +1163,7 @@ _No KDoc at source._
 
 </details>
 
-### `feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/di/AutoPayModule.kt`
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/di/AutoPayModule.kt`
 
 ```kotlin
 val AutoPayModule = module

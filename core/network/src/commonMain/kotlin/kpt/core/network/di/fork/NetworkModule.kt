@@ -27,9 +27,9 @@ import kpt.core.network.config.SupabaseInstanceConfigLoader
 import kpt.core.network.di.BaseClient
 import kpt.core.network.di.InterBankClient
 import kpt.core.network.di.SelfClient
-import kpt.core.network.utils.BaseURL
-import kpt.core.network.utils.FlowConverterFactory
-import kpt.core.network.utils.KtorInterceptor
+import kpt.core.network.main.utils.BaseURL
+import kpt.core.network.main.utils.FlowConverterFactory
+import kpt.core.network.main.utils.KtorInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.corebase.network.DynamicBaseUrlPlugin

@@ -9,6 +9,8 @@ Screens: `AddEditSIScreen`, `SIDetailsScreen`, `StandingInstructionScreen`
 
 ViewModels: `AddEditSIViewModel`, `SIDetailViewModel`, `StandingInstructionViewModel`
 
+**Consumes:** `core/store/repository`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `AddEditSIViewModel`, `SIDetailViewModel`, `StandingInstructionViewM
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/standing-instruction sha=17816ccda8b4460c268b18c9f4fbccf9f6dcd594 -->
+<!-- api-docs:begin module=feature/standing-instruction sha=6910aa73b232261d85a4410adf1d856e3e257a68 -->
 ## API reference
 
-_Generated from `feature/standing-instruction` at tree `17816ccda8b4` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/standing-instruction` at tree `6910aa73b232` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,21 +33,21 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/StandingInstructionScreen.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt`
 
 ```kotlin
 fun StandingInstructionsScreen(
 ```
 _No KDoc at source._
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/StandingInstructionViewModel.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionViewModel.kt`
 
 ```kotlin
 class StandingInstructionViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/StandingInstructionScreen.kt:79</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:78</code></summary>
 
 ```kotlin
     onShowSIDetails: (Long) -> Unit,
@@ -63,7 +65,7 @@ data class SIUiState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/StandingInstructionScreen.kt:117</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:116</code></summary>
 
 ```kotlin
 @Composable
@@ -82,7 +84,7 @@ sealed interface SIEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/StandingInstructionScreen.kt:89</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:88</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -101,7 +103,7 @@ sealed interface SIAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/StandingInstructionScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:101</code></summary>
 
 ```kotlin
         dialogState = state.dialogState,
@@ -115,14 +117,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/components/InstructionTypeChip.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/components/InstructionTypeChip.kt`
 
 ```kotlin
 fun InstructionTypeChip(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/details/SIDetailsScreen.kt:222</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/details/SIDetailsScreen.kt:221</code></summary>
 
 ```kotlin
                         text = "Instruction Type",
@@ -140,14 +142,14 @@ enum class StandingInstructionType
 ```
 _No KDoc at source._
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/components/PriorityChip.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/components/PriorityChip.kt`
 
 ```kotlin
 fun PriorityChip(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/details/SIDetailsScreen.kt:212</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/details/SIDetailsScreen.kt:211</code></summary>
 
 ```kotlin
                         )
@@ -161,14 +163,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/createOrUpdate/AddEditSINavigation.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSINavigation.kt`
 
 ```kotlin
 data class SIAddEditArgs(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt:61</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt:61</code></summary>
 
 ```kotlin
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: run {
@@ -192,14 +194,14 @@ fun NavController.navigateToSIAddEdit(
 ```
 _No KDoc at source._
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt`
 
 ```kotlin
 sealed interface AddEditSIEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/createOrUpdate/AddEditSIScreen.kt:96</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIScreen.kt:95</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -218,7 +220,7 @@ sealed interface AddEditSIAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/createOrUpdate/AddEditSIScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIScreen.kt:107</code></summary>
 
 ```kotlin
         dialogState = state.dialogState,
@@ -232,14 +234,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/createOrUpdate/SIAddEditType.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/SIAddEditType.kt`
 
 ```kotlin
 sealed class SIAddEditType
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/StandingInstructionScreen.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:75</code></summary>
 
 ```kotlin
 @Composable
@@ -253,7 +255,7 @@ fun StandingInstructionsScreen(
 
 </details>
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/details/SIDetailsNavigation.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/details/SIDetailsNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.siDetailsScreen(
@@ -265,14 +267,14 @@ fun NavController.navigateSIDetails(instructionId: Long, navOptions: NavOptions?
 ```
 _No KDoc at source._
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/details/SIDetailsScreen.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/details/SIDetailsScreen.kt`
 
 ```kotlin
 fun colorForMissing(value: String?): Color
 ```
 _No KDoc at source._
 
-### `feature/standing-instruction/src/commonMain/kotlin/org/mifospay/feature/standing/instruction/di/StandingInstructionModule.kt`
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/di/StandingInstructionModule.kt`
 
 ```kotlin
 val StandingInstructionModule = module

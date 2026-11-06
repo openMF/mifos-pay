@@ -24,10 +24,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/database sha=fa46e9b0f089108eec594ff8f6f788e5b1bf4273 -->
+<!-- api-docs:begin module=core/database sha=10d42b5c53f5dda0d50a46fd2aedede70a97333b -->
 ## API reference
 
-_Generated from `core/database` at tree `fa46e9b0f089` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/database` at tree `10d42b5c53f5` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/database/src/commonMain/kotlin/kpt/core/database/config/DatabaseConfig.kt`
@@ -125,7 +125,7 @@ interface SavingAccountDetailDao
 ```
 Data-access object for the `wallet_saving_account_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per account — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/account/AccountDetailStore.kt:114</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/account/AccountDetailStore.kt:116</code></summary>
 
 ```kotlin
 fun provideAccountDetailStore(
@@ -150,7 +150,7 @@ fun provideAccountDetailStore(
 ```kotlin
 data class SavingAccountDetailEntity(
 ```
-Persistent row for a single savings-account detail record — the Room mirror of the `org.mifospay.core.model.savingsaccount.SavingAccountDetail` domain model. Stored in the `wallet_saving_account_details` table.
+Persistent row for a single savings-account detail record — the Room mirror of the `kpt.core.model.savingsaccount.SavingAccountDetail` domain model. Stored in the `wallet_saving_account_details` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/account/SavingAccountDetailDao.kt:49</code></summary>
 
@@ -185,7 +185,7 @@ interface BeneficiaryDao
 ```
 Data-access object for the `wallet_beneficiaries` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/beneficiary/BeneficiaryStore.kt:82</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/beneficiary/BeneficiaryStore.kt:84</code></summary>
 
 ```kotlin
 fun provideBeneficiaryStore(
@@ -210,7 +210,7 @@ fun provideBeneficiaryStore(
 ```kotlin
 data class BeneficiaryEntity(
 ```
-Persistent row for a single beneficiary — the Room mirror of the `org.mifospay.core.model.beneficiary.Beneficiary` domain model. Stored in the `wallet_beneficiaries` table. LEDGER shape — many rows per client, page-keyed by `clientId`.
+Persistent row for a single beneficiary — the Room mirror of the `kpt.core.model.beneficiary.Beneficiary` domain model. Stored in the `wallet_beneficiaries` table. LEDGER shape — many rows per client, page-keyed by `clientId`.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/beneficiary/BeneficiaryDao.kt:57</code></summary>
 
@@ -245,7 +245,7 @@ interface BillDao
 ```
 Data-access object for the `wallet_autopay_bills` OFFLINE_LOCAL_ONLY table (GOAL D12). All reads are reactive `Flow`s; all writes are `suspend` one-shots.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/BillOfflineRepositoryImpl.kt:78</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillOfflineRepositoryImpl.kt:78</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalTime::class)
@@ -274,7 +274,7 @@ class BillOfflineRepositoryImpl(
 ```kotlin
 data class BillEntity(
 ```
-Persistent row for a user-defined bill — the Room mirror of the `org.mifospay.core.model.autopay.Bill` domain model. Stored in the `wallet_autopay_bills` table.
+Persistent row for a user-defined bill — the Room mirror of the `kpt.core.model.autopay.Bill` domain model. Stored in the `wallet_autopay_bills` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/bill/BillDao.kt:37</code></summary>
 
@@ -309,7 +309,7 @@ interface BillerDao
 ```
 Data-access object for the `wallet_autopay_billers` OFFLINE_LOCAL_ONLY table (GOAL D12) — mirrors the shape of [`BillDao`]`kpt.core.database.wallet.bill.BillDao`. All reads are reactive `Flow`s; all writes are `suspend` one-shots.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/BillerOfflineRepositoryImpl.kt:95</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillerOfflineRepositoryImpl.kt:95</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalTime::class)
@@ -339,7 +339,7 @@ class BillerOfflineRepositoryImpl(
 ```kotlin
 data class BillerEntity(
 ```
-Persistent row for a user-defined biller — the Room mirror of the `org.mifospay.core.model.autopay.Biller` domain model. Stored in the `wallet_autopay_billers` table.
+Persistent row for a user-defined biller — the Room mirror of the `kpt.core.model.autopay.Biller` domain model. Stored in the `wallet_autopay_billers` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/biller/BillerDao.kt:39</code></summary>
 
@@ -374,7 +374,7 @@ interface ClientDetailDao
 ```
 Data-access object for the `wallet_client_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per client — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/client/ClientDetailStore.kt:109</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/client/ClientDetailStore.kt:111</code></summary>
 
 ```kotlin
 fun provideClientDetailStore(
@@ -399,7 +399,7 @@ fun provideClientDetailStore(
 ```kotlin
 data class ClientDetailEntity(
 ```
-Persistent row for a single client-info record — the Room mirror of the `org.mifospay.core.model.client.Client` domain model. Stored in the `wallet_client_details` table.
+Persistent row for a single client-info record — the Room mirror of the `kpt.core.model.client.Client` domain model. Stored in the `wallet_client_details` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/client/ClientDetailDao.kt:49</code></summary>
 
@@ -434,7 +434,7 @@ interface InvoiceDao
 ```
 Data-access object for the `wallet_invoices` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/invoice/InvoiceStore.kt:88</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/invoice/InvoiceStore.kt:90</code></summary>
 
 ```kotlin
 fun provideInvoiceStore(
@@ -459,9 +459,9 @@ fun provideInvoiceStore(
 ```kotlin
 data class InvoiceEntity(
 ```
-Persistent row for a single invoice — the Room mirror of the `org.mifospay.core.model.datatables.invoice.Invoice` domain model. Stored in the `wallet_invoices` table. LEDGER shape — many rows per client, page-keyed by `clientId`.
+Persistent row for a single invoice — the Room mirror of the `kpt.core.model.datatables.invoice.Invoice` domain model. Stored in the `wallet_invoices` table. LEDGER shape — many rows per client, page-keyed by `clientId`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repository/InvoiceRepository.kt:63</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/InvoiceRepository.kt:62</code></summary>
 
 ```kotlin
     // SubmitHandler maps success/exception to SubmitState. The user-facing success
@@ -494,7 +494,7 @@ interface LinkableAccountDao
 ```
 Data-access object for the `wallet_linkable_accounts` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/linkableaccount/LinkableAccountStore.kt:125</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/linkableaccount/LinkableAccountStore.kt:126</code></summary>
 
 ```kotlin
 fun provideLinkableAccountsStore(
@@ -519,7 +519,7 @@ fun provideLinkableAccountsStore(
 ```kotlin
 data class LinkableAccountEntity(
 ```
-Persistent row for a single account that a client CAN link into a pocket — the Room mirror of the `org.mifospay.core.model.pocket.LinkableAccount` domain model. Stored in the `wallet_linkable_accounts` table.
+Persistent row for a single account that a client CAN link into a pocket — the Room mirror of the `kpt.core.model.pocket.LinkableAccount` domain model. Stored in the `wallet_linkable_accounts` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/linkableaccount/LinkableAccountDao.kt:59</code></summary>
 
@@ -554,7 +554,7 @@ interface NotificationDao
 ```
 Data-access object for the `wallet_notifications` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/notification/NotificationStore.kt:93</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/notification/NotificationStore.kt:95</code></summary>
 
 ```kotlin
 fun provideNotificationStore(
@@ -579,7 +579,7 @@ fun provideNotificationStore(
 ```kotlin
 data class NotificationEntity(
 ```
-Persistent row for a single notification — the Room mirror of the `org.mifospay.core.model.notification.Notification` domain model. Stored in the `wallet_notifications` table. LEDGER shape — many rows per client.
+Persistent row for a single notification — the Room mirror of the `kpt.core.model.notification.Notification` domain model. Stored in the `wallet_notifications` table. LEDGER shape — many rows per client.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/notification/NotificationDao.kt:58</code></summary>
 
@@ -614,7 +614,7 @@ interface OfficeDao
 ```
 Data-access object for the `wallet_offices` global-reference table. ## Access pattern (GOAL D13 — global LEDGER variant, singleton key) - **Reads** are reactive `Flow`s over the WHOLE table — `observeAll`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/office/OfficeStore.kt:85</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/office/OfficeStore.kt:87</code></summary>
 
 ```kotlin
 fun provideOfficeStore(
@@ -638,7 +638,7 @@ fun provideOfficeStore(
 ```kotlin
 data class OfficeEntity(
 ```
-Persistent row for a single Fineract office — the Room mirror of the `org.mifospay.core.model.office.Office` domain model. Stored in the `wallet_offices` table.
+Persistent row for a single Fineract office — the Room mirror of the `kpt.core.model.office.Office` domain model. Stored in the `wallet_offices` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/office/OfficeDao.kt:60</code></summary>
 
@@ -673,7 +673,7 @@ interface PocketDao
 ```
 Data-access object for the `wallet_pockets` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/PocketRepositoryImp.kt:50</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:51</code></summary>
 
 ```kotlin
     private val storeNetworkMonitor: StoreNetworkMonitor? = null,
@@ -708,7 +708,7 @@ Data-access object for the `wallet_pockets` LEDGER table. ## Access pattern (GOA
 ```kotlin
 data class PocketEntity(
 ```
-Persistent row for a single linked pocket account — the Room mirror of the `org.mifospay.core.model.pocket.DetailedPocketAccount` domain aggregate (which wraps `PocketAccount` + derived detail fields). Stored in the `wallet_pockets` table.
+Persistent row for a single linked pocket account — the Room mirror of the `kpt.core.model.pocket.DetailedPocketAccount` domain aggregate (which wraps `PocketAccount` + derived detail fields). Stored in the `wallet_pockets` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/pocket/PocketDao.kt:58</code></summary>
 
@@ -748,7 +748,7 @@ interface RecentPayeeDao
 ```
 Data-access object for the `wallet_recent_payees` LOCAL-DERIVED table (GOAL D12 — persist-on-derive variant of the OFFLINE_LOCAL_ONLY archetype).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:71</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:71</code></summary>
 
 ```kotlin
     // construct it. Production DI in `RepositoryModule` wires this
@@ -773,7 +773,7 @@ Data-access object for the `wallet_recent_payees` LOCAL-DERIVED table (GOAL D12 
 ```kotlin
 data class RecentPayeeEntity(
 ```
-Persistent row for a derived recent-payee — the Room mirror of the `org.mifospay.core.model.account.RecentPayee` domain model. Stored in the `wallet_recent_payees` table.
+Persistent row for a derived recent-payee — the Room mirror of the `kpt.core.model.account.RecentPayee` domain model. Stored in the `wallet_recent_payees` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/recentpayee/RecentPayeeDao.kt:57</code></summary>
 
@@ -808,7 +808,7 @@ interface SavedCardDao
 ```
 Data-access object for the `wallet_saved_cards` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/savedcards/SavedCardStore.kt:79</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/savedcards/SavedCardStore.kt:81</code></summary>
 
 ```kotlin
 fun provideSavedCardStore(
@@ -833,7 +833,7 @@ fun provideSavedCardStore(
 ```kotlin
 data class SavedCardEntity(
 ```
-Persistent row for a single saved payment card — the Room mirror of the `org.mifospay.core.model.savedcards.SavedCard` domain model. Stored in the `wallet_saved_cards` table. LEDGER shape — many rows per client, page-keyed by `clientId`.
+Persistent row for a single saved payment card — the Room mirror of the `kpt.core.model.savedcards.SavedCard` domain model. Stored in the `wallet_saved_cards` table. LEDGER shape — many rows per client, page-keyed by `clientId`.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/savedcards/SavedCardDao.kt:58</code></summary>
 
@@ -868,7 +868,7 @@ interface SelfAccountDao
 ```
 Data-access object for the `wallet_self_accounts` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/selfaccounts/SelfAccountsStore.kt:100</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/selfaccounts/SelfAccountsStore.kt:102</code></summary>
 
 ```kotlin
 fun provideSelfAccountsStore(
@@ -893,7 +893,7 @@ fun provideSelfAccountsStore(
 ```kotlin
 data class SelfAccountEntity(
 ```
-Persistent row for a single "self account" (own savings account) — the Room mirror of the `org.mifospay.core.model.account.Account` domain model. Stored in the `wallet_self_accounts` table.
+Persistent row for a single "self account" (own savings account) — the Room mirror of the `kpt.core.model.account.Account` domain model. Stored in the `wallet_self_accounts` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/selfaccounts/SelfAccountDao.kt:61</code></summary>
 
@@ -928,7 +928,7 @@ interface StandingInstructionDao
 ```
 Data-access object for the `wallet_standing_instructions` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/standinginstruction/StandingInstructionStore.kt:91</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/standinginstruction/StandingInstructionStore.kt:93</code></summary>
 
 ```kotlin
 fun provideStandingInstructionStore(
@@ -953,7 +953,7 @@ fun provideStandingInstructionStore(
 ```kotlin
 data class StandingInstructionEntity(
 ```
-Persistent row for a single standing instruction — the Room mirror of the `org.mifospay.core.model.standinginstruction.StandingInstruction` domain model. Stored in the `wallet_standing_instructions` table.
+Persistent row for a single standing instruction — the Room mirror of the `kpt.core.model.standinginstruction.StandingInstruction` domain model. Stored in the `wallet_standing_instructions` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/standinginstruction/StandingInstructionDao.kt:59</code></summary>
 
@@ -988,7 +988,7 @@ interface TransactionDao
 ```
 Data-access object for the `wallet_transactions` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per account — `observeByAccount`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/AccountRepositoryImpl.kt:67</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:68</code></summary>
 
 ```kotlin
     // injected so getTransaction(...) can read the cached row offline-first before
@@ -1016,7 +1016,7 @@ Data-access object for the `wallet_transactions` LEDGER table. ## Access pattern
 ```kotlin
 data class TransactionEntity(
 ```
-Persistent row for a single financial transaction — the Room mirror of the `org.mifospay.core.model.savingsaccount.Transaction` domain model. Stored in the `wallet_transactions` table.
+Persistent row for a single financial transaction — the Room mirror of the `kpt.core.model.savingsaccount.Transaction` domain model. Stored in the `wallet_transactions` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/transaction/TransactionDao.kt:69</code></summary>
 
@@ -1051,7 +1051,7 @@ interface TransferDetailDao
 ```
 Data-access object for the `wallet_transfer_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per transfer — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/transferdetail/TransferDetailStore.kt:84</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/transferdetail/TransferDetailStore.kt:86</code></summary>
 
 ```kotlin
 fun provideTransferDetailStore(
@@ -1075,7 +1075,7 @@ fun provideTransferDetailStore(
 ```kotlin
 data class TransferDetailEntity(
 ```
-Persistent row for a single account-transfer detail record — the Room mirror of the `org.mifospay.core.model.savingsaccount.TransferDetail` domain model. Stored in the `wallet_transfer_details` table.
+Persistent row for a single account-transfer detail record — the Room mirror of the `kpt.core.model.savingsaccount.TransferDetail` domain model. Stored in the `wallet_transfer_details` table.
 
 <details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/transferdetail/TransferDetailDao.kt:49</code></summary>
 

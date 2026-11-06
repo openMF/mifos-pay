@@ -9,6 +9,8 @@ Screens: `IntraBankHubScreen`, `SelectPayeeScreen`, `TransferConfirmScreen`, `Tr
 
 ViewModels: `IntraBankHubViewModel`, `SelectScreenViewModel`, `TransferConfirmViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `IntraBankHubViewModel`, `SelectScreenViewModel`, `TransferConfirmVi
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/transfer-intrabank sha=0117ca21058daeb6967ce5617daad432daf64c6f -->
+<!-- api-docs:begin module=feature/transfer-intrabank sha=344141e1e2bd0851da2cfff441e3e0e9a2f2a9b2 -->
 ## API reference
 
-_Generated from `feature/transfer-intrabank` at tree `0117ca21058d` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/transfer-intrabank` at tree `344141e1e2bd` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,21 +33,21 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt`
 
 ```kotlin
 fun ClientCard(
 ```
 _No KDoc at source._
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt`
 
 ```kotlin
 data class TransferResult(
 ```
 Transfer result data containing all the details of a successful transfer.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:139</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:139</code></summary>
 
 ```kotlin
 internal fun TransferConfirmScreen(
@@ -59,21 +61,21 @@ internal fun TransferConfirmScreen(
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/di/IntraBankModule.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/di/IntraBankModule.kt`
 
 ```kotlin
 val IntraBankModule = module
 ```
 _No KDoc at source._
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt`
 
 ```kotlin
 fun IntraBankHubScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/navigation/IntraBankHubNavigation.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/navigation/IntraBankHubNavigation.kt:44</code></summary>
 
 ```kotlin
 ) {
@@ -87,17 +89,17 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubViewModel.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubViewModel.kt`
 
 ```kotlin
 class IntraBankHubViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/di/IntraBankModule.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/di/IntraBankModule.kt:18</code></summary>
 
 ```kotlin
-
+import org.koin.dsl.module
 val IntraBankModule = module {
     viewModelOf(::IntraBankHubViewModel)
     viewModelOf(::SelectScreenViewModel)
@@ -112,7 +114,7 @@ enum class PayeeTab
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:184</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:183</code></summary>
 
 ```kotlin
             // Content based on selected tab
@@ -131,7 +133,7 @@ data class IntraBankHubState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:125</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:124</code></summary>
 
 ```kotlin
 @Composable
@@ -150,7 +152,7 @@ enum class RecentPayeesState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:186</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:185</code></summary>
 
 ```kotlin
                 PayeeTab.Recents -> {
@@ -169,7 +171,7 @@ enum class BeneficiariesState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:234</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:233</code></summary>
 
 ```kotlin
                 PayeeTab.Beneficiaries -> {
@@ -188,7 +190,7 @@ sealed interface IntraBankHubEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:81</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:80</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -207,7 +209,7 @@ sealed interface IntraBankHubAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:119</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:118</code></summary>
 
 ```kotlin
 
@@ -221,14 +223,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/components/BeneficiaryCard.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/BeneficiaryCard.kt`
 
 ```kotlin
 fun BeneficiaryCard(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:247</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:246</code></summary>
 
 ```kotlin
                         BeneficiariesState.Success -> {
@@ -242,14 +244,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/components/EmptyBeneficiariesState.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/EmptyBeneficiariesState.kt`
 
 ```kotlin
 fun EmptyBeneficiariesState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:258</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:257</code></summary>
 
 ```kotlin
                         BeneficiariesState.Empty -> {
@@ -263,14 +265,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/components/EmptyRecentsState.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/EmptyRecentsState.kt`
 
 ```kotlin
 fun EmptyRecentsState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:218</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:217</code></summary>
 
 ```kotlin
                         RecentPayeesState.Empty -> {
@@ -284,14 +286,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/components/QuickActionsGrid.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/QuickActionsGrid.kt`
 
 ```kotlin
 fun QuickActionsGrid(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:166</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:165</code></summary>
 
 ```kotlin
 
@@ -305,14 +307,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/components/RecentPayeeCard.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/RecentPayeeCard.kt`
 
 ```kotlin
 fun RecentPayeeCard(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:199</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:198</code></summary>
 
 ```kotlin
                         RecentPayeesState.Success -> {
@@ -326,7 +328,7 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/navigation/IntraBankHubNavigation.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/navigation/IntraBankHubNavigation.kt`
 
 ```kotlin
 data object IntraBankHubRoute
@@ -343,14 +345,14 @@ fun NavGraphBuilder.intraBankHubScreen(
 ```
 _No KDoc at source._
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/navigation/TransferConfirmNavigation.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/navigation/TransferConfirmNavigation.kt`
 
 ```kotlin
 data class TransferConfirmRoute(
 ```
 Type-safe route for the intra-bank transfer confirmation screen. Carries the source/destination account snapshot and the post-success destination the caller wants to return to (`home` or `payments`).
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt:100</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt:100</code></summary>
 
 ```kotlin
 ) : BaseViewModel<TransferConfirmState, TransferConfirmEvent, TransferConfirmAction>(
@@ -374,14 +376,14 @@ fun NavGraphBuilder.transferConfirmScreen(
 ```
 Registers the transfer-confirm destination. Hoists the destination's own `SavedStateHandle` into `TransferConfirmScreen` so the `INTRA_BANK_TRANSFER_VERIFICATION_KEY` round-trip channel works.
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/select/SelectPayeeScreen.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt`
 
 ```kotlin
 fun SelectPayeeScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/select/SelectScreenNavigation.kt:46</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectScreenNavigation.kt:46</code></summary>
 
 ```kotlin
     composable<SelectAccountRoute> { backStackEntry ->
@@ -395,7 +397,7 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/select/SelectScreenNavigation.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectScreenNavigation.kt`
 
 ```kotlin
 data class SelectAccountRoute(
@@ -412,14 +414,14 @@ fun NavGraphBuilder.selectAccountScreenDestination(
 ```
 _No KDoc at source._
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/select/SelectScreenViewModel.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectScreenViewModel.kt`
 
 ```kotlin
 class SelectScreenViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/di/IntraBankModule.kt:20</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/di/IntraBankModule.kt:19</code></summary>
 
 ```kotlin
 val IntraBankModule = module {
@@ -436,7 +438,7 @@ data class SelectScreenState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/select/SelectPayeeScreen.kt:126</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:125</code></summary>
 
 ```kotlin
 @Composable
@@ -455,7 +457,7 @@ sealed interface SelectScreenEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/select/SelectPayeeScreen.kt:98</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:97</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -474,7 +476,7 @@ sealed interface SelectScreenAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/select/SelectPayeeScreen.kt:128</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:127</code></summary>
 
 ```kotlin
     state: SelectScreenState,
@@ -488,7 +490,7 @@ _No KDoc at source._
 
 </details>
 
-### `feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/success/TransferSuccessNavigation.kt`
+### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/success/TransferSuccessNavigation.kt`
 
 ```kotlin
 data class TransferSuccessRoute(

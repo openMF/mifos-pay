@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/designsystem sha=0f54af0f1b9883c1d0c5c0b2f50675208efbcdf2 -->
+<!-- api-docs:begin module=core/designsystem sha=8dcbac397831150ff5f0b9711380c6abc74b5afb -->
 ## API reference
 
-_Generated from `core/designsystem` at tree `0f54af0f1b98` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/designsystem` at tree `8dcbac397831` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/chart/ChartTokens.kt`
@@ -113,12 +113,792 @@ fun KptSparkline(
 ```
 Minimal Canvas-based sparkline — a one-pass connected polyline whose y-axis is normalized to the series's own `[min, max]` range. No external chart dependency.
 
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/AlertDialog.kt`
+
+```kotlin
+fun MifosDialogBox(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrScreen.kt:149</code></summary>
+
+```kotlin
+
+        is MpayQrState.DialogState.AddToPocketConfirmation -> {
+            MifosDialogBox(
+                showDialogState = true,
+                onDismiss = { onAction(MpayQrAction.ConfirmAddToPocket(false)) },
+                title = stringResource(UiRes.string.core_ui_add_to_pocket_title),
+                message = stringResource(UiRes.string.core_ui_add_to_pocket_message),
+```
+
+</details>
+
+```kotlin
+fun MifosCustomDialog(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/SetAmountDialog.kt:56</code></summary>
+
+```kotlin
+    onAction: (MpayQrAction) -> Unit,
+) {
+    MifosCustomDialog(
+        onDismiss = {
+            onAction(MpayQrAction.DismissDialog)
+        },
+        content = {
+```
+
+</details>
+
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/AmountDisplay.kt`
 
 ```kotlin
 fun AmountDisplay(
 ```
 Big-and-bold currency presentation used at the top of dashboards and detail screens. Layout: optional label (small, dimmed) → large amount → optional supporting metadata row.
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Background.kt`
+
+```kotlin
+fun MifosBackground(
+```
+The main background for the app. Uses `LocalBackgroundTheme` to set the color and tonal elevation of a `Surface`.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Button.kt:296</code></summary>
+
+```kotlin
+fun MifosButtonPreview() {
+    MifosTheme {
+        MifosBackground(modifier = Modifier.size(150.dp, 50.dp)) {
+            MifosButton(text = { Text("Test button") }, onClick = {})
+        }
+    }
+}
+```
+
+</details>
+
+```kotlin
+fun MifosGradientBackground(
+```
+A gradient background for select screens. Uses `LocalBackgroundTheme` to set the gradient colors of a `Box` within a `Surface`.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/socialSignup/SignupMethodScreen.kt:75</code></summary>
+
+```kotlin
+        },
+    ) {
+        MifosGradientBackground {
+            SignupMethodScreenContent(
+                modifier = Modifier.padding(it),
+                onSignUpAsMerchant = {
+                    navigateToSignupScreen(WALLET_ACCOUNT_SAVINGS_PRODUCT_ID)
+```
+
+</details>
+
+```kotlin
+fun BackgroundDefault()
+```
+_No KDoc at source._
+
+```kotlin
+fun BackgroundDynamic()
+```
+_No KDoc at source._
+
+```kotlin
+fun BackgroundAndroid()
+```
+_No KDoc at source._
+
+```kotlin
+fun GradientBackgroundDefault()
+```
+_No KDoc at source._
+
+```kotlin
+fun GradientBackgroundDynamic()
+```
+_No KDoc at source._
+
+```kotlin
+fun GradientBackgroundAndroid()
+```
+_No KDoc at source._
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/BottomSheet.kt`
+
+```kotlin
+fun MifosBottomSheet(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt:62</code></summary>
+
+```kotlin
+    when (dialogState) {
+        is DeleteBeneficiaryState.DialogState.Confirmation -> {
+            MifosBottomSheet(
+                onDismiss = onDismiss,
+            ) {
+                DeleteConfirmationContent(
+                    beneficiaryName = dialogState.beneficiaryName,
+```
+
+</details>
+
+```kotlin
+fun MifosBottomSheetPreview()
+```
+_No KDoc at source._
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Button.kt`
+
+```kotlin
+fun MifosButton(
+```
+Mifos Wallet filled button with generic content slot. Wraps Material 3 `Button`.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:517</code></summary>
+
+```kotlin
+
+        item("CreateOrUpdateSavingAccount") {
+            MifosButton(
+                text = {
+                    Text(
+                        text = btnText,
+                    )
+```
+
+</details>
+
+```kotlin
+fun MifosButton(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:517</code></summary>
+
+```kotlin
+
+        item("CreateOrUpdateSavingAccount") {
+            MifosButton(
+                text = {
+                    Text(
+                        text = btnText,
+                    )
+```
+
+</details>
+
+```kotlin
+fun MifosButton(
+```
+Mifos Wallet filled button with text and icon content slots.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:517</code></summary>
+
+```kotlin
+
+        item("CreateOrUpdateSavingAccount") {
+            MifosButton(
+                text = {
+                    Text(
+                        text = btnText,
+                    )
+```
+
+</details>
+
+```kotlin
+fun MifosOutlinedButton(
+```
+Mifos Wallet outlined button with generic content slot. Wraps Material 3 `OutlinedButton`.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/socialSignup/SignupMethodScreen.kt:105</code></summary>
+
+```kotlin
+        )
+
+        MifosOutlinedButton(
+            modifier = Modifier.padding(top = KptTheme.spacing.xl),
+            onClick = onSignUpAsMerchant,
+            border = BorderStroke(
+                1.dp,
+```
+
+</details>
+
+```kotlin
+fun MifosOutlinedButton(
+```
+Mifos Wallet outlined button with text and icon content slots.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/socialSignup/SignupMethodScreen.kt:105</code></summary>
+
+```kotlin
+        )
+
+        MifosOutlinedButton(
+            modifier = Modifier.padding(top = KptTheme.spacing.xl),
+            onClick = onSignUpAsMerchant,
+            border = BorderStroke(
+                1.dp,
+```
+
+</details>
+
+```kotlin
+fun MifosTextButton(
+```
+Mifos Wallet text button with generic content slot. Wraps Material 3 `TextButton`.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosBasicDialog.kt:32</code></summary>
+
+```kotlin
+            onDismissRequest = onDismissRequest,
+            confirmButton = {
+                MifosTextButton(
+                    content = {
+                        Text(text = "Ok")
+                    },
+                    onClick = onDismissRequest,
+```
+
+</details>
+
+```kotlin
+fun MifosTextButton(
+```
+Mifos Wallet text button with text and icon content slots.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosBasicDialog.kt:32</code></summary>
+
+```kotlin
+            onDismissRequest = onDismissRequest,
+            confirmButton = {
+                MifosTextButton(
+                    content = {
+                        Text(text = "Ok")
+                    },
+                    onClick = onDismissRequest,
+```
+
+</details>
+
+```kotlin
+fun MifosButtonPreview()
+```
+_No KDoc at source._
+
+```kotlin
+fun MifosOutlinedButtonPreview()
+```
+_No KDoc at source._
+
+```kotlin
+fun MifosButtonLeadingIconPreview()
+```
+_No KDoc at source._
+
+```kotlin
+object MifosButtonDefaults
+```
+Mifos Wallet button default values.
+
+- `const val DISABLED_OUTLINED_BUTTON_BORDER_ALPHA = 0.12f`
+- `val OutlinedButtonBorderWidth = 1.dp`
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Card.kt`
+
+```kotlin
+fun MifosCard(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantsItem.kt:43</code></summary>
+
+```kotlin
+    modifier: Modifier = Modifier,
+) {
+    MifosCard(
+        modifier = modifier.combinedClickable(
+            onClick = onMerchantClicked,
+            onLongClick = {
+                onMerchantLongPressed(savingsWithAssociations.id.toString())
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/IconBox.kt`
+
+```kotlin
+fun IconBox(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTopBar.kt:38</code></summary>
+
+```kotlin
+        },
+        navigationIcon = {
+            IconBox(
+                icon = MifosIcons.ArrowBack2,
+                onClick = backPress,
+            )
+        },
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/LoadingWheel.kt`
+
+```kotlin
+fun MifosLoadingWheel(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:91</code></summary>
+
+```kotlin
+    ) {
+        if (state.isProcessing) {
+            MifosLoadingWheel(
+                contentDesc = "Processing Payment",
+                modifier = Modifier.size(120.dp),
+            )
+        } else {
+```
+
+</details>
+
+```kotlin
+fun MifosOverlayLoadingWheel(
+```
+_No KDoc at source._
+
+```kotlin
+fun MfOverlayLoadingWheel(
+```
+_No KDoc at source._
+
+```kotlin
+fun MfLoadingWheel(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:121</code></summary>
+
+```kotlin
+
+                MerchantUiState.Loading -> {
+                    MfLoadingWheel(
+                        contentDesc = stringResource(Res.string.feature_merchants_loading),
+                        backgroundColor = KptTheme.colorScheme.surface,
+                    )
+                }
+```
+
+</details>
+
+```kotlin
+fun MifosLoadingWheelPreview()
+```
+_No KDoc at source._
+
+```kotlin
+fun NiaOverlayLoadingWheelPreview()
+```
+_No KDoc at source._
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosAccountCard.kt`
+
+```kotlin
+fun MifosAccountCard(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/PocketDashboardScreen.kt:202</code></summary>
+
+```kotlin
+            Column(verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md)) {
+                buckets.savingsAccounts.forEach { account ->
+                    MifosAccountCard(
+                        accountId = account.accountId,
+                        accountType = account.name
+                            ?: stringResource(Res.string.feature_pocket_unknown_account),
+                        accountNumber = account.accountNumber,
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosAlertDialog.kt`
+
+```kotlin
+fun MifosAlertDialog(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/ManagePocketScreen.kt:323</code></summary>
+
+```kotlin
+
+        is ManagePocketDialogState.Error -> {
+            MifosAlertDialog(
+                title = stringResource(Res.string.feature_pocket_dialog_error_title),
+                message = stringResource(dialogState.message),
+                icon = MifosIcons.Error,
+                confirmText = stringResource(Res.string.feature_pocket_action_ok),
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosBasicDialog.kt`
+
+```kotlin
+fun MifosBasicDialog(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:453</code></summary>
+
+```kotlin
+) {
+    when (dialogState) {
+        is AccountState.DialogState.DeleteBeneficiary -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                title = stringResource(dialogState.title),
+                message = stringResource(dialogState.message),
+            ),
+```
+
+</details>
+
+```kotlin
+fun MifosBasicDialog(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:453</code></summary>
+
+```kotlin
+) {
+    when (dialogState) {
+        is AccountState.DialogState.DeleteBeneficiary -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                title = stringResource(dialogState.title),
+                message = stringResource(dialogState.message),
+            ),
+```
+
+</details>
+
+```kotlin
+sealed class BasicDialogState
+```
+Models display of a `MifosBasicDialog`.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:454</code></summary>
+
+```kotlin
+    when (dialogState) {
+        is AccountState.DialogState.DeleteBeneficiary -> MifosBasicDialog(
+            visibilityState = BasicDialogState.Shown(
+                title = stringResource(dialogState.title),
+                message = stringResource(dialogState.message),
+            ),
+            onConfirm = dialogState.onConfirm,
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosLoadingDialog.kt`
+
+```kotlin
+fun MifosLoadingDialog(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:469</code></summary>
+
+```kotlin
+        )
+
+        is AccountState.DialogState.Loading -> MifosLoadingDialog(
+            visibilityState = LoadingDialogState.Shown,
+        )
+
+        null -> Unit
+```
+
+</details>
+
+```kotlin
+sealed class LoadingDialogState
+```
+Models display of a `MifosLoadingDialog`.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:470</code></summary>
+
+```kotlin
+
+        is AccountState.DialogState.Loading -> MifosLoadingDialog(
+            visibilityState = LoadingDialogState.Shown,
+        )
+
+        null -> Unit
+    }
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosScaffold.kt`
+
+```kotlin
+fun MifosScaffold(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:160</code></summary>
+
+```kotlin
+    modifier: Modifier = Modifier,
+) {
+    MifosScaffold(
+        modifier = modifier,
+        snackbarHostState = snackbarHostState,
+        floatingActionButtonPosition = FabPosition.EndOverlay,
+        floatingActionButton = {
+```
+
+</details>
+
+```kotlin
+fun MifosScaffold(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:160</code></summary>
+
+```kotlin
+    modifier: Modifier = Modifier,
+) {
+    MifosScaffold(
+        modifier = modifier,
+        snackbarHostState = snackbarHostState,
+        floatingActionButtonPosition = FabPosition.EndOverlay,
+        floatingActionButton = {
+```
+
+</details>
+
+```kotlin
+fun MifosBottomSheetScaffold(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:288</code></summary>
+
+```kotlin
+    onAction: (TransferConfirmAction) -> Unit,
+) {
+    MifosBottomSheetScaffold(
+        topBar = {
+            MifosTopBar(
+                topBarTitle = stringResource(Res.string.feature_make_transfer_review_title),
+                backPress = {
+```
+
+</details>
+
+```kotlin
+data class FloatingActionButtonContent(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/scaffold/KptForkScaffold.kt:56</code></summary>
+
+```kotlin
+    title: String? = null,
+    containerColor: Color = KptTheme.colorScheme.background,
+    floatingActionButtonContent: FloatingActionButtonContent? = null,
+    pullToRefreshState: KptPullToRefreshState = rememberKptPullToRefreshState(),
+    contentWindowInsets: WindowInsets = ScaffoldDefaults
+        .contentWindowInsets
+//        .union(WindowInsets.displayCutout)
+```
+
+</details>
+
+```kotlin
+data class MifosPullToRefreshState(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:72</code></summary>
+
+```kotlin
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+
+    val pullRefreshState = rememberMifosPullToRefreshState(
+        isEnabled = true,
+        isRefreshing = state.isLoading,
+        onRefresh = { viewModel.trySendAction(AutoPayScheduleManagementAction.RefreshSchedules) },
+    )
+```
+
+</details>
+
+```kotlin
+fun rememberMifosPullToRefreshState(
+```
+_No KDoc at source._
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTab.kt`
+
+```kotlin
+fun MifosTab(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/ScrollableTabRow.kt:46</code></summary>
+
+```kotlin
+    ) {
+        tabContents.forEachIndexed { index, currentTab ->
+            MifosTab(
+                text = currentTab.tabName,
+                selected = pagerState.currentPage == index,
+                selectedColor = selectedContentColor,
+                unselectedColor = unselectedContentColor,
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTabPager.kt`
+
+```kotlin
+fun MifosTabPager(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/ManagePocketScreen.kt:537</code></summary>
+
+```kotlin
+                .weight(1f),
+        ) {
+            MifosTabPager(
+                modifier = Modifier.fillMaxSize(),
+                pagerState = pagerState,
+                currentPage = selectedTabIndex,
+                tabs = tabs.map { it.name },
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTopAppBar.kt`
+
+```kotlin
+fun MifosTopAppBar(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
+
+```kotlin
+        snackbarHostState = snackbarHostState,
+        topBar = {
+            MifosTopAppBar(
+                title = title,
+                scrollBehavior = scrollBehavior,
+                navigationIcon = NavigationIcon(
+                    navigationIcon = MifosIcons.Back,
+```
+
+</details>
+
+```kotlin
+fun MifosTopAppBar(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
+
+```kotlin
+        snackbarHostState = snackbarHostState,
+        topBar = {
+            MifosTopAppBar(
+                title = title,
+                scrollBehavior = scrollBehavior,
+                navigationIcon = NavigationIcon(
+                    navigationIcon = MifosIcons.Back,
+```
+
+</details>
+
+```kotlin
+fun MifosTopAppBar(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
+
+```kotlin
+        snackbarHostState = snackbarHostState,
+        topBar = {
+            MifosTopAppBar(
+                title = title,
+                scrollBehavior = scrollBehavior,
+                navigationIcon = NavigationIcon(
+                    navigationIcon = MifosIcons.Back,
+```
+
+</details>
+
+```kotlin
+data class NavigationIcon(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:114</code></summary>
+
+```kotlin
+                title = title,
+                scrollBehavior = scrollBehavior,
+                navigationIcon = NavigationIcon(
+                    navigationIcon = MifosIcons.Back,
+                    navigationIconContentDescription = "Go Back",
+                    onNavigationIconClick = {
+                        onEvent(MobileVerificationAction.CloseButtonClick)
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTopBar.kt`
+
+```kotlin
+fun MifosTopBar(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:101</code></summary>
+
+```kotlin
+    MifosScaffold(
+        topBar = {
+            MifosTopBar(
+                topBarTitle = "Add New Bill",
+                backPress = onNavigateBack,
+            )
+        },
+```
+
+</details>
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MoneyText.kt`
 
@@ -147,6 +927,47 @@ Money tone — how a monetary amount should be colored regardless of the raw val
 ```
 
 </details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Navigation.kt`
+
+```kotlin
+fun RowScope.MifosNavigationBarItem(
+```
+Now in Android navigation bar item with icon and label content slots. Wraps Material 3 `NavigationBarItem`.
+
+```kotlin
+fun MifosNavigationBar(
+```
+Now in Android navigation bar with content slot. Wraps Material 3 `NavigationBar`.
+
+```kotlin
+fun MifosNavigationRailItem(
+```
+Now in Android navigation rail item with icon and label content slots. Wraps Material 3 `NavigationRailItem`.
+
+```kotlin
+fun MifosNavigationRail(
+```
+Now in Android navigation rail with header and content slots. Wraps Material 3 `NavigationRail`.
+
+```kotlin
+fun MifosNavigationBarPreview()
+```
+_No KDoc at source._
+
+```kotlin
+fun MifosNavigationRailPreview()
+```
+_No KDoc at source._
+
+```kotlin
+object MifosNavigationDefaults
+```
+Now in Android navigation default values.
+
+- `fun navigationContentColor() = KptTheme.colorScheme.onSurfaceVariant`
+- `fun navigationSelectedItemColor() = KptTheme.colorScheme.onPrimaryContainer`
+- `fun navigationIndicatorColor() = KptTheme.colorScheme.primaryContainer`
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/RateBadge.kt`
 
@@ -190,7 +1011,7 @@ fun StatusChip(text: String, intent: StatusChipIntent, modifier: Modifier = Modi
 ```
 Compact colored pill used to convey state at a glance — bill status, loan stage, rate direction, sync state. Stays one line; no icons (use `UrgencyDot` when you want a leading accent).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:491</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:490</code></summary>
 
 ```kotlin
     ) {
@@ -225,6 +1046,130 @@ fun StatusChip(text: String, intent: StatusChipIntent, modifier: Modifier = Modi
 
 </details>
 
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/TextField.kt`
+
+```kotlin
+fun MifosOutlinedTextField(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:181</code></summary>
+
+```kotlin
+        )
+        Spacer(modifier = Modifier.padding(top = KptTheme.spacing.xl))
+        MifosOutlinedTextField(
+            label = stringResource(Res.string.feature_auth_username),
+            value = state.username,
+            onValueChange = {
+                onAction(LoginAction.UsernameChanged(it))
+```
+
+</details>
+
+```kotlin
+fun MifosTextField(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:228</code></summary>
+
+```kotlin
+    ) {
+        item("Client Name") {
+            MifosTextField(
+                value = state.template.clientName,
+                label = stringResource(Res.string.feature_accounts_add_client_name),
+                onValueChange = {},
+                readOnly = true,
+```
+
+</details>
+
+```kotlin
+fun MifosCustomTextField(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt:62</code></summary>
+
+```kotlin
+    val focusRequester = remember { FocusRequester() }
+
+    MifosCustomTextField(
+        modifier = modifier
+            .tabNavigation()
+            .focusRequester(focusRequester),
+        label = label,
+```
+
+</details>
+
+```kotlin
+fun MifosCustomTextField(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt:62</code></summary>
+
+```kotlin
+    val focusRequester = remember { FocusRequester() }
+
+    MifosCustomTextField(
+        modifier = modifier
+            .tabNavigation()
+            .focusRequester(focusRequester),
+        label = label,
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/TextUserImage.kt`
+
+```kotlin
+fun MifosTextUserImage(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/BeneficiaryCard.kt:56</code></summary>
+
+```kotlin
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            MifosTextUserImage(
+                text = getInitials(beneficiary.name),
+                size = 44.dp,
+            )
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/TopAppBar.kt`
+
+```kotlin
+fun MifosTopAppBar(
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
+
+```kotlin
+        snackbarHostState = snackbarHostState,
+        topBar = {
+            MifosTopAppBar(
+                title = title,
+                scrollBehavior = scrollBehavior,
+                navigationIcon = NavigationIcon(
+                    navigationIcon = MifosIcons.Back,
+```
+
+</details>
+
+```kotlin
+fun MifosNavigationTopAppBar(
+```
+_No KDoc at source._
+
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Urgency.kt`
 
 ```kotlin
@@ -252,6 +1197,116 @@ Due-date urgency tier — informs the color of a leading dot on a list row.
 fun UrgencyDot(urgency: Urgency, modifier: Modifier = Modifier, size: Dp = 10.dp)
 ```
 Solid colored dot used as the leading accent on a list row (bill reminder, loan due, task). Pairs cheaply with any list-item layout to encode urgency at a glance without stealing focus from the row's text content.
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/scrollbar/AppScrollbars.kt`
+
+```kotlin
+fun ScrollableState.DraggableScrollbar(
+```
+A `Scrollbar` that allows for fast scrolling of content by dragging its thumb. Its thumb disappears when the scrolling container is dormant.
+
+<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:368</code></summary>
+
+```kotlin
+
+        if (showScrollBar) {
+            state.DraggableScrollbar(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .windowInsetsPadding(WindowInsets.systemBars)
+                    .padding(horizontal = KptTheme.spacing.xs)
+```
+
+</details>
+
+```kotlin
+fun ScrollableState.DecorativeScrollbar(
+```
+A simple `Scrollbar`. Its thumb disappears when the scrolling container is dormant.
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/scrollbar/Scrollbar.kt`
+
+```kotlin
+class ScrollbarState
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/scrollbar/AppScrollbars.kt:69</code></summary>
+
+```kotlin
+@Composable
+fun ScrollableState.DraggableScrollbar(
+    state: ScrollbarState,
+    orientation: Orientation,
+    onThumbMoved: (Float) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+```
+
+</details>
+
+```kotlin
+value class ScrollbarStateValue internal constructor(
+```
+Class definition for the core properties of a scroll bar
+
+```kotlin
+fun scrollbarStateValue(
+```
+Creates a `ScrollbarStateValue` with the listed properties
+
+```kotlin
+fun Scrollbar(
+```
+A Composable for drawing a scrollbar
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/scrollbar/AppScrollbars.kt:75</code></summary>
+
+```kotlin
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    Scrollbar(
+        modifier = modifier,
+        orientation = orientation,
+        interactionSource = interactionSource,
+        state = state,
+```
+
+</details>
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/scrollbar/ScrollbarExt.kt`
+
+```kotlin
+fun LazyListState.scrollbarState(
+```
+Calculates a `ScrollbarState` driven by the changes in a `LazyListState`.
+
+```kotlin
+fun LazyGridState.scrollbarState(
+```
+Calculates a `ScrollbarState` driven by the changes in a `LazyGridState`
+
+```kotlin
+fun LazyStaggeredGridState.scrollbarState(
+```
+Remembers a `ScrollbarState` driven by the changes in a `LazyStaggeredGridState`
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/scrollbar/ThumbExt.kt`
+
+```kotlin
+fun LazyListState.rememberDraggableScroller(
+```
+Remembers a function to react to `Scrollbar` thumb position displacements for a `LazyListState`
+
+```kotlin
+fun LazyGridState.rememberDraggableScroller(
+```
+Remembers a function to react to `Scrollbar` thumb position displacements for a `LazyGridState`
+
+```kotlin
+fun LazyStaggeredGridState.rememberDraggableScroller(
+```
+Remembers a function to react to `Scrollbar` thumb position displacements for a `LazyStaggeredGridState`
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/state/CardLoadingSkeleton.kt`
 
@@ -352,6 +1407,83 @@ The app's icon set, named by ROLE rather than by glyph.
 - `val Visibility: ImageVector = Icons.Filled.Visibility` — `visibility` role — Material filled `Visibility`.
 - `val Check: ImageVector = Icons.Default.Check` — `check` role — Material default `Check`.
   _…more members; read the file._
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/icon/MifosIcons.kt`
+
+```kotlin
+object MifosIcons
+```
+Mifos icons. Material icons are `ImageVector`s, custom icons are drawable resource IDs.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:176</code></summary>
+
+```kotlin
+                ) {
+                    Icon(
+                        imageVector = MifosIcons.Add,
+                        stringResource(Res.string.feature_accounts_add),
+                    )
+                }
+            }
+```
+
+</details>
+
+- `val Fingerprint = Icons.Default.Fingerprint`
+- `val OutlinedInfo = Icons.Outlined.Info`
+- `val OutlinedLock = Icons.Outlined.Lock`
+- `val OutlinedNotifications = Icons.Outlined.Notifications`
+- `val ChevronRight: ImageVector = Icons.Filled.ChevronRight`
+- `val QrCode: ImageVector = Icons.Filled.QrCode`
+- `val Close: ImageVector = Icons.Filled.Close`
+- `val Error: ImageVector = Icons.Filled.Error`
+- `val AttachMoney: ImageVector = Icons.Filled.AttachMoney`
+- `val OutlinedVisibilityOff: ImageVector = Icons.Outlined.VisibilityOff`
+- `val OutlinedVisibility: ImageVector = Icons.Outlined.Visibility`
+- `val VisibilityOff: ImageVector = Icons.Filled.VisibilityOff`
+- `val Visibility: ImageVector = Icons.Filled.Visibility`
+- `val Check: ImageVector = Icons.Default.Check`
+  _…more members; read the file._
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/BackgroundTheme.kt`
+
+```kotlin
+data class BackgroundTheme(
+```
+A class to model background color and tonal elevation values for Now in Android.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:60</code></summary>
+
+```kotlin
+    }
+    // Background theme
+    val defaultBackgroundTheme = BackgroundTheme(
+        color = Color.Transparent,
+        tonalElevation = 2.dp,
+    )
+    val backgroundTheme = when {
+```
+
+</details>
+
+```kotlin
+val LocalBackgroundTheme = staticCompositionLocalOf { BackgroundTheme() }
+```
+A composition local for `BackgroundTheme`.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Background.kt:44</code></summary>
+
+```kotlin
+    content: @Composable () -> Unit,
+) {
+    val color = LocalBackgroundTheme.current.color
+    val tonalElevation = LocalBackgroundTheme.current.tonalElevation
+    Surface(
+        color = if (color == Color.Unspecified) Color.Transparent else color,
+        tonalElevation = if (tonalElevation == Dp.Unspecified) 0.dp else tonalElevation,
+```
+
+</details>
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/Color.kt`
 
@@ -705,6 +1837,18 @@ val surfaceContainerHighestDark = Color(0xFF374558)
 ```
 _No KDoc at source._
 
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/ColorScheme.kt`
+
+```kotlin
+val lightKptColorScheme = LightDefaultColorScheme.toKptColorScheme()
+```
+_No KDoc at source._
+
+```kotlin
+val darkKptColorScheme = DarkDefaultColorScheme.toKptColorScheme()
+```
+_No KDoc at source._
+
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/Elevation.kt`
 
 ```kotlin
@@ -712,7 +1856,7 @@ data class Elevation(
 ```
 Shared elevation tier scale — five named tiers matching Material 3 elevation guidance. Access from any Composable via `MaterialTheme.elevation`.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayHistoryScreen.kt:170</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:169</code></summary>
 
 ```kotlin
             containerColor = MaterialTheme.colorScheme.surface,
@@ -827,6 +1971,46 @@ val darkScheme = darkColorScheme(
 ```
 The assembled Material 3 dark scheme, wired from the palette tokens in `Color.kt`.
 
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/GradientColors.kt`
+
+```kotlin
+data class GradientColors(
+```
+A class to model gradient color values for Now in Android.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Background.kt:68</code></summary>
+
+```kotlin
+fun MifosGradientBackground(
+    modifier: Modifier = Modifier,
+    gradientColors: GradientColors = LocalGradientColors.current,
+    content: @Composable () -> Unit,
+) {
+    val currentTopColor by rememberUpdatedState(gradientColors.top)
+    val currentBottomColor by rememberUpdatedState(gradientColors.bottom)
+```
+
+</details>
+
+```kotlin
+val LocalGradientColors = staticCompositionLocalOf { GradientColors() }
+```
+A composition local for `GradientColors`.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Background.kt:68</code></summary>
+
+```kotlin
+fun MifosGradientBackground(
+    modifier: Modifier = Modifier,
+    gradientColors: GradientColors = LocalGradientColors.current,
+    content: @Composable () -> Unit,
+) {
+    val currentTopColor by rememberUpdatedState(gradientColors.top)
+    val currentBottomColor by rememberUpdatedState(gradientColors.bottom)
+```
+
+</details>
+
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/KptTheme.kt`
 
 ```kotlin
@@ -834,7 +2018,7 @@ fun KptTheme(
 ```
 The main theme composable for the application. This composable uses KptMaterialTheme under the hood to provide seamless integration between KptTheme design tokens and Material3 theming system.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:198</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:197</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
@@ -853,6 +2037,38 @@ expect fun platformColorScheme(useDarkTheme: Boolean, dynamicColor: Boolean): Co
 ```
 Resolves the active colour scheme per platform. `dynamicColor` is honoured only where the OS supplies one (Android 12+); every other target falls back to `lightScheme`/`darkScheme`, so a caller can request it unconditionally.
 
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/MifosTextStyle.kt`
+
+```kotlin
+val styleMedium16sp =
+```
+_No KDoc at source._
+
+```kotlin
+val styleNormal18sp =
+```
+_No KDoc at source._
+
+```kotlin
+val styleMedium30sp =
+```
+_No KDoc at source._
+
+```kotlin
+val styleMifosTopBar =
+```
+_No KDoc at source._
+
+```kotlin
+val styleSettingsButton = TextStyle(textAlign = TextAlign.Center)
+```
+_No KDoc at source._
+
+```kotlin
+val historyItemTextStyle = TextStyle(fontSize = 16.sp)
+```
+_No KDoc at source._
+
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/MifosTheme.deprecated.kt`
 
 ```kotlin
@@ -860,7 +2076,7 @@ fun MifosTheme(
 ```
 Back-compat shim — forwards to `KptTheme`. Composables cannot be `typealias`'d, so this file holds a thin `@Composable fun` wrapper that re-exports the old `MifosTheme` name for one release while consumers migrate.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginScreen.kt:288</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:287</code></summary>
 
 ```kotlin
 @Composable
@@ -881,7 +2097,7 @@ data class Spacing(
 ```
 Shared spacing scale — replaces raw `.dp` literals scattered across features with a disciplined 4 / 8 / 12 / 16 / 24 / 32 / 48 progression. Access from any Composable via `MaterialTheme.spacing`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:427</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:426</code></summary>
 
 ```kotlin
                     color = KptTheme.colorScheme.surface,
@@ -919,6 +2135,53 @@ val MaterialTheme.spacing: Spacing
 ```
 Resolve the active `Spacing` scale from composition.
 
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/ThemeExtensions.kt`
+
+```kotlin
+fun KptShapes.toRoundedCornerShape(
+```
+Converts the given corner values into a `RoundedCornerShape`.
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/TintTheme.kt`
+
+```kotlin
+data class TintTheme(
+```
+A class to model background color and tonal elevation values for Now in Android.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:68</code></summary>
+
+```kotlin
+    }
+    val tintTheme = when {
+        else -> TintTheme()
+    }
+
+    // Composition locals
+    CompositionLocalProvider(
+```
+
+</details>
+
+```kotlin
+val LocalTintTheme = staticCompositionLocalOf { TintTheme() }
+```
+A composition local for `TintTheme`.
+
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:75</code></summary>
+
+```kotlin
+        LocalGradientColors provides gradientColors,
+        LocalBackgroundTheme provides backgroundTheme,
+        LocalTintTheme provides tintTheme,
+    ) {
+        KptMaterialTheme(
+            theme = theme,
+            content = content,
+```
+
+</details>
+
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/Type.kt`
 
 ```kotlin
@@ -926,1163 +2189,7 @@ val fontFamily: FontFamily
 ```
 _No KDoc at source._
 
-### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/utils/ModifierExt.kt`
-
-```kotlin
-fun Modifier.mirrorIfRtl() = composed
-```
-Horizontally mirrors content when the layout direction is RTL. For glyphs with a direction (a back chevron, a progress arrow). NOT for text or logos, which must not be flipped.
-
-```kotlin
-fun Modifier.tabNavigation() = composed
-```
-Makes the element reachable and actionable by keyboard tab — desktop and web, where a tap target alone leaves it unusable.
-
-```kotlin
-fun Modifier.onClick(
-```
-Click handling with the app's ripple and accessibility semantics already attached, so a clickable element is announced correctly without each call site remembering to say so.
-
-### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/utils/NonLetterColorVisualTransformation.kt`
-
-```kotlin
-fun nonLetterColorVisualTransformation(): VisualTransformation
-```
-Tints digits and symbols differently from letters in a text field — used for passwords and codes, where character class is hard to read at a glance. Presentation only: it never alters the field's value.
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/AlertDialog.kt`
-
-```kotlin
-fun MifosDialogBox(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrScreen.kt:149</code></summary>
-
-```kotlin
-
-        is MpayQrState.DialogState.AddToPocketConfirmation -> {
-            MifosDialogBox(
-                showDialogState = true,
-                onDismiss = { onAction(MpayQrAction.ConfirmAddToPocket(false)) },
-                title = stringResource(UiRes.string.core_ui_add_to_pocket_title),
-                message = stringResource(UiRes.string.core_ui_add_to_pocket_message),
-```
-
-</details>
-
-```kotlin
-fun MifosCustomDialog(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/SetAmountDialog.kt:57</code></summary>
-
-```kotlin
-    onAction: (MpayQrAction) -> Unit,
-) {
-    MifosCustomDialog(
-        onDismiss = {
-            onAction(MpayQrAction.DismissDialog)
-        },
-        content = {
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Background.kt`
-
-```kotlin
-fun MifosBackground(
-```
-The main background for the app. Uses `LocalBackgroundTheme` to set the color and tonal elevation of a `Surface`.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Button.kt:297</code></summary>
-
-```kotlin
-fun MifosButtonPreview() {
-    MifosTheme {
-        MifosBackground(modifier = Modifier.size(150.dp, 50.dp)) {
-            MifosButton(text = { Text("Test button") }, onClick = {})
-        }
-    }
-}
-```
-
-</details>
-
-```kotlin
-fun MifosGradientBackground(
-```
-A gradient background for select screens. Uses `LocalBackgroundTheme` to set the gradient colors of a `Box` within a `Surface`.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/socialSignup/SignupMethodScreen.kt:76</code></summary>
-
-```kotlin
-        },
-    ) {
-        MifosGradientBackground {
-            SignupMethodScreenContent(
-                modifier = Modifier.padding(it),
-                onSignUpAsMerchant = {
-                    navigateToSignupScreen(WALLET_ACCOUNT_SAVINGS_PRODUCT_ID)
-```
-
-</details>
-
-```kotlin
-fun BackgroundDefault()
-```
-_No KDoc at source._
-
-```kotlin
-fun BackgroundDynamic()
-```
-_No KDoc at source._
-
-```kotlin
-fun BackgroundAndroid()
-```
-_No KDoc at source._
-
-```kotlin
-fun GradientBackgroundDefault()
-```
-_No KDoc at source._
-
-```kotlin
-fun GradientBackgroundDynamic()
-```
-_No KDoc at source._
-
-```kotlin
-fun GradientBackgroundAndroid()
-```
-_No KDoc at source._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/BottomSheet.kt`
-
-```kotlin
-fun MifosBottomSheet(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt:63</code></summary>
-
-```kotlin
-    when (dialogState) {
-        is DeleteBeneficiaryState.DialogState.Confirmation -> {
-            MifosBottomSheet(
-                onDismiss = onDismiss,
-            ) {
-                DeleteConfirmationContent(
-                    beneficiaryName = dialogState.beneficiaryName,
-```
-
-</details>
-
-```kotlin
-fun MifosBottomSheetPreview()
-```
-_No KDoc at source._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Button.kt`
-
-```kotlin
-fun MifosButton(
-```
-Mifos Wallet filled button with generic content slot. Wraps Material 3 `Button`.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:518</code></summary>
-
-```kotlin
-
-        item("CreateOrUpdateSavingAccount") {
-            MifosButton(
-                text = {
-                    Text(
-                        text = btnText,
-                    )
-```
-
-</details>
-
-```kotlin
-fun MifosButton(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:518</code></summary>
-
-```kotlin
-
-        item("CreateOrUpdateSavingAccount") {
-            MifosButton(
-                text = {
-                    Text(
-                        text = btnText,
-                    )
-```
-
-</details>
-
-```kotlin
-fun MifosButton(
-```
-Mifos Wallet filled button with text and icon content slots.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:518</code></summary>
-
-```kotlin
-
-        item("CreateOrUpdateSavingAccount") {
-            MifosButton(
-                text = {
-                    Text(
-                        text = btnText,
-                    )
-```
-
-</details>
-
-```kotlin
-fun MifosOutlinedButton(
-```
-Mifos Wallet outlined button with generic content slot. Wraps Material 3 `OutlinedButton`.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/socialSignup/SignupMethodScreen.kt:106</code></summary>
-
-```kotlin
-        )
-
-        MifosOutlinedButton(
-            modifier = Modifier.padding(top = KptTheme.spacing.xl),
-            onClick = onSignUpAsMerchant,
-            border = BorderStroke(
-                1.dp,
-```
-
-</details>
-
-```kotlin
-fun MifosOutlinedButton(
-```
-Mifos Wallet outlined button with text and icon content slots.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/socialSignup/SignupMethodScreen.kt:106</code></summary>
-
-```kotlin
-        )
-
-        MifosOutlinedButton(
-            modifier = Modifier.padding(top = KptTheme.spacing.xl),
-            onClick = onSignUpAsMerchant,
-            border = BorderStroke(
-                1.dp,
-```
-
-</details>
-
-```kotlin
-fun MifosTextButton(
-```
-Mifos Wallet text button with generic content slot. Wraps Material 3 `TextButton`.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosBasicDialog.kt:33</code></summary>
-
-```kotlin
-            onDismissRequest = onDismissRequest,
-            confirmButton = {
-                MifosTextButton(
-                    content = {
-                        Text(text = "Ok")
-                    },
-                    onClick = onDismissRequest,
-```
-
-</details>
-
-```kotlin
-fun MifosTextButton(
-```
-Mifos Wallet text button with text and icon content slots.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosBasicDialog.kt:33</code></summary>
-
-```kotlin
-            onDismissRequest = onDismissRequest,
-            confirmButton = {
-                MifosTextButton(
-                    content = {
-                        Text(text = "Ok")
-                    },
-                    onClick = onDismissRequest,
-```
-
-</details>
-
-```kotlin
-fun MifosButtonPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun MifosOutlinedButtonPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun MifosButtonLeadingIconPreview()
-```
-_No KDoc at source._
-
-```kotlin
-object MifosButtonDefaults
-```
-Mifos Wallet button default values.
-
-- `const val DISABLED_OUTLINED_BUTTON_BORDER_ALPHA = 0.12f`
-- `val OutlinedButtonBorderWidth = 1.dp`
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Card.kt`
-
-```kotlin
-fun MifosCard(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantsItem.kt:44</code></summary>
-
-```kotlin
-    modifier: Modifier = Modifier,
-) {
-    MifosCard(
-        modifier = modifier.combinedClickable(
-            onClick = onMerchantClicked,
-            onLongClick = {
-                onMerchantLongPressed(savingsWithAssociations.id.toString())
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/IconBox.kt`
-
-```kotlin
-fun IconBox(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosTopBar.kt:39</code></summary>
-
-```kotlin
-        },
-        navigationIcon = {
-            IconBox(
-                icon = MifosIcons.ArrowBack2,
-                onClick = backPress,
-            )
-        },
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/LoadingWheel.kt`
-
-```kotlin
-fun MifosLoadingWheel(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/PaymentProcessingScreen.kt:92</code></summary>
-
-```kotlin
-    ) {
-        if (state.isProcessing) {
-            MifosLoadingWheel(
-                contentDesc = "Processing Payment",
-                modifier = Modifier.size(120.dp),
-            )
-        } else {
-```
-
-</details>
-
-```kotlin
-fun MifosOverlayLoadingWheel(
-```
-_No KDoc at source._
-
-```kotlin
-fun MfOverlayLoadingWheel(
-```
-_No KDoc at source._
-
-```kotlin
-fun MfLoadingWheel(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantScreen.kt:122</code></summary>
-
-```kotlin
-
-                MerchantUiState.Loading -> {
-                    MfLoadingWheel(
-                        contentDesc = stringResource(Res.string.feature_merchants_loading),
-                        backgroundColor = KptTheme.colorScheme.surface,
-                    )
-                }
-```
-
-</details>
-
-```kotlin
-fun MifosLoadingWheelPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun NiaOverlayLoadingWheelPreview()
-```
-_No KDoc at source._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosAccountCard.kt`
-
-```kotlin
-fun MifosAccountCard(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/screens/PocketDashboardScreen.kt:203</code></summary>
-
-```kotlin
-            Column(verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md)) {
-                buckets.savingsAccounts.forEach { account ->
-                    MifosAccountCard(
-                        accountId = account.accountId,
-                        accountType = account.name
-                            ?: stringResource(Res.string.feature_pocket_unknown_account),
-                        accountNumber = account.accountNumber,
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosAlertDialog.kt`
-
-```kotlin
-fun MifosAlertDialog(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/screens/ManagePocketScreen.kt:324</code></summary>
-
-```kotlin
-
-        is ManagePocketDialogState.Error -> {
-            MifosAlertDialog(
-                title = stringResource(Res.string.feature_pocket_dialog_error_title),
-                message = stringResource(dialogState.message),
-                icon = MifosIcons.Error,
-                confirmText = stringResource(Res.string.feature_pocket_action_ok),
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosBasicDialog.kt`
-
-```kotlin
-fun MifosBasicDialog(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:454</code></summary>
-
-```kotlin
-) {
-    when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
-                title = stringResource(dialogState.title),
-                message = stringResource(dialogState.message),
-            ),
-```
-
-</details>
-
-```kotlin
-fun MifosBasicDialog(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:454</code></summary>
-
-```kotlin
-) {
-    when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
-                title = stringResource(dialogState.title),
-                message = stringResource(dialogState.message),
-            ),
-```
-
-</details>
-
-```kotlin
-sealed class BasicDialogState
-```
-Models display of a `MifosBasicDialog`.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:455</code></summary>
-
-```kotlin
-    when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> MifosBasicDialog(
-            visibilityState = BasicDialogState.Shown(
-                title = stringResource(dialogState.title),
-                message = stringResource(dialogState.message),
-            ),
-            onConfirm = dialogState.onConfirm,
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosLoadingDialog.kt`
-
-```kotlin
-fun MifosLoadingDialog(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:470</code></summary>
-
-```kotlin
-        )
-
-        is AccountState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
-        null -> Unit
-```
-
-</details>
-
-```kotlin
-sealed class LoadingDialogState
-```
-Models display of a `MifosLoadingDialog`.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:471</code></summary>
-
-```kotlin
-
-        is AccountState.DialogState.Loading -> MifosLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
-        null -> Unit
-    }
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosScaffold.kt`
-
-```kotlin
-fun MifosScaffold(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:161</code></summary>
-
-```kotlin
-    modifier: Modifier = Modifier,
-) {
-    MifosScaffold(
-        modifier = modifier,
-        snackbarHostState = snackbarHostState,
-        floatingActionButtonPosition = FabPosition.EndOverlay,
-        floatingActionButton = {
-```
-
-</details>
-
-```kotlin
-fun MifosScaffold(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:161</code></summary>
-
-```kotlin
-    modifier: Modifier = Modifier,
-) {
-    MifosScaffold(
-        modifier = modifier,
-        snackbarHostState = snackbarHostState,
-        floatingActionButtonPosition = FabPosition.EndOverlay,
-        floatingActionButton = {
-```
-
-</details>
-
-```kotlin
-fun MifosBottomSheetScaffold(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:288</code></summary>
-
-```kotlin
-    onAction: (TransferConfirmAction) -> Unit,
-) {
-    MifosBottomSheetScaffold(
-        topBar = {
-            MifosTopBar(
-                topBarTitle = stringResource(Res.string.feature_make_transfer_review_title),
-                backPress = {
-```
-
-</details>
-
-```kotlin
-data class FloatingActionButtonContent(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/scaffold/KptForkScaffold.kt:56</code></summary>
-
-```kotlin
-    title: String? = null,
-    containerColor: Color = KptTheme.colorScheme.background,
-    floatingActionButtonContent: FloatingActionButtonContent? = null,
-    pullToRefreshState: KptPullToRefreshState = rememberKptPullToRefreshState(),
-    contentWindowInsets: WindowInsets = ScaffoldDefaults
-        .contentWindowInsets
-//        .union(WindowInsets.displayCutout)
-```
-
-</details>
-
-```kotlin
-data class MifosPullToRefreshState(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AutoPayScheduleManagementScreen.kt:72</code></summary>
-
-```kotlin
-    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-
-    val pullRefreshState = rememberMifosPullToRefreshState(
-        isEnabled = true,
-        isRefreshing = state.isLoading,
-        onRefresh = { viewModel.trySendAction(AutoPayScheduleManagementAction.RefreshSchedules) },
-    )
-```
-
-</details>
-
-```kotlin
-fun rememberMifosPullToRefreshState(
-```
-_No KDoc at source._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosTab.kt`
-
-```kotlin
-fun MifosTab(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/ScrollableTabRow.kt:47</code></summary>
-
-```kotlin
-    ) {
-        tabContents.forEachIndexed { index, currentTab ->
-            MifosTab(
-                text = currentTab.tabName,
-                selected = pagerState.currentPage == index,
-                selectedColor = selectedContentColor,
-                unselectedColor = unselectedContentColor,
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosTabPager.kt`
-
-```kotlin
-fun MifosTabPager(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/screens/ManagePocketScreen.kt:538</code></summary>
-
-```kotlin
-                .weight(1f),
-        ) {
-            MifosTabPager(
-                modifier = Modifier.fillMaxSize(),
-                pagerState = pagerState,
-                currentPage = selectedTabIndex,
-                tabs = tabs.map { it.name },
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosTopAppBar.kt`
-
-```kotlin
-fun MifosTopAppBar(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/mobileVerify/MobileVerificationScreen.kt:112</code></summary>
-
-```kotlin
-        snackbarHostState = snackbarHostState,
-        topBar = {
-            MifosTopAppBar(
-                title = title,
-                scrollBehavior = scrollBehavior,
-                navigationIcon = NavigationIcon(
-                    navigationIcon = MifosIcons.Back,
-```
-
-</details>
-
-```kotlin
-fun MifosTopAppBar(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/mobileVerify/MobileVerificationScreen.kt:112</code></summary>
-
-```kotlin
-        snackbarHostState = snackbarHostState,
-        topBar = {
-            MifosTopAppBar(
-                title = title,
-                scrollBehavior = scrollBehavior,
-                navigationIcon = NavigationIcon(
-                    navigationIcon = MifosIcons.Back,
-```
-
-</details>
-
-```kotlin
-fun MifosTopAppBar(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/mobileVerify/MobileVerificationScreen.kt:112</code></summary>
-
-```kotlin
-        snackbarHostState = snackbarHostState,
-        topBar = {
-            MifosTopAppBar(
-                title = title,
-                scrollBehavior = scrollBehavior,
-                navigationIcon = NavigationIcon(
-                    navigationIcon = MifosIcons.Back,
-```
-
-</details>
-
-```kotlin
-data class NavigationIcon(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/mobileVerify/MobileVerificationScreen.kt:115</code></summary>
-
-```kotlin
-                title = title,
-                scrollBehavior = scrollBehavior,
-                navigationIcon = NavigationIcon(
-                    navigationIcon = MifosIcons.Back,
-                    navigationIconContentDescription = "Go Back",
-                    onNavigationIconClick = {
-                        onEvent(MobileVerificationAction.CloseButtonClick)
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/MifosTopBar.kt`
-
-```kotlin
-fun MifosTopBar(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/org/mifospay/feature/autopay/AddBillScreen.kt:101</code></summary>
-
-```kotlin
-    MifosScaffold(
-        topBar = {
-            MifosTopBar(
-                topBarTitle = "Add New Bill",
-                backPress = onNavigateBack,
-            )
-        },
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Navigation.kt`
-
-```kotlin
-fun RowScope.MifosNavigationBarItem(
-```
-Now in Android navigation bar item with icon and label content slots. Wraps Material 3 `NavigationBarItem`.
-
-```kotlin
-fun MifosNavigationBar(
-```
-Now in Android navigation bar with content slot. Wraps Material 3 `NavigationBar`.
-
-```kotlin
-fun MifosNavigationRailItem(
-```
-Now in Android navigation rail item with icon and label content slots. Wraps Material 3 `NavigationRailItem`.
-
-```kotlin
-fun MifosNavigationRail(
-```
-Now in Android navigation rail with header and content slots. Wraps Material 3 `NavigationRail`.
-
-```kotlin
-fun MifosNavigationBarPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun MifosNavigationRailPreview()
-```
-_No KDoc at source._
-
-```kotlin
-object MifosNavigationDefaults
-```
-Now in Android navigation default values.
-
-- `fun navigationContentColor() = KptTheme.colorScheme.onSurfaceVariant`
-- `fun navigationSelectedItemColor() = KptTheme.colorScheme.onPrimaryContainer`
-- `fun navigationIndicatorColor() = KptTheme.colorScheme.primaryContainer`
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/TextField.kt`
-
-```kotlin
-fun MifosOutlinedTextField(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginScreen.kt:182</code></summary>
-
-```kotlin
-        )
-        Spacer(modifier = Modifier.padding(top = KptTheme.spacing.xl))
-        MifosOutlinedTextField(
-            label = stringResource(Res.string.feature_auth_username),
-            value = state.username,
-            onValueChange = {
-                onAction(LoginAction.UsernameChanged(it))
-```
-
-</details>
-
-```kotlin
-fun MifosTextField(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:229</code></summary>
-
-```kotlin
-    ) {
-        item("Client Name") {
-            MifosTextField(
-                value = state.template.clientName,
-                label = stringResource(Res.string.feature_accounts_add_client_name),
-                onValueChange = {},
-                readOnly = true,
-```
-
-</details>
-
-```kotlin
-fun MifosCustomTextField(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosPasswordField.kt:63</code></summary>
-
-```kotlin
-    val focusRequester = remember { FocusRequester() }
-
-    MifosCustomTextField(
-        modifier = modifier
-            .tabNavigation()
-            .focusRequester(focusRequester),
-        label = label,
-```
-
-</details>
-
-```kotlin
-fun MifosCustomTextField(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/org/mifospay/core/ui/MifosPasswordField.kt:63</code></summary>
-
-```kotlin
-    val focusRequester = remember { FocusRequester() }
-
-    MifosCustomTextField(
-        modifier = modifier
-            .tabNavigation()
-            .focusRequester(focusRequester),
-        label = label,
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/TextUserImage.kt`
-
-```kotlin
-fun MifosTextUserImage(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/org/mifospay/feature/transfer/intrabank/hub/components/BeneficiaryCard.kt:57</code></summary>
-
-```kotlin
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            MifosTextUserImage(
-                text = getInitials(beneficiary.name),
-                size = 44.dp,
-            )
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/TopAppBar.kt`
-
-```kotlin
-fun MifosTopAppBar(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/mobileVerify/MobileVerificationScreen.kt:112</code></summary>
-
-```kotlin
-        snackbarHostState = snackbarHostState,
-        topBar = {
-            MifosTopAppBar(
-                title = title,
-                scrollBehavior = scrollBehavior,
-                navigationIcon = NavigationIcon(
-                    navigationIcon = MifosIcons.Back,
-```
-
-</details>
-
-```kotlin
-fun MifosNavigationTopAppBar(
-```
-_No KDoc at source._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/scrollbar/AppScrollbars.kt`
-
-```kotlin
-fun ScrollableState.DraggableScrollbar(
-```
-A `Scrollbar` that allows for fast scrolling of content by dragging its thumb. Its thumb disappears when the scrolling container is dormant.
-
-<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/org/mifospay/feature/home/HomeScreen.kt:364</code></summary>
-
-```kotlin
-
-        if (showScrollBar) {
-            state.DraggableScrollbar(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .windowInsetsPadding(WindowInsets.systemBars)
-                    .padding(horizontal = KptTheme.spacing.xs)
-```
-
-</details>
-
-```kotlin
-fun ScrollableState.DecorativeScrollbar(
-```
-A simple `Scrollbar`. Its thumb disappears when the scrolling container is dormant.
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/scrollbar/Scrollbar.kt`
-
-```kotlin
-class ScrollbarState
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/scrollbar/AppScrollbars.kt:70</code></summary>
-
-```kotlin
-@Composable
-fun ScrollableState.DraggableScrollbar(
-    state: ScrollbarState,
-    orientation: Orientation,
-    onThumbMoved: (Float) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-```
-
-</details>
-
-```kotlin
-value class ScrollbarStateValue internal constructor(
-```
-Class definition for the core properties of a scroll bar
-
-```kotlin
-fun scrollbarStateValue(
-```
-Creates a `ScrollbarStateValue` with the listed properties
-
-```kotlin
-fun Scrollbar(
-```
-A Composable for drawing a scrollbar
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/scrollbar/AppScrollbars.kt:76</code></summary>
-
-```kotlin
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-    Scrollbar(
-        modifier = modifier,
-        orientation = orientation,
-        interactionSource = interactionSource,
-        state = state,
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/scrollbar/ScrollbarExt.kt`
-
-```kotlin
-fun LazyListState.scrollbarState(
-```
-Calculates a `ScrollbarState` driven by the changes in a `LazyListState`.
-
-```kotlin
-fun LazyGridState.scrollbarState(
-```
-Calculates a `ScrollbarState` driven by the changes in a `LazyGridState`
-
-```kotlin
-fun LazyStaggeredGridState.scrollbarState(
-```
-Remembers a `ScrollbarState` driven by the changes in a `LazyStaggeredGridState`
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/scrollbar/ThumbExt.kt`
-
-```kotlin
-fun LazyListState.rememberDraggableScroller(
-```
-Remembers a function to react to `Scrollbar` thumb position displacements for a `LazyListState`
-
-```kotlin
-fun LazyGridState.rememberDraggableScroller(
-```
-Remembers a function to react to `Scrollbar` thumb position displacements for a `LazyGridState`
-
-```kotlin
-fun LazyStaggeredGridState.rememberDraggableScroller(
-```
-Remembers a function to react to `Scrollbar` thumb position displacements for a `LazyStaggeredGridState`
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/icon/MifosIcons.kt`
-
-```kotlin
-object MifosIcons
-```
-Mifos icons. Material icons are `ImageVector`s, custom icons are drawable resource IDs.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:177</code></summary>
-
-```kotlin
-                ) {
-                    Icon(
-                        imageVector = MifosIcons.Add,
-                        stringResource(Res.string.feature_accounts_add),
-                    )
-                }
-            }
-```
-
-</details>
-
-- `val Fingerprint = Icons.Default.Fingerprint`
-- `val OutlinedInfo = Icons.Outlined.Info`
-- `val OutlinedLock = Icons.Outlined.Lock`
-- `val OutlinedNotifications = Icons.Outlined.Notifications`
-- `val ChevronRight: ImageVector = Icons.Filled.ChevronRight`
-- `val QrCode: ImageVector = Icons.Filled.QrCode`
-- `val Close: ImageVector = Icons.Filled.Close`
-- `val Error: ImageVector = Icons.Filled.Error`
-- `val AttachMoney: ImageVector = Icons.Filled.AttachMoney`
-- `val OutlinedVisibilityOff: ImageVector = Icons.Outlined.VisibilityOff`
-- `val OutlinedVisibility: ImageVector = Icons.Outlined.Visibility`
-- `val VisibilityOff: ImageVector = Icons.Filled.VisibilityOff`
-- `val Visibility: ImageVector = Icons.Filled.Visibility`
-- `val Check: ImageVector = Icons.Default.Check`
-  _…more members; read the file._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/BackgroundTheme.kt`
-
-```kotlin
-data class BackgroundTheme(
-```
-A class to model background color and tonal elevation values for Now in Android.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/Theme.kt:52</code></summary>
-
-```kotlin
-    }
-    // Background theme
-    val defaultBackgroundTheme = BackgroundTheme(
-        color = Color.Transparent,
-        tonalElevation = 2.dp,
-    )
-    val backgroundTheme = when {
-```
-
-</details>
-
-```kotlin
-val LocalBackgroundTheme = staticCompositionLocalOf { BackgroundTheme() }
-```
-A composition local for `BackgroundTheme`.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Background.kt:45</code></summary>
-
-```kotlin
-    content: @Composable () -> Unit,
-) {
-    val color = LocalBackgroundTheme.current.color
-    val tonalElevation = LocalBackgroundTheme.current.tonalElevation
-    Surface(
-        color = if (color == Color.Unspecified) Color.Transparent else color,
-        tonalElevation = if (tonalElevation == Dp.Unspecified) 0.dp else tonalElevation,
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/Color.kt`
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Color.kt`
 
 ```kotlin
 val primaryLight = Color(0xFF0673BA)
@@ -2434,98 +2541,14 @@ val surfaceContainerHighestDark = Color(0xFF32353A)
 ```
 _No KDoc at source._
 
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/ColorScheme.kt`
-
-```kotlin
-val lightKptColorScheme = LightDefaultColorScheme.toKptColorScheme()
-```
-_No KDoc at source._
-
-```kotlin
-val darkKptColorScheme = DarkDefaultColorScheme.toKptColorScheme()
-```
-_No KDoc at source._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/GradientColors.kt`
-
-```kotlin
-data class GradientColors(
-```
-A class to model gradient color values for Now in Android.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Background.kt:69</code></summary>
-
-```kotlin
-fun MifosGradientBackground(
-    modifier: Modifier = Modifier,
-    gradientColors: GradientColors = LocalGradientColors.current,
-    content: @Composable () -> Unit,
-) {
-    val currentTopColor by rememberUpdatedState(gradientColors.top)
-    val currentBottomColor by rememberUpdatedState(gradientColors.bottom)
-```
-
-</details>
-
-```kotlin
-val LocalGradientColors = staticCompositionLocalOf { GradientColors() }
-```
-A composition local for `GradientColors`.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/component/Background.kt:69</code></summary>
-
-```kotlin
-fun MifosGradientBackground(
-    modifier: Modifier = Modifier,
-    gradientColors: GradientColors = LocalGradientColors.current,
-    content: @Composable () -> Unit,
-) {
-    val currentTopColor by rememberUpdatedState(gradientColors.top)
-    val currentBottomColor by rememberUpdatedState(gradientColors.bottom)
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/MifosTextStyle.kt`
-
-```kotlin
-val styleMedium16sp =
-```
-_No KDoc at source._
-
-```kotlin
-val styleNormal18sp =
-```
-_No KDoc at source._
-
-```kotlin
-val styleMedium30sp =
-```
-_No KDoc at source._
-
-```kotlin
-val styleMifosTopBar =
-```
-_No KDoc at source._
-
-```kotlin
-val styleSettingsButton = TextStyle(textAlign = TextAlign.Center)
-```
-_No KDoc at source._
-
-```kotlin
-val historyItemTextStyle = TextStyle(fontSize = 16.sp)
-```
-_No KDoc at source._
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/Theme.kt`
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt`
 
 ```kotlin
 fun MifosTheme(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/org/mifospay/feature/auth/login/LoginScreen.kt:288</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:287</code></summary>
 
 ```kotlin
 @Composable
@@ -2539,61 +2562,38 @@ private fun LoginScreenPreview() {
 
 </details>
 
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/ThemeExtensions.kt`
-
-```kotlin
-fun KptShapes.toRoundedCornerShape(
-```
-Converts the given corner values into a `RoundedCornerShape`.
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/TintTheme.kt`
-
-```kotlin
-data class TintTheme(
-```
-A class to model background color and tonal elevation values for Now in Android.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/Theme.kt:60</code></summary>
-
-```kotlin
-    }
-    val tintTheme = when {
-        else -> TintTheme()
-    }
-
-    // Composition locals
-    CompositionLocalProvider(
-```
-
-</details>
-
-```kotlin
-val LocalTintTheme = staticCompositionLocalOf { TintTheme() }
-```
-A composition local for `TintTheme`.
-
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/theme/Theme.kt:67</code></summary>
-
-```kotlin
-        LocalGradientColors provides gradientColors,
-        LocalBackgroundTheme provides backgroundTheme,
-        LocalTintTheme provides tintTheme,
-    ) {
-        KptMaterialTheme(
-            theme = theme,
-            content = content,
-```
-
-</details>
-
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/utils/ExpirationDateMask.kt`
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/utils/ExpirationDateMask.kt`
 
 ```kotlin
 class ExpirationDateMask : VisualTransformation
 ```
 _No KDoc at source._
 
-### `core/designsystem/src/commonMain/kotlin/org/mifospay/core/designsystem/utils/ModifierExt.kt`
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/utils/ModifierExt.kt`
+
+```kotlin
+fun Modifier.mirrorIfRtl() = composed
+```
+Horizontally mirrors content when the layout direction is RTL. For glyphs with a direction (a back chevron, a progress arrow). NOT for text or logos, which must not be flipped.
+
+```kotlin
+fun Modifier.tabNavigation() = composed
+```
+Makes the element reachable and actionable by keyboard tab — desktop and web, where a tap target alone leaves it unusable.
+
+```kotlin
+fun Modifier.onClick(
+```
+Click handling with the app's ripple and accessibility semantics already attached, so a clickable element is announced correctly without each call site remembering to say so.
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/utils/NonLetterColorVisualTransformation.kt`
+
+```kotlin
+fun nonLetterColorVisualTransformation(): VisualTransformation
+```
+Tints digits and symbols differently from letters in a text field — used for passwords and codes, where character class is hard to read at a glance. Presentation only: it never alters the field's value.
+
+### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/utils/fork/ModifierExt.kt`
 
 ```kotlin
 fun Modifier.mirrorIfRtl(): Modifier =

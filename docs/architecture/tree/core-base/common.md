@@ -71,7 +71,7 @@ expect annotation class Parcelize()
 ```
 Marks a class as parcelable so it can cross an Android process/configuration boundary.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:19</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:19</code></summary>
 
 ```kotlin
 import kotlinx.parcelize.TypeParceler
@@ -90,7 +90,7 @@ expect interface Parcelable
 ```
 The platform's parcelable contract — `android.os.Parcelable` on Android, an empty marker elsewhere. Implement it on a shared model together with `Parcelize`; do not hand-write the read/write pair.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:21</code></summary>
 
 ```kotlin
 actual typealias Parcelize = Parcelize
@@ -109,7 +109,7 @@ expect annotation class IgnoredOnParcel()
 ```
 Excludes one property from parcelling, for values that are derived or cannot cross a process boundary (a lambda, a coroutine scope, a cached bitmap). The property must have a default, since it is reconstructed rather than restored.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:23</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:23</code></summary>
 
 ```kotlin
 actual typealias Parcelable = Parcelable
@@ -128,7 +128,7 @@ expect interface Parceler<P>
 ```
 Custom parcelling for a type the platform cannot serialise on its own — a value class, a third-party type, anything needing a narrower wire form than its fields. Pair it with `TypeParceler` at the use site.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:25</code></summary>
 
 ```kotlin
 actual typealias IgnoredOnParcel = IgnoredOnParcel
@@ -150,7 +150,7 @@ expect annotation class TypeParceler<T, P : Parceler<in T>>()
 ```
 Binds a `Parceler` to type `T` for one property or file, so a shared model can carry a type the platform does not know how to parcel.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:27</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:27</code></summary>
 
 ```kotlin
 actual typealias Parceler<P> = Parceler<P>
@@ -167,7 +167,7 @@ expect class Parcel
 ```
 The platform write buffer a `Parceler` reads from and writes to. Strictly POSITIONAL — there are no field names on the wire, so reads must mirror the write order exactly.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/org/mifospay/core/common/Parcelize.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:29</code></summary>
 
 ```kotlin
 actual typealias TypeParceler<T, P> = TypeParceler<T, P>
@@ -209,15 +209,16 @@ interface DispatcherManager
 ```
 Injectable access to the app's coroutine dispatchers.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/user/impl/UserLogoutManagerImpl.kt:35</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:275</code></summary>
 
 ```kotlin
-    private val repository: UserPreferencesRepository,
-    private val storeCacheManager: StoreCacheManager,
-    dispatcherManager: DispatcherManager,
-) : UserLogoutManager {
-
-    private val scope = CoroutineScope(dispatcherManager.unconfined)
+    plainSettings = MapSettings(),
+    secureSettings = MapSettings(),
+    dispatcher = object : DispatcherManager {
+        override val default = Dispatchers.Unconfined
+        override val main = Dispatchers.Main
+        override val io = Dispatchers.Unconfined
+        override val unconfined = Dispatchers.Unconfined
 ```
 
 </details>

@@ -18,10 +18,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core-base/store sha=0b378a562e186abd452d4d3d5f8305b67d08f0c9 -->
+<!-- api-docs:begin module=core-base/store sha=626b01f91a22231152882d91a1ffd8ae92b66071 -->
 ## API reference
 
-_Generated from `core-base/store` at tree `0b378a562e18` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core-base/store` at tree `626b01f91a22` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **framework-shared and read-only to generators** (D9). Everything below is
@@ -171,16 +171,16 @@ sealed interface ErrorCategory
 ```
 High-level classification of a `Throwable` for state-aware UI rendering. Pure logic — no platform calls, no side effects. Lives in `core-base/store` (state layer) so both UI and non-UI consumers can branch on the same categorization.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/KptErrorMapper.kt:39</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/config/KptErrorMapper.kt:49</code></summary>
 
 ```kotlin
  */
-fun mapErrorToUserMessage(error: Throwable): String = when (val cat = categorize(error)) {
-    ErrorCategory.Network -> "Can't reach the server. Check your connection and try again."
-    ErrorCategory.Timeout.Connect -> "Connection timed out. Check your connection and try again."
-    ErrorCategory.Timeout.Read -> "Server took too long to respond. Please try again shortly."
-    ErrorCategory.Auth -> "Your session expired. Please sign in again."
-    ErrorCategory.RateLimit -> "Too many requests. Please wait a moment and try again."
+fun errorCategoryToken(error: Throwable): String = when (val cat = categorize(error)) {
+    ErrorCategory.Network -> "network"
+    ErrorCategory.Timeout.Connect -> "timeout_connect"
+    ErrorCategory.Timeout.Read -> "timeout_read"
+    ErrorCategory.Auth -> "auth"
+    ErrorCategory.RateLimit -> "rate_limit"
 ```
 
 </details>
@@ -263,7 +263,7 @@ data class FreshnessSignal(
 ```
 Pure-staleness signal carried by `kpt.core.base.store.screen.ScreenDataStream.freshness` alongside `state`. Decouples cache age from network connectivity.
 
-<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/org/mifospay/feature/pocket/screens/ManagePocketScreen.kt:168</code></summary>
+<details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/ManagePocketScreen.kt:167</code></summary>
 
 ```kotlin
 internal fun ManagePocketContent(
@@ -406,7 +406,7 @@ interface FetchedAtRepository
 ```
 Persists "when was this Store's data last successfully fetched from network", keyed by `storeKey`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/org/mifospay/core/data/repositoryImpl/AccountRepositoryImpl.kt:58</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:59</code></summary>
 
 ```kotlin
     private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>? = null,
@@ -898,7 +898,7 @@ fun <Value : Any> Store<PageKey, List<Value>>.asPagingScreenStream(
 ```
 Creates a `PagingScreenStream` with network-fused state via cmp-network-monitor.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsScreen.kt:407</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:406</code></summary>
 
 ```kotlin
                 )
@@ -917,7 +917,7 @@ fun <Value : Any> Store<PageKey, List<Value>>.asPagingScreenStream(
 ```
 `asPagingScreenStream` overload taking a bundled `ScreenStreamContext` instead of the two infra deps — so a paginated repository reads `store.asPagingScreenStream(screen, cacheKey, scope, …)` with `screen` its one injected `ScreenStreamContext`. Delegates to the primary overload.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsScreen.kt:407</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:406</code></summary>
 
 ```kotlin
                 )
@@ -974,7 +974,7 @@ class ClientPagingSource(
 
 </details>
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/org/mifospay/feature/send/money/SendMoneyOptionsScreen.kt:407</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:406</code></summary>
 
 ```kotlin
                 )
@@ -1087,16 +1087,15 @@ sealed interface FetchPolicy
 ```
 Controls whether a screen stream reads from cache, hits the network, or both. Pass to `ScreenDataStream.asScreenStream`, `LoadOnceStream.asLoadOnceStream`, or `PagingScreenStream` to override that entry point's default.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/user/impl/UserDataRepositoryImpl.kt:50</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:151</code></summary>
 
 ```kotlin
-            cacheKey = AppCacheKeys.UserData.KEY,
             scope = scope,
-            fetchPolicy = FetchPolicy.CACHE_ONLY,
+            isEmpty = { it.isEmpty() },
+            fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
+            ttl = WalletStoreTtl.SELF_ACCOUNTS,
         )
-
-    override val authToken: String?
-        get() = preferencesRepository.authToken
+    }
 ```
 
 </details>
@@ -1115,7 +1114,7 @@ class ScreenDataStream<T> internal constructor(
 ```
 One screen's read surface: a cold `ScreenState` flow plus the refresh/retry controls that drive it.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/org/mifospay/feature/fastmpay/TestFakes.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:81</code></summary>
 
 ```kotlin
 
@@ -1134,7 +1133,7 @@ annotation class ExperimentalScreenDataStreamTestingApi
 ```
 Opt-in marker for the testing-only `ScreenDataStream` constructors.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/org/mifospay/feature/fastmpay/TestFakes.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:80</code></summary>
 
 ```kotlin
     }
@@ -1170,12 +1169,12 @@ sealed interface ScreenState<out T>
 ```
 Unified UI state produced by `ScreenDataStream`. Replaces per-ViewModel ScreenUiState + isFromCache + isRefreshing + networkStatus.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:75</code></summary>
 
 ```kotlin
             } else {
                 flowOf(
-                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<org.mifospay.core.model.account.AccountContent>,
+                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<kpt.core.model.account.AccountContent>,
                 )
             }
         }
@@ -1191,7 +1190,7 @@ fun <T, R> Flow<ScreenState<T>>.mapContent(
 ```
 Transforms only `ScreenState.Content` data, passing through all other states unchanged.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1210,7 +1209,7 @@ fun <T, S, R> Flow<ScreenState<T>>.combineContent(
 ```
 Combines ScreenState with a local state flow for reactive filter/sort/preferences.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1229,7 +1228,7 @@ fun <T> Flow<ScreenState<T>>.emptyIfContent(
 ```
 Converts Content to Empty when business-level predicate says data is empty. Applied AFTER DecisionEngine (which only handles structural empty from Store).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1258,7 +1257,7 @@ fun <T> Flow<ScreenState<T>>.mapError(
 ```
 Maps Error throwable to a user-facing type.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1476,7 +1475,7 @@ fun <T, R> Flow<StoreData<T>>.mapData(transform: (T) -> R): Flow<StoreData<R>>
 ```
 Maps a Flow of `StoreData` content while preserving all metadata.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1502,7 +1501,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToStoreData(
 ```
 Maps a `StoreReadResponse` flow into `Flow<StoreData<Output>>`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1521,7 +1520,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToStoreDataWithErrors(
 ```
 Like `mapToStoreData` but also emits on errors, carrying the last known data.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1542,7 +1541,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToResult(): Flow<Result<Ou
 ```
 Maps a `StoreReadResponse` flow to `Flow<Result<Output>>`. - `StoreReadResponse.Data` → `Result.success` - `StoreReadResponse.Error` → `Result.failure` - `StoreReadResponse.Loading` and `StoreReadResponse.NoNewData` are filtered out.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1561,7 +1560,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToData(): Flow<Output>
 ```
 Maps a `StoreReadResponse` flow to `Flow<Output>`, emitting only data values. Loading, error, and no-data responses are silently filtered out. Use `mapToResult` when error handling is needed.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -2076,7 +2075,7 @@ State machine for a single form/action submission lifecycle.
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/org/mifospay/feature/accounts/AccountViewModel.kt:131</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:130</code></summary>
 
 ```kotlin
             .onEach { submitState ->

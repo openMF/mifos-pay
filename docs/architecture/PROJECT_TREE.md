@@ -7,24 +7,24 @@
 
 | Area | Files | Page |
 |---|---:|---|
-| `cmp-android/` | 48 | [`cmp-android/`](tree/cmp-android.md) |
+| `cmp-android/` | 47 | [`cmp-android/`](tree/cmp-android.md) |
 | `cmp-ios/` | 49 | [`cmp-ios/`](tree/cmp-ios.md) |
 | `cmp-desktop/` | 12 | [`cmp-desktop/`](tree/cmp-desktop.md) |
-| `cmp-web/` | 20 | [`cmp-web/`](tree/cmp-web.md) |
-| `cmp-shared/` | 34 | [`cmp-shared/`](tree/cmp-shared.md) |
-| `cmp-navigation/` | 61 | [`cmp-navigation/`](tree/cmp-navigation.md) |
+| `cmp-web/` | 22 | [`cmp-web/`](tree/cmp-web.md) |
+| `cmp-shared/` | 8 | [`cmp-shared/`](tree/cmp-shared.md) |
+| `cmp-navigation/` | 77 | [`cmp-navigation/`](tree/cmp-navigation.md) |
 
 ## Features
 
 | Area | Files | Page |
 |---|---:|---|
-| `feature/` | 764 | [`feature/`](tree/feature.md) |
+| `feature/` | 765 | [`feature/`](tree/feature.md) |
 
 ## Core layers
 
 | Area | Files | Page |
 |---|---:|---|
-| `core/` | 873 | [`core/`](tree/core.md) |
+| `core/` | 869 | [`core/`](tree/core.md) |
 | `core-base/` | 513 | [`core-base/`](tree/core-base.md) |
 
 ## Codegen
@@ -50,7 +50,7 @@
 | `.github/` | 17 | [`.github/`](tree/github.md) |
 | `fastlane/` | 4 | [`fastlane/`](tree/fastlane.md) |
 | `fastlane-config/` | 1 | [`fastlane-config/`](tree/fastlane-config.md) |
-| `legal/` | 4 | [`legal/`](tree/legal.md) |
+| `legal/` | 6 | [`legal/`](tree/legal.md) |
 
 ## Automation
 

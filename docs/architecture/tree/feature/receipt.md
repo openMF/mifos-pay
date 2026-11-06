@@ -9,6 +9,8 @@ Screens: `ReceiptScreen`
 
 ViewModels: `ReceiptViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `ReceiptViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/receipt sha=dd48380f311de5096a57ec47d0d70200defbeb19 -->
+<!-- api-docs:begin module=feature/receipt sha=918f35eb385814013a14a942def71cc2bdd98553 -->
 ## API reference
 
-_Generated from `feature/receipt` at tree `dd48380f311d` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/receipt` at tree `918f35eb3858` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +33,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/receipt/src/commonMain/kotlin/org/mifospay/feature/receipt/ReceiptViewModel.kt`
+### `feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptViewModel.kt`
 
 ```kotlin
 class ReceiptViewModel(
 ```
 Reads OFF the shared `TransferDetail` Store5 vertical — the SAME store `TransactionDetailViewModel` (`feature/history`) already consumes via `AccountRepository.getAccountTransferStream`.
 
-<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/org/mifospay/feature/receipt/ReceiptScreen.kt:62</code></summary>
+<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptScreen.kt:61</code></summary>
 
 ```kotlin
     onBackClick: () -> Unit,
@@ -56,7 +58,7 @@ sealed interface ReceiptEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/org/mifospay/feature/receipt/ReceiptScreen.kt:69</code></summary>
+<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptScreen.kt:68</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -75,7 +77,7 @@ sealed interface ReceiptAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/org/mifospay/feature/receipt/ReceiptScreen.kt:83</code></summary>
+<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptScreen.kt:82</code></summary>
 
 ```kotlin
     ReceiptScreen(
@@ -94,7 +96,7 @@ sealed interface ReceiptUiState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/org/mifospay/feature/receipt/ReceiptScreen.kt:71</code></summary>
+<details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptScreen.kt:70</code></summary>
 
 ```kotlin
             ReceiptEvent.OnNavigateBack -> onBackClick()
@@ -108,14 +110,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/receipt/src/commonMain/kotlin/org/mifospay/feature/receipt/di/ReceiptModule.kt`
+### `feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/di/ReceiptModule.kt`
 
 ```kotlin
 val ReceiptModule = module
 ```
 _No KDoc at source._
 
-### `feature/receipt/src/commonMain/kotlin/org/mifospay/feature/receipt/navigation/ReceiptNavigation.kt`
+### `feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/navigation/ReceiptNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.receiptScreen(

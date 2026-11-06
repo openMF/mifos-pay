@@ -20,10 +20,10 @@ ViewModels: `MerchantTransferViewModel`, `MerchantViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/merchants sha=ee9bd4fe3318dd80eef838b4f9c9692409cc7308 -->
+<!-- api-docs:begin module=feature/merchants sha=b2797911c8b2765a422d7a45b92227d1ff8f3664 -->
 ## API reference
 
-_Generated from `feature/merchants` at tree `ee9bd4fe3318` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/merchants` at tree `b2797911c8b2` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +31,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/MerchantTransferViewModel.kt`
+### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/MerchantTransferViewModel.kt`
 
 ```kotlin
 class MerchantTransferViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/di/MerchantsModule.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/di/MerchantsModule.kt:18</code></summary>
 
 ```kotlin
 val MerchantsModule = module {
@@ -64,7 +64,7 @@ sealed class MerchantTransferUiState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantTransferScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantTransferScreen.kt:101</code></summary>
 
 ```kotlin
 @VisibleForTesting
@@ -78,17 +78,17 @@ internal fun MerchantTransferScreen(
 
 </details>
 
-### `feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/MerchantViewModel.kt`
+### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/MerchantViewModel.kt`
 
 ```kotlin
 class MerchantViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/di/MerchantsModule.kt:18</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/di/MerchantsModule.kt:17</code></summary>
 
 ```kotlin
-
+import org.koin.dsl.module
 val MerchantsModule = module {
     viewModelOf(::MerchantViewModel)
     viewModelOf(::MerchantTransferViewModel)
@@ -117,7 +117,7 @@ sealed class MerchantUiState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantScreen.kt:81</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:80</code></summary>
 
 ```kotlin
 @VisibleForTesting
@@ -131,14 +131,14 @@ internal fun MerchantScreen(
 
 </details>
 
-### `feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/di/MerchantsModule.kt`
+### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/di/MerchantsModule.kt`
 
 ```kotlin
 val MerchantsModule = module
 ```
 _No KDoc at source._
 
-### `feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/navigation/MerchantTransferNavigation.kt`
+### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/navigation/MerchantTransferNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.merchantTransferScreen(
@@ -150,7 +150,7 @@ fun NavController.navigateToMerchantTransferScreen(
 ```
 _No KDoc at source._
 
-### `feature/merchants/src/commonMain/kotlin/org/mifospay/feature/merchants/ui/MerchantScreen.kt`
+### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt`
 
 ```kotlin
 fun MerchantScreen(

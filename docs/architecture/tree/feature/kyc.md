@@ -9,6 +9,8 @@ Screens: `KYCDescriptionScreen`, `KYCLevel1Screen`, `KYCLevel2Screen`, `KYCLevel
 
 ViewModels: `KYCDescriptionViewModel`, `KYCLevel1ViewModel`, `KYCLevel2ViewModel`, `KYCLevel3ViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `KYCDescriptionViewModel`, `KYCLevel1ViewModel`, `KYCLevel2ViewModel
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/kyc sha=d563709e097cf92672ca8af40484c18b936ccb28 -->
+<!-- api-docs:begin module=feature/kyc sha=555bb0cd2cc0906f773bee627eba1ee57edd8608 -->
 ## API reference
 
-_Generated from `feature/kyc` at tree `d563709e097c` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/kyc` at tree `555bb0cd2cc0` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +33,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCDescriptionScreen.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt`
 
 ```kotlin
 fun KYCScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/navigation/KYCNavigation.kt:29</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCNavigation.kt:28</code></summary>
 
 ```kotlin
 ) {
@@ -52,14 +54,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCDescriptionViewModel.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionViewModel.kt`
 
 ```kotlin
 class KYCDescriptionViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCDescriptionScreen.kt:56</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:55</code></summary>
 
 ```kotlin
     onLevel3Clicked: () -> Unit,
@@ -83,7 +85,7 @@ sealed interface KYCDescriptionUiState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCDescriptionScreen.kt:79</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:78</code></summary>
 
 ```kotlin
 @Composable
@@ -102,7 +104,7 @@ enum class KycLevel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCDescriptionScreen.kt:113</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:112</code></summary>
 
 ```kotlin
 @Composable
@@ -121,7 +123,7 @@ sealed interface KycEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCDescriptionScreen.kt:62</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:61</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -140,7 +142,7 @@ sealed interface KycAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCDescriptionScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:79</code></summary>
 
 ```kotlin
 private fun KYCDescriptionScreen(
@@ -154,21 +156,21 @@ private fun KYCDescriptionScreen(
 
 </details>
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCLevel3Screen.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCLevel3Screen.kt`
 
 ```kotlin
 fun KYCLevel3ScreenContent(
 ```
 _No KDoc at source._
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCLevel3ViewModel.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCLevel3ViewModel.kt`
 
 ```kotlin
 class KYCLevel3ViewModel :
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/KYCLevel3Screen.kt:26</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCLevel3Screen.kt:25</code></summary>
 
 ```kotlin
     navigateBack: () -> Unit,
@@ -197,14 +199,14 @@ sealed interface KYCLevel3Action
 ```
 _No KDoc at source._
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/di/KYCModule.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/di/KYCModule.kt`
 
 ```kotlin
 val KYCModule = module
 ```
 _No KDoc at source._
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/navigation/KYCLevel1Navigation.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCLevel1Navigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYCLevel1()
@@ -216,7 +218,7 @@ fun NavGraphBuilder.kycLevel1Screen(
 ```
 _No KDoc at source._
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/navigation/KYCLevel2Navigation.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCLevel2Navigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYCLevel2(navOptions: NavOptions? = null)
@@ -228,7 +230,7 @@ fun NavGraphBuilder.kycLevel2Screen(
 ```
 _No KDoc at source._
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/navigation/KYCLevel3Navigation.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCLevel3Navigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYCLevel3(navOptions: NavOptions? = null)
@@ -240,7 +242,7 @@ fun NavGraphBuilder.kycLevel3Screen(
 ```
 _No KDoc at source._
 
-### `feature/kyc/src/commonMain/kotlin/org/mifospay/feature/kyc/navigation/KYCNavigation.kt`
+### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYC()

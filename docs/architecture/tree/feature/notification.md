@@ -9,6 +9,8 @@ Screens: `NotificationScreen`
 
 ViewModels: `NotificationViewModel`
 
+**Consumes:** `core/store/repository`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `NotificationViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/notification sha=2975f2fe4673ba8c0e49e0e7d987a7552760be5e -->
+<!-- api-docs:begin module=feature/notification sha=39788abf34bc1bac3476962b5197573018b72fa6 -->
 ## API reference
 
-_Generated from `feature/notification` at tree `2975f2fe4673` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/notification` at tree `39788abf34bc` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,7 +33,7 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/notification/src/commonMain/kotlin/org/mifospay/feature/notification/NotificationNavigation.kt`
+### `feature/notification/src/commonMain/kotlin/kpt/feature/notification/NotificationNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.notificationScreen(
@@ -43,7 +45,7 @@ fun NavController.navigateToNotification(navOptions: NavOptions? = null)
 ```
 _No KDoc at source._
 
-### `feature/notification/src/commonMain/kotlin/org/mifospay/feature/notification/di/NotificationModule.kt`
+### `feature/notification/src/commonMain/kotlin/kpt/feature/notification/di/NotificationModule.kt`
 
 ```kotlin
 val NotificationModule = module

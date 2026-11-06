@@ -9,6 +9,8 @@ Screens: `MpayQrScreen`
 
 ViewModels: `MpayQrViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `MpayQrViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/mpay-qr sha=1ca4ee1050ff58c42027b97131974531198f7e8b -->
+<!-- api-docs:begin module=feature/mpay-qr sha=a282efd181e2689dd9967563a44630d02d05a2d1 -->
 ## API reference
 
-_Generated from `feature/mpay-qr` at tree `1ca4ee1050ff` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/mpay-qr` at tree `a282efd181e2` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +33,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrViewModel.kt`
+### `feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt`
 
 ```kotlin
 class MpayQrViewModel(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrScreen.kt:93</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrScreen.kt:93</code></summary>
 
 ```kotlin
     navigateBack: () -> Unit,
@@ -57,7 +59,7 @@ data class MpayQrState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrScreen.kt:139</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrScreen.kt:139</code></summary>
 
 ```kotlin
 @Composable
@@ -76,7 +78,7 @@ sealed interface MpayQrEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrScreen.kt:105</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrScreen.kt:105</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -95,7 +97,7 @@ sealed interface MpayQrAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/MpayQrScreen.kt:141</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrScreen.kt:141</code></summary>
 
 ```kotlin
     dialogState: MpayQrState.DialogState?,
@@ -108,14 +110,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/components/QrCodeCard.kt`
+### `feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/components/QrCodeCard.kt`
 
 ```kotlin
 enum class QrType
 ```
 QR type identifier for visual distinction.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/org/mifospay/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:90</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:89</code></summary>
 
 ```kotlin
                         officeId = beneficiary.officeId,
@@ -129,14 +131,14 @@ QR type identifier for visual distinction.
 
 </details>
 
-### `feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/di/MpayQrModule.kt`
+### `feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/di/MpayQrModule.kt`
 
 ```kotlin
 val MpayQrModule = module
 ```
 _No KDoc at source._
 
-### `feature/mpay-qr/src/commonMain/kotlin/org/mifospay/feature/mpay/qr/navigation/MpayQrNavigation.kt`
+### `feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/navigation/MpayQrNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.mpayQrScreen(

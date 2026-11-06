@@ -9,6 +9,8 @@ Screens: `HistoryScreen`, `SpecificTransactionsScreen`, `TransactionDetailScreen
 
 ViewModels: `HistoryViewModel`, `SpecificTransactionsViewModel`, `TransactionDetailViewModel`
 
+**Consumes:** `core/store/repository`, `core/store/util`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `HistoryViewModel`, `SpecificTransactionsViewModel`, `TransactionDet
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/history sha=8f0d500a2769eca4607bb348999a52474050a156 -->
+<!-- api-docs:begin module=feature/history sha=376c3cec73abe3bec2b57be08442ec654afb1d7b -->
 ## API reference
 
-_Generated from `feature/history` at tree `8f0d500a2769` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/history` at tree `376c3cec73ab` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +33,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryScreen.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt`
 
 ```kotlin
 fun HistoryScreen(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/navigation/HistoryNavigation.kt:24</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/HistoryNavigation.kt:23</code></summary>
 
 ```kotlin
 ) {
@@ -52,14 +54,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryViewModel.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt`
 
 ```kotlin
 class HistoryViewModel
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryScreen.kt:65</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:64</code></summary>
 
 ```kotlin
     viewTransferDetail: (Long, Long) -> Unit,
@@ -78,7 +80,7 @@ data class HistoryState(
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryScreen.kt:97</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:96</code></summary>
 
 ```kotlin
 @Composable
@@ -97,7 +99,7 @@ sealed interface HistoryEvent
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryScreen.kt:73</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:72</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -116,7 +118,7 @@ sealed interface HistoryAction
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryScreen.kt:100</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:99</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -130,14 +132,14 @@ _No KDoc at source._
 
 </details>
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/components/PdfGenerator.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/components/PdfGenerator.kt`
 
 ```kotlin
 object HistoryHtmlTemplate
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/org/mifospay/feature/history/HistoryViewModel.kt:265</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt:264</code></summary>
 
 ```kotlin
         mutableStateFlow.update { it.copy(isExportingPdf = true) }
@@ -155,21 +157,21 @@ _No KDoc at source._
 - `val document = createHTML().html`
 - `val instant = kotlin.time.Clock.System.now()`
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/di/HistoryModule.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/di/HistoryModule.kt`
 
 ```kotlin
 val HistoryModule = module
 ```
 _No KDoc at source._
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/di/PdfGeneratorModule.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/di/PdfGeneratorModule.kt`
 
 ```kotlin
 expect val HistoryPdfModule: Module
 ```
 Provides a platform-appropriate `PdfGenerator` singleton (e.g. bound to an Android `Context` via `createPdfGenerator(context)` on Android).
 
-<details><summary>Used in the template — <code>feature/history/src/androidMain/kotlin/org/mifospay/feature/history/di/HistoryAndroidModule.kt:57</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/androidMain/kotlin/kpt/feature/history/di/HistoryAndroidModule.kt:57</code></summary>
 
 ```kotlin
 
@@ -180,7 +182,7 @@ actual val HistoryPdfModule: Module
 
 </details>
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/navigation/HistoryNavigation.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/HistoryNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.historyNavigation(
@@ -192,7 +194,7 @@ fun NavController.navigateToHistory(navOptions: NavOptions? = null)
 ```
 _No KDoc at source._
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/navigation/SpecificTransactionsNavigation.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/SpecificTransactionsNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.specificTransactionsScreen(
@@ -204,7 +206,7 @@ fun NavController.navigateToSpecificTransaction(accountId: Long, transactionId: 
 ```
 _No KDoc at source._
 
-### `feature/history/src/commonMain/kotlin/org/mifospay/feature/history/navigation/TransactionDetailNavigation.kt`
+### `feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/TransactionDetailNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.transactionDetailNavigation(

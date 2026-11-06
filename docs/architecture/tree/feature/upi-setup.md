@@ -7,6 +7,8 @@
 
 Screens: `DebitCardScreen`, `OtpScreen`, `SetUpUPiPinScreen`, `UpiPinScreen`
 
+**Consumes:** `core/store/repository`
+
 ### Docs in the tree
 
 | Path | |
@@ -18,10 +20,10 @@ Screens: `DebitCardScreen`, `OtpScreen`, `SetUpUPiPinScreen`, `UpiPinScreen`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/upi-setup sha=d44e0ee50f8badb2a9a7ab0abd97a44f9c73c793 -->
+<!-- api-docs:begin module=feature/upi-setup sha=ac4e54568b0b73fd092e8cbf24711d486c1c5512 -->
 ## API reference
 
-_Generated from `feature/upi-setup` at tree `d44e0ee50f8b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/upi-setup` at tree `ac4e54568b0b` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -29,14 +31,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/di/UpiSetupModule.kt`
+### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/di/UpiSetupModule.kt`
 
 ```kotlin
 val UpiSetupModule = module
 ```
 _No KDoc at source._
 
-### `feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/navigation/SetupUpiPinNavigation.kt`
+### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/navigation/SetupUpiPinNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.setupUpiPinScreen(
@@ -48,7 +50,7 @@ fun NavController.navigateToSetupUpiPin(
 ```
 _No KDoc at source._
 
-### `feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/SetUpUPiPinScreen.kt`
+### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/SetUpUPiPinScreen.kt`
 
 ```kotlin
 fun PreviewSetupUpiPin()
@@ -70,24 +72,24 @@ fun getBankAccountDetails(): BankAccountDetails
 ```
 _No KDoc at source._
 
-### `feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/UpiPinScreen.kt`
+### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/UpiPinScreen.kt`
 
 ```kotlin
 fun showSnackbar(snackbarHostState: SnackbarHostState, message: String)
 ```
 _No KDoc at source._
 
-### `feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/viewmodel/DebitCardViewModal.kt`
+### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/viewmodel/DebitCardViewModal.kt`
 
 ```kotlin
 class DebitCardViewModel :
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/di/UpiSetupModule.kt:18</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/di/UpiSetupModule.kt:17</code></summary>
 
 ```kotlin
-
+import org.koin.dsl.module
 val UpiSetupModule = module {
     viewModelOf(::DebitCardViewModel)
     viewModelOf(::SetUpUpiViewModal)
@@ -111,7 +113,7 @@ sealed class DebitCardUiState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/DebitCardScreen.kt:57</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/DebitCardScreen.kt:56</code></summary>
 
 ```kotlin
 @VisibleForTesting
@@ -125,14 +127,14 @@ internal fun DebitCardScreenWithHeaderAndContent(
 
 </details>
 
-### `feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/viewmodel/SetUpUpiViewModal.kt`
+### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/viewmodel/SetUpUpiViewModal.kt`
 
 ```kotlin
 class SetUpUpiViewModal(
 ```
 Real OTP request/verify — reads through `TwoFactorAuthRepository` (a real Fineract self-service two-factor-auth endpoint, previously bound in DI but never actually consumed anywhere in this app).
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/di/UpiSetupModule.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/di/UpiSetupModule.kt:18</code></summary>
 
 ```kotlin
 val UpiSetupModule = module {
@@ -153,7 +155,7 @@ sealed interface OtpRequestState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/OtpScreen.kt:43</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/OtpScreen.kt:42</code></summary>
 
 ```kotlin
 @Composable
@@ -172,7 +174,7 @@ sealed interface OtpVerifyState
 ```
 _No KDoc at source._
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/org/mifospay/feature/upi/setup/screens/OtpScreen.kt:44</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/OtpScreen.kt:43</code></summary>
 
 ```kotlin
 internal fun OtpScreen(

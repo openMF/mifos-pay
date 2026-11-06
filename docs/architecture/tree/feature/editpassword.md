@@ -9,6 +9,8 @@ Screens: `EditPasswordScreen`
 
 ViewModels: `EditPasswordViewModel`
 
+**Consumes:** `core/store/repository`
+
 ### Docs in the tree
 
 | Path | |
@@ -20,10 +22,10 @@ ViewModels: `EditPasswordViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/editpassword sha=109419dca8245d435523b6279ab4cf649929be0f -->
+<!-- api-docs:begin module=feature/editpassword sha=da93fe84dfbdab8e69009af9074eb5c90e4c2c0e -->
 ## API reference
 
-_Generated from `feature/editpassword` at tree `109419dca824` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/editpassword` at tree `da93fe84dfbd` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -31,14 +33,14 @@ here as a WORKED EXAMPLE: this is the shape a generator should produce for a new
 with its real Screen / ViewModel / Route wiring. Call into `core/**` and `core-base/**`
 rather than re-declaring what they already own.
 
-### `feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/di/EditPasswordModule.kt`
+### `feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/di/EditPasswordModule.kt`
 
 ```kotlin
 val EditPasswordModule = module
 ```
 _No KDoc at source._
 
-### `feature/editpassword/src/commonMain/kotlin/org/mifospay/feature/editpassword/navigation/EditPasswordScreenNavigation.kt`
+### `feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/navigation/EditPasswordScreenNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.editPasswordScreen(

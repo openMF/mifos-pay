@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_FIREBASE.md`
-> **Measured:** 9 Kotlin files, 0 test files
+> **Measured:** 6 Kotlin files, 0 test files
 
 ## Principal types
 
@@ -14,223 +14,11 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/firebase sha=17f7007da5bdfb37248c1b38389bba9a203aab02 -->
+<!-- api-docs:begin module=core/firebase sha=7b52cc099d92fdb35620670797b391953385cab5 -->
 ## API reference
 
-_Generated from `core/firebase` at tree `17f7007da5bd` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/firebase` at tree `7b52cc099d92` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
-
-### `core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsEvents.kt`
-
-```kotlin
-object KptEventTypes
-```
-App-specific analytics event types and parameters
-
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/config/analytics/KptAnalyticsEvents.kt:28</code></summary>
-
-```kotlin
- * out: a fork that ships those features declares them in its own feature packages.
- */
-object KptEventTypes {
-    // Session + authentication — every app has a session, whether or not it has accounts.
-    /** Session + authentication: login success. Emitted as `login_success`. */
-    const val LOGIN_SUCCESS = "login_success"
-```
-
-</details>
-
-- `const val CLIENT_CREATED = "client_created"`
-- `const val CLIENT_UPDATED = "client_updated"`
-- `const val CLIENT_ACTIVATED = "client_activated"`
-- `const val CLIENT_CLOSED = "client_closed"`
-- `const val CLIENT_SEARCHED = "client_searched"`
-- `const val CLIENT_PROFILE_VIEWED = "client_profile_viewed"`
-- `const val LOAN_APPLICATION_STARTED = "loan_application_started"`
-- `const val LOAN_APPLICATION_SUBMITTED = "loan_application_submitted"`
-- `const val LOAN_APPROVED = "loan_approved"`
-- `const val LOAN_REJECTED = "loan_rejected"`
-- `const val LOAN_DISBURSED = "loan_disbursed"`
-- `const val LOAN_REPAYMENT_MADE = "loan_repayment_made"`
-- `const val LOAN_RESCHEDULED = "loan_rescheduled"`
-- `const val LOAN_WRITTEN_OFF = "loan_written_off"`
-  _…more members; read the file._
-
-```kotlin
-object KptParamKeys
-```
-App-specific parameter keys
-
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/config/analytics/KptAnalyticsEvents.kt:151</code></summary>
-
-```kotlin
- * the feature's own `kpt/core/firebase/<feature>/` package, for the same reason as the event types above.
- */
-object KptParamKeys {
-    // Session
-    /** Session: login method. Emitted as `login_method`. */
-    const val LOGIN_METHOD = "login_method"
-```
-
-</details>
-
-- `const val CLIENT_ID = "client_id"`
-- `const val CLIENT_TYPE = "client_type"`
-- `const val CLIENT_STATUS = "client_status"`
-- `const val CLIENT_OFFICE = "client_office"`
-- `const val CLIENT_STAFF = "client_staff"`
-- `const val LOAN_ID = "loan_id"`
-- `const val LOAN_PRODUCT_ID = "loan_product_id"`
-- `const val LOAN_PRODUCT_NAME = "loan_product_name"`
-- `const val LOAN_AMOUNT = "loan_amount"`
-- `const val LOAN_TERM = "loan_term"`
-- `const val LOAN_INTEREST_RATE = "loan_interest_rate"`
-- `const val LOAN_STATUS = "loan_status"`
-- `const val REPAYMENT_AMOUNT = "repayment_amount"`
-- `const val REPAYMENT_METHOD = "repayment_method"`
-  _…more members; read the file._
-
-```kotlin
-object KptParamValues
-```
-Predefined common parameter values
-
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/config/analytics/KptAnalyticsEvents.kt:234</code></summary>
-
-```kotlin
- * Only values whose meaning is independent of any feature.
- */
-object KptParamValues {
-    // Trigger sources
-    /** Trigger sources: trigger user action. Emitted as `user_action`. */
-    const val TRIGGER_USER_ACTION = "user_action"
-```
-
-</details>
-
-- `const val CLIENT_TYPE_INDIVIDUAL = "individual"`
-- `const val CLIENT_TYPE_ENTITY = "entity"`
-- `const val LOAN_STATUS_PENDING = "pending"`
-- `const val LOAN_STATUS_APPROVED = "approved"`
-- `const val LOAN_STATUS_ACTIVE = "active"`
-- `const val LOAN_STATUS_CLOSED = "closed"`
-- `const val LOAN_STATUS_REJECTED = "rejected"`
-- `const val TRANSACTION_DEPOSIT = "deposit"`
-- `const val TRANSACTION_WITHDRAWAL = "withdrawal"`
-- `const val TRANSACTION_TRANSFER = "transfer"`
-- `const val AUTH_PASSWORD = "password"`
-- `const val AUTH_PIN = "pin"`
-- `const val AUTH_BIOMETRIC = "biometric"`
-- `const val AUTH_PATTERN = "pattern"`
-  _…more members; read the file._
-
-### `core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsExtensions.kt`
-
-```kotlin
-fun AnalyticsHelper.trackClientCreationFlow(step: String, success: Boolean = true)
-```
-Extension for tracking client creation flow
-
-```kotlin
-fun AnalyticsHelper.trackLoanApplicationFlow(step: String, loanProductId: String? = null, success: Boolean = true)
-```
-Extension for tracking loan application flow
-
-```kotlin
-fun AnalyticsHelper.trackNavigation(from: String, to: String, trigger: String = "user_action")
-```
-Extension for tracking navigation patterns
-
-```kotlin
-fun AnalyticsHelper.trackApiCall(
-```
-Extension for tracking API call performance
-
-```kotlin
-fun AnalyticsHelper.trackValidationError(
-```
-Extension for tracking form validation errors
-
-```kotlin
-fun AnalyticsHelper.trackDataSync(
-```
-Extension for tracking data synchronization
-
-```kotlin
-fun AnalyticsHelper.trackPreferenceChange(preferenceName: String, oldValue: String?, newValue: String)
-```
-Extension for tracking user preferences changes
-
-```kotlin
-fun AnalyticsHelper.trackTutorial(action: String, step: Int, tutorialName: String)
-```
-Extension for tracking tutorial interactions
-
-```kotlin
-fun AnalyticsHelper.trackDocumentOperation(
-```
-Extension for tracking document operations
-
-```kotlin
-fun AnalyticsHelper.trackBiometricAuth(
-```
-Extension for tracking biometric authentication
-
-```kotlin
-fun AnalyticsHelper.trackLocationUsage(
-```
-Extension for tracking geolocation usage
-
-```kotlin
-fun AnalyticsHelper.trackNotificationInteraction(
-```
-Extension for tracking notification interactions
-
-```kotlin
-fun AnalyticsHelper.trackAccessibilityUsage(
-```
-Extension for tracking accessibility features usage
-
-```kotlin
-fun AnalyticsHelper.trackBackupRestore(
-```
-Extension for tracking backup and restore operations
-
-```kotlin
-fun AnalyticsHelper.kptTracker(): KptAnalyticsTracker = KptAnalyticsTracker(this)
-```
-Convenience function to create the app's analytics tracker
-
-```kotlin
-fun AnalyticsHelper.trackMicrofinanceEvent(eventName: String, businessParams: Map<String, String>)
-```
-Extension for tracking custom business events specific to microfinance
-
-### `core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsTracker.kt`
-
-```kotlin
-class KptAnalyticsTracker(
-```
-Project-specific analytics tracker that provides domain-specific tracking methods for the app.
-
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsExtensions.kt:245</code></summary>
-
-```kotlin
- * Convenience function to create the app's analytics tracker
- */
-fun AnalyticsHelper.kptTracker(): KptAnalyticsTracker = KptAnalyticsTracker(this)
-
-/**
- * Extension for tracking custom business events specific to microfinance
- */
-```
-
-</details>
-
-```kotlin
-fun rememberKptAnalyticsTracker(): KptAnalyticsTracker
-```
-_No KDoc at source._
 
 ### `core/firebase/src/commonMain/kotlin/kpt/core/firebase/config/analytics/KptAnalyticsEvents.kt`
 
@@ -239,16 +27,16 @@ object KptEventTypes
 ```
 CROSS-CUTTING analytics event keys — TEMPLATE-OWNED, full-copied by every sync.
 
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsEvents.kt:15</code></summary>
+<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/config/analytics/KptAnalyticsExtensions.kt:39</code></summary>
 
 ```kotlin
- * App-specific analytics event types and parameters
- */
-object KptEventTypes {
-    // Client Management Events
-    const val CLIENT_CREATED = "client_created"
-    const val CLIENT_UPDATED = "client_updated"
-    const val CLIENT_ACTIVATED = "client_activated"
+    logEvent(
+        AnalyticsEvent(
+            KptEventTypes.NAVIGATION,
+            listOf(
+                Param(KptParamKeys.FROM_SCREEN, from),
+                Param(KptParamKeys.TO_SCREEN, to),
+                Param(KptParamKeys.TRIGGER, trigger),
 ```
 
 </details>
@@ -274,16 +62,16 @@ object KptParamKeys
 ```
 CROSS-CUTTING parameter keys — TEMPLATE-OWNED, full-copied by every sync.
 
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsEvents.kt:113</code></summary>
+<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/config/analytics/KptAnalyticsExtensions.kt:41</code></summary>
 
 ```kotlin
- * App-specific parameter keys
- */
-object KptParamKeys {
-    // Client-specific parameters
-    const val CLIENT_ID = "client_id"
-    const val CLIENT_TYPE = "client_type"
-    const val CLIENT_STATUS = "client_status"
+            KptEventTypes.NAVIGATION,
+            listOf(
+                Param(KptParamKeys.FROM_SCREEN, from),
+                Param(KptParamKeys.TO_SCREEN, to),
+                Param(KptParamKeys.TRIGGER, trigger),
+            ),
+        ),
 ```
 
 </details>
@@ -309,15 +97,16 @@ object KptParamValues
 ```
 CROSS-CUTTING parameter values — TEMPLATE-OWNED, full-copied by every sync. Only values whose meaning is independent of any feature.
 
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsEvents.kt:209</code></summary>
+<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/config/analytics/KptAnalyticsExtensions.kt:35</code></summary>
 
 ```kotlin
- * Predefined common parameter values
- */
-object KptParamValues {
-    // Client types
-    const val CLIENT_TYPE_INDIVIDUAL = "individual"
-    const val CLIENT_TYPE_ENTITY = "entity"
+    from: String,
+    to: String,
+    trigger: String = KptParamValues.TRIGGER_USER_ACTION,
+) {
+    logEvent(
+        AnalyticsEvent(
+            KptEventTypes.NAVIGATION,
 ```
 
 </details>
@@ -376,20 +165,6 @@ Onboarding progress. `action` is `started` / `step_completed` / `skipped` / `com
 class KptAnalyticsTracker(
 ```
 CROSS-CUTTING analytics tracker — TEMPLATE-OWNED, full-copied by every sync. Wraps the kmptoolkit `AnalyticsHelper` with the events every app on this template raises, whatever it ships: session, navigation, network, sync, performance.
-
-<details><summary>Used in the template — <code>core/firebase/src/commonMain/kotlin/kpt/core/firebase/KptAnalyticsExtensions.kt:245</code></summary>
-
-```kotlin
- * Convenience function to create the app's analytics tracker
- */
-fun AnalyticsHelper.kptTracker(): KptAnalyticsTracker = KptAnalyticsTracker(this)
-
-/**
- * Extension for tracking custom business events specific to microfinance
- */
-```
-
-</details>
 
 ```kotlin
 fun rememberKptAnalyticsTracker(): KptAnalyticsTracker
@@ -468,5 +243,5 @@ Project-layer Koin module — the toolkit **default** analytics binding.
 
 ---
 
-_9 type(s), 122 function(s)/property(ies); 88 carry KDoc at source; 0 authored example(s); 9 live call site(s)._
+_5 type(s), 63 function(s)/property(ies); 68 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
 <!-- api-docs:end -->
