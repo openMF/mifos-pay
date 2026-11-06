@@ -14,13 +14,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kpt.core.common.ScreenState
+import kpt.core.common.errorOrNull
+import kpt.core.ui.utils.BaseViewModel
 import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.core.model.ProductOptions
 import org.mifos.lib.loan.repository.LoansRepository
-import org.mifospay.core.common.ScreenState
-import org.mifospay.core.common.errorOrNull
-import org.mifospay.core.ui.utils.BaseViewModel
-
 /**
  * `ViewModel` for the Select Loan Type screen.
  *

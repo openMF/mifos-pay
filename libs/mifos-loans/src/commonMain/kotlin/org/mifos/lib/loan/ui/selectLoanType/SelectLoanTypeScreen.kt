@@ -23,6 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.ui.EmptyContentScreen
+import kpt.core.ui.ErrorScreenContent
+import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.utils.EventsEffect
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_type_choose_loan
 import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_type_empty
@@ -31,12 +36,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.LoanCard
 import org.mifos.lib.loan.core.model.ProductOptions
-import org.mifospay.core.designsystem.component.MifosScaffold
-import org.mifospay.core.ui.EmptyContentScreen
-import org.mifospay.core.ui.ErrorScreenContent
-import org.mifospay.core.ui.MifosProgressIndicator
-import org.mifospay.core.ui.utils.EventsEffect
-
 /**
  * Entry point for the Loan Type Selection screen.
  * Fetches available loan products via the ViewModel and handles navigation to the product details.

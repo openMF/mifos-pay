@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single standing instruction — the Room mirror of the
- * `org.mifospay.core.model.standinginstruction.StandingInstruction` domain model.
+ * `kpt.core.model.standinginstruction.StandingInstruction` domain model.
  *
  * Stored in the `wallet_standing_instructions` table. LEDGER shape — many rows
  * per client, page-keyed by [clientId]. The Fineract standing-instruction

@@ -182,6 +182,48 @@ class CacheFirstSwrTest {
         )
     }
 
+    @Test
+    fun emptyNeverFetchedCacheFetchesOnce() = runTest {
+        // First launch: the SoT is an empty table. The mapper stamps that first cache emission as
+        // just-loaded, so its band reads Fresh — and before the fix the screen sat on Loading
+        // forever with no request made (the mifos-pay web home after sign-in).
+        val sotState = MutableStateFlow<List<String>>(emptyList())
+        var fetchCount = 0
+        val store = StoreBuilder
+            .from<String, List<String>, List<String>>(
+                fetcher = Fetcher.of { _ ->
+                    fetchCount++
+                    listOf("network")
+                },
+                sourceOfTruth = SourceOfTruth.of(
+                    reader = { _ -> flow { sotState.collect { emit(it) } } },
+                    writer = { _, value -> sotState.value = value },
+                ),
+            )
+            .build()
+
+        val stream = store.asScreenStream(
+            key = "k-empty",
+            networkMonitor = FakeNetworkMonitor(online),
+            fetchedAtRepository = FakeFetchedAtRepository(),
+            cacheKey = "test:swr-empty-never-fetched",
+            scope = backgroundScope,
+            isEmpty = { it.isEmpty() },
+            fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
+            reconnectDebounceMs = 0L,
+            userRefreshDebounceMs = 0L,
+            ttl = 24.hours,
+        )
+
+        stream.state.test {
+            var state: ScreenState<List<String>> = awaitItem()
+            while (state !is ScreenState.Content<List<String>>) state = awaitItem()
+            assertEquals(listOf("network"), state.data)
+            cancelAndIgnoreRemainingEvents()
+        }
+        assertEquals(1, fetchCount, "an empty, never-fetched cache must fetch exactly once")
+    }
+
     // ─── AC-2 — stale band launches real revalidation + silent swap ───────────
 
     @Test

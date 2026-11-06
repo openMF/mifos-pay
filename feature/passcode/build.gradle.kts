@@ -18,8 +18,8 @@ kotlin {
             implementation(projects.coreBase.ui)
             implementation(projects.coreBase.datastore)
             // Fork addition: BiometricsSetupScreen reads
-            // org.mifospay.core.designsystem.{component,theme}.* (MifosDialogBox/MifosScaffold/MifosTheme).
-            // org.mifospay.core.model.client.Client and org.mifospay.core.datastore.UserPreferencesRepository
+            // kpt.core.designsystem.{component,theme}.* (MifosDialogBox/MifosScaffold/MifosTheme).
+            // kpt.core.model.client.Client and kpt.core.datastore.UserPreferencesRepository
             // come transitively via core/data's api(core.model)/api(core.datastore) re-export.
             implementation(projects.core.designsystem)
             implementation(compose.material3)

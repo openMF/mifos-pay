@@ -5,72 +5,115 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/mifos-pay/blob/master/LICENSE.md
  */
 package kpt.core.datastore.prefs
 
 import com.russhwolf.settings.Settings
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kpt.core.base.common.manager.DispatcherManager
-
+import kpt.core.datastore.UserPreferencesDataSource
+import kpt.core.model.account.DefaultAccount
+import kpt.core.model.client.Client
+import kpt.core.model.client.UpdatedClient
+import kpt.core.model.instance.InterbankServer
+import kpt.core.model.instance.ServerInstance
+import kpt.core.model.user.Language
+import kpt.core.model.user.UserInfo
 /**
- * Fork implementation of [ForkPreferencesRepository]. `owner: fork` — never synced.
+ * Implementation of [ForkPreferencesRepository]. `owner: fork` — never synced.
  *
- * `by delegate` forwards every framework preference to the template's own implementation, so this
- * class starts out complete and STAYS complete when the template ADDS a preference: the new member
- * arrives on the supertype and the delegate already satisfies it. No edit here, no compile break.
- *
- * It also receives the same storage handles the template's impl gets — [plainSettings],
- * [secureSettings] and [dispatcher] — because delegation alone gives you READ access to framework
- * preferences and nowhere to put your OWN. A fork needs somewhere to write.
- *
- * They are public `val`s, mirroring [UserPreferencesRepositoryImpl]: the whole point of this class is
- * that a fork fills it in, so the handles it is handed should be reachable rather than sealed off in
- * a class the fork owns anyway. It also means the compiler does not warn about unused private
- * members while the body is still empty.
- *
- * ## Add a preference
- * Declare it on [ForkPreferencesRepository], then implement it here against the settings:
- * ```
- * override val observeMyFlag: Flow<Boolean> =
- *     MutableStateFlow(plainSettings.getBoolean(KEY_MY_FLAG, false))
- *
- * override suspend fun setMyFlag(enabled: Boolean) = withContext(dispatcher.io) {
- *     plainSettings.putBoolean(KEY_MY_FLAG, enabled)
- * }
- * ```
- * Use [secureSettings] for anything sensitive — it is encrypted at rest on every platform that can
- * be (Android EncryptedSharedPreferences, iOS/native Keychain, desktop AES-GCM). Web is browser
- * storage and is NOT encrypted; do not put a credential there.
- *
- * Namespace your keys (e.g. a `project.` prefix) so a future framework preference cannot collide
- * with yours on the shared `Settings` instances.
- *
- * ## Alter a framework preference
- * `override` it — the explicit member wins over the delegated one, and `delegate.…` still reaches
- * the framework behaviour underneath:
- * ```
- * override suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig) {
- *     analytics.log("theme_changed")
- *     delegate.setDarkThemeConfig(darkThemeConfig)
- * }
- * ```
+ * `by delegate` forwards every framework preference to the template's implementation, so this class
+ * stays complete when the template adds one. The wallet's preferences are stored through
+ * [preferenceManager] exactly as before the migration onto this seam.
  */
 class ForkPreferencesRepositoryImpl(
-    /**
-     * The framework-shared implementation every call forwards to. Exposed so a fork can reach a base member it has not
-     * overridden.
-     */
+    /** The framework-shared implementation every framework preference forwards to. */
     val delegate: UserPreferencesRepository,
-    /** Unencrypted preferences — theme, language, onboarding. Cheap to read on every composition. */
+    /** Unencrypted preferences — theme, language, onboarding. */
     val plainSettings: Settings,
-    /**
-     * Encrypted preferences — passcode and auth token. A separate store because its reads are expensive and its
-     * backing key is platform-held.
-     */
+    /** Encrypted preferences — passcode and auth token. */
     val secureSettings: Settings,
-    /**
-     * Dispatcher provider, so a write never blocks the caller's thread and tests can run it on a scheduler they
-     * control.
-     */
+    /** Dispatcher provider for writes. */
     val dispatcher: DispatcherManager,
-) : ForkPreferencesRepository, UserPreferencesRepository by delegate
+    /** The wallet's own store: user, client, token, accounts, server instances. */
+    private val preferenceManager: UserPreferencesDataSource,
+    private val ioDispatcher: CoroutineDispatcher,
+    unconfinedDispatcher: CoroutineDispatcher,
+) : ForkPreferencesRepository, UserPreferencesRepository by delegate {
+    private val unconfinedScope = CoroutineScope(unconfinedDispatcher)
+
+    private fun <T> Flow<T>.shared(initial: T): StateFlow<T> =
+        stateIn(scope = unconfinedScope, initialValue = initial, started = SharingStarted.Eagerly)
+
+    override val userInfo: Flow<UserInfo>
+        get() = preferenceManager.userInfo.flowOn(ioDispatcher)
+
+    override val token: StateFlow<String?>
+        get() = preferenceManager.token.shared(null)
+
+    override val client: StateFlow<Client?>
+        get() = preferenceManager.clientInfo.shared(null)
+
+    override val clientId: StateFlow<Long?>
+        get() = preferenceManager.clientId.shared(null)
+
+    // The wallet's sign-in writes this token; the framework's is the fallback.
+    override val authToken: String?
+        get() = preferenceManager.getAuthToken() ?: delegate.authToken
+
+    override val defaultAccount: StateFlow<DefaultAccount?>
+        get() = preferenceManager.defaultAccount.shared(null)
+
+    override val defaultAccountId: StateFlow<Long?>
+        get() = preferenceManager.defaultAccount.map { it?.accountId }.shared(null)
+
+    override val selectedInstance: StateFlow<ServerInstance?>
+        get() = preferenceManager.selectedInstance.shared(null)
+
+    override val selectedInterbankInstance: StateFlow<InterbankServer?>
+        get() = preferenceManager.selectedInterbankInstance.shared(null)
+
+    override val accountExternalIds: StateFlow<Map<Long, String>>
+        get() = preferenceManager.accountExternalIds.shared(emptyMap())
+
+    override val language: StateFlow<Language>
+        get() = preferenceManager.language.shared(Language.DEFAULT)
+
+    override suspend fun updateDefaultAccount(account: DefaultAccount) =
+        preferenceManager.updateDefaultAccount(account)
+
+    override suspend fun updateSelectedInstance(instance: ServerInstance) =
+        preferenceManager.updateSelectedInstance(instance)
+
+    override suspend fun updateSelectedInterbankInstance(instance: InterbankServer) =
+        preferenceManager.updateSelectedInterbankInstance(instance)
+
+    override suspend fun updateAccountExternalIds(accountExternalIds: Map<Long, String>) =
+        preferenceManager.updateAccountExternalIds(accountExternalIds)
+
+    override fun getAccountExternalId(accountId: Long): String? =
+        preferenceManager.getAccountExternalId(accountId)
+
+    override suspend fun updateToken(token: String) = preferenceManager.updateAuthToken(token)
+
+    override suspend fun updateClientInfo(client: Client) = preferenceManager.updateClientInfo(client)
+
+    override suspend fun updateClientProfile(client: UpdatedClient) =
+        preferenceManager.updateClientProfile(client)
+
+    override suspend fun setLanguage(language: Language) = preferenceManager.setLanguage(language)
+
+    override suspend fun updateUserInfo(user: UserInfo) = preferenceManager.updateUserInfo(user)
+
+    // Store caches (pocket, linkable accounts, …) are drained by StoreCacheManager.clearAll() in
+    // UserLogoutManagerImpl; this clears the wallet's own preferences.
+    override suspend fun logOut() = preferenceManager.clearInfo()
+}

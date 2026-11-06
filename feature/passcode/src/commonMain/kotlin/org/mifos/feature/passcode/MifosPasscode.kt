@@ -24,6 +24,7 @@ import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.MifosDialogBox
 import mifos_pay.feature.passcode.generated.resources.Res
 import mifos_pay.feature.passcode.generated.resources.feature_passcode_error
 import mifos_pay.feature.passcode.generated.resources.feature_passcode_ok
@@ -42,8 +43,6 @@ import org.mifos.authenticator.passcode.screen.PasscodeKeyConfig
 import org.mifos.authenticator.passcode.screen.PasscodeLogoConfig
 import org.mifos.authenticator.passcode.screen.PasscodeScreen
 import org.mifos.authenticator.passcode.screen.PasscodeSwitchConfig
-import org.mifospay.core.designsystem.component.MifosDialogBox
-
 /** Navigation-event info marker for the passcode destination. */
 internal object MifosPasscodeCurrentInfo : NavigationEventInfo()
 

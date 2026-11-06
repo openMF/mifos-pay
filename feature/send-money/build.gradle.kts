@@ -40,7 +40,7 @@ kotlin {
 
             implementation(projects.core.common)
             implementation(projects.core.ui)
-            // org.mifospay.core.model.* (needed by PayAnyoneViewModel/PayeeDetailsViewModel etc.)
+            // kpt.core.model.* (needed by PayAnyoneViewModel/PayeeDetailsViewModel etc.)
             // comes transitively via core/data's api(core.model) re-export.
         }
     }

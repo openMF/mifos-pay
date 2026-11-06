@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single account-transfer detail record — the Room mirror of the
- * `org.mifospay.core.model.savingsaccount.TransferDetail` domain model.
+ * `kpt.core.model.savingsaccount.TransferDetail` domain model.
  *
  * Stored in the `wallet_transfer_details` table. One row per transfer
  * (SINGLE-ROW-PER-KEY archetype — the DAO's PK is [transferId] which doubles as the

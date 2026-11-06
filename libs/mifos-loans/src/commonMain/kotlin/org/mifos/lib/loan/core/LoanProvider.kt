@@ -10,11 +10,10 @@
 package org.mifos.lib.loan.core
 
 import kotlinx.coroutines.flow.Flow
+import kpt.core.common.ScreenState
 import org.mifos.lib.loan.core.model.LoanState
 import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.core.model.LoansPayload
-import org.mifospay.core.common.ScreenState
-
 interface LoanProvider {
     fun getLoanTemplate(clientId: Long): Flow<ScreenState<LoanTemplate>>
 

@@ -51,6 +51,11 @@ import io.github.vinceglb.filekit.dialogs.compose.util.encodeToByteArray
 import kotlinx.coroutines.launch
 import kpt.core.base.common.toBase64DataUri
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.MifosButton
+import kpt.core.designsystem.component.MifosCard
+import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.component.MifosTopBar
+import kpt.core.designsystem.icon.MifosIcons
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.attach
 import mifos_pay.libs.mifos_loans.generated.resources.capture
@@ -62,12 +67,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.lib.loan.component.SignatureUploadType
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsAction
-import org.mifospay.core.designsystem.component.MifosButton
-import org.mifospay.core.designsystem.component.MifosCard
-import org.mifospay.core.designsystem.component.MifosScaffold
-import org.mifospay.core.designsystem.component.MifosTopBar
-import org.mifospay.core.designsystem.icon.MifosIcons
-
 /**
  * Orchestrates the bottom sheet UI, transitioning between the document upload method selection
  * and the digital signature drawing canvas based on the current mode.

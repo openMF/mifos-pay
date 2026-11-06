@@ -17,8 +17,8 @@ import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.standinginstruction.StandingInstructionDao
 import kpt.core.database.wallet.standinginstruction.toDomain
 import kpt.core.database.wallet.standinginstruction.toEntity
-import org.mifospay.core.model.standinginstruction.StandingInstruction
-import org.mifospay.core.network.FineractApiManager
+import kpt.core.model.standinginstruction.StandingInstruction
+import kpt.core.network.FineractApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -41,7 +41,7 @@ private const val STANDING_INSTRUCTIONS_TABLE = "wallet_standing_instructions"
  * the Room `wallet_standing_instructions` [SourceOfTruth]; the network fetcher
  * pulls from `standingInstructionApi.getAllStandingInstructions(clientId)`
  * (which returns `Flow<Page<StandingInstruction>>`), strips the
- * `pageItems` list out of the Fineract [org.mifospay.core.model.network.entity.Page]
+ * `pageItems` list out of the Fineract [kpt.core.model.network.entity.Page]
  * envelope, and hands the mapped list to the writer for atomic page replacement.
  *
  * The consumer at the repository layer wires this to

@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single notification — the Room mirror of the
- * `org.mifospay.core.model.notification.Notification` domain model.
+ * `kpt.core.model.notification.Notification` domain model.
  *
  * Stored in the `wallet_notifications` table. LEDGER shape — many rows per client.
  *

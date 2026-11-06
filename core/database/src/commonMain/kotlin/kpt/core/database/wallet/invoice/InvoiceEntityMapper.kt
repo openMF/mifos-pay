@@ -12,8 +12,7 @@ package kpt.core.database.wallet.invoice
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.datatables.invoice.Invoice
-
+import kpt.core.model.datatables.invoice.Invoice
 /**
  * Entity ↔ domain mapper for the `wallet_invoices` LEDGER table.
  *

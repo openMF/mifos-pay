@@ -17,8 +17,8 @@ import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.transferdetail.TransferDetailDao
 import kpt.core.database.wallet.transferdetail.toDomain
 import kpt.core.database.wallet.transferdetail.toEntity
-import org.mifospay.core.model.savingsaccount.TransferDetail
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.savingsaccount.TransferDetail
+import kpt.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store

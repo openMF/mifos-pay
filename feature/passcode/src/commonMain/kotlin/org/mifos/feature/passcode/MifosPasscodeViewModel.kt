@@ -12,6 +12,8 @@ package org.mifos.feature.passcode
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kpt.core.data.repository.AppLockRepository
+import kpt.core.ui.utils.BaseViewModel
 import mifos_pay.feature.passcode.generated.resources.Res
 import mifos_pay.feature.passcode.generated.resources.feature_passcode_user_not_registered_error_message
 import org.jetbrains.compose.resources.getString
@@ -21,9 +23,6 @@ import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenti
 import org.mifos.authenticator.passcode.PasscodeManager
 import org.mifos.authenticator.passcode.PasscodeResult
 import org.mifos.authenticator.passcode.PasscodeStep
-import org.mifospay.core.data.repository.AppLockRepository
-import org.mifospay.core.ui.utils.BaseViewModel
-
 /**
  * ViewModel for [MifosPasscode]. Owns the glue between:
  *  - [PasscodeManager] (passcode library) — provides step/state and emits

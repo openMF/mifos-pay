@@ -14,16 +14,16 @@ import kotlinx.coroutines.flow.map
 import kpt.core.base.store.annotation.CacheKey
 import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
+import kpt.core.common.DateHelper
 import kpt.core.database.wallet.account.SavingAccountDetailDao
 import kpt.core.database.wallet.account.toDomain
 import kpt.core.database.wallet.account.toEntity
-import org.mifospay.core.common.DateHelper
-import org.mifospay.core.model.savingsaccount.SavingAccountDetail
-import org.mifospay.core.model.savingsaccount.SavingsWithAssociationsEntity
-import org.mifospay.core.model.savingsaccount.Transaction
-import org.mifospay.core.model.savingsaccount.TransactionType
-import org.mifospay.core.model.savingsaccount.TransactionsEntity
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.savingsaccount.SavingAccountDetail
+import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
+import kpt.core.model.savingsaccount.Transaction
+import kpt.core.model.savingsaccount.TransactionType
+import kpt.core.model.savingsaccount.TransactionsEntity
+import kpt.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -143,7 +143,7 @@ fun provideAccountDetailStore(
 // ---------------------------------------------------------------------------
 // Inline mapping helper — private to this file.
 //
-// Mirrors `org.mifospay.core.data.mapper.toSavingDetail` (which lives in
+// Mirrors `kpt.core.data.mapper.toSavingDetail` (which lives in
 // core/data, out of reach for a `core/store` module). Kept private + minimal
 // so the store body is self-contained and the fetcher lambda doesn't need to
 // reach across module boundaries. If a third consumer wants this mapping, lift

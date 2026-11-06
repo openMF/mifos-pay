@@ -5,47 +5,91 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/mifos-pay/blob/master/LICENSE.md
  */
 package kpt.core.datastore.prefs
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kpt.core.model.account.DefaultAccount
+import kpt.core.model.client.Client
+import kpt.core.model.client.UpdatedClient
+import kpt.core.model.instance.InterbankServer
+import kpt.core.model.instance.ServerInstance
+import kpt.core.model.user.Language
+import kpt.core.model.user.UserInfo
 /**
- * THE FORK'S preferences. Extends the framework's — this is yours to fill.
+ * The wallet's preferences, extending the framework's [UserPreferencesRepository].
  *
- * ## The split
- * [UserPreferencesRepository] and its impl are `owner: template`: the framework DESIGNS and MANAGES
- * those preferences (theme, language, auth, passcode, biometrics, onboarding) and keeps improving
- * them. They FULL-COPY on a sync, so a fork must never edit them — an accessor added there
- * disappears on the next adopt while its value stays on disk.
- *
- * This file and [ForkPreferencesRepositoryImpl] are `owner: fork` and are never copied. Extending
- * rather than paralleling means a fork gets all framework preferences for free and adds its own
- * beside them, through ONE injected type.
- *
- * ## What you get by default
- * Every framework preference, inherited. Inject [ForkPreferencesRepository] and
- * `userData`, `observeLanguage`, `setDarkThemeConfig`… are all there — the impl delegates them to
- * the template's, so the template can change how any of them works and this file never notices.
- *
- * ## Adding your own
- * ```
- * interface ForkPreferencesRepository : UserPreferencesRepository {
- *     val observeMyFlag: Flow<Boolean>
- *     suspend fun setMyFlag(enabled: Boolean)
- * }
- * ```
- *
- * ## Altering a framework one
- * Override it in [ForkPreferencesRepositoryImpl] — delegation supplies the default, an explicit
- * `override` wins. The template's own implementation stays untouched and keeps evolving:
- * ```
- * override suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig) {
- *     analytics.log("theme_changed")
- *     delegate.setDarkThemeConfig(darkThemeConfig)
- * }
- * ```
- *
- * Framework preferences cannot be REMOVED — the framework reads them. Inheritance makes that
- * structural rather than a rule: drop one and this interface no longer satisfies its supertype.
+ * Framework preferences (theme, language config, passcode, biometrics, onboarding, consent) are
+ * inherited and delegated to the template's implementation; the wallet's own — signed-in user,
+ * client, token, default account, server instances — are declared here. One injected type gives
+ * every consumer both. `owner: fork`: a template sync never copies this file.
  */
-interface ForkPreferencesRepository : UserPreferencesRepository
+interface ForkPreferencesRepository : UserPreferencesRepository {
+    /** The signed-in self-service user. */
+    val userInfo: Flow<UserInfo>
+
+    /** The session's base64 authentication key, or null when signed out. */
+    val token: StateFlow<String?>
+
+    /** The signed-in user's client record. */
+    val client: StateFlow<Client?>
+
+    /** The signed-in user's client id. */
+    val clientId: StateFlow<Long?>
+
+    /** Declared by the framework too; the wallet's sign-in token is the session's token. */
+    override val authToken: String?
+
+    /** The account payments default to. */
+    val defaultAccount: StateFlow<DefaultAccount?>
+
+    /** The id of [defaultAccount]. */
+    val defaultAccountId: StateFlow<Long?>
+
+    /** The Fineract instance the app is connected to. */
+    val selectedInstance: StateFlow<ServerInstance?>
+
+    /** The interbank (payment hub) instance the app is connected to. */
+    val selectedInterbankInstance: StateFlow<InterbankServer?>
+
+    /** External ids of the user's accounts, by account id. */
+    val accountExternalIds: StateFlow<Map<Long, String>>
+
+    /** The wallet's display language. */
+    val language: StateFlow<Language>
+
+    /** Stores the session token after sign-in. */
+    suspend fun updateToken(token: String)
+
+    /** Stores the signed-in user. */
+    suspend fun updateUserInfo(user: UserInfo)
+
+    /** Stores the wallet's display language. */
+    suspend fun setLanguage(language: Language)
+
+    /** Stores the signed-in user's client record. */
+    suspend fun updateClientInfo(client: Client)
+
+    /** Applies a profile edit to the stored client record. */
+    suspend fun updateClientProfile(client: UpdatedClient)
+
+    /** Stores the account payments default to. */
+    suspend fun updateDefaultAccount(account: DefaultAccount)
+
+    /** Stores the Fineract instance to connect to. */
+    suspend fun updateSelectedInstance(instance: ServerInstance)
+
+    /** Stores the interbank instance to connect to. */
+    suspend fun updateSelectedInterbankInstance(instance: InterbankServer)
+
+    /** Stores the external ids of the user's accounts. */
+    suspend fun updateAccountExternalIds(accountExternalIds: Map<Long, String>)
+
+    /** The external id of [accountId], or null when unknown. */
+    fun getAccountExternalId(accountId: Long): String?
+
+    /** Clears the wallet's preferences on sign-out. */
+    suspend fun logOut()
+}

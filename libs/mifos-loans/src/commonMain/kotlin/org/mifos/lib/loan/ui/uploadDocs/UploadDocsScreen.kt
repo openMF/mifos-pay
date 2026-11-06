@@ -33,6 +33,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.BasicDialogState
+import kpt.core.designsystem.component.MifosBasicDialog
+import kpt.core.designsystem.component.MifosButton
+import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.component.MifosTopBar
+import kpt.core.ui.utils.EventsEffect
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_section_fill_details
 import mifos_pay.libs.mifos_loans.generated.resources.feature_button_next
@@ -40,13 +46,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.UploadDocumentsSection
 import org.mifos.lib.loan.ui.uploadDocs.component.BottomSheetContent
-import org.mifospay.core.designsystem.component.BasicDialogState
-import org.mifospay.core.designsystem.component.MifosBasicDialog
-import org.mifospay.core.designsystem.component.MifosButton
-import org.mifospay.core.designsystem.component.MifosScaffold
-import org.mifospay.core.designsystem.component.MifosTopBar
-import org.mifospay.core.ui.utils.EventsEffect
-
 /**
  * Entry point for the Document Upload screen.
  *

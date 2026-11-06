@@ -9,6 +9,9 @@
  */
 package org.mifos.lib.loan.di
 
+import kpt.core.common.MifosDispatchers
+import kpt.core.data.util.MifosNetworkMonitorQualifier
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -25,8 +28,6 @@ import org.mifos.lib.loan.ui.providerWebView.LoanProviderWebViewViewModel
 import org.mifos.lib.loan.ui.selectLoanProvider.SelectLoanProviderViewModel
 import org.mifos.lib.loan.ui.selectLoanType.SelectLoanTypeViewModel
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsViewModel
-import org.mifospay.core.common.MifosDispatchers
-
 /**
  * Koin module for the `libs/mifos-loans` loan-application wizard.
  */
@@ -63,7 +64,15 @@ val LoanApplicationModule = module {
     viewModelOf(::LoanProviderWebViewViewModel)
     viewModelOf(::SelectLoanTypeViewModel)
     viewModelOf(::LoanProductDetailsViewModel)
-    viewModelOf(::LoanApplyViewModel)
+    viewModel {
+        LoanApplyViewModel(
+            savedStateHandle = get(),
+            loansRepository = get(),
+            selfServiceRepository = get(),
+            userPreferencesRepository = get(),
+            networkMonitor = get(MifosNetworkMonitorQualifier),
+        )
+    }
     viewModelOf(::UploadDocsViewModel)
     viewModelOf(::ConfirmDetailsViewModel)
 }

@@ -12,10 +12,9 @@ package kpt.core.database.wallet.client
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.client.Client
-import org.mifospay.core.model.client.ClientStatus
-import org.mifospay.core.model.client.ClientTimeline
-
+import kpt.core.model.client.Client
+import kpt.core.model.client.ClientStatus
+import kpt.core.model.client.ClientTimeline
 /**
  * Entity ↔ domain mapper for the `wallet_client_details` table.
  *

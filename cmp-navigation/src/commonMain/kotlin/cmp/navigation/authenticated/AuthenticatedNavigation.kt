@@ -11,14 +11,18 @@
 
 package cmp.navigation.authenticated
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import cmp.navigation.authenticatednavbar.AuthenticatedNavbarRoute
 import cmp.navigation.authenticatednavbar.authenticatedNavbarGraph
+import cmp.navigation.registry.ForkBackboneRegistry
+import cmp.navigation.registry.ForkFeatureRegistry
+import cmp.navigation.registry.ForkShowcaseRegistry
 import kotlinx.serialization.Serializable
+// NOTE: this merge-owned shell carries zero direct feature imports — all backbone, fork-feature,
+// and dev-only destinations flow through the three registry seams imported above.
 
 @Serializable
 internal data object AuthenticatedGraphRoute
@@ -27,37 +31,30 @@ internal fun NavController.navigateToAuthenticatedGraph(navOptions: NavOptions? 
     navigate(route = AuthenticatedGraphRoute, navOptions = navOptions)
 }
 
-/**
- * Phase 2 nav-chunk (skeleton). Template-demo destinations (bills, calculators,
- * crypto, currency-rates, emi-calculator, loans, macro, rates, showcase, etc.)
- * were stripped — their `kpt.feature.*` modules do not exist in the fork's
- * classpath. Notification/settings top-level registrations were also stripped;
- * those destinations continue to live inside the fork's `MifosNavHost` (see
- * `cmp-shared/.../MifosNavHost.kt`), which is mounted wholesale via the
- * [authenticatedContent] callback supplied by `SharedApp`.
- *
- * The graph STRUCTURE (authenticatedGraph → authenticatedNavbarGraph) is kept
- * intact so future per-feature typed-route conversion can add siblings back
- * beside `authenticatedNavbarGraph` without another shape change.
- */
-internal fun NavGraphBuilder.authenticatedGraph(
-    navController: NavController,
-    authenticatedContent: @Composable () -> Unit,
-) {
+internal fun NavGraphBuilder.authenticatedGraph(navController: NavController) {
     navigation<AuthenticatedGraphRoute>(
         startDestination = AuthenticatedNavbarRoute,
     ) {
         authenticatedNavbarGraph(
-            authenticatedContent = authenticatedContent,
+            navigateToSettingsScreen = { ForkBackboneRegistry.navigateToSettings(navController) },
+            // Home body from the fork-owned ForkBackboneRegistry seam (default: demo dashboard). The
+            // template shell carries zero demo imports — a fork edits ForkBackboneRegistry, not this file.
+            homeBody = { ForkBackboneRegistry.homeBody(navController) },
+            // The outer graph's controller — the navbar uses it to push full-screen fork tabs above the
+            // scaffold and to hand inline fork tabs a controller for their drill-downs. This IS the same
+            // graph the fork tabs' destinations register on (ForkFeatureRegistry.featureDestinations below).
+            outerNavController = navController,
         )
 
-        // TODO(phase-per-feature): once we convert the fork's ~60 destinations
-        // to typed routes at this layer, register them as siblings here — e.g.
-        //   notificationDestination(onBackClick = { navController.popBackStackSafely() })
-        //   settingsDestination(onBackClick = { navController.popBackStackSafely() })
-        //   sendMoneyGraph(navController = navController)
-        //   ...
-        // Until then, all fork feature destinations are reachable via the
-        // wholesale-bridged `MifosNavHost` inside `authenticatedContent`.
+        // Backbone (framework) destinations — settings, notification, sync-and-drafts.
+        ForkBackboneRegistry.backboneDestinations.invoke(this, navController)
+
+        // Fork feature routes — from the fork-owned ForkFeatureRegistry seam (white-label: the template infra
+        // never edits this; a fork adds/removes routes in cmp-navigation/registry/ForkFeatureRegistry.kt).
+        ForkFeatureRegistry.featureDestinations.invoke(this, navController)
+
+        // Dev-only showcase destinations — from the template-owned ForkShowcaseRegistry seam. A `--clean`
+        // fork strips its fenced content, reducing this to a no-op.
+        ForkShowcaseRegistry.devDestinations.invoke(this, navController)
     }
 }

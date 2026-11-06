@@ -24,6 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.component.MifosTopBar
+import kpt.core.ui.ErrorScreenContent
+import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.utils.EventsEffect
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_title
 import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_amendments_and_termination
@@ -56,12 +61,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.ApplyLoanBottomBar
 import org.mifos.lib.loan.component.LoanCard
 import org.mifos.lib.loan.component.TermsAndConditionItem
-import org.mifospay.core.designsystem.component.MifosScaffold
-import org.mifospay.core.designsystem.component.MifosTopBar
-import org.mifospay.core.ui.ErrorScreenContent
-import org.mifospay.core.ui.MifosProgressIndicator
-import org.mifospay.core.ui.utils.EventsEffect
-
 /**
  * Entry point for the Loan Product Details screen.
  *

@@ -12,6 +12,7 @@ package kpt.core.database
 import androidx.room3.Room
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
+import kpt.core.database.config.DatabaseConfig
 import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -58,12 +59,13 @@ class AppDatabaseTest {
 
     @Test
     fun databaseVersionIsCurrent() {
-        // Fork wallet schema, currently at 9 — the transfer-detail Store5 vertical added
-        // wallet_transfer_details via AutoMigration(7→8), and AutoMigration(8→9) follows it.
+        // Fork wallet schema, currently at 10 — the transfer-detail Store5 vertical added
+        // wallet_transfer_details via AutoMigration(7→8), AutoMigration(8→9) follows it, and the
+        // template-sync migration unit landed as AutoMigration(9→10).
         // This guards the FORK's AppDatabase, not the upstream template demo database
         // (whose own version advances independently). Update this constant when bumping
         // AppDatabase.VERSION so the guardrail stays meaningful.
-        assertEquals(9, AppDatabase.VERSION)
+        assertEquals(10, AppDatabase.VERSION)
     }
 
     @Test

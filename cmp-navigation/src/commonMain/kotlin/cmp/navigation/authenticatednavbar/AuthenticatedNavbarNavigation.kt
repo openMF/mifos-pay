@@ -26,31 +26,19 @@ internal fun NavController.navigateToAuthenticatedNavBar(navOptions: NavOptions?
     navigate(route = AuthenticatedNavbarRoute, navOptions = navOptions)
 }
 
-/**
- * Phase 2 nav-chunk (skeleton): the template's authenticated navbar is now a
- * bare BRIDGE for content injected from `:cmp-shared` (`SharedApp`) via the
- * `authenticatedContent` callback plumbed through `ComposeApp` → `RootNavScreen`
- * → [authenticatedGraph].
- *
- * The template's four internal pieces here (bottom-nav scaffold with
- * HomeTab/ProfileTab items, `AuthenticatedNavbarNavigationViewModel`,
- * `AuthenticatedNavBarTabItem`, and `AuthenticatedNavbarNavigationScreen*`)
- * were **deleted** because their `kpt.feature.{home,profile}.*` imports don't
- * exist in the fork's classpath (fork feature modules live under
- * `org.mifospay.feature.*`). The wholesale bridge composes the fork's own
- * `MifosApp` scaffold — which already owns its Scaffold + 4-tab bottom nav
- * (HOME/PAYMENTS/FINANCE/HISTORY per `org.mifospay.shared.utils.TopLevelDestination`)
- * + top-app-bar + `MifosNavHost` — inside this single composable slot.
- *
- * TODO(phase-per-feature): convert to typed routes — each of the ~60 fork
- * destinations currently mounted wholesale inside `MifosNavHost` migrates to a
- * `composable<AppRoute.X>` registration at THIS layer, replacing the wholesale
- * bridge with typed-route registrations one feature at a time.
- */
 internal fun NavGraphBuilder.authenticatedNavbarGraph(
-    authenticatedContent: @Composable () -> Unit,
+    navigateToSettingsScreen: () -> Unit,
+    homeBody: @Composable () -> Unit,
+    // The OUTER authenticated-graph controller, threaded down to the navbar screen so full-screen fork
+    // tabs push above the scaffold and inline fork tabs can drill down full-screen. Passed from
+    // authenticatedGraph (which owns it) — keeps this graph + the shell feature-free.
+    outerNavController: NavController,
 ) {
     composableWithStayTransitions<AuthenticatedNavbarRoute> {
-        authenticatedContent()
+        AuthenticatedNavbarNavigationScreen(
+            navigateToSettingsScreen = navigateToSettingsScreen,
+            homeBody = homeBody,
+            outerNavController = outerNavController,
+        )
     }
 }

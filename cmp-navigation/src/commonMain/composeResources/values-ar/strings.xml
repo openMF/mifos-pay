@@ -29,4 +29,25 @@
     <string name="error_category_ratelimit">طلبات كثيرة جدًا. يُرجى الانتظار ثم المحاولة.</string>
     <string name="error_category_server">خوادمنا تواجه مشكلة مؤقتة. حاول بعد قليل.</string>
     <string name="error_category_generic">حدث خطأ ما</string>
+
+    <!-- Wallet app shell (cmp.navigation.registry.app) -->
+    <string name="wallet_app_name">Mifos Pay</string>
+    <string name="wallet_home">الصفحة الرئيسية</string>
+    <string name="payments">المدفوعات</string>
+    <string name="finance">المالية</string>
+    <string name="history">السجل</string>
+    <string name="transaction_history">سجل المعاملات</string>
+    <string name="wallet_settings">الإعدادات</string>
+    <string name="wallet_not_connected">⚠️ أنت غير متصل بالإنترنت</string>
+    <string name="faq">الأسئلة الشائعة</string>
+    <string name="update">تحديث</string>
+    <string name="select_instance">تحديد المثيل</string>
+    <string name="main_server">الخادم الرئيسي</string>
+    <string name="interbank_server">خادم بين البنوك</string>
+    <string name="no_interbank_servers">لا توجد خوادم بين البنوك متاحة</string>
+    <string name="default_string">افتراضي</string>
+    <string name="tenant_value">المستأجر: %1$s</string>
+    <string name="error_message">خطأ: %1$s</string>
+    <string name="feature_finance_accounts">الحسابات</string>
+    <string name="feature_finance_beneficiaries">المستفيدون</string>
 </resources>

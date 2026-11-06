@@ -17,24 +17,23 @@ import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.pocket.PocketDao
 import kpt.core.database.wallet.pocket.toDomain
 import kpt.core.database.wallet.pocket.toEntity
-import org.mifospay.core.model.enums.AccountType
-import org.mifospay.core.model.network.entity.client.ClientAccountsEntity
-import org.mifospay.core.model.network.entity.loanAccount.LoanStatusResponseDto
-import org.mifospay.core.model.network.entity.pocket.PocketAccountDto
-import org.mifospay.core.model.network.entity.pocket.PocketDelinkRequest
-import org.mifospay.core.model.network.entity.pocket.PocketLinkRequest
-import org.mifospay.core.model.network.entity.pocket.PocketResponseDto
-import org.mifospay.core.model.network.entity.shareAccount.ShareStatusResponseDto
-import org.mifospay.core.model.pocket.AccountStatus
-import org.mifospay.core.model.pocket.DetailedPocketAccount
-import org.mifospay.core.model.pocket.PocketAccount
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.enums.AccountType
+import kpt.core.model.network.entity.client.ClientAccountsEntity
+import kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto
+import kpt.core.model.network.entity.pocket.PocketAccountDto
+import kpt.core.model.network.entity.pocket.PocketDelinkRequest
+import kpt.core.model.network.entity.pocket.PocketLinkRequest
+import kpt.core.model.network.entity.pocket.PocketResponseDto
+import kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto
+import kpt.core.model.pocket.AccountStatus
+import kpt.core.model.pocket.DetailedPocketAccount
+import kpt.core.model.pocket.PocketAccount
+import kpt.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
-import org.mifospay.core.model.savingsaccount.Status as SavingsStatus
-
+import kpt.core.model.savingsaccount.Status as SavingsStatus
 // Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
@@ -129,7 +128,7 @@ private const val POCKETS_TABLE = "wallet_pockets"
  * `core/data` depends on `core/store` for the store bindings). The
  * `PocketResponseDto → List<PocketAccount>` mapper and the three status-DTO
  * `→ AccountStatus` mappers are inlined below, mirroring
- * `org.mifospay.core.data.mapper.pocket.PocketAccountMapper`. Keep the two
+ * `kpt.core.data.mapper.pocket.PocketAccountMapper`. Keep the two
  * in lockstep if either grows fields.
  */
 @StoreProvider(id = "pocket")
@@ -225,7 +224,7 @@ fun providePocketStore(
 // ---------------------------------------------------------------------------
 // Inline PocketResponseDto → List<PocketAccount> mapper + the three
 // per-account-type status → AccountStatus mappers. Mirrors
-// `org.mifospay.core.data.mapper.pocket.PocketAccountMapper`. See
+// `kpt.core.data.mapper.pocket.PocketAccountMapper`. See
 // `providePocketStore` ## Inline mappers KDoc for rationale.
 // ---------------------------------------------------------------------------
 

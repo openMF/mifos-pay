@@ -19,19 +19,18 @@ import kpt.core.database.wallet.linkableaccount.LinkableAccountDao
 import kpt.core.database.wallet.linkableaccount.toDomain
 import kpt.core.database.wallet.linkableaccount.toEntity
 import kpt.core.database.wallet.pocket.PocketDao
-import org.mifospay.core.model.enums.AccountType
-import org.mifospay.core.model.network.entity.client.ClientAccountsEntity
-import org.mifospay.core.model.network.entity.loanAccount.LoanStatusResponseDto
-import org.mifospay.core.model.network.entity.shareAccount.ShareStatusResponseDto
-import org.mifospay.core.model.pocket.AccountStatus
-import org.mifospay.core.model.pocket.LinkableAccount
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.enums.AccountType
+import kpt.core.model.network.entity.client.ClientAccountsEntity
+import kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto
+import kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto
+import kpt.core.model.pocket.AccountStatus
+import kpt.core.model.pocket.LinkableAccount
+import kpt.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
-import org.mifospay.core.model.savingsaccount.Status as SavingsStatus
-
+import kpt.core.model.savingsaccount.Status as SavingsStatus
 // Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }

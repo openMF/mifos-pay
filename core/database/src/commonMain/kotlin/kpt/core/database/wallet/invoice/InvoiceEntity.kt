@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single invoice — the Room mirror of the
- * `org.mifospay.core.model.datatables.invoice.Invoice` domain model.
+ * `kpt.core.model.datatables.invoice.Invoice` domain model.
  *
  * Stored in the `wallet_invoices` table. LEDGER shape — many rows per client,
  * page-keyed by [clientId]. The Fineract datatable API

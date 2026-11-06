@@ -15,4 +15,6 @@ import io.ktor.client.engine.js.Js
 
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Js) {
     config(this)
+    // Installed after the caller's config, so it sees the host DynamicBaseUrlPlugin chose.
+    install(WebRelayPlugin)
 }

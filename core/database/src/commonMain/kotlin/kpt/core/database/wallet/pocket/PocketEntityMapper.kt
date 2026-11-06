@@ -9,11 +9,10 @@
  */
 package kpt.core.database.wallet.pocket
 
-import org.mifospay.core.model.enums.AccountType
-import org.mifospay.core.model.pocket.AccountStatus
-import org.mifospay.core.model.pocket.DetailedPocketAccount
-import org.mifospay.core.model.pocket.PocketAccount
-
+import kpt.core.model.enums.AccountType
+import kpt.core.model.pocket.AccountStatus
+import kpt.core.model.pocket.DetailedPocketAccount
+import kpt.core.model.pocket.PocketAccount
 /**
  * Entity ↔ domain mapper for the `wallet_pockets` LEDGER table.
  *

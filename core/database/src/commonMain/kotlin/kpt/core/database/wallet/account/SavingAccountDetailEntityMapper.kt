@@ -12,14 +12,13 @@ package kpt.core.database.wallet.account
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.savingsaccount.Currency
-import org.mifospay.core.model.savingsaccount.DepositType
-import org.mifospay.core.model.savingsaccount.SavingAccountDetail
-import org.mifospay.core.model.savingsaccount.Status
-import org.mifospay.core.model.savingsaccount.Summary
-import org.mifospay.core.model.savingsaccount.Timeline
-import org.mifospay.core.model.savingsaccount.Transaction
-
+import kpt.core.model.savingsaccount.Currency
+import kpt.core.model.savingsaccount.DepositType
+import kpt.core.model.savingsaccount.SavingAccountDetail
+import kpt.core.model.savingsaccount.Status
+import kpt.core.model.savingsaccount.Summary
+import kpt.core.model.savingsaccount.Timeline
+import kpt.core.model.savingsaccount.Transaction
 /**
  * Entity ↔ domain mapper for the `wallet_saving_account_details` table.
  *

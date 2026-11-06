@@ -10,6 +10,10 @@
 package org.mifos.lib.loan.network.di
 
 import de.jensklingenberg.ktorfit.Ktorfit
+import kpt.core.datastore.prefs.ForkPreferencesRepository
+import kpt.core.network.config.InstanceConfigManager
+import kpt.core.network.utils.FlowConverterFactory
+import kpt.core.network.utils.KtorInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.mifos.corebase.network.DynamicBaseUrlPlugin
@@ -19,11 +23,6 @@ import org.mifos.corebase.network.httpClient
 import org.mifos.corebase.network.setupDefaultHttpClient
 import org.mifos.lib.loan.network.LoansService
 import org.mifos.lib.loan.network.createLoansService
-import org.mifospay.core.datastore.UserPreferencesRepository
-import org.mifospay.core.network.config.InstanceConfigManager
-import org.mifospay.core.network.utils.FlowConverterFactory
-import org.mifospay.core.network.utils.KtorInterceptor
-
 /**
  * Koin module providing the `libs/mifos-loans` module's own, self-contained Ktorfit/HttpClient
  * engine and [LoansService]. This mirrors the pattern used for the app's SelfClient in
@@ -34,7 +33,7 @@ val LoansClient = named("LoansClient")
 
 val LoansNetworkModule = module {
     single<Ktorfit>(qualifier = LoansClient) {
-        val preferencesRepository = get<UserPreferencesRepository>()
+        val preferencesRepository = get<ForkPreferencesRepository>()
         val configManager = get<InstanceConfigManager>()
         Ktorfit.Builder()
             .httpClient(

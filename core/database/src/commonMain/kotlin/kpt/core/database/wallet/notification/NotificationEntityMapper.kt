@@ -9,8 +9,7 @@
  */
 package kpt.core.database.wallet.notification
 
-import org.mifospay.core.model.notification.Notification
-
+import kpt.core.model.notification.Notification
 /**
  * Entity ↔ domain mapper for the `wallet_notifications` LEDGER table.
  *

@@ -27,6 +27,9 @@
 // bulk-move of working config). Any NEW feature dependency should go here instead, so it survives the
 // next template sync.
 
+// An applied script has no type-safe `libs` accessor; resolve catalog entries by alias.
+fun catalogLib(alias: String) = extensions.getByType<VersionCatalogsExtension>().named("libs").findLibrary(alias).get()
+
 dependencies {
     // Every fork feature reaches the app shell here, so cmp-navigation's generated feature aggregates
     // (GeneratedFeatureKoinBindings / Destinations / Tabs scan every feature/*) resolve. Added at the 90ff6da6 sync.
@@ -57,4 +60,11 @@ dependencies {
     "commonMainImplementation"(project(":feature:upi-setup"))
     // Fork feature dependencies go below this line, e.g.:
     // "commonMainImplementation"(project(":feature:my-feature"))
+
+    // The wallet app shell (cmp.navigation.registry.app) — moved out of cmp-shared onto ForkAppShell.
+    "commonMainImplementation"(project(":core:domain"))
+    "commonMainImplementation"(project(":libs:mifos-loans"))
+    "commonMainImplementation"(catalogLib("mifos-authenticator-biometrics"))
+    "commonMainImplementation"(catalogLib("mifos-authenticator-passcode"))
+    "commonMainImplementation"(catalogLib("window-size"))
 }

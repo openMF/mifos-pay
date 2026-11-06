@@ -10,12 +10,11 @@
 package org.mifos.lib.loan.repository
 
 import kotlinx.coroutines.flow.Flow
+import kpt.core.common.ScreenState
 import org.mifos.lib.loan.core.model.LoanState
 import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.core.model.LoansPayload
 import org.mifos.lib.loan.providers.LoanProviderRegistry
-import org.mifospay.core.common.ScreenState
-
 /**
  * Default [LoansRepository] implementation — resolves the concrete [org.mifos.lib.loan.core.LoanProvider]
  * for the given `providerId` via [registry] and delegates every call to it.

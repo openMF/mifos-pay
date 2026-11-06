@@ -19,6 +19,13 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
+import kpt.core.common.DateHelper
+import kpt.core.common.ScreenState
+import kpt.core.data.repository.SelfServiceRepository
+import kpt.core.data.util.NetworkMonitor
+import kpt.core.datastore.prefs.ForkPreferencesRepository
+import kpt.core.model.client.Client
+import kpt.core.ui.utils.BaseViewModel
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_error_amount_empty
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_error_amount_invalid_decimal
@@ -29,13 +36,6 @@ import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_error_a
 import org.jetbrains.compose.resources.StringResource
 import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.repository.LoansRepository
-import org.mifospay.core.common.DateHelper
-import org.mifospay.core.common.ScreenState
-import org.mifospay.core.data.repository.SelfServiceRepository
-import org.mifospay.core.data.util.NetworkMonitor
-import org.mifospay.core.datastore.UserPreferencesRepository
-import org.mifospay.core.model.client.Client
-import org.mifospay.core.ui.utils.BaseViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -58,7 +58,7 @@ internal class LoanApplyViewModel(
     savedStateHandle: SavedStateHandle,
     private val loansRepository: LoansRepository,
     private val selfServiceRepository: SelfServiceRepository,
-    private val userPreferencesRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: ForkPreferencesRepository,
     private val networkMonitor: NetworkMonitor,
 ) : BaseViewModel<LoanApplyState, LoanApplyEvent, LoanApplyAction>(
     initialState = run {

@@ -31,4 +31,27 @@
     <string name="error_category_ratelimit">Too many requests. Please wait and try again.</string>
     <string name="error_category_server">Our servers are having a moment. Try again in a bit.</string>
     <string name="error_category_generic">Something went wrong</string>
+
+    <!-- Wallet app shell (cmp.navigation.registry.app) -->
+    <string name="wallet_app_name">Mifos Pay</string>
+    <string name="wallet_home">Home</string>
+    <string name="payments">Payments</string>
+    <string name="upi_and_autopay"> UPI Payments &amp; AutoPay </string>
+    <string name="finance">Finance</string>
+    <string name="history">History</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="wallet_settings">Settings</string>
+    <string name="wallet_not_connected">⚠️ You aren’t connected to the internet</string>
+    <string name="faq">FAQ</string>
+    <string name="update">Update</string>
+    <string name="select_instance">Select Instance</string>
+    <string name="main_server">Main Server</string>
+    <string name="interbank_server">Interbank Server</string>
+    <string name="no_interbank_servers">No interbank servers available</string>
+    <string name="default">Default</string>
+    <string name="tenant_value">Tenant: %1$d</string>
+    <string name="error_message">Error: %1$d</string>
+    <string name="failed_to_load_instances">Failed to load instances</string>
+    <string name="feature_finance_accounts">Accounts</string>
+    <string name="feature_finance_beneficiaries">Beneficiaries</string>
 </resources>

@@ -9,10 +9,9 @@
  */
 package kpt.core.database.wallet.linkableaccount
 
-import org.mifospay.core.model.enums.AccountType
-import org.mifospay.core.model.pocket.AccountStatus
-import org.mifospay.core.model.pocket.LinkableAccount
-
+import kpt.core.model.enums.AccountType
+import kpt.core.model.pocket.AccountStatus
+import kpt.core.model.pocket.LinkableAccount
 /**
  * Entity ↔ domain mapper for the `wallet_linkable_accounts` LEDGER table.
  *

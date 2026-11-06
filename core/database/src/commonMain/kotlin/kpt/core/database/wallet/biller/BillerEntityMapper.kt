@@ -9,9 +9,8 @@
  */
 package kpt.core.database.wallet.biller
 
-import org.mifospay.core.model.autopay.Biller
-import org.mifospay.core.model.autopay.BillerCategory
-
+import kpt.core.model.autopay.Biller
+import kpt.core.model.autopay.BillerCategory
 /**
  * Entity ↔ domain mapper for the `wallet_autopay_billers` table.
  *

@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single client-info record — the Room mirror of the
- * `org.mifospay.core.model.client.Client` domain model.
+ * `kpt.core.model.client.Client` domain model.
  *
  * Stored in the `wallet_client_details` table. One row per client
  * (SINGLE-ROW-PER-KEY archetype — the DAO's PK is [id] which doubles as the

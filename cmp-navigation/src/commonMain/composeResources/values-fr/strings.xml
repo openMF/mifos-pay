@@ -31,4 +31,25 @@
     <string name="error_category_ratelimit">Trop de requêtes. Veuillez patienter et réessayer.</string>
     <string name="error_category_server">Nos serveurs rencontrent un problème. Réessayez bientôt.</string>
     <string name="error_category_generic">Une erreur est survenue</string>
+
+    <!-- Wallet app shell (cmp.navigation.registry.app) -->
+    <string name="wallet_app_name">Mifos Pay</string>
+    <string name="wallet_home">Accueil</string>
+    <string name="payments">Paiements</string>
+    <string name="finance">Finance</string>
+    <string name="history">Historique</string>
+    <string name="transaction_history">Historique des transactions</string>
+    <string name="wallet_settings">Paramètres</string>
+    <string name="wallet_not_connected">⚠️ Vous n'êtes pas connecté à Internet</string>
+    <string name="faq">FAQ</string>
+    <string name="update">Mettre à jour</string>
+    <string name="select_instance">Sélectionner l'instance</string>
+    <string name="main_server">Serveur principal</string>
+    <string name="interbank_server">Serveur interbancaire</string>
+    <string name="no_interbank_servers">Aucun serveur interbancaire disponible</string>
+    <string name="default_string">Par défaut</string>
+    <string name="tenant_value">Locataire : %1$s</string>
+    <string name="error_message">Erreur : %1$s</string>
+    <string name="feature_finance_accounts">Comptes</string>
+    <string name="feature_finance_beneficiaries">Bénéficiaires</string>
 </resources>

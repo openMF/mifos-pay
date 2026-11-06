@@ -35,22 +35,11 @@ kotlin {
             // is warranted for a security module the shell itself assembles. Feature modules NEVER
             // depend on core-base — enforced by the encapsulation gate (Phase A).
             implementation(projects.coreBase.security)
-            // Fork shell-security seam: core/designsystem (MifosDialogBox for UnauthorizedDialogGate) +
-            // mifos-authenticator-biometrics (PlatformAuthenticatorCompositionProvider for
-            // PlatformAuthenticatorGate). PRESERVED across template syncs — do not drop.
-            implementation(projects.core.designsystem)
-            implementation(libs.mifos.authenticator.biometrics)
-            // Fork addition: RootNavScreen's login/passcode graph wraps feature/passcode's
-            // rootMifosPasscodeScreen/biometricSetupScreen/reAuthMifosPasscodeScreen composables +
-            // KoinModules wires MifosAuthenticatorModule + PasscodeManager (mifos-authenticator-passcode).
-            implementation(projects.feature.passcode)
-            implementation(libs.mifos.authenticator.passcode)
-            // Fork addition: KoinModules wires org.mifospay.core.domain.di.DomainModule.
-            implementation(projects.core.domain)
             // KptRootScaffold's snackbarHost slot defaults to KptToastHost, so the app-wide
             // transient-message surface exists without every screen wiring one.
             // Routed through core/designsystem, which re-exports core-base/designsystem with
             // api(...). An app shell must not reach core-base directly (G-CORE-BASE-ENCAP).
+            implementation(projects.core.designsystem)
 
             // Backbone shell features (template-owned) — always present in every fork.
             implementation(projects.feature.home)

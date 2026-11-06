@@ -11,8 +11,7 @@ package org.mifos.lib.loan.ui.selectLoanProvider
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
-import org.mifospay.core.ui.utils.BaseViewModel
-
+import kpt.core.ui.utils.BaseViewModel
 /**
  * `ViewModel` for the Select Loan Provider screen — the new first step of the loan-application
  * wizard.

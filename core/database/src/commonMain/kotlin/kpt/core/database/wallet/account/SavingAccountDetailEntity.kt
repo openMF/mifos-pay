@@ -16,7 +16,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single savings-account detail record — the Room mirror of the
- * `org.mifospay.core.model.savingsaccount.SavingAccountDetail` domain model.
+ * `kpt.core.model.savingsaccount.SavingAccountDetail` domain model.
  *
  * Stored in the `wallet_saving_account_details` table. One row per savings account
  * (SINGLE-ROW-PER-KEY archetype — the DAO's PK is [id] which doubles as the store's
@@ -32,11 +32,11 @@ import kpt.core.base.database.annotation.DbEntity
  * ## Column mapping
  *
  * The domain `SavingAccountDetail` model has SIX nested `@Serializable` payloads —
- * [`DepositType`][org.mifospay.core.model.savingsaccount.DepositType],
- * [`Status`][org.mifospay.core.model.savingsaccount.Status],
- * [`Timeline`][org.mifospay.core.model.savingsaccount.Timeline],
- * [`Currency`][org.mifospay.core.model.savingsaccount.Currency],
- * [`Summary`][org.mifospay.core.model.savingsaccount.Summary],
+ * [`DepositType`][kpt.core.model.savingsaccount.DepositType],
+ * [`Status`][kpt.core.model.savingsaccount.Status],
+ * [`Timeline`][kpt.core.model.savingsaccount.Timeline],
+ * [`Currency`][kpt.core.model.savingsaccount.Currency],
+ * [`Summary`][kpt.core.model.savingsaccount.Summary],
  * and `List<Transaction>` — each persisted as a JSON string column (see
  * `SavingAccountDetailEntityMapper`) rather than as normalized relation tables.
  * Rationale: `SavingAccountDetail` is a single-record snapshot the app renders

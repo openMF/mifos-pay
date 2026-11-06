@@ -11,6 +11,8 @@ package kpt.core.datastore.di
 
 import com.russhwolf.settings.Settings
 import kpt.core.base.common.manager.DispatcherManager
+import kpt.core.common.MifosDispatchers
+import kpt.core.datastore.UserPreferencesDataSource
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepositoryImpl
 import kpt.core.datastore.prefs.UserPreferencesRepository
@@ -36,6 +38,9 @@ val ForkDatastoreModule = module {
             plainSettings = get<Settings>(named("plain")),
             secureSettings = get<Settings>(named("secure")),
             dispatcher = get<DispatcherManager>(),
+            preferenceManager = get<UserPreferencesDataSource>(),
+            ioDispatcher = get(named(MifosDispatchers.IO.name)),
+            unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
         )
     }
 }

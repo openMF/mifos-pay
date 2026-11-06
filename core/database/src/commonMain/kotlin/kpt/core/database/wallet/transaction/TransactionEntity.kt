@@ -16,7 +16,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single financial transaction — the Room mirror of the
- * `org.mifospay.core.model.savingsaccount.Transaction` domain model.
+ * `kpt.core.model.savingsaccount.Transaction` domain model.
  *
  * Stored in the `wallet_transactions` table. Each row represents one transaction
  * on one savings account (LEDGER shape).
@@ -31,9 +31,9 @@ import kpt.core.base.database.annotation.DbEntity
  * ## Column mapping
  *
  * The domain `Transaction` model has two nested nullable payloads —
- * [`Transaction.Transfer`][org.mifospay.core.model.savingsaccount.Transaction.Transfer]
+ * [`Transaction.Transfer`][kpt.core.model.savingsaccount.Transaction.Transfer]
  * and
- * [`Transaction.PaymentDetailData`][org.mifospay.core.model.savingsaccount.Transaction.PaymentDetailData].
+ * [`Transaction.PaymentDetailData`][kpt.core.model.savingsaccount.Transaction.PaymentDetailData].
  * Those are persisted as JSON strings in [transferJson] / [paymentDetailJson]
  * (see `TransactionEntityMapper`) rather than as normalized relation tables — the
  * two payloads are read-only from the app's perspective (server-echoed ledger detail)

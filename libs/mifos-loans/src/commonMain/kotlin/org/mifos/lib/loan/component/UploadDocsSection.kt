@@ -24,6 +24,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.MifosCard
+import kpt.core.designsystem.icon.MifosIcons
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_upload_docs_bank_account
 import mifos_pay.libs.mifos_loans.generated.resources.feature_upload_docs_collateral
@@ -31,9 +33,6 @@ import mifos_pay.libs.mifos_loans.generated.resources.feature_upload_docs_signat
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsAction
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsState
-import org.mifospay.core.designsystem.component.MifosCard
-import org.mifospay.core.designsystem.icon.MifosIcons
-
 /**
  * Renders the document upload section, switching between upload prompts and file summaries based on the current state.
  *

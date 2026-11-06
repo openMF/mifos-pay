@@ -18,34 +18,13 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.koinApplication
 import org.koin.mp.KoinPlatform
-import org.mifospay.shared.di.KoinModules as ForkKoinModules
-
-// Fork feature Koin surface. The template shell's `cmp.navigation.di.KoinModules.allModules`
-// carries the fork's core/network/data/domain/passcode/preferences modules. The pieces MISSING
-// from that list — and REQUIRED by the bridged fork `MifosApp` which composes ~60 fork feature
-// screens with `koinViewModel()`-resolved VMs — are the fork's per-feature Koin modules aggregate
-// (`featureModules`: Auth, Home, Payments, History, AutoPay, Accounts, Beneficiary, Pocket,
-// Profile, IntraBank, interbankTransfer, MpayQr, MpayQrScan, FastMpay, Merchants, UpiSetup,
-// SendMoney, LoanApplication, Notification, SavedCards, KYC, Invoices, EditPassword, Faq,
-// Settings, StandingInstruction, Receipt + MifosAuthenticatorModule — Koin's `includes()` is
-// identity-deduplicated so re-registration is a no-op) plus the fork's shared VM module
-// (`sharedModule`: MifosPayViewModel, InstanceSelectorViewModel, TransferOptionsViewModel). Both
-// are `internal val` in `org.mifospay.shared.di.KoinModules` (same `:cmp-shared` module) and are
-// imported below aliased as `ForkKoinModules`.
-
-// One splice list — kept as a `val` (not inlined below) so `koinConfiguration()` and
-// `initKoin()` share the exact same module set. Order: template modules first (they establish
-// the core/network/data/domain graph the fork feature modules depend on), then fork
-// feature/shared modules layered on top.
-private val allModulesForNewShell = KoinModules.allModules +
-    listOf(ForkKoinModules.featureModules, ForkKoinModules.sharedModule)
 
 /**
  * The Koin application, configured but not started — what a Compose `KoinApplication` takes and what a test can build
  * in isolation.
  */
 fun koinConfiguration() = koinApplication {
-    modules(allModulesForNewShell)
+    modules(KoinModules.allModules)
 }
 
 /**
@@ -56,7 +35,7 @@ fun koinConfiguration() = koinApplication {
 fun initKoin(config: KoinAppDeclaration? = null) {
     startKoin {
         config?.invoke(this)
-        modules(allModulesForNewShell)
+        modules(KoinModules.allModules)
     }
 
     // Privacy consent first: analytics starts OFF (core-base) and only the user's stored choice may turn it

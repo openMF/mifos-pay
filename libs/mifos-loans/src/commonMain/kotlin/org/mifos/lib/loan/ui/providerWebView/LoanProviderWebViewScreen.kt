@@ -16,13 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.ui.utils.EventsEffect
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_provider_web_view_top_bar_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifospay.core.designsystem.component.MifosScaffold
-import org.mifospay.core.ui.utils.EventsEffect
-
 /**
  * Entry point for the Loan Provider Website screen — shown right after a provider is picked on
  * the Select Loan Provider screen, rendering that provider's website in an embedded web view.

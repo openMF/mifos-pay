@@ -64,6 +64,12 @@ data class StoreData<out T>(
 }
 
 /**
+ * Empty, and not from the network: a cache that was never filled. The mapper stamps the first cache
+ * emission as just-loaded, so its freshness band reads `Fresh` and would never trigger a fetch.
+ */
+internal fun StoreData<*>.isEmptyNeverFetched(): Boolean = isEmpty && origin != DataOrigin.NETWORK
+
+/**
  * Indicates where a [StoreData] emission originated.
  */
 enum class DataOrigin {

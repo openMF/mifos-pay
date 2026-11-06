@@ -17,8 +17,8 @@ import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.invoice.InvoiceDao
 import kpt.core.database.wallet.invoice.toDomain
 import kpt.core.database.wallet.invoice.toEntity
-import org.mifospay.core.model.datatables.invoice.Invoice
-import org.mifospay.core.network.FineractApiManager
+import kpt.core.model.datatables.invoice.Invoice
+import kpt.core.network.FineractApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store

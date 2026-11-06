@@ -7,9 +7,7 @@
  *
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
-@file:OptIn(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCacheApi::class)
 
-import org.jetbrains.kotlin.gradle.plugin.mpp.DisableCacheInKotlinVersion
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
@@ -59,22 +57,6 @@ kotlin {
             optimized = buildType == NativeBuildType.RELEASE
             xcf.add(this)
         }
-        // Kotlin 2.4.0's Native static-cache builder corrupts IR linkage for certain
-        // third-party klibs on iosArm64/iosSimulatorArm64 — first seen with
-        // compose-signature:1.0.1 ("Failed to build cache for ...klib"), now also with
-        // kotlinx-datetime 0.8.0 ("IrTypeAliasSymbolImpl is already bound. Signature:
-        // kotlinx.datetime/Instant" — its typealias-to-kotlin.time.Instant symbol gets
-        // double-registered when the per-library static cache is stale/rebuilt against a
-        // bumped klib version). Disabling the native cache for every binary of this target
-        // links the klib directly instead of through the broken cache path. The
-        // `kotlin.native.cacheKind.<target>` gradle property that used to do this was
-        // removed in 2.3.20; this per-binary DSL is its replacement.
-        iosTarget.binaries.configureEach {
-            disableNativeCache(
-                DisableCacheInKotlinVersion.`2_4_0`,
-                reason = "third-party klibs (compose-signature, kotlinx-datetime) fail static-cache build on Kotlin 2.4.0",
-            )
-        }
     }
 
     sourceSets {
@@ -107,59 +89,14 @@ kotlin {
             implementation(libs.worker.compose.all)
             // Worker classes referenced from the @WorkerKmpWorkers annotation live here.
             implementation(projects.sync)
-            // DataSyncWorker's constructor params come from core:datastore (SyncStatePersister).
-            // The @WorkerKmpWorkers KSP codegen reads every worker ctor param type for Koin
+            // DataSyncWorker's constructor params come from core:data (CurrencyRepository,
+            // MacroIndicatorsRepository) + core:datastore (SyncStatePersister). The
+            // @WorkerKmpWorkers KSP codegen reads every worker ctor param type for Koin
             // autowiring, and KSP metadata resolution needs them on the DIRECT classpath
             // (transitive-via-:sync klibs are not resolved) — else "could not resolve type
             // of constructor parameter ...".
             implementation(projects.core.data)
             implementation(projects.core.datastore)
-
-            // Fork's KoinModules aggregator + MifosPayApp compose every feature/lib/domain/
-            // network module into a single graph. Declared here so `import
-            // org.mifospay.feature.*.di.*Module` + `import org.mifos.lib.loan.di.*`
-            // + `import org.mifospay.core.{common,domain,network}.di.*` resolve.
-            implementation(projects.core.common)
-            implementation(projects.core.domain)
-            implementation(projects.core.network)
-            // MifosPayApp wraps the PlatformAuthenticatorCompositionProvider + PasscodeManager
-            // biometrics/passcode seams directly.
-            implementation(libs.mifos.authenticator.biometrics)
-            implementation(libs.mifos.authenticator.passcode)
-            implementation(projects.feature.auth)
-            implementation(projects.feature.home)
-            implementation(projects.feature.settings)
-            implementation(projects.feature.faq)
-            implementation(projects.feature.editpassword)
-            implementation(projects.feature.profile)
-            implementation(projects.feature.history)
-            implementation(projects.feature.payments)
-            implementation(projects.feature.accounts)
-            implementation(projects.feature.beneficiary)
-            implementation(projects.feature.invoices)
-            implementation(projects.feature.kyc)
-            implementation(projects.feature.notification)
-            implementation(projects.feature.savedcards)
-            implementation(projects.feature.receipt)
-            implementation(projects.feature.standingInstruction)
-            implementation(projects.feature.transferIntrabank)
-            implementation(projects.feature.transferInterbank)
-            implementation(projects.feature.mpayQr)
-            implementation(projects.feature.mpayQrScan)
-            implementation(projects.feature.fastMpay)
-            implementation(projects.feature.merchants)
-            implementation(projects.feature.upiSetup)
-            implementation(projects.feature.passcode)
-            implementation(projects.feature.autopay)
-            implementation(projects.feature.sendMoney)
-            implementation(projects.feature.pocket)
-            implementation(projects.libs.mifosLoans)
-            implementation(projects.feature.finance)
-
-            // MifosAppState + HomeScreen tie to material3 window-size-class multiplatform;
-            // Preview annotations use org.jetbrains.compose.ui.tooling.preview.
-            implementation(libs.window.size)
-            implementation(compose.components.uiToolingPreview)
         }
 
         desktopMain.dependencies {

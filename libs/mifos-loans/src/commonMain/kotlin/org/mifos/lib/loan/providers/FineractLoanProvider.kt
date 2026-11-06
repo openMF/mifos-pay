@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.common.ScreenState
+import kpt.core.common.asScreenStateFlow
 import org.mifos.lib.loan.core.LoanProvider
 import org.mifos.lib.loan.core.model.LoanState
 import org.mifos.lib.loan.core.model.LoanTemplate
@@ -21,9 +23,6 @@ import org.mifos.lib.loan.core.model.LoansPayload
 import org.mifos.lib.loan.mapper.toDto
 import org.mifos.lib.loan.mapper.toModel
 import org.mifos.lib.loan.network.LoansService
-import org.mifospay.core.common.ScreenState
-import org.mifospay.core.common.asScreenStateFlow
-
 /**
  * The real, Fineract-backed [LoanProvider] adapter. Registered in [org.mifos.lib.loan.providers.LoanProviderRegistry]
  * under the `"fineract"` key for future activation once a real per-provider backend exists — it is

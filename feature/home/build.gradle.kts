@@ -19,10 +19,10 @@ kotlin {
             implementation(projects.core.model)
             implementation(projects.core.store)
             implementation(projects.core.ui)
-            // Fork addition: org.mifospay.feature.home.{HomeScreen,HomeViewModel} (the fork's
+            // Fork addition: kpt.feature.home.{HomeScreen,HomeViewModel} (the fork's
             // pre-existing Home screen, mounted wholesale via cmp-shared's MifosNavHost) read
-            // the org.mifospay.core.designsystem.{component,icon}.* design system surface.
-            // org.mifospay.core.datastore.UserPreferencesRepository comes transitively via
+            // the kpt.core.designsystem.{component,icon}.* design system surface.
+            // kpt.core.datastore.UserPreferencesRepository comes transitively via
             // core/data's api(core.datastore) re-export.
             implementation(projects.core.designsystem)
 

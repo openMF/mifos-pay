@@ -51,6 +51,7 @@ kotlin {
         }
 
         commonTest.dependencies {
+            implementation(libs.multiplatform.settings.test)
             implementation(libs.turbine)
         }
     }

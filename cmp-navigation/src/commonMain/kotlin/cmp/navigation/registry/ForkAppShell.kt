@@ -11,7 +11,8 @@ package cmp.navigation.registry
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import cmp.navigation.rootnav.RootNavScreen
+import cmp.navigation.LocalAppLocaleHandler
+import cmp.navigation.registry.app.ForkAppRoot
 
 /**
  * ForkAppShell — the FORK-OWNED seam for the app root, so a fork never edits the template's
@@ -45,6 +46,11 @@ object ForkAppShell {
      */
     val root: @Composable (modifier: Modifier, onSplashScreenRemoved: () -> Unit) -> Unit =
         { modifier, onSplashScreenRemoved ->
-            RootNavScreen(modifier = modifier, onSplashScreenRemoved = onSplashScreenRemoved)
+            // The wallet's own root: login, passcode, re-auth lock, 401 dialog, the 4-tab shell.
+            ForkAppRoot(
+                modifier = modifier,
+                handleAppLocale = LocalAppLocaleHandler.current,
+                onSplashScreenRemoved = onSplashScreenRemoved,
+            )
         }
 }

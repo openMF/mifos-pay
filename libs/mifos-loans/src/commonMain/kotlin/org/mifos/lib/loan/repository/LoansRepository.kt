@@ -10,11 +10,10 @@
 package org.mifos.lib.loan.repository
 
 import kotlinx.coroutines.flow.Flow
+import kpt.core.common.ScreenState
 import org.mifos.lib.loan.core.model.LoanState
 import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.core.model.LoansPayload
-import org.mifospay.core.common.ScreenState
-
 /**
  * Facade injected by the wizard's data-consuming ViewModels ([org.mifos.lib.loan.ui.selectLoanType.SelectLoanTypeViewModel],
  * [org.mifos.lib.loan.ui.loanProductDetails.LoanProductDetailsViewModel],

@@ -47,6 +47,10 @@ kotlin {
             implementation(projects.coreBase.ui)
         }
 
+        commonTest.dependencies {
+            implementation(libs.multiplatform.settings.test)
+        }
+
         named("androidDeviceTest") {
             dependencies {
                 implementation(libs.bundles.androidx.compose.ui.test)

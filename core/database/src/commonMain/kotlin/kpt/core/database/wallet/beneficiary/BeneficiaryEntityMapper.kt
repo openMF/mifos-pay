@@ -9,8 +9,7 @@
  */
 package kpt.core.database.wallet.beneficiary
 
-import org.mifospay.core.model.beneficiary.Beneficiary
-
+import kpt.core.model.beneficiary.Beneficiary
 /**
  * Entity ↔ domain mapper for the `wallet_beneficiaries` LEDGER table.
  *

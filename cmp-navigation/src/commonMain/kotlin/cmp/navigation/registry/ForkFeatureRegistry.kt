@@ -11,6 +11,7 @@ package cmp.navigation.registry
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import cmp.navigation.registry.app.di.ForkAppModules
 import kpt.core.data.di.ForkRepositoryModule
 import kpt.core.database.di.ForkDatabaseModule
 import kpt.core.datastore.di.ForkDatastoreModule
@@ -54,7 +55,7 @@ object ForkFeatureRegistry {
         ForkDatastoreModule,
         ForkStoreModule,
         GeneratedFeatureKoinBindings,
-    )
+    ) + ForkAppModules.allModules // the wallet app shell rendered by ForkAppShell.root
 
     /**
      * Every top-level feature destination, DERIVED from `@FeatureDestination`.

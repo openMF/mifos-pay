@@ -17,13 +17,13 @@ import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.client.ClientDetailDao
 import kpt.core.database.wallet.client.toDomain
 import kpt.core.database.wallet.client.toEntity
-import org.mifospay.core.model.client.Client
-import org.mifospay.core.model.client.ClientStatus
-import org.mifospay.core.model.client.ClientTimeline
-import org.mifospay.core.model.network.entity.client.ClientEntity
-import org.mifospay.core.model.network.entity.client.ClientTimelineEntity
-import org.mifospay.core.model.network.entity.client.Status
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.client.Client
+import kpt.core.model.client.ClientStatus
+import kpt.core.model.client.ClientTimeline
+import kpt.core.model.network.entity.client.ClientEntity
+import kpt.core.model.network.entity.client.ClientTimelineEntity
+import kpt.core.model.network.entity.client.Status
+import kpt.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -96,7 +96,7 @@ private const val CLIENT_DETAILS_TABLE = "wallet_client_details"
  *
  * ## Inline mapper
  *
- * Mirrors `org.mifospay.core.data.mapper.ClientDetailsMapper` (which lives in
+ * Mirrors `kpt.core.data.mapper.ClientDetailsMapper` (which lives in
  * `core/data`, out of reach for a `core/store` module — `core/data` depends on
  * `core/store` for the store bindings, so a reverse import would circle).
  * Kept private + minimal so the store body is self-contained and the fetcher
@@ -135,7 +135,7 @@ fun provideClientDetailStore(
 // ---------------------------------------------------------------------------
 // Inline ClientEntity → Client mapper — private to this file.
 //
-// Mirrors `org.mifospay.core.data.mapper.ClientDetailsMapper#toModel` — see the
+// Mirrors `kpt.core.data.mapper.ClientDetailsMapper#toModel` — see the
 // ## Inline mapper section on `provideClientDetailStore` for rationale. Keep
 // the two in lockstep if the domain model or the network entity grow fields.
 // ---------------------------------------------------------------------------

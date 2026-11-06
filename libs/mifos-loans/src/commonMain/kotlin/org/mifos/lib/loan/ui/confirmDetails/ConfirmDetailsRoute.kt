@@ -14,8 +14,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
 import kpt.core.base.ui.nav.composableWithSlideTransitions
-import org.mifospay.core.ui.composableWithSlideTransitions
-
+import kpt.core.ui.composableWithSlideTransitions
 /**
  * Type-safe navigation route for the final "Confirm Details" step of the loan application
  * wizard. Carries the same application form data forwarded, unchanged, all the way from

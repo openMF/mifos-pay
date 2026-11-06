@@ -27,6 +27,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.MifosButton
+import kpt.core.designsystem.component.MifosOutlinedTextField
+import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.ui.DropdownBoxItem
+import kpt.core.ui.ErrorScreenContent
+import kpt.core.ui.ExposedDropdownBox
+import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.utils.EventsEffect
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_button_continue
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_hint_applicant_name
@@ -43,15 +51,6 @@ import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_section
 import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_type_network_issue
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import org.mifospay.core.designsystem.component.MifosButton
-import org.mifospay.core.designsystem.component.MifosOutlinedTextField
-import org.mifospay.core.designsystem.component.MifosScaffold
-import org.mifospay.core.ui.DropdownBoxItem
-import org.mifospay.core.ui.ErrorScreenContent
-import org.mifospay.core.ui.ExposedDropdownBox
-import org.mifospay.core.ui.MifosProgressIndicator
-import org.mifospay.core.ui.utils.EventsEffect
-
 /**
  * Entry point for the Loan Application form.
  *

@@ -71,7 +71,9 @@ fun setupDefaultHttpClient(
     requestTimeout: Long = 60_000L,
     socketTimeout: Long = 60_000L,
     httpLogger: Logger = Logger.DEFAULT,
-    httpLogLevel: LogLevel = LogLevel.ALL,
+    // NONE by default: ALL prints request bodies, sign-in password included, to the console of a
+    // shipped build. A debug session opts in.
+    httpLogLevel: LogLevel = LogLevel.NONE,
     loggableHosts: List<String> = emptyList(),
     sensitiveHeaders: List<String> = listOf(HttpHeaders.Authorization),
     jsonConfig: Json = Json {

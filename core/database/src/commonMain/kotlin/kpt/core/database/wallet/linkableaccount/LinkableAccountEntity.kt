@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single account that a client CAN link into a pocket — the
- * Room mirror of the `org.mifospay.core.model.pocket.LinkableAccount` domain model.
+ * Room mirror of the `kpt.core.model.pocket.LinkableAccount` domain model.
  *
  * Stored in the `wallet_linkable_accounts` table. LEDGER shape — many rows per
  * client, page-keyed by [clientId]. Content is a **derived read cache**: the
@@ -41,7 +41,7 @@ import kpt.core.base.database.annotation.DbEntity
  * `@Serializable`. Enums are stored as their `.name` string (portable across
  * schema versions and free of Room type converters).
  *
- * REPLACES upstream PR #2057's `org.mifospay.core.datastore.model.LinkableAccountEntity`
+ * REPLACES upstream PR #2057's `kpt.core.datastore.model.LinkableAccountEntity`
  * (multiplatform-settings JSON, kotlinx.serialization) — this branch's Store5
  * architecture serves this data through Room SoT instead (matches
  * `PocketStore` / `BeneficiaryStore` / `SelfAccountsStore` recipe).

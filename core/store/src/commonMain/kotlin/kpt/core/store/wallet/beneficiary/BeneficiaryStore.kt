@@ -17,8 +17,8 @@ import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.beneficiary.BeneficiaryDao
 import kpt.core.database.wallet.beneficiary.toDomain
 import kpt.core.database.wallet.beneficiary.toEntity
-import org.mifospay.core.model.beneficiary.Beneficiary
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.beneficiary.Beneficiary
+import kpt.core.network.SelfServiceApiManager
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store

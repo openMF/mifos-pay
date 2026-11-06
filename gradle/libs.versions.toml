@@ -111,8 +111,8 @@ koinAnnotationsVersion = "4.2.2"
 
 # Mokkery — fork uses two version keys because the plugin id lookup and the
 # runtime library lookup are historically separate refs in this catalog.
-mokkeryVersion = "3.4.2"
-mokkery = "3.4.2"
+mokkeryVersion = "3.6.0"
+mokkery = "3.6.0"
 
 # KMP Toolkit Libraries
 # 3.5.9: cmp-network-monitor accuracy overhaul (seed fix incl. no-plan/captive-portal, HTTP-204

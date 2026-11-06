@@ -29,6 +29,13 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.component.BasicDialogState
+import kpt.core.designsystem.component.MifosBasicDialog
+import kpt.core.designsystem.component.MifosButton
+import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.component.MifosTopBar
+import kpt.core.ui.MifosProgressIndicatorOverlay
+import kpt.core.ui.utils.EventsEffect
 import mifos_pay.libs.mifos_loans.generated.resources.Res
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_info_confirm_details
 import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_status_success
@@ -36,14 +43,6 @@ import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.ConfirmDetailsCard
-import org.mifospay.core.designsystem.component.BasicDialogState
-import org.mifospay.core.designsystem.component.MifosBasicDialog
-import org.mifospay.core.designsystem.component.MifosButton
-import org.mifospay.core.designsystem.component.MifosScaffold
-import org.mifospay.core.designsystem.component.MifosTopBar
-import org.mifospay.core.ui.MifosProgressIndicatorOverlay
-import org.mifospay.core.ui.utils.EventsEffect
-
 /**
  * Entry point for the Confirm Details screen — the final step of the loan-application wizard.
  *

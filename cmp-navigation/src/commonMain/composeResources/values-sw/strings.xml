@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+
+    <!-- Wallet app shell (cmp.navigation.registry.app) -->
+    <string name="wallet_app_name">Mifos Pay</string>
+    <string name="wallet_home">Mwanzo</string>
+    <string name="payments">Malipo</string>
+    <string name="finance">Fedha</string>
+    <string name="history">Historia</string>
+    <string name="transaction_history">Historia ya Miamala</string>
+    <string name="wallet_settings">Mipangilio</string>
+    <string name="wallet_not_connected">⚠️ Hujaunganishwa kwenye intaneti</string>
+    <string name="faq">Maswali Yanayoulizwa Mara kwa Mara</string>
+    <string name="update">Sasisha</string>
+    <string name="select_instance">Chagua Seva</string>
+    <string name="main_server">Seva Kuu</string>
+    <string name="interbank_server">Seva ya Benki</string>
+    <string name="no_interbank_servers">Hakuna seva za benki zinazopatikana</string>
+    <string name="default_string">Chaguo-msingi</string>
+    <string name="tenant_value">Mpangaji: %1$d</string>
+    <string name="error_message">Hitilafu: %1$d</string>
+    <string name="feature_finance_accounts">Akaunti</string>
+    <string name="feature_finance_beneficiaries">Wanufaika</string>
+</resources>

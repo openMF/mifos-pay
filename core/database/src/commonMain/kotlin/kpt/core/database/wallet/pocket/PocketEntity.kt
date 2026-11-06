@@ -16,7 +16,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single linked pocket account — the Room mirror of the
- * `org.mifospay.core.model.pocket.DetailedPocketAccount` domain aggregate
+ * `kpt.core.model.pocket.DetailedPocketAccount` domain aggregate
  * (which wraps `PocketAccount` + derived detail fields).
  *
  * Stored in the `wallet_pockets` table. LEDGER shape — many rows per client,

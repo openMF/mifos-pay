@@ -12,17 +12,16 @@ package org.mifos.feature.passcode
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kpt.core.datastore.prefs.ForkPreferencesRepository
+import kpt.core.model.client.Client
+import kpt.core.ui.utils.AuthenticationUtils
+import kpt.core.ui.utils.BaseViewModel
 import mifos_pay.feature.passcode.generated.resources.Res
 import mifos_pay.feature.passcode.generated.resources.feature_passcode_biometrics_available
 import mifos_pay.feature.passcode.generated.resources.feature_passcode_biometrics_not_set
 import org.jetbrains.compose.resources.getString
 import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenticationProvider
 import org.mifos.authenticator.biometrics.platformAuthenticator.RegistrationResult
-import org.mifospay.core.datastore.UserPreferencesRepository
-import org.mifospay.core.model.client.Client
-import org.mifospay.core.ui.utils.AuthenticationUtils
-import org.mifospay.core.ui.utils.BaseViewModel
-
 /**
  * ViewModel for [BiometricSetupScreen].
  *
@@ -32,13 +31,13 @@ import org.mifospay.core.ui.utils.BaseViewModel
  * adapter call here. Failure variants surface a dialog message via
  * [BiometricSetupScreenState.error].
  *
- * Identity seed is taken from [UserPreferencesRepository.client] (snapshot
+ * Identity seed is taken from [ForkPreferencesRepository.client] (snapshot
  * at construction time); falls back to [AuthenticationUtils.DEFAULT_USER_ID]
  * / `DEFAULT_USER_EMAIL` / `DEFAULT_DISPLAY_NAME` only when the snapshot
  * fields are absent.
  */
 class BiometricSetupScreenViewmodel(
-    userPreferencesRepository: UserPreferencesRepository,
+    userPreferencesRepository: ForkPreferencesRepository,
 ) : BaseViewModel<
     BiometricSetupScreenState,
     BiometricSetupScreenEvent,

@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single saved payment card — the Room mirror of the
- * `org.mifospay.core.model.savedcards.SavedCard` domain model.
+ * `kpt.core.model.savedcards.SavedCard` domain model.
  *
  * Stored in the `wallet_saved_cards` table. LEDGER shape — many rows per client,
  * page-keyed by [clientId]. The Fineract datatable API

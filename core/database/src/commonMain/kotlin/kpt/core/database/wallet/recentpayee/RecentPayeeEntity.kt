@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a derived recent-payee — the Room mirror of the
- * `org.mifospay.core.model.account.RecentPayee` domain model.
+ * `kpt.core.model.account.RecentPayee` domain model.
  *
  * Stored in the `wallet_recent_payees` table. LEDGER-shaped but LOCAL-DERIVED
  * (GOAL D12 — OFFLINE_LOCAL_ONLY variant used to persist runtime-derived data):

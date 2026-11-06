@@ -15,7 +15,7 @@ import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single Fineract office — the Room mirror of the
- * `org.mifospay.core.model.office.Office` domain model.
+ * `kpt.core.model.office.Office` domain model.
  *
  * Stored in the `wallet_offices` table. Global reference-data LEDGER shape —
  * the office list is NOT client-scoped (the Fineract `GET /offices` endpoint

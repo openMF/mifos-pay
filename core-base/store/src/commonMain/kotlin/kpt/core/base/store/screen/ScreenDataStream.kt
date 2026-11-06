@@ -465,6 +465,7 @@ fun <Key : Any, Output : Any> Store<Key, Output>.asScreenStream(
     if (fetchPolicy is FetchPolicy.CACHE_FIRST_SWR) {
         scope.launch {
             var lastBand: FreshnessBand? = null
+            var lastStale = false
             storeFlow.collect { storeData ->
                 val band = FreshnessBands.bandFor(
                     now = clock.now(),
@@ -472,8 +473,9 @@ fun <Key : Any, Output : Any> Store<Key, Output>.asScreenStream(
                     ttl = ttl,
                     lastError = storeData.error,
                 )
-                val isStale = band == FreshnessBand.Stale || band == FreshnessBand.VeryStale
-                val wasStale = lastBand == FreshnessBand.Stale || lastBand == FreshnessBand.VeryStale
+                val isStale = band == FreshnessBand.Stale || band == FreshnessBand.VeryStale ||
+                    storeData.isEmptyNeverFetched()
+                val wasStale = lastStale
                 // Gate the SWR revalidation on ONLINE: never fire a doomed background fetch
                 // while offline (or on a falsely-'Available' no-plan / captive-portal link). This
                 // side-fetch is already decoupled from rendering, so offline it only wastes a
@@ -515,6 +517,7 @@ fun <Key : Any, Output : Any> Store<Key, Output>.asScreenStream(
                     }
                 }
                 lastBand = band
+                lastStale = isStale
             }
         }
     }
@@ -701,6 +704,7 @@ fun <Key : Any, Output : Any> Store<Key, Output>.asScreenStream(
     if (fetchPolicy is FetchPolicy.CACHE_FIRST_SWR) {
         scope.launch {
             var lastBand: FreshnessBand? = null
+            var lastStale = false
             storeFlow.collect { storeData ->
                 val band = FreshnessBands.bandFor(
                     now = clock.now(),
@@ -708,8 +712,9 @@ fun <Key : Any, Output : Any> Store<Key, Output>.asScreenStream(
                     ttl = ttl,
                     lastError = storeData.error,
                 )
-                val isStale = band == FreshnessBand.Stale || band == FreshnessBand.VeryStale
-                val wasStale = lastBand == FreshnessBand.Stale || lastBand == FreshnessBand.VeryStale
+                val isStale = band == FreshnessBand.Stale || band == FreshnessBand.VeryStale ||
+                    storeData.isEmptyNeverFetched()
+                val wasStale = lastStale
                 // Gate the SWR revalidation on ONLINE: never fire a doomed background fetch
                 // while offline (or on a falsely-'Available' no-plan / captive-portal link). This
                 // side-fetch is already decoupled from rendering, so offline it only wastes a
@@ -749,6 +754,7 @@ fun <Key : Any, Output : Any> Store<Key, Output>.asScreenStream(
                     }
                 }
                 lastBand = band
+                lastStale = isStale
             }
         }
     }

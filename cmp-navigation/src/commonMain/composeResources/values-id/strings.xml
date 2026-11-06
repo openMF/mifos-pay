@@ -29,4 +29,25 @@
     <string name="error_category_ratelimit">Terlalu banyak permintaan. Harap tunggu dan coba lagi.</string>
     <string name="error_category_server">Server kami sedang bermasalah. Coba lagi sebentar lagi.</string>
     <string name="error_category_generic">Terjadi kesalahan</string>
+
+    <!-- Wallet app shell (cmp.navigation.registry.app) -->
+    <string name="wallet_app_name">Mifos Pay</string>
+    <string name="wallet_home">Beranda</string>
+    <string name="payments">Pembayaran</string>
+    <string name="finance">Keuangan</string>
+    <string name="history">Riwayat</string>
+    <string name="transaction_history">Riwayat Transaksi</string>
+    <string name="wallet_settings">Pengaturan</string>
+    <string name="wallet_not_connected">⚠️ Anda tidak terhubung ke internet</string>
+    <string name="faq">FAQ</string>
+    <string name="update">Perbarui</string>
+    <string name="select_instance">Pilih Instans</string>
+    <string name="main_server">Server Utama</string>
+    <string name="interbank_server">Server Antarbank</string>
+    <string name="no_interbank_servers">Tidak ada server antarbank yang tersedia</string>
+    <string name="default_string">Default</string>
+    <string name="tenant_value">Penyewa: %1$d</string>
+    <string name="error_message">Kesalahan: %1$d</string>
+    <string name="feature_finance_accounts">Akun</string>
+    <string name="feature_finance_beneficiaries">Penerima Manfaat</string>
 </resources>
