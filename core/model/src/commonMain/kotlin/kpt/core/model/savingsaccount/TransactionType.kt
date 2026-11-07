@@ -9,8 +9,16 @@
  */
 package kpt.core.model.savingsaccount
 
+/**
+ * Direction of a savings transaction as shown to the user.
+ */
 enum class TransactionType {
+    /** Neither a debit nor a credit. */
     OTHER,
+
+    /** Money leaving the account. */
     DEBIT,
+
+    /** Money entering the account. */
     CREDIT,
 }

@@ -9,6 +9,7 @@
  */
 package kpt.feature.send.money
 
+/** WasmJs actual: sharing is not implemented yet. */
 actual fun getSharingHelper(): SharingHelper {
     TODO("Not yet implemented")
 }

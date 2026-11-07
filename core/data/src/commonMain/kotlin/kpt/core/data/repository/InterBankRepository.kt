@@ -14,23 +14,28 @@ import kpt.core.model.interbank.InterBankParticipantResponse
 import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.model.interbank.InterBankTransferRequest
 import kpt.core.model.interbank.InterBankTransferResponse
+/** Repository for inter-bank (cross-institution) transfers. */
 interface InterBankRepository {
+    /** Fetches the participant that owns the given identifier. */
     suspend fun fetchParticipant(
         partyId: String,
         currencyCode: String,
     ): InterBankParticipantResponse
 
+    /** Fetches party information for an inter-bank transfer. */
     suspend fun fetchPartyInfo(
         partyId: String,
         currencyCode: String,
         ownerFspId: String,
     ): InterBankPartyInfoResponse
 
+    /** Finds a participant for the given identifier. */
     fun findParticipant(
         partyId: String,
         currencyCode: String,
     ): ScreenStateStream<InterBankPartyInfoResponse>
 
+    /** Executes an inter-bank transfer. */
     suspend fun interBankMakeTransfer(
         request: InterBankTransferRequest,
     ): InterBankTransferResponse

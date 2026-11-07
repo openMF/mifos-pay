@@ -15,6 +15,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import kpt.core.common.DateHelper
 import kpt.core.ui.utils.BaseViewModel
+/** ViewModel for the UPI transaction history screen; supports searching grouped transactions. */
 class UpiTransactionHistoryViewModel() : BaseViewModel<UpiTransactionHistoryState, UpiTransactionHistoryEvent, UpiTransactionHistoryAction>(
     initialState = UpiTransactionHistoryState(),
 ) {
@@ -257,6 +258,13 @@ class UpiTransactionHistoryViewModel() : BaseViewModel<UpiTransactionHistoryStat
     }
 }
 
+/**
+ * State of the UPI transaction history screen.
+ * @property isLoading Whether transactions are loading.
+ * @property searchQuery Current search text.
+ * @property groupedTransactions Transactions grouped by month.
+ * @property isSearchActive Whether the search field is active.
+ */
 data class UpiTransactionHistoryState(
     val isLoading: Boolean = true,
     val searchQuery: String = "",
@@ -264,14 +272,29 @@ data class UpiTransactionHistoryState(
     val isSearchActive: Boolean = false,
 )
 
+/** User actions on the UPI transaction history screen. */
 sealed class UpiTransactionHistoryAction {
+    /** Navigate back. */
     object NavigateBack : UpiTransactionHistoryAction()
+
+    /**
+     * The search text changed.
+     * @property query New search text.
+     */
     data class SearchQueryChanged(val query: String) : UpiTransactionHistoryAction()
+
+    /** The user submitted the search. */
     object SearchPerformed : UpiTransactionHistoryAction()
+
+    /** The user cleared the search. */
     object ClearSearch : UpiTransactionHistoryAction()
+
+    /** The system back button was pressed. */
     object BackPressed : UpiTransactionHistoryAction()
 }
 
+/** One-off events emitted by the UPI transaction history screen. */
 sealed class UpiTransactionHistoryEvent {
+    /** Navigate back. */
     object NavigateBack : UpiTransactionHistoryEvent()
 }

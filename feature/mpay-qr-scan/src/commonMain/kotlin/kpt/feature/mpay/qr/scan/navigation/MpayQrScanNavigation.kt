@@ -15,11 +15,17 @@ import androidx.navigation.NavOptions
 import kpt.core.model.utils.QrCodeData
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.mpay.qr.scan.ScanQrCodeScreen
+/** Navigation route of the scan-QR screen. */
 const val SCAN_QR_ROUTE = "scan_qr_route"
 
+/** Navigates to the scan-QR screen. */
 fun NavController.navigateToScanQr(navOptions: NavOptions? = null) =
     navigate(SCAN_QR_ROUTE, navOptions)
 
+/**
+ * Registers the scan-QR destination, wiring navigation callbacks for intra-bank, inter-bank and
+ * add-beneficiary results.
+ */
 fun NavGraphBuilder.scanQrScreen(
     navigateBack: () -> Unit,
     navigateToIntraBankTransfer: (QrCodeData) -> Unit,

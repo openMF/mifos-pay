@@ -30,9 +30,9 @@ import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.LinkableAccount
 import kpt.core.model.pocket.PocketAccount
 import kpt.core.ui.utils.BaseViewModel
-import mifos_pay.feature.pocket.generated.resources.Res
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_error_delink_account
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_error_link_accounts
+import kpt.feature.pocket.generated.resources.Res
+import kpt.feature.pocket.generated.resources.feature_pocket_error_delink_account
+import kpt.feature.pocket.generated.resources.feature_pocket_error_link_accounts
 /** *
  * **Architecture & Decisions:**
  * - **Empty State Evaluation**: `ScreenState.Empty` is only emitted if `fetchedAtInstant != null`

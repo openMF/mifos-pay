@@ -15,10 +15,13 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kpt.core.ui.utility.TabContent
 import kpt.feature.finance.FinanceRoute
+/** Navigation route of the finance screen. */
 const val FINANCE_ROUTE = "finance_route"
 
+/** Navigates to the finance screen using [navOptions]. */
 fun NavController.navigateToFinance(navOptions: NavOptions) = navigate(FINANCE_ROUTE, navOptions)
 
+/** Registers the finance screen in the nav graph, showing the given [tabContents]. */
 fun NavGraphBuilder.financeScreen(
     tabContents: List<TabContent>,
 ) {

@@ -18,6 +18,9 @@ import kpt.core.model.search.AccountResult
  * @property accountNo Account number
  * @property currency Currency code
  * @property amount Payment amount as a string
+ * @property accountId Internal identifier of the payee account
+ * @property officeId Identifier of the payee office
+ * @property accountTypeId Identifier of the payee account type
  */
 @Serializable
 data class PaymentQrData(
@@ -36,14 +39,19 @@ data class PaymentQrData(
      * currently Savings Account to Savings Account Transaction are allowed
      */
     companion object {
+        /** Currency code used when none is given. */
         const val DEFAULT_CURRENCY = "USD"
+
+        /** Default office id. */
         const val OFFICE_ID: Long = 1
 
+        /** Default account type id (wallet). */
         // WALLET
         const val ACCOUNT_TYPE_ID: Long = 2
     }
 }
 
+/** Converts the payment QR data into an [AccountResult] describing the wallet account. */
 fun PaymentQrData.toAccount(): AccountResult {
     return AccountResult(
         entityId = accountId,

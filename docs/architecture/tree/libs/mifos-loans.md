@@ -8,4 +8,6 @@
 <!-- tree-scaffold:end -->
 ## Significance
 
-_Authored below this marker; regeneration never touches it._
+The loan-application flow — loan products, apply, confirm details, provider web view — packaged as a
+library with its own repository, network layer and Koin module (`LoanApplicationModule`). The app
+shell registers that module and links to its screens; drop both together if loans are removed.

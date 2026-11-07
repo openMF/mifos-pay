@@ -12,6 +12,17 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Payment details attached to a savings transaction.
+ *
+ * @property id Unique identifier.
+ * @property paymentType Payment type used.
+ * @property accountNumber Account number.
+ * @property checkNumber Cheque number.
+ * @property routingCode Bank routing code.
+ * @property receiptNumber Receipt number.
+ * @property bankNumber Bank number.
+ */
 @Serializable
 @Parcelize
 data class PaymentDetailData(

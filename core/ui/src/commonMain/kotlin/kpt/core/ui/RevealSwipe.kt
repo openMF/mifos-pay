@@ -71,6 +71,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
+/** Swipeable card that reveals a background action layer behind the foreground content. */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RevealSwipe(
@@ -269,6 +270,7 @@ fun RevealSwipe(
     )
 }
 
+/** Lower-level reveal-swipe implementation that takes explicit shape and colors. */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BaseRevealSwipe(
@@ -463,6 +465,7 @@ private fun <T> T.or(orValue: T, whenClosure: T.() -> Boolean): T {
 
 private fun Float.nonNaNorZero() = if (isNaN()) 0f else this
 
+/** Directions in which a [RevealSwipe] can be swiped open. */
 enum class RevealDirection {
     /**
      * Can be dismissed by swiping in the reading direction.
@@ -531,6 +534,12 @@ fun rememberRevealState(
     }
 }
 
+/**
+ * Anchored-draggable state of a [RevealSwipe].
+ *
+ * @property maxRevealDp Maximum distance the content can be swiped to reveal the background.
+ * @property directions Swipe directions that are enabled.
+ */
 @OptIn(ExperimentalFoundationApi::class)
 data class RevealState(
     val maxRevealDp: Dp = 75.dp,
@@ -543,6 +552,7 @@ data class RevealState(
     private val decayAnimationSpec: DecayAnimationSpec<Float>,
     private val confirmValueChange: (newValue: RevealValue) -> Boolean = { true },
 ) {
+    /** Drag state between the closed and revealed anchors. */
     @OptIn(ExperimentalFoundationApi::class)
     val anchoredDraggableState: AnchoredDraggableState<RevealValue> = AnchoredDraggableState(
         initialValue = initialValue,

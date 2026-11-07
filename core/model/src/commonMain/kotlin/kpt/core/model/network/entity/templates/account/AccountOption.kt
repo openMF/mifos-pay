@@ -11,6 +11,17 @@ package kpt.core.model.network.entity.templates.account
 
 import kotlinx.serialization.Serializable
 
+/**
+ * An account selectable as a source or destination in a transfer.
+ *
+ * @property accountId Id of the account.
+ * @property accountNo Account number.
+ * @property accountType Type of the account.
+ * @property clientId Id of the client.
+ * @property clientName Name of the client.
+ * @property officeId Id of the office.
+ * @property officeName Name of the office.
+ */
 @Serializable
 data class AccountOption(
     val accountId: Int? = null,

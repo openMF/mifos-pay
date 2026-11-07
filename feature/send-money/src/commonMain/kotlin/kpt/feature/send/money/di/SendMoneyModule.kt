@@ -24,6 +24,7 @@ import kpt.feature.send.money.UpiPinViewModel
 import kpt.feature.send.money.UpiTransactionHistoryViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module that registers the send-money view models and the platform [ScannerModule]. */
 val SendMoneyModule = module {
     includes(ScannerModule)
     viewModelOf(::SendMoneyViewModel)

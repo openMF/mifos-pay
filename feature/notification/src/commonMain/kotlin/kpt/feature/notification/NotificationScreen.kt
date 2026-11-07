@@ -34,10 +34,10 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.model.notification.Notification
 import kpt.core.ui.EmptyContentScreen
-import mifos_pay.feature.notification.generated.resources.Res
-import mifos_pay.feature.notification.generated.resources.feature_notification_nothing_to_notify
-import mifos_pay.feature.notification.generated.resources.feature_notification_notifications
-import mifos_pay.feature.notification.generated.resources.feature_notification_there_is_nothing_to_show
+import kpt.feature.notification.generated.resources.Res
+import kpt.feature.notification.generated.resources.feature_notification_nothing_to_notify
+import kpt.feature.notification.generated.resources.feature_notification_notifications
+import kpt.feature.notification.generated.resources.feature_notification_there_is_nothing_to_show
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel

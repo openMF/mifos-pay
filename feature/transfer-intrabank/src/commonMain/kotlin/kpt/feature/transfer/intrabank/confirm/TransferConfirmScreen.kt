@@ -86,21 +86,21 @@ import kpt.core.ui.generated.resources.core_ui_ok
 import kpt.core.ui.generated.resources.core_ui_success
 import kpt.core.ui.generated.resources.core_ui_yes
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.transfer_intrabank.generated.resources.Res
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_amount
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_amount_error
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_available_balance
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_check_icon_description
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_continue_button
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_description_label
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_from_account
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_from_account_title
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_no_accounts_found
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_oops_title
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_review_title
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_show_balance
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_to_account
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_transfer_cancel
+import kpt.feature.transfer.intrabank.generated.resources.Res
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_amount
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_amount_error
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_available_balance
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_check_icon_description
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_continue_button
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_description_label
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_from_account
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_from_account_title
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_no_accounts_found
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_oops_title
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_review_title
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_show_balance
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_to_account
+import kpt.feature.transfer.intrabank.generated.resources.feature_transfer_cancel
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -681,6 +681,7 @@ private fun AccountItem(
     }
 }
 
+/** Card showing a client's name and account number with an edit action. */
 @Composable
 fun ClientCard(
     name: String,

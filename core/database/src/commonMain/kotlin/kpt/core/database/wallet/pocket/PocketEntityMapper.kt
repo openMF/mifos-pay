@@ -80,6 +80,7 @@ private fun decodeAccountType(name: String): AccountType =
 private fun decodeAccountStatus(name: String): AccountStatus =
     runCatching { AccountStatus.valueOf(name) }.getOrDefault(AccountStatus.UNKNOWN)
 
+/** Maps this account to a [PocketEntity] marked PENDING_LINK for [clientId], awaiting upload. */
 fun DetailedPocketAccount.toPendingLinkEntity(clientId: Long, fetchedAtEpochMs: Long): PocketEntity =
     PocketEntity(
         id = if (pocket.id == 0L) kotlin.random.Random.nextLong(Long.MIN_VALUE, -1L) else pocket.id,

@@ -9,8 +9,10 @@
  */
 package kpt.core.network
 
+/** Entry point for the inter-bank API service created by [KtorfitClient]. */
 class InterBankApiManager(
     private val ktorfitClient: KtorfitClient,
 ) {
+    /** Inter-bank transfers API. */
     val interBankApi by lazy { ktorfitClient.interBankApi }
 }

@@ -11,6 +11,15 @@ package kpt.core.model.instance
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Endpoint of an interbank (Mojaloop) server used for cross-bank transfers.
+ *
+ * @property endpoint Host name or address.
+ * @property protocol URL scheme prefix.
+ * @property path Base path.
+ * @property label Display label.
+ * @property isDefault Whether this is the default interbank server.
+ */
 @Serializable
 data class InterbankServer(
     val endpoint: String,
@@ -19,6 +28,9 @@ data class InterbankServer(
     val label: String,
     val isDefault: Boolean = false,
 ) {
+    /**
+     * Complete URL built from protocol, endpoint and path.
+     */
     val fullUrl: String
         get() = "$protocol$endpoint$path"
 }

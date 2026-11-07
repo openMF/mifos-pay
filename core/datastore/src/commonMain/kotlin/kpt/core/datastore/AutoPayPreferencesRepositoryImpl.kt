@@ -17,6 +17,9 @@ import kotlinx.coroutines.flow.flowOn
 import kpt.core.model.autopay.AutoPay
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.UpcomingPayment
+/**
+ * [AutoPayPreferencesRepository] that delegates to [AutoPayPreferencesDataSource] and emits flows on the IO dispatcher.
+ */
 class AutoPayPreferencesRepositoryImpl(
     private val autoPayPreferencesDataSource: AutoPayPreferencesDataSource,
     private val ioDispatcher: CoroutineDispatcher,
@@ -54,6 +57,7 @@ class AutoPayPreferencesRepositoryImpl(
         autoPayPreferencesDataSource.updateLastSyncTimestamp(timestamp)
     }
 
+    /** Persists the current time as the last sync time. */
     suspend fun updateLastSyncTimestamp() {
         autoPayPreferencesDataSource.updateLastSyncTimestamp()
     }

@@ -11,15 +11,15 @@ package kpt.feature.faq
 
 import kotlinx.coroutines.flow.update
 import kpt.core.ui.utils.BaseViewModel
-import mifos_pay.feature.faq.generated.resources.Res
-import mifos_pay.feature.faq.generated.resources.feature_faq_answer1
-import mifos_pay.feature.faq.generated.resources.feature_faq_answer2
-import mifos_pay.feature.faq.generated.resources.feature_faq_answer3
-import mifos_pay.feature.faq.generated.resources.feature_faq_answer4
-import mifos_pay.feature.faq.generated.resources.feature_faq_question1
-import mifos_pay.feature.faq.generated.resources.feature_faq_question2
-import mifos_pay.feature.faq.generated.resources.feature_faq_question3
-import mifos_pay.feature.faq.generated.resources.feature_faq_question4
+import kpt.feature.faq.generated.resources.Res
+import kpt.feature.faq.generated.resources.feature_faq_answer1
+import kpt.feature.faq.generated.resources.feature_faq_answer2
+import kpt.feature.faq.generated.resources.feature_faq_answer3
+import kpt.feature.faq.generated.resources.feature_faq_answer4
+import kpt.feature.faq.generated.resources.feature_faq_question1
+import kpt.feature.faq.generated.resources.feature_faq_question2
+import kpt.feature.faq.generated.resources.feature_faq_question3
+import kpt.feature.faq.generated.resources.feature_faq_question4
 internal class FAQViewModel : BaseViewModel<FaqState, FaqEvent, FaqAction>(
     initialState = FaqState(sampleFaqList),
 ) {

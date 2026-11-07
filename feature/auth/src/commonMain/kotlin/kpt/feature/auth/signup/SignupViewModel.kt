@@ -47,28 +47,29 @@ import kpt.core.ui.utils.BaseViewModel
 import kpt.core.ui.utils.fork.PasswordChecker
 import kpt.core.ui.utils.fork.PasswordStrength
 import kpt.core.ui.utils.fork.PasswordStrengthResult
+import kpt.feature.auth.generated.resources.Res
+import kpt.feature.auth.generated.resources.feature_auth_error_address_line1_required
+import kpt.feature.auth.generated.resources.feature_auth_error_check_uniqueness_failed
+import kpt.feature.auth.generated.resources.feature_auth_error_confirm_password_required
+import kpt.feature.auth.generated.resources.feature_auth_error_country_required
+import kpt.feature.auth.generated.resources.feature_auth_error_email_invalid
+import kpt.feature.auth.generated.resources.feature_auth_error_email_required
+import kpt.feature.auth.generated.resources.feature_auth_error_field_already_exists
+import kpt.feature.auth.generated.resources.feature_auth_error_first_name_required
+import kpt.feature.auth.generated.resources.feature_auth_error_last_name_required
+import kpt.feature.auth.generated.resources.feature_auth_error_mobile_invalid
+import kpt.feature.auth.generated.resources.feature_auth_error_mobile_required
+import kpt.feature.auth.generated.resources.feature_auth_error_password_required
+import kpt.feature.auth.generated.resources.feature_auth_error_passwords_mismatch
+import kpt.feature.auth.generated.resources.feature_auth_error_pincode_required
+import kpt.feature.auth.generated.resources.feature_auth_error_select_savings_account
+import kpt.feature.auth.generated.resources.feature_auth_error_state_required
+import kpt.feature.auth.generated.resources.feature_auth_error_username_required
+import kpt.feature.auth.generated.resources.feature_auth_registration_successful
 import kpt.feature.auth.signup.SignUpAction.Internal.ReceivePasswordStrengthResult
 import kpt.feature.auth.signup.SignUpState.DialogState
-import mifos_pay.feature.auth.generated.resources.Res
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_address_line1_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_check_uniqueness_failed
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_confirm_password_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_country_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_email_invalid
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_email_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_field_already_exists
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_first_name_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_last_name_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_mobile_invalid
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_mobile_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_password_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_passwords_mismatch
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_pincode_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_select_savings_account
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_state_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_username_required
-import mifos_pay.feature.auth.generated.resources.feature_auth_registration_successful
 import org.jetbrains.compose.resources.StringResource
+/** View model for the signup screen; validates the form and registers a new user and client. */
 class SignupViewModel(
     private val userRepository: UserRepository,
     private val searchRepository: SearchRepository,
@@ -80,6 +81,7 @@ class SignupViewModel(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: SignUpState(),
 ) {
 
+    /** Holds the saved-state key used to persist the signup state. */
     companion object {
         private const val KEY_STATE = "signup_state"
     }
@@ -553,6 +555,28 @@ class SignupViewModel(
     }
 }
 
+/**
+ * UI state of the signup form.
+ *
+ * @property savingsProductId Savings product to open for the new client.
+ * @property firstNameInput First name typed by the user.
+ * @property lastNameInput Last name typed by the user.
+ * @property emailInput Email typed by the user.
+ * @property userNameInput Username typed by the user.
+ * @property addressLine1Input First address line typed by the user.
+ * @property addressLine2Input Second address line typed by the user.
+ * @property pinCodeInput Postal code typed by the user.
+ * @property passwordInput Password typed by the user.
+ * @property confirmPasswordInput Password confirmation typed by the user.
+ * @property mobileNumberInput Mobile number of the user.
+ * @property stateInput Selected state or province.
+ * @property countryInput Selected country.
+ * @property businessNameInput Business name typed by the user.
+ * @property dialogState Loading or error dialog currently shown, or null.
+ * @property passwordStrengthState Evaluated strength of the password.
+ * @property passwordFeedback Hints for improving the password.
+ * @property countriesWithStates Map of country name to its states.
+ */
 @Serializable
 data class SignUpState(
     val savingsProductId: Int = 0,
@@ -575,47 +599,173 @@ data class SignUpState(
     val passwordFeedback: ImmutableList<String> = persistentListOf(),
     val countriesWithStates: Map<String, List<String>> = emptyMap(),
 ) {
+    /** States available for the currently selected country, or null if none. */
     @Transient
     val statesForSelectedCountry = countriesWithStates[countryInput]
 
+    /** Dialog shown over the signup screen. */
     sealed interface DialogState {
+        /** Error dialog, with either a plain or a resource-based message. */
         sealed interface Error : DialogState {
+            /**
+             * Error dialog with a plain text message.
+             *
+             * @property message Error text to show.
+             */
             data class StringMessage(val message: String) : Error
+
+            /**
+             * Error dialog with a string-resource message.
+             *
+             * @property message Resource of the error text.
+             */
             data class ResourceMessage(val message: StringResource) : Error
         }
 
+        /** Blocking progress dialog shown while signup is in flight. */
         data object Loading : DialogState
     }
 }
 
+/** One-off events emitted by the signup view model. */
 sealed interface SignUpEvent {
+    /** Navigate back from the signup screen. */
     data object NavigateBack : SignUpEvent
+
+    /**
+     * Show a toast.
+     *
+     * @property message Text of the toast.
+     */
     data class ShowToast(val message: String) : SignUpEvent
+
+    /**
+     * Navigate to login after successful signup.
+     *
+     * @property username Username of the newly registered user.
+     */
     data class NavigateToLogin(val username: String) : SignUpEvent
 }
 
+/** User actions handled by the signup view model. */
 sealed interface SignUpAction {
+    /**
+     * The first name field changed.
+     *
+     * @property firstName New first name value.
+     */
     data class FirstNameInputChange(val firstName: String) : SignUpAction
+
+    /**
+     * The last name field changed.
+     *
+     * @property lastName New last name value.
+     */
     data class LastNameInputChange(val lastName: String) : SignUpAction
+
+    /**
+     * The email field changed.
+     *
+     * @property email New email value.
+     */
     data class EmailInputChange(val email: String) : SignUpAction
+
+    /**
+     * The username field changed.
+     *
+     * @property username New username value.
+     */
     data class UserNameInputChange(val username: String) : SignUpAction
+
+    /**
+     * The first address line changed.
+     *
+     * @property addressLineOne New address line value.
+     */
     data class AddressLine1InputChange(val addressLineOne: String) : SignUpAction
+
+    /**
+     * The second address line changed.
+     *
+     * @property addressLineTwo New address line value.
+     */
     data class AddressLine2InputChange(val addressLineTwo: String) : SignUpAction
+
+    /**
+     * The postal code changed.
+     *
+     * @property pincode New postal code value.
+     */
     data class PinCodeInputChange(val pincode: String) : SignUpAction
+
+    /**
+     * The business name changed.
+     *
+     * @property businessName New business name value.
+     */
     data class BusinessNameInputChange(val businessName: String) : SignUpAction
+
+    /**
+     * The password field changed.
+     *
+     * @property password New password value.
+     */
     data class PasswordInputChange(val password: String) : SignUpAction
+
+    /**
+     * The confirm-password field changed.
+     *
+     * @property confirmPassword New confirmation value.
+     */
     data class ConfirmPasswordInputChange(val confirmPassword: String) : SignUpAction
+
+    /**
+     * The mobile number field changed.
+     *
+     * @property mobileNumber New mobile number value.
+     */
     data class MobileNumberInputChange(val mobileNumber: String) : SignUpAction
+
+    /**
+     * The savings product selection changed.
+     *
+     * @property savingsAccountNo Selected savings product id.
+     */
     data class SavingsAccountNoInputChange(val savingsAccountNo: Int) : SignUpAction
+
+    /**
+     * The state selection changed.
+     *
+     * @property state Selected state.
+     */
     data class StateInputChange(val state: String) : SignUpAction
+
+    /**
+     * The country selection changed.
+     *
+     * @property country Selected country.
+     */
     data class CountryInputChange(val country: String) : SignUpAction
 
+    /** The user tapped the submit button. */
     data object SubmitClick : SignUpAction
+
+    /** The user tapped the close button. */
     data object CloseClick : SignUpAction
+
+    /** The user dismissed the error dialog. */
     data object ErrorDialogDismiss : SignUpAction
+
+    /** Load the list of countries and their states. */
     data object LoadCountries : SignUpAction
 
+    /** Actions dispatched internally by the view model rather than by the UI. */
     sealed class Internal : SignUpAction {
+        /**
+         * Delivers the evaluated password strength.
+         *
+         * @property result Result of the password strength check.
+         */
         data class ReceivePasswordStrengthResult(
             val result: PasswordStrengthResult,
         ) : Internal()

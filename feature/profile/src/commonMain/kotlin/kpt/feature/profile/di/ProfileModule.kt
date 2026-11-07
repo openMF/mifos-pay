@@ -13,6 +13,7 @@ import kpt.feature.profile.ProfileViewModel
 import kpt.feature.profile.edit.EditProfileViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the profile and edit-profile ViewModels. */
 val ProfileModule = module {
     viewModelOf(::ProfileViewModel)
     viewModelOf(::EditProfileViewModel)

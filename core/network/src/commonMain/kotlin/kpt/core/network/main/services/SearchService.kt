@@ -13,7 +13,9 @@ import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Query
 import kpt.core.model.network.entity.SearchedEntity
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for searching resources. */
 interface SearchService {
+    /** Searches Fineract resources. */
     @GET(ApiEndPoints.SEARCH)
     suspend fun searchResources(
         @Query("query") query: String,

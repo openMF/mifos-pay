@@ -16,5 +16,7 @@ package kpt.core.store.wallet.account
  * The [accountId] doubles as the primary key at the DAO layer
  * (`SavingAccountDetailDao.upsert(entity(id = accountId))`), so a fresh fetch for
  * account A never disturbs cached detail rows for account B.
+ *
+ * @property accountId Savings account id the cached data belongs to.
  */
 data class AccountDetailKey(val accountId: Long)

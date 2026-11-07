@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosTextUserImage
+/** Circular user picture from [bitmap], falling back to the initials of [username] or a default icon. */
 @Composable
 fun MifosUserImage(
     modifier: Modifier = Modifier,

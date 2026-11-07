@@ -32,6 +32,7 @@ import kpt.feature.merchants.di.MerchantsModule
 import kpt.feature.mpay.qr.di.MpayQrModule
 import kpt.feature.mpay.qr.scan.di.MpayQrScanModule
 import kpt.feature.notification.di.NotificationModule
+import kpt.feature.passcode.MifosAuthenticatorModule
 import kpt.feature.payments.di.PaymentsModule
 import kpt.feature.pocket.di.PocketModule
 import kpt.feature.profile.di.ProfileModule
@@ -46,7 +47,6 @@ import kpt.feature.upi.setup.di.UpiSetupModule
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.mifos.authenticator.passcode.PasscodeManager
-import org.mifos.feature.passcode.MifosAuthenticatorModule
 import org.mifos.lib.loan.di.LoanApplicationModule
 
 /**
@@ -146,6 +146,7 @@ object ForkAppModules {
         single { PasscodeManager(get()) }
     }
 
+    /** Every Koin module the wallet app loads at startup, in registration order. */
     val allModules = listOf(
         commonModules,
         dataModules,

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.KptTheme
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
+/** Search bar with query text, placeholder and optional clear button. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosSearchBar(
@@ -81,6 +82,7 @@ fun MifosSearchBar(
     )
 }
 
+/** Compact search field with query text and placeholder. */
 @Composable
 fun SimpleSearchBar(
     query: String,
@@ -137,6 +139,7 @@ fun SimpleSearchBar(
     )
 }
 
+/** Preview of [MifosSearchBar]. */
 @Composable
 @DevicePreviews
 fun PreviewMifosSearchBar() {
@@ -151,6 +154,7 @@ fun PreviewMifosSearchBar() {
     }
 }
 
+/** Preview of [SimpleSearchBar]. */
 @Composable
 @DevicePreviews
 fun PreviewSimpleSearchBar() {

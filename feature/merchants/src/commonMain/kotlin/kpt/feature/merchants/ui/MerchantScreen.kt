@@ -44,17 +44,18 @@ import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosSearchBar
 import kpt.feature.merchants.MerchantUiState
 import kpt.feature.merchants.MerchantViewModel
+import kpt.feature.merchants.generated.resources.Res
+import kpt.feature.merchants.generated.resources.feature_merchants_empty_no_merchants_subtitle
+import kpt.feature.merchants.generated.resources.feature_merchants_empty_no_merchants_title
+import kpt.feature.merchants.generated.resources.feature_merchants_error_oops
+import kpt.feature.merchants.generated.resources.feature_merchants_loading
+import kpt.feature.merchants.generated.resources.feature_merchants_search
+import kpt.feature.merchants.generated.resources.feature_merchants_unexpected_error_subtitle
 import kpt.feature.merchants.navigation.navigateToMerchantTransferScreen
-import mifos_pay.feature.merchants.generated.resources.Res
-import mifos_pay.feature.merchants.generated.resources.feature_merchants_empty_no_merchants_subtitle
-import mifos_pay.feature.merchants.generated.resources.feature_merchants_empty_no_merchants_title
-import mifos_pay.feature.merchants.generated.resources.feature_merchants_error_oops
-import mifos_pay.feature.merchants.generated.resources.feature_merchants_loading
-import mifos_pay.feature.merchants.generated.resources.feature_merchants_search
-import mifos_pay.feature.merchants.generated.resources.feature_merchants_unexpected_error_subtitle
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen listing merchants with search and pull-to-refresh. */
 @Composable
 fun MerchantScreen(
     modifier: Modifier = Modifier,
@@ -273,6 +274,7 @@ private fun MerchantEmptyPreview() {
     }
 }
 
+/** Sample merchant list used for previews. */
 val sampleMerchantList = List(10) {
     SavingsWithAssociationsEntity(
         id = 1L,

@@ -19,9 +19,11 @@ import kpt.core.model.client.NewClient
 import kpt.core.model.client.UpdatedClient
 import kpt.core.model.network.entity.Page
 import kpt.core.model.network.entity.client.ClientAccountsEntity
+/** Repository for clients, their profile images and accounts. */
 interface ClientRepository {
 
     // Phase-3 cutover — streaming reads on ScreenState.
+    /** Streams the details of the given client. */
     fun getClientInfo(clientId: Long): Flow<ScreenState<Client>>
 
     /**
@@ -59,6 +61,7 @@ interface ClientRepository {
         scope: CoroutineScope,
     ): ScreenDataStream<Client>
 
+    /** Streams the page of clients visible to the signed-in user. */
     suspend fun getClients(): Flow<ScreenState<Page<Client>>>
 
     // Point-lookup (non-streaming suspend) — returns the value and throws on
@@ -66,21 +69,29 @@ interface ClientRepository {
     // terminal); one-shot suspend fetches don't have a Loading phase to model.
     // Callers that want a Loading tick can wrap the suspend in `flow { … }` +
     // `asScreenStateFlow()` at the callsite.
+    /** Fetches a single client once. */
     suspend fun getClient(clientId: Long): Client
 
     // Writes throw on error; message-returning writes now return Unit.
+    /** Updates the client's details. */
     suspend fun updateClient(clientId: Long, client: UpdatedClient)
 
+    /** Streams the client's profile image. */
     fun getClientImage(clientId: Long): Flow<ScreenState<String>>
 
+    /** Uploads a new profile image for the client. */
     suspend fun updateClientImage(clientId: Long, image: String)
 
     // Non-DataState/ScreenState surface — throwing suspend; leave as-is.
+    /** Fetches the savings accounts of a client. */
     suspend fun getClientAccounts(clientId: Long): ClientAccountsEntity
 
+    /** Streams the client's accounts of the given account type. */
     suspend fun getAccounts(clientId: Long, accountType: String): Flow<ScreenState<List<Account>>>
 
+    /** Creates a client and returns the new client id. */
     suspend fun createClient(newClient: NewClient): Int
 
+    /** Deletes the client with the given id and returns the server response code. */
     suspend fun deleteClient(clientId: Int): Int
 }

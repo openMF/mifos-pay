@@ -21,6 +21,15 @@ import kpt.feature.transfer.intrabank.confirm.TransferResult
  * Type-safe route for the intra-bank transfer confirmation screen. Carries
  * the source/destination account snapshot and the post-success destination
  * the caller wants to return to (`home` or `payments`).
+ *
+ * @property amount Amount to transfer.
+ * @property accountId Id of the source account.
+ * @property toOfficeId Office id of the destination account, or null.
+ * @property toClientId Client id of the destination account, or null.
+ * @property toAccountTypeId Account type id of the destination account, or null.
+ * @property toAccountName Destination account holder name.
+ * @property toAccountNo Destination account number.
+ * @property returnDestination Destination to return to after the transfer.
  */
 @Serializable
 data class TransferConfirmRoute(

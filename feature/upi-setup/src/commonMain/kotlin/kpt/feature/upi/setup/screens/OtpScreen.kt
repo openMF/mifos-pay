@@ -25,10 +25,10 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.ui.OtpTextField
 import kpt.core.ui.VerifyStepHeader
+import kpt.feature.upi.setup.generated.resources.Res
+import kpt.feature.upi.setup.generated.resources.feature_upi_setup_enter_otp
 import kpt.feature.upi.setup.viewmodel.OtpRequestState
 import kpt.feature.upi.setup.viewmodel.OtpVerifyState
-import mifos_pay.feature.upi_setup.generated.resources.Res
-import mifos_pay.feature.upi_setup.generated.resources.feature_upi_setup_enter_otp
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /**

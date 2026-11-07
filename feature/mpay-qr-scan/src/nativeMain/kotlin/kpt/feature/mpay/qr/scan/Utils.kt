@@ -22,6 +22,7 @@ import platform.AVFoundation.AVMetadataObjectTypePDF417Code
 import platform.AVFoundation.AVMetadataObjectTypeQRCode
 import platform.AVFoundation.AVMetadataObjectTypeUPCECode
 
+/** Maps [CodeType] values to the matching AVFoundation metadata object types. */
 fun List<CodeType>.toFormat(): List<platform.AVFoundation.AVMetadataObjectType> = map {
     when (it) {
         CodeType.Codabar -> AVMetadataObjectTypeCodabarCode

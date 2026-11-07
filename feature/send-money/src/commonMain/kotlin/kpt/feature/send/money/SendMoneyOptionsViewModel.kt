@@ -15,6 +15,10 @@ import kotlinx.coroutines.flow.onEach
 import kpt.core.data.util.StandardUpiQrCodeProcessor
 import kpt.core.ui.utils.BackgroundEvent
 import kpt.core.ui.utils.BaseViewModel
+/**
+ * ViewModel for the send-money options screen; maps option taps and QR scans to navigation events.
+ * @property scanner QR scanner used by the scan option.
+ */
 class SendMoneyOptionsViewModel(
     private val scanner: QrScanner,
 ) : BaseViewModel<SendMoneyOptionsState, SendMoneyOptionsEvent, SendMoneyOptionsAction>(
@@ -57,25 +61,61 @@ class SendMoneyOptionsViewModel(
     }
 }
 
+/**
+ * State of the send-money options screen.
+ * @property isLoading Whether a request is in progress.
+ */
 data class SendMoneyOptionsState(
     val isLoading: Boolean = false,
 )
 
+/** One-off navigation events emitted by the send-money options screen. */
 sealed interface SendMoneyOptionsEvent {
+    /** Navigate back. */
     data object NavigateBack : SendMoneyOptionsEvent
+
+    /** Navigate to the pay-anyone screen. */
     data object NavigateToPayAnyone : SendMoneyOptionsEvent
+
+    /** Navigate to the bank transfer screen. */
     data object NavigateToBankTransfer : SendMoneyOptionsEvent
+
+    /** Navigate to the Fineract payments screen. */
     data object NavigateToFineractPayments : SendMoneyOptionsEvent
+
+    /** Navigate to the auto-pay screen. */
     data object NavigateToAutoPay : SendMoneyOptionsEvent
+
+    /**
+     * A QR code was scanned.
+     * @property data Raw scanned value.
+     */
     data class QrCodeScanned(val data: String) : SendMoneyOptionsEvent, BackgroundEvent
+
+    /**
+     * Navigate to payee details for a scanned QR code.
+     * @property qrCodeData Raw scanned QR value.
+     */
     data class NavigateToPayeeDetails(val qrCodeData: String) : SendMoneyOptionsEvent, BackgroundEvent
 }
 
+/** User actions on the send-money options screen. */
 sealed interface SendMoneyOptionsAction {
+    /** The user tapped back. */
     data object NavigateBack : SendMoneyOptionsAction
+
+    /** The user tapped scan QR. */
     data object ScanQrClicked : SendMoneyOptionsAction
+
+    /** The user tapped pay anyone. */
     data object PayAnyoneClicked : SendMoneyOptionsAction
+
+    /** The user tapped bank transfer. */
     data object BankTransferClicked : SendMoneyOptionsAction
+
+    /** The user tapped Fineract payments. */
     data object FineractPaymentsClicked : SendMoneyOptionsAction
+
+    /** The user tapped auto-pay. */
     data object AutoPayClicked : SendMoneyOptionsAction
 }

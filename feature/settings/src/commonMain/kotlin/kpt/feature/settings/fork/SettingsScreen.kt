@@ -38,6 +38,8 @@ import kpt.core.designsystem.component.MifosLoadingDialog
 import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
+import kpt.feature.passcode.rememberBiometricErrorMessages
+import kpt.feature.passcode.rememberBiometricPromptStrings
 import kpt.feature.settings.di.MifosSettingsViewModelQualifier
 import kpt.feature.settings.generated.resources.Res
 import kpt.feature.settings.generated.resources.feature_settings_change_language_text
@@ -60,8 +62,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.authenticator.biometrics.platformAuthenticationProvider
 import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenticatorStatus
-import org.mifos.feature.passcode.rememberBiometricErrorMessages
-import org.mifos.feature.passcode.rememberBiometricPromptStrings
 /**
  * Settings screen route. Owns the passcode/biometrics integration glue:
  *

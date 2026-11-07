@@ -24,9 +24,6 @@ import kotlin.random.Random
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-/** Room `@Entity(tableName = …)` string — must match [kpt.core.database.wallet.bill.BillEntity]'s. */
-private const val BILLS_TABLE = "wallet_autopay_bills"
-
 /**
  * Phase-4 Batch-A Room-backed implementation of the historic
  * [`kpt.core.datastore.BillRepository`][BillRepository] contract

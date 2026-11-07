@@ -36,6 +36,7 @@ import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.designsystem.utils.fork.mirrorIfRtl
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Center-aligned top app bar with a title and a navigation icon. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosTopAppBar(
@@ -60,6 +61,7 @@ fun MifosTopAppBar(
     )
 }
 
+/** Center-aligned top app bar with a title and optional [NavigationIcon] and action icons. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Suppress("LongMethod")
 @Composable
@@ -141,6 +143,7 @@ fun MifosTopAppBar(
     }
 }
 
+/** Top app bar with a title and subtitle, an optional [NavigationIcon] and action icons. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Suppress("LongMethod")
 @Composable
@@ -266,6 +269,13 @@ private fun MifosTopAppBarOverflowCutoff_preview() {
     }
 }
 
+/**
+ * Navigation icon configuration for a top app bar.
+ *
+ * @property navigationIcon Icon to display.
+ * @property navigationIconContentDescription Accessibility description of the icon.
+ * @property onNavigationIconClick Invoked when the icon is clicked.
+ */
 data class NavigationIcon(
     val navigationIcon: ImageVector,
     val navigationIconContentDescription: String,

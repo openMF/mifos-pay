@@ -24,6 +24,7 @@ import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 import platform.UIKit.UIApplicationOpenSettingsURLString
 
+/** iOS actual of [rememberCameraPermissionState] using the AVFoundation camera authorization status. */
 @Composable
 actual fun rememberCameraPermissionState(): CameraPermissionState {
     return remember {

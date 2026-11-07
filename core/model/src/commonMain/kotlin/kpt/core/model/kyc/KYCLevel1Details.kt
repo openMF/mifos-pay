@@ -12,6 +12,17 @@ package kpt.core.model.kyc
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Personal details collected for level 1 KYC verification.
+ *
+ * @property firstName First name.
+ * @property lastName Last name.
+ * @property addressLine1 First address line.
+ * @property addressLine2 Second address line.
+ * @property mobileNo Mobile phone number.
+ * @property dob Date of birth.
+ * @property currentLevel Current KYC level of the user.
+ */
 @Serializable
 @Parcelize
 data class KYCLevel1Details(

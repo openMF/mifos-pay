@@ -16,10 +16,10 @@ ViewModels: `AddEditBeneficiaryViewModel`, `BeneficiaryListViewModel`, `DeleteBe
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/beneficiary sha=06c9fd31964f56dbaa4d9dbf7401d638daf27bcc -->
+<!-- api-docs:begin module=feature/beneficiary sha=30e56566ffacf7de1a361b8b29b4ca3825f510a6 -->
 ## API reference
 
-_Generated from `feature/beneficiary` at tree `06c9fd31964f` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/beneficiary` at tree `30e56566ffac` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -32,9 +32,9 @@ rather than re-declaring what they already own.
 ```kotlin
 sealed class BeneficiaryAddEditType
 ```
-_No KDoc at source._
+Whether the beneficiary form adds a new beneficiary or edits an existing one.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:173</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:182</code></summary>
 
 ```kotlin
 
@@ -53,7 +53,7 @@ _No KDoc at source._
 ```kotlin
 data class BeneficiaryAddEditArgs(
 ```
-_No KDoc at source._
+Navigation arguments of the add/edit beneficiary screen.
 
 <details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:65</code></summary>
 
@@ -72,12 +72,12 @@ _No KDoc at source._
 ```kotlin
 fun NavGraphBuilder.addEditBeneficiaryScreen(
 ```
-_No KDoc at source._
+Registers the add/edit beneficiary destination.
 
 ```kotlin
 fun NavController.navigateToBeneficiaryAddEdit(
 ```
-_No KDoc at source._
+Navigates to the add/edit beneficiary screen for `addEditType`.
 
 ### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt`
 
@@ -86,7 +86,7 @@ fun DeleteBeneficiaryBottomSheet(
 ```
 Bottom sheet composable for delete beneficiary flow.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:105</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:106</code></summary>
 
 ```kotlin
 
@@ -107,7 +107,7 @@ class DeleteBeneficiaryViewModel(
 ```
 ViewModel for handling beneficiary deletion. This is a standalone ViewModel that manages the delete flow independently from the beneficiary list, preventing unwanted list refreshes during the delete confirmation flow.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt:20</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt:21</code></summary>
 
 ```kotlin
     viewModelOf(::AddEditBeneficiaryViewModel)
@@ -121,7 +121,7 @@ ViewModel for handling beneficiary deletion. This is a standalone ViewModel that
 ```kotlin
 data class DeleteBeneficiaryState(
 ```
-_No KDoc at source._
+UI state of the delete-beneficiary flow.
 
 <details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt:55</code></summary>
 
@@ -140,50 +140,50 @@ fun DeleteBeneficiaryBottomSheet(
 ```kotlin
 sealed interface DeleteBeneficiaryEvent
 ```
-_No KDoc at source._
+One-off events of the delete-beneficiary flow (none currently).
 
 ```kotlin
 sealed interface DeleteBeneficiaryAction
 ```
-_No KDoc at source._
+Actions handled by the delete-beneficiary view model.
 
 ### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt`
 
 ```kotlin
 val BeneficiaryModule = module
 ```
-_No KDoc at source._
+Koin module providing the beneficiary add/edit, list and delete ViewModels.
 
 ### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt`
 
 ```kotlin
 fun BeneficiaryListScreen(
 ```
-_No KDoc at source._
+Screen listing the client's saved third-party transfer beneficiaries, with add, edit and delete actions.
 
 ```kotlin
 fun BeneficiariesList(
 ```
-_No KDoc at source._
+Scrollable list of `beneficiaries`; row actions go to `onAction`, deletes to `onDeleteBeneficiary`.
 
 ```kotlin
 fun BeneficiaryItem(
 ```
-_No KDoc at source._
+Single beneficiary row with edit and delete buttons.
 
 ```kotlin
 fun PreviewBeneficiaryListScreen()
 ```
-_No KDoc at source._
+Compose preview of the beneficiary list screen with sample data.
 
 ### `feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListViewModel.kt`
 
 ```kotlin
 class BeneficiaryListViewModel(
 ```
-_No KDoc at source._
+ViewModel that loads the client's beneficiaries and handles add, edit and refresh actions.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/di/BeneficiaryModule.kt:20</code></summary>
 
 ```kotlin
 val BeneficiaryModule = module {
@@ -198,14 +198,14 @@ val BeneficiaryModule = module {
 ```kotlin
 data class BeneficiaryListState(
 ```
-_No KDoc at source._
+UI state of the beneficiary list.
 
 ```kotlin
 sealed interface BeneficiaryListEvent
 ```
-_No KDoc at source._
+One-off events emitted by `BeneficiaryListViewModel`.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:94</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:95</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -222,9 +222,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface BeneficiaryListAction
 ```
-_No KDoc at source._
+User actions handled by `BeneficiaryListViewModel`.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:141</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:142</code></summary>
 
 ```kotlin
     state: ScreenState<List<Beneficiary>>,
@@ -240,5 +240,5 @@ _No KDoc at source._
 
 ---
 
-_10 type(s), 8 function(s)/property(ies); 2 carry KDoc at source; 0 authored example(s); 8 live call site(s)._
+_10 type(s), 8 function(s)/property(ies); 18 carry KDoc at source; 0 authored example(s); 8 live call site(s)._
 <!-- api-docs:end -->

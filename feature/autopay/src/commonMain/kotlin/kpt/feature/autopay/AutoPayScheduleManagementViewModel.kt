@@ -25,12 +25,14 @@ import kpt.core.ui.utils.BaseViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** View model for AutoPay schedule management; loads bills with AutoPay and handles toggling, editing and deleting. */
 class AutoPayScheduleManagementViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AutoPayScheduleManagementState, AutoPayScheduleManagementEvent, AutoPayScheduleManagementAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AutoPayScheduleManagementState(),
 ) {
 
+    /** Holds the saved-state key used to persist the state. */
     companion object {
         private const val KEY_STATE = "autopay_schedule_management_state"
     }
@@ -184,6 +186,13 @@ class AutoPayScheduleManagementViewModel(
     }
 }
 
+/**
+ * UI state of the schedule management screen.
+ *
+ * @property billsWithAutoPay Bills that have AutoPay configured.
+ * @property isLoading Whether bills are loading.
+ * @property error Error message to show, or null.
+ */
 @Serializable
 data class AutoPayScheduleManagementState(
     val billsWithAutoPay: List<Bill> = emptyList(),
@@ -191,18 +200,60 @@ data class AutoPayScheduleManagementState(
     val error: String? = null,
 )
 
+/** One-off events emitted by the schedule management view model. */
 sealed interface AutoPayScheduleManagementEvent {
+    /** Navigate to the add-bill screen. */
     data object NavigateToAddBill : AutoPayScheduleManagementEvent
+
+    /**
+     * Navigate to the edit-bill screen.
+     *
+     * @property billId Id of the bill to edit.
+     */
     data class NavigateToEditBill(val billId: String) : AutoPayScheduleManagementEvent
+
+    /** Navigate to the bill list. */
     data object NavigateToBillList : AutoPayScheduleManagementEvent
+
+    /**
+     * AutoPay was toggled for a bill.
+     *
+     * @property billId Id of the bill.
+     * @property enabled New AutoPay state.
+     */
     data class AutoPayToggled(val billId: String, val enabled: Boolean) : AutoPayScheduleManagementEvent
 }
 
+/** User actions handled by the schedule management view model. */
 sealed interface AutoPayScheduleManagementAction {
+    /** Reload the schedules. */
     data object RefreshSchedules : AutoPayScheduleManagementAction
+
+    /**
+     * Toggle AutoPay for a bill.
+     *
+     * @property billId Id of the bill.
+     * @property enabled Desired AutoPay state.
+     */
     data class ToggleAutoPay(val billId: String, val enabled: Boolean) : AutoPayScheduleManagementAction
+
+    /**
+     * Edit a bill.
+     *
+     * @property billId Id of the bill.
+     */
     data class EditBill(val billId: String) : AutoPayScheduleManagementAction
+
+    /**
+     * Delete a bill.
+     *
+     * @property billId Id of the bill.
+     */
     data class DeleteBill(val billId: String) : AutoPayScheduleManagementAction
+
+    /** Add a new bill. */
     data object AddNewBill : AutoPayScheduleManagementAction
+
+    /** View all bills. */
     data object ViewAllBills : AutoPayScheduleManagementAction
 }

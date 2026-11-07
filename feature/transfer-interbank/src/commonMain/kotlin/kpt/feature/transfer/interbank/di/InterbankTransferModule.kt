@@ -19,6 +19,7 @@ import org.koin.dsl.module
 // import kpt.feature.send.money.SendMoneyOptionsViewModel
 // import kpt.feature.send.money.SendMoneyViewModel
 
+/** Koin module providing the interbank transfer view model. */
 val interbankTransferModule = module {
     viewModelOf(::InterbankTransferViewModel)
 

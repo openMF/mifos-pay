@@ -19,6 +19,7 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Outlined icon button showing [icon], used for small tappable icon actions. */
 @Composable
 fun IconBox(
     icon: ImageVector,

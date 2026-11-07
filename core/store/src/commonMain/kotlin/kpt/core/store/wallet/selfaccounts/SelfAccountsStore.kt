@@ -30,9 +30,6 @@ import kotlin.time.Clock
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `SelfAccountEntity`. Shared with the DAO's writes. */
-private const val SELF_ACCOUNTS_TABLE = "wallet_self_accounts"
-
 /**
  * `apiManager.clientsApi.getAccounts(clientId, "savingsAccounts")` `?fields=`
  * value — pulls back only the savings-accounts bucket of a client's account

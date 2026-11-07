@@ -19,13 +19,42 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/**
+ * Shared visual constants for the card widgets.
+ */
 object CardConfig {
+    /**
+     * Size of the card network logo.
+     */
     val logoSize: Dp = 60.dp
+
+    /**
+     * Optional tint applied to the card logo; null keeps original colors.
+     */
     val logoTint: Color? = null
+
+    /**
+     * Animation used when the card logo appears.
+     */
     val logoEnterTransition: EnterTransition = fadeIn() + expandIn()
+
+    /**
+     * Animation used when the card logo disappears.
+     */
     val logoExitTransition: ExitTransition = fadeOut() + shrinkOut()
 
+    /**
+     * Radius of a masked-digit dot.
+     */
     val dotRadius = 4.dp
+
+    /**
+     * Horizontal gap between masked-digit dots.
+     */
     val spaceBetweenDots = 8.dp
+
+    /**
+     * Horizontal gap between groups of card digits.
+     */
     val spaceBetweenGroups = 16.dp
 }

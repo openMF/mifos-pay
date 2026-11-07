@@ -166,7 +166,7 @@ internal fun HomeScreen(
     val homeUIState by viewModel.stateFlow.collectAsStateWithLifecycle()
     val pullRefreshState = rememberPullToRefreshState()
 
-    EventsEffect(viewModel) { event ->
+    EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         when (event) {
             is HomeEvent.NavigateBack -> onNavigateBack()
             is HomeEvent.NavigateToRequestScreen -> onRequest(event.vpa)
@@ -212,6 +212,7 @@ internal fun HomeScreen(
     )
 }
 
+/** Stateless home screen body that renders the wallet dashboard for the given [uiState] and [viewState]. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenContent(
@@ -219,10 +220,10 @@ fun HomeScreenContent(
     viewState: ViewState,
     defaultAccountId: Long?,
     snackbarHostState: SnackbarHostState,
-    isRefreshing: Boolean = false,
     pullRefreshState: PullToRefreshState,
-    modifier: Modifier = Modifier,
     onAction: (HomeAction) -> Unit,
+    modifier: Modifier = Modifier,
+    isRefreshing: Boolean = false,
 ) {
     MifosScaffold(
         modifier = modifier,
@@ -303,7 +304,7 @@ private fun HomeScreenContent(
             .fillMaxWidth(),
     ) {
         LazyColumn(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize(),
             state = state,
             contentPadding = PaddingValues(),
@@ -408,10 +409,10 @@ private fun HomeScreenContent(
 private fun AccountList(
     accounts: List<Account>,
     defaultAccountId: Long?,
-    modifier: Modifier = Modifier,
     onMarkAsDefault: (Long, String) -> Unit,
     onClick: (Long) -> Unit,
     onPageChanged: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState { accounts.size }
 
@@ -442,8 +443,8 @@ private fun AccountCard(
     account: Account,
     defaultAccountId: Long?,
     onMarkAsDefault: (Long, String) -> Unit,
-    modifier: Modifier = Modifier,
     onClick: (Long) -> Unit,
+    modifier: Modifier = Modifier,
     gradientStartColor: Color = KptTheme.colorScheme.primary,
     gradientEndColor: Color = KptTheme.colorScheme.secondary,
 ) {
@@ -563,6 +564,7 @@ private fun AccountCard(
     }
 }
 
+/** Overflow icon button that opens a dropdown menu to make the account the default one via [onClickDefault]. */
 @Composable
 fun CardDropdownBox(
     onClickDefault: () -> Unit,
@@ -937,69 +939,72 @@ private fun HomeTransactionHistoryCard(
     }
 }
 
+/** Sample accounts for [HomeScreenContentPreview]. */
+private val previewAccounts = listOf(
+    Account(
+        name = "Account 1",
+        number = "123456789",
+        balance = 1000.0,
+        id = 1L,
+        currency = Currency(
+            code = "USD",
+            name = "US Dollar",
+            decimalPlaces = 2,
+            displaySymbol = "$",
+            nameCode = "USD",
+            displayLabel = "US Dollar ($)",
+        ),
+        status = Status(
+            id = 300,
+            code = "status.active",
+            value = "Active",
+            submittedAndPendingApproval = false,
+            approved = false,
+            rejected = false,
+            withdrawnByApplicant = false,
+            active = true,
+            closed = false,
+            prematureClosed = false,
+            transferInProgress = false,
+            transferOnHold = false,
+            matured = false,
+        ),
+    ),
+    Account(
+        name = "Account 1",
+        number = "123456789",
+        balance = 1000.0,
+        id = 1L,
+        currency = Currency(
+            code = "USD",
+            name = "US Dollar",
+            decimalPlaces = 2,
+            displaySymbol = "$",
+            nameCode = "USD",
+            displayLabel = "US Dollar ($)",
+        ),
+        status = Status(
+            id = 300,
+            code = "status.active",
+            value = "Active",
+            submittedAndPendingApproval = false,
+            approved = false,
+            rejected = false,
+            withdrawnByApplicant = false,
+            active = true,
+            closed = false,
+            prematureClosed = false,
+            transferInProgress = false,
+            transferOnHold = false,
+            matured = false,
+        ),
+    ),
+)
+
 @Preview
 @Composable
 private fun HomeScreenContentPreview() {
-    val accounts = listOf(
-        Account(
-            name = "Account 1",
-            number = "123456789",
-            balance = 1000.0,
-            id = 1L,
-            currency = Currency(
-                code = "USD",
-                name = "US Dollar",
-                decimalPlaces = 2,
-                displaySymbol = "$",
-                nameCode = "USD",
-                displayLabel = "US Dollar ($)",
-            ),
-            status = Status(
-                id = 300,
-                code = "status.active",
-                value = "Active",
-                submittedAndPendingApproval = false,
-                approved = false,
-                rejected = false,
-                withdrawnByApplicant = false,
-                active = true,
-                closed = false,
-                prematureClosed = false,
-                transferInProgress = false,
-                transferOnHold = false,
-                matured = false,
-            ),
-        ),
-        Account(
-            name = "Account 1",
-            number = "123456789",
-            balance = 1000.0,
-            id = 1L,
-            currency = Currency(
-                code = "USD",
-                name = "US Dollar",
-                decimalPlaces = 2,
-                displaySymbol = "$",
-                nameCode = "USD",
-                displayLabel = "US Dollar ($)",
-            ),
-            status = Status(
-                id = 300,
-                code = "status.active",
-                value = "Active",
-                submittedAndPendingApproval = false,
-                approved = false,
-                rejected = false,
-                withdrawnByApplicant = false,
-                active = true,
-                closed = false,
-                prematureClosed = false,
-                transferInProgress = false,
-                transferOnHold = false,
-                matured = false,
-            ),
-        ),
-    )
+    val accounts = previewAccounts
     val transactions = listOf(
         Transaction(
             accountId = 1L,

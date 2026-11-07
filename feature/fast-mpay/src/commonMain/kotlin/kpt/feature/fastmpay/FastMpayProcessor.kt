@@ -60,7 +60,9 @@ class FastMpayProcessor(
     private val officeRepository: OfficeRepository,
 ) {
 
+    /** Constants for [FastMpayProcessor]. */
     companion object {
+        /** Office name used when no specific office is resolved. */
         const val DEFAULT_OFFICE_NAME = "Head Office"
     }
 

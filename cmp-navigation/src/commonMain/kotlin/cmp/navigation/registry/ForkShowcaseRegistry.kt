@@ -24,13 +24,10 @@ import kpt.feature.settings.DevMenuEntry
  */
 object ForkShowcaseRegistry {
     /**
-     * Dev-menu entries surfaced in `SettingsScreen`'s Developer section. Returns an
-     * empty list on release builds (dev menu hidden) and, on a `--clean` fork where the
-     * fenced block is stripped, the trailing `return emptyList()` is the whole body.
+     * Dev-menu entries surfaced in `SettingsScreen`'s Developer section. This fork ships none (its
+     * demo entries were stripped), so the list is empty.
      */
-    fun devSettingsEntries(navController: NavController): List<DevMenuEntry> {
-        return emptyList()
-    }
+    val devSettingsEntries: (NavController) -> List<DevMenuEntry> = { _ -> emptyList() }
 
     /** Dev-only nav destinations registered inside the authenticated graph. */
     val devDestinations: NavGraphBuilder.(NavController) -> Unit = { navController ->

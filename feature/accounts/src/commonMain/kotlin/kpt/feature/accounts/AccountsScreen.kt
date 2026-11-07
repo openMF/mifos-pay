@@ -63,35 +63,36 @@ import kpt.core.ui.RevealDirection
 import kpt.core.ui.RevealSwipe
 import kpt.core.ui.rememberRevealState
 import kpt.core.ui.utils.EventsEffect
+import kpt.feature.accounts.generated.resources.Res
+import kpt.feature.accounts.generated.resources.baseline_check
+import kpt.feature.accounts.generated.resources.baseline_unchecked
+import kpt.feature.accounts.generated.resources.feature_accounts_add
+import kpt.feature.accounts.generated.resources.feature_accounts_apply_for_loan
+import kpt.feature.accounts.generated.resources.feature_accounts_check
+import kpt.feature.accounts.generated.resources.feature_accounts_default
+import kpt.feature.accounts.generated.resources.feature_accounts_edit
+import kpt.feature.accounts.generated.resources.feature_accounts_error_oops
+import kpt.feature.accounts.generated.resources.feature_accounts_info
+import kpt.feature.accounts.generated.resources.feature_accounts_savings_account
+import kpt.feature.accounts.generated.resources.feature_accounts_status_active
+import kpt.feature.accounts.generated.resources.feature_accounts_status_approved
+import kpt.feature.accounts.generated.resources.feature_accounts_status_closed
+import kpt.feature.accounts.generated.resources.feature_accounts_status_matured
+import kpt.feature.accounts.generated.resources.feature_accounts_status_pending_approval
+import kpt.feature.accounts.generated.resources.feature_accounts_status_prematurely_closed
+import kpt.feature.accounts.generated.resources.feature_accounts_status_rejected
+import kpt.feature.accounts.generated.resources.feature_accounts_status_transfer_in_progress
+import kpt.feature.accounts.generated.resources.feature_accounts_status_transfer_on_hold
+import kpt.feature.accounts.generated.resources.feature_accounts_status_withdrawn
+import kpt.feature.accounts.generated.resources.feature_accounts_unexpected_error_subtitle
 import kpt.feature.accounts.savingsaccount.SavingsAddEditType
 import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
-import mifos_pay.feature.accounts.generated.resources.Res
-import mifos_pay.feature.accounts.generated.resources.baseline_check
-import mifos_pay.feature.accounts.generated.resources.baseline_unchecked
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_add
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_apply_for_loan
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_check
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_default
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_edit
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_error_oops
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_info
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_savings_account
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_active
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_approved
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_closed
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_matured
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_pending_approval
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_prematurely_closed
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_rejected
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_transfer_in_progress
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_transfer_on_hold
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_status_withdrawn
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_unexpected_error_subtitle
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen listing the user's savings accounts and beneficiaries with add, edit and detail actions. */
 @Composable
 fun AccountsScreen(
     onViewSavingAccountDetails: (Long) -> Unit,
@@ -504,28 +505,54 @@ private fun StatusChip(label: String, color: Color) {
     )
 }
 
+/**
+ * Savings account lifecycle statuses, each mapped to a status predicate and label.
+ *
+ * @property isActive Tests whether a Status matches this entry.
+ * @property labelRes String resource for the status label.
+ */
 enum class SavingAccountStatus(
     val isActive: (Status) -> Boolean,
     val labelRes: StringResource,
 ) {
+    /** Submitted and awaiting approval. */
     PendingApproval(
         { it.submittedAndPendingApproval },
         Res.string.feature_accounts_status_pending_approval,
     ),
+
+    /** Approved. */
     Approved({ it.approved }, Res.string.feature_accounts_status_approved),
+
+    /** Rejected. */
     Rejected({ it.rejected }, Res.string.feature_accounts_status_rejected),
+
+    /** Withdrawn by the applicant. */
     Withdrawn({ it.withdrawnByApplicant }, Res.string.feature_accounts_status_withdrawn),
+
+    /** Active. */
     Active({ it.active }, Res.string.feature_accounts_status_active),
+
+    /** Closed. */
     Closed({ it.closed }, Res.string.feature_accounts_status_closed),
+
+    /** Closed prematurely. */
     PrematureClosed({ it.prematureClosed }, Res.string.feature_accounts_status_prematurely_closed),
+
+    /** Transfer in progress. */
     TransferInProgress(
         { it.transferInProgress },
         Res.string.feature_accounts_status_transfer_in_progress,
     ),
+
+    /** Transfer on hold. */
     TransferOnHold({ it.transferOnHold }, Res.string.feature_accounts_status_transfer_on_hold),
+
+    /** Matured. */
     Matured({ it.matured }, Res.string.feature_accounts_status_matured),
 }
 
+/** Chip container color used to display this status. */
 val SavingAccountStatus.color: Color
     @Composable get() = when (this) {
         SavingAccountStatus.PendingApproval -> KptTheme.colorScheme.primaryContainer.copy(alpha = 0.6f)

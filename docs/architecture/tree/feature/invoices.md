@@ -22,10 +22,10 @@ ViewModels: `InvoiceDetailViewModel`, `InvoicesViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/invoices sha=3003ae200c892c54c8001cbb94787988e05be850 -->
+<!-- api-docs:begin module=feature/invoices sha=46135e63699e5e9d65a65686611b4c3f9b99e9aa -->
 ## API reference
 
-_Generated from `feature/invoices` at tree `3003ae200c89` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/invoices` at tree `46135e63699e` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,16 +38,16 @@ rather than re-declaring what they already own.
 ```kotlin
 fun InvoiceScreen(
 ```
-_No KDoc at source._
+Screen listing the client's invoices; selecting one calls `navigateToInvoiceDetailScreen` with its id.
 
 ### `feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoicesViewModel.kt`
 
 ```kotlin
 class InvoicesViewModel(
 ```
-_No KDoc at source._
+ViewModel that loads the current client's invoices and emits navigation to invoice detail.
 
-<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoiceScreen.kt:41</code></summary>
+<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoiceScreen.kt:42</code></summary>
 
 ```kotlin
     navigateToInvoiceDetailScreen: (Long) -> Unit,
@@ -64,14 +64,14 @@ _No KDoc at source._
 ```kotlin
 data class InvoiceState(
 ```
-_No KDoc at source._
+Persisted UI state of the invoices screen.
 
 ```kotlin
 sealed interface InvoiceAction
 ```
-_No KDoc at source._
+User actions on the invoices screen.
 
-<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoiceScreen.kt:67</code></summary>
+<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoiceScreen.kt:68</code></summary>
 
 ```kotlin
     state: ScreenState<List<Invoice>>,
@@ -88,9 +88,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface InvoiceEvent
 ```
-_No KDoc at source._
+One-off events emitted by the invoices screen.
 
-<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoiceScreen.kt:47</code></summary>
+<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoiceScreen.kt:48</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -109,21 +109,21 @@ _No KDoc at source._
 ```kotlin
 val InvoicesModule = module
 ```
-_No KDoc at source._
+Koin module providing the invoice list and invoice detail view models.
 
 ### `feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/navigation/InvoiceNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToInvoiceDetail(invoiceId: Long)
 ```
-_No KDoc at source._
+Navigates to the detail screen of the invoice with the given `invoiceId`.
 
 ```kotlin
 fun NavGraphBuilder.invoiceDetailScreen(
 ```
-_No KDoc at source._
+Registers the invoice detail destination, which takes the invoice id as a long argument.
 
 ---
 
-_4 type(s), 4 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 3 live call site(s)._
+_4 type(s), 4 function(s)/property(ies); 8 carry KDoc at source; 0 authored example(s); 3 live call site(s)._
 <!-- api-docs:end -->

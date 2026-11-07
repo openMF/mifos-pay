@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import kpt.feature.mpay.qr.scan.components.QrPermissionDenied
+/** Platform camera scanner that detects the given [types] and reports each decoded value via [onScanned]. */
 @Composable
 expect fun QrCodeScanner(
     types: List<CodeType>,
@@ -23,6 +24,7 @@ expect fun QrCodeScanner(
     onScanned: (String) -> Boolean,
 )
 
+/** Wraps [QrCodeScanner] with a camera permission check, showing [permissionDeniedContent] when access is denied. */
 @Composable
 fun QrScannerWithPermissions(
     types: List<CodeType>,

@@ -12,8 +12,11 @@ package kpt.core.data.repository
 import kotlinx.coroutines.flow.StateFlow
 import kpt.core.model.utils.CurrencyCode
 import kpt.core.model.utils.Locale
+/** Repository for static reference data bundled with the app. */
 interface LocalAssetRepository {
+    /** Locales available in the app. */
     val localeList: StateFlow<List<Locale>>
 
+    /** Currency codes available in the app. */
     val currencyList: StateFlow<List<CurrencyCode>>
 }

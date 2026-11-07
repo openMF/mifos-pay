@@ -30,6 +30,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import co.touchlab.kermit.Logger.Companion as KermitLogger
 
+/** Creates a platform-specific [HttpClient] configured by [config]. */
 expect fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient
 
 /**

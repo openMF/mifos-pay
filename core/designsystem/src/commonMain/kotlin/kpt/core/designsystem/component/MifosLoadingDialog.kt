@@ -29,6 +29,7 @@ import androidx.compose.ui.window.DialogProperties
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.theme.fork.MifosTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Full-screen modal dialog with a loading indicator, driven by [LoadingDialogState]. */
 @Composable
 fun MifosLoadingDialog(
     visibilityState: LoadingDialogState,
@@ -98,7 +99,9 @@ private fun MifosLoadingDialog_preview() {
  * Models display of a [MifosLoadingDialog].
  */
 sealed class LoadingDialogState {
+    /** Loading dialog is not displayed. */
     data object Hidden : LoadingDialogState()
 
+    /** Loading dialog is displayed. */
     data object Shown : LoadingDialogState()
 }

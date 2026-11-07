@@ -13,6 +13,7 @@ import kpt.core.datastore.PreferencesHelper
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
+/** Android Koin module providing [PreferencesHelper] backed by the application context. */
 val CoreDataStoreModule = module {
 
     factory {

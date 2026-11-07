@@ -19,10 +19,15 @@ import kpt.core.common.StringProvider
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+/** Koin module binding the default [StringProvider]. */
 val stringProviderModule = module {
     single<StringProvider> { DefaultStringProvider() }
 }
 
+/**
+ * Koin module providing the Default and Unconfined dispatchers and the application scope (IO comes from
+ * [ioDispatcherModule]).
+ */
 val DispatchersModule = module {
     includes(ioDispatcherModule)
     single<CoroutineDispatcher>(named(MifosDispatchers.Default.name)) { Dispatchers.Default }
@@ -32,4 +37,5 @@ val DispatchersModule = module {
     }
 }
 
+/** Platform-specific Koin module binding the IO dispatcher. */
 expect val ioDispatcherModule: Module

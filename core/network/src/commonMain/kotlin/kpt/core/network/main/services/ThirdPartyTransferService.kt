@@ -16,10 +16,13 @@ import kpt.core.model.network.entity.TPTResponse
 import kpt.core.model.network.entity.payload.TransferPayload
 import kpt.core.model.network.entity.templates.account.AccountOptionsTemplate
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for third-party transfers. */
 interface ThirdPartyTransferService {
+    /** Fetches the account options template for a transfer. */
     @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template?type=tpt")
     suspend fun accountTransferTemplate(): AccountOptionsTemplate
 
+    /** Makes a third-party transfer. */
     @POST(ApiEndPoints.ACCOUNT_TRANSFER + "?type=tpt")
     suspend fun makeTransfer(@Body transferPayload: TransferPayload): TPTResponse
 }

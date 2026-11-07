@@ -28,6 +28,7 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Step heading with a verified/unverified status icon next to [text]. */
 @Composable
 fun VerifyStepHeader(
     text: String,
@@ -64,6 +65,7 @@ fun VerifyStepHeader(
     }
 }
 
+/** Preview of [VerifyStepHeader] in the verified state. */
 @Preview
 @Composable
 fun VerifyStepHeaderVerifiedPreview() {
@@ -72,6 +74,7 @@ fun VerifyStepHeaderVerifiedPreview() {
     }
 }
 
+/** Preview of [VerifyStepHeader] in the unverified state. */
 @Preview
 @Composable
 fun VerifyStepHeaderUnverifiedPreview() {

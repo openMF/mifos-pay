@@ -11,6 +11,12 @@ package kpt.core.model.network.entity.register
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for verifying a newly registered user.
+ *
+ * @property requestId Id of the verification request.
+ * @property authenticationToken Token used to verify the user.
+ */
 @Serializable
 data class UserVerify(
     val requestId: String? = null,

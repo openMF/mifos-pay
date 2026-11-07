@@ -11,6 +11,12 @@ package kpt.core.model.network.entity
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Generic paged Fineract response wrapper.
+ *
+ * @property totalFilteredRecords Total records matching the filter.
+ * @property pageItems Items on this page.
+ */
 @Serializable
 data class Page<T>(
     val totalFilteredRecords: Int = 0,

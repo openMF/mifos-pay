@@ -14,9 +14,11 @@ import kotlinx.coroutines.flow.Flow
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.common.ScreenState
 import kpt.core.model.notification.Notification
+/** Repository for user notifications. */
 interface NotificationRepository {
     // Phase-3 cutover: reads now return Flow<ScreenState<T>> per the CORE_DATA
     // recipe. Callers migrate via BaseViewModel.observeScreen / stateInAsScreen.
+    /** Streams the user's notifications. */
     fun fetchNotifications(): Flow<ScreenState<List<Notification>>>
 
     /**

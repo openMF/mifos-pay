@@ -280,13 +280,13 @@ print_items() {
 }
 
 # apply_template_migrations — follow the template's renames BEFORE anything is merged.
+MIGRATE_DIR=""
 # The ledger (template-migrations.yaml) and its applier come from the commit being synced (a fork's
 # copies may predate a rename). FORK_STATE moves to a commit object holding the result (no hooks, branch
 # unmoved): every merge reads "ours" from FORK_STATE, so it must already carry the new names —
 # otherwise a renamed merge-owned file looks fork-deleted and a renamed fork seam keeps the old name
 # the template no longer calls. Keeps the ledger + applier in MIGRATE_DIR for migrated_from() and
 # migrate_base(), which serve every merge of the run.
-MIGRATE_DIR=""
 apply_template_migrations() {
     git cat-file -e "$TEMPLATE_REF:template-migrations.yaml" 2>/dev/null \
         && git cat-file -e "$TEMPLATE_REF:scripts/white-label/template-migrations.sh" 2>/dev/null || return 0

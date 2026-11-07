@@ -11,6 +11,7 @@ package kpt.feature.send.money
 
 import androidx.compose.runtime.Composable
 
+/** Native (iOS) actual: contact permission handling is not implemented yet. */
 @Composable
 actual fun ContactPermissionHandler() {
     // TODO

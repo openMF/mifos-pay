@@ -22,10 +22,10 @@ ViewModels: `KYCDescriptionViewModel`, `KYCLevel1ViewModel`, `KYCLevel2ViewModel
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/kyc sha=555bb0cd2cc0906f773bee627eba1ee57edd8608 -->
+<!-- api-docs:begin module=feature/kyc sha=46d0223c85d457837c9f97330b6d50ee8580e0f5 -->
 ## API reference
 
-_Generated from `feature/kyc` at tree `555bb0cd2cc0` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/kyc` at tree `46d0223c85d4` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,9 +38,9 @@ rather than re-declaring what they already own.
 ```kotlin
 fun KYCScreen(
 ```
-_No KDoc at source._
+Screen describing the KYC levels; each level calls its matching click callback.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCNavigation.kt:28</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCNavigation.kt:31</code></summary>
 
 ```kotlin
 ) {
@@ -59,9 +59,9 @@ _No KDoc at source._
 ```kotlin
 class KYCDescriptionViewModel(
 ```
-_No KDoc at source._
+ViewModel exposing the client's current KYC level and routing level selection events.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:55</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:56</code></summary>
 
 ```kotlin
     onLevel3Clicked: () -> Unit,
@@ -78,14 +78,14 @@ _No KDoc at source._
 ```kotlin
 data class KycState(
 ```
-_No KDoc at source._
+Persisted UI state of the KYC description screen.
 
 ```kotlin
 sealed interface KYCDescriptionUiState
 ```
-_No KDoc at source._
+Loading, content and error states of the KYC description screen.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:79</code></summary>
 
 ```kotlin
 @Composable
@@ -102,9 +102,9 @@ private fun KYCDescriptionScreen(
 ```kotlin
 enum class KycLevel(
 ```
-_No KDoc at source._
+KYC verification levels offered in the wallet.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:112</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:113</code></summary>
 
 ```kotlin
 @Composable
@@ -121,9 +121,9 @@ private fun KYCDescriptionScreen(
 ```kotlin
 sealed interface KycEvent
 ```
-_No KDoc at source._
+One-off navigation events emitted by the KYC description screen.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:61</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:62</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -140,9 +140,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface KycAction
 ```
-_No KDoc at source._
+User actions on the KYC description screen.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:79</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionScreen.kt:80</code></summary>
 
 ```kotlin
 private fun KYCDescriptionScreen(
@@ -161,7 +161,7 @@ private fun KYCDescriptionScreen(
 ```kotlin
 fun KYCLevel3ScreenContent(
 ```
-_No KDoc at source._
+Static KYC level 3 (review and submit) screen body with a back button via `navigateBack`.
 
 ### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCLevel3ViewModel.kt`
 
@@ -187,74 +187,74 @@ _No KDoc at source._
 ```kotlin
 data object KYCLevel3State
 ```
-_No KDoc at source._
+Empty UI state of the KYC level 3 stub screen.
 
 ```kotlin
 sealed interface KYCLevel3Event
 ```
-_No KDoc at source._
+One-off events of the KYC level 3 screen (none defined).
 
 ```kotlin
 sealed interface KYCLevel3Action
 ```
-_No KDoc at source._
+User actions of the KYC level 3 screen (none defined).
 
 ### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/di/KYCModule.kt`
 
 ```kotlin
 val KYCModule = module
 ```
-_No KDoc at source._
+Koin module providing the KYC description and level 1 to 3 view models.
 
 ### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCLevel1Navigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYCLevel1()
 ```
-_No KDoc at source._
+Navigates to the KYC level 1 screen.
 
 ```kotlin
 fun NavGraphBuilder.kycLevel1Screen(
 ```
-_No KDoc at source._
+Registers the KYC level 1 destination in the navigation graph.
 
 ### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCLevel2Navigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYCLevel2(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the KYC level 2 screen.
 
 ```kotlin
 fun NavGraphBuilder.kycLevel2Screen(
 ```
-_No KDoc at source._
+Registers the KYC level 2 destination in the navigation graph.
 
 ### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCLevel3Navigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYCLevel3(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the KYC level 3 screen.
 
 ```kotlin
 fun NavGraphBuilder.kycLevel3Screen(
 ```
-_No KDoc at source._
+Registers the KYC level 3 destination in the navigation graph.
 
 ### `feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/navigation/KYCNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToKYC()
 ```
-_No KDoc at source._
+Navigates to the KYC description screen.
 
 ```kotlin
 fun NavGraphBuilder.kycScreen(
 ```
-_No KDoc at source._
+Registers the KYC description destination with callbacks for each KYC level.
 
 ---
 
-_10 type(s), 11 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 7 live call site(s)._
+_10 type(s), 11 function(s)/property(ies); 20 carry KDoc at source; 0 authored example(s); 7 live call site(s)._
 <!-- api-docs:end -->

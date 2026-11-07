@@ -35,8 +35,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.base.platform.PlatformBuildConfig
 import kpt.core.base.ui.detectMultiTapGesture
+import kpt.core.common.PlatformBuildConfig
 import kpt.core.designsystem.component.BasicDialogState
 import kpt.core.designsystem.component.MifosBasicDialog
 import kpt.core.designsystem.component.MifosButton
@@ -47,13 +47,13 @@ import kpt.core.designsystem.theme.styleNormal18sp
 import kpt.core.ui.MifosPasswordField
 import kpt.core.ui.MifosProgressIndicatorOverlay
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.auth.generated.resources.Res
-import mifos_pay.feature.auth.generated.resources.feature_auth_connected_to
-import mifos_pay.feature.auth.generated.resources.feature_auth_login
-import mifos_pay.feature.auth.generated.resources.feature_auth_password
-import mifos_pay.feature.auth.generated.resources.feature_auth_sign_up
-import mifos_pay.feature.auth.generated.resources.feature_auth_username
-import mifos_pay.feature.auth.generated.resources.feature_auth_welcome_back
+import kpt.feature.auth.generated.resources.Res
+import kpt.feature.auth.generated.resources.feature_auth_connected_to
+import kpt.feature.auth.generated.resources.feature_auth_login
+import kpt.feature.auth.generated.resources.feature_auth_password
+import kpt.feature.auth.generated.resources.feature_auth_sign_up
+import kpt.feature.auth.generated.resources.feature_auth_username
+import kpt.feature.auth.generated.resources.feature_auth_welcome_back
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -138,7 +138,7 @@ private fun LoginDialogs(
     when (dialogState) {
         is LoginState.DialogState.Error -> MifosBasicDialog(
             visibilityState = BasicDialogState.Shown(
-                message = dialogState.message,
+                message = stringResource(dialogState.message),
             ),
             onDismissRequest = onDismissRequest,
         )

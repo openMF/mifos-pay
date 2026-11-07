@@ -9,25 +9,34 @@
  */
 package kpt.core.network
 
+/** Entry point for the Fineract self-service API services created by [KtorfitClient]. */
 class SelfServiceApiManager(
     private val ktorfitClient: KtorfitClient,
 ) : PocketDataManager {
+    /** Authentication API. */
     val authenticationApi by lazy { ktorfitClient.authenticationApi }
 
     override val clientsApi by lazy { ktorfitClient.clientsApi }
 
+    /** Savings accounts list API. */
     val savingAccountsListApi by lazy { ktorfitClient.savingsAccountsApi }
 
+    /** Registration API. */
     val registrationAPi by lazy { ktorfitClient.registrationAPi }
 
+    /** Beneficiaries API. */
     val beneficiaryApi by lazy { ktorfitClient.beneficiaryApi }
 
+    /** Third-party transfers API. */
     val thirdPartyTransferApi by lazy { ktorfitClient.thirdPartyTransferApi }
 
+    /** Account transfers API. */
     val accountTransfersApi by lazy { ktorfitClient.accountTransfersApi }
 
+    /** Offices API. */
     val officeApi by lazy { ktorfitClient.officeApi }
 
+    /** Users API. */
     val userApi by lazy { ktorfitClient.userApi }
 
     override val pocketApi by lazy { ktorfitClient.pocketApi }

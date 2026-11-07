@@ -12,6 +12,14 @@ package kpt.core.model.interbank
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Request for the details of a party in another bank.
+ *
+ * @property partyId Id of the party.
+ * @property partyIdType Type of the party id.
+ * @property currencyCode Currency code.
+ * @property ownerFspId Id of the provider that owns the party.
+ */
 @Serializable
 data class InterBankPartyInfoRequest(
     @SerialName("partyId")
@@ -24,6 +32,25 @@ data class InterBankPartyInfoRequest(
     val ownerFspId: String,
 )
 
+/**
+ * Details of a party in another bank, or an error describing why lookup failed.
+ *
+ * @property sourceFspId Id of the requesting provider.
+ * @property destinationFspId Id of the provider holding the party.
+ * @property requestId Id of the request.
+ * @property partyId Id of the party.
+ * @property partySubIdOrType Optional sub-id or type of the party.
+ * @property currencyCode Currency code.
+ * @property firstName First name of the party.
+ * @property middleName Optional middle name.
+ * @property lastName Last name of the party.
+ * @property dateOfBirth Optional date of birth.
+ * @property systemMessage Status message from the system.
+ * @property executionStatus Whether the lookup succeeded.
+ * @property errorCode Error code when the lookup failed.
+ * @property errorMessage Error message when the lookup failed.
+ * @property partyIdType Type of the party id.
+ */
 @Serializable
 data class InterBankPartyInfoResponse(
     @SerialName("sourceFspId")

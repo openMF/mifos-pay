@@ -13,6 +13,7 @@ import kpt.core.common.ScreenStateStream
 import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillStatus
 import kpt.core.model.autopay.RecurrencePattern
+/** Repository for bills and their statuses. */
 interface BillRepository {
     /**
      * Get all bills for a client
@@ -90,6 +91,16 @@ interface BillRepository {
     suspend fun clearAllBills()
 }
 
+/**
+ * Aggregate figures for a client's bills.
+ * @property totalBills Total number of bills.
+ * @property activeBills Number of active bills.
+ * @property overdueBills Number of overdue bills.
+ * @property totalAmount Total amount across bills.
+ * @property currency Currency code of the amounts.
+ * @property upcomingPayments Number of upcoming payments.
+ * @property totalAmountThisMonth Total amount due this month.
+ */
 data class BillStatistics(
     val totalBills: Int = 0,
     val activeBills: Int = 0,

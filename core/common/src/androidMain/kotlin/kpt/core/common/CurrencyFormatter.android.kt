@@ -12,8 +12,12 @@ package kpt.core.common
 import java.text.NumberFormat
 import java.util.Locale
 
+/** Platform actual of [CurrencyFormatter] for wallet balance formatting. */
 actual object CurrencyFormatter {
 
+    /**
+     * Platform actual: formats [balance] as a currency string for [currencyCode] with [maximumFractionDigits] decimals.
+     */
     actual fun format(
         balance: Double?,
         currencyCode: String?,
@@ -25,6 +29,7 @@ actual object CurrencyFormatter {
         return formatter.format(balance)
     }
 
+    /** Platform actual: formats [balance] as a plain number string with [maximumFractionDigits] decimals. */
     actual fun format(
         balance: Double?,
         maximumFractionDigits: Int?,

@@ -11,6 +11,16 @@ package kpt.core.model.beneficiary
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for adding a beneficiary.
+ *
+ * @property locale Locale used to parse numbers in the request.
+ * @property name Display name of the beneficiary.
+ * @property accountNumber Beneficiary account number.
+ * @property accountType Account type code.
+ * @property transferLimit Maximum amount allowed per transfer.
+ * @property officeName Name of the beneficiary's office.
+ */
 @Serializable
 data class BeneficiaryPayload(
     val locale: String? = "en_GB",

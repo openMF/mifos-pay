@@ -55,6 +55,7 @@ import kpt.core.ui.utils.BaseViewModel
 // hits, and FineractApiManager's 18 bound APIs still carry no merchant surface. Verdict unchanged;
 // see sub-plans/MERCHANTS_ENDPOINT_VERDICT.md for the full rationale.
 // -----------------------------------------------------------------------------
+/** ViewModel of the merchants screen; holds the merchant list, search query and refresh state. */
 class MerchantViewModel(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MerchantState, MerchantEvent, MerchantAction>(
@@ -75,6 +76,7 @@ class MerchantViewModel(
             initialValue = MerchantUiState.Empty,
         )
 
+    /** Projection of the merchant list state from [MerchantState]. */
     val merchantsListUiState: StateFlow<MerchantUiState> = stateFlow
         .map { it.merchantListUiState }
         .stateIn(
@@ -83,6 +85,7 @@ class MerchantViewModel(
             initialValue = MerchantUiState.ShowMerchants(arrayListOf()),
         )
 
+    /** Whether a refresh is in progress, projected from [MerchantState]. */
     val isRefreshing: StateFlow<Boolean> = stateFlow
         .map { it.isRefreshing }
         .stateIn(
@@ -134,6 +137,14 @@ class MerchantViewModel(
     }
 }
 
+/**
+ * Single MVI state of the merchants screen.
+ *
+ * @property merchantUiState State of the primary merchant content.
+ * @property merchantListUiState State of the merchant list.
+ * @property searchQuery Current search text.
+ * @property isRefreshing Whether a refresh is in progress.
+ */
 data class MerchantState(
     val merchantUiState: MerchantUiState = MerchantUiState.Empty,
     val merchantListUiState: MerchantUiState = MerchantUiState.ShowMerchants(arrayListOf()),
@@ -141,16 +152,41 @@ data class MerchantState(
     val isRefreshing: Boolean = false,
 )
 
+/** One-off events of the merchants screen (none defined). */
 sealed interface MerchantEvent
 
+/** User actions on the merchants screen. */
 sealed interface MerchantAction {
+    /**
+     * The search text changed.
+     *
+     * @property query The new search text.
+     */
     data class UpdateSearchQuery(val query: String) : MerchantAction
+
+    /** The user requested a refresh. */
     data object Refresh : MerchantAction
 }
 
+/** UI states of merchant content. */
 sealed class MerchantUiState {
+    /** Merchants are being loaded. */
     data object Loading : MerchantUiState()
+
+    /** No merchants to show. */
     data object Empty : MerchantUiState()
+
+    /**
+     * Loading merchants failed.
+     *
+     * @property message Error message to display.
+     */
     data class Error(val message: String) : MerchantUiState()
+
+    /**
+     * Merchants loaded.
+     *
+     * @property merchants The merchants (savings accounts) to display.
+     */
     data class ShowMerchants(val merchants: List<SavingsWithAssociationsEntity>) : MerchantUiState()
 }

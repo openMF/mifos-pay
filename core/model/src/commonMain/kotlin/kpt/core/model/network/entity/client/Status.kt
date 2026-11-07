@@ -11,6 +11,13 @@ package kpt.core.model.network.entity.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Generic Fineract status enumeration value (id, code and display value).
+ *
+ * @property id Status id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ */
 @Serializable
 data class Status(
     val id: Int? = null,

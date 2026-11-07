@@ -46,11 +46,11 @@ import kpt.core.ui.MifosDivider
 import kpt.core.ui.MifosProgressIndicator
 import kpt.core.ui.utils.EventsEffect
 import kpt.feature.savedcards.components.CreditCard
+import kpt.feature.savedcards.generated.resources.Res
+import kpt.feature.savedcards.generated.resources.feature_savedcards_error_oops
+import kpt.feature.savedcards.generated.resources.feature_savedcards_subtitle
 import kpt.feature.savedcards.utils.CardMaskStyle
 import kpt.feature.savedcards.utils.CreditCardUtils.maskCreditCardNumber
-import mifos_pay.feature.savedcards.generated.resources.Res
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_error_oops
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_subtitle
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 @Composable

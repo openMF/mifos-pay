@@ -26,6 +26,7 @@ import kpt.core.model.autopay.BillerCategory
 import kpt.core.model.autopay.BillerFormData
 import kpt.core.model.autopay.BillerValidationResult
 import kpt.core.ui.utils.BaseViewModel
+/** View model for the edit-biller form; validates input and updates the biller identified by the billerId argument. */
 class EditBillerViewModel(
     savedStateHandle: SavedStateHandle,
     private val billerRepository: BillerRepository,
@@ -254,11 +255,20 @@ class EditBillerViewModel(
         }
     }
 
+    /** Holds the saved-state key used to persist the form state. */
     companion object {
         private const val KEY_STATE = "edit_biller_state"
     }
 }
 
+/**
+ * UI state of the edit-biller form.
+ *
+ * @property formData Biller details being edited.
+ * @property validationResult Result of validating the form.
+ * @property isLoading Whether a load or save is in progress.
+ * @property error Error message to show, or null.
+ */
 @Serializable
 data class EditBillerState(
     val formData: BillerFormData = BillerFormData(),
@@ -267,19 +277,69 @@ data class EditBillerState(
     val error: String? = null,
 )
 
+/** One-off events emitted by the edit-biller view model. */
 sealed interface EditBillerEvent {
+    /**
+     * The biller was updated.
+     *
+     * @property biller The updated biller.
+     */
     data class BillerUpdated(val biller: Biller) : EditBillerEvent
 }
 
+/** User actions handled by the edit-biller view model. */
 sealed interface EditBillerAction {
+    /**
+     * The biller name changed.
+     *
+     * @property name New biller name.
+     */
     data class UpdateBillerName(val name: String) : EditBillerAction
+
+    /**
+     * The account number changed.
+     *
+     * @property accountNumber New account number.
+     */
     data class UpdateAccountNumber(val accountNumber: String) : EditBillerAction
+
+    /**
+     * The contact number changed.
+     *
+     * @property contactNumber New contact number.
+     */
     data class UpdateContactNumber(val contactNumber: String) : EditBillerAction
+
+    /**
+     * The email changed.
+     *
+     * @property email New email address.
+     */
     data class UpdateEmail(val email: String) : EditBillerAction
+
+    /**
+     * The category changed.
+     *
+     * @property category New biller category.
+     */
     data class UpdateCategory(val category: BillerCategory) : EditBillerAction
+
+    /**
+     * The address changed.
+     *
+     * @property address New address.
+     */
     data class UpdateAddress(val address: String) : EditBillerAction
+
+    /** The user tapped update. */
     data object UpdateBiller : EditBillerAction
+
+    /** Validate the form. */
     data object ValidateForm : EditBillerAction
+
+    /** Clear the current error. */
     data object ClearError : EditBillerAction
+
+    /** Clear field-level validation errors. */
     data object ClearValidationErrors : EditBillerAction
 }

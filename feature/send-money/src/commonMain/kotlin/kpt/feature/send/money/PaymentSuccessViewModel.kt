@@ -18,6 +18,7 @@ import kpt.core.common.DateHelper
 import kpt.core.ui.utils.BaseViewModel
 import kotlin.time.ExperimentalTime
 
+/** ViewModel for the payment success screen; builds its state from the navigation arguments. */
 class PaymentSuccessViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<PaymentSuccessState, PaymentSuccessEvent, PaymentSuccessAction>(
@@ -95,23 +96,41 @@ class PaymentSuccessViewModel(
 }
 
 // amount stored in paise
+/**
+ * State of the payment success screen.
+ * @property payeeName Name of the payee that was paid.
+ * @property amount Amount paid, in paise.
+ * @property upiName UPI name used for the payment.
+ * @property timestamp Formatted time of the payment.
+ */
 data class PaymentSuccessState(
     val payeeName: String = "",
     val amount: String = "",
     val upiName: String = "",
     val timestamp: String = "",
 ) {
+    /** The amount formatted for display. */
     val formattedAmount: String
         get() = AmountUtils.formatPaiseForUI(amount)
 }
 
+/** One-off events emitted by the payment success screen. */
 sealed interface PaymentSuccessEvent {
+    /** Share a screenshot of the success screen. */
     data object ShareScreenshot : PaymentSuccessEvent
+
+    /** Navigate back to the home screen. */
     data object NavigateToHome : PaymentSuccessEvent
+
+    /** Navigate to the send-money options screen. */
     data object NavigateToSendMoneyOptions : PaymentSuccessEvent
 }
 
+/** User actions on the payment success screen. */
 sealed interface PaymentSuccessAction {
+    /** The user tapped share. */
     data object ShareScreenshot : PaymentSuccessAction
+
+    /** The user tapped done. */
     data object Done : PaymentSuccessAction
 }

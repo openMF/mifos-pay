@@ -14,8 +14,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kpt.feature.history.HistoryScreen
+/** Navigation route of the history screen. */
 const val HISTORY_ROUTE = "history_route"
 
+/** Registers the history screen in the nav graph; [viewTransactionDetail] opens a transfer (two ids). */
 fun NavGraphBuilder.historyNavigation(
     viewTransactionDetail: (Long, Long) -> Unit,
 ) {
@@ -26,6 +28,7 @@ fun NavGraphBuilder.historyNavigation(
     }
 }
 
+/** Navigates to the history screen, optionally with [navOptions]. */
 fun NavController.navigateToHistory(navOptions: NavOptions? = null) {
     navigate(HISTORY_ROUTE, navOptions)
 }

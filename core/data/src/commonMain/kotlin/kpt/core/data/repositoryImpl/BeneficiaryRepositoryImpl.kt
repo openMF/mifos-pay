@@ -21,6 +21,7 @@ import kpt.core.model.beneficiary.BeneficiaryPayload
 import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.network.entity.templates.beneficiary.BeneficiaryTemplate
 import kpt.core.network.SelfServiceApiManager
+/** Default [BeneficiaryRepository] backed by the beneficiary API. */
 class BeneficiaryRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
     private val ioDispatcher: CoroutineDispatcher,

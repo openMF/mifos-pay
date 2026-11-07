@@ -11,6 +11,12 @@ package kpt.core.model.network.entity.templates.account
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Fineract transfer template listing selectable source and destination accounts.
+ *
+ * @property fromAccountOptions Selectable source accounts.
+ * @property toAccountOptions Selectable destination accounts.
+ */
 @Serializable
 data class AccountOptionsTemplate(
     val fromAccountOptions: List<AccountOption>? = listOf(),

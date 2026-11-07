@@ -19,6 +19,7 @@ import co.touchlab.kermit.Logger
  */
 actual object ScreenshotUtils {
 
+    /** Not supported on this platform; reports failure through [onError]. */
     actual suspend fun takeScreenshotAndShare(
         excludeModifiers: List<Modifier>,
         contextDetails: ScreenshotContextDetails,

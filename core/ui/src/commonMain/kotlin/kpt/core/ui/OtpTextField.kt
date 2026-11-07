@@ -103,6 +103,7 @@ fun OtpTextField(
     }
 }
 
+/** Single box showing one OTP character at [index] of [text]. */
 @Composable
 fun CharView(
     index: Int,
@@ -130,6 +131,7 @@ fun CharView(
     )
 }
 
+/** Preview of the OTP text field. */
 @Preview
 @Composable
 fun PreviewOtpTextField() {

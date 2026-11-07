@@ -15,8 +15,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.auth.mobileVerify.MobileVerificationScreen
+/** Navigation route of the mobile verification screen. */
 const val MOBILE_VERIFICATION_ROUTE = "mobile_verification_route"
 
+/** Registers the mobile verification destination in the nav graph. */
 fun NavGraphBuilder.mobileVerificationScreen(
     onNavigateBack: () -> Unit,
     onOtpVerificationSuccess: (String) -> Unit,
@@ -31,6 +33,7 @@ fun NavGraphBuilder.mobileVerificationScreen(
     }
 }
 
+/** Navigates to the mobile verification screen. */
 fun NavController.navigateToMobileVerification() {
     this.navigate(MOBILE_VERIFICATION_ROUTE)
 }

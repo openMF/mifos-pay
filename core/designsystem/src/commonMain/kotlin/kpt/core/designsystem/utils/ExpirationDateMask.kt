@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
+/** Visual transformation that formats card expiry input as MM/YY. */
 @Suppress("ReturnCount")
 class ExpirationDateMask : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText = makeExpirationFilter(text)

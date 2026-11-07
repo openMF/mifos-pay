@@ -18,6 +18,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/**
+ * Confirmation alert dialog with a title, optional text and confirm/dismiss buttons,
+ * shown while [showDialogState] is true.
+ */
 @Composable
 fun MifosDialogBox(
     title: String,
@@ -59,6 +63,7 @@ fun MifosDialogBox(
     }
 }
 
+/** Basic dialog that hosts arbitrary [content], dismissed through [onDismiss]. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosCustomDialog(

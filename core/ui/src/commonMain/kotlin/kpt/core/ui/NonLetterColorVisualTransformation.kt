@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Remembers a visual transformation that colors digits and special characters differently from letters. */
 @Composable
 fun nonLetterColorVisualTransformation(): VisualTransformation {
     val digitColor = KptTheme.colorScheme.primary

@@ -22,7 +22,9 @@ import io.ktor.http.content.PartData
 import kotlinx.coroutines.flow.Flow
 import kpt.core.model.network.entity.noncore.Document
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for documents. */
 interface DocumentService {
+    /** Fetches the documents of an entity. */
     @GET("{entityType}/{entityId}/" + ApiEndPoints.DOCUMENTS)
     suspend fun getDocuments(
         @Path("entityType") entityType: String,
@@ -47,6 +49,7 @@ interface DocumentService {
         @Part typedFile: PartData,
     ): Flow<Unit>
 
+    /** Uploads a document file for an entity. */
     @POST("{entityType}/{entityId}/" + ApiEndPoints.DOCUMENTS)
     suspend fun createDocumentFile(
         @Path("entityType") entityType: String,

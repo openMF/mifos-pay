@@ -12,6 +12,13 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Savings account type reference (id, code and label).
+ *
+ * @property id Account type id.
+ * @property code Account type code.
+ * @property value Human-readable account type label.
+ */
 @Serializable
 @Parcelize
 data class AccountType(

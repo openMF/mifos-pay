@@ -20,7 +20,7 @@ import kpt.feature.auth.navigation.navigateToSignup
 import kpt.feature.auth.navigation.signupScreen
 import kpt.feature.auth.socialSignup.navigateToSignupMethod
 import kpt.feature.auth.socialSignup.signupMethodScreen
-import org.mifos.feature.passcode.navigateToRootMifosPasscodeScreen
+import kpt.feature.passcode.navigateToRootMifosPasscodeScreen
 internal fun NavGraphBuilder.loginNavGraph(
     navController: NavController,
     onShowInstanceSelector: () -> Unit,

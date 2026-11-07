@@ -10,6 +10,15 @@
 package kpt.core.model.pocket
 
 import kpt.core.model.enums.AccountType
+/**
+ * An account that has been linked to a pocket.
+ *
+ * @property pocketId Identifier of the pocket the account is linked to.
+ * @property id Identifier of the pocket account link.
+ * @property accountId Identifier of the linked account.
+ * @property accountType Type of the account.
+ * @property accountNumber Account number.
+ */
 data class PocketAccount(
     val pocketId: Long,
     val id: Long,
@@ -18,6 +27,18 @@ data class PocketAccount(
     val accountNumber: String,
 )
 
+/**
+ * A pocket-linked account enriched with product, balance and currency details for display.
+ *
+ * @property pocket The linked pocket account.
+ * @property productName Name of the savings product.
+ * @property balance Current account balance.
+ * @property currencyCode ISO currency code.
+ * @property decimalPlaces Number of decimal places for the currency.
+ * @property status Status of the account.
+ * @property currencyDisplaySymbol Display symbol of the currency, for example "$"; null when unavailable.
+ * @property syncStatus Local sync state of the record, "SYNCED" by default.
+ */
 data class DetailedPocketAccount(
     val pocket: PocketAccount,
     val productName: String?,
@@ -36,6 +57,19 @@ data class DetailedPocketAccount(
     val syncStatus: String = "SYNCED",
 )
 
+/**
+ * An account that the user can link to a pocket, with its balance and currency details.
+ *
+ * @property accountId Identifier of the account.
+ * @property productName Name of the savings product.
+ * @property accountNumber Account number.
+ * @property accountType Type of the account.
+ * @property balance Current account balance.
+ * @property currencyCode ISO currency code.
+ * @property decimalPlaces Number of decimal places for the currency.
+ * @property status Status of the account.
+ * @property currencyDisplaySymbol Display symbol of the currency, for example "$"; null when unavailable.
+ */
 data class LinkableAccount(
     val accountId: Long,
     val productName: String?,
@@ -49,14 +83,34 @@ data class LinkableAccount(
     val currencyDisplaySymbol: String? = null,
 )
 
+/**
+ * Lifecycle status of a savings account as shown for pocket accounts.
+ */
 enum class AccountStatus {
+    /** Submitted and awaiting approval. */
     PENDING,
+
+    /** Approved but not yet activated. */
     APPROVED,
+
+    /** Active and usable. */
     ACTIVE,
+
+    /** Closed. */
     CLOSED,
+
+    /** Application was rejected. */
     REJECTED,
+
+    /** Application was withdrawn by the applicant. */
     WITHDRAWN,
+
+    /** Loan account that has been overpaid. */
     OVERPAID,
+
+    /** Reached its maturity date. */
     MATURED,
+
+    /** Status not recognised. */
     UNKNOWN,
 }

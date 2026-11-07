@@ -11,6 +11,11 @@ package kpt.core.model.network
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Minimal Fineract command response carrying only the id of the affected resource.
+ *
+ * @property resourceId Id of the created or affected resource.
+ */
 @Serializable
 data class CommonResponse(
     val resourceId: Int,

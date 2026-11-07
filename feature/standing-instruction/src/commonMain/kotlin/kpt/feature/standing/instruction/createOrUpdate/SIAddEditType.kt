@@ -11,17 +11,24 @@ package kpt.feature.standing.instruction.createOrUpdate
 
 import kotlinx.serialization.Serializable
 
+/** Whether the add/edit screen creates a new standing instruction or edits an existing one. */
 @Serializable
 sealed class SIAddEditType {
 
+    /** Id of the instruction being edited, or null when adding. */
     abstract val standingInsId: Long?
 
+    /** Create a new standing instruction. */
     @Serializable
     data object AddItem : SIAddEditType() {
         override val standingInsId: Long?
             get() = null
     }
 
+    /**
+     * Edit an existing standing instruction.
+     * @property standingInsId Id of the instruction to edit.
+     */
     @Serializable
     data class EditItem(
         override val standingInsId: Long,

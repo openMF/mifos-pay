@@ -14,10 +14,12 @@ import kpt.core.model.network.entity.client.ClientAccountsEntity
 import kpt.core.model.savingsaccount.AccountType
 import kpt.core.model.savingsaccount.SavingAccountEntity
 import kpt.core.model.network.entity.templates.account.AccountType as NetworkAccountType
+/** Maps the savings accounts of a client's accounts response to domain [Account]s. */
 fun ClientAccountsEntity.toAccount(): List<Account> {
     return this.savingsAccounts.toAccount()
 }
 
+/** Maps a list of savings account entities to domain [Account]s. */
 fun List<SavingAccountEntity>.toAccount(): List<Account> {
     return map {
         Account(
@@ -35,6 +37,7 @@ fun List<SavingAccountEntity>.toAccount(): List<Account> {
     }
 }
 
+/** Maps a network account type to the domain [AccountType]. */
 fun NetworkAccountType.toModelAccountType(): AccountType {
     return AccountType(
         id = this.id?.toLong() ?: 0L,

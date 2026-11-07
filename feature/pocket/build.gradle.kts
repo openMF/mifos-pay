@@ -60,3 +60,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.pocket.generated.resources"
+}

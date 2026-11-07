@@ -62,6 +62,8 @@ import kpt.core.base.database.annotation.DbEntity
  * @property updatedAtJson JSON encoding of `List<Long>` — Fineract date parts.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property lastName Cardholder last name.
  */
 @DbEntity
 @Entity(

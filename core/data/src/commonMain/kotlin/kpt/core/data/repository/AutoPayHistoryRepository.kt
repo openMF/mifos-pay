@@ -14,6 +14,7 @@ import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.network.entity.Page
 // TODO: Align repository with final API response/request schema once confirmed by backend
 
+/** Repository for the execution history of auto-pay schedules. */
 interface AutoPayHistoryRepository {
     /**
      * Get AutoPay history for a specific AutoPay schedule
@@ -62,6 +63,17 @@ interface AutoPayHistoryRepository {
     fun getHistoryStatistics(autoPayId: Long): ScreenStateStream<AutoPayHistoryStatistics>
 }
 
+/**
+ * Aggregate execution counts and amounts of auto-pay history.
+ * @property totalTransactions Total number of executions.
+ * @property successfulTransactions Number of successful executions.
+ * @property failedTransactions Number of failed executions.
+ * @property pendingTransactions Number of executions still pending.
+ * @property totalAmount Total amount across all executions.
+ * @property successfulAmount Total amount of successful executions.
+ * @property failedAmount Total amount of failed executions.
+ * @property currency Currency code of the amounts.
+ */
 data class AutoPayHistoryStatistics(
     val totalTransactions: Int = 0,
     val successfulTransactions: Int = 0,

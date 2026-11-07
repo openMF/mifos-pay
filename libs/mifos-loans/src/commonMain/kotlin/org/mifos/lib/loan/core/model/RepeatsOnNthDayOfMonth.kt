@@ -11,6 +11,13 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the repeats on nth day of month used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property code Short code identifying the value.
+ * @property value Human-readable value.
+ */
 @Serializable
 data class RepeatsOnNthDayOfMonth(
     val id: Int? = null,

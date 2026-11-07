@@ -11,6 +11,14 @@ package kpt.core.model.user
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A role assigned to a user.
+ *
+ * @property id Unique identifier.
+ * @property name Display name.
+ * @property description Description.
+ * @property disabled Whether the role is disabled.
+ */
 @Parcelize
 data class RoleInfo(
     val id: String,

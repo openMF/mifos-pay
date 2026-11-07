@@ -12,6 +12,20 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Savings account sub-status (for example dormant or blocked) with state flags.
+ *
+ * @property id Sub-status id.
+ * @property code Sub-status code.
+ * @property value Human-readable sub-status label.
+ * @property none No sub-status applies.
+ * @property inactive Account is inactive.
+ * @property dormant Account is dormant.
+ * @property escheat Account has escheated.
+ * @property block Account is fully blocked.
+ * @property blockCredit Credits are blocked.
+ * @property blockDebit Debits are blocked.
+ */
 @Serializable
 @Parcelize
 data class SubStatus(

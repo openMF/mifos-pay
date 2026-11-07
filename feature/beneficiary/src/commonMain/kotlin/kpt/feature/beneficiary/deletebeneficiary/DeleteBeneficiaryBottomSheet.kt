@@ -34,13 +34,13 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosBottomSheet
 import kpt.core.designsystem.component.MifosButton
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.beneficiary.generated.resources.Res
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_cancel
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_delete
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_delete_beneficiary
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_delete_confirmation_message
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_delete_failed
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_ok
+import kpt.feature.beneficiary.generated.resources.Res
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_cancel
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_delete
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_delete_beneficiary
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_delete_confirmation_message
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_delete_failed
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_ok
 import org.jetbrains.compose.resources.stringResource
 /**
  * Bottom sheet composable for delete beneficiary flow.

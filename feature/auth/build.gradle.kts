@@ -53,3 +53,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.auth.generated.resources"
+}

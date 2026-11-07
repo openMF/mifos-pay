@@ -19,6 +19,7 @@ import androidx.compose.ui.semantics.testTag
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.theme.fork.MifosTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Dialog that shows an error-style title and message from a [BasicDialogState] with a single dismiss action. */
 @Composable
 fun MifosBasicDialog(
     visibilityState: BasicDialogState,
@@ -61,6 +62,7 @@ fun MifosBasicDialog(
     }
 }
 
+/** Dialog that shows a title and message from a [BasicDialogState] with confirm and dismiss actions. */
 @Composable
 fun MifosBasicDialog(
     visibilityState: BasicDialogState,
@@ -132,8 +134,15 @@ private fun MifosBasicDialog_preview() {
  */
 sealed class BasicDialogState {
 
+    /** No dialog is displayed. */
     data object Hidden : BasicDialogState()
 
+    /**
+     * A dialog is displayed with the given text.
+     *
+     * @property message Body text of the dialog.
+     * @property title Dialog title; defaults to an error heading.
+     */
     data class Shown(
         val message: String,
         val title: String = "An Error Occurred!",

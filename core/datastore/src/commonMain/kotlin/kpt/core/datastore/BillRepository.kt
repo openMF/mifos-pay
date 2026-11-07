@@ -11,6 +11,7 @@ package kpt.core.datastore
 
 import kotlinx.coroutines.flow.Flow
 import kpt.core.model.autopay.Bill
+/** Repository contract for saved bills. */
 interface BillRepository {
     /**
      * Get all saved bills

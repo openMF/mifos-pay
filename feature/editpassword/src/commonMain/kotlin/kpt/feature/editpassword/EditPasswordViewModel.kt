@@ -36,13 +36,13 @@ import kpt.core.ui.utils.fork.PasswordStrength
 import kpt.core.ui.utils.fork.PasswordStrengthResult
 import kpt.feature.editpassword.EditPasswordAction.Internal.ReceivePasswordStrengthResult
 import kpt.feature.editpassword.EditPasswordDialog.Error
-import mifos_pay.feature.editpassword.generated.resources.Res
-import mifos_pay.feature.editpassword.generated.resources.feature_editpassword_error_empty_current_password
-import mifos_pay.feature.editpassword.generated.resources.feature_editpassword_error_password_min_length
-import mifos_pay.feature.editpassword.generated.resources.feature_editpassword_error_password_mismatch
-import mifos_pay.feature.editpassword.generated.resources.feature_editpassword_error_password_weak
-import mifos_pay.feature.editpassword.generated.resources.feature_editpassword_error_same_password
-import mifos_pay.feature.editpassword.generated.resources.feature_editpassword_password_changed_successfully
+import kpt.feature.editpassword.generated.resources.Res
+import kpt.feature.editpassword.generated.resources.feature_editpassword_error_empty_current_password
+import kpt.feature.editpassword.generated.resources.feature_editpassword_error_password_min_length
+import kpt.feature.editpassword.generated.resources.feature_editpassword_error_password_mismatch
+import kpt.feature.editpassword.generated.resources.feature_editpassword_error_password_weak
+import kpt.feature.editpassword.generated.resources.feature_editpassword_error_same_password
+import kpt.feature.editpassword.generated.resources.feature_editpassword_password_changed_successfully
 import org.jetbrains.compose.resources.StringResource
 internal class EditPasswordViewModel(
     private val userRepository: UserRepository,

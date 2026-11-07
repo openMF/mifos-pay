@@ -23,12 +23,14 @@ import kpt.core.model.autopay.AutoPayRules
 import kpt.core.model.autopay.NotificationSettings
 import kpt.core.model.autopay.SecuritySettings
 import kpt.core.ui.utils.BaseViewModel
+/** View model for AutoPay preferences; loads, edits and saves the global settings. */
 class AutoPayPreferencesViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AutoPayPreferencesState, AutoPayPreferencesEvent, AutoPayPreferencesAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AutoPayPreferencesState(),
 ) {
 
+    /** Holds the saved-state key used to persist the state. */
     companion object {
         private const val KEY_STATE = "autopay_preferences_state"
     }
@@ -176,6 +178,15 @@ class AutoPayPreferencesViewModel(
     }
 }
 
+/**
+ * UI state of the AutoPay preferences screen.
+ *
+ * @property globalSettings Current AutoPay settings.
+ * @property isLoading Whether settings are loading.
+ * @property isSaving Whether settings are being saved.
+ * @property hasUnsavedChanges Whether there are edits not yet saved.
+ * @property error Error message to show, or null.
+ */
 @Serializable
 data class AutoPayPreferencesState(
     val globalSettings: AutoPayGlobalSettings = AutoPayGlobalSettings(),
@@ -185,17 +196,59 @@ data class AutoPayPreferencesState(
     val error: String? = null,
 )
 
+/** One-off events emitted by the preferences view model. */
 sealed interface AutoPayPreferencesEvent {
+    /** Settings were saved. */
     data object SettingsSaved : AutoPayPreferencesEvent
+
+    /**
+     * Show an error.
+     *
+     * @property message Error text to show.
+     */
     data class ShowError(val message: String) : AutoPayPreferencesEvent
 }
 
+/** User actions handled by the preferences view model. */
 sealed interface AutoPayPreferencesAction {
+    /**
+     * Replace the global settings.
+     *
+     * @property settings New global settings.
+     */
     data class UpdateGlobalSettings(val settings: AutoPayGlobalSettings) : AutoPayPreferencesAction
+
+    /**
+     * Replace the notification settings.
+     *
+     * @property settings New notification settings.
+     */
     data class UpdateNotificationSettings(val settings: NotificationSettings) : AutoPayPreferencesAction
+
+    /**
+     * Replace the security settings.
+     *
+     * @property settings New security settings.
+     */
     data class UpdateSecuritySettings(val settings: SecuritySettings) : AutoPayPreferencesAction
+
+    /**
+     * Replace the AutoPay rules.
+     *
+     * @property rules New rules.
+     */
     data class UpdateAutoPayRules(val rules: AutoPayRules) : AutoPayPreferencesAction
+
+    /**
+     * Switch AutoPay on or off.
+     *
+     * @property enabled Desired AutoPay state.
+     */
     data class ToggleAutoPayEnabled(val enabled: Boolean) : AutoPayPreferencesAction
+
+    /** Save the settings. */
     data object SaveSettings : AutoPayPreferencesAction
+
+    /** Load the settings. */
     data object LoadSettings : AutoPayPreferencesAction
 }

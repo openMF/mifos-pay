@@ -54,22 +54,22 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.model.pocket.AccountStatus
 import kpt.core.ui.utils.EventsEffect
+import kpt.feature.pocket.generated.resources.Res
+import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_loan_accounts
+import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_manage
+import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_savings_accounts
+import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_share_accounts
+import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_title
+import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_total_balance
+import kpt.feature.pocket.generated.resources.feature_pocket_empty_action
+import kpt.feature.pocket.generated.resources.feature_pocket_empty_description
+import kpt.feature.pocket.generated.resources.feature_pocket_empty_title
+import kpt.feature.pocket.generated.resources.feature_pocket_unknown_account
+import kpt.feature.pocket.generated.resources.feature_pocket_unknown_status
 import kpt.feature.pocket.viewmodels.PocketBuckets
 import kpt.feature.pocket.viewmodels.PocketDashboardAction
 import kpt.feature.pocket.viewmodels.PocketDashboardEvent
 import kpt.feature.pocket.viewmodels.PocketDashboardViewModel
-import mifos_pay.feature.pocket.generated.resources.Res
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_dashboard_loan_accounts
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_dashboard_manage
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_dashboard_savings_accounts
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_dashboard_share_accounts
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_dashboard_title
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_dashboard_total_balance
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_empty_action
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_empty_description
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_empty_title
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_unknown_account
-import mifos_pay.feature.pocket.generated.resources.feature_pocket_unknown_status
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -335,6 +335,7 @@ internal fun PocketDashboardCard(
     }
 }
 
+/** Maps an account status to the theme color used to display it. */
 @Composable
 fun AccountStatus.toColor(): Color =
     when (this) {

@@ -12,16 +12,25 @@ package kpt.core.model.user
 import kotlinx.serialization.Serializable
 import kpt.core.model.user.fork.LanguageConfig
 
+/**
+ * A language the user can choose in the app.
+ *
+ * @property localeName Locale code, or null for the system default.
+ * @property text Name of the language shown in the UI.
+ */
 @Serializable
 data class Language(
     val localeName: String?,
     val text: String,
 ) {
+    /** Holds the default language. */
     companion object {
+        /** Language entry that follows the system default. */
         val DEFAULT = LanguageConfig.DEFAULT.toLanguage()
     }
 }
 
+/** Converts this [LanguageConfig] into a [Language]. */
 fun LanguageConfig.toLanguage(): Language {
     return Language(
         localeName = this.localeName,

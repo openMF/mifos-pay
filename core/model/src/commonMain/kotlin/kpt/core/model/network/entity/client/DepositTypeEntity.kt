@@ -11,6 +11,13 @@ package kpt.core.model.network.entity.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Deposit type classification of a savings account (for example recurring or fixed).
+ *
+ * @property id Unique id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ */
 @Serializable
 data class DepositTypeEntity(
     val id: Int? = null,

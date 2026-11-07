@@ -21,13 +21,22 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class QrCodeType {
+    /** Payment to an account in the same Fineract instance. */
     INTRA_BANK,
+
+    /** Payment routed to another bank through the payment hub. */
     INTER_BANK,
+
+    /** A saved beneficiary to add, rather than a payment. */
     BENEFICIARY,
+
+    /** Payment to a merchant. */
     MERCHANT,
     ;
 
+    /** Helpers for decoding a [QrCodeType]. */
     companion object {
+        /** Returns the [QrCodeType] at [ordinal], or [INTRA_BANK] if the ordinal is out of range. */
         fun fromOrdinal(ordinal: Int): QrCodeType = entries.getOrElse(ordinal) { INTRA_BANK }
     }
 }

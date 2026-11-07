@@ -22,10 +22,10 @@ ViewModels: `AddBillViewModel`, `AddBillerViewModel`, `AutoPayHistoryViewModel`,
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/autopay sha=11c284ad19b44fa41aff3997a9770909caa07bfb -->
+<!-- api-docs:begin module=feature/autopay sha=4fde3bcae7d7823e0e7db19a20a37b7de0ee171e -->
 ## API reference
 
-_Generated from `feature/autopay` at tree `11c284ad19b4` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/autopay` at tree `4fde3bcae7d7` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,9 +38,9 @@ rather than re-declaring what they already own.
 ```kotlin
 fun AddBillScreen(
 ```
-_No KDoc at source._
+Screen with a form for adding a new bill, including recurrence and optional AutoPay settings.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:256</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:300</code></summary>
 
 ```kotlin
 
@@ -59,9 +59,9 @@ _No KDoc at source._
 ```kotlin
 class AddBillViewModel(
 ```
-_No KDoc at source._
+View model for the add-bill form; validates input, computes upcoming payment dates and saves a new bill.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:81</code></summary>
 
 ```kotlin
     onNavigateToBillList: () -> Unit,
@@ -78,14 +78,14 @@ _No KDoc at source._
 ```kotlin
 data class AddBillState(
 ```
-_No KDoc at source._
+UI state of the add-bill form.
 
 ```kotlin
 sealed interface AddBillEvent
 ```
-_No KDoc at source._
+One-off events emitted by the add-bill view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:89</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:90</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -102,9 +102,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AddBillAction
 ```
-_No KDoc at source._
+User actions handled by the add-bill view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:96</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:97</code></summary>
 
 ```kotlin
 
@@ -123,9 +123,9 @@ _No KDoc at source._
 ```kotlin
 fun AddBillerScreen(
 ```
-_No KDoc at source._
+Screen with a form for adding a new biller (payee) for bill payments.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:219</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:263</code></summary>
 
 ```kotlin
         ),
@@ -144,9 +144,9 @@ _No KDoc at source._
 ```kotlin
 class AddBillerViewModel(
 ```
-_No KDoc at source._
+View model for the add-biller form; validates input and saves a new biller.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:54</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:55</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -162,14 +162,14 @@ _No KDoc at source._
 ```kotlin
 data class AddBillerState(
 ```
-_No KDoc at source._
+UI state of the add-biller form.
 
 ```kotlin
 sealed interface AddBillerEvent
 ```
-_No KDoc at source._
+One-off events emitted by the add-biller view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:61</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:62</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -186,9 +186,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AddBillerAction
 ```
-_No KDoc at source._
+User actions handled by the add-biller view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:101</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:102</code></summary>
 
 ```kotlin
                     label = "Biller Name *",
@@ -207,9 +207,9 @@ _No KDoc at source._
 ```kotlin
 fun AutoPayHistoryScreen(
 ```
-_No KDoc at source._
+Screen showing the read-only history of AutoPay payments, with search and filters.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:190</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:234</code></summary>
 
 ```kotlin
         ),
@@ -229,7 +229,7 @@ class AutoPayHistoryViewModel(
 ```
 ViewModel for AutoPay history screen. This ViewModel provides read-only access to AutoPay history data. Users can view, search, and filter history but cannot edit or delete entries.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:49</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:50</code></summary>
 
 ```kotlin
 fun AutoPayHistoryScreen(
@@ -245,39 +245,39 @@ fun AutoPayHistoryScreen(
 ```kotlin
 data class AutoPayHistoryUiState(
 ```
-_No KDoc at source._
+UI state of the AutoPay history screen.
 
 ```kotlin
 sealed interface AutoPayHistoryEvent
 ```
-_No KDoc at source._
+One-off events of the history screen; none are currently emitted.
 
 ```kotlin
 sealed interface AutoPayHistoryAction
 ```
-_No KDoc at source._
+User actions handled by the history view model.
 
 ### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt`
 
 ```kotlin
 object AutoPayNavigation
 ```
-_No KDoc at source._
+Route names and argument keys for the AutoPay screens.
 
-- `const val AUTO_PAY_ROUTE = "autopay_route"`
-- `const val AUTO_PAY_SCHEDULE_MANAGEMENT_ROUTE = "autopay_schedule_management_route"`
-- `const val AUTO_PAY_PREFERENCES_ROUTE = "autopay_preferences_route"`
-- `const val AUTO_PAY_HISTORY_ROUTE = "autopay_history_route"`
-- `const val AUTO_PAY_SCHEDULE_DETAILS_ROUTE = "autopay_schedule_details_route"`
-- `const val AUTO_PAY_ADD_BILLER_ROUTE = "autopay_add_biller_route"`
-- `const val AUTO_PAY_BILLER_LIST_ROUTE = "autopay_biller_list_route"`
-- `const val AUTO_PAY_EDIT_BILLER_ROUTE = "autopay_edit_biller_route"`
-- `const val AUTO_PAY_ADD_BILL_ROUTE = "autopay_add_bill_route"`
-- `const val AUTO_PAY_BILL_LIST_ROUTE = "autopay_bill_list_route"`
-- `const val AUTO_PAY_EDIT_BILL_ROUTE = "autopay_edit_bill_route"`
-- `const val SCHEDULE_ID_ARG = "scheduleId"`
-- `const val BILLER_ID_ARG = "billerId"`
-- `const val BILL_ID_ARG = "billId"`
+- `const val AUTO_PAY_ROUTE = "autopay_route"` — Route of the AutoPay dashboard.
+- `const val AUTO_PAY_SCHEDULE_MANAGEMENT_ROUTE = "autopay_schedule_management_route"` — Route of the AutoPay schedule management screen.
+- `const val AUTO_PAY_PREFERENCES_ROUTE = "autopay_preferences_route"` — Route of the AutoPay preferences screen.
+- `const val AUTO_PAY_HISTORY_ROUTE = "autopay_history_route"` — Route of the AutoPay history screen.
+- `const val AUTO_PAY_SCHEDULE_DETAILS_ROUTE = "autopay_schedule_details_route"` — Route of the AutoPay schedule details screen.
+- `const val AUTO_PAY_ADD_BILLER_ROUTE = "autopay_add_biller_route"` — Route of the add-biller screen.
+- `const val AUTO_PAY_BILLER_LIST_ROUTE = "autopay_biller_list_route"` — Route of the biller list screen.
+- `const val AUTO_PAY_EDIT_BILLER_ROUTE = "autopay_edit_biller_route"` — Route of the edit-biller screen.
+- `const val AUTO_PAY_ADD_BILL_ROUTE = "autopay_add_bill_route"` — Route of the add-bill screen.
+- `const val AUTO_PAY_BILL_LIST_ROUTE = "autopay_bill_list_route"` — Route of the bill list screen.
+- `const val AUTO_PAY_EDIT_BILL_ROUTE = "autopay_edit_bill_route"` — Route of the edit-bill screen.
+- `const val SCHEDULE_ID_ARG = "scheduleId"` — Argument key for the schedule id.
+- `const val BILLER_ID_ARG = "billerId"` — Argument key for the biller id.
+- `const val BILL_ID_ARG = "billId"` — Argument key for the bill id.
   _…more members; read the file._
 
 ```kotlin
@@ -288,71 +288,71 @@ Custom composable function that uses fade transitions to prevent the state issue
 ```kotlin
 fun NavController.navigateToAutoPay(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the AutoPay dashboard.
 
 ```kotlin
 fun NavController.navigateToScheduleManagement(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the AutoPay schedule management screen.
 
 ```kotlin
 fun NavController.navigateToAutoPayPreferences(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the AutoPay preferences screen.
 
 ```kotlin
 fun NavController.navigateToAutoPayHistory(autoPayId: Long = 0L, navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the AutoPay history screen for the given AutoPay id.
 
 ```kotlin
 fun NavController.navigateToAutoPayScheduleDetails(scheduleId: String, navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the details screen of an AutoPay schedule.
 
 ```kotlin
 fun NavController.navigateToAddBiller(source: String = "direct", navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the add-biller screen, noting where the user came from.
 
 ```kotlin
 fun NavController.navigateToBillerList(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the biller list screen.
 
 ```kotlin
 fun NavController.navigateToEditBiller(billerId: String, navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the edit-biller screen for a biller.
 
 ```kotlin
 fun NavController.navigateToAddBill(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the add-bill screen.
 
 ```kotlin
 fun NavController.navigateToBillList(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the bill list screen.
 
 ```kotlin
 fun NavController.navigateToEditBill(billId: String, navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the edit-bill screen for a bill.
 
 ```kotlin
 fun NavGraphBuilder.autoPayGraph(
 ```
-_No KDoc at source._
+Registers all AutoPay destinations in the nav graph and wires their callbacks.
 
 ### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt`
 
 ```kotlin
 fun AutoPayScheduleDetailsScreen(
 ```
-_No KDoc at source._
+Screen showing the details of one AutoPay schedule, with pause, resume, edit and cancel actions.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:204</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:248</code></summary>
 
 ```kotlin
         ),
@@ -370,9 +370,9 @@ _No KDoc at source._
 ```kotlin
 class AutoPayScheduleDetailsViewModel(
 ```
-_No KDoc at source._
+View model for the AutoPay schedule details screen; loads a schedule and handles pause, resume and cancel.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:48</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:49</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -389,14 +389,14 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayScheduleDetailsState(
 ```
-_No KDoc at source._
+UI state of the schedule details screen.
 
 ```kotlin
 sealed interface AutoPayScheduleDetailsEvent
 ```
-_No KDoc at source._
+One-off events emitted by the schedule details view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:117</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:118</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -413,9 +413,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AutoPayScheduleDetailsAction
 ```
-_No KDoc at source._
+User actions handled by the schedule details view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:104</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:105</code></summary>
 
 ```kotlin
                 onPauseResume = {
@@ -434,9 +434,9 @@ _No KDoc at source._
 ```kotlin
 fun AutoPayScheduleManagementScreen(
 ```
-_No KDoc at source._
+Screen listing bills that have AutoPay, with toggles and edit, delete and add actions.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:160</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:204</code></summary>
 
 ```kotlin
 
@@ -455,9 +455,9 @@ _No KDoc at source._
 ```kotlin
 class AutoPayScheduleManagementViewModel(
 ```
-_No KDoc at source._
+View model for AutoPay schedule management; loads bills with AutoPay and handles toggling, editing and deleting.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:69</code></summary>
 
 ```kotlin
     onNavigateToBillList: () -> Unit,
@@ -474,14 +474,14 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayScheduleManagementState(
 ```
-_No KDoc at source._
+UI state of the schedule management screen.
 
 ```kotlin
 sealed interface AutoPayScheduleManagementEvent
 ```
-_No KDoc at source._
+One-off events emitted by the schedule management view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:81</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -498,9 +498,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AutoPayScheduleManagementAction
 ```
-_No KDoc at source._
+User actions handled by the schedule management view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:76</code></summary>
 
 ```kotlin
         isEnabled = true,
@@ -519,9 +519,9 @@ _No KDoc at source._
 ```kotlin
 fun AutoPayScreen(
 ```
-_No KDoc at source._
+AutoPay dashboard screen showing active schedules and upcoming payments, with entry points to related screens.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:129</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:173</code></summary>
 
 ```kotlin
 ) {
@@ -540,9 +540,9 @@ _No KDoc at source._
 ```kotlin
 fun AutoPayPreferencesScreen(
 ```
-_No KDoc at source._
+Screen for editing AutoPay preferences: global, notification and security settings and rules.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:175</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:219</code></summary>
 
 ```kotlin
 
@@ -560,9 +560,9 @@ _No KDoc at source._
 ```kotlin
 class AutoPayPreferencesViewModel(
 ```
-_No KDoc at source._
+View model for AutoPay preferences; loads, edits and saves the global settings.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:47</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:48</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -579,14 +579,14 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayPreferencesState(
 ```
-_No KDoc at source._
+UI state of the AutoPay preferences screen.
 
 ```kotlin
 sealed interface AutoPayPreferencesEvent
 ```
-_No KDoc at source._
+One-off events emitted by the preferences view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:53</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:54</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -603,9 +603,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AutoPayPreferencesAction
 ```
-_No KDoc at source._
+User actions handled by the preferences view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:88</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:89</code></summary>
 
 ```kotlin
                     settings = state.globalSettings,
@@ -676,9 +676,9 @@ Calculates upcoming payments for bills with AutoPay enabled
 ```kotlin
 class AutoPayViewModel(
 ```
-_No KDoc at source._
+View model for the AutoPay dashboard; loads schedules and upcoming payments and routes to related screens.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:63</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:64</code></summary>
 
 ```kotlin
     showTopBar: Boolean = true,
@@ -695,9 +695,9 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayState(
 ```
-_No KDoc at source._
+UI state of the AutoPay dashboard.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:121</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:122</code></summary>
 
 ```kotlin
 @Composable
@@ -714,9 +714,9 @@ private fun AutoPayDashboardContent(
 ```kotlin
 data class AutoPaySchedule(
 ```
-_No KDoc at source._
+A recurring payment schedule.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:128</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:129</code></summary>
 
 ```kotlin
 @Composable
@@ -733,9 +733,9 @@ private fun ScheduleDetailsContent(
 ```kotlin
 data class UpcomingPayment(
 ```
-_No KDoc at source._
+A payment due soon.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:523</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:524</code></summary>
 
 ```kotlin
 @Composable
@@ -752,9 +752,9 @@ private fun UpcomingPaymentCard(
 ```kotlin
 enum class AutoPayStatus
 ```
-_No KDoc at source._
+Lifecycle status of an AutoPay schedule.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:103</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:104</code></summary>
 
 ```kotlin
                 modifier = Modifier.padding(paddingValues),
@@ -771,9 +771,9 @@ _No KDoc at source._
 ```kotlin
 enum class PaymentStatus
 ```
-_No KDoc at source._
+Status of an individual payment.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:145</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:146</code></summary>
 
 ```kotlin
     val statusColor = when (currentStatus) {
@@ -790,9 +790,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AutoPayEvent
 ```
-_No KDoc at source._
+One-off events emitted by the AutoPay dashboard view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:107</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:108</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -809,9 +809,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AutoPayAction
 ```
-_No KDoc at source._
+User actions handled by the AutoPay dashboard view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:70</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:71</code></summary>
 
 ```kotlin
         isEnabled = true,
@@ -830,9 +830,9 @@ _No KDoc at source._
 ```kotlin
 fun BillListScreen(
 ```
-_No KDoc at source._
+Screen listing the user's bills with add, edit and delete actions.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:274</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:318</code></summary>
 
 ```kotlin
 
@@ -851,9 +851,9 @@ _No KDoc at source._
 ```kotlin
 class BillListViewModel(
 ```
-_No KDoc at source._
+View model for the bill list; loads bills and handles deletion.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:65</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:66</code></summary>
 
 ```kotlin
     onNavigateToAutopay: () -> Unit,
@@ -870,14 +870,14 @@ _No KDoc at source._
 ```kotlin
 data class BillListState(
 ```
-_No KDoc at source._
+UI state of the bill list.
 
 ```kotlin
 sealed interface BillListEvent
 ```
-_No KDoc at source._
+One-off events emitted by the bill list view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:133</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:134</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -894,9 +894,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface BillListAction
 ```
-_No KDoc at source._
+User actions handled by the bill list view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:72</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillListScreen.kt:73</code></summary>
 
 ```kotlin
         isEnabled = true,
@@ -915,9 +915,9 @@ _No KDoc at source._
 ```kotlin
 fun BillerListScreen(
 ```
-_No KDoc at source._
+Screen listing saved billers with search, add, edit and delete actions.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:228</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:272</code></summary>
 
 ```kotlin
 
@@ -936,9 +936,9 @@ _No KDoc at source._
 ```kotlin
 class BillerListViewModel(
 ```
-_No KDoc at source._
+View model for the biller list; loads, searches and deletes billers.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:60</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:61</code></summary>
 
 ```kotlin
     onNavigateToAddBiller: () -> Unit,
@@ -955,14 +955,14 @@ _No KDoc at source._
 ```kotlin
 data class BillerListState(
 ```
-_No KDoc at source._
+UI state of the biller list.
 
 ```kotlin
 sealed interface BillerListEvent
 ```
-_No KDoc at source._
+One-off events emitted by the biller list view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:69</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -979,9 +979,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface BillerListAction
 ```
-_No KDoc at source._
+User actions handled by the biller list view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:109</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/BillerListScreen.kt:110</code></summary>
 
 ```kotlin
                         onValueChange = {
@@ -1000,9 +1000,9 @@ _No KDoc at source._
 ```kotlin
 fun EditBillScreen(
 ```
-_No KDoc at source._
+Screen with a form for editing an existing bill, including recurrence and optional AutoPay settings.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:297</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:341</code></summary>
 
 ```kotlin
         ),
@@ -1021,9 +1021,9 @@ _No KDoc at source._
 ```kotlin
 class EditBillViewModel(
 ```
-_No KDoc at source._
+View model for the edit-bill form; validates input, computes upcoming payment dates and updates the bill.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:79</code></summary>
 
 ```kotlin
     onNavigateBack: () -> Unit,
@@ -1040,14 +1040,14 @@ _No KDoc at source._
 ```kotlin
 data class EditBillState(
 ```
-_No KDoc at source._
+UI state of the edit-bill form.
 
 ```kotlin
 sealed interface EditBillEvent
 ```
-_No KDoc at source._
+One-off events emitted by the edit-bill view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:87</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:88</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1064,9 +1064,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface EditBillAction
 ```
-_No KDoc at source._
+User actions handled by the edit-bill view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:121</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillScreen.kt:122</code></summary>
 
 ```kotlin
                     label = "Bill Name *",
@@ -1085,9 +1085,9 @@ _No KDoc at source._
 ```kotlin
 fun EditBillerScreen(
 ```
-_No KDoc at source._
+Screen with a form for editing an existing biller.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:250</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayNavigation.kt:294</code></summary>
 
 ```kotlin
         ),
@@ -1105,9 +1105,9 @@ _No KDoc at source._
 ```kotlin
 class EditBillerViewModel(
 ```
-_No KDoc at source._
+View model for the edit-biller form; validates input and updates the biller identified by the billerId argument.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:53</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:54</code></summary>
 
 ```kotlin
 fun EditBillerScreen(
@@ -1123,14 +1123,14 @@ fun EditBillerScreen(
 ```kotlin
 data class EditBillerState(
 ```
-_No KDoc at source._
+UI state of the edit-biller form.
 
 ```kotlin
 sealed interface EditBillerEvent
 ```
-_No KDoc at source._
+One-off events emitted by the edit-biller view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:60</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:61</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1147,9 +1147,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface EditBillerAction
 ```
-_No KDoc at source._
+User actions handled by the edit-biller view model.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:90</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/EditBillerScreen.kt:91</code></summary>
 
 ```kotlin
                 label = "Biller Name *",
@@ -1168,9 +1168,9 @@ _No KDoc at source._
 ```kotlin
 val AutoPayModule = module
 ```
-_No KDoc at source._
+Koin module that registers the AutoPay feature view models.
 
 ---
 
-_49 type(s), 49 function(s)/property(ies); 12 carry KDoc at source; 0 authored example(s); 47 live call site(s)._
+_49 type(s), 49 function(s)/property(ies); 98 carry KDoc at source; 0 authored example(s); 47 live call site(s)._
 <!-- api-docs:end -->

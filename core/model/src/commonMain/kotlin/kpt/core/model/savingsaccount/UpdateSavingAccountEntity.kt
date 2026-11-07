@@ -12,6 +12,12 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Request body for updating a savings account.
+ *
+ * @property clientId Identifier of the account client.
+ * @property productId Identifier of the savings product.
+ */
 @Serializable
 @Parcelize
 data class UpdateSavingAccountEntity(

@@ -18,5 +18,7 @@ package kpt.core.store.wallet.client
  * client A never disturbs cached detail rows for client B (which arises for
  * an admin operator + client-picker flow, and simply for a logout-then-login
  * as a different client on the same device).
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class ClientDetailKey(val clientId: Long)

@@ -1,13 +1,13 @@
 # `feature/`
 
 > **Kind:** Kotlin Multiplatform module group  
-> **Measured:** 765 tracked files — 417× `.kt`, 239× `.xml`, 29× `.kts`, 25× `.md`, 24× `.png`
+> **Measured:** 767 tracked files — 419× `.kt`, 239× `.xml`, 29× `.kts`, 25× `.md`, 24× `.png`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
-| `feature/send-money/` | 74 |
+| `feature/send-money/` | 76 |
 | `feature/passcode/` | 71 |
 | `feature/mpay-qr-scan/` | 55 |
 | `feature/settings/` | 51 |
@@ -65,7 +65,7 @@
 | `feature:profile` | 13 Kotlin files — [guide](feature/profile.md) |
 | `feature:receipt` | 4 Kotlin files — [guide](feature/receipt.md) |
 | `feature:savedcards` | 15 Kotlin files — [guide](feature/savedcards.md) |
-| `feature:send-money` | 72 Kotlin files — [guide](feature/send-money.md) |
+| `feature:send-money` | 74 Kotlin files — [guide](feature/send-money.md) |
 
 ## Subsections
 
@@ -94,7 +94,7 @@
 | `feature/profile/` | 21 | [profile](feature/profile.md) |
 | `feature/receipt/` | 11 | [receipt](feature/receipt.md) |
 | `feature/savedcards/` | 34 | [savedcards](feature/savedcards.md) |
-| `feature/send-money/` | 74 | [send-money](feature/send-money.md) |
+| `feature/send-money/` | 76 | [send-money](feature/send-money.md) |
 | `feature/settings/` | 51 | [settings](feature/settings.md) |
 | `feature/standing-instruction/` | 18 | [standing-instruction](feature/standing-instruction.md) |
 | `feature/transfer-interbank/` | 14 | [transfer-interbank](feature/transfer-interbank.md) |

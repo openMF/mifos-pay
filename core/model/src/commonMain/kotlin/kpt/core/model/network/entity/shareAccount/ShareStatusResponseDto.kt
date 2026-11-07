@@ -11,6 +11,18 @@ package kpt.core.model.network.entity.shareAccount
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Share account status with its lifecycle flags.
+ *
+ * @property id Unique id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ * @property submittedAndPendingApproval Submitted and pending approval.
+ * @property approved Whether it is approved.
+ * @property rejected Whether it is rejected.
+ * @property active Whether it is active.
+ * @property closed Whether it is closed.
+ */
 @Serializable
 data class ShareStatusResponseDto(
 

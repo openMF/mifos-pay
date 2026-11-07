@@ -13,6 +13,7 @@ import kpt.core.model.savingsaccount.SavingAccount
 import kpt.core.model.savingsaccount.SavingAccountDetail
 import kpt.core.model.savingsaccount.SavingAccountEntity
 import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
+/** Maps a savings account network entity to the domain [SavingAccount]. */
 fun SavingAccountEntity.toModel(): SavingAccount {
     return SavingAccount(
         id = id,
@@ -32,6 +33,7 @@ fun SavingAccountEntity.toModel(): SavingAccount {
     )
 }
 
+/** Maps a savings-with-associations entity to a [SavingAccountDetail] including its transactions. */
 fun SavingsWithAssociationsEntity.toSavingDetail(): SavingAccountDetail {
     return SavingAccountDetail(
         id = id,

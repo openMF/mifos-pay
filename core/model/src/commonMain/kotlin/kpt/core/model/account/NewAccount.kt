@@ -11,6 +11,16 @@ package kpt.core.model.account
 
 import kotlinx.datetime.LocalDate
 
+/**
+ * Data needed to open a new savings account for a client.
+ *
+ * @property clientId Id of the client the account is opened for.
+ * @property productId Id of the savings product to open.
+ * @property submittedOnDate Date the application is submitted.
+ * @property accountNo Account number to assign.
+ * @property locale Locale used to parse values in the request.
+ * @property dateFormat Format pattern used for date fields in the request.
+ */
 data class NewAccount(
     val clientId: Int,
     val productId: String? = null,

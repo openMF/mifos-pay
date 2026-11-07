@@ -41,6 +41,7 @@ class PaymentChatHistoryViewModel :
         trySendAction(PaymentChatHistoryAction.SendMessage(message))
     }
 
+    /** Holds the factory for the placeholder chat history state. */
     companion object {
         /**
          * Creates placeholder data for demonstration purposes
@@ -132,8 +133,14 @@ class PaymentChatHistoryViewModel :
     }
 }
 
+/** One-off events emitted by the payment chat history screen (none currently). */
 sealed interface PaymentChatHistoryEvent
 
+/** User actions handled by [PaymentChatHistoryViewModel]. */
 sealed interface PaymentChatHistoryAction {
+    /**
+     * Sends a chat message.
+     * @property message Text of the message.
+     */
     data class SendMessage(val message: String) : PaymentChatHistoryAction
 }

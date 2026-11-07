@@ -37,6 +37,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 private const val TRANSACTION_LIMIT = 5
 
+/** ViewModel for the home screen: client accounts, recent transactions, filters and navigation events. */
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModel(
     private val preferencesRepository: ForkPreferencesRepository,
@@ -44,7 +45,10 @@ class HomeViewModel(
     private val accountRepository: AccountRepository,
 ) : BaseViewModel<HomeState, HomeEvent, HomeAction>(
     initialState = run {
+        /** Signed-in client, read from preferences. */
         val client = requireNotNull(preferencesRepository.client.value)
+
+        /** Id of the client's default account, if set. */
         val defaultAccount = preferencesRepository.defaultAccountId.value
 
         HomeState(
@@ -86,6 +90,7 @@ class HomeViewModel(
             .launchIn(viewModelScope)
     }
 
+    /** Starts observing the client's active savings accounts. */
     fun getAccounts() {
         launchIO {
             // Offline-first: read the self-accounts through the Store5 SelfAccounts
@@ -194,6 +199,7 @@ class HomeViewModel(
 
     private var loadTransactionsJob: Job? = null
 
+    /** Selects [account] and shows its cached transactions, loading them if not yet fetched. */
     fun getAccountBasedOnId(account: Account) {
         if (state.accountsWithTransactions.containsKey(account)) {
             mutableStateFlow.update {
@@ -281,96 +287,24 @@ class HomeViewModel(
         }
     }
 
-    override fun handleAction(action: HomeAction) {
+    /** The navigation event an action asks for, or null for an action that is not navigation. */
+    private fun navigationEventFor(action: HomeAction): HomeEvent? = when (action) {
+        is HomeAction.RequestClicked ->
+            HomeEvent.NavigateToRequestScreen(state.client.mobileNo.ifEmpty { state.client.externalId })
+        HomeAction.SendClicked -> HomeEvent.NavigateToSendScreen
+        HomeAction.AutoPayClicked -> HomeEvent.NavigateToAutoPayScreen
+        HomeAction.ClientDetailsClicked -> HomeEvent.NavigateToClientDetailScreen
+        HomeAction.OnClickSeeAllTransactions -> HomeEvent.NavigateToTransactionScreen
+        is HomeAction.TransactionClicked ->
+            HomeEvent.NavigateToTransactionDetail(action.accountId, action.transactionId)
+        HomeAction.OnNavigateBack -> HomeEvent.NavigateBack
+        is HomeAction.AccountDetailsClicked -> HomeEvent.NavigateToAccountDetail(action.accountId)
+        else -> null
+    }
+
+    /** The transaction-filter bottom sheet's actions. */
+    private fun handleFilterAction(action: HomeAction) {
         when (action) {
-            is HomeAction.RequestClicked -> {
-                val vpa = state.client.mobileNo.ifEmpty { state.client.externalId }
-                sendEvent(HomeEvent.NavigateToRequestScreen(vpa))
-            }
-
-            is HomeAction.SendClicked -> {
-                sendEvent(HomeEvent.NavigateToSendScreen)
-            }
-
-            is HomeAction.AutoPayClicked -> {
-                sendEvent(HomeEvent.NavigateToAutoPayScreen)
-            }
-
-            is HomeAction.ClientDetailsClicked -> {
-                sendEvent(HomeEvent.NavigateToClientDetailScreen)
-            }
-
-            is HomeAction.OnClickSeeAllTransactions -> {
-                sendEvent(HomeEvent.NavigateToTransactionScreen)
-            }
-
-            is HomeAction.TransactionClicked -> {
-                sendEvent(
-                    HomeEvent.NavigateToTransactionDetail(
-                        action.accountId,
-                        action.transactionId,
-                    ),
-                )
-            }
-
-            is HomeAction.OnDismissDialog -> {
-                mutableStateFlow.update {
-                    it.copy(dialogState = null)
-                }
-            }
-
-            is HomeAction.OnNavigateBack -> {
-                sendEvent(HomeEvent.NavigateBack)
-            }
-
-            is HomeAction.AccountDetailsClicked -> {
-                sendEvent(HomeEvent.NavigateToAccountDetail(action.accountId))
-            }
-
-            is HomeAction.MarkAsDefault -> {
-                // Submit through the handler — it drives Submitting/Submitted/Failed,
-                // observed in `init`. The repository write returns Unit and throws on
-                // failure; the handler maps that to Submitted/Failed. On success the
-                // block returns the account id so the observer can update
-                // `defaultAccountId` and fire the success toast.
-                submitDefaultAccount.submit {
-                    preferencesRepository.updateDefaultAccount(
-                        DefaultAccount(
-                            accountId = action.accountId,
-                            accountNo = action.accountNo,
-                        ),
-                    )
-                    action.accountId
-                }
-            }
-
-            is HomeAction.OnRetryClicked -> {
-                getAccounts()
-            }
-
-            is HomeAction.OnPullToRefresh -> {
-                mutableStateFlow.update {
-                    it.copy(isRefreshing = true)
-                }
-                getAccounts()
-            }
-
-            is HomeAction.OnSelectedAccountChanged -> {
-                getAccountBasedOnId(action.account)
-            }
-
-            HomeAction.DismissBottomSheet -> {
-                mutableStateFlow.update {
-                    it.copy(showBottomSheet = false)
-                }
-            }
-
-            HomeAction.ShowBottomSheet -> {
-                mutableStateFlow.update {
-                    it.copy(showBottomSheet = true)
-                }
-            }
-
             HomeAction.ClearFilters -> {
                 mutableStateFlow.update {
                     it.copy(
@@ -415,6 +349,73 @@ class HomeViewModel(
                 }
             }
 
+            else -> Unit
+        }
+    }
+
+    override fun handleAction(action: HomeAction) {
+        when (action) {
+            is HomeAction.RequestClicked,
+            HomeAction.SendClicked,
+            HomeAction.AutoPayClicked,
+            HomeAction.ClientDetailsClicked,
+            HomeAction.OnClickSeeAllTransactions,
+            is HomeAction.TransactionClicked,
+            HomeAction.OnNavigateBack,
+            is HomeAction.AccountDetailsClicked,
+            -> navigationEventFor(action)?.let(::sendEvent)
+
+            is HomeAction.OnDismissDialog -> {
+                mutableStateFlow.update {
+                    it.copy(dialogState = null)
+                }
+            }
+
+            is HomeAction.MarkAsDefault -> {
+                // Submit through the handler — it drives Submitting/Submitted/Failed,
+                // observed in `init`. The repository write returns Unit and throws on
+                // failure; the handler maps that to Submitted/Failed. On success the
+                // block returns the account id so the observer can update
+                // `defaultAccountId` and fire the success toast.
+                submitDefaultAccount.submit {
+                    preferencesRepository.updateDefaultAccount(
+                        DefaultAccount(
+                            accountId = action.accountId,
+                            accountNo = action.accountNo,
+                        ),
+                    )
+                    action.accountId
+                }
+            }
+
+            is HomeAction.OnRetryClicked -> {
+                getAccounts()
+            }
+
+            is HomeAction.OnPullToRefresh -> {
+                mutableStateFlow.update {
+                    it.copy(isRefreshing = true)
+                }
+                getAccounts()
+            }
+
+            is HomeAction.OnSelectedAccountChanged -> {
+                getAccountBasedOnId(action.account)
+            }
+
+            HomeAction.DismissBottomSheet, HomeAction.ShowBottomSheet -> {
+                mutableStateFlow.update {
+                    it.copy(showBottomSheet = action == HomeAction.ShowBottomSheet)
+                }
+            }
+
+            HomeAction.ClearFilters,
+            HomeAction.OnApplyFilterClick,
+            is HomeAction.SetFilter,
+            is HomeAction.OnFilterAccountSelected,
+            is HomeAction.OnFilterTransactionTypeSelected,
+            -> handleFilterAction(action)
+
             is HomeAction.PocketDashboardClicked -> {
                 sendEvent(HomeEvent.NavigateToPocketDashboard)
             }
@@ -442,6 +443,24 @@ class HomeViewModel(
     }
 }
 
+/**
+ * UI state of the home screen.
+ * @property client Signed-in client.
+ * @property defaultAccountId Id of the default account, or null.
+ * @property transactionType Transaction type filter being edited.
+ * @property currentTransactionType Applied transaction type filter.
+ * @property selectedAccount Account selected in the filter being edited.
+ * @property currentSelectedAccount Applied account filter.
+ * @property isRefreshing Whether a pull-to-refresh is in progress.
+ * @property dialogState Loading or error dialog to show, or null.
+ * @property accounts Client's accounts.
+ * @property accountsWithTransactions Transactions grouped by account.
+ * @property viewState Loading, error, content or no-accounts state.
+ * @property transactions Transactions currently shown, or null if not loaded.
+ * @property showBottomSheet Whether the filter bottom sheet is visible.
+ * @property transactionsLoading Whether transactions are loading.
+ * @property currentSelectedTransactionType Applied transaction type selection.
+ */
 @Serializable
 data class HomeState(
     val client: Client,
@@ -461,64 +480,172 @@ data class HomeState(
     val currentSelectedTransactionType: TransactionType = TransactionType.OTHER,
 ) {
 
+    /** Dialog shown over the home screen. */
     @Serializable
     sealed class DialogState {
 
+        /** Blocking loading dialog. */
         @Serializable
         data object Loading : DialogState()
 
+        /**
+         * Error dialog.
+         * @property message Error text to display.
+         */
         @Serializable
         data class Error(val message: String) : DialogState()
     }
 }
 
+/** Display state of the home screen. */
 sealed interface ViewState {
+    /** Data is loading. */
     data object Loading : ViewState
 
+    /**
+     * Loading failed.
+     * @property message Error text to display.
+     */
     data class Error(val message: String) : ViewState
 
+    /** Data loaded and ready to show. */
     data object Content : ViewState
 
+    /** The client has no accounts. */
     data object NoAccounts : ViewState
 }
 
+/** One-off events emitted by [HomeViewModel]. */
 sealed interface HomeEvent {
+    /** Navigate back. */
     data object NavigateBack : HomeEvent
+
+    /** Open the send screen. */
     data object NavigateToSendScreen : HomeEvent
+
+    /** Open the auto-pay screen. */
     data object NavigateToAutoPayScreen : HomeEvent
+
+    /** Open the pocket dashboard. */
     data object NavigateToPocketDashboard : HomeEvent
+
+    /** Open the full transaction list. */
     data object NavigateToTransactionScreen : HomeEvent
+
+    /** Open the client details screen. */
     data object NavigateToClientDetailScreen : HomeEvent
+
+    /**
+     * Open the request-money screen.
+     * @property vpa Virtual payment address to request money to.
+     */
     data class NavigateToRequestScreen(val vpa: String) : HomeEvent
+
+    /**
+     * Open a transaction's detail.
+     * @property accountId Account owning the transaction.
+     * @property transactionId Id of the transaction.
+     */
     data class NavigateToTransactionDetail(val accountId: Long, val transactionId: Long) : HomeEvent
+
+    /**
+     * Open an account's detail.
+     * @property accountId Id of the account.
+     */
     data class NavigateToAccountDetail(val accountId: Long) : HomeEvent
 
+    /**
+     * Show a toast message.
+     * @property message Localized string resource to display.
+     */
     data class ShowToast(val message: StringResource) : HomeEvent
 }
 
+/** User actions handled by [HomeViewModel]. */
 sealed interface HomeAction {
+    /** User tapped request money. */
     data object RequestClicked : HomeAction
+
+    /** User tapped send money. */
     data object SendClicked : HomeAction
+
+    /** User tapped auto-pay. */
     data object AutoPayClicked : HomeAction
+
+    /** User tapped the pocket dashboard. */
     data object PocketDashboardClicked : HomeAction
+
+    /** User tapped client details. */
     data object ClientDetailsClicked : HomeAction
+
+    /** User tapped to see all transactions. */
     data object OnClickSeeAllTransactions : HomeAction
+
+    /** User dismissed the dialog. */
     data object OnDismissDialog : HomeAction
+
+    /** User navigated back. */
     data object OnNavigateBack : HomeAction
+
+    /** User tapped retry after an error. */
     data object OnRetryClicked : HomeAction
+
+    /** User pulled to refresh. */
     data object OnPullToRefresh : HomeAction
 
+    /**
+     * Marks an account as the default.
+     * @property accountId Id of the account.
+     * @property accountNo Account number.
+     */
     data class MarkAsDefault(val accountId: Long, val accountNo: String) : HomeAction
+
+    /**
+     * Opens an account's detail.
+     * @property accountId Id of the account.
+     */
     data class AccountDetailsClicked(val accountId: Long) : HomeAction
+
+    /**
+     * Opens a transaction's detail.
+     * @property accountId Account owning the transaction.
+     * @property transactionId Id of the transaction.
+     */
     data class TransactionClicked(val accountId: Long, val transactionId: Long) : HomeAction
 
+    /**
+     * The selected account filter changed.
+     * @property account Newly selected account.
+     */
     data class OnSelectedAccountChanged(val account: Account) : HomeAction
+
+    /** Show the filter bottom sheet. */
     data object ShowBottomSheet : HomeAction
+
+    /** Dismiss the filter bottom sheet. */
     data object DismissBottomSheet : HomeAction
+
+    /** User confirmed the selected filters. */
     data object OnApplyFilterClick : HomeAction
+
+    /** User cleared all filters. */
     data object ClearFilters : HomeAction
+
+    /**
+     * Applies a transaction type filter.
+     * @property filter Transaction type to filter by.
+     */
     data class SetFilter(val filter: TransactionType) : HomeAction
 
+    /**
+     * The transaction type selected in the filter changed.
+     * @property transactionType Newly selected type.
+     */
     data class OnFilterTransactionTypeSelected(val transactionType: TransactionType) : HomeAction
+
+    /**
+     * The account selected in the filter changed.
+     * @property account Newly selected account.
+     */
     data class OnFilterAccountSelected(val account: Account) : HomeAction
 }

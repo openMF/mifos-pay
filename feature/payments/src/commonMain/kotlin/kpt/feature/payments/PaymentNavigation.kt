@@ -14,10 +14,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kpt.core.ui.utility.TabContent
+/** Navigation route of the payments screen. */
 const val PAYMENTS_ROUTE = "payments_route"
 
+/** Navigates to the payments screen. */
 fun NavController.navigateToPayments(navOptions: NavOptions) = navigate(PAYMENTS_ROUTE, navOptions)
 
+/** Registers the payments screen destination, rendering the given [tabContents]. */
 fun NavGraphBuilder.paymentsScreen(
     tabContents: List<TabContent>,
 ) {

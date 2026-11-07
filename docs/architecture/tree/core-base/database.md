@@ -73,10 +73,10 @@ data class LoanEntity(...)
 
 </details>
 
-<details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/account/SavingAccountDetailEntity.kt:74</code></summary>
+<details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/account/SavingAccountDetailEntity.kt:80</code></summary>
 
 ```kotlin
- *   for observability + a future stale-row prune.
+ * @property isDormancyTrackingActive Whether dormancy tracking is active for the account.
  */
 @DbEntity
 @Entity(

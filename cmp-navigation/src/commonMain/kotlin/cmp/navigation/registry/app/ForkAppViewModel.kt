@@ -113,6 +113,8 @@ sealed class UserState {
     /**
      * User-info has loaded. [userData].`authenticated` distinguishes a
      * persisted session from a logged-out state.
+     *
+     * @property userData The loaded user info.
      */
     data class Authenticated(val userData: UserInfo) : UserState()
 }

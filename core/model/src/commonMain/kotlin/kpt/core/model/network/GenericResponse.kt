@@ -9,6 +9,11 @@
  */
 package kpt.core.model.network
 
+/**
+ * Generic server response holding arbitrary key/value fields.
+ *
+ * @property responseFields Response fields keyed by field name.
+ */
 data class GenericResponse(
     var responseFields: HashMap<String, Any> = hashMapOf(),
 )

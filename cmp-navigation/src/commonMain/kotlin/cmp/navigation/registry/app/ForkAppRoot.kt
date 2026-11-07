@@ -32,14 +32,15 @@ import kpt.core.data.util.NetworkMonitor
 import kpt.core.data.util.TimeZoneMonitor
 import kpt.core.designsystem.component.MifosDialogBox
 import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.feature.passcode.ROOT_MIFOS_PASSCODE_ROUTE
+import kpt.feature.passcode.navigateToReAuthMifosPasscodeScreen
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.authenticator.biometrics.BiometricStorageAdapter
 import org.mifos.authenticator.biometrics.PlatformAuthenticatorCompositionProvider
 import org.mifos.authenticator.passcode.PasscodeManager
 import org.mifos.authenticator.passcode.PasscodeStep
-import org.mifos.feature.passcode.ROOT_MIFOS_PASSCODE_ROUTE
-import org.mifos.feature.passcode.navigateToReAuthMifosPasscodeScreen
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.TimeSource
@@ -65,9 +66,9 @@ import kotlin.time.TimeSource
  */
 @Composable
 fun ForkAppRoot(
-    modifier: Modifier = Modifier,
     handleAppLocale: (locale: String?) -> Unit,
     onSplashScreenRemoved: () -> Unit,
+    modifier: Modifier = Modifier,
     networkMonitor: NetworkMonitor = koinInject(MifosNetworkMonitorQualifier),
     timeZoneMonitor: TimeZoneMonitor = koinInject(MifosTimeZoneMonitorQualifier),
 ) {
@@ -76,7 +77,12 @@ fun ForkAppRoot(
     PlatformAuthenticatorCompositionProvider(
         biometricStorageAdapter = biometricStorageAdapter,
     ) {
-        ForkAppContent(modifier, networkMonitor, timeZoneMonitor, handleAppLocale)
+        ForkAppContent(
+            networkMonitor = networkMonitor,
+            timeZoneMonitor = timeZoneMonitor,
+            handleAppLocale = handleAppLocale,
+            modifier = modifier,
+        )
     }
 }
 
@@ -112,10 +118,10 @@ fun ForkAppRoot(
 @OptIn(ExperimentalTime::class)
 @Composable
 private fun ForkAppContent(
-    modifier: Modifier = Modifier,
     networkMonitor: NetworkMonitor,
     timeZoneMonitor: TimeZoneMonitor,
     handleAppLocale: (locale: String?) -> Unit,
+    modifier: Modifier = Modifier,
     passcodeManager: PasscodeManager = koinInject(),
     viewModel: ForkAppViewModel = koinViewModel(),
 ) {
@@ -124,17 +130,6 @@ private fun ForkAppContent(
 
     val showErrorDialog = remember { mutableStateOf<Boolean>(false) }
     val isUnauthorized by GlobalAuthManager.isUnauthorized.collectAsStateWithLifecycle()
-
-    val lockTimeOut = 15.seconds
-
-    // Monotonic mark of the most recent ON_STOP. `null` means "no stop
-    // recorded yet" or "already consumed on a previous ON_RESUME" — either
-    // way, ON_RESUME must skip the re-auth gate. Monotonic clock is used
-    // instead of wall-clock (Clock.System.now()) to defeat clock-rewind:
-    // a user with passcode access could otherwise background the app, roll
-    // the device clock back via Settings → Date & time, and resume far
-    // past the 15-second window without triggering re-auth.
-    val onStopMark = remember { mutableStateOf<TimeSource.Monotonic.ValueTimeMark?>(null) }
 
     LaunchedEffect(isUnauthorized) {
         if (isUnauthorized && userState !is Authenticated) {
@@ -173,46 +168,13 @@ private fun ForkAppContent(
         )
     }
 
-    val navDestination = when (userState) {
-        is UserState.UnAuthenticated -> LOGIN_GRAPH
-        is Authenticated -> if (
-            (userState as Authenticated).userData.authenticated &&
-            !viewModel.isPasscodeNotCreated()
-        ) {
-            ROOT_MIFOS_PASSCODE_ROUTE
-        } else {
-            LOGIN_GRAPH
-        }
-    }
+    val navDestination = startDestination(userState, viewModel.isPasscodeNotCreated())
 
-    val lifeCycleObserver = LocalLifecycleOwner.current.lifecycle
-
-    DisposableEffect(lifeCycleObserver) {
-        val observer = LifecycleEventObserver { _, event ->
-            when (event) {
-                Lifecycle.Event.ON_RESUME -> {
-                    onStopMark.value?.let { mark ->
-                        val inactiveTime = mark.elapsedNow()
-                        Logger.a { "inactiveTime: ${inactiveTime.inWholeSeconds}s" }
-                        viewModel.isAppLocked()?.let {
-                            if (inactiveTime > lockTimeOut && !it) {
-                                if (passcodeManager.state.value.passcodeStep == PasscodeStep.Enter) {
-                                    navController.navigateToReAuthMifosPasscodeScreen()
-                                }
-                            }
-                        }
-                    }
-                    onStopMark.value = null
-                }
-                Lifecycle.Event.ON_STOP -> {
-                    onStopMark.value = TimeSource.Monotonic.markNow()
-                }
-                else -> {}
-            }
-        }
-        lifeCycleObserver.addObserver(observer)
-        onDispose { lifeCycleObserver.removeObserver(observer) }
-    }
+    ReAuthOnResume(
+        isAppLocked = viewModel::isAppLocked,
+        passcodeManager = passcodeManager,
+        onReAuthRequired = { navController.navigateToReAuthMifosPasscodeScreen() },
+    )
 
     MifosTheme {
         RootNavGraph(
@@ -231,5 +193,57 @@ private fun ForkAppContent(
                 }
             },
         )
+    }
+}
+
+/**
+ * Where the nav graph starts: the passcode screen for a signed-in user who has set a passcode, the
+ * login graph otherwise. Only seeds the NavHost; later state changes do not re-target it.
+ */
+internal fun startDestination(userState: UserState, isPasscodeNotCreated: Boolean): String =
+    if (userState is Authenticated && userState.userData.authenticated && !isPasscodeNotCreated) {
+        ROOT_MIFOS_PASSCODE_ROUTE
+    } else {
+        LOGIN_GRAPH
+    }
+
+/**
+ * Asks for the passcode again when the app returns after more than [lockTimeOut] in the background —
+ * only for an established, unlocked session whose passcode surface is in unlock mode.
+ */
+@OptIn(ExperimentalTime::class)
+@Composable
+private fun ReAuthOnResume(
+    isAppLocked: () -> Boolean?,
+    passcodeManager: PasscodeManager,
+    onReAuthRequired: () -> Unit,
+    lockTimeOut: Duration = 15.seconds,
+) {
+    // Monotonic mark of the most recent ON_STOP. `null` means "no stop recorded yet" or "already
+    // consumed on a previous ON_RESUME" — either way, ON_RESUME skips the gate. A monotonic clock
+    // defeats clock-rewind: a user could otherwise background the app, roll the device clock back,
+    // and resume far past the window without re-auth.
+    val onStopMark = remember { mutableStateOf<TimeSource.Monotonic.ValueTimeMark?>(null) }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    DisposableEffect(lifecycle) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> {
+                    val inactiveTime = onStopMark.value?.elapsedNow()
+                    onStopMark.value = null
+                    if (inactiveTime != null) {
+                        Logger.a { "inactiveTime: ${inactiveTime.inWholeSeconds}s" }
+                        val unlocked = isAppLocked() == false
+                        val unlockMode = passcodeManager.state.value.passcodeStep == PasscodeStep.Enter
+                        if (inactiveTime > lockTimeOut && unlocked && unlockMode) onReAuthRequired()
+                    }
+                }
+                Lifecycle.Event.ON_STOP -> onStopMark.value = TimeSource.Monotonic.markNow()
+                else -> Unit
+            }
+        }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
     }
 }

@@ -17,6 +17,7 @@ import kpt.core.model.autopay.AutoPayTemplate
 import kpt.core.model.autopay.AutoPayUpdatePayload
 import kpt.core.model.autopay.UpcomingPayment
 import kpt.core.model.network.entity.Page
+/** Repository for managing auto-pay (scheduled recurring payment) schedules. */
 interface AutoPayRepository {
     // Phase-3 cutover — Flow-shaped reads on ScreenState.
 
@@ -104,6 +105,15 @@ interface AutoPayRepository {
     suspend fun validateAutoPayPayload(payload: AutoPayPayload)
 }
 
+/**
+ * Aggregate figures for a client's auto-pay schedules.
+ * @property totalActiveSchedules Number of active schedules.
+ * @property totalPausedSchedules Number of paused schedules.
+ * @property totalCompletedSchedules Number of completed schedules.
+ * @property totalUpcomingPayments Number of upcoming payments.
+ * @property totalAmountThisMonth Total amount scheduled for this month.
+ * @property currency Currency code of the amounts.
+ */
 data class AutoPayStatistics(
     val totalActiveSchedules: Int = 0,
     val totalPausedSchedules: Int = 0,

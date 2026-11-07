@@ -44,15 +44,15 @@ import kotlinx.browser.document
 import kotlinx.coroutines.await
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_camera_access_denied
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_camera_denied_message
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_camera_error
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_camera_view_active
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_initializing_camera
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_position_qr_code
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_scan_qr_code
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_select_from_gallery
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_access_denied
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_denied_message
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_error
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_view_active
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_initializing_camera
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_position_qr_code
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_scan_qr_code
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_select_from_gallery
 import org.jetbrains.compose.resources.stringResource
 import org.w3c.dom.HTMLDivElement
 
@@ -69,7 +69,11 @@ sealed interface WebCameraScannerState {
     /** Permission denied - user denied camera access */
     data object PermissionDenied : WebCameraScannerState
 
-    /** Error - failed to initialize camera */
+    /**
+     * Error - failed to initialize camera.
+     *
+     * @property message Description of the failure.
+     */
     data class Error(val message: String) : WebCameraScannerState
 }
 

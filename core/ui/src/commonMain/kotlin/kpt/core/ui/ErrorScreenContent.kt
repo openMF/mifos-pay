@@ -35,6 +35,7 @@ import kpt.core.ui.generated.resources.core_ui_error_occurred
 import kpt.core.ui.generated.resources.core_ui_retry
 import kpt.core.ui.generated.resources.core_ui_try_again
 import org.jetbrains.compose.resources.stringResource
+/** Error state with title, subtitle and a retry button wired to [onClickRetry]. */
 @Composable
 fun ErrorScreenContent(
     modifier: Modifier = Modifier,
@@ -85,6 +86,7 @@ fun ErrorScreenContent(
     }
 }
 
+/** Preview of [ErrorScreenContent]. */
 @DevicePreviews
 @Composable
 fun ErrorContentScreenDrawableImagePreview() {

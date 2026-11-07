@@ -20,6 +20,7 @@ import kpt.core.model.network.entity.TPTResponse
 import kpt.core.model.network.entity.payload.TransferPayload
 import kpt.core.model.network.entity.templates.account.AccountOptionsTemplate
 import kpt.core.network.SelfServiceApiManager
+/** Default [ThirdPartyTransferRepository] backed by the third-party transfer API. */
 class ThirdPartyTransferRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
     private val ioDispatcher: CoroutineDispatcher,

@@ -18,6 +18,8 @@
 #   Y-12 a retired key the fork CHANGED is still removed, and the removal is reported
 #   Y-13 a key the fork added itself is never removed
 #   Y-14 a list row the template owns (`owner: template`) follows the template; a fork row stays
+#   Y-15 the web_cors_proxy -> web_cors rename: un-migrated, the old value is reported and the block
+#        arrives; migrated BEFORE the sync, the fork's relay and hosts survive and only `mode` is added
 set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(cd "$HERE/../.." && pwd)"
@@ -75,6 +77,7 @@ YAML
 ( CS_ROOT="$REPO" cs_merge_yaml_schema "$WORK/ours.yaml" "$WORK/base.yaml" "$WORK/theirs.yaml" "$WORK/out.yaml" ) \
   || { echo "  ❌ merge failed"; exit 1; }
 O="$WORK/out.yaml"
+# True when the merged output contains the literal text.
 has() { grep -qF -- "$1" "$O"; }
 
 has 'Field operations for loan officers.' && has 'Works offline.' && ! has 'demo copy' \
@@ -145,6 +148,32 @@ grep -qF 'publishable_key_env: NEW_KEY' "$WORK/ap-out.yaml" && ! grep -qF OLD_KE
   && grep -qF 'fork.example.org' "$WORK/ap-out.yaml" && ! grep -qF 'template.example.org' "$WORK/ap-out.yaml" \
   && [ "$(grep -c 'id: shared' "$WORK/ap-out.yaml")" = 1 ] \
   && pass "Y-14 template-owned row follows the template; the fork row stays" || bad "Y-14 row-level ownership wrong"
+
+# Y-15 — network.web_cors_proxy was retired for network.web_cors (template-migrations.yaml web-cors-block).
+cat > "$WORK/wc-base.yaml" <<'YAML'
+network:
+  web_cors_proxy: /cors
+  log_tag: App
+YAML
+cat > "$WORK/wc-theirs.yaml" <<'YAML'
+network:
+  web_cors:
+    mode: relay
+    relay: /cors
+    hosts: []
+  log_tag: App
+YAML
+printf 'network:\n  web_cors_proxy: https://my.relay.io\n  log_tag: App\n' > "$WORK/wc-old.yaml"
+printf 'network:\n  web_cors:\n    relay: https://my.relay.io\n    hosts: ["*.bank.io"]\n  log_tag: App\n' > "$WORK/wc-new.yaml"
+( CS_ROOT="$REPO" CS_YAML_SCHEMA="$REPO/app-profile/app.schema.yaml" \
+  cs_merge_yaml_schema "$WORK/wc-old.yaml" "$WORK/wc-base.yaml" "$WORK/wc-theirs.yaml" "$WORK/wc-old.out" ) 2>"$WORK/wc-err"
+( CS_ROOT="$REPO" CS_YAML_SCHEMA="$REPO/app-profile/app.schema.yaml" \
+  cs_merge_yaml_schema "$WORK/wc-new.yaml" "$WORK/wc-base.yaml" "$WORK/wc-theirs.yaml" "$WORK/wc-new.out" ) 2>/dev/null
+grep -qF 'retired key network.web_cors_proxy removed (fork had: web_cors_proxy: https://my.relay.io)' "$WORK/wc-err" \
+  && ! grep -q web_cors_proxy "$WORK/wc-old.out" && grep -qF 'relay: /cors' "$WORK/wc-old.out" \
+  && grep -qF 'relay: https://my.relay.io' "$WORK/wc-new.out" && grep -qF '*.bank.io' "$WORK/wc-new.out" \
+  && grep -qF 'mode: relay' "$WORK/wc-new.out" && [ "$(grep -c 'web_cors:' "$WORK/wc-new.out")" = 1 ] \
+  && pass "Y-15 web_cors_proxy retirement reported; a pre-migrated web_cors block survives" || bad "Y-15 web_cors rename merge wrong"
 
 [ "$fail" = 0 ] && echo "yaml-schema-merge-test: PASS" || echo "yaml-schema-merge-test: FAIL"
 exit "$fail"

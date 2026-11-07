@@ -9,7 +9,11 @@
  */
 package kpt.feature.mpay.qr.scan
 
+/** iOS actual of [WebPlatform]; never a web environment. */
 actual object WebPlatform {
+    /** Always false on iOS. */
     actual val isWeb: Boolean = false
+
+    /** Always false on iOS. */
     actual val isWebDesktop: Boolean = false
 }

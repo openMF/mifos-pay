@@ -11,6 +11,17 @@ package org.mifos.lib.loan.network.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Network response DTO for the currency, as returned by the Fineract loans API.
+ *
+ * @property code Short code identifying the value.
+ * @property name Name.
+ * @property decimalPlaces Number of decimal places used for the currency.
+ * @property inMultiplesOf Amounts must be a multiple of this value.
+ * @property displaySymbol Currency symbol shown to the user.
+ * @property nameCode Localization code for the currency name.
+ * @property displayLabel Label shown to the user.
+ */
 @Serializable
 data class CurrencyResponseDto(
     val code: String? = null,

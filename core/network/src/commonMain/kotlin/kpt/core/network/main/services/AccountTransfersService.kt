@@ -21,28 +21,34 @@ import kpt.core.model.savingsaccount.TransactionsEntity
 import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.model.search.AccountResult
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for account transfers and account transactions. */
 interface AccountTransfersService {
 
+    /** Fetches a transaction of a savings account. */
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}/transactions/{transactionId}")
     fun getTransaction(
         @Path("accountId") clientId: Long,
         @Path("transactionId") transactionId: Long,
     ): Flow<TransactionsEntity>
 
+    /** Fetches the details of an account transfer. */
     @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/{transferId}")
     fun getAccountTransfer(@Path("transferId") transferId: Int): Flow<TransferDetail>
 
+    /** Searches accounts matching [query] within the given [resource]. */
     @GET(ApiEndPoints.SEARCH)
     fun searchAccounts(
         @Query("query") query: String,
         @Query("resource") resource: String,
     ): Flow<List<AccountResult>>
 
+    /** Makes an account transfer. */
     @POST(ApiEndPoints.ACCOUNT_TRANSFER)
     suspend fun makeTransfer(
         @Body payload: AccountTransferPayload,
     )
 
+    /** Fetches the template for creating an account transfer. */
     @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template")
     fun getAccountTransferTemplate(): Flow<AccountOptionsTemplate>
 }

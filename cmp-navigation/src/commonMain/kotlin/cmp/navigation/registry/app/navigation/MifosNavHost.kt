@@ -72,9 +72,15 @@ import kpt.feature.mpay.qr.scan.navigation.navigateToScanQr
 import kpt.feature.mpay.qr.scan.navigation.scanQrScreen
 import kpt.feature.notification.navigateToNotification
 import kpt.feature.notification.notificationScreen
+import kpt.feature.passcode.internalMifosPasscodeScreen
+import kpt.feature.passcode.navigateToInternalMifosPasscodeScreen
 import kpt.feature.payments.PAYMENTS_ROUTE
 import kpt.feature.payments.PaymentsScreenContents
 import kpt.feature.payments.RequestScreen
+import kpt.feature.payments.generated.resources.Res
+import kpt.feature.payments.generated.resources.feature_payments_history
+import kpt.feature.payments.generated.resources.feature_payments_request
+import kpt.feature.payments.generated.resources.feature_payments_send
 import kpt.feature.payments.paymentsScreen
 import kpt.feature.payments.selectTransferType.SelectTransferTypeScreen
 import kpt.feature.pocket.navigation.managePocketDestination
@@ -132,14 +138,8 @@ import kpt.feature.transfer.intrabank.selectScreen.selectAccountScreenDestinatio
 import kpt.feature.transfer.intrabank.success.navigateTransferSuccess
 import kpt.feature.transfer.intrabank.success.transferSuccessScreen
 import kpt.feature.upi.setup.navigation.setupUpiPinScreen
-import mifos_pay.feature.payments.generated.resources.Res
-import mifos_pay.feature.payments.generated.resources.feature_payments_history
-import mifos_pay.feature.payments.generated.resources.feature_payments_request
-import mifos_pay.feature.payments.generated.resources.feature_payments_send
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
-import org.mifos.feature.passcode.internalMifosPasscodeScreen
-import org.mifos.feature.passcode.navigateToInternalMifosPasscodeScreen
 import org.mifos.lib.loan.navigation.loanApplicationGraph
 import org.mifos.lib.loan.navigation.navigateToLoanApplicationGraph
 import cmp.navigation.generated.resources.Res as SharedRes

@@ -12,6 +12,32 @@ package kpt.core.model.standinginstruction
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A recurring transfer (standing instruction) between two accounts.
+ *
+ * @property id Unique identifier.
+ * @property accountDetailId Identifier of the account detail record.
+ * @property name Name of the instruction.
+ * @property fromOffice Office of the paying client.
+ * @property fromClient Paying client.
+ * @property fromAccountType Type of the paying account.
+ * @property fromAccount Paying account.
+ * @property toOffice Office of the receiving client.
+ * @property toClient Receiving client.
+ * @property toAccountType Type of the receiving account.
+ * @property toAccount Receiving account.
+ * @property transferType Type of the transfer.
+ * @property priority Priority of the instruction.
+ * @property instructionType Type of the instruction.
+ * @property status Current status.
+ * @property amount Amount transferred on each run.
+ * @property validFrom Date from which the instruction is valid.
+ * @property validTill Date until which the instruction is valid.
+ * @property recurrenceType Recurrence type.
+ * @property recurrenceFrequency Recurrence frequency.
+ * @property recurrenceInterval Interval between recurrences.
+ * @property recurrenceOnMonthDay Day of the month on which the instruction recurs.
+ */
 @Serializable
 @Parcelize
 data class StandingInstruction(
@@ -39,6 +65,14 @@ data class StandingInstruction(
     val recurrenceOnMonthDay: List<Int>? = emptyList(),
 ) : Parcelable {
 
+    /**
+     * Account at either end of a standing instruction.
+     *
+     * @property id Unique identifier.
+     * @property accountNo Account number.
+     * @property productId Identifier of the savings product.
+     * @property productName Name of the savings product.
+     */
     @Serializable
     @Parcelize
     data class FromAndToAccount(
@@ -48,6 +82,12 @@ data class StandingInstruction(
         val productName: String,
     ) : Parcelable
 
+    /**
+     * Office at either end of a standing instruction.
+     *
+     * @property id Unique identifier.
+     * @property name Display name.
+     */
     @Serializable
     @Parcelize
     data class FromAndToOffice(
@@ -55,6 +95,14 @@ data class StandingInstruction(
         val name: String,
     ) : Parcelable
 
+    /**
+     * Client at either end of a standing instruction.
+     *
+     * @property id Unique identifier.
+     * @property displayName Display name.
+     * @property officeId Identifier of the office.
+     * @property officeName Name of the office.
+     */
     @Serializable
     @Parcelize
     data class FromAndToClient(
@@ -64,6 +112,13 @@ data class StandingInstruction(
         val officeName: String,
     ) : Parcelable
 
+    /**
+     * A coded option (id, code and label) such as priority or status.
+     *
+     * @property id Unique identifier.
+     * @property code Code identifying the item.
+     * @property value Human-readable label.
+     */
     @Serializable
     @Parcelize
     data class Option(

@@ -18,6 +18,7 @@ private object NoOpQrScanner : QrScanner {
     override fun startScanning(): Flow<String?> = emptyFlow()
 }
 
+/** Non-Android actual: provides a no-op [QrScanner] that never emits a scan result. */
 actual val ScannerModule: Module
     get() = module {
         single<QrScanner> { NoOpQrScanner }

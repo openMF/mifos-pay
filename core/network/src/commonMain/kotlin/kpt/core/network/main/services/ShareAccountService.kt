@@ -15,8 +15,10 @@ import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
 import kpt.core.model.network.entity.shareAccount.ShareWithAssociationsResponseDto
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for share accounts. */
 interface ShareAccountService {
 
+    /** Fetches share account details. */
     @GET(ApiEndPoints.SHARE_ACCOUNTS + "/{accountId}")
     fun getShareAccountDetails(
         @Path("accountId") accountId: Long,

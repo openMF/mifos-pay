@@ -19,6 +19,9 @@ private const val CARD_ID = "cardId"
 
 private const val BASE_ROUTE = "$ROUTE?$CARD_ID={$CARD_ID}"
 
+/**
+ * Registers the card details screen in the navigation graph.
+ */
 fun NavGraphBuilder.cardDetailRoute(
     navigateBack: () -> Unit,
 ) {
@@ -34,6 +37,9 @@ fun NavGraphBuilder.cardDetailRoute(
     }
 }
 
+/**
+ * Navigates to the details of the card with id [cardId].
+ */
 fun NavController.navigateToCardDetails(cardId: Long) {
     navigate("$ROUTE?$CARD_ID=$cardId")
 }

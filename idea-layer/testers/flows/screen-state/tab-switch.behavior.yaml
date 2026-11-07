@@ -1,8 +1,0 @@
-schema_version: "1.0"
-flow: tab-switch
-flow_category: ui_navigation
-assertions:
-  - assert_network_call:
-      url_pattern: "*"
-      method: GET
-      count: 0

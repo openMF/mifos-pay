@@ -14,7 +14,9 @@ import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
 import kpt.core.model.savingsaccount.TransactionsEntity
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for running reports. */
 interface RunReportService {
+    /** Fetches a transaction receipt by running a report. */
     @GET(ApiEndPoints.RUN_REPORT + "/Savings Transaction Receipt")
     suspend fun getTransactionReceipt(
         @Query("output-type") outputType: String,

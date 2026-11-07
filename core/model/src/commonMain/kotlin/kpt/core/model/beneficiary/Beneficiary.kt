@@ -12,6 +12,18 @@ package kpt.core.model.beneficiary
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A saved payee the user can transfer money to.
+ *
+ * @property id Unique id of the beneficiary.
+ * @property name Display name of the beneficiary.
+ * @property officeName Name of the beneficiary's office.
+ * @property clientName Name of the client that owns the beneficiary account.
+ * @property accountType Type of the beneficiary account.
+ * @property accountNumber Account number of the beneficiary.
+ * @property transferLimit Maximum amount allowed per transfer.
+ * @property officeId Id of the beneficiary's office.
+ */
 @Serializable
 @Parcelize
 data class Beneficiary(
@@ -25,6 +37,13 @@ data class Beneficiary(
     val officeId: Long? = null,
 ) : Parcelable {
 
+    /**
+     * Type of a beneficiary account as returned by the API.
+     *
+     * @property id Id of the account type.
+     * @property code Machine-readable code.
+     * @property value Human-readable label.
+     */
     @Serializable
     @Parcelize
     data class AccountType(

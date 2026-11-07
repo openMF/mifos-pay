@@ -76,6 +76,7 @@ class ErrorMessageProviderImpl : ErrorMessageProvider {
         return fallbackMessage ?: getGenericErrorMessageSync()
     }
 
+    /** Synchronous fallback error titles and messages keyed by HTTP status code. */
     companion object {
         // HTTP Error Titles - using hardcoded fallbacks for sync access
         private fun getHttpErrorTitleSync(statusCode: Int): String = when (statusCode) {

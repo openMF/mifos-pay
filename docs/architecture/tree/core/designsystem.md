@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/designsystem sha=8dcbac397831150ff5f0b9711380c6abc74b5afb -->
+<!-- api-docs:begin module=core/designsystem sha=e80a01d44c1aa9f3584c3ef88833903d437550af -->
 ## API reference
 
-_Generated from `core/designsystem` at tree `8dcbac397831` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/designsystem` at tree `e80a01d44c1a` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/chart/ChartTokens.kt`
@@ -118,7 +118,7 @@ Minimal Canvas-based sparkline — a one-pass connected polyline whose y-axis is
 ```kotlin
 fun MifosDialogBox(
 ```
-_No KDoc at source._
+Confirmation alert dialog with a title, optional text and confirm/dismiss buttons, shown while `showDialogState` is true.
 
 <details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrScreen.kt:149</code></summary>
 
@@ -137,7 +137,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosCustomDialog(
 ```
-_No KDoc at source._
+Basic dialog that hosts arbitrary `content`, dismissed through `onDismiss`.
 
 <details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/SetAmountDialog.kt:56</code></summary>
 
@@ -167,7 +167,7 @@ fun MifosBackground(
 ```
 The main background for the app. Uses `LocalBackgroundTheme` to set the color and tonal elevation of a `Surface`.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Button.kt:296</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Button.kt:298</code></summary>
 
 ```kotlin
 fun MifosButtonPreview() {
@@ -203,39 +203,39 @@ A gradient background for select screens. Uses `LocalBackgroundTheme` to set the
 ```kotlin
 fun BackgroundDefault()
 ```
-_No KDoc at source._
+Preview of MifosBackground with the default theme.
 
 ```kotlin
 fun BackgroundDynamic()
 ```
-_No KDoc at source._
+Preview of MifosBackground with a dynamic theme.
 
 ```kotlin
 fun BackgroundAndroid()
 ```
-_No KDoc at source._
+Preview of MifosBackground with the Android theme.
 
 ```kotlin
 fun GradientBackgroundDefault()
 ```
-_No KDoc at source._
+Preview of MifosGradientBackground with the default theme.
 
 ```kotlin
 fun GradientBackgroundDynamic()
 ```
-_No KDoc at source._
+Preview of MifosGradientBackground with the dynamic theme.
 
 ```kotlin
 fun GradientBackgroundAndroid()
 ```
-_No KDoc at source._
+Preview of MifosGradientBackground with the Android theme.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/BottomSheet.kt`
 
 ```kotlin
 fun MifosBottomSheet(
 ```
-_No KDoc at source._
+Modal bottom sheet that hosts `content` and is dismissed via `onDismiss`.
 
 <details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/deletebeneficiary/DeleteBeneficiaryBottomSheet.kt:62</code></summary>
 
@@ -254,7 +254,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosBottomSheetPreview()
 ```
-_No KDoc at source._
+Preview of `MifosBottomSheet`.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Button.kt`
 
@@ -280,7 +280,7 @@ Mifos Wallet filled button with generic content slot. Wraps Material 3 `Button`.
 ```kotlin
 fun MifosButton(
 ```
-_No KDoc at source._
+Primary filled Mifos button with an optional leading icon and a composable `text` label.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:517</code></summary>
 
@@ -358,7 +358,7 @@ fun MifosTextButton(
 ```
 Mifos Wallet text button with generic content slot. Wraps Material 3 `TextButton`.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosBasicDialog.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosBasicDialog.kt:33</code></summary>
 
 ```kotlin
             onDismissRequest = onDismissRequest,
@@ -377,7 +377,7 @@ fun MifosTextButton(
 ```
 Mifos Wallet text button with text and icon content slots.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosBasicDialog.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosBasicDialog.kt:33</code></summary>
 
 ```kotlin
             onDismissRequest = onDismissRequest,
@@ -394,32 +394,32 @@ Mifos Wallet text button with text and icon content slots.
 ```kotlin
 fun MifosButtonPreview()
 ```
-_No KDoc at source._
+Preview of `MifosButton`.
 
 ```kotlin
 fun MifosOutlinedButtonPreview()
 ```
-_No KDoc at source._
+Preview of MifosOutlinedButton.
 
 ```kotlin
 fun MifosButtonLeadingIconPreview()
 ```
-_No KDoc at source._
+Preview of `MifosButton` with a leading icon.
 
 ```kotlin
 object MifosButtonDefaults
 ```
 Mifos Wallet button default values.
 
-- `const val DISABLED_OUTLINED_BUTTON_BORDER_ALPHA = 0.12f`
-- `val OutlinedButtonBorderWidth = 1.dp`
+- `const val DISABLED_OUTLINED_BUTTON_BORDER_ALPHA = 0.12f` — Alpha applied to the border of a disabled outlined button, which Material does not do by default.
+- `val OutlinedButtonBorderWidth = 1.dp` — Border width of outlined buttons (not exposed by Material ButtonDefaults).
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Card.kt`
 
 ```kotlin
 fun MifosCard(
 ```
-_No KDoc at source._
+Themed Material card wrapper with Mifos default shape, elevation and colors.
 
 <details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantsItem.kt:43</code></summary>
 
@@ -440,9 +440,9 @@ _No KDoc at source._
 ```kotlin
 fun IconBox(
 ```
-_No KDoc at source._
+Outlined icon button showing `icon`, used for small tappable icon actions.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTopBar.kt:38</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTopBar.kt:39</code></summary>
 
 ```kotlin
         },
@@ -461,9 +461,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosLoadingWheel(
 ```
-_No KDoc at source._
+Animated loading wheel with an accessibility content description.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:91</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:92</code></summary>
 
 ```kotlin
     ) {
@@ -480,19 +480,19 @@ _No KDoc at source._
 ```kotlin
 fun MifosOverlayLoadingWheel(
 ```
-_No KDoc at source._
+Loading wheel shown on a rounded overlay surface above the content.
 
 ```kotlin
 fun MfOverlayLoadingWheel(
 ```
-_No KDoc at source._
+Overlay loading wheel with a default "Loading" description.
 
 ```kotlin
 fun MfLoadingWheel(
 ```
-_No KDoc at source._
+Loading wheel with a default "Loading" description and configurable background color.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:121</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:122</code></summary>
 
 ```kotlin
 
@@ -509,19 +509,19 @@ _No KDoc at source._
 ```kotlin
 fun MifosLoadingWheelPreview()
 ```
-_No KDoc at source._
+Preview of `MifosLoadingWheel`.
 
 ```kotlin
 fun NiaOverlayLoadingWheelPreview()
 ```
-_No KDoc at source._
+Preview of `MifosOverlayLoadingWheel`.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosAccountCard.kt`
 
 ```kotlin
 fun MifosAccountCard(
 ```
-_No KDoc at source._
+Card summarising a wallet account (number, type, balance) that can be clicked or have actions applied.
 
 <details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/PocketDashboardScreen.kt:202</code></summary>
 
@@ -542,7 +542,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosAlertDialog(
 ```
-_No KDoc at source._
+Alert dialog showing an `icon`, `title` and `message` with confirm/dismiss actions.
 
 <details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/ManagePocketScreen.kt:323</code></summary>
 
@@ -563,9 +563,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosBasicDialog(
 ```
-_No KDoc at source._
+Dialog that shows an error-style title and message from a `BasicDialogState` with a single dismiss action.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:453</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:454</code></summary>
 
 ```kotlin
 ) {
@@ -582,9 +582,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosBasicDialog(
 ```
-_No KDoc at source._
+Dialog that shows a title and message from a `BasicDialogState` with confirm and dismiss actions.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:453</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:454</code></summary>
 
 ```kotlin
 ) {
@@ -603,7 +603,7 @@ sealed class BasicDialogState
 ```
 Models display of a `MifosBasicDialog`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:454</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:455</code></summary>
 
 ```kotlin
     when (dialogState) {
@@ -622,9 +622,9 @@ Models display of a `MifosBasicDialog`.
 ```kotlin
 fun MifosLoadingDialog(
 ```
-_No KDoc at source._
+Full-screen modal dialog with a loading indicator, driven by `LoadingDialogState`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:469</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:470</code></summary>
 
 ```kotlin
         )
@@ -643,7 +643,7 @@ sealed class LoadingDialogState
 ```
 Models display of a `MifosLoadingDialog`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:470</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:471</code></summary>
 
 ```kotlin
 
@@ -662,9 +662,9 @@ Models display of a `MifosLoadingDialog`.
 ```kotlin
 fun MifosScaffold(
 ```
-_No KDoc at source._
+Scaffold with a standard top bar (title and back button) wrapping the screen `content`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:160</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:161</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -681,9 +681,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosScaffold(
 ```
-_No KDoc at source._
+Scaffold that takes caller-supplied top bar, bottom bar, snackbar and floating action button slots.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:160</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:161</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -700,7 +700,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosBottomSheetScaffold(
 ```
-_No KDoc at source._
+Scaffold with a persistent bottom sheet hosting `sheetContent`.
 
 <details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:288</code></summary>
 
@@ -719,7 +719,7 @@ _No KDoc at source._
 ```kotlin
 data class FloatingActionButtonContent(
 ```
-_No KDoc at source._
+Describes a floating action button for `MifosScaffold`.
 
 <details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/scaffold/KptForkScaffold.kt:56</code></summary>
 
@@ -738,9 +738,9 @@ _No KDoc at source._
 ```kotlin
 data class MifosPullToRefreshState(
 ```
-_No KDoc at source._
+State holder for pull-to-refresh behaviour of a scaffold.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:72</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:73</code></summary>
 
 ```kotlin
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
@@ -757,16 +757,16 @@ _No KDoc at source._
 ```kotlin
 fun rememberMifosPullToRefreshState(
 ```
-_No KDoc at source._
+Creates and remembers a `MifosPullToRefreshState`.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosTab.kt`
 
 ```kotlin
 fun MifosTab(
 ```
-_No KDoc at source._
+Single tab with a text label, used inside tab rows.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/ScrollableTabRow.kt:46</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/ScrollableTabRow.kt:47</code></summary>
 
 ```kotlin
     ) {
@@ -785,7 +785,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosTabPager(
 ```
-_No KDoc at source._
+Tab row synchronised with a pager, rendering one page per tab.
 
 <details><summary>Used in the template — <code>feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/ManagePocketScreen.kt:537</code></summary>
 
@@ -806,7 +806,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosTopAppBar(
 ```
-_No KDoc at source._
+Center-aligned top app bar with a title and a navigation icon.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
 
@@ -825,7 +825,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosTopAppBar(
 ```
-_No KDoc at source._
+Center-aligned top app bar with a title and optional `NavigationIcon` and action icons.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
 
@@ -844,7 +844,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosTopAppBar(
 ```
-_No KDoc at source._
+Top app bar with a title and subtitle, an optional `NavigationIcon` and action icons.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
 
@@ -863,7 +863,7 @@ _No KDoc at source._
 ```kotlin
 data class NavigationIcon(
 ```
-_No KDoc at source._
+Navigation icon configuration for a top app bar.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:114</code></summary>
 
@@ -884,9 +884,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosTopBar(
 ```
-_No KDoc at source._
+Top bar showing `topBarTitle` with a back button wired to `backPress`.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:101</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:102</code></summary>
 
 ```kotlin
     MifosScaffold(
@@ -953,21 +953,21 @@ Now in Android navigation rail with header and content slots. Wraps Material 3 `
 ```kotlin
 fun MifosNavigationBarPreview()
 ```
-_No KDoc at source._
+Preview of the Mifos bottom navigation bar.
 
 ```kotlin
 fun MifosNavigationRailPreview()
 ```
-_No KDoc at source._
+Preview of the Mifos navigation rail.
 
 ```kotlin
 object MifosNavigationDefaults
 ```
 Now in Android navigation default values.
 
-- `fun navigationContentColor() = KptTheme.colorScheme.onSurfaceVariant`
-- `fun navigationSelectedItemColor() = KptTheme.colorScheme.onPrimaryContainer`
-- `fun navigationIndicatorColor() = KptTheme.colorScheme.primaryContainer`
+- `fun navigationContentColor() = KptTheme.colorScheme.onSurfaceVariant` — Color of unselected navigation item content.
+- `fun navigationSelectedItemColor() = KptTheme.colorScheme.onPrimaryContainer` — Color of the selected navigation item content.
+- `fun navigationIndicatorColor() = KptTheme.colorScheme.primaryContainer` — Color of the selected navigation item indicator.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/RateBadge.kt`
 
@@ -1011,7 +1011,7 @@ fun StatusChip(text: String, intent: StatusChipIntent, modifier: Modifier = Modi
 ```
 Compact colored pill used to convey state at a glance — bill status, loan stage, rate direction, sync state. Stays one line; no icons (use `UrgencyDot` when you want a leading accent).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:490</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:491</code></summary>
 
 ```kotlin
     ) {
@@ -1051,7 +1051,7 @@ fun StatusChip(text: String, intent: StatusChipIntent, modifier: Modifier = Modi
 ```kotlin
 fun MifosOutlinedTextField(
 ```
-_No KDoc at source._
+Outlined text field with label, optional leading/trailing icon, error text and keyboard options.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:181</code></summary>
 
@@ -1070,7 +1070,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosTextField(
 ```
-_No KDoc at source._
+Filled text field with label, optional icons, error text and keyboard options.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:228</code></summary>
 
@@ -1089,9 +1089,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosCustomTextField(
 ```
-_No KDoc at source._
+Custom-styled text field operating on a plain `String` value.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt:62</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt:63</code></summary>
 
 ```kotlin
     val focusRequester = remember { FocusRequester() }
@@ -1108,9 +1108,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosCustomTextField(
 ```
-_No KDoc at source._
+Custom-styled text field operating on a `TextFieldValue`, giving callers control over cursor and selection.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt:62</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt:63</code></summary>
 
 ```kotlin
     val focusRequester = remember { FocusRequester() }
@@ -1129,9 +1129,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosTextUserImage(
 ```
-_No KDoc at source._
+Circular avatar showing the initials derived from `text`.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/BeneficiaryCard.kt:56</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/components/BeneficiaryCard.kt:57</code></summary>
 
 ```kotlin
             verticalAlignment = Alignment.CenterVertically,
@@ -1149,7 +1149,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosTopAppBar(
 ```
-_No KDoc at source._
+Top app bar with a title and optional navigation icon and actions.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:111</code></summary>
 
@@ -1168,7 +1168,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosNavigationTopAppBar(
 ```
-_No KDoc at source._
+Top app bar with a title and a back navigation button when `onNavigationClick` is provided.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/Urgency.kt`
 
@@ -1205,7 +1205,7 @@ fun ScrollableState.DraggableScrollbar(
 ```
 A `Scrollbar` that allows for fast scrolling of content by dragging its thumb. Its thumb disappears when the scrolling container is dormant.
 
-<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:368</code></summary>
+<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:369</code></summary>
 
 ```kotlin
 
@@ -1229,7 +1229,7 @@ A simple `Scrollbar`. Its thumb disappears when the scrolling container is dorma
 ```kotlin
 class ScrollbarState
 ```
-_No KDoc at source._
+Holds the packed scroll metrics of a scrollbar and exposes the derived thumb size.
 
 <details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/scrollbar/AppScrollbars.kt:69</code></summary>
 
@@ -1415,7 +1415,7 @@ object MifosIcons
 ```
 Mifos icons. Material icons are `ImageVector`s, custom icons are drawable resource IDs.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:176</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:177</code></summary>
 
 ```kotlin
                 ) {
@@ -1429,20 +1429,20 @@ Mifos icons. Material icons are `ImageVector`s, custom icons are drawable resour
 
 </details>
 
-- `val Fingerprint = Icons.Default.Fingerprint`
-- `val OutlinedInfo = Icons.Outlined.Info`
-- `val OutlinedLock = Icons.Outlined.Lock`
-- `val OutlinedNotifications = Icons.Outlined.Notifications`
-- `val ChevronRight: ImageVector = Icons.Filled.ChevronRight`
-- `val QrCode: ImageVector = Icons.Filled.QrCode`
-- `val Close: ImageVector = Icons.Filled.Close`
-- `val Error: ImageVector = Icons.Filled.Error`
-- `val AttachMoney: ImageVector = Icons.Filled.AttachMoney`
-- `val OutlinedVisibilityOff: ImageVector = Icons.Outlined.VisibilityOff`
-- `val OutlinedVisibility: ImageVector = Icons.Outlined.Visibility`
-- `val VisibilityOff: ImageVector = Icons.Filled.VisibilityOff`
-- `val Visibility: ImageVector = Icons.Filled.Visibility`
-- `val Check: ImageVector = Icons.Default.Check`
+- `val Fingerprint = Icons.Default.Fingerprint` — Fingerprint icon used for biometric authentication prompts.
+- `val OutlinedInfo = Icons.Outlined.Info` — Outlined information icon.
+- `val OutlinedLock = Icons.Outlined.Lock` — Outlined padlock icon, used for security and passcode settings.
+- `val OutlinedNotifications = Icons.Outlined.Notifications` — Outlined notification bell icon.
+- `val ChevronRight: ImageVector = Icons.Filled.ChevronRight` — Filled right-pointing chevron, typically a list-row navigation affordance.
+- `val QrCode: ImageVector = Icons.Filled.QrCode` — Filled QR code icon.
+- `val Close: ImageVector = Icons.Filled.Close` — Close (X) icon.
+- `val Error: ImageVector = Icons.Filled.Error` — Filled error icon.
+- `val AttachMoney: ImageVector = Icons.Filled.AttachMoney` — Dollar/money icon.
+- `val OutlinedVisibilityOff: ImageVector = Icons.Outlined.VisibilityOff` — Outlined "hide" eye icon, used to mask password text.
+- `val OutlinedVisibility: ImageVector = Icons.Outlined.Visibility` — Outlined "show" eye icon, used to reveal password text.
+- `val VisibilityOff: ImageVector = Icons.Filled.VisibilityOff` — Filled "hide" eye icon.
+- `val Visibility: ImageVector = Icons.Filled.Visibility` — Filled "show" eye icon.
+- `val Check: ImageVector = Icons.Default.Check` — Check mark icon.
   _…more members; read the file._
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/BackgroundTheme.kt`
@@ -1452,7 +1452,7 @@ data class BackgroundTheme(
 ```
 A class to model background color and tonal elevation values for Now in Android.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:60</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:61</code></summary>
 
 ```kotlin
     }
@@ -1490,364 +1490,364 @@ A composition local for `BackgroundTheme`.
 ```kotlin
 val primaryLight = Color(0xFF4338CA)
 ```
-_No KDoc at source._
+Light-scheme `primary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onPrimaryLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onPrimary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val primaryContainerLight = Color(0xFFE0E7FF)
 ```
-_No KDoc at source._
+Light-scheme `primaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onPrimaryContainerLight = Color(0xFF1F1D75)
 ```
-_No KDoc at source._
+Light-scheme `onPrimaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val secondaryLight = Color(0xFF059669)
 ```
-_No KDoc at source._
+Light-scheme `secondary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSecondaryLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onSecondary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val secondaryContainerLight = Color(0xFFD1FAE5)
 ```
-_No KDoc at source._
+Light-scheme `secondaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSecondaryContainerLight = Color(0xFF064E3B)
 ```
-_No KDoc at source._
+Light-scheme `onSecondaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val tertiaryLight = Color(0xFFD97706)
 ```
-_No KDoc at source._
+Light-scheme `tertiary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onTertiaryLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onTertiary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val tertiaryContainerLight = Color(0xFFFEF3C7)
 ```
-_No KDoc at source._
+Light-scheme `tertiaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onTertiaryContainerLight = Color(0xFF78350F)
 ```
-_No KDoc at source._
+Light-scheme `onTertiaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val errorLight = Color(0xFFF87171)
 ```
-_No KDoc at source._
+Light-scheme `error` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onErrorLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onError` color role of the default Mifos Pay palette.
 
 ```kotlin
 val errorContainerLight = Color(0xFFFFE4E1)
 ```
-_No KDoc at source._
+Light-scheme `errorContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onErrorContainerLight = Color(0xFF9F1239)
 ```
-_No KDoc at source._
+Light-scheme `onErrorContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val backgroundLight = Color(0xFFFAFAFB)
 ```
-_No KDoc at source._
+Light-scheme `background` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onBackgroundLight = Color(0xFF0F172A)
 ```
-_No KDoc at source._
+Light-scheme `onBackground` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceLight = Color(0xFFFAFAFB)
 ```
-_No KDoc at source._
+Light-scheme `surface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSurfaceLight = Color(0xFF0F172A)
 ```
-_No KDoc at source._
+Light-scheme `onSurface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceVariantLight = Color(0xFFE2E8F0)
 ```
-_No KDoc at source._
+Light-scheme `surfaceVariant` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSurfaceVariantLight = Color(0xFF475569)
 ```
-_No KDoc at source._
+Light-scheme `onSurfaceVariant` color role of the default Mifos Pay palette.
 
 ```kotlin
 val outlineLight = Color(0xFF94A3B8)
 ```
-_No KDoc at source._
+Light-scheme `outline` color role of the default Mifos Pay palette.
 
 ```kotlin
 val outlineVariantLight = Color(0xFFCBD5E1)
 ```
-_No KDoc at source._
+Light-scheme `outlineVariant` color role of the default Mifos Pay palette.
 
 ```kotlin
 val scrimLight = Color(0xFF000000)
 ```
-_No KDoc at source._
+Light-scheme `scrim` color role of the default Mifos Pay palette.
 
 ```kotlin
 val inverseSurfaceLight = Color(0xFF1E293B)
 ```
-_No KDoc at source._
+Light-scheme `inverseSurface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val inverseOnSurfaceLight = Color(0xFFF1F5F9)
 ```
-_No KDoc at source._
+Light-scheme `inverseOnSurface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val inversePrimaryLight = Color(0xFFA5B4FC)
 ```
-_No KDoc at source._
+Light-scheme `inversePrimary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceDimLight = Color(0xFFE2E8F0)
 ```
-_No KDoc at source._
+Light-scheme `surfaceDim` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceBrightLight = Color(0xFFFAFAFB)
 ```
-_No KDoc at source._
+Light-scheme `surfaceBright` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerLowestLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerLowest` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerLowLight = Color(0xFFF8FAFC)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerLow` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerLight = Color(0xFFF1F5F9)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerHighLight = Color(0xFFE2E8F0)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerHigh` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerHighestLight = Color(0xFFCBD5E1)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerHighest` color role of the default Mifos Pay palette.
 
 ```kotlin
 val primaryDark = Color(0xFFA5B4FC)
 ```
-_No KDoc at source._
+Dark-scheme `primary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onPrimaryDark = Color(0xFF1F1D75)
 ```
-_No KDoc at source._
+Dark-scheme `onPrimary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val primaryContainerDark = Color(0xFF3730A3)
 ```
-_No KDoc at source._
+Dark-scheme `primaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onPrimaryContainerDark = Color(0xFFE0E7FF)
 ```
-_No KDoc at source._
+Dark-scheme `onPrimaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val secondaryDark = Color(0xFF6EE7B7)
 ```
-_No KDoc at source._
+Dark-scheme `secondary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSecondaryDark = Color(0xFF064E3B)
 ```
-_No KDoc at source._
+Dark-scheme `onSecondary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val secondaryContainerDark = Color(0xFF065F46)
 ```
-_No KDoc at source._
+Dark-scheme `secondaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSecondaryContainerDark = Color(0xFFD1FAE5)
 ```
-_No KDoc at source._
+Dark-scheme `onSecondaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val tertiaryDark = Color(0xFFFCD34D)
 ```
-_No KDoc at source._
+Dark-scheme `tertiary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onTertiaryDark = Color(0xFF78350F)
 ```
-_No KDoc at source._
+Dark-scheme `onTertiary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val tertiaryContainerDark = Color(0xFF92400E)
 ```
-_No KDoc at source._
+Dark-scheme `tertiaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onTertiaryContainerDark = Color(0xFFFEF3C7)
 ```
-_No KDoc at source._
+Dark-scheme `onTertiaryContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val errorDark = Color(0xFFFDBA74)
 ```
-_No KDoc at source._
+Dark-scheme `error` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onErrorDark = Color(0xFF7C2D12)
 ```
-_No KDoc at source._
+Dark-scheme `onError` color role of the default Mifos Pay palette.
 
 ```kotlin
 val errorContainerDark = Color(0xFFC2410C)
 ```
-_No KDoc at source._
+Dark-scheme `errorContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onErrorContainerDark = Color(0xFFFFEDD5)
 ```
-_No KDoc at source._
+Dark-scheme `onErrorContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val backgroundDark = Color(0xFF0F172A)
 ```
-_No KDoc at source._
+Dark-scheme `background` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onBackgroundDark = Color(0xFFF1F5F9)
 ```
-_No KDoc at source._
+Dark-scheme `onBackground` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceDark = Color(0xFF0F172A)
 ```
-_No KDoc at source._
+Dark-scheme `surface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSurfaceDark = Color(0xFFF1F5F9)
 ```
-_No KDoc at source._
+Dark-scheme `onSurface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceVariantDark = Color(0xFF1E293B)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceVariant` color role of the default Mifos Pay palette.
 
 ```kotlin
 val onSurfaceVariantDark = Color(0xFFCBD5E1)
 ```
-_No KDoc at source._
+Dark-scheme `onSurfaceVariant` color role of the default Mifos Pay palette.
 
 ```kotlin
 val outlineDark = Color(0xFF64748B)
 ```
-_No KDoc at source._
+Dark-scheme `outline` color role of the default Mifos Pay palette.
 
 ```kotlin
 val outlineVariantDark = Color(0xFF334155)
 ```
-_No KDoc at source._
+Dark-scheme `outlineVariant` color role of the default Mifos Pay palette.
 
 ```kotlin
 val scrimDark = Color(0xFF000000)
 ```
-_No KDoc at source._
+Dark-scheme `scrim` color role of the default Mifos Pay palette.
 
 ```kotlin
 val inverseSurfaceDark = Color(0xFFF1F5F9)
 ```
-_No KDoc at source._
+Dark-scheme `inverseSurface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val inverseOnSurfaceDark = Color(0xFF1E293B)
 ```
-_No KDoc at source._
+Dark-scheme `inverseOnSurface` color role of the default Mifos Pay palette.
 
 ```kotlin
 val inversePrimaryDark = Color(0xFF4338CA)
 ```
-_No KDoc at source._
+Dark-scheme `inversePrimary` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceDimDark = Color(0xFF0F172A)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceDim` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceBrightDark = Color(0xFF374558)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceBright` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerLowestDark = Color(0xFF020617)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerLowest` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerLowDark = Color(0xFF1E293B)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerLow` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerDark = Color(0xFF243044)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainer` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerHighDark = Color(0xFF2D3B52)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerHigh` color role of the default Mifos Pay palette.
 
 ```kotlin
 val surfaceContainerHighestDark = Color(0xFF374558)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerHighest` color role of the default Mifos Pay palette.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/ColorScheme.kt`
 
 ```kotlin
 val lightKptColorScheme = LightDefaultColorScheme.toKptColorScheme()
 ```
-_No KDoc at source._
+Light `KptColorScheme` built from the default light color scheme.
 
 ```kotlin
 val darkKptColorScheme = DarkDefaultColorScheme.toKptColorScheme()
 ```
-_No KDoc at source._
+Dark `KptColorScheme` built from the default dark color scheme.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/Elevation.kt`
 
@@ -1856,7 +1856,7 @@ data class Elevation(
 ```
 Shared elevation tier scale — five named tiers matching Material 3 elevation guidance. Access from any Composable via `MaterialTheme.elevation`.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:169</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:170</code></summary>
 
 ```kotlin
             containerColor = MaterialTheme.colorScheme.surface,
@@ -1873,7 +1873,7 @@ Shared elevation tier scale — five named tiers matching Material 3 elevation g
 ```kotlin
 val LocalElevation = staticCompositionLocalOf { Elevation() }
 ```
-_No KDoc at source._
+Composition local providing the active `Elevation` scale.
 
 <details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/KptTheme.kt:77</code></summary>
 
@@ -2018,7 +2018,7 @@ fun KptTheme(
 ```
 The main theme composable for the application. This composable uses KptMaterialTheme under the hood to provide seamless integration between KptTheme design tokens and Material3 theming system.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:197</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:198</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
@@ -2042,32 +2042,32 @@ Resolves the active colour scheme per platform. `dynamicColor` is honoured only 
 ```kotlin
 val styleMedium16sp =
 ```
-_No KDoc at source._
+Medium-weight 16sp sans-serif text style.
 
 ```kotlin
 val styleNormal18sp =
 ```
-_No KDoc at source._
+Normal-weight 18sp sans-serif text style.
 
 ```kotlin
 val styleMedium30sp =
 ```
-_No KDoc at source._
+Medium-weight 30sp sans-serif text style.
 
 ```kotlin
 val styleMifosTopBar =
 ```
-_No KDoc at source._
+Semi-bold dark text style used for top bar titles.
 
 ```kotlin
 val styleSettingsButton = TextStyle(textAlign = TextAlign.Center)
 ```
-_No KDoc at source._
+Center-aligned text style for settings buttons.
 
 ```kotlin
 val historyItemTextStyle = TextStyle(fontSize = 16.sp)
 ```
-_No KDoc at source._
+16sp text style for transaction history items.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/MifosTheme.deprecated.kt`
 
@@ -2114,7 +2114,7 @@ Shared spacing scale — replaces raw `.dp` literals scattered across features w
 ```kotlin
 val LocalSpacing = staticCompositionLocalOf { Spacing() }
 ```
-_No KDoc at source._
+Composition local providing the active `Spacing` scale.
 
 <details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/KptTheme.kt:76</code></summary>
 
@@ -2149,7 +2149,7 @@ data class TintTheme(
 ```
 A class to model background color and tonal elevation values for Now in Android.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:68</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:69</code></summary>
 
 ```kotlin
     }
@@ -2168,7 +2168,7 @@ val LocalTintTheme = staticCompositionLocalOf { TintTheme() }
 ```
 A composition local for `TintTheme`.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:75</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt:76</code></summary>
 
 ```kotlin
         LocalGradientColors provides gradientColors,
@@ -2187,366 +2187,366 @@ A composition local for `TintTheme`.
 ```kotlin
 val fontFamily: FontFamily
 ```
-_No KDoc at source._
+Outfit font family used by the app typography, with all weights from Thin to Black.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Color.kt`
 
 ```kotlin
 val primaryLight = Color(0xFF0673BA)
 ```
-_No KDoc at source._
+Light-scheme `primary` color role of the fork-level palette.
 
 ```kotlin
 val onPrimaryLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onPrimary` color role of the fork-level palette.
 
 ```kotlin
 val primaryContainerLight = Color(0xFFCEEAFD)
 ```
-_No KDoc at source._
+Light-scheme `primaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val onPrimaryContainerLight = Color(0xFF033D63)
 ```
-_No KDoc at source._
+Light-scheme `onPrimaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val secondaryLight = Color(0xFF984061)
 ```
-_No KDoc at source._
+Light-scheme `secondary` color role of the fork-level palette.
 
 ```kotlin
 val onSecondaryLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onSecondary` color role of the fork-level palette.
 
 ```kotlin
 val secondaryContainerLight = Color(0xFFF0DBE3)
 ```
-_No KDoc at source._
+Light-scheme `secondaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val onSecondaryContainerLight = Color(0xFF361722)
 ```
-_No KDoc at source._
+Light-scheme `onSecondaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val tertiaryLight = Color(0xFF7D4996)
 ```
-_No KDoc at source._
+Light-scheme `tertiary` color role of the fork-level palette.
 
 ```kotlin
 val onTertiaryLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onTertiary` color role of the fork-level palette.
 
 ```kotlin
 val tertiaryContainerLight = Color(0XFFE9DDEE)
 ```
-_No KDoc at source._
+Light-scheme `tertiaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val onTertiaryContainerLight = Color(0xFF2B1934)
 ```
-_No KDoc at source._
+Light-scheme `onTertiaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val errorLight = Color(0xFFBA1A1A)
 ```
-_No KDoc at source._
+Light-scheme `error` color role of the fork-level palette.
 
 ```kotlin
 val onErrorLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `onError` color role of the fork-level palette.
 
 ```kotlin
 val errorContainerLight = Color(0xFFFFDAD6)
 ```
-_No KDoc at source._
+Light-scheme `errorContainer` color role of the fork-level palette.
 
 ```kotlin
 val onErrorContainerLight = Color(0xFF93000A)
 ```
-_No KDoc at source._
+Light-scheme `onErrorContainer` color role of the fork-level palette.
 
 ```kotlin
 val backgroundLight = Color(0xFFF8F9FF)
 ```
-_No KDoc at source._
+Light-scheme `background` color role of the fork-level palette.
 
 ```kotlin
 val onBackgroundLight = Color(0xFF181C20)
 ```
-_No KDoc at source._
+Light-scheme `onBackground` color role of the fork-level palette.
 
 ```kotlin
 val surfaceLight = Color(0xFFF8F9FF)
 ```
-_No KDoc at source._
+Light-scheme `surface` color role of the fork-level palette.
 
 ```kotlin
 val onSurfaceLight = Color(0xFF181C20)
 ```
-_No KDoc at source._
+Light-scheme `onSurface` color role of the fork-level palette.
 
 ```kotlin
 val surfaceVariantLight = Color(0xFFDCE3EF)
 ```
-_No KDoc at source._
+Light-scheme `surfaceVariant` color role of the fork-level palette.
 
 ```kotlin
 val onSurfaceVariantLight = Color(0xFF404751)
 ```
-_No KDoc at source._
+Light-scheme `onSurfaceVariant` color role of the fork-level palette.
 
 ```kotlin
 val outlineLight = Color(0xFF717882)
 ```
-_No KDoc at source._
+Light-scheme `outline` color role of the fork-level palette.
 
 ```kotlin
 val outlineVariantLight = Color(0xFFC0C7D2)
 ```
-_No KDoc at source._
+Light-scheme `outlineVariant` color role of the fork-level palette.
 
 ```kotlin
 val scrimLight = Color(0xFF000000)
 ```
-_No KDoc at source._
+Light-scheme `scrim` color role of the fork-level palette.
 
 ```kotlin
 val inverseSurfaceLight = Color(0xFF2D3136)
 ```
-_No KDoc at source._
+Light-scheme `inverseSurface` color role of the fork-level palette.
 
 ```kotlin
 val inverseOnSurfaceLight = Color(0xFFEEF1F7)
 ```
-_No KDoc at source._
+Light-scheme `inverseOnSurface` color role of the fork-level palette.
 
 ```kotlin
 val inversePrimaryLight = Color(0xFF9BCAFF)
 ```
-_No KDoc at source._
+Light-scheme `inversePrimary` color role of the fork-level palette.
 
 ```kotlin
 val surfaceDimLight = Color(0xFFD8DAE0)
 ```
-_No KDoc at source._
+Light-scheme `surfaceDim` color role of the fork-level palette.
 
 ```kotlin
 val surfaceBrightLight = Color(0xFFF8F9FF)
 ```
-_No KDoc at source._
+Light-scheme `surfaceBright` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerLowestLight = Color(0xFFFFFFFF)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerLowest` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerLowLight = Color(0xFFF1F3FA)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerLow` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerLight = Color(0xFFECEEF4)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainer` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerHighLight = Color(0xFFE6E8EE)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerHigh` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerHighestLight = Color(0xFFE0E2E9)
 ```
-_No KDoc at source._
+Light-scheme `surfaceContainerHighest` color role of the fork-level palette.
 
 ```kotlin
 val primaryDark = Color(0xFF9CD6FC)
 ```
-_No KDoc at source._
+Dark-scheme `primary` color role of the fork-level palette.
 
 ```kotlin
 val onPrimaryDark = Color(0xFF033D63)
 ```
-_No KDoc at source._
+Dark-scheme `onPrimary` color role of the fork-level palette.
 
 ```kotlin
 val primaryContainerDark = Color(0xFF044C7C)
 ```
-_No KDoc at source._
+Dark-scheme `primaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val onPrimaryContainerDark = Color(0xFFE6F5FE)
 ```
-_No KDoc at source._
+Dark-scheme `onPrimaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val secondaryDark = Color(0xFFD9A5B8)
 ```
-_No KDoc at source._
+Dark-scheme `secondary` color role of the fork-level palette.
 
 ```kotlin
 val onSecondaryDark = Color(0xFF361722)
 ```
-_No KDoc at source._
+Dark-scheme `onSecondary` color role of the fork-level palette.
 
 ```kotlin
 val secondaryContainerDark = Color(0xFF5A2639)
 ```
-_No KDoc at source._
+Dark-scheme `secondaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val onSecondaryContainerDark = Color(0xFFF0DBE3)
 ```
-_No KDoc at source._
+Dark-scheme `onSecondaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val tertiaryDark = Color(0xFFC7A9D6)
 ```
-_No KDoc at source._
+Dark-scheme `tertiary` color role of the fork-level palette.
 
 ```kotlin
 val onTertiaryDark = Color(0xFF3A2145)
 ```
-_No KDoc at source._
+Dark-scheme `onTertiary` color role of the fork-level palette.
 
 ```kotlin
 val tertiaryContainerDark = Color(0xFF653A78)
 ```
-_No KDoc at source._
+Dark-scheme `tertiaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val onTertiaryContainerDark = Color(0xFFF4EEF7)
 ```
-_No KDoc at source._
+Dark-scheme `onTertiaryContainer` color role of the fork-level palette.
 
 ```kotlin
 val errorDark = Color(0xFFFFB4AB)
 ```
-_No KDoc at source._
+Dark-scheme `error` color role of the fork-level palette.
 
 ```kotlin
 val onErrorDark = Color(0xFF690005)
 ```
-_No KDoc at source._
+Dark-scheme `onError` color role of the fork-level palette.
 
 ```kotlin
 val errorContainerDark = Color(0xFF93000A)
 ```
-_No KDoc at source._
+Dark-scheme `errorContainer` color role of the fork-level palette.
 
 ```kotlin
 val onErrorContainerDark = Color(0xFFFFDAD6)
 ```
-_No KDoc at source._
+Dark-scheme `onErrorContainer` color role of the fork-level palette.
 
 ```kotlin
 val backgroundDark = Color(0xFF101418)
 ```
-_No KDoc at source._
+Dark-scheme `background` color role of the fork-level palette.
 
 ```kotlin
 val onBackgroundDark = Color(0xFFE0E2E9)
 ```
-_No KDoc at source._
+Dark-scheme `onBackground` color role of the fork-level palette.
 
 ```kotlin
 val surfaceDark = Color(0xFF101418)
 ```
-_No KDoc at source._
+Dark-scheme `surface` color role of the fork-level palette.
 
 ```kotlin
 val onSurfaceDark = Color(0xFFE0E2E9)
 ```
-_No KDoc at source._
+Dark-scheme `onSurface` color role of the fork-level palette.
 
 ```kotlin
 val surfaceVariantDark = Color(0xFF404751)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceVariant` color role of the fork-level palette.
 
 ```kotlin
 val onSurfaceVariantDark = Color(0xFFC0C7D2)
 ```
-_No KDoc at source._
+Dark-scheme `onSurfaceVariant` color role of the fork-level palette.
 
 ```kotlin
 val outlineDark = Color(0xFF8A919C)
 ```
-_No KDoc at source._
+Dark-scheme `outline` color role of the fork-level palette.
 
 ```kotlin
 val outlineVariantDark = Color(0xFF404751)
 ```
-_No KDoc at source._
+Dark-scheme `outlineVariant` color role of the fork-level palette.
 
 ```kotlin
 val scrimDark = Color(0xFF000000)
 ```
-_No KDoc at source._
+Dark-scheme `scrim` color role of the fork-level palette.
 
 ```kotlin
 val inverseSurfaceDark = Color(0xFFE0E2E9)
 ```
-_No KDoc at source._
+Dark-scheme `inverseSurface` color role of the fork-level palette.
 
 ```kotlin
 val inverseOnSurfaceDark = Color(0xFF2D3136)
 ```
-_No KDoc at source._
+Dark-scheme `inverseOnSurface` color role of the fork-level palette.
 
 ```kotlin
 val inversePrimaryDark = Color(0xFF0062A0)
 ```
-_No KDoc at source._
+Dark-scheme `inversePrimary` color role of the fork-level palette.
 
 ```kotlin
 val surfaceDimDark = Color(0xFF101418)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceDim` color role of the fork-level palette.
 
 ```kotlin
 val surfaceBrightDark = Color(0xFF36393E)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceBright` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerLowestDark = Color(0xFF0B0E13)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerLowest` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerLowDark = Color(0xFF181C20)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerLow` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerDark = Color(0xFF1C2025)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainer` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerHighDark = Color(0xFF272A2F)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerHigh` color role of the fork-level palette.
 
 ```kotlin
 val surfaceContainerHighestDark = Color(0xFF32353A)
 ```
-_No KDoc at source._
+Dark-scheme `surfaceContainerHighest` color role of the fork-level palette.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/fork/Theme.kt`
 
 ```kotlin
 fun MifosTheme(
 ```
-_No KDoc at source._
+Fork-level Mifos Material 3 theme that applies the color scheme and typography to `content`.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:287</code></summary>
 
@@ -2567,7 +2567,7 @@ private fun LoginScreenPreview() {
 ```kotlin
 class ExpirationDateMask : VisualTransformation
 ```
-_No KDoc at source._
+Visual transformation that formats card expiry input as MM/YY.
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/utils/ModifierExt.kt`
 
@@ -2598,19 +2598,19 @@ Tints digits and symbols differently from letters in a text field — used for p
 ```kotlin
 fun Modifier.mirrorIfRtl(): Modifier =
 ```
-_No KDoc at source._
+Flips the content horizontally when the layout direction is right-to-left.
 
 ```kotlin
 fun Modifier.tabNavigation(): Modifier
 ```
-_No KDoc at source._
+Moves focus to the next/previous element when Tab/Shift+Tab is pressed (desktop and web keyboards).
 
 ```kotlin
 fun Modifier.onClick(
 ```
-_No KDoc at source._
+Makes the element clickable without a ripple unless an `indication` is supplied.
 
 ---
 
-_26 type(s), 298 function(s)/property(ies); 98 carry KDoc at source; 1 authored example(s); 70 live call site(s)._
+_26 type(s), 298 function(s)/property(ies); 323 carry KDoc at source; 1 authored example(s); 70 live call site(s)._
 <!-- api-docs:end -->

@@ -34,6 +34,7 @@ import kpt.core.network.main.services.createStandingInstructionService
 import kpt.core.network.main.services.createThirdPartyTransferService
 import kpt.core.network.main.services.createTwoFactorAuthService
 import kpt.core.network.main.services.createUserService
+/** Creates and caches the Ktorfit-generated Fineract service implementations from a single [Ktorfit] instance. */
 class KtorfitClient(
     ktorfit: Ktorfit,
 ) {

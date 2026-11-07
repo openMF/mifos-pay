@@ -17,6 +17,7 @@ import kpt.core.model.instance.InstancesConfig
 class AppConfigService(
     private val postgrest: Postgrest,
 ) {
+    /** Fetches the server instances configuration from the Supabase app_config table. */
     suspend fun fetchInstancesConfig(): InstancesConfig {
         return postgrest
             .from(TABLE_APP_CONFIG)
@@ -24,6 +25,7 @@ class AppConfigService(
             .decodeSingle<InstancesConfig>()
     }
 
+    /** Name of the Supabase table holding the app configuration. */
     companion object {
         private const val TABLE_APP_CONFIG = "app_config"
     }

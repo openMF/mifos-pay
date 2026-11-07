@@ -9,7 +9,11 @@
  */
 package kpt.core.common
 
+/** Platform actual of [CurrencyFormatter] for wallet balance formatting. */
 actual object CurrencyFormatter {
+    /**
+     * Platform actual: formats [balance] as a currency string for [currencyCode] with [maximumFractionDigits] decimals.
+     */
     actual fun format(
         balance: Double?,
         currencyCode: String?,
@@ -27,13 +31,14 @@ actual object CurrencyFormatter {
         }
 
         return try {
-            numberFormat(options).format(balance).toString()
+            (intlNumberFormat("en-US", options).format(balance) as String)
         } catch (e: Throwable) {
             console.error("Error formatting currency: ${e.message}")
             balance.toString()
         }
     }
 
+    /** Platform actual: formats [balance] as a plain number string with [maximumFractionDigits] decimals. */
     actual fun format(
         balance: Double?,
         maximumFractionDigits: Int?,
@@ -47,7 +52,7 @@ actual object CurrencyFormatter {
             options.minimumFractionDigits = maximumFractionDigits
         }
         return try {
-            numberFormat(options).format(balance).toString()
+            (intlNumberFormat("en-US", options).format(balance) as String)
         } catch (e: Throwable) {
             console.error("Error formatting number: ${e.message}")
             balance.toString()
@@ -55,6 +60,8 @@ actual object CurrencyFormatter {
     }
 }
 
-// Constructed in its own js() call: the compiler reprints `new X(o).format(b)` as
-// `new (X(o).format)(b)`, which throws "format is not a constructor".
-private fun numberFormat(options: dynamic): dynamic = js("new Intl.NumberFormat('en-US', options)")
+/**
+ * The browser's `Intl.NumberFormat` constructor. Called as a plain function it returns a new
+ * formatter, so no `js()` string (whose `new … .format()` the compiler once mis-printed) is needed.
+ */
+private val intlNumberFormat: dynamic = js("Intl.NumberFormat")

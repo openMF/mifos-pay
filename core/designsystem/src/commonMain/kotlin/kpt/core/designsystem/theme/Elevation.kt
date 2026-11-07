@@ -30,6 +30,12 @@ import androidx.compose.ui.unit.dp
  * | [medium] | 3 | Hover state, pressed state, highlighted card |
  * | [high] | 6 | Floating action button, snackbar |
  * | [dragging] | 12 | Drag-and-drop visual state |
+ *
+ * @property resting Elevation of surface-level cards (0dp).
+ * @property low Elevation of standard elevated cards (1dp).
+ * @property medium Elevation for hover, pressed or highlighted states (3dp).
+ * @property high Elevation for floating action buttons and snackbars (6dp).
+ * @property dragging Elevation while an item is being dragged (12dp).
  */
 @Immutable
 data class Elevation(
@@ -40,6 +46,7 @@ data class Elevation(
     val dragging: Dp = 12.dp,
 )
 
+/** Composition local providing the active [Elevation] scale. */
 val LocalElevation = staticCompositionLocalOf { Elevation() }
 
 /** Resolve the active [Elevation] tier scale from composition. */

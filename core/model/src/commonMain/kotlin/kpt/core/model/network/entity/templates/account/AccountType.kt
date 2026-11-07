@@ -11,6 +11,13 @@ package kpt.core.model.network.entity.templates.account
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Type of an account (id, code and display value).
+ *
+ * @property id Unique id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ */
 @Serializable
 data class AccountType(
     val id: Int? = null,

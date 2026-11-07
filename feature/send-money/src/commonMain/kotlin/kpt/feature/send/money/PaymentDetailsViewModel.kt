@@ -82,6 +82,7 @@ class PaymentDetailsViewModel :
         trySendAction(PaymentDetailsAction.UpdateAmount(newAmount))
     }
 
+    /** Holds the factory for the placeholder payment details state. */
     companion object {
         /**
          * Creates placeholder data for demonstration purposes
@@ -113,10 +114,26 @@ class PaymentDetailsViewModel :
     }
 }
 
+/** One-off events emitted by the payment details screen (none currently). */
 sealed interface PaymentDetailsEvent
 
+/** User actions handled by [PaymentDetailsViewModel]. */
 sealed interface PaymentDetailsAction {
+    /**
+     * Loads the details of a transaction.
+     * @property transactionId Identifier of the transaction to show.
+     */
     data class Initialize(val transactionId: String) : PaymentDetailsAction
+
+    /**
+     * Marks the displayed payment as successful or failed.
+     * @property isSuccessful Whether the payment succeeded.
+     */
     data class UpdatePaymentStatus(val isSuccessful: Boolean) : PaymentDetailsAction
+
+    /**
+     * Updates the displayed payment amount.
+     * @property newAmount The new amount string.
+     */
     data class UpdateAmount(val newAmount: String) : PaymentDetailsAction
 }

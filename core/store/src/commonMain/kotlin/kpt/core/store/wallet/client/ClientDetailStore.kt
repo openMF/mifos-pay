@@ -33,9 +33,6 @@ import kotlin.time.Clock
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `ClientDetailEntity`. Shared with the DAO's writes. */
-private const val CLIENT_DETAILS_TABLE = "wallet_client_details"
-
 /**
  * Build the SINGLE-ROW-PER-KEY read [Store] for client-info (profile) records
  * (GOAL D13 — a variation of the `history` archetype for a single-record cache).

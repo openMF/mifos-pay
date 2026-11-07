@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosTab
 import kpt.core.ui.utility.TabContent
+/** Scrollable tab row linked to a pager, one tab per [TabContent]. */
 @Suppress("MultipleEmitters")
 @Composable
 fun MifosScrollableTabRow(

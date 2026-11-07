@@ -24,6 +24,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kpt.core.model.autopay.Biller
 private const val BILLERS_KEY = "billers"
 
+/** Settings-backed local store of [Biller]s. */
 class BillerDataSource(
     private val settings: Settings,
     private val dispatcher: CoroutineDispatcher,
@@ -36,8 +37,10 @@ class BillerDataSource(
         ),
     )
 
+    /** Stored billers. */
     val billers: Flow<List<Biller>> = _billers
 
+    /** Replaces all stored [billers]. */
     suspend fun updateBillers(billers: List<Biller>) {
         withContext(dispatcher) {
             settings.putBillers(billers)
@@ -45,6 +48,7 @@ class BillerDataSource(
         }
     }
 
+    /** Adds [biller] to the stored list. */
     suspend fun addBiller(biller: Biller) {
         withContext(dispatcher) {
             val currentBillers = _billers.value.toMutableList()
@@ -56,6 +60,7 @@ class BillerDataSource(
         }
     }
 
+    /** Removes the biller with [billerId]. */
     suspend fun removeBiller(billerId: String) {
         withContext(dispatcher) {
             val currentBillers = _billers.value.toMutableList()
@@ -65,6 +70,7 @@ class BillerDataSource(
         }
     }
 
+    /** Removes all stored billers. */
     suspend fun clearBillers() {
         withContext(dispatcher) {
             settings.remove(BILLERS_KEY)

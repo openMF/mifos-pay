@@ -13,6 +13,7 @@ import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.flow.StateFlow
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.ui.utils.BaseViewModel
+/** ViewModel of the merchant transfer screen; currently a stub with no backend or actions. */
 class MerchantTransferViewModel(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MerchantTransferUiState, MerchantTransferEvent, MerchantTransferAction>(
@@ -30,14 +31,30 @@ class MerchantTransferViewModel(
     override fun handleAction(action: MerchantTransferAction) = Unit
 }
 
+/** One-off events of the merchant transfer screen (none defined). */
 sealed interface MerchantTransferEvent
 
+/** User actions of the merchant transfer screen (none defined). */
 sealed interface MerchantTransferAction
 
+/** UI states of the merchant transfer screen. */
 sealed class MerchantTransferUiState {
+    /** Transactions are being loaded. */
     data object Loading : MerchantTransferUiState()
+
+    /**
+     * Transactions loaded.
+     *
+     * @property transactionsList The loaded transactions.
+     */
     class Success(val transactionsList: List<Transaction>) : MerchantTransferUiState()
+
+    /** No transactions to show. */
     data object Empty : MerchantTransferUiState()
+
+    /** Loading failed. */
     data object Error : MerchantTransferUiState()
+
+    /** The account balance is too low for the transfer. */
     data object InsufficientBalance : MerchantTransferUiState()
 }

@@ -14,6 +14,16 @@ import kotlinx.serialization.Serializable
 /**
  * Represents a recently paid beneficiary/payee.
  * Derived from transaction history and transfer details.
+ *
+ * @property clientId Client id of the payee.
+ * @property clientName Name of the payee.
+ * @property accountId Id of the payee's account.
+ * @property accountNo Account number of the payee.
+ * @property officeId Id of the payee's office.
+ * @property officeName Name of the payee's office.
+ * @property lastTransferDate Date of the most recent transfer to this payee.
+ * @property lastAmount Amount of the most recent transfer.
+ * @property currency Currency code of the most recent transfer.
  */
 @Serializable
 data class RecentPayee(

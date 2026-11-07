@@ -9,14 +9,26 @@
  */
 package kpt.feature.settings
 
+/** Returns the [Platform] the app is running on. */
 expect fun getPlatform(): Platform
 
+/** Platforms the settings feature distinguishes between. */
 enum class Platform {
+    /** Android. */
     Android,
+
+    /** Desktop (JVM). */
     Desktop,
+
+    /** iOS. */
     IOS,
+
+    /** Kotlin/JS web. */
     JS,
+
+    /** Kotlin/Wasm web. */
     Wasm,
 }
 
+/** Whether the current platform supports dynamic (Material You) theming. */
 expect fun supportsDynamicTheming(): Boolean

@@ -23,3 +23,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.receipt.generated.resources"
+}

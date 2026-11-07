@@ -72,8 +72,8 @@ import kpt.core.ui.ExposedDropdownBox
 import kpt.core.ui.MifosDivider
 import kpt.core.ui.MifosProgressIndicator
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.standing_instruction.generated.resources.Res
-import mifos_pay.feature.standing_instruction.generated.resources.feature_standing_instruction_error_oops
+import kpt.feature.standing.instruction.generated.resources.Res
+import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_error_oops
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -863,6 +863,7 @@ private fun AddEditSIScreenContent(
     }
 }
 
+/** Horizontally arranged, full-width row used to lay out form fields side by side. */
 @Composable
 inline fun RowBlock(
     crossinline content: @Composable (RowScope.() -> Unit),

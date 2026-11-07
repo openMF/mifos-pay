@@ -10,6 +10,8 @@
 package kpt.core.data.repository
 
 import kpt.core.model.user.UserInfo
+/** Repository for user authentication. */
 interface AuthenticationRepository {
+    /** Authenticates with the given credentials and returns the signed-in [UserInfo]. */
     suspend fun authenticate(username: String, password: String): UserInfo
 }

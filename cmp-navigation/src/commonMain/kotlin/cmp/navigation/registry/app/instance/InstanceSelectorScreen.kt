@@ -65,6 +65,7 @@ import kpt.core.ui.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Bottom-sheet screen for choosing the main and inter-bank server instances; [onDismiss] closes it. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InstanceSelectorScreen(

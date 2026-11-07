@@ -43,15 +43,15 @@ import kpt.core.ui.generated.resources.core_ui_error_session_expired
 import kpt.core.ui.generated.resources.core_ui_pocket_add_failed
 import kpt.core.ui.generated.resources.core_ui_pocket_added_successfully
 import kpt.core.ui.utils.BaseViewModel
+import kpt.feature.transfer.intrabank.generated.resources.Res
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_empty_amount
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_empty_description
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_insufficient_balance
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_invalid_amount
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_same_account
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_select_account
+import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_user_verification_failed
 import kpt.feature.transfer.intrabank.navigation.TransferConfirmRoute
-import mifos_pay.feature.transfer_intrabank.generated.resources.Res
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_error_empty_amount
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_error_empty_description
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_error_insufficient_balance
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_error_invalid_amount
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_error_same_account
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_error_select_account
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_make_transfer_user_verification_failed
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import kpt.core.ui.generated.resources.Res as CoreUiRes
@@ -638,6 +638,15 @@ internal data class TransferConfirmState(
 
 /**
  * Transfer result data containing all the details of a successful transfer.
+ *
+ * @property transactionId Id of the completed transaction.
+ * @property amount Amount transferred.
+ * @property fromAccountNo Source account number.
+ * @property fromAccountName Source account holder name.
+ * @property toAccountNo Destination account number.
+ * @property toAccountName Destination account holder name.
+ * @property transferDate Transfer date formatted for display.
+ * @property description Description (remark) of the transfer.
  */
 data class TransferResult(
     val transactionId: String,

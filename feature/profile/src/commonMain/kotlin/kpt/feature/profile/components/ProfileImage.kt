@@ -37,6 +37,7 @@ import org.jetbrains.compose.resources.stringResource
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
+/** Displays the client profile image decoded from a base64 string. */
 @OptIn(ExperimentalEncodingApi::class)
 @Composable
 fun ProfileImage(
@@ -75,6 +76,7 @@ fun ProfileImage(
     }
 }
 
+/** Profile image that can be tapped to pick a new picture. */
 @OptIn(ExperimentalEncodingApi::class)
 @Composable
 fun EditableProfileImage(

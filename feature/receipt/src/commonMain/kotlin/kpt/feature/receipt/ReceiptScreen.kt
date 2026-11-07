@@ -45,13 +45,13 @@ import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosProgressIndicator
 import kpt.core.ui.utils.EventsEffect
 import kpt.core.ui.utils.ShareUtils
-import mifos_pay.feature.receipt.generated.resources.Res
-import mifos_pay.feature.receipt.generated.resources.feature_receipt_credited_by
-import mifos_pay.feature.receipt.generated.resources.feature_receipt_paid_to
-import mifos_pay.feature.receipt.generated.resources.feature_receipt_receipt
-import mifos_pay.feature.receipt.generated.resources.feature_receipt_reference_id
-import mifos_pay.feature.receipt.generated.resources.feature_receipt_share_receipt
-import mifos_pay.feature.receipt.generated.resources.feature_receipt_transaction_date
+import kpt.feature.receipt.generated.resources.Res
+import kpt.feature.receipt.generated.resources.feature_receipt_credited_by
+import kpt.feature.receipt.generated.resources.feature_receipt_paid_to
+import kpt.feature.receipt.generated.resources.feature_receipt_receipt
+import kpt.feature.receipt.generated.resources.feature_receipt_reference_id
+import kpt.feature.receipt.generated.resources.feature_receipt_share_receipt
+import kpt.feature.receipt.generated.resources.feature_receipt_transaction_date
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 @Composable

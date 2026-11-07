@@ -39,13 +39,14 @@ import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosProgressIndicatorOverlay
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.kyc.generated.resources.Res
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_check
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_complete_kyc
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_error_oops
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_unexpected_error_subtitle
+import kpt.feature.kyc.generated.resources.Res
+import kpt.feature.kyc.generated.resources.feature_kyc_check
+import kpt.feature.kyc.generated.resources.feature_kyc_complete_kyc
+import kpt.feature.kyc.generated.resources.feature_kyc_error_oops
+import kpt.feature.kyc.generated.resources.feature_kyc_unexpected_error_subtitle
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen describing the KYC levels; each level calls its matching click callback. */
 @Composable
 fun KYCScreen(
     onLevel1Clicked: () -> Unit,

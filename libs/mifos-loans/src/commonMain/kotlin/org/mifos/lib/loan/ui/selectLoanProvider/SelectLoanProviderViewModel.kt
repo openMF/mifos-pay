@@ -99,8 +99,16 @@ internal data class SelectLoanProviderState(
  */
 sealed interface SelectLoanProviderEvent {
 
+    /** Navigates back to the previous screen. */
     data object NavigateBack : SelectLoanProviderEvent
 
+    /**
+     * Navigates to the selected provider screen.
+     *
+     * @property clientId Identifier of the client applying for the loan.
+     * @property providerId Identifier of the chosen loan provider.
+     * @property url Provider web page URL to load.
+     */
     data class NavigateToLoanProvider(
         val clientId: Long,
         val providerId: String,

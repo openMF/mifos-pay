@@ -58,6 +58,9 @@ import kpt.core.base.database.annotation.DbEntity
  * @property status Nullable `AccountStatus.name` — `PENDING`/`APPROVED`/`ACTIVE`/…/`UNKNOWN`.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property currencyDisplaySymbol Nullable currency display symbol.
+ * @property syncStatus Sync state: SYNCED, PENDING_LINK or PENDING_DELINK.
  */
 @DbEntity
 @Entity(

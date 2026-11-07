@@ -40,6 +40,7 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen for editing AutoPay preferences: global, notification and security settings and rules. */
 @Composable
 fun AutoPayPreferencesScreen(
     onNavigateBack: () -> Unit,

@@ -19,6 +19,7 @@ import org.koin.core.qualifier.named
  */
 
 interface TimeZoneMonitor {
+    /** Emits the device's current time zone, then each change. */
     val currentTimeZone: Flow<TimeZone>
 }
 

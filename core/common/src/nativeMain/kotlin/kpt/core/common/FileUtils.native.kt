@@ -20,6 +20,7 @@ import platform.Foundation.create
 import platform.Foundation.writeToFile
 
 // iOS implementation
+/** Creates the platform [FileUtils] implementation. */
 @BetaInteropApi
 @OptIn(ExperimentalForeignApi::class)
 actual fun createPlatformFileUtils(): FileUtils = object : FileUtils {

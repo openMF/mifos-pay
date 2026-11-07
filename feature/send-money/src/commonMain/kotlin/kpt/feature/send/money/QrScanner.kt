@@ -12,8 +12,11 @@ package kpt.feature.send.money
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.module.Module
 
+/** Platform-agnostic QR code scanner. */
 interface QrScanner {
+    /** Starts a scan and emits the raw scanned value, or null if scanning failed. */
     fun startScanning(): Flow<String?>
 }
 
+/** Platform-specific Koin module that provides the [QrScanner] implementation. */
 expect val ScannerModule: Module

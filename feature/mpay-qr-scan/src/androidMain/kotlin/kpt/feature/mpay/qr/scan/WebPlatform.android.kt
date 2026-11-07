@@ -9,7 +9,11 @@
  */
 package kpt.feature.mpay.qr.scan
 
+/** Android actual of [WebPlatform]; never a web environment. */
 actual object WebPlatform {
+    /** Always false on Android. */
     actual val isWeb: Boolean = false
+
+    /** Always false on Android. */
     actual val isWebDesktop: Boolean = false
 }

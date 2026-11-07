@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -29,9 +30,20 @@ fun <E> EventsEffect(
     viewModel: BaseViewModel<*, E, *>,
     lifecycleOwner: Lifecycle = LocalLifecycleOwner.current.lifecycle,
     handler: suspend (E) -> Unit,
+) = EventsEffect(viewModel.eventFlow, lifecycleOwner, handler)
+
+/**
+ * [EventsEffect] over a bare event flow — pass `viewModel.eventFlow` rather than the view model, so a
+ * screen does not forward its view model into another composable.
+ */
+@Composable
+fun <E> EventsEffect(
+    eventFlow: Flow<E>,
+    lifecycleOwner: Lifecycle = LocalLifecycleOwner.current.lifecycle,
+    handler: suspend (E) -> Unit,
 ) {
     LaunchedEffect(key1 = Unit) {
-        viewModel.eventFlow
+        eventFlow
             .filter {
                 it is BackgroundEvent ||
                     lifecycleOwner.currentState.isAtLeast(Lifecycle.State.RESUMED)

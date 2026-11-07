@@ -16,6 +16,7 @@ import org.koin.core.qualifier.named
  * Utility for reporting app connectivity status
  */
 interface NetworkMonitor {
+    /** Emits true while the device has network connectivity. */
     val isOnline: Flow<Boolean>
 }
 

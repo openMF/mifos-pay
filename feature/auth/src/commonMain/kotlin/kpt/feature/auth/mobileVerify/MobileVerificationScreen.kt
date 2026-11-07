@@ -40,14 +40,14 @@ import kpt.core.designsystem.component.NavigationIcon
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.auth.generated.resources.Res
-import mifos_pay.feature.auth.generated.resources.feature_auth_enter_mobile_number
-import mifos_pay.feature.auth.generated.resources.feature_auth_enter_mobile_number_description
-import mifos_pay.feature.auth.generated.resources.feature_auth_enter_otp
-import mifos_pay.feature.auth.generated.resources.feature_auth_enter_otp_received
-import mifos_pay.feature.auth.generated.resources.feature_auth_phone_number
-import mifos_pay.feature.auth.generated.resources.feature_auth_verify_otp
-import mifos_pay.feature.auth.generated.resources.feature_auth_verify_phone
+import kpt.feature.auth.generated.resources.Res
+import kpt.feature.auth.generated.resources.feature_auth_enter_mobile_number
+import kpt.feature.auth.generated.resources.feature_auth_enter_mobile_number_description
+import kpt.feature.auth.generated.resources.feature_auth_enter_otp
+import kpt.feature.auth.generated.resources.feature_auth_enter_otp_received
+import kpt.feature.auth.generated.resources.feature_auth_phone_number
+import kpt.feature.auth.generated.resources.feature_auth_verify_otp
+import kpt.feature.auth.generated.resources.feature_auth_verify_phone
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -141,6 +141,7 @@ private fun MobileVerificationScreen(
     }
 }
 
+/** Content for the phone-number entry step of mobile verification. */
 @Composable
 fun PhoneNoVerifyContent(
     modifier: Modifier = Modifier,
@@ -192,6 +193,7 @@ fun PhoneNoVerifyContent(
     }
 }
 
+/** Content for the OTP entry step of mobile verification. */
 @Composable
 fun OtpVerifyContent(
     modifier: Modifier = Modifier,

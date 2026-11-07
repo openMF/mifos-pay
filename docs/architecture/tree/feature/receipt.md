@@ -22,10 +22,10 @@ ViewModels: `ReceiptViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/receipt sha=918f35eb385814013a14a942def71cc2bdd98553 -->
+<!-- api-docs:begin module=feature/receipt sha=70a1142085cc67aeca3b3b8f104face0cf886aa4 -->
 ## API reference
 
-_Generated from `feature/receipt` at tree `918f35eb3858` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/receipt` at tree `70a1142085cc` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -56,7 +56,7 @@ Reads OFF the shared `TransferDetail` Store5 vertical — the SAME store `Transa
 ```kotlin
 sealed interface ReceiptEvent
 ```
-_No KDoc at source._
+One-shot events emitted by `ReceiptViewModel`.
 
 <details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptScreen.kt:68</code></summary>
 
@@ -75,7 +75,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface ReceiptAction
 ```
-_No KDoc at source._
+Actions dispatched to `ReceiptViewModel`.
 
 <details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptScreen.kt:82</code></summary>
 
@@ -94,7 +94,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface ReceiptUiState
 ```
-_No KDoc at source._
+UI state of the receipt screen.
 
 <details><summary>Used in the template — <code>feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/ReceiptScreen.kt:70</code></summary>
 
@@ -115,7 +115,7 @@ _No KDoc at source._
 ```kotlin
 val ReceiptModule = module
 ```
-_No KDoc at source._
+Koin module providing the `kpt.feature.receipt.ReceiptViewModel` for the receipt feature.
 
 ### `feature/receipt/src/commonMain/kotlin/kpt/feature/receipt/navigation/ReceiptNavigation.kt`
 
@@ -127,9 +127,9 @@ Reads `transferId` (see `navigateToReceipt`) via `SavedStateHandle` inside `Rece
 ```kotlin
 fun NavController.navigateToReceipt(transferId: Long)
 ```
-_No KDoc at source._
+Navigates to the receipt screen for the transfer identified by `transferId`.
 
 ---
 
-_4 type(s), 3 function(s)/property(ies); 2 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
+_4 type(s), 3 function(s)/property(ies); 7 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
 <!-- api-docs:end -->

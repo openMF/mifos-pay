@@ -24,6 +24,7 @@ import org.koin.dsl.module
 // import kpt.feature.send.money.UpiPinViewModel
 // import kpt.feature.send.money.UpiTransactionHistoryViewModel
 
+/** Koin module providing the QR scan feature's view model. */
 val MpayQrScanModule = module {
     viewModelOf(::ScanQrViewModel)
 

@@ -38,6 +38,7 @@ import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [PocketRepository] backed by the pocket and client APIs. */
 class PocketRepositoryImp(
     private val dataManager: SelfServiceApiManager,
     private val ioDispatcher: CoroutineDispatcher,

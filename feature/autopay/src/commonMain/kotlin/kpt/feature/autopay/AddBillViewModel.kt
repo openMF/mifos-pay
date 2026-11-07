@@ -35,6 +35,7 @@ import kotlin.random.Random
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** View model for the add-bill form; validates input, computes upcoming payment dates and saves a new bill. */
 class AddBillViewModel(
     savedStateHandle: SavedStateHandle,
     private val billRepository: BillRepository,
@@ -43,6 +44,7 @@ class AddBillViewModel(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AddBillState(),
 ) {
 
+    /** Holds the saved-state key used to persist the form state. */
     companion object {
         private const val KEY_STATE = "add_bill_state"
     }
@@ -384,6 +386,17 @@ class AddBillViewModel(
     }
 }
 
+/**
+ * UI state of the add-bill form.
+ *
+ * @property formData Bill details typed by the user.
+ * @property validationResult Result of validating the form.
+ * @property isLoading Whether a save is in progress.
+ * @property isSuccess Whether the bill was saved.
+ * @property error Error message to show, or null.
+ * @property nextPaymentDates Upcoming payment dates for the chosen recurrence.
+ * @property availableBillers Billers the user can pick from.
+ */
 @Serializable
 data class AddBillState(
     val formData: BillFormData = BillFormData(),
@@ -395,27 +408,104 @@ data class AddBillState(
     val availableBillers: List<Biller> = emptyList(),
 )
 
+/** One-off events emitted by the add-bill view model. */
 sealed interface AddBillEvent {
+    /**
+     * The bill was saved.
+     *
+     * @property bill The saved bill.
+     */
     data class BillSaved(val bill: Bill) : AddBillEvent
 }
 
+/** User actions handled by the add-bill view model. */
 sealed interface AddBillAction {
+    /**
+     * The bill name changed.
+     *
+     * @property name New bill name.
+     */
     data class UpdateBillName(val name: String) : AddBillAction
+
+    /**
+     * The amount changed.
+     *
+     * @property amount New amount as typed.
+     */
     data class UpdateAmount(val amount: String) : AddBillAction
+
+    /**
+     * The due date changed.
+     *
+     * @property dueDate New due date as epoch milliseconds.
+     */
     data class UpdateDueDate(val dueDate: Long) : AddBillAction
+
+    /**
+     * The recurrence pattern changed.
+     *
+     * @property recurrencePattern New recurrence pattern.
+     */
     data class UpdateRecurrencePattern(val recurrencePattern: RecurrencePattern) : AddBillAction
+
+    /**
+     * The description changed.
+     *
+     * @property description New description.
+     */
     data class UpdateDescription(val description: String) : AddBillAction
+
+    /** The user tapped save. */
     data object SaveBill : AddBillAction
+
+    /** Validate the form. */
     data object ValidateForm : AddBillAction
+
+    /** Clear the current error. */
     data object ClearError : AddBillAction
+
+    /** Clear field-level validation errors. */
     data object ClearValidationErrors : AddBillAction
+
+    /** Recompute the upcoming payment dates. */
     data object CalculateNextPaymentDates : AddBillAction
+
+    /**
+     * A biller was selected.
+     *
+     * @property biller The selected biller.
+     */
     data class SelectBiller(val biller: Biller) : AddBillAction
+
+    /** Reload the list of available billers. */
     data object RefreshBillers : AddBillAction
 
     // AutoPay actions
+    /**
+     * AutoPay was switched on or off for the bill.
+     *
+     * @property enabled Whether AutoPay is enabled.
+     */
     data class UpdateAutoPayEnabled(val enabled: Boolean) : AddBillAction
+
+    /**
+     * The AutoPay payment method changed.
+     *
+     * @property paymentMethod New payment method.
+     */
     data class UpdateAutoPayPaymentMethod(val paymentMethod: String) : AddBillAction
+
+    /**
+     * The AutoPay source account changed.
+     *
+     * @property sourceAccount New source account.
+     */
     data class UpdateAutoPaySourceAccount(val sourceAccount: String) : AddBillAction
+
+    /**
+     * The AutoPay maximum amount changed.
+     *
+     * @property maxAmount New maximum amount as typed.
+     */
     data class UpdateAutoPayMaxAmount(val maxAmount: String) : AddBillAction
 }

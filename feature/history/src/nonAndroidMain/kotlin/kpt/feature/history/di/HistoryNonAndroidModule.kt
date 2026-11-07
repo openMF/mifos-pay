@@ -14,6 +14,7 @@ import com.mobilebytelabs.kmptoolkit.pdfgenerator.PdfGenerator
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
+/** Non-Android PDF module providing a default PdfGenerator. */
 @OptIn(ExperimentalPdfGeneratorApi::class)
 actual val HistoryPdfModule: Module
     get() = module {

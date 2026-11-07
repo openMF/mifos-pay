@@ -2,11 +2,11 @@
 
 > **Layer:** core-base — framework-shared; generators CONSUME, never write
 > **Corpus surface:** `CORE_BASE_PLATFORM.md`
-> **Measured:** 31 Kotlin files, 2 test files
+> **Measured:** 25 Kotlin files, 2 test files
 
 ## Principal types
 
-`AppContext`, `AppReviewManager`, `AppReviewManagerImpl`, `AppUpdateManager`, `AppUpdateManagerImpl`, `GarbageCollectionManager`, `GarbageCollectionManagerImpl`, `IntentManager`, `IntentManagerImpl`, `MimeType`, `PlatformBuildConfig`, `ShareManager`, `ShareManagerImpl`, `UpdateOutcome`  …and 2 more
+`AppContext`, `AppReviewManager`, `AppReviewManagerImpl`, `AppUpdateManager`, `AppUpdateManagerImpl`, `GarbageCollectionManager`, `GarbageCollectionManagerImpl`, `IntentManager`, `IntentManagerImpl`, `MimeType`, `ShareManager`, `ShareManagerImpl`, `UpdateOutcome`, `UrlLauncher`  …and 1 more
 
 <!-- scaffold:end -->
 
@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core-base/platform sha=aa4a586a20076c437ddd5b88f6d7fce627780062 -->
+<!-- api-docs:begin module=core-base/platform sha=958153c7f9ee4f423cc8ad64396279cc0b79a488 -->
 ## API reference
 
-_Generated from `core-base/platform` at tree `aa4a586a2007` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core-base/platform` at tree `958153c7f9ee` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **framework-shared and read-only to generators** (D9). Everything below is
@@ -76,7 +76,7 @@ val LocalClipboardManager: ProvidableCompositionLocal<ClipboardManager> =
 ```
 Reads and writes the system clipboard, plus history, change observation and URL detection. Typed as the toolkit's `ClipboardManager` rather than a template wrapper — see the note in `platformModule`.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:166</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:167</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -99,29 +99,6 @@ Shows floating bubbles, overlays and heads-up UI. Provided by `LocalManagerProvi
 val LocalPdfManager: ProvidableCompositionLocal<PdfManager> =
 ```
 Generates PDFs — statements, receipts, invoices. Provided by `LocalManagerProvider`.
-
-### `core-base/platform/src/commonMain/kotlin/kpt/core/base/platform/PlatformBuildConfig.kt`
-
-```kotlin
-expect object PlatformBuildConfig
-```
-Provides build configuration information across all platforms. Named PlatformBuildConfig to avoid conflicts with Android's generated BuildConfig.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:228</code></summary>
-
-```kotlin
-
-        // Server Instance Info at bottom - only visible in debug builds
-        if (PlatformBuildConfig.isDebug) {
-            ServerInstanceInfo(
-                endpoint = state.selectedInstanceEndpoint ?: "",
-                modifier = Modifier.padding(bottom = KptTheme.spacing.lg),
-            )
-```
-
-</details>
-
-- `val isDebug: Boolean` — Returns true if the app is running in debug mode.
 
 ### `core-base/platform/src/commonMain/kotlin/kpt/core/base/platform/context/AppContext.kt`
 
@@ -294,7 +271,7 @@ enum class MimeType(val value: String, vararg val extensions: String)
 ```
 Represents standardized MIME (Multipurpose Internet Mail Extensions) types for various file formats.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:307</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:314</code></summary>
 
 ```kotlin
                     fileName = "qr_code.png",
@@ -517,5 +494,5 @@ The one `UrlLauncher`, for every target. `cmp-open-url` carries the per-target `
 
 ---
 
-_16 type(s), 34 function(s)/property(ies); 50 carry KDoc at source; 0 authored example(s); 20 live call site(s)._
+_15 type(s), 33 function(s)/property(ies); 48 carry KDoc at source; 0 authored example(s); 19 live call site(s)._
 <!-- api-docs:end -->

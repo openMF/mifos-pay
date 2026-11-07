@@ -11,6 +11,28 @@ package kpt.core.model.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A bank client (customer) profile as returned by Fineract.
+ *
+ * @property id Unique id of the client.
+ * @property accountNo Client account number.
+ * @property externalId External reference id.
+ * @property active Whether the client is active.
+ * @property activationDate Activation date as date components.
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property displayName Full name for display.
+ * @property mobileNo Mobile phone number.
+ * @property emailAddress Email address.
+ * @property dateOfBirth Date of birth as date components.
+ * @property isStaff Whether the client is a staff member.
+ * @property officeId Id of the client's office.
+ * @property officeName Name of the client's office.
+ * @property savingsProductName Name of the client's savings product.
+ * @property timeline Key lifecycle dates of the client.
+ * @property status Current status of the client.
+ * @property legalForm Legal form of the client.
+ */
 @Serializable
 data class Client(
     val id: Long,

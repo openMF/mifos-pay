@@ -16,9 +16,6 @@ import kpt.core.database.wallet.biller.BillerEntity
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 
-/** Room `@Entity(tableName = …)` for [BillerEntity]. Shared with the DAO's writes. */
-private const val BILLERS_TABLE = "wallet_autopay_billers"
-
 /**
  * Build the OFFLINE_LOCAL_ONLY [Store] for user-authored billers (GOAL D12 —
  * mirrors the batch-4 pilot's `AutoPayBillStore`).

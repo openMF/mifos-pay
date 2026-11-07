@@ -45,3 +45,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.send.money.generated.resources"
+}

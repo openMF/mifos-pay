@@ -16,7 +16,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -66,32 +65,24 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
 import kpt.core.designsystem.component.MifosGradientBackground
 import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.component.MifosTopBar
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.send_money.generated.resources.Res
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_add_bank_account
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_add_bank_account_desc
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_amount_below_minimum
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_amount_exceeds_limit
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_balance
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_bank_icon
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_change_account
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_check_now
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_choose_account
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_pay_amount
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_payee_details_title
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_payee_profile
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_paying
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_rupee_icon
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_selected
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_upi_id
+import kpt.feature.send.money.generated.resources.Res
+import kpt.feature.send.money.generated.resources.feature_send_money_amount_below_minimum
+import kpt.feature.send.money.generated.resources.feature_send_money_amount_exceeds_limit
+import kpt.feature.send.money.generated.resources.feature_send_money_pay_amount
+import kpt.feature.send.money.generated.resources.feature_send_money_payee_details_title
+import kpt.feature.send.money.generated.resources.feature_send_money_payee_profile
+import kpt.feature.send.money.generated.resources.feature_send_money_paying
+import kpt.feature.send.money.generated.resources.feature_send_money_rupee_icon
+import kpt.feature.send.money.generated.resources.feature_send_money_upi_id
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen where the user reviews the payee, enters amount and note, and selects the paying account. */
 @Composable
 fun PayeeDetailsScreen(
     onBackClick: () -> Unit,
@@ -640,301 +631,7 @@ private fun ProceedButton(
 }
 
 // TODO improve bottomsheet UI/UX
-@Composable
-private fun AccountSelectionBottomSheet(
-    state: PayeeDetailsState,
-    onAccountSelected: (BankAccount) -> Unit,
-    onDismiss: () -> Unit,
-    onConfirmPayment: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val dummyAccounts = listOf(
-        BankAccount(
-            id = "1",
-            bankName = "State Bank of India",
-            accountNumber = "****1234",
-            isDefault = true,
-            accountType = "",
-        ),
-        BankAccount(
-            id = "2",
-            bankName = "HDFC Bank",
-            accountNumber = "****5678",
-            isDefault = false,
-            accountType = "",
-        ),
-    )
-
-    MifosBottomSheet(
-        onDismiss = onDismiss,
-        modifier = modifier,
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(400.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .padding(KptTheme.spacing.sm),
-            ) {
-                Text(
-                    text = stringResource(Res.string.feature_send_money_choose_account),
-                    style = KptTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Normal,
-                    color = KptTheme.colorScheme.onSurface,
-                )
-
-                Spacer(modifier = Modifier.height(KptTheme.spacing.md))
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
-                ) {
-                    dummyAccounts.forEach { account ->
-                        AccountItem(
-                            account = account,
-                            isSelected = state.selectedAccount?.id == account.id,
-                            onAccountClick = { onAccountSelected(account) },
-                        )
-                    }
-
-                    AddBankAccountItem()
-                }
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(KptTheme.spacing.md),
-            ) {
-                val focusManager = LocalFocusManager.current
-                Button(
-                    onClick = {
-                        focusManager.clearFocus()
-                        onConfirmPayment()
-                    },
-                    enabled = state.selectedAccount != null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (state.selectedAccount != null) {
-                            KptTheme.colorScheme.primary
-                        } else {
-                            KptTheme.colorScheme.surfaceVariant
-                        },
-                        contentColor = if (state.selectedAccount != null) {
-                            KptTheme.colorScheme.onPrimary
-                        } else {
-                            KptTheme.colorScheme.onSurfaceVariant
-                        },
-                    ),
-                    shape = RoundedCornerShape(KptTheme.spacing.sm),
-                    contentPadding = PaddingValues(horizontal = KptTheme.spacing.lg),
-                ) {
-                    Text(
-                        text = stringResource(Res.string.feature_send_money_pay_amount, AmountUtils.formatPaiseForUI(state.amount)),
-                        style = KptTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Medium,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun AccountItem(
-    account: BankAccount,
-    isSelected: Boolean,
-    onAccountClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onAccountClick() },
-        colors = CardDefaults.cardColors(
-            containerColor = KptTheme.colorScheme.surface,
-        ),
-        shape = RoundedCornerShape(KptTheme.spacing.sm),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(KptTheme.spacing.md),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = MifosIcons.Bank,
-                contentDescription = stringResource(Res.string.feature_send_money_bank_icon),
-                modifier = Modifier.size(32.dp),
-                tint = KptTheme.colorScheme.primary,
-            )
-
-            Spacer(modifier = Modifier.width(KptTheme.spacing.md))
-
-            Column(
-                modifier = Modifier.weight(1f),
-            ) {
-                Text(
-                    text = account.bankName,
-                    style = KptTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    color = KptTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = account.accountNumber,
-                    style = KptTheme.typography.bodyMedium,
-                    color = KptTheme.colorScheme.onSurfaceVariant,
-                )
-                // TODO implement check now for balance
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
-                ) {
-                    Text(
-                        text = stringResource(Res.string.feature_send_money_balance),
-                        style = KptTheme.typography.bodySmall,
-                        color = KptTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Text(
-                        text = stringResource(Res.string.feature_send_money_check_now),
-                        style = KptTheme.typography.bodySmall,
-                        color = KptTheme.colorScheme.primary,
-                        modifier = Modifier.clickable { },
-                    )
-                }
-            }
-
-            if (isSelected) {
-                Icon(
-                    imageVector = MifosIcons.CheckCircle,
-                    contentDescription = stringResource(Res.string.feature_send_money_selected),
-                    modifier = Modifier.size(24.dp),
-                    tint = KptTheme.colorScheme.primary,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun SelectedAccountSection(
-    account: BankAccount,
-    onChangeAccount: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = KptTheme.colorScheme.surface,
-        ),
-        shape = RoundedCornerShape(KptTheme.spacing.md),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(KptTheme.spacing.lg)
-                .clickable { onChangeAccount() },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = MifosIcons.Bank,
-                contentDescription = stringResource(Res.string.feature_send_money_bank_icon),
-                modifier = Modifier.size(32.dp),
-                tint = KptTheme.colorScheme.primary,
-            )
-
-            Spacer(modifier = Modifier.width(KptTheme.spacing.md))
-
-            Column(
-                modifier = Modifier.weight(1f),
-            ) {
-                Text(
-                    text = account.bankName,
-                    style = KptTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    color = KptTheme.colorScheme.onSurface,
-                )
-                Text(
-                    text = account.accountNumber,
-                    style = KptTheme.typography.bodyMedium,
-                    color = KptTheme.colorScheme.onSurfaceVariant,
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
-                ) {
-                    Text(
-                        text = stringResource(Res.string.feature_send_money_balance),
-                        style = KptTheme.typography.bodySmall,
-                        color = KptTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Text(
-                        text = stringResource(Res.string.feature_send_money_check_now),
-                        style = KptTheme.typography.bodySmall,
-                        color = KptTheme.colorScheme.primary,
-                        modifier = Modifier.clickable { },
-                    )
-                }
-            }
-
-            Icon(
-                imageVector = MifosIcons.KeyboardArrowDown,
-                contentDescription = stringResource(Res.string.feature_send_money_change_account),
-                modifier = Modifier.size(24.dp),
-                tint = KptTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Composable
-private fun AddBankAccountItem(
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = KptTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
-        ),
-        shape = RoundedCornerShape(KptTheme.spacing.sm),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(KptTheme.spacing.md),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = MifosIcons.Add,
-                contentDescription = stringResource(Res.string.feature_send_money_add_bank_account_desc),
-                modifier = Modifier.size(24.dp),
-                tint = KptTheme.colorScheme.primary,
-            )
-
-            Spacer(modifier = Modifier.width(KptTheme.spacing.md))
-
-            Text(
-                text = stringResource(Res.string.feature_send_money_add_bank_account),
-                style = KptTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium,
-                color = KptTheme.colorScheme.primary,
-            )
-        }
-    }
-}
-
+/** Preview of [PayeeDetailsScreen]. */
 @Preview
 @Composable
 fun PayeeDetailsScreenPreview() {
@@ -951,6 +648,7 @@ fun PayeeDetailsScreenPreview() {
     )
 }
 
+/** Preview of the payee profile section. */
 @Preview
 @Composable
 fun PayeeProfileSectionPreview() {
@@ -971,6 +669,7 @@ fun PayeeProfileSectionPreview() {
     PayeeProfileSection(state = state, modifier = Modifier)
 }
 
+/** Preview of the payment details section. */
 @Preview
 @Composable
 fun PaymentDetailsSectionPreview() {
@@ -998,6 +697,7 @@ fun PaymentDetailsSectionPreview() {
     )
 }
 
+/** Preview of the expandable amount input. */
 @Preview
 @Composable
 fun ExpandableAmountInputPreview() {
@@ -1010,6 +710,7 @@ fun ExpandableAmountInputPreview() {
     )
 }
 
+/** Preview of the expandable note input. */
 @Preview
 @Composable
 fun ExpandableNoteInputPreview() {
@@ -1021,6 +722,7 @@ fun ExpandableNoteInputPreview() {
     )
 }
 
+/** Preview of the proceed button. */
 @Preview
 @Composable
 fun ProceedButtonPreview() {
@@ -1043,72 +745,4 @@ fun ProceedButtonPreview() {
         onProceedClick = {},
         modifier = Modifier,
     )
-}
-
-@Preview
-@Composable
-fun AccountSelectionBottomSheetPreview() {
-    val state = PayeeDetailsState(
-        payeeName = "John Doe",
-        upiId = "john.doe@upi",
-        phoneNumber = "1234567890",
-        amount = "100.00",
-        note = "Test payment",
-        isAmountEditable = true,
-        isUpiCode = true,
-        isLoading = false,
-        showMaxAmountMessage = false,
-        hasNoteFieldBeenFocused = false,
-        showAccountSelectionSheet = false,
-        selectedAccount = null,
-    )
-    AccountSelectionBottomSheet(
-        state = state,
-        onAccountSelected = {},
-        onDismiss = {},
-        onConfirmPayment = {},
-        modifier = Modifier,
-    )
-}
-
-@Preview
-@Composable
-fun AccountItemPreview() {
-    val account = BankAccount(
-        id = "1",
-        bankName = "State Bank of India",
-        accountNumber = "****1234",
-        isDefault = true,
-        accountType = "",
-
-    )
-    AccountItem(
-        account = account,
-        isSelected = true,
-        onAccountClick = {},
-        modifier = Modifier,
-    )
-}
-
-@Preview
-@Composable
-fun SelectedAccountSectionPreview() {
-    val account = BankAccount(
-        id = "1",
-        bankName = "State Bank of India",
-        accountNumber = "****1234",
-        isDefault = true,
-        accountType = "",
-    )
-    SelectedAccountSection(
-        account = account,
-        onChangeAccount = {},
-        modifier = Modifier,
-    )
-}
-
-@Preview
-@Composable
-fun AddBankAccountItemPreview() {
-    AddBankAccountItem(modifier = Modifier)
 }

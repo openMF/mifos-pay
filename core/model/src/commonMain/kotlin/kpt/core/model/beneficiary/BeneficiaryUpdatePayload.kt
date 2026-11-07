@@ -11,6 +11,12 @@ package kpt.core.model.beneficiary
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for updating a beneficiary's name and transfer limit.
+ *
+ * @property name New display name.
+ * @property transferLimit New maximum amount allowed per transfer.
+ */
 @Serializable
 data class BeneficiaryUpdatePayload(
     val name: String? = null,

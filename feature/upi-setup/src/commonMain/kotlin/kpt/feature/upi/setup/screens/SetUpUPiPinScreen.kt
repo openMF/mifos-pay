@@ -27,11 +27,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.common.Constants
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.model.bank.BankAccountDetails
+import kpt.feature.upi.setup.generated.resources.Res
+import kpt.feature.upi.setup.generated.resources.feature_upi_setup_back
 import kpt.feature.upi.setup.viewmodel.OtpRequestState
 import kpt.feature.upi.setup.viewmodel.OtpVerifyState
 import kpt.feature.upi.setup.viewmodel.SetUpUpiViewModal
-import mifos_pay.feature.upi_setup.generated.resources.Res
-import mifos_pay.feature.upi_setup.generated.resources.feature_upi_setup_back
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -125,6 +125,9 @@ internal fun SetupUpiPinScreen(
     )
 }
 
+/**
+ * Preview of the set-up UPI PIN screen.
+ */
 @Preview
 @Composable
 fun PreviewSetupUpiPin() {
@@ -141,6 +144,9 @@ fun PreviewSetupUpiPin() {
     )
 }
 
+/**
+ * Preview of the change UPI PIN screen.
+ */
 @Preview
 @Composable
 fun PreviewChangeUpi() {
@@ -157,6 +163,9 @@ fun PreviewChangeUpi() {
     )
 }
 
+/**
+ * Preview of the forgot UPI PIN screen.
+ */
 @Preview
 @Composable
 fun PreviewForgetUpi() {
@@ -173,6 +182,9 @@ fun PreviewForgetUpi() {
     )
 }
 
+/**
+ * Returns sample bank account details used by the previews.
+ */
 fun getBankAccountDetails(): BankAccountDetails {
     return BankAccountDetails(
         accountNo = "SBI",

@@ -22,6 +22,7 @@ import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.launch
 import kpt.feature.mpay.qr.scan.components.QrImportScreen
+/** Desktop actual of [QrCodeScanner]. */
 @Composable
 actual fun QrCodeScanner(
     types: List<CodeType>,

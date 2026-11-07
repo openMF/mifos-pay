@@ -437,25 +437,75 @@ internal data class EditProfileState(
     }
 }
 
+/** One-shot events emitted by the edit-profile ViewModel. */
 sealed interface EditProfileEvent {
+    /** Event requesting navigation back. */
     data object NavigateBack : EditProfileEvent
+
+    /**
+     * Event requesting a toast message to be shown.
+     *
+     * @property message String resource of the toast message.
+     */
     data class ShowToast(val message: StringResource) : EditProfileEvent
 }
 
+/** Actions dispatched to the edit-profile ViewModel. */
 sealed interface EditProfileAction {
+    /**
+     * User edited the first name field.
+     *
+     * @property firstName New first name input.
+     */
     data class FirstNameInputChange(val firstName: String) : EditProfileAction
+
+    /**
+     * User edited the last name field.
+     *
+     * @property lastName New last name input.
+     */
     data class LastNameInputChange(val lastName: String) : EditProfileAction
+
+    /**
+     * User edited the phone number field.
+     *
+     * @property phoneNumber New phone number input.
+     */
     data class PhoneNumberInputChange(val phoneNumber: String) : EditProfileAction
+
+    /**
+     * User edited the email field.
+     *
+     * @property email New email input.
+     */
     data class EmailInputChange(val email: String) : EditProfileAction
+
+    /**
+     * User edited the external id field.
+     *
+     * @property externalId New external id input.
+     */
     data class ExternalIdInputChange(val externalId: String) : EditProfileAction
 
+    /** User dismissed the error dialog. */
     data object DismissErrorDialog : EditProfileAction
+
+    /** User requested to navigate back. */
     data object NavigateBack : EditProfileAction
 
+    /** User confirmed saving the profile changes. */
     data object UpdateProfile : EditProfileAction
+
+    /** User tapped to pick a new profile image. */
     data object PickProfileImage : EditProfileAction
 
+    /** Actions dispatched internally by the ViewModel rather than the UI. */
     sealed interface Internal : EditProfileAction {
+        /**
+         * Requests loading the image of a client.
+         *
+         * @property clientId Id of the client whose image is loaded.
+         */
         data class LoadClientImage(val clientId: Long) : Internal
 
         /**
@@ -464,6 +514,8 @@ sealed interface EditProfileAction {
          * during the Phase-3 cutover. The one-shot profile writes no longer have
          * result actions here: `updateClient` / `updateClientImage` /
          * `updateClientProfile` now go through SubmitHandlers in the ViewModel.
+         *
+         * @property result Screen state carrying the loaded client image.
          */
         data class HandleLoadClientImageResult(val result: ScreenState<String>) : Internal
     }

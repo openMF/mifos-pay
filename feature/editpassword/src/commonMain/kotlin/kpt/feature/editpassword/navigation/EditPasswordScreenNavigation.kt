@@ -13,8 +13,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.editpassword.EditPasswordScreen
+/** Navigation route of the edit-password screen. */
 const val EDIT_PASSWORD_ROUTE = "edit_password_route"
 
+/**
+ * Registers the edit-password screen; [navigateBack] pops it, [onLogOut] runs after a password change.
+ */
 fun NavGraphBuilder.editPasswordScreen(
     navigateBack: () -> Unit,
     onLogOut: () -> Unit,
@@ -27,6 +31,7 @@ fun NavGraphBuilder.editPasswordScreen(
     }
 }
 
+/** Navigates to the edit-password screen. */
 fun NavController.navigateToEditPassword() {
     this.navigate(EDIT_PASSWORD_ROUTE)
 }

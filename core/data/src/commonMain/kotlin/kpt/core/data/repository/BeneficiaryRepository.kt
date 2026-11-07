@@ -15,20 +15,26 @@ import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.beneficiary.BeneficiaryPayload
 import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.network.entity.templates.beneficiary.BeneficiaryTemplate
+/** Repository for the beneficiaries a client can transfer to. */
 interface BeneficiaryRepository {
     // Phase-3 cutover — reads on ScreenState.
+    /** Streams the client's saved beneficiaries. */
     suspend fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>>
 
+    /** Streams the template used to create or update beneficiaries. */
     suspend fun getBeneficiaryTemplate(): Flow<ScreenState<BeneficiaryTemplate>>
 
     // Writes execute the network call and throw on failure (no offline write
     // stores yet). Callers surface errors via their own try/catch.
+    /** Creates a new beneficiary from the payload. */
     suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload)
 
+    /** Updates an existing beneficiary. */
     suspend fun updateBeneficiary(
         beneficiaryId: Long,
         payload: BeneficiaryUpdatePayload,
     )
 
+    /** Deletes the beneficiary with the given id. */
     suspend fun deleteBeneficiary(beneficiaryId: Long)
 }

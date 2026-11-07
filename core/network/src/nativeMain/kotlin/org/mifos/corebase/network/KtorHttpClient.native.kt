@@ -13,6 +13,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.darwin.Darwin
 
+/** Native (iOS) actual: creates an [HttpClient] on the Darwin engine, configured by [config]. */
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Darwin) {
     config(this)
 }

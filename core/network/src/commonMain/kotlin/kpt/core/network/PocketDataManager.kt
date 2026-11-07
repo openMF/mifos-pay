@@ -12,8 +12,14 @@ package kpt.core.network
 import kpt.core.network.main.services.ClientService
 import kpt.core.network.main.services.PocketService
 import kpt.core.network.main.services.ShareAccountService
+/** Provides the network services needed to load a client's pocket accounts. */
 interface PocketDataManager {
+    /** Clients API. */
     val clientsApi: ClientService
+
+    /** Pocket accounts API. */
     val pocketApi: PocketService
+
+    /** Share accounts API. */
     val shareAccountApi: ShareAccountService
 }

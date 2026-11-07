@@ -26,6 +26,7 @@ import kpt.core.model.autopay.AutoPayUpdatePayload
 import kpt.core.model.autopay.UpcomingPayment
 import kpt.core.model.network.entity.Page
 import kpt.core.network.FineractApiManager
+/** Default [AutoPayRepository]. */
 class AutoPayRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

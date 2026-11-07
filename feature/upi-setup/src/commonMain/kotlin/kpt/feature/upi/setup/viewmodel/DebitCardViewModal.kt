@@ -14,11 +14,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kpt.core.ui.utils.BaseViewModel
+/**
+ * ViewModel that checks the format of a debit card number before UPI setup continues.
+ */
 class DebitCardViewModel :
     BaseViewModel<DebitCardUiState, DebitCardEvent, DebitCardAction>(
         initialState = DebitCardUiState.Initials,
     ) {
 
+    /** The debit-card step's state, under the name the screen reads. */
     val debitCardUiState: StateFlow<DebitCardUiState> get() = stateFlow
 
     override fun handleAction(action: DebitCardAction) {
@@ -46,6 +50,9 @@ class DebitCardViewModel :
         }
     }
 
+    /**
+     * Requests verification of the given debit card details.
+     */
     fun verifyDebitCard(debitCardNumber: String, month: String, year: String) {
         trySendAction(DebitCardAction.VerifyDebitCard(debitCardNumber, month, year))
     }
@@ -55,9 +62,21 @@ class DebitCardViewModel :
     }
 }
 
+/**
+ * One-off events of the debit card ViewModel (none defined).
+ */
 sealed interface DebitCardEvent
 
+/**
+ * Actions handled by the debit card ViewModel.
+ */
 sealed interface DebitCardAction {
+    /**
+     * Verify a debit card.
+     * @property debitCardNumber Card number to check.
+     * @property month Expiry month.
+     * @property year Expiry year.
+     */
     data class VerifyDebitCard(
         val debitCardNumber: String,
         val month: String,
@@ -65,9 +84,28 @@ sealed interface DebitCardAction {
     ) : DebitCardAction
 }
 
+/**
+ * UI state of the debit card verification.
+ */
 sealed class DebitCardUiState {
+    /**
+     * Nothing entered or verified yet.
+     */
     data object Initials : DebitCardUiState()
+
+    /**
+     * Verification in progress.
+     */
     data object Verifying : DebitCardUiState()
+
+    /**
+     * Card number format accepted.
+     */
     data object Verified : DebitCardUiState()
+
+    /**
+     * Verification failed.
+     * @property errorMessage Reason shown to the user.
+     */
     data class VerificationFailed(val errorMessage: String) : DebitCardUiState()
 }

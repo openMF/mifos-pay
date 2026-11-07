@@ -16,6 +16,7 @@ import kpt.core.data.repository.AuthenticationRepository
 import kpt.core.data.repository.ClientRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.user.UserInfo
+/** Logs a user in: authenticates, stores the session token and loads the client and user info into preferences. */
 @OpenForMokkery
 class LoginUseCase(
     private val repository: AuthenticationRepository,

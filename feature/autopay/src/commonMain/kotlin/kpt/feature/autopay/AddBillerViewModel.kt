@@ -30,6 +30,7 @@ import kotlin.random.Random
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** View model for the add-biller form; validates input and saves a new biller. */
 class AddBillerViewModel(
     savedStateHandle: SavedStateHandle,
     private val billerRepository: BillerRepository,
@@ -37,6 +38,7 @@ class AddBillerViewModel(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AddBillerState(),
 ) {
 
+    /** Holds the saved-state and navigation argument keys. */
     companion object {
         private const val KEY_STATE = "add_biller_state"
         private const val SOURCE_ARG = "source"
@@ -44,6 +46,7 @@ class AddBillerViewModel(
 
     private val source: String = savedStateHandle.get<String>(SOURCE_ARG) ?: "direct"
 
+    /** Returns where the screen was opened from (defaults to "direct"). */
     fun getSource(): String = source
 
     // Template idiom (core-base/store): the one-shot create goes through a SubmitHandler
@@ -232,6 +235,15 @@ class AddBillerViewModel(
     }
 }
 
+/**
+ * UI state of the add-biller form.
+ *
+ * @property formData Biller details typed by the user.
+ * @property validationResult Result of validating the form.
+ * @property isLoading Whether a save is in progress.
+ * @property isSuccess Whether the biller was saved.
+ * @property error Error message to show, or null.
+ */
 @Serializable
 data class AddBillerState(
     val formData: BillerFormData = BillerFormData(),
@@ -241,19 +253,69 @@ data class AddBillerState(
     val error: String? = null,
 )
 
+/** One-off events emitted by the add-biller view model. */
 sealed interface AddBillerEvent {
+    /**
+     * The biller was saved.
+     *
+     * @property biller The saved biller.
+     */
     data class BillerSaved(val biller: Biller) : AddBillerEvent
 }
 
+/** User actions handled by the add-biller view model. */
 sealed interface AddBillerAction {
+    /**
+     * The biller name changed.
+     *
+     * @property name New biller name.
+     */
     data class UpdateBillerName(val name: String) : AddBillerAction
+
+    /**
+     * The account number changed.
+     *
+     * @property accountNumber New account number.
+     */
     data class UpdateAccountNumber(val accountNumber: String) : AddBillerAction
+
+    /**
+     * The contact number changed.
+     *
+     * @property contactNumber New contact number.
+     */
     data class UpdateContactNumber(val contactNumber: String) : AddBillerAction
+
+    /**
+     * The email changed.
+     *
+     * @property email New email address.
+     */
     data class UpdateEmail(val email: String) : AddBillerAction
+
+    /**
+     * The category changed.
+     *
+     * @property category New biller category.
+     */
     data class UpdateCategory(val category: BillerCategory) : AddBillerAction
+
+    /**
+     * The address changed.
+     *
+     * @property address New address.
+     */
     data class UpdateAddress(val address: String) : AddBillerAction
+
+    /** The user tapped save. */
     data object SaveBiller : AddBillerAction
+
+    /** Validate the form. */
     data object ValidateForm : AddBillerAction
+
+    /** Clear the current error. */
     data object ClearError : AddBillerAction
+
+    /** Clear field-level validation errors. */
     data object ClearValidationErrors : AddBillerAction
 }

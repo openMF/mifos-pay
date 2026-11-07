@@ -23,31 +23,39 @@ import kpt.core.model.network.entity.user.NewUserEntity
 import kpt.core.model.network.entity.user.UpdateUserEntityPassword
 import kpt.core.model.network.entity.user.UpdateUserPasswordResponse
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for users. */
 interface UserService {
+    /** Fetches all users with their roles. */
     @GET(ApiEndPoints.USER)
     suspend fun users(): Flow<List<UserWithRole>>
 
+    /** Creates a user. */
     @POST(ApiEndPoints.USER)
     suspend fun createUser(@Body user: NewUserEntity): CommonResponse
 
+    /** Updates a user. */
     @PUT(ApiEndPoints.USER + "/{userId}")
     suspend fun updateUser(
         @Body updateUserEntity: NewUserEntity,
     ): Flow<GenericResponse>
 
+    /** Updates a user's password. */
     @PUT(ApiEndPoints.USER_SELF)
     suspend fun updateUserPassword(
         @Body updateUserEntity: UpdateUserEntityPassword,
     ): UpdateUserPasswordResponse
 
+    /** Deletes a user. */
     @DELETE(ApiEndPoints.USER + "/{userId}")
     suspend fun deleteUser(
         @Path("userId") userId: Int,
     ): CommonResponse
 
+    /** Fetches the signed-in user. */
     @GET("self/userdetails")
     suspend fun getUser(): Flow<UserWithRole>
 
+    /** Assigns a client to a user. */
     @PUT(ApiEndPoints.USER + "/{userId}")
     suspend fun assignClientToUser(
         @Path("userId") userId: Int,

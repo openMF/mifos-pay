@@ -12,7 +12,7 @@ package kpt.core.data.repository
 /**
  * App-wide lock flag, persisted across process restarts.
  *
- * Set/cleared by [org.mifos.feature.passcode.MifosPasscodeViewModel]:
+ * Set/cleared by [kpt.feature.passcode.MifosPasscodeViewModel]:
  *  - locked on `OnStart` if the passcode screen is in `Enter` step,
  *  - unlocked on `PasscodeResult.Verified` (passcode or biometric success),
  *  - deleted on `PasscodeResult.Forgotten` / logout.

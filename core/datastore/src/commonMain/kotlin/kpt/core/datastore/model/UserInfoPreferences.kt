@@ -11,6 +11,20 @@ package kpt.core.datastore.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Persisted snapshot of the authenticated user's login result.
+ * @property username Login username.
+ * @property userId User id.
+ * @property base64EncodedAuthenticationKey Base64 key used for the Basic auth header.
+ * @property authenticated Whether authentication succeeded.
+ * @property officeId Office id.
+ * @property officeName Office name.
+ * @property roles Roles assigned to the user.
+ * @property permissions Permission codes granted to the user.
+ * @property clients Ids of the clients linked to the user.
+ * @property shouldRenewPassword Whether the server requires a password change.
+ * @property isTwoFactorAuthenticationRequired Whether two-factor authentication is required.
+ */
 @Serializable
 data class UserInfoPreferences(
     val username: String,
@@ -25,7 +39,9 @@ data class UserInfoPreferences(
     val shouldRenewPassword: Boolean,
     val isTwoFactorAuthenticationRequired: Boolean,
 ) {
+    /** Holds the default (logged-out) value. */
     companion object {
+        /** Unauthenticated user used before login. */
         val DEFAULT = UserInfoPreferences(
             username = "",
             userId = 0,

@@ -193,6 +193,7 @@ get_android_app_id() {
         grep "$package_name" | awk '{print $4}' | head -1
 }
 
+# Prints the Firebase iOS app id registered for a bundle id in the project, or nothing.
 get_ios_app_id() {
     local bundle_id=$1
     firebase apps:list IOS --project="$FIREBASE_PROJECT_ID" 2>/dev/null | \

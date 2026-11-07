@@ -46,17 +46,24 @@ class AutoPayHistoryViewModel(
     // MVI view-state surface. `state` (BaseViewModel) is the current value and
     // `stateFlow` is the hot StateFlow. The Screen consumes `uiState` unchanged,
     // aliased here to `stateFlow` so the public API and the Screen stay intact.
+    /** The screen state, under the name the screen reads. */
     val uiState: StateFlow<AutoPayHistoryUiState> get() = stateFlow
 
     // Search/filter selection surfaces are separate from the MVI view-state and
     // preserved as-is to keep the ViewModel's existing public API + behavior.
     private val _searchQuery = MutableStateFlow("")
+
+    /** Current search query text. */
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
     private val _selectedStatus = MutableStateFlow<String?>(null)
+
+    /** Selected payment status filter, or null for all statuses. */
     val selectedStatus: StateFlow<String?> = _selectedStatus.asStateFlow()
 
     private val _selectedDateRange = MutableStateFlow<Pair<String?, String?>>(null to null)
+
+    /** Selected date range filter as (from, to) strings; null entries are unbounded. */
     val selectedDateRange: StateFlow<Pair<String?, String?>> = _selectedDateRange.asStateFlow()
 
     init {
@@ -89,6 +96,7 @@ class AutoPayHistoryViewModel(
         }
     }
 
+    /** Loads one page of AutoPay history. */
     fun loadAutoPayHistoryWithPagination(
         autoPayId: Long,
         limit: Int = 20,
@@ -97,26 +105,32 @@ class AutoPayHistoryViewModel(
         trySendAction(AutoPayHistoryAction.LoadWithPagination(autoPayId, limit, offset))
     }
 
+    /** Filters the history by a search query. */
     fun searchHistory(query: String) {
         trySendAction(AutoPayHistoryAction.Search(query))
     }
 
+    /** Filters the history by payment status; null clears the status filter. */
     fun filterByStatus(status: String?) {
         trySendAction(AutoPayHistoryAction.FilterByStatus(status))
     }
 
+    /** Filters the history to a date range. */
     fun filterByDateRange(fromDate: String?, toDate: String?) {
         trySendAction(AutoPayHistoryAction.FilterByDateRange(fromDate, toDate))
     }
 
+    /** Clears the search, status and date filters. */
     fun clearFilters() {
         trySendAction(AutoPayHistoryAction.ClearFilters)
     }
 
+    /** Reloads the history from the repository. */
     fun refreshHistory() {
         trySendAction(AutoPayHistoryAction.RefreshHistory)
     }
 
+    /** Clears the current error. */
     fun clearError() {
         trySendAction(AutoPayHistoryAction.ClearError)
     }
@@ -552,6 +566,17 @@ class AutoPayHistoryViewModel(
     }
 }
 
+/**
+ * UI state of the AutoPay history screen.
+ *
+ * @property isLoading Whether history is loading.
+ * @property historyList All loaded history entries.
+ * @property filteredHistoryList Entries matching the current filters.
+ * @property historyPage Paged response the entries came from, or null.
+ * @property statistics Aggregate statistics for the history, or null.
+ * @property error Error message to show, or null.
+ * @property isReadOnly Whether entries are read-only (always true for history).
+ */
 data class AutoPayHistoryUiState(
     val isLoading: Boolean = false,
     val historyList: List<AutoPayHistory> = emptyList(),
@@ -561,31 +586,60 @@ data class AutoPayHistoryUiState(
     val error: String? = null,
     val isReadOnly: Boolean = true,
 ) {
+    /** Filtered entries when a filter is active, otherwise all entries. */
     val displayHistoryList: List<AutoPayHistory>
         get() = filteredHistoryList.ifEmpty { historyList }
 }
 
+/** One-off events of the history screen; none are currently emitted. */
 sealed interface AutoPayHistoryEvent
 
+/** User actions handled by the history view model. */
 sealed interface AutoPayHistoryAction {
+    /**
+     * Load one page of history.
+     *
+     * @property autoPayId Id of the AutoPay schedule.
+     * @property limit Page size.
+     * @property offset Index of the first entry to load.
+     */
     data class LoadWithPagination(
         val autoPayId: Long,
         val limit: Int,
         val offset: Int,
     ) : AutoPayHistoryAction
 
+    /**
+     * Search the history.
+     *
+     * @property query Search text.
+     */
     data class Search(val query: String) : AutoPayHistoryAction
 
+    /**
+     * Filter by payment status.
+     *
+     * @property status Status to keep, or null for all.
+     */
     data class FilterByStatus(val status: String?) : AutoPayHistoryAction
 
+    /**
+     * Filter by date range.
+     *
+     * @property fromDate Start of the range, or null.
+     * @property toDate End of the range, or null.
+     */
     data class FilterByDateRange(
         val fromDate: String?,
         val toDate: String?,
     ) : AutoPayHistoryAction
 
+    /** Clear all filters. */
     data object ClearFilters : AutoPayHistoryAction
 
+    /** Reload the history. */
     data object RefreshHistory : AutoPayHistoryAction
 
+    /** Clear the current error. */
     data object ClearError : AutoPayHistoryAction
 }

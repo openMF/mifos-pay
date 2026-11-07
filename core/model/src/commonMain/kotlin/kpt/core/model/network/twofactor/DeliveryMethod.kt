@@ -11,6 +11,12 @@ package kpt.core.model.network.twofactor
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A channel (for example SMS or email) over which a two-factor code can be delivered.
+ *
+ * @property name Name of the delivery method, such as SMS or email.
+ * @property target Address the code is sent to, such as a phone number or email.
+ */
 @Serializable
 data class DeliveryMethod(
     val name: String?,

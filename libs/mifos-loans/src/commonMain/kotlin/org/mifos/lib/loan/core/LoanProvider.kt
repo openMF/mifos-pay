@@ -14,9 +14,12 @@ import kpt.core.common.ScreenState
 import org.mifos.lib.loan.core.model.LoanState
 import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.core.model.LoansPayload
+/** Source of loan templates and loan application submission for one loan provider (Fineract or a bank). */
 interface LoanProvider {
+    /** Loads the loan template for [clientId] as a stream of screen states. */
     fun getLoanTemplate(clientId: Long): Flow<ScreenState<LoanTemplate>>
 
+    /** Loads the loan template for [clientId] pre-filled for the product [productId]. */
     fun getLoanTemplateByProduct(clientId: Long, productId: Long): Flow<ScreenState<LoanTemplate>>
 
     /**

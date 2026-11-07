@@ -25,44 +25,55 @@ import kpt.core.model.network.entity.client.ClientEntity
 import kpt.core.model.network.entity.client.NewClientEntity
 import kpt.core.model.network.entity.client.UpdateClientEntity
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for clients. */
 interface ClientService {
+    /** Fetches the page of clients. */
     @GET(ApiEndPoints.CLIENTS)
     suspend fun clients(): Flow<Page<ClientEntity>>
 
+    /** Fetches a client's details once. */
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
     suspend fun getClientForId(@Path("clientId") clientId: Long): ClientEntity
 
+    /** Streams a client's details. */
     @GET(ApiEndPoints.CLIENTS + "/{clientId}")
     fun getClient(@Path("clientId") clientId: Long): Flow<ClientEntity>
 
+    /** Updates a client. */
     @PUT(ApiEndPoints.CLIENTS + "/{clientId}")
     suspend fun updateClient(
         @Path("clientId") clientId: Long,
         @Body payload: UpdateClientEntity,
     ): Unit
 
+    /** Fetches a client's profile image. */
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/images")
     @Headers("Accept: text/plain")
     fun getClientImage(@Path("clientId") clientId: Long): Flow<String>
 
+    /** Uploads a client's profile image. */
     @PUT(ApiEndPoints.CLIENTS + "/{clientId}/images")
     suspend fun updateClientImage(
         @Path("clientId") clientId: Long,
         @Body typedFile: String,
     ): Unit
 
+    /** Fetches the accounts of a client. */
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
     suspend fun getClientAccounts(@Path("clientId") clientId: Long): ClientAccountsEntity
 
+    /** Fetches the accounts of a client filtered by account type. */
     @GET(ApiEndPoints.CLIENTS + "/{clientId}/accounts")
     fun getAccounts(
         @Path("clientId") clientId: Long,
         @Query("fields") accountType: String,
     ): Flow<ClientAccountsEntity>
 
+    /** Creates a client. */
     @POST(ApiEndPoints.CLIENTS)
     suspend fun createClient(@Body newClient: NewClientEntity): ClientResponseEntity
 
+    /** Deletes a client. */
     @DELETE(ApiEndPoints.CLIENTS + "/{clientId}")
     suspend fun deleteClient(@Path("clientId") clientId: Int): ClientResponseEntity
 }

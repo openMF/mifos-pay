@@ -11,6 +11,16 @@ package kpt.core.model.network.entity
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A result row from the Fineract search API, with its parent entity.
+ *
+ * @property entityId Id of the entity.
+ * @property entityAccountNo Account number of the entity.
+ * @property entityName Name of the entity.
+ * @property entityType Type of the entity.
+ * @property parentId Id of the parent entity.
+ * @property parentName Name of the parent entity.
+ */
 @Serializable
 data class SearchedEntity(
     val entityId: Int = 0,

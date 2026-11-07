@@ -11,6 +11,24 @@ package kpt.core.datastore.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Persisted snapshot of the logged-in client's profile.
+ * @property id Client id.
+ * @property accountNo Client account number.
+ * @property externalId External id.
+ * @property active Whether the client is active.
+ * @property activationDate Activation date as Fineract date parts.
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property displayName Display name.
+ * @property mobileNo Mobile number.
+ * @property emailAddress Email address.
+ * @property dateOfBirth Date of birth as Fineract date parts.
+ * @property isStaff Whether the client is a staff member.
+ * @property officeId Owning office id.
+ * @property officeName Owning office name.
+ * @property savingsProductName Default savings product name.
+ */
 @Serializable
 data class ClientPreferences(
     val id: Long,
@@ -29,7 +47,9 @@ data class ClientPreferences(
     val officeName: String,
     val savingsProductName: String,
 ) {
+    /** Holds the default (empty) value. */
     companion object {
+        /** Empty client used before anyone has logged in. */
         val DEFAULT = ClientPreferences(
             id = 0L,
             accountNo = "",

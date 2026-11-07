@@ -28,15 +28,15 @@ import kpt.core.model.savedcards.CardPayload
 import kpt.core.model.savedcards.SavedCard
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.savedcards.createOrUpdate.AECardAction.Internal.HandleCardResult
+import kpt.feature.savedcards.generated.resources.Res
+import kpt.feature.savedcards.generated.resources.feature_savedcards_card_added_successfully
+import kpt.feature.savedcards.generated.resources.feature_savedcards_card_updated_successfully
 import kpt.feature.savedcards.utils.CardType
 import kpt.feature.savedcards.utils.CreditCardUtils.detectCardType
 import kpt.feature.savedcards.utils.CreditCardUtils.isValidCVV
 import kpt.feature.savedcards.utils.CreditCardUtils.isValidCreditCardNumber
 import kpt.feature.savedcards.utils.CreditCardUtils.isValidExpiryDate
 import kpt.feature.savedcards.utils.creditCardColors
-import mifos_pay.feature.savedcards.generated.resources.Res
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_card_added_successfully
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_card_updated_successfully
 import org.jetbrains.compose.resources.StringResource
 internal class AddEditCardViewModel(
     private val repository: SavedCardRepository,

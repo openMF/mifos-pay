@@ -2,13 +2,13 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_COMMON.md`
-> **Measured:** 51 Kotlin files, 0 test files
+> **Measured:** 58 Kotlin files, 1 test files
 
 **Defines annotations:** `@ApplicationScope`, `@Dispatcher`, `@IgnoredOnParcel`, `@OpenForMokkery`, `@Parcelize`, `@TypeParceler`
 
 ## Principal types
 
-`ApplicationScope`, `CommonFileUtils`, `Constants`, `CurrencyFormatter`, `DateAsStringSerializer`, `DateHelper`, `DebugUtil`, `DefaultStringProvider`, `DialogManager`, `DialogMessage`, `Dispatcher`, `ErrorMessageProvider`, `FileUtils`, `GlobalAuthManager`  …and 17 more
+`ApplicationScope`, `CommonFileUtils`, `Constants`, `CurrencyFormatter`, `DateAsStringSerializer`, `DateHelper`, `DebugUtil`, `DefaultStringProvider`, `DialogManager`, `DialogMessage`, `Dispatcher`, `ErrorMessageProvider`, `FileUtils`, `GlobalAuthManager`  …and 18 more
 
 <!-- scaffold:end -->
 
@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/common sha=f11fcb7f306eee58bc8ecfd9454d84bcd668c89b -->
+<!-- api-docs:begin module=core/common sha=eb28d4fd81966f4e512aa356e168f1d2a2a3dfbe -->
 ## API reference
 
-_Generated from `core/common` at tree `f11fcb7f306e` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/common` at tree `eb28d4fd8196` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/Constants.kt`
@@ -29,7 +29,7 @@ object Constants
 ```
 Created by naman on 17/6/17.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:191</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:193</code></summary>
 
 ```kotlin
             val result = searchRepository.searchResources(
@@ -43,20 +43,20 @@ Created by naman on 17/6/17.
 
 </details>
 
-- `const val BASIC = "Basic "`
-- `const val CLIENT_ID = "client_id"`
-- `const val ACCOUNT_ID = "account_id"`
-- `const val ACCOUNT = "account"`
-- `const val TO_EXTERNAL_ID = "to_external_id"`
-- `const val RUPEE = "₹"`
-- `const val QR_DATA = "qr_data"`
-- `const val MERCHANT_NAME = "merchant_name"`
-- `const val MERCHANT_VPA = "merchant_vpa"`
-- `const val MERCHANT_ACCOUNT_NO = "merchant_account_no"`
-- `const val FILE = "file"`
-- `const val MULTIPART_FORM_DATA = "multipart/form-data"`
-- `const val CHOOSE_A_FILE_TO_UPLOAD = "Choose a file to upload."`
-- `const val ERROR_UPLOADING_DOCS = "Error uploading docs."`
+- `const val BASIC = "Basic "` — Prefix of the HTTP Basic authorization header value ("Basic ").
+- `const val CLIENT_ID = "client_id"` — Argument/key name "client_id".
+- `const val ACCOUNT_ID = "account_id"` — Argument/key name "account_id".
+- `const val ACCOUNT = "account"` — Argument/key name "account".
+- `const val TO_EXTERNAL_ID = "to_external_id"` — Argument/key name "to_external_id".
+- `const val RUPEE = "₹"` — Indian rupee currency symbol shown next to wallet amounts.
+- `const val QR_DATA = "qr_data"` — Argument/key name "qr_data".
+- `const val MERCHANT_NAME = "merchant_name"` — Argument/key name "merchant_name".
+- `const val MERCHANT_VPA = "merchant_vpa"` — Argument/key name "merchant_vpa".
+- `const val MERCHANT_ACCOUNT_NO = "merchant_account_no"` — Argument/key name "merchant_account_no".
+- `const val FILE = "file"` — Argument/key name "file".
+- `const val MULTIPART_FORM_DATA = "multipart/form-data"` — MIME type used for multipart form uploads (KYC documents).
+- `const val CHOOSE_A_FILE_TO_UPLOAD = "Choose a file to upload."` — User-facing text: "Choose a file to upload.".
+- `const val ERROR_UPLOADING_DOCS = "Error uploading docs."` — User-facing text: "Error uploading docs.".
   _…more members; read the file._
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/CurrencyFormatter.kt`
@@ -64,7 +64,7 @@ Created by naman on 17/6/17.
 ```kotlin
 expect object CurrencyFormatter
 ```
-_No KDoc at source._
+Platform-specific formatter that renders wallet balances as currency or plain grouped numbers.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:247</code></summary>
 
@@ -80,13 +80,13 @@ _No KDoc at source._
 
 </details>
 
-- `fun format(balance: Double?, currencyCode: String?, maximumFractionDigits: Int?): String`
-- `fun format(balance: Double?, maximumFractionDigits: Int?): String`
+- `fun format(balance: Double?, currencyCode: String?, maximumFractionDigits: Int?): String` — Formats `balance` as a currency string for `currencyCode` with up to `maximumFractionDigits` decimals.
+- `fun format(balance: Double?, maximumFractionDigits: Int?): String` — Formats `balance` as a plain number string with `maximumFractionDigits` decimals.
 
 ```kotlin
 fun <T> List<T>.toArrayList(): ArrayList<T>
 ```
-_No KDoc at source._
+Copies this list into a new `ArrayList`.
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/DateAsStringSerializer.kt`
 
@@ -107,7 +107,7 @@ data class Transfer(
 
 </details>
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/Transfer.kt:20</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/Transfer.kt:30</code></summary>
 
 ```kotlin
     val currency: Currency? = null,
@@ -141,7 +141,7 @@ data class UserPreferences(
 
 </details>
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:574</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:598</code></summary>
 
 ```kotlin
     @Transient val dialogState: DialogState? = null,
@@ -150,7 +150,7 @@ data class UserPreferences(
     val passwordFeedback: ImmutableList<String> = persistentListOf(),
     val countriesWithStates: Map<String, List<String>> = emptyMap(),
 ) {
-    @Transient
+    /** States available for the currently selected country, or null if none. */
 ```
 
 </details>
@@ -160,7 +160,7 @@ data class UserPreferences(
 ```kotlin
 object DateHelper
 ```
-_No KDoc at source._
+Date parsing/formatting helpers for Fineract-style date parts and kotlinx-datetime values.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:428</code></summary>
 
@@ -176,12 +176,12 @@ _No KDoc at source._
 
 </details>
 
-- `const val FULL_MONTH = "dd MM yyyy"` — /* Copyright 2024 Mifos Initiative This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
-- `const val SHORT_MONTH = "dd-MM-yyyy"` — /* Copyright 2024 Mifos Initiative This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
-- `const val MONTH_FORMAT = "dd MMMM"`
+- `const val FULL_MONTH = "dd MM yyyy"` — Date pattern dd MM yyyy used for the date picker.
+- `const val SHORT_MONTH = "dd-MM-yyyy"` — Date pattern dd-MM-yyyy used for the date picker.
+- `const val MONTH_FORMAT = "dd MMMM"` — Date pattern dd MMMM (day and full month name).
 - `fun getDateAsString(integersOfDate: List<Int>): String` — the result string uses the list given in a reverse order ([x, y, z] results in "z y x")
 - `val stringBuilder = StringBuilder()`
-- `fun getDateAsString(integersOfDate: List<Long>, pattern: String): String`
+- `fun getDateAsString(integersOfDate: List<Long>, pattern: String): String` — Converts Fineract date parts ([year, month, day]) given in dd MM yyyy form into a string using `pattern`.
 - `fun getDateAsString(dateString: String): String` — Parses a date string with an auto-detected delimiter and returns it in "dd MMM yyyy" format.
 - `val delimiters = listOf("-", "/", ".")`
 - `val detectedDelimiter = delimiters.find { dateString.contains(it) }`
@@ -197,9 +197,9 @@ _No KDoc at source._
 ```kotlin
 object DebugUtil
 ```
-_No KDoc at source._
+Debug logging helper.
 
-- `fun log(vararg objects: Any): Array<out Any>`
+- `fun log(vararg objects: Any): Array<out Any>` — Logs `objects` joined by commas at debug level and returns them unchanged.
 - `val stringToPrint = objects.joinToString(", ")`
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/ErrorBodyParser.kt`
@@ -209,7 +209,7 @@ typealias ErrorBodyParser = suspend (responseBody: String, statusCode: Int) -> S
 ```
 Function type for parsing an error response body into a user-friendly message. Repositories provide custom parsing logic (e.g.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:105</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:98</code></summary>
 
 ```kotlin
     suspend fun <T> mapErrorBody(
@@ -249,12 +249,12 @@ class ErrorMessageProviderImpl : ErrorMessageProvider {
 
 </details>
 
-- `fun getHttpErrorTitle(statusCode: Int): String`
-- `fun getHttpErrorMessage(statusCode: Int, fallbackMessage: String?): String`
-- `fun getNetworkErrorTitle(): String`
-- `fun getNetworkErrorMessage(): String`
-- `fun getGenericErrorTitle(): String`
-- `fun getGenericErrorMessage(fallbackMessage: String?): String`
+- `fun getHttpErrorTitle(statusCode: Int): String` — Returns the localized dialog title for an HTTP `statusCode` error.
+- `fun getHttpErrorMessage(statusCode: Int, fallbackMessage: String?): String` — Returns the localized message for an HTTP `statusCode` error, using `fallbackMessage` when no mapping exists.
+- `fun getNetworkErrorTitle(): String` — Returns the localized dialog title for a network (connectivity) error.
+- `fun getNetworkErrorMessage(): String` — Returns the localized message for a network (connectivity) error.
+- `fun getGenericErrorTitle(): String` — Returns the localized dialog title for an unclassified error.
+- `fun getGenericErrorMessage(fallbackMessage: String?): String` — Returns the localized message for an unclassified error, using `fallbackMessage` when available.
 
 ```kotlin
 data class UiError(
@@ -307,7 +307,7 @@ class HttpStatusException(
 ```
 Exception thrown when an HTTP request fails with a specific status code. Use this to differentiate between client errors (4xx) and server errors (5xx).
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ErrorHandler.kt:66</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ErrorHandler.kt:83</code></summary>
 
 ```kotlin
         fun from(throwable: Throwable, provider: ErrorMessageProvider): UiError {
@@ -326,7 +326,7 @@ class NetworkException(message: String) : Exception(message)
 ```
 Exception thrown when a network operation fails due to connectivity issues.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ErrorHandler.kt:73</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ErrorHandler.kt:90</code></summary>
 
 ```kotlin
                 )
@@ -345,36 +345,36 @@ Exception thrown when a network operation fails due to connectivity issues.
 ```kotlin
 interface FileUtils
 ```
-_No KDoc at source._
+Platform-neutral contract for writing downloaded bytes (e.g. receipts) to disk.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/FileUtils.android.kt:13</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/FileUtils.android.kt:14</code></summary>
 
 ```kotlin
-
 // JVM and Android implementation
+/** Creates the platform [FileUtils] implementation. */
 actual fun createPlatformFileUtils(): FileUtils = CommonFileUtils()
 ```
 
 </details>
 
-- `suspend fun writeInputStreamDataToFile(inputStream: ByteArray, filePath: String): Boolean`
-- `val logger = Logger.withTag("FileUtils")`
+- `suspend fun writeInputStreamDataToFile(inputStream: ByteArray, filePath: String): Boolean` — Writes `inputStream` bytes to `filePath`; returns true on success.
+- `val logger = Logger.withTag("FileUtils")` — Logger tagged FileUtils.
 
 ```kotlin
 expect fun createPlatformFileUtils(): FileUtils
 ```
-_No KDoc at source._
+Creates the platform-specific `FileUtils` implementation.
 
 ```kotlin
 class CommonFileUtils : FileUtils
 ```
-_No KDoc at source._
+Default `FileUtils` used on platforms without a dedicated implementation.
 
-<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/FileUtils.android.kt:13</code></summary>
+<details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/FileUtils.android.kt:14</code></summary>
 
 ```kotlin
-
 // JVM and Android implementation
+/** Creates the platform [FileUtils] implementation. */
 actual fun createPlatformFileUtils(): FileUtils = CommonFileUtils()
 ```
 
@@ -385,7 +385,7 @@ actual fun createPlatformFileUtils(): FileUtils = CommonFileUtils()
 ```kotlin
 fun formatDate(millis: Long): String
 ```
-_No KDoc at source._
+Formats epoch `millis` as dd/MM/yyyy in the system time zone.
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/FormatDuration.kt`
 
@@ -399,26 +399,26 @@ Returns a human-readable "X ago" label for a past `instant`, e.g. "just now", "5
 ```kotlin
 fun Double.formatDecimal(places: Int): String
 ```
-_No KDoc at source._
+Formats this value rounded to `places` decimal places without grouping (KMP-safe replacement for String.format).
 
 ```kotlin
 fun Double.formatGrouped(places: Int): String
 ```
-_No KDoc at source._
+Formats this value with `places` decimal places and comma thousands separators.
 
 ```kotlin
 fun Long.formatGrouped(): String
 ```
-_No KDoc at source._
+Formats this value with comma thousands separators.
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/GlobalAuthManager.kt`
 
 ```kotlin
 object GlobalAuthManager
 ```
-_No KDoc at source._
+Process-wide holder of the 'session unauthorized' signal raised when the server answers 401.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/utils/KtorInterceptor.kt:45</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/utils/KtorInterceptor.kt:49</code></summary>
 
 ```kotlin
             scope.responsePipeline.intercept(HttpResponsePipeline.After) {
@@ -432,18 +432,18 @@ _No KDoc at source._
 
 </details>
 
-- `val isUnauthorized = MutableStateFlow(false)`
-- `fun markUnauthorized()`
-- `fun reset()`
+- `val isUnauthorized = MutableStateFlow(false)` — Emits true once a request was rejected as unauthorized, so the app can force a re-login.
+- `fun markUnauthorized()` — Flags the session as unauthorized.
+- `fun reset()` — Clears the unauthorized flag, typically after a fresh login.
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/MifosDispatchers.kt`
 
 ```kotlin
 annotation class Dispatcher(val mifosDispatcher: MifosDispatchers)
 ```
-_No KDoc at source._
+Koin qualifier selecting a coroutine dispatcher by `MifosDispatchers` type.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:50</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:52</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -460,9 +460,9 @@ class LoginViewModelTest {
 ```kotlin
 enum class MifosDispatchers
 ```
-_No KDoc at source._
+Kinds of coroutine dispatchers the app injects.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/di/MpayQrModule.kt:24</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/di/MpayQrModule.kt:25</code></summary>
 
 ```kotlin
             pocketRepository = get(),
@@ -478,9 +478,9 @@ _No KDoc at source._
 ```kotlin
 annotation class ApplicationScope
 ```
-_No KDoc at source._
+Koin qualifier for the application-wide `kotlinx.coroutines.CoroutineScope`.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:30</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:35</code></summary>
 
 ```kotlin
     single<CoroutineDispatcher>(named(MifosDispatchers.Default.name)) { Dispatchers.Default }
@@ -516,7 +516,6 @@ Central mapper — Throwable / feature error handlers → `ScreenState.Error` / 
 
 - `fun <T> mapError(` — Blocking (non-suspending) mapper — use when no response body is available or the caller has already parsed a user-facing message.
 - `val status = throwable.response.status.value`
-- `val status = throwable.response.status.value`
 - `suspend fun <T> mapErrorBody(` — Suspending mapper — parses the ktor response body via `errorBodyParser` to extract a user-facing message when possible.
 - `val status = throwable.response.status.value`
 - `val body = readBodyOrEmpty(throwable)`
@@ -535,7 +534,7 @@ Convert a raw `Throwable` to a `ScreenState` via `MifosErrorMapper`.
 ```kotlin
 expect annotation class Parcelize()
 ```
-_No KDoc at source._
+Generates Parcelable boilerplate for a class; maps to kotlinx.parcelize.Parcelize on Android.
 
 <details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:19</code></summary>
 
@@ -554,7 +553,7 @@ actual typealias IgnoredOnParcel = IgnoredOnParcel
 ```kotlin
 expect interface Parcelable
 ```
-_No KDoc at source._
+Marker for types that can be written to a `Parcel`; maps to android.os.Parcelable on Android and is a no-op elsewhere.
 
 <details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:21</code></summary>
 
@@ -573,7 +572,7 @@ actual typealias Parceler<P> = Parceler<P>
 ```kotlin
 expect annotation class IgnoredOnParcel()
 ```
-_No KDoc at source._
+Excludes a property from parcelization; maps to kotlinx.parcelize.IgnoredOnParcel on Android.
 
 <details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:23</code></summary>
 
@@ -592,7 +591,7 @@ actual typealias TypeParceler<T, P> = TypeParceler<T, P>
 ```kotlin
 expect interface Parceler<P>
 ```
-_No KDoc at source._
+Custom parcel (de)serializer contract; maps to kotlinx.parcelize.Parceler on Android.
 
 <details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:25</code></summary>
 
@@ -608,13 +607,13 @@ actual typealias Parcel = Parcel
 
 </details>
 
-- `fun create(parcel: Parcel): P`
-- `fun P.write(parcel: Parcel, flags: Int)`
+- `fun create(parcel: Parcel): P` — Reads and returns an instance of `P` from `parcel`.
+- `fun P.write(parcel: Parcel, flags: Int)` — Writes this `P` instance into `parcel`.
 
 ```kotlin
 expect annotation class TypeParceler<T, P : Parceler<in T>>()
 ```
-_No KDoc at source._
+Registers a custom `Parceler` for type `T`; maps to kotlinx.parcelize.TypeParceler on Android.
 
 <details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:27</code></summary>
 
@@ -631,7 +630,7 @@ actual typealias Parcel = Parcel
 ```kotlin
 expect class Parcel
 ```
-_No KDoc at source._
+Minimal cross-platform stand-in for android.os.Parcel; non-Android actuals are stubs.
 
 <details><summary>Used in the template — <code>core/common/src/androidMain/kotlin/kpt/core/common/Parcelize.kt:29</code></summary>
 
@@ -643,6 +642,29 @@ actual typealias Parcel = Parcel
 
 </details>
 
+### `core/common/src/commonMain/kotlin/kpt/core/common/PlatformBuildConfig.kt`
+
+```kotlin
+expect object PlatformBuildConfig
+```
+Whether this binary is a debug build, for UI that only developers should see. Named to avoid a clash with Android's generated `BuildConfig`.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:228</code></summary>
+
+```kotlin
+
+        // Server Instance Info at bottom - only visible in debug builds
+        if (PlatformBuildConfig.isDebug) {
+            ServerInstanceInfo(
+                endpoint = state.selectedInstanceEndpoint ?: "",
+                modifier = Modifier.padding(bottom = KptTheme.spacing.lg),
+            )
+```
+
+</details>
+
+- `val isDebug: Boolean` — True in a debug build; always false where the platform cannot tell (Android, web).
+
 ### `core/common/src/commonMain/kotlin/kpt/core/common/ScreenState.kt`
 
 ```kotlin
@@ -650,16 +672,16 @@ sealed interface ScreenState<out T>
 ```
 Unified UI state produced by fork repositories (and, once Phase 4 lands, by `Store<Key, Output>.asScreenStream(...)`). Replaces the legacy `DataState` sealed class as the single fork-wide read-side model.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:83</code></summary>
 
 ```kotlin
             } else {
                 flowOf(
-                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<kpt.core.model.account.AccountContent>,
+                    ScreenState.Error(IllegalStateException("Client ID not available"))
+                        as ScreenState<kpt.core.model.account.AccountContent>,
                 )
             }
         }
-        .mapLatest { screenState ->
 ```
 
 </details>
@@ -691,11 +713,11 @@ typealias ScreenStateStream<T> = Flow<ScreenState<T>>
 ```
 Fork-wide alias for `Flow<ScreenState<T>>` — the read-side stream shape every Phase-3 repository exposes to its ViewModels.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AssetRepository.kt:14</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AssetRepository.kt:16</code></summary>
 
 ```kotlin
-import kpt.core.common.ScreenStateStream
 interface AssetRepository {
+    /** Streams the supported countries mapped to their states. */
     fun getCountriesWithStates(): ScreenStateStream<Map<String, List<String>>>
 }
 ```
@@ -717,7 +739,7 @@ fun <T, R> Flow<ScreenState<T>>.mapContent(transform: (T) -> R): Flow<ScreenStat
 ```
 Extension on `Flow<ScreenState<T>>` mirroring the template's `mapContent { data, freshness -> R }` — the freshness slot is dropped because Phase-3 lacks the FreshnessSignal engine. Phase-4 replaces this with the template's two-arg lambda.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -736,7 +758,7 @@ fun <T> Flow<ScreenState<T>>.emptyIfContent(
 ```
 Template-parity `emptyIfContent` — flips `ScreenState.Content` whose data satisfies `predicate` to `ScreenState.Empty`. Applied AFTER the upstream repository has already emitted; use for business-level empty (e.g. `list.isEmpty()`).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -766,7 +788,7 @@ val message = stringProvider.get(Res.string.feature_auth_error_email_required)
 
 </details>
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:77</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:78</code></summary>
 
 ```kotlin
     private val clientRepository: ClientRepository,
@@ -787,16 +809,16 @@ class DefaultStringProvider : StringProvider
 ```
 Default implementation of `StringProvider` that uses Compose Multiplatform’s `getString`. This class is meant to be used in runtime environments where resource resolution is supported.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:23</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:24</code></summary>
 
 ```kotlin
-import org.koin.dsl.module
+/** Koin module binding the default [StringProvider]. */
 val stringProviderModule = module {
     single<StringProvider> { DefaultStringProvider() }
 }
 
-val DispatchersModule = module {
-    includes(ioDispatcherModule)
+/**
+ * Koin module providing the Default and Unconfined dispatchers and the application scope (IO comes from
 ```
 
 </details>
@@ -842,25 +864,25 @@ object StringResourceRegistry
 ```
 A registry that maps resource keys to their corresponding StringResource objects. Used during deserialization to reconstruct StringResource objects from their serialized resource keys.
 
-- `fun register(resourceKey: String, stringResource: StringResource)`
-- `fun getResource(resourceKey: String): StringResource?`
+- `fun register(resourceKey: String, stringResource: StringResource)` — Registers `stringResource` under `resourceKey` so it can be restored during deserialization.
+- `fun getResource(resourceKey: String): StringResource?` — Returns the `StringResource` registered for `resourceKey`, or null if none.
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt`
 
 ```kotlin
 val stringProviderModule = module
 ```
-_No KDoc at source._
+Koin module binding the default `StringProvider`.
 
 ```kotlin
 val DispatchersModule = module
 ```
-_No KDoc at source._
+Koin module providing the Default and Unconfined dispatchers and the application scope (IO comes from `ioDispatcherModule`).
 
 ```kotlin
 expect val ioDispatcherModule: Module
 ```
-_No KDoc at source._
+Platform-specific Koin module binding the IO dispatcher.
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/dialogManager/DialogManager.kt`
 
@@ -976,11 +998,11 @@ allOpen {
 
 </details>
 
-<details><summary>Used in the template — <code>core/domain/src/commonMain/kotlin/kpt/core/domain/LoginUseCase.kt:19</code></summary>
+<details><summary>Used in the template — <code>core/domain/src/commonMain/kotlin/kpt/core/domain/LoginUseCase.kt:20</code></summary>
 
 ```kotlin
-import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.user.UserInfo
+/** Logs a user in: authenticates, stores the session token and loads the client and user info into preferences. */
 @OpenForMokkery
 class LoginUseCase(
     private val repository: AuthenticationRepository,
@@ -1000,24 +1022,24 @@ Whether or not string is a valid email address. This just checks if the string c
 ```kotlin
 fun maskString(input: String, maskChar: Char = '*'): String
 ```
-_No KDoc at source._
+Masks all but the last three characters of `input` with `maskChar`; short inputs are returned as is.
 
 ```kotlin
 fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it ->
 ```
-_No KDoc at source._
+Upper-cases the first letter of each space-separated word.
 
 ```kotlin
 fun String.hasSpaces(): Boolean
 ```
-_No KDoc at source._
+True if this string contains a space.
 
 ```kotlin
 fun String.hasConsecutiveRepetitions(): Boolean
 ```
-_No KDoc at source._
+True if this string contains two identical characters in a row.
 
 ---
 
-_33 type(s), 101 function(s)/property(ies); 51 carry KDoc at source; 7 authored example(s); 32 live call site(s)._
+_34 type(s), 101 function(s)/property(ies); 115 carry KDoc at source; 7 authored example(s); 33 live call site(s)._
 <!-- api-docs:end -->

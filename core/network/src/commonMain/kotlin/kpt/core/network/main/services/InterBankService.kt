@@ -17,17 +17,21 @@ import kpt.core.model.interbank.InterBankPartyInfoRequest
 import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.model.interbank.InterBankTransferRequest
 import kpt.core.model.interbank.InterBankTransferResponse
+/** Ktorfit service for inter-bank transfers. */
 interface InterBankService {
+    /** Fetches a participant. */
     @POST("participant")
     suspend fun fetchParticipant(
         @Body request: InterBankParticipantRequest,
     ): InterBankParticipantResponse
 
+    /** Fetches party information for an inter-bank transfer. */
     @POST("partyinfo")
     suspend fun fetchPartyInfo(
         @Body request: InterBankPartyInfoRequest,
     ): InterBankPartyInfoResponse
 
+    /** Executes an inter-bank transfer. */
     @POST("executetransfer")
     suspend fun interBankMakeTransfer(
         @Body request: InterBankTransferRequest,

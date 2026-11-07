@@ -16,6 +16,7 @@ import kpt.core.data.repository.AuthenticationRepository
 import kpt.core.model.network.entity.authentication.AuthenticationPayload
 import kpt.core.model.user.UserInfo
 import kpt.core.network.SelfServiceApiManager
+/** Default [AuthenticationRepository] backed by the authentication API. */
 class AuthenticationRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
     private val ioDispatcher: CoroutineDispatcher,

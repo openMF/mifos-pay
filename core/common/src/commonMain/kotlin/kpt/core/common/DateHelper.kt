@@ -22,20 +22,24 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** Date parsing/formatting helpers for Fineract-style date parts and kotlinx-datetime values. */
 @OptIn(ExperimentalTime::class)
 object DateHelper {
     /*
      * This is the full month format for the date picker.
      * "dd MM yyyy" is the format of the date picker.
      */
+    /** Date pattern dd MM yyyy used for the date picker. */
     const val FULL_MONTH = "dd MM yyyy"
 
     /*
      * This is the short month format for the date picker.
      * "dd-MM-yyyy" is the format of the date picker.
      */
+    /** Date pattern dd-MM-yyyy used for the date picker. */
     const val SHORT_MONTH = "dd-MM-yyyy"
 
+    /** Date pattern dd MMMM (day and full month name). */
     const val MONTH_FORMAT = "dd MMMM"
 
     @OptIn(FormatStringsInDatetimeFormats::class)
@@ -64,6 +68,7 @@ object DateHelper {
         return stringBuilder.toString()
     }
 
+    /** Converts Fineract date parts ([year, month, day]) given in dd MM yyyy form into a string using [pattern]. */
     fun getDateAsString(integersOfDate: List<Long>, pattern: String): String {
         return getFormatConverter(
             currentFormat = FULL_MONTH,
@@ -134,6 +139,7 @@ object DateHelper {
     }
 
     // Extension function to format LocalDate
+    /** Formats this [LocalDate] using the Unicode date [pattern]. */
     fun LocalDate.format(pattern: String): String {
         val year = this.year.toString().padStart(4, '0')
         val month = this.monthNumber.toString().padStart(2, '0')
@@ -363,6 +369,7 @@ object DateHelper {
         if (it.isLowerCase()) it.titlecase() else it.toString()
     }
 
+    /** Current date and time in the system default time zone, captured on first access. */
     val currentDate: LocalDateTime by lazy {
         Instant.fromEpochMilliseconds(Clock.System.now().toEpochMilliseconds()).toLocalDateTime(TimeZone.currentSystemDefault())
     }

@@ -12,6 +12,12 @@ package kpt.core.model.notification
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * One page of notifications returned by the server.
+ *
+ * @property totalFilteredRecords Total number of records matching the query across all pages.
+ * @property pageItems Notifications in this page.
+ */
 @Serializable
 @Parcelize
 data class NotificationPayload(

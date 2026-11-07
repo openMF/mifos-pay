@@ -15,6 +15,7 @@ import kpt.core.data.repository.RegistrationRepository
 import kpt.core.model.network.entity.register.RegisterPayload
 import kpt.core.model.network.entity.register.UserVerify
 import kpt.core.network.FineractApiManager
+/** Default [RegistrationRepository] backed by the registration API. */
 class RegistrationRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

@@ -38,9 +38,9 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.client.Client
-import mifos_pay.feature.mpay_qr.generated.resources.Res
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_primary
-import mifos_pay.feature.mpay_qr.generated.resources.logo
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_primary
+import kpt.feature.mpay.qr.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

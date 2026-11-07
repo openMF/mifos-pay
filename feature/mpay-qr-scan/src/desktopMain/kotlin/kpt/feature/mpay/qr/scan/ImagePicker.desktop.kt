@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 import java.io.ByteArrayInputStream
 import javax.imageio.ImageIO
 
+/** Decodes a QR code from an image file on desktop, returning the decoded text or null if none is found. */
 actual suspend fun decodeQrFromFile(file: PlatformFile): String? = withContext(Dispatchers.IO) {
     try {
         val bytes = file.readBytes()

@@ -13,8 +13,10 @@ import kotlinx.coroutines.CoroutineScope
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.common.ScreenStateStream
 import kpt.core.model.office.Office
+/** Repository for Fineract offices. */
 interface OfficeRepository {
     // Phase-3 cutover — reads on ScreenState.
+    /** Streams the list of offices. */
     fun getOffices(): ScreenStateStream<List<Office>>
 
     /**

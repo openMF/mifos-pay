@@ -42,9 +42,9 @@ import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.standing.instruction.createOrUpdate.AddEditSIAction.Internal.HandleTemplateResult
 import kpt.feature.standing.instruction.createOrUpdate.AddEditSIAction.Internal.LoadClientAccount
 import kpt.feature.standing.instruction.createOrUpdate.AddEditSIState.DialogState.Error
-import mifos_pay.feature.standing_instruction.generated.resources.Res
-import mifos_pay.feature.standing_instruction.generated.resources.feature_standing_instruction_created_successfully
-import mifos_pay.feature.standing_instruction.generated.resources.feature_standing_instruction_updated_successfully
+import kpt.feature.standing.instruction.generated.resources.Res
+import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_created_successfully
+import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_updated_successfully
 import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -686,55 +686,189 @@ internal data class AddEditSIState(
     }
 }
 
+/** One-shot events emitted by the add/edit standing instruction view model. */
 sealed interface AddEditSIEvent {
+    /**
+     * Show a toast message.
+     * @property message Text resource to display.
+     */
     data class ShowToast(val message: StringResource) : AddEditSIEvent
+
+    /** Navigate back. */
     data object OnNavigateBack : AddEditSIEvent
 }
 
+/** Actions handled by the add/edit standing instruction view model. */
 sealed interface AddEditSIAction {
 
+    /**
+     * The source office changed.
+     * @property officeId Id of the selected office.
+     */
     data class FromOfficeChanged(val officeId: String) : AddEditSIAction
+
+    /**
+     * The source client changed.
+     * @property clientId Id of the selected client.
+     */
     data class FromClientChanged(val clientId: String) : AddEditSIAction
+
+    /**
+     * The source account type changed.
+     * @property accountType Selected account type.
+     */
     data class FromAccountTypeChanged(val accountType: String) : AddEditSIAction
+
+    /**
+     * The source account changed.
+     * @property accountId Id of the selected account.
+     */
     data class FromAccountChanged(val accountId: String) : AddEditSIAction
 
+    /**
+     * The destination office changed.
+     * @property officeId Id of the selected office.
+     */
     data class ToOfficeChanged(val officeId: String) : AddEditSIAction
+
+    /**
+     * The destination client changed.
+     * @property clientId Id of the selected client.
+     */
     data class ToClientChanged(val clientId: String) : AddEditSIAction
+
+    /**
+     * The destination account type changed.
+     * @property accountType Selected account type.
+     */
     data class ToAccountTypeChanged(val accountType: String) : AddEditSIAction
+
+    /**
+     * The destination account changed.
+     * @property accountId Id of the selected account.
+     */
     data class ToAccountChanged(val accountId: String) : AddEditSIAction
 
+    /**
+     * The instruction name changed.
+     * @property name New name.
+     */
     data class NameChanged(val name: String) : AddEditSIAction
+
+    /**
+     * The transfer amount changed.
+     * @property amount New amount as entered.
+     */
     data class AmountChanged(val amount: String) : AddEditSIAction
+
+    /**
+     * The transfer type changed.
+     * @property transferType Selected transfer type.
+     */
     data class TransferTypeChanged(val transferType: String) : AddEditSIAction
+
+    /**
+     * The instruction type changed.
+     * @property instructionType Selected instruction type.
+     */
     data class InstructionTypeChanged(val instructionType: String) : AddEditSIAction
+
+    /**
+     * The priority changed.
+     * @property priority Selected priority.
+     */
     data class PriorityChanged(val priority: String) : AddEditSIAction
+
+    /**
+     * The status changed.
+     * @property status Selected status.
+     */
     data class StatusChanged(val status: String) : AddEditSIAction
+
+    /**
+     * The recurrence type changed.
+     * @property recurrenceType Selected recurrence type.
+     */
     data class RecurrenceTypeChanged(val recurrenceType: String) : AddEditSIAction
+
+    /**
+     * The recurrence interval changed.
+     * @property recurrenceInterval Selected recurrence interval.
+     */
     data class RecurrenceIntervalChanged(val recurrenceInterval: String) : AddEditSIAction
+
+    /**
+     * The recurrence frequency changed.
+     * @property recurrenceFrequency Selected recurrence frequency.
+     */
     data class RecurrenceFrequencyChanged(val recurrenceFrequency: String) : AddEditSIAction
 
+    /**
+     * The locale changed.
+     * @property locale Selected locale.
+     */
     data class LocaleChanged(val locale: String) : AddEditSIAction
+
+    /**
+     * The date format changed.
+     * @property dateFormat Selected date format.
+     */
     data class DateFormatChanged(val dateFormat: String) : AddEditSIAction
+
+    /**
+     * The valid-from date changed.
+     * @property validFrom New start date as epoch milliseconds.
+     */
     data class ValidFromChanged(val validFrom: Long) : AddEditSIAction
+
+    /**
+     * The valid-till date changed.
+     * @property validTill New end date as epoch milliseconds.
+     */
     data class ValidTillChanged(val validTill: Long) : AddEditSIAction
+
+    /**
+     * The month-day format changed.
+     * @property monthDayFormat Selected month-day format.
+     */
     data class MonthDayFormatChanged(val monthDayFormat: String) : AddEditSIAction
+
+    /**
+     * The recurrence day of month changed.
+     * @property recurrenceOnMonthDay Selected day of month.
+     */
     data class RecurrenceOnMonthDayChanged(val recurrenceOnMonthDay: Long) : AddEditSIAction
 
+    /** Dismiss the currently shown dialog. */
     data object DismissDialog : AddEditSIAction
+
+    /** Navigate back. */
     data object NavigateBack : AddEditSIAction
+
+    /** The submit button was clicked. */
     data object SubmitClicked : AddEditSIAction
 
+    /** Actions dispatched internally by the view model rather than by the UI. */
     sealed interface Internal : AddEditSIAction {
         /**
          * Template load result. Uses [ScreenState] — Phase-3 migrated
          * `getStandingInstructionTemplate` to a ScreenState stream.
+         *
+         * @property result Template load result.
          */
         data class HandleTemplateResult(val result: ScreenState<SITemplate>) : Internal
+
+        /**
+         * Load the accounts of a client.
+         * @property clientId Id of the client whose accounts are loaded.
+         */
         data class LoadClientAccount(val clientId: Long) : Internal
 
         /**
          * Existing-SI load result (edit mode). Uses [ScreenState] — Phase-3
          * migrated `getStandingInstruction` to a ScreenState stream.
+         *
+         * @property result Load result of the existing standing instruction.
          */
         data class HandleSIResult(val result: ScreenState<StandingInstruction>) : Internal
     }

@@ -10,7 +10,9 @@
 package kpt.core.data.repository
 
 import kpt.core.model.search.SearchResult
+/** Repository for searching Fineract resources. */
 interface SearchRepository {
+    /** Searches Fineract resources by query. */
     suspend fun searchResources(
         query: String,
         resources: String,

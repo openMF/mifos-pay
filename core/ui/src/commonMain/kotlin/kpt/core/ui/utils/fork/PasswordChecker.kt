@@ -14,12 +14,14 @@ import kpt.core.common.utils.hasSpaces
 import kotlin.math.log2
 import kotlin.math.pow
 
+/** Evaluates password strength and produces improvement feedback. */
 object PasswordChecker {
     private const val MIN_PASSWORD_LENGTH = 12
     private const val STRONG_PASSWORD_LENGTH = 15
     private const val MIN_ENTROPY_BITS = 100.0
     private const val MAX_PASSWORD_LENGTH = 50
 
+    /** Computes the [PasswordStrength] of [password] and wraps it in a [PasswordStrengthResult]. */
     fun getPasswordStrengthResult(password: String): PasswordStrengthResult {
         return PasswordStrengthResult.Success(getPasswordStrength(password))
     }
@@ -55,6 +57,7 @@ object PasswordChecker {
 
     // TODO: Move password feedback messages to string.xml — currently not possible as SignUpState uses Parcelable
     //  and cannot hold List<StringResource>; revisit when SavedStateHandle usage is decoupled from state.
+    /** Returns human-readable hints on how to make [password] stronger. */
     fun getPasswordFeedback(password: String): List<String> {
         val feedback = mutableListOf<String>()
 
@@ -87,8 +90,19 @@ object PasswordChecker {
     }
 }
 
+/** Result of a password strength evaluation. */
 sealed class PasswordStrengthResult {
+    /**
+     * Evaluation succeeded.
+     *
+     * @property passwordStrength The computed strength level.
+     */
     data class Success(val passwordStrength: PasswordStrength) : PasswordStrengthResult()
 
+    /**
+     * Evaluation failed.
+     *
+     * @property message Description of the failure.
+     */
     data class Error(val message: String) : PasswordStrengthResult()
 }

@@ -46,6 +46,7 @@ import kpt.core.ui.DropdownBox
 import kpt.core.ui.DropdownBoxItem
 import kpt.core.ui.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen with a form for adding a new biller (payee) for bill payments. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddBillerScreen(

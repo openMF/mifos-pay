@@ -53,6 +53,7 @@ val HistoryPdfAndroidModule: Module = module {
     }
 }
 
+/** Android PDF module used by the history feature. */
 @OptIn(ExperimentalPdfGeneratorApi::class)
 actual val HistoryPdfModule: Module
     get() = HistoryPdfAndroidModule

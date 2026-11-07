@@ -14,6 +14,7 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
 
+/** Formats epoch [millis] as dd/MM/yyyy in the system time zone. */
 fun formatDate(millis: Long): String {
     val dateTime = Instant
         .fromEpochMilliseconds(millis)

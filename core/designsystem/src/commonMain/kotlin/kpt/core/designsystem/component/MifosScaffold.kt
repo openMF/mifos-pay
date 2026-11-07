@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Scaffold with a standard top bar (title and back button) wrapping the screen [content]. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosScaffold(
@@ -104,6 +105,7 @@ fun MifosScaffold(
     )
 }
 
+/** Scaffold that takes caller-supplied top bar, bottom bar, snackbar and floating action button slots. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosScaffold(
@@ -160,6 +162,7 @@ fun MifosScaffold(
     )
 }
 
+/** Scaffold with a persistent bottom sheet hosting [sheetContent]. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosBottomSheetScaffold(
@@ -202,18 +205,33 @@ fun MifosBottomSheetScaffold(
     )
 }
 
+/**
+ * Describes a floating action button for [MifosScaffold].
+ *
+ * @property onClick Invoked when the button is clicked.
+ * @property contentColor Color of the button content.
+ * @property content Composable content (icon/label) of the button.
+ */
 data class FloatingActionButtonContent(
     val onClick: (() -> Unit),
     val contentColor: Color,
     val content: (@Composable () -> Unit),
 )
 
+/**
+ * State holder for pull-to-refresh behaviour of a scaffold.
+ *
+ * @property isEnabled Whether pull-to-refresh is enabled.
+ * @property isRefreshing Whether a refresh is currently in progress.
+ * @property onRefresh Invoked when the user triggers a refresh.
+ */
 data class MifosPullToRefreshState(
     val isEnabled: Boolean,
     val isRefreshing: Boolean,
     val onRefresh: () -> Unit,
 )
 
+/** Creates and remembers a [MifosPullToRefreshState]. */
 @Composable
 fun rememberMifosPullToRefreshState(
     isEnabled: Boolean = false,

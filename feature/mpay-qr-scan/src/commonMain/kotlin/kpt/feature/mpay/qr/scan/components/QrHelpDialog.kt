@@ -24,11 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_help_description
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_help_title
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_ok
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_help_description
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_help_title
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_ok
 import org.jetbrains.compose.resources.stringResource
+/** Dialog explaining how to scan a QR code; closed through [onDismiss]. */
 @Composable
 fun QrHelpDialog(
     onDismiss: () -> Unit,

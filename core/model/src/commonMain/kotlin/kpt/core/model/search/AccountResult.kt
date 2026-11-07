@@ -12,6 +12,19 @@ package kpt.core.model.search
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * An account found by a search, with its parent client details.
+ *
+ * @property entityId Identifier of the matched entity.
+ * @property entityAccountNo Account number of the matched entity.
+ * @property entityExternalId External identifier of the matched entity.
+ * @property entityName Name of the matched entity.
+ * @property entityType Type of the matched entity.
+ * @property parentId Identifier of the parent entity.
+ * @property parentName Name of the parent entity.
+ * @property parentType Type of the parent entity.
+ * @property subEntityType Sub-type of the matched entity.
+ */
 @Serializable
 @Parcelize
 data class AccountResult(

@@ -32,6 +32,7 @@ import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.ui.generated.resources.Res
 import kpt.core.ui.utils.LottieConstants
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Full-size Lottie loading animation. */
 @Composable
 fun MifosProgressIndicator(
     modifier: Modifier = Modifier.fillMaxSize(),
@@ -57,6 +58,7 @@ fun MifosProgressIndicator(
     }
 }
 
+/** Small Lottie loading animation for inline use. */
 @Composable
 fun MifosProgressIndicatorMini(
     modifier: Modifier = Modifier,
@@ -83,6 +85,7 @@ fun MifosProgressIndicatorMini(
     }
 }
 
+/** Lottie loading animation drawn over existing content. */
 @Composable
 fun MifosProgressIndicatorOverlay(
     modifier: Modifier = Modifier.fillMaxSize(),

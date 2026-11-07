@@ -11,6 +11,13 @@ package kpt.core.model.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A coded status value of a client, such as status or legal form.
+ *
+ * @property id Id of the code value.
+ * @property code Machine-readable code.
+ * @property value Human-readable label.
+ */
 @Serializable
 data class ClientStatus(
     val id: Int = 0,

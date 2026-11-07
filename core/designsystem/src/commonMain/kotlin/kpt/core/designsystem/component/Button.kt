@@ -68,6 +68,7 @@ fun MifosButton(
     )
 }
 
+/** Primary filled Mifos button with an optional leading icon and a composable [text] label. */
 @Composable
 fun MifosButton(
     onClick: () -> Unit,
@@ -289,6 +290,7 @@ private fun MifosButtonContent(
     }
 }
 
+/** Preview of [MifosButton]. */
 @Preview
 @Composable
 fun MifosButtonPreview() {
@@ -299,6 +301,7 @@ fun MifosButtonPreview() {
     }
 }
 
+/** Preview of MifosOutlinedButton. */
 @Preview
 @Composable
 fun MifosOutlinedButtonPreview() {
@@ -309,6 +312,7 @@ fun MifosOutlinedButtonPreview() {
     }
 }
 
+/** Preview of [MifosButton] with a leading icon. */
 @Preview
 @Composable
 fun MifosButtonLeadingIconPreview() {
@@ -330,9 +334,11 @@ fun MifosButtonLeadingIconPreview() {
 object MifosButtonDefaults {
     // TODO: File bug
     // OutlinedButton border color doesn't respect disabled state by default
+    /** Alpha applied to the border of a disabled outlined button, which Material does not do by default. */
     const val DISABLED_OUTLINED_BUTTON_BORDER_ALPHA = 0.12f
 
     // TODO: File bug
     // OutlinedButton default border width isn't exposed via ButtonDefaults
+    /** Border width of outlined buttons (not exposed by Material ButtonDefaults). */
     val OutlinedButtonBorderWidth = 1.dp
 }

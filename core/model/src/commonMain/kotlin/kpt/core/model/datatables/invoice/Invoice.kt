@@ -13,6 +13,23 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * An invoice record stored in the Fineract invoice datatable for a client.
+ *
+ * @property id Row id.
+ * @property clientId Id of the client the invoice belongs to.
+ * @property consumerId Id of the consumer being billed.
+ * @property consumerName Name of the consumer being billed.
+ * @property amount Invoice amount.
+ * @property itemsBought Description of the items bought.
+ * @property status Numeric invoice status.
+ * @property transactionId Id of the payment transaction.
+ * @property invoiceId Business id of the invoice.
+ * @property title Invoice title.
+ * @property date Invoice date.
+ * @property createdAt Creation timestamp as date components.
+ * @property updatedAt Last update timestamp as date components.
+ */
 @Serializable
 @Parcelize
 data class Invoice(

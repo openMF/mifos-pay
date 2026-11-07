@@ -18,16 +18,20 @@ import kpt.core.model.network.entity.pocket.PocketDelinkRequest
 import kpt.core.model.network.entity.pocket.PocketLinkRequest
 import kpt.core.model.network.entity.pocket.PocketResponseDto
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for pocket accounts. */
 interface PocketService {
+    /** Fetches the accounts linked to the pocket. */
     @GET(ApiEndPoints.POCKETS)
     suspend fun getPocketAccounts(): PocketResponseDto
 
+    /** Links accounts to the pocket. */
     @POST(ApiEndPoints.POCKETS)
     suspend fun linkAccounts(
         @Query("command") command: String = "linkAccounts",
         @Body request: PocketLinkRequest,
     ): PocketCommandResponse
 
+    /** Delinks accounts from the pocket. */
     @POST(ApiEndPoints.POCKETS)
     suspend fun delinkAccounts(
         @Query("command") command: String = "delinkAccounts",

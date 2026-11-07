@@ -28,9 +28,6 @@ import kotlin.time.Clock
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `SavedCardEntity`. Shared with the DAO's writes. */
-private const val SAVED_CARDS_TABLE = "wallet_saved_cards"
-
 /**
  * Build the LEDGER read [Store] for saved payment cards
  * (GOAL D13 — the `history` archetype variant for a client-scoped list).

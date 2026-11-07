@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kpt.core.model.autopay.AutoPay
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.UpcomingPayment
+/** Repository contract for the locally cached AutoPay preferences and data. */
 interface AutoPayPreferencesRepository {
     /**
      * AutoPay enabled state

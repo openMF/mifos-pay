@@ -12,9 +12,11 @@ package kpt.core.data.di.fork
 import kpt.core.data.JsPlatformDependentDataModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
+/** Desktop [PlatformDependentDataModule] instance. */
 actual val getPlatformDataModule: PlatformDependentDataModule
     get() = JsPlatformDependentDataModule()
 
+/** Koin module binding the desktop [PlatformDependentDataModule]. */
 actual val platformModule: Module
     get() = module {
         single<PlatformDependentDataModule> { getPlatformDataModule }

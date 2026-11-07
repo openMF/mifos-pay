@@ -66,14 +66,19 @@ data class QrCodeData(
      * currently Savings Account to Savings Account Transaction are allowed
      */
     companion object {
+        /** Currency code used when none is given. */
         const val DEFAULT_CURRENCY = "USD"
+
+        /** Default office id. */
         const val OFFICE_ID: Long = 1
 
+        /** Default account type id (wallet). */
         // WALLET
         const val ACCOUNT_TYPE_ID: Long = 2
     }
 }
 
+/** Converts the scanned QR data into an [AccountResult] describing the wallet account. */
 fun QrCodeData.toAccount(): AccountResult {
     return AccountResult(
         entityId = accountId,

@@ -29,6 +29,7 @@ import kpt.core.store.wallet.notification.NotificationKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [NotificationRepository] backed by the notification API. */
 class NotificationRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

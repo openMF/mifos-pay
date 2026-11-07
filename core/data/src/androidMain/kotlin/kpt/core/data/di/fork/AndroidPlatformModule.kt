@@ -21,6 +21,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+/** Koin module binding the Android network and time-zone monitors and [AndroidPlatformDependentDataModule]. */
 val AndroidDataModule = module {
     // Legacy fork NetworkMonitor (kpt.core.data.util) for DataState `withNetworkCheck`.
     // The Store5 `kpt.core.data.infra.NetworkMonitor` is bound in DataModule via kmptoolkit's
@@ -47,7 +48,9 @@ val AndroidDataModule = module {
     }
 }
 
+/** Android actual of the platform module: exposes [AndroidDataModule]. */
 actual val platformModule: Module = AndroidDataModule
 
+/** Resolves the registered [PlatformDependentDataModule] from the global Koin context. */
 actual val getPlatformDataModule: PlatformDependentDataModule
     get() = org.koin.core.context.GlobalContext.get().get()

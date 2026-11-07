@@ -12,6 +12,7 @@ package kpt.feature.notification.di
 import kpt.feature.notification.NotificationViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the [NotificationViewModel]. */
 val NotificationModule = module {
     viewModelOf(::NotificationViewModel)
 }

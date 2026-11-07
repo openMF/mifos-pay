@@ -12,6 +12,23 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Savings account status with the individual state flags reported by the server.
+ *
+ * @property id Status id.
+ * @property code Status code.
+ * @property value Human-readable status label.
+ * @property submittedAndPendingApproval Submitted and awaiting approval.
+ * @property approved Approved.
+ * @property rejected Rejected.
+ * @property withdrawnByApplicant Withdrawn by the applicant.
+ * @property active Active.
+ * @property closed Closed.
+ * @property prematureClosed Closed before maturity.
+ * @property transferInProgress A transfer is in progress.
+ * @property transferOnHold A transfer is on hold.
+ * @property matured Matured.
+ */
 @Parcelize
 @Serializable
 data class Status(

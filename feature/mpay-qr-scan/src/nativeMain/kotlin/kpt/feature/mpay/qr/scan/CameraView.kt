@@ -119,6 +119,7 @@ fun UiScannerView(
 //    }
 }
 
+/** UIKit view that hosts the camera preview layer and keeps it sized to the view bounds. */
 @OptIn(ExperimentalForeignApi::class)
 class ScannerPreviewView(private val coordinator: ScannerCameraCoordinator) : UIView(frame = cValue { CGRectZero }) {
 
@@ -140,6 +141,10 @@ class ScannerPreviewView(private val coordinator: ScannerCameraCoordinator) : UI
     }
 }
 
+/**
+ * Owns the AVFoundation capture session, handles detected metadata codes and torch control.
+ * @property onScanned Called with each decoded value; returns whether it was accepted.
+ */
 @OptIn(ExperimentalForeignApi::class)
 class ScannerCameraCoordinator(
     val onScanned: (String) -> Boolean,
@@ -149,10 +154,12 @@ class ScannerCameraCoordinator(
     private lateinit var captureSession: AVCaptureSession
     private var captureDevice: AVCaptureDevice? = null
 
+    /** Returns whether the capture device has a torch. */
     fun isTorchAvailable(): Boolean {
         return captureDevice?.hasTorch == true
     }
 
+    /** Turns the torch on or off when available. */
     @OptIn(BetaInteropApi::class)
     fun setTorchEnabled(enabled: Boolean) {
         val device = captureDevice ?: return
@@ -172,6 +179,7 @@ class ScannerCameraCoordinator(
         }
     }
 
+    /** Configures the capture session and preview layer to detect the [allowedMetadataTypes]. */
     @OptIn(ExperimentalForeignApi::class, BetaInteropApi::class)
     fun prepare(layer: CALayer, allowedMetadataTypes: List<AVMetadataObjectType>) {
         captureSession = AVCaptureSession()
@@ -238,6 +246,7 @@ class ScannerCameraCoordinator(
         }
     }
 
+    /** Updates the capture orientation to match the device orientation. */
     fun setCurrentOrientation(newOrientation: UIDeviceOrientation) {
         when (newOrientation) {
             UIDeviceOrientation.UIDeviceOrientationLandscapeLeft ->
@@ -262,6 +271,7 @@ class ScannerCameraCoordinator(
         metadataObject?.stringValue?.let { onFound(it) }
     }
 
+    /** Delegate callback for a detected code; forwards the value to [onScanned]. */
     fun onFound(code: String) {
         captureSession.stopRunning()
         if (!onScanned(code)) {
@@ -271,6 +281,7 @@ class ScannerCameraCoordinator(
         }
     }
 
+    /** Resizes the preview layer to [rect]. */
     fun setFrame(rect: CValue<CGRect>) {
         previewLayer?.setFrame(rect)
     }

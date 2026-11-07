@@ -30,8 +30,11 @@ class KYCLevel3ViewModel :
     }
 }
 
+/** Empty UI state of the KYC level 3 stub screen. */
 data object KYCLevel3State
 
+/** One-off events of the KYC level 3 screen (none defined). */
 sealed interface KYCLevel3Event
 
+/** User actions of the KYC level 3 screen (none defined). */
 sealed interface KYCLevel3Action

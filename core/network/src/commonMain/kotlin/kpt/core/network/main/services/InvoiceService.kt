@@ -19,22 +19,27 @@ import kotlinx.coroutines.flow.Flow
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.model.datatables.invoice.InvoiceEntity
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for invoices. */
 interface InvoiceService {
+    /** Fetches a client's invoices. */
     @GET(ApiEndPoints.DATATABLES + "/invoice/{clientId}")
     fun getInvoices(@Path("clientId") clientId: Long): Flow<List<Invoice>>
 
+    /** Fetches a single invoice. */
     @GET(ApiEndPoints.DATATABLES + "/invoice/{clientId}/{invoiceId}")
     fun getInvoice(
         @Path("clientId") clientId: Long,
         @Path("invoiceId") invoiceId: Long,
     ): Flow<List<Invoice>>
 
+    /** Adds an invoice. */
     @POST(ApiEndPoints.DATATABLES + "/invoice/{clientId}")
     suspend fun addInvoice(
         @Path("clientId") clientId: Long,
         @Body invoice: InvoiceEntity,
     ): Unit
 
+    /** Updates an invoice. */
     @PUT(ApiEndPoints.DATATABLES + "/invoice/{clientId}/{invoiceId}")
     suspend fun updateInvoice(
         @Path("clientId") clientId: Long,
@@ -42,6 +47,7 @@ interface InvoiceService {
         @Body invoice: InvoiceEntity,
     ): Unit
 
+    /** Deletes an invoice. */
     @DELETE(ApiEndPoints.DATATABLES + "/invoice/{clientId}/{invoiceId}")
     suspend fun deleteInvoice(
         @Path("clientId") clientId: Long,

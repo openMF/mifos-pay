@@ -11,6 +11,13 @@ package kpt.core.model.bank
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A bank listed for selection when linking an external bank account.
+ *
+ * @property name Bank name.
+ * @property image Drawable resource id of the bank logo.
+ * @property bankType Whether the bank is shown as popular or other.
+ */
 @Parcelize
 data class Bank(
     val name: String,
@@ -18,7 +25,17 @@ data class Bank(
     val bankType: BankType = BankType.OTHER,
 ) : Parcelable
 
+/**
+ * Grouping used when listing banks.
+ */
 enum class BankType {
+    /**
+     * Banks shown in the popular section.
+     */
     POPULAR,
+
+    /**
+     * All remaining banks.
+     */
     OTHER,
 }

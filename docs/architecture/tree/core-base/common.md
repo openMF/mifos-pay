@@ -209,7 +209,7 @@ interface DispatcherManager
 ```
 Injectable access to the app's coroutine dispatchers.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:275</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:277</code></summary>
 
 ```kotlin
     plainSettings = MapSettings(),

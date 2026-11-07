@@ -20,6 +20,7 @@ private const val SID_DETAILS_ARG = "instructionId"
 
 private const val BASE_ROUTE = "$SID_DETAILS_ROUTE/{$SID_DETAILS_ARG}"
 
+/** Registers the standing instruction details destination. */
 fun NavGraphBuilder.siDetailsScreen(
     navigateBack: () -> Unit,
 ) {
@@ -33,6 +34,7 @@ fun NavGraphBuilder.siDetailsScreen(
     }
 }
 
+/** Navigates to the details of the standing instruction [instructionId]. */
 fun NavController.navigateSIDetails(instructionId: Long, navOptions: NavOptions? = null) {
     navigate(route = "$SID_DETAILS_ROUTE/$instructionId", navOptions)
 }

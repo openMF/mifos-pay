@@ -11,6 +11,22 @@ package kpt.core.model.network.entity.shareAccount
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Dates and actors for each stage of a share account (submit, approve, activate).
+ *
+ * @property submittedOnDate Date submitted, as [year, month, day].
+ * @property submittedByUsername Username of the submitting user.
+ * @property submittedByFirstname First name of the submitting user.
+ * @property submittedByLastname Last name of the submitting user.
+ * @property approvedDate Date approved, as [year, month, day].
+ * @property approvedByUsername Username of the approving user.
+ * @property approvedByFirstname First name of the approving user.
+ * @property approvedByLastname Last name of the approving user.
+ * @property activatedDate Date activated, as [year, month, day].
+ * @property activatedByUsername Username of the activating user.
+ * @property activatedByFirstname First name of the activating user.
+ * @property activatedByLastname Last name of the activating user.
+ */
 @Serializable
 data class ShareTimelineResponseDto(
 

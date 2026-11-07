@@ -49,6 +49,7 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen listing UPI transactions grouped by month, with search. */
 @Composable
 fun UpiTransactionHistoryScreen(
     onBackClick: () -> Unit,
@@ -318,6 +319,14 @@ private fun TransactionHistoryCard(
     }
 }
 
+/**
+ * A UPI transaction in the history list.
+ * @property id Identifier of the transaction.
+ * @property payeeName Name of the payee.
+ * @property amount Amount paid.
+ * @property date Date of the transaction.
+ * @property profileImageUrl URL of the payee's profile image, if any.
+ */
 data class UpiTransaction(
     val id: String,
     val payeeName: String,
@@ -325,10 +334,17 @@ data class UpiTransaction(
     val date: LocalDate,
     val profileImageUrl: String?,
 ) {
+    /** The date formatted for display. */
     val formattedDate: String
         get() = "${date.dayOfMonth} ${date.month.name.lowercase().replaceFirstChar { it.uppercase() }}"
 }
 
+/**
+ * UPI transactions for one month.
+ * @property monthYear Month and year heading of the group.
+ * @property totalAmount Sum of the transactions in the month.
+ * @property transactions Transactions in the month.
+ */
 data class MonthTransactionGroup(
     val monthYear: String,
     val totalAmount: Double,

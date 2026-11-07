@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/model sha=65d97333a8c2a05755941678f300467648ce7e37 -->
+<!-- api-docs:begin module=core/model sha=8dea7c87c7baa33f44abe7ba3bdf0cf1bdc10e21 -->
 ## API reference
 
-_Generated from `core/model` at tree `65d97333a8c2` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/model` at tree `8dea7c87c7ba` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/account/Account.kt`
@@ -27,13 +27,13 @@ _Do not hand-edit inside this block — re-run the generator. Authored prose bel
 ```kotlin
 data class Account(
 ```
-_No KDoc at source._
+A wallet account (savings account) shown to the user, with its balance, currency, status and owning office.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:58</code></summary>
 
 ```kotlin
-    initialState = run {
-        val clientId = userRepository.clientId.value
+
+        /** Default account id read from user preferences when the view model is created. */
         val defaultAccount = userRepository.defaultAccountId.value
 
         AccountState(
@@ -48,14 +48,14 @@ _No KDoc at source._
 ```kotlin
 data class AccountContent(
 ```
-_No KDoc at source._
+Combined payload of the user's accounts and saved beneficiaries.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:84</code></summary>
 
 ```kotlin
-            } else {
                 flowOf(
-                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<kpt.core.model.account.AccountContent>,
+                    ScreenState.Error(IllegalStateException("Client ID not available"))
+                        as ScreenState<kpt.core.model.account.AccountContent>,
                 )
             }
         }
@@ -69,9 +69,9 @@ _No KDoc at source._
 ```kotlin
 data class AccountTransferPayload(
 ```
-_No KDoc at source._
+Request body for transferring funds between two accounts in the same Fineract instance.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:509</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:508</code></summary>
 
 ```kotlin
         screenDataStreamForTesting(state = flowOf(StoreScreenState.Empty))
@@ -90,16 +90,16 @@ private class FakePocketRepository : PocketRepository {
 ```kotlin
 data class AccountsWithTransactions(
 ```
-_No KDoc at source._
+Pairs a list of accounts with the transactions that belong to them.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/account/DefaultAccount.kt`
 
 ```kotlin
 data class DefaultAccount(
 ```
-_No KDoc at source._
+The account the user has chosen as their default for payments.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:221</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:230</code></summary>
 
 ```kotlin
     private fun handleSetDefaultAccount(action: AccountAction.SetDefaultAccount) {
@@ -118,7 +118,7 @@ _No KDoc at source._
 ```kotlin
 data class NewAccount(
 ```
-_No KDoc at source._
+Data needed to open a new savings account for a client.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/account/RecentPayee.kt`
 
@@ -127,7 +127,7 @@ data class RecentPayee(
 ```
 Represents a recently paid beneficiary/payee. Derived from transaction history and transfer details.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:344</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:345</code></summary>
 
 ```kotlin
 private fun PreviewIntraBankHubScreenWithRecents() {
@@ -146,9 +146,9 @@ private fun PreviewIntraBankHubScreenWithRecents() {
 ```kotlin
 data class AutoPay(
 ```
-_No KDoc at source._
+A recurring payment schedule that automatically pays a recipient from a source account.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:241</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:242</code></summary>
 
 ```kotlin
                 // AutoPay Section
@@ -165,9 +165,9 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayTemplate(
 ```
-_No KDoc at source._
+Template of the options available when creating an auto-pay schedule.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:26</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:27</code></summary>
 
 ```kotlin
      * Get AutoPay template for creating new AutoPay schedules
@@ -183,24 +183,24 @@ _No KDoc at source._
 ```kotlin
 data class FrequencyOption(
 ```
-_No KDoc at source._
+A selectable recurrence frequency for an auto-pay schedule.
 
 ```kotlin
 data class PaymentMethod(
 ```
-_No KDoc at source._
+A selectable payment method for an auto-pay schedule.
 
 ```kotlin
 data class CurrencyOption(
 ```
-_No KDoc at source._
+A selectable currency for an auto-pay schedule.
 
 ```kotlin
 data class AccountType(
 ```
-_No KDoc at source._
+A selectable source account type for an auto-pay schedule.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:320</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:326</code></summary>
 
 ```kotlin
         officeName = "Head Office",
@@ -217,9 +217,9 @@ _No KDoc at source._
 ```kotlin
 enum class AutoPayStatus
 ```
-_No KDoc at source._
+Lifecycle status of an auto-pay schedule.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:103</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleDetailsScreen.kt:104</code></summary>
 
 ```kotlin
                 modifier = Modifier.padding(paddingValues),
@@ -236,9 +236,9 @@ _No KDoc at source._
 ```kotlin
 enum class PaymentStatus
 ```
-_No KDoc at source._
+Status of a single auto-pay payment occurrence.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:145</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:146</code></summary>
 
 ```kotlin
     val statusColor = when (currentStatus) {
@@ -255,9 +255,9 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayGlobalSettings(
 ```
-_No KDoc at source._
+User-wide auto-pay preferences that apply across all schedules.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:138</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:139</code></summary>
 
 ```kotlin
 @Composable
@@ -274,9 +274,9 @@ private fun GeneralSettingsSection(
 ```kotlin
 data class NotificationSettings(
 ```
-_No KDoc at source._
+Notification preferences for auto-pay events.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:158</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:159</code></summary>
 
 ```kotlin
 @Composable
@@ -293,9 +293,9 @@ private fun NotificationSettingsSection(
 ```kotlin
 data class SecuritySettings(
 ```
-_No KDoc at source._
+Security limits applied to auto-pay payments.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:220</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:221</code></summary>
 
 ```kotlin
 @Composable
@@ -312,9 +312,9 @@ private fun SecuritySettingsSection(
 ```kotlin
 data class AutoPayRules(
 ```
-_No KDoc at source._
+Approval and retry rules for auto-pay payments.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:107</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPaySettingsScreen.kt:108</code></summary>
 
 ```kotlin
 
@@ -333,9 +333,9 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayPayload(
 ```
-_No KDoc at source._
+Request body for creating an auto-pay schedule.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:49</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:50</code></summary>
 
 ```kotlin
      */
@@ -352,9 +352,9 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayUpdatePayload(
 ```
-_No KDoc at source._
+Request body for updating an auto-pay schedule; only non-null fields are changed.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:57</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:58</code></summary>
 
 ```kotlin
     suspend fun updateAutoPaySchedule(
@@ -371,9 +371,9 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayHistory(
 ```
-_No KDoc at source._
+A historical record of one auto-pay payment attempt.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:138</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryScreen.kt:139</code></summary>
 
 ```kotlin
 @Composable
@@ -389,9 +389,9 @@ private fun HistoryItemCard(
 ```kotlin
 data class UpcomingPayment(
 ```
-_No KDoc at source._
+A payment due soon under an auto-pay schedule.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:523</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScreen.kt:524</code></summary>
 
 ```kotlin
 @Composable
@@ -410,9 +410,9 @@ private fun UpcomingPaymentCard(
 ```kotlin
 data class Bill
 ```
-_No KDoc at source._
+A bill the user tracks, optionally recurring and optionally paid automatically through auto-pay.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:103</code></summary>
 
 ```kotlin
         topBar = {
@@ -429,9 +429,9 @@ _No KDoc at source._
 ```kotlin
 enum class RecurrencePattern(val displayName: String, val interval: Int)
 ```
-_No KDoc at source._
+How often a bill repeats, with its display label and approximate interval in days.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:218</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:219</code></summary>
 
 ```kotlin
                     onExpandChange = { showRecurrenceDropdown = it },
@@ -448,9 +448,9 @@ _No KDoc at source._
 ```kotlin
 enum class BillStatus
 ```
-_No KDoc at source._
+Lifecycle status of a bill.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:116</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayScheduleManagementScreen.kt:117</code></summary>
 
 ```kotlin
                     ScheduleManagementHeader(
@@ -467,9 +467,9 @@ _No KDoc at source._
 ```kotlin
 data class BillFormData(
 ```
-_No KDoc at source._
+Editable form state for creating or editing a bill; amounts are kept as strings for text input.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:148</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:150</code></summary>
 
 ```kotlin
 
@@ -486,9 +486,9 @@ _No KDoc at source._
 ```kotlin
 data class BillValidationResult(
 ```
-_No KDoc at source._
+Outcome of validating a BillFormData, with an error message per invalid field.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:203</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:205</code></summary>
 
 ```kotlin
     }
@@ -505,9 +505,9 @@ _No KDoc at source._
 ```kotlin
 data class NextPaymentDate(
 ```
-_No KDoc at source._
+Computed next payment date for a bill.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:230</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:232</code></summary>
 
 ```kotlin
         }
@@ -526,9 +526,9 @@ _No KDoc at source._
 ```kotlin
 data class Biller
 ```
-_No KDoc at source._
+A payee (utility, insurer, lender and so on) that bills are paid to.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:138</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:139</code></summary>
 
 ```kotlin
                 DropdownBox(
@@ -545,9 +545,9 @@ _No KDoc at source._
 ```kotlin
 enum class BillerCategory(val displayName: String)
 ```
-_No KDoc at source._
+Category of a biller, with its display label.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:157</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:158</code></summary>
 
 ```kotlin
                     onExpandChange = { showCategoryDropdown = it },
@@ -564,9 +564,9 @@ _No KDoc at source._
 ```kotlin
 data class BillerFormData(
 ```
-_No KDoc at source._
+Editable form state for creating or editing a biller.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:237</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:249</code></summary>
 
 ```kotlin
 @Serializable
@@ -583,9 +583,9 @@ data class AddBillerState(
 ```kotlin
 data class BillerValidationResult(
 ```
-_No KDoc at source._
+Outcome of validating a BillerFormData, with an error message per invalid field.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:178</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:181</code></summary>
 
 ```kotlin
     }
@@ -604,9 +604,9 @@ _No KDoc at source._
 ```kotlin
 data class Bank(
 ```
-_No KDoc at source._
+A bank listed for selection when linking an external bank account.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:373</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:374</code></summary>
 
 ```kotlin
                 leadingContent = {
@@ -623,16 +623,16 @@ _No KDoc at source._
 ```kotlin
 enum class BankType
 ```
-_No KDoc at source._
+Grouping used when listing banks.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/bank/BankAccountDetails.kt`
 
 ```kotlin
 data class BankAccountDetails(
 ```
-_No KDoc at source._
+Details of an external bank account linked to the wallet, including UPI settings.
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/navigation/SetupUpiPinNavigation.kt:56</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/navigation/SetupUpiPinNavigation.kt:59</code></summary>
 
 ```kotlin
             type = type,
@@ -651,9 +651,9 @@ _No KDoc at source._
 ```kotlin
 data class Beneficiary(
 ```
-_No KDoc at source._
+A saved payee the user can transfer money to.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:178</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:187</code></summary>
 
 ```kotlin
             is AccountAction.EditBeneficiary -> {
@@ -672,7 +672,7 @@ _No KDoc at source._
 ```kotlin
 data class BeneficiaryPayload(
 ```
-_No KDoc at source._
+Request body for adding a beneficiary.
 
 <details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:342</code></summary>
 
@@ -693,7 +693,7 @@ _No KDoc at source._
 ```kotlin
 data class BeneficiaryUpdatePayload(
 ```
-_No KDoc at source._
+Request body for updating a beneficiary's name and transfer limit.
 
 <details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:361</code></summary>
 
@@ -713,18 +713,18 @@ _No KDoc at source._
 ```kotlin
 data class Client(
 ```
-_No KDoc at source._
+A bank client (customer) profile as returned by Fineract.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:83</code></summary>
 
 ```kotlin
             } else {
                 flowOf(
-                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<kpt.core.model.account.AccountContent>,
+                    ScreenState.Error(IllegalStateException("Client ID not available"))
+                        as ScreenState<kpt.core.model.account.AccountContent>,
                 )
             }
         }
-        .mapLatest { screenState ->
 ```
 
 </details>
@@ -734,16 +734,16 @@ _No KDoc at source._
 ```kotlin
 data class ClientAccount(
 ```
-_No KDoc at source._
+Accounts held by a client.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/client/ClientAddress.kt`
 
 ```kotlin
 data class ClientAddress(
 ```
-_No KDoc at source._
+Postal address submitted when registering a client.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:476</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:478</code></summary>
 
 ```kotlin
             mobileNo = state.mobileNumberInput,
@@ -762,9 +762,9 @@ _No KDoc at source._
 ```kotlin
 data class ClientStatus(
 ```
-_No KDoc at source._
+A coded status value of a client, such as status or legal form.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:42</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:43</code></summary>
 
 ```kotlin
         officeName = officeName ?: "",
@@ -783,9 +783,9 @@ _No KDoc at source._
 ```kotlin
 data class ClientTimeline(
 ```
-_No KDoc at source._
+Key lifecycle dates and the staff member who activated a client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:43</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:44</code></summary>
 
 ```kotlin
         savingsProductName = savingsProductName ?: "",
@@ -803,9 +803,9 @@ _No KDoc at source._
 ```kotlin
 data class NewClient(
 ```
-_No KDoc at source._
+Data needed to register a new client.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:470</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:472</code></summary>
 
 ```kotlin
 
@@ -824,9 +824,9 @@ _No KDoc at source._
 ```kotlin
 data class UpdatedClient(
 ```
-_No KDoc at source._
+Editable profile fields sent when updating a client.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:255</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:257</code></summary>
 
 ```kotlin
     override suspend fun setLanguage(language: Language) {}
@@ -925,7 +925,7 @@ Security defaults a fresh install starts with. **SoT: `app-profile/app.yaml#secu
 ```kotlin
 data class Invoice(
 ```
-_No KDoc at source._
+An invoice record stored in the Fineract invoice datatable for a client.
 
 <details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoiceItem.kt:32</code></summary>
 
@@ -946,18 +946,18 @@ internal fun InvoiceItem(
 ```kotlin
 data class InvoiceEntity(
 ```
-_No KDoc at source._
+Request body for creating an invoice row in the invoice datatable.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/InvoiceRepository.kt:62</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/InvoiceRepository.kt:66</code></summary>
 
 ```kotlin
-    // SubmitHandler maps success/exception to SubmitState. The user-facing success
     // message is a feature StringResource surfaced by the ViewModel, not repo copy.
+    /** Creates an invoice for the given client. */
     suspend fun createInvoice(clientId: Long, invoice: InvoiceEntity)
 
+    /** Updates an invoice of the given client. */
     suspend fun updateInvoice(
         clientId: Long,
-        invoiceId: Long,
 ```
 
 </details>
@@ -967,9 +967,9 @@ _No KDoc at source._
 ```kotlin
 enum class AccountType(val value: String)
 ```
-_No KDoc at source._
+Kind of account in Fineract, with its display label.
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:320</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:326</code></summary>
 
 ```kotlin
         officeName = "Head Office",
@@ -988,14 +988,16 @@ _No KDoc at source._
 ```kotlin
 data class InstancesConfig(
 ```
-_No KDoc at source._
+Configured list of selectable server instances.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/InstanceConfigLoader.kt:16</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/InstanceConfigLoader.kt:18</code></summary>
 
 ```kotlin
-import kpt.core.model.instance.InstancesConfig
 interface InstanceConfigLoader {
+    /** Fetches the server instances configuration once. */
     suspend fun fetchInstancesConfig(): InstancesConfig
+
+    /** Streams the server instances configuration wrapped in a [ScreenState]. */
     fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>
 }
 ```
@@ -1007,9 +1009,9 @@ interface InstanceConfigLoader {
 ```kotlin
 data class InterbankServer(
 ```
-_No KDoc at source._
+Endpoint of an interbank (Mojaloop) server used for cross-bank transfers.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:59</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:61</code></summary>
 
 ```kotlin
     private val userPreferencesRepository: ForkPreferencesRepository = mock {
@@ -1028,9 +1030,9 @@ _No KDoc at source._
 ```kotlin
 data class ServerInstance(
 ```
-_No KDoc at source._
+A Fineract backend the app can connect to, with its tenant and interbank servers.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:58</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:60</code></summary>
 
 ```kotlin
     private val clientRepository: ClientRepository = mock()
@@ -1049,9 +1051,9 @@ _No KDoc at source._
 ```kotlin
 data class InterBankParticipantRequest(
 ```
-_No KDoc at source._
+Request to register or look up a party as an interbank participant.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:35</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:36</code></summary>
 
 ```kotlin
         currencyCode: String,
@@ -1068,18 +1070,18 @@ _No KDoc at source._
 ```kotlin
 data class InterBankParticipantResponse(
 ```
-_No KDoc at source._
+Response to an interbank participant request.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/InterBankRepository.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/InterBankRepository.kt:23</code></summary>
 
 ```kotlin
         partyId: String,
         currencyCode: String,
     ): InterBankParticipantResponse
 
+    /** Fetches party information for an inter-bank transfer. */
     suspend fun fetchPartyInfo(
         partyId: String,
-        currencyCode: String,
 ```
 
 </details>
@@ -1089,9 +1091,9 @@ _No KDoc at source._
 ```kotlin
 data class InterBankPartyInfoRequest(
 ```
-_No KDoc at source._
+Request for the details of a party in another bank.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:48</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:49</code></summary>
 
 ```kotlin
         ownerFspId: String,
@@ -1108,9 +1110,9 @@ _No KDoc at source._
 ```kotlin
 data class InterBankPartyInfoResponse(
 ```
-_No KDoc at source._
+Details of a party in another bank, or an error describing why lookup failed.
 
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:247</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:249</code></summary>
 
 ```kotlin
     }
@@ -1129,9 +1131,9 @@ _No KDoc at source._
 ```kotlin
 data class InterBankTransferRequest(
 ```
-_No KDoc at source._
+Request to transfer money to a party in another bank.
 
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:399</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:401</code></summary>
 
 ```kotlin
 
@@ -1148,9 +1150,9 @@ _No KDoc at source._
 ```kotlin
 data class Party(
 ```
-_No KDoc at source._
+A party in an interbank transfer, identified by provider and id.
 
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:401</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:403</code></summary>
 
 ```kotlin
         val transferRequest = InterBankTransferRequest(
@@ -1167,9 +1169,9 @@ _No KDoc at source._
 ```kotlin
 data class Amount(
 ```
-_No KDoc at source._
+An amount of money with its currency.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:164</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:165</code></summary>
 
 ```kotlin
 
@@ -1186,9 +1188,9 @@ _No KDoc at source._
 ```kotlin
 data class TransactionType(
 ```
-_No KDoc at source._
+Describes the scenario and initiator of an interbank transaction.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:135</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:136</code></summary>
 
 ```kotlin
                     HistoryScreenHeader(
@@ -1205,9 +1207,9 @@ _No KDoc at source._
 ```kotlin
 data class InterBankTransferResponse(
 ```
-_No KDoc at source._
+Response to an interbank transfer request.
 
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:87</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:89</code></summary>
 
 ```kotlin
     // the Submitting/Submitted/Failed lifecycle; we observe it to drive this flow's
@@ -1226,12 +1228,12 @@ _No KDoc at source._
 ```kotlin
 data class KYCLevel1Details(
 ```
-_No KDoc at source._
+Personal details collected for level 1 KYC verification.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionViewModel.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionViewModel.kt:48</code></summary>
 
 ```kotlin
-
+    /** The client's KYC level, as the description screen's state. */
     @OptIn(ExperimentalCoroutinesApi::class)
     val kycState = kycLevelRepository.fetchKYCLevel1Details(state.clientId).mapLatest { screenState ->
         // Fold ScreenState → the existing 3-branch KYCDescriptionUiState.
@@ -1247,18 +1249,18 @@ _No KDoc at source._
 ```kotlin
 data class ClientResponseEntity(
 ```
-_No KDoc at source._
+Fineract response returned after creating a client with a savings account.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ClientService.kt:64</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ClientService.kt:74</code></summary>
 
 ```kotlin
-
+    /** Creates a client. */
     @POST(ApiEndPoints.CLIENTS)
     suspend fun createClient(@Body newClient: NewClientEntity): ClientResponseEntity
 
+    /** Deletes a client. */
     @DELETE(ApiEndPoints.CLIENTS + "/{clientId}")
     suspend fun deleteClient(@Path("clientId") clientId: Int): ClientResponseEntity
-}
 ```
 
 </details>
@@ -1268,15 +1270,16 @@ _No KDoc at source._
 ```kotlin
 data class CommonResponse(
 ```
-_No KDoc at source._
+Minimal Fineract command response carrying only the id of the affected resource.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/UserRepository.kt:30</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/UserRepository.kt:37</code></summary>
 
 ```kotlin
-    suspend fun updateUserPassword(userId: Long, password: String)
 
+    /** Deletes a user. */
     suspend fun deleteUser(userId: Int): CommonResponse
 
+    /** Assigns a client to a user. */
     suspend fun assignClientToUser(userId: Int, clientId: Int)
 }
 ```
@@ -1288,16 +1291,17 @@ _No KDoc at source._
 ```kotlin
 data class GenericResponse(
 ```
-_No KDoc at source._
+Generic server response holding arbitrary key/value fields.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/UserRepository.kt:23</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/UserRepository.kt:27</code></summary>
 
 ```kotlin
-    suspend fun getUser(): ScreenStateStream<UserWithRole>
 
+    /** Updates a user. */
     suspend fun updateUser(userId: Int, updatedUser: NewUser): ScreenStateStream<GenericResponse>
 
     // Writes throw on failure (DataState-free).
+    /** Creates a user and returns its id. */
     suspend fun createUser(newUser: NewUser): Int
 ```
 
@@ -1308,9 +1312,9 @@ _No KDoc at source._
 ```kotlin
 data class Page<T>(
 ```
-_No KDoc at source._
+Generic paged Fineract response wrapper.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryViewModel.kt:175</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryViewModel.kt:189</code></summary>
 
 ```kotlin
                                 it.copy(
@@ -1329,9 +1333,9 @@ _No KDoc at source._
 ```kotlin
 data class Role(
 ```
-_No KDoc at source._
+A user role in Fineract.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/components/QrActionButton.kt:44</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/components/QrActionButton.kt:45</code></summary>
 
 ```kotlin
     Column(
@@ -1350,13 +1354,13 @@ _No KDoc at source._
 ```kotlin
 data class SearchedEntity(
 ```
-_No KDoc at source._
+A result row from the Fineract search API, with its parent entity.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/SearchedEntitiesMapper.kt:14</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/SearchedEntitiesMapper.kt:15</code></summary>
 
 ```kotlin
-import kpt.core.model.network.entity.SearchedEntity
 import kpt.core.model.search.SearchResult
+/** Maps a searched entity to a domain [SearchResult]. */
 fun SearchedEntity.toModel(): SearchResult {
     return SearchResult(
         entityId = entityId,
@@ -1371,13 +1375,13 @@ fun SearchedEntity.toModel(): SearchResult {
 ```kotlin
 data class TPTResponse(
 ```
-_No KDoc at source._
+Response returned after a third-party transfer.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/ThirdPartyTransferRepository.kt:23</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/ThirdPartyTransferRepository.kt:26</code></summary>
 
 ```kotlin
-    // Underlying network call remains a POST (a semantic write) but the
     // read-facing envelope is aligned with the rest of the fork.
+    /** Makes a third-party transfer and streams the response. */
     fun makeTransfer(payload: TransferPayload): ScreenStateStream<TPTResponse>
 }
 ```
@@ -1389,9 +1393,9 @@ _No KDoc at source._
 ```kotlin
 data class Timeline(
 ```
-_No KDoc at source._
+Dates and actors for submission, activation and closure of an account.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:305</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:307</code></summary>
 
 ```kotlin
             matured = false,
@@ -1410,9 +1414,9 @@ _No KDoc at source._
 ```kotlin
 data class UserEntity(
 ```
-_No KDoc at source._
+Persisted representation of an authenticated Fineract user.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:63</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:64</code></summary>
 
 ```kotlin
         withContext(ioDispatcher) {
@@ -1431,18 +1435,17 @@ _No KDoc at source._
 ```kotlin
 data class UserWithRole(
 ```
-_No KDoc at source._
+A Fineract user together with the roles selected for that user.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/UserRepository.kt:19</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/UserRepository.kt:21</code></summary>
 
 ```kotlin
-interface UserRepository {
     // Phase-3 cutover — Flow-shaped surfaces on ScreenState.
+    /** Streams all users with their roles. */
     suspend fun getUsers(): ScreenStateStream<List<UserWithRole>>
 
+    /** Streams the signed-in user with role. */
     suspend fun getUser(): ScreenStateStream<UserWithRole>
-
-    suspend fun updateUser(userId: Int, updatedUser: NewUser): ScreenStateStream<GenericResponse>
 ```
 
 </details>
@@ -1452,7 +1455,7 @@ interface UserRepository {
 ```kotlin
 data class AuthenticationPayload(
 ```
-_No KDoc at source._
+Request body for authenticating a user against the Fineract self-service API.
 
 <details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:115</code></summary>
 
@@ -1473,18 +1476,18 @@ _No KDoc at source._
 ```kotlin
 data class ClientAccountsEntity(
 ```
-_No KDoc at source._
+All accounts owned by a client, grouped by account type.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/AccountMapper.kt:17</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/AccountMapper.kt:18</code></summary>
 
 ```kotlin
-import kpt.core.model.savingsaccount.SavingAccountEntity
 import kpt.core.model.network.entity.templates.account.AccountType as NetworkAccountType
+/** Maps the savings accounts of a client's accounts response to domain [Account]s. */
 fun ClientAccountsEntity.toAccount(): List<Account> {
     return this.savingsAccounts.toAccount()
 }
 
-fun List<SavingAccountEntity>.toAccount(): List<Account> {
+/** Maps a list of savings account entities to domain [Account]s. */
 ```
 
 </details>
@@ -1494,13 +1497,13 @@ fun List<SavingAccountEntity>.toAccount(): List<Account> {
 ```kotlin
 data class ClientEntity(
 ```
-_No KDoc at source._
+A Fineract client (wallet customer) with identity, contact and office details.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:26</code></summary>
 
 ```kotlin
-import kpt.core.model.network.entity.client.Status
 import kpt.core.model.network.entity.client.UpdateClientEntity
+/** Maps a client network entity to the domain [Client]. */
 fun ClientEntity.toModel(): Client {
     return Client(
         id = id ?: 0,
@@ -1513,13 +1516,13 @@ fun ClientEntity.toModel(): Client {
 ```kotlin
 data class ClientTimelineEntity(
 ```
-_No KDoc at source._
+Timeline of key client lifecycle events (submission and activation).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:87</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:94</code></summary>
 
 ```kotlin
-}
 
+/** Maps a client timeline entity to the domain [ClientTimeline]. */
 fun ClientTimelineEntity.toModel(): ClientTimeline {
     return ClientTimeline(
         submittedOnDate = submittedOnDate,
@@ -1534,18 +1537,18 @@ fun ClientTimelineEntity.toModel(): ClientTimeline {
 ```kotlin
 data class Currency(
 ```
-_No KDoc at source._
+A currency definition as reported by Fineract, with display metadata.
 
 <details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:949</code></summary>
 
 ```kotlin
-            balance = 1000.0,
-            id = 1L,
-            currency = Currency(
-                code = "USD",
-                name = "US Dollar",
-                decimalPlaces = 2,
-                displaySymbol = "$",
+        balance = 1000.0,
+        id = 1L,
+        currency = Currency(
+            code = "USD",
+            name = "US Dollar",
+            decimalPlaces = 2,
+            displaySymbol = "$",
 ```
 
 </details>
@@ -1555,16 +1558,16 @@ _No KDoc at source._
 ```kotlin
 data class DepositTypeEntity(
 ```
-_No KDoc at source._
+Deposit type classification of a savings account (for example recurring or fixed).
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/GuarantorAccountEntity.kt`
 
 ```kotlin
 data class GuarantorAccountEntity(
 ```
-_No KDoc at source._
+A loan account for which the client acts as guarantor.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/ClientAccountsEntity.kt:22</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/ClientAccountsEntity.kt:31</code></summary>
 
 ```kotlin
     val shareAccounts: List<ShareAccountResponseDto> = emptyList(),
@@ -1572,8 +1575,8 @@ _No KDoc at source._
     val guarantorAccounts: List<GuarantorAccountEntity> = emptyList(),
 ) {
 
+    /** Replaces the savings accounts and returns this entity for chaining. */
     fun withSavingsAccounts(savingsAccounts: List<SavingAccountEntity>): ClientAccountsEntity {
-        this.savingsAccounts = savingsAccounts
 ```
 
 </details>
@@ -1581,20 +1584,20 @@ _No KDoc at source._
 ```kotlin
 data class LoanStatusEntity(
 ```
-_No KDoc at source._
+Status of a loan with its lifecycle flags.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/NewClientEntity.kt`
 
 ```kotlin
 data class NewClientEntity(
 ```
-_No KDoc at source._
+Request body for registering a new client; the secondary constructor fills default office, legal form and dates.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:57</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:61</code></summary>
 
 ```kotlin
-}
 
+/** Maps a domain [NewClient] to the create-client network entity. */
 fun NewClient.toEntity(): NewClientEntity {
     return NewClientEntity(
         firstname = firstname,
@@ -1607,9 +1610,9 @@ fun NewClient.toEntity(): NewClientEntity {
 ```kotlin
 data class Address(
 ```
-_No KDoc at source._
+Postal address submitted when registering a client.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:284</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:282</code></summary>
 
 ```kotlin
         displayName = "John Doe",
@@ -1628,9 +1631,9 @@ _No KDoc at source._
 ```kotlin
 data class Status(
 ```
-_No KDoc at source._
+Generic Fineract status enumeration value (id, code and display value).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:480</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:481</code></summary>
 
 ```kotlin
 @Composable
@@ -1649,7 +1652,7 @@ private fun SavingAccountStatusCard(
 ```kotlin
 data class Type(
 ```
-_No KDoc at source._
+Generic Fineract type enumeration value (id, code and display value).
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:429</code></summary>
 
@@ -1670,13 +1673,13 @@ _No KDoc at source._
 ```kotlin
 data class UpdateClientEntity(
 ```
-_No KDoc at source._
+Request body for updating a client's personal and contact details.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:97</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/ClientDetailsMapper.kt:105</code></summary>
 
 ```kotlin
-}
 
+/** Maps a domain [UpdatedClient] to the update-client network entity. */
 fun UpdatedClient.toEntity(): UpdateClientEntity {
     return UpdateClientEntity(
         firstname = firstname,
@@ -1691,9 +1694,9 @@ fun UpdatedClient.toEntity(): UpdateClientEntity {
 ```kotlin
 data class CurrencyResponseDto(
 ```
-_No KDoc at source._
+Currency details embedded in Fineract account responses.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:51</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:77</code></summary>
 
 ```kotlin
     val amountPaid: Double? = null,
@@ -1712,9 +1715,9 @@ _No KDoc at source._
 ```kotlin
 data class TypeResponseDto(
 ```
-_No KDoc at source._
+Generic Fineract type enumeration value embedded in account responses.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:43</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:69</code></summary>
 
 ```kotlin
     val status: LoanStatusResponseDto? = null,
@@ -1733,9 +1736,9 @@ _No KDoc at source._
 ```kotlin
 data class LoanAccountResponseDto(
 ```
-_No KDoc at source._
+A client loan account as returned by Fineract, with balances, status and timeline.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/ClientAccountsEntity.kt:19</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/ClientAccountsEntity.kt:28</code></summary>
 
 ```kotlin
 data class ClientAccountsEntity(
@@ -1754,13 +1757,13 @@ data class ClientAccountsEntity(
 ```kotlin
 data class LoanStatusResponseDto(
 ```
-_No KDoc at source._
+Loan status with its lifecycle flags.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:34</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:36</code></summary>
 
 ```kotlin
-)
 
+/** Maps a loan [LoanStatusResponseDto] to a pocket [AccountStatus]. */
 fun kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
     when {
         active == true -> kpt.core.model.pocket.AccountStatus.ACTIVE
@@ -1775,9 +1778,9 @@ fun kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto.toAccountSta
 ```kotlin
 data class LoanSummaryResponseDto(
 ```
-_No KDoc at source._
+Financial summary of a loan: principal, interest, fees, penalties and outstanding amounts.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:55</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:81</code></summary>
 
 ```kotlin
     val inArrears: Boolean? = null,
@@ -1796,9 +1799,9 @@ _No KDoc at source._
 ```kotlin
 data class LoanTimelineResponseDto(
 ```
-_No KDoc at source._
+Dates and actors for each stage of a loan (submit, approve, disburse, close).
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:59</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/loanAccount/LoanAccountResponseDto.kt:85</code></summary>
 
 ```kotlin
     val loanPurposeName: String? = null,
@@ -1837,7 +1840,7 @@ Represents the standard error response format from Mifos/Fineract server.
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:128</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:129</code></summary>
 
 ```kotlin
             .getAccounts(clientId, Constants.SAVINGS)
@@ -1858,7 +1861,7 @@ data class MifosErrorDetail(
 ```
 Represents a specific error detail in the Mifos/Fineract error response. This is typically used for validation errors where multiple fields may have issues.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/MifosError.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/MifosError.kt:47</code></summary>
 
 ```kotlin
     val defaultUserMessage: String? = null,
@@ -1877,7 +1880,7 @@ Represents a specific error detail in the Mifos/Fineract error response. This is
 ```kotlin
 data class Document(
 ```
-_No KDoc at source._
+Metadata of a document attached to a Fineract entity.
 
 <details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCLevel2ViewModel.kt:158</code></summary>
 
@@ -1898,16 +1901,16 @@ _No KDoc at source._
 ```kotlin
 data class ClientPayload(
 ```
-_No KDoc at source._
+Request body for creating a client, optionally with data tables.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/payload/DataTablePayload.kt`
 
 ```kotlin
 data class DataTablePayload(
 ```
-_No KDoc at source._
+Payload for a Fineract data table entry; transient fields are local bookkeeping and are not serialized.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/payload/ClientPayload.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/payload/ClientPayload.kt:53</code></summary>
 
 ```kotlin
     val dateFormat: String? = "DD_MMMM_YYYY",
@@ -1923,30 +1926,29 @@ _No KDoc at source._
 ```kotlin
 data class PayPayload(
 ```
-_No KDoc at source._
+Request body for a payment transaction on a savings account.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/payload/PayResponse.kt`
 
 ```kotlin
 data class PayResponse(
 ```
-_No KDoc at source._
+Fineract response returned after a payment transaction.
 
 ```kotlin
 data class Change(
 ```
-_No KDoc at source._
+Fields changed by a payment transaction.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/Constants.kt:154</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/Constants.kt:425</code></summary>
 
 ```kotlin
-    const val UPI_PIN_SETUP_COMPLETED_SUCCESSFULLY = "UPI PIN Setup Completed Successfully"
-    const val FORGOT = "Forgot"
+
+    /** User-facing text: "Change". */
     const val CHANGE = "Change"
+
+    /** Argument key for a one-time password. */
     const val OTP = "otp"
-    const val SETUP_UPI_PIN = "Setup UPI PIN"
-    const val SETTING_UP_UPI_PIN = "Setting up UPI PIN.."
-    const val UPDATED_BANK_ACCOUNT = "Updated Bank Account"
 ```
 
 </details>
@@ -1956,7 +1958,7 @@ _No KDoc at source._
 ```kotlin
 data class TransferPayload(
 ```
-_No KDoc at source._
+Request body for an account-to-account transfer; the no-arg constructor leaves all fields unset.
 
 <details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt:578</code></summary>
 
@@ -1977,16 +1979,16 @@ _No KDoc at source._
 ```kotlin
 data class UpdateVpaPayload(
 ```
-_No KDoc at source._
+Request body for updating a client's virtual payment address (VPA) via its external id.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/pocket/PocketRequestDto.kt`
 
 ```kotlin
 data class PocketLinkRequest(
 ```
-_No KDoc at source._
+Request body for linking accounts to a pocket.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:137</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:138</code></summary>
 
 ```kotlin
             try {
@@ -2003,18 +2005,18 @@ _No KDoc at source._
 ```kotlin
 data class PocketCommandResponse(
 ```
-_No KDoc at source._
+Response to a pocket link command, carrying the created resource id.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/PocketService.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/PocketService.kt:32</code></summary>
 
 ```kotlin
         @Query("command") command: String = "linkAccounts",
         @Body request: PocketLinkRequest,
     ): PocketCommandResponse
 
+    /** Delinks accounts from the pocket. */
     @POST(ApiEndPoints.POCKETS)
     suspend fun delinkAccounts(
-        @Query("command") command: String = "delinkAccounts",
 ```
 
 </details>
@@ -2022,9 +2024,9 @@ _No KDoc at source._
 ```kotlin
 data class PocketDelinkRequest(
 ```
-_No KDoc at source._
+Request body for removing accounts from a pocket by mapping id.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:190</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:191</code></summary>
 
 ```kotlin
                 val serverIds = accountsToDelink.filter { it.id > 0 }.map { it.id }
@@ -2043,13 +2045,13 @@ _No KDoc at source._
 ```kotlin
 data class PocketResponseDto(
 ```
-_No KDoc at source._
+Accounts linked to a pocket, grouped by loan, savings and share accounts.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:16</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:17</code></summary>
 
 ```kotlin
-import kpt.core.model.network.entity.pocket.PocketResponseDto
 import kpt.core.model.pocket.PocketAccount
+/** Flattens a pocket response (loan, savings and share accounts) into a list of domain [PocketAccount]s. */
 fun PocketResponseDto.toDomainList(): List<PocketAccount> {
     val all = mutableListOf<PocketAccount>()
 
@@ -2062,9 +2064,9 @@ fun PocketResponseDto.toDomainList(): List<PocketAccount> {
 ```kotlin
 data class PocketAccountDto(
 ```
-_No KDoc at source._
+An account linked to a pocket.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:26</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:27</code></summary>
 
 ```kotlin
 }
@@ -2083,15 +2085,16 @@ private fun PocketAccountDto.toDomain(type: AccountType) = PocketAccount(
 ```kotlin
 data class RegisterPayload(
 ```
-_No KDoc at source._
+Request body for self-service user registration.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/RegistrationRepository.kt:15</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/RegistrationRepository.kt:17</code></summary>
 
 ```kotlin
-import kpt.core.model.network.entity.register.UserVerify
 interface RegistrationRepository {
+    /** Registers a new user. */
     suspend fun registerUser(registerPayload: RegisterPayload)
 
+    /** Verifies a newly registered user. */
     suspend fun verifyUser(userVerify: UserVerify)
 }
 ```
@@ -2103,13 +2106,13 @@ interface RegistrationRepository {
 ```kotlin
 data class UserVerify(
 ```
-_No KDoc at source._
+Request body for verifying a newly registered user.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/RegistrationRepository.kt:17</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/RegistrationRepository.kt:20</code></summary>
 
 ```kotlin
-    suspend fun registerUser(registerPayload: RegisterPayload)
 
+    /** Verifies a newly registered user. */
     suspend fun verifyUser(userVerify: UserVerify)
 }
 ```
@@ -2121,9 +2124,9 @@ _No KDoc at source._
 ```kotlin
 data class ShareAccountResponseDto(
 ```
-_No KDoc at source._
+A client share account as returned by Fineract.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/ClientAccountsEntity.kt:20</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/client/ClientAccountsEntity.kt:29</code></summary>
 
 ```kotlin
     var savingsAccounts: List<SavingAccountEntity> = emptyList(),
@@ -2141,13 +2144,13 @@ _No KDoc at source._
 ```kotlin
 data class ShareStatusResponseDto(
 ```
-_No KDoc at source._
+Share account status with its lifecycle flags.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:59</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt:63</code></summary>
 
 ```kotlin
-    }
 
+/** Maps a share account [ShareStatusResponseDto] to a pocket [AccountStatus]. */
 fun kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
     when {
         active == true -> kpt.core.model.pocket.AccountStatus.ACTIVE
@@ -2162,9 +2165,9 @@ fun kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto.toAccountS
 ```kotlin
 data class ShareSummaryResponseDto(
 ```
-_No KDoc at source._
+Summary of a share account with approved and pending share counts.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/shareAccount/ShareWithAssociationsResponseDto.kt:27</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/shareAccount/ShareWithAssociationsResponseDto.kt:48</code></summary>
 
 ```kotlin
     val currency: CurrencyResponseDto? = null,
@@ -2183,9 +2186,9 @@ _No KDoc at source._
 ```kotlin
 data class ShareTimelineResponseDto(
 ```
-_No KDoc at source._
+Dates and actors for each stage of a share account (submit, approve, activate).
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/shareAccount/ShareAccountResponseDto.kt:35</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/shareAccount/ShareAccountResponseDto.kt:49</code></summary>
 
 ```kotlin
     val currency: CurrencyResponseDto? = null,
@@ -2202,9 +2205,9 @@ _No KDoc at source._
 ```kotlin
 data class ShareWithAssociationsResponseDto(
 ```
-_No KDoc at source._
+A share account with its associated client, savings account, summary and dividends.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ShareAccountService.kt:24</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ShareAccountService.kt:26</code></summary>
 
 ```kotlin
         @Path("accountId") accountId: Long,
@@ -2220,9 +2223,9 @@ _No KDoc at source._
 ```kotlin
 data class City(
 ```
-_No KDoc at source._
+A city option used in the signup address form.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscViewModel.kt:239</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscViewModel.kt:240</code></summary>
 
 ```kotlin
     DummyBankBranch("Koregaon Park", "Maharashtra"),
@@ -2241,7 +2244,7 @@ _No KDoc at source._
 ```kotlin
 data class Country(
 ```
-_No KDoc at source._
+A country option used in the signup address form.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/signup/SignUpViewModelTest.kt:706</code></summary>
 
@@ -2262,18 +2265,18 @@ _No KDoc at source._
 ```kotlin
 data class State(
 ```
-_No KDoc at source._
+A state or province option used in the signup address form.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:49</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:53</code></summary>
 
 ```kotlin
     private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
+        /** Client id read from user preferences when the view model is created. */
         val clientId = userRepository.clientId.value
-        val defaultAccount = userRepository.defaultAccountId.value
 
-        AccountState(
+        /** Default account id read from user preferences when the view model is created. */
 ```
 
 </details>
@@ -2283,7 +2286,7 @@ _No KDoc at source._
 ```kotlin
 data class AccountOption(
 ```
-_No KDoc at source._
+An account selectable as a source or destination in a transfer.
 
 <details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmScreen.kt:415</code></summary>
 
@@ -2304,9 +2307,9 @@ private fun FromAccountCard(
 ```kotlin
 data class AccountOptionsTemplate(
 ```
-_No KDoc at source._
+Fineract transfer template listing selectable source and destination accounts.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubViewModel.kt:72</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubViewModel.kt:76</code></summary>
 
 ```kotlin
 
@@ -2324,9 +2327,9 @@ _No KDoc at source._
 ```kotlin
 data class AccountType(
 ```
-_No KDoc at source._
+Type of an account (id, code and display value).
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:320</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:326</code></summary>
 
 ```kotlin
         officeName = "Head Office",
@@ -2345,9 +2348,9 @@ _No KDoc at source._
 ```kotlin
 data class AccountTypeOption(
 ```
-_No KDoc at source._
+An account type selectable when adding a beneficiary.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/templates/beneficiary/BeneficiaryTemplate.kt:16</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/templates/beneficiary/BeneficiaryTemplate.kt:21</code></summary>
 
 ```kotlin
 @Serializable
@@ -2363,18 +2366,18 @@ data class BeneficiaryTemplate(
 ```kotlin
 data class BeneficiaryTemplate(
 ```
-_No KDoc at source._
+Fineract beneficiary template listing the allowed account types.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/BeneficiaryRepository.kt:22</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/BeneficiaryRepository.kt:25</code></summary>
 
 ```kotlin
-    suspend fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>>
 
+    /** Streams the template used to create or update beneficiaries. */
     suspend fun getBeneficiaryTemplate(): Flow<ScreenState<BeneficiaryTemplate>>
 
     // Writes execute the network call and throw on failure (no offline write
     // stores yet). Callers surface errors via their own try/catch.
-    suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload)
+    /** Creates a new beneficiary from the payload. */
 ```
 
 </details>
@@ -2384,13 +2387,13 @@ _No KDoc at source._
 ```kotlin
 class NewUserEntity(
 ```
-_No KDoc at source._
+Request body for creating a new Fineract user.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/UserMapper.kt:24</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/UserMapper.kt:26</code></summary>
 
 ```kotlin
-val NEW_USER_ROLE_IDS: ArrayList<Int> = arrayListOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)
 
+/** Maps a domain [NewUser] to the create-user network entity. */
 fun NewUser.toEntity(): NewUserEntity {
     return NewUserEntity(
         username = username,
@@ -2405,23 +2408,23 @@ fun NewUser.toEntity(): NewUserEntity {
 ```kotlin
 data class UpdateUserEntityClients(
 ```
-_No KDoc at source._
+Request body for updating the clients linked to a user.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/user/UpdateUserEntityEmail.kt`
 
 ```kotlin
 data class UpdateUserEntityEmail(
 ```
-_No KDoc at source._
+Request body for updating a user's email address.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/user/UpdateUserEntityPassword.kt`
 
 ```kotlin
 data class UpdateUserEntityPassword(
 ```
-_No KDoc at source._
+Request body for changing a user's password.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:63</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:64</code></summary>
 
 ```kotlin
         withContext(ioDispatcher) {
@@ -2438,18 +2441,18 @@ _No KDoc at source._
 ```kotlin
 data class UpdateUserPasswordResponse(
 ```
-_No KDoc at source._
+Response returned after a password change.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/UserService.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/UserService.kt:46</code></summary>
 
 ```kotlin
     suspend fun updateUserPassword(
         @Body updateUserEntity: UpdateUserEntityPassword,
     ): UpdateUserPasswordResponse
 
+    /** Deletes a user. */
     @DELETE(ApiEndPoints.USER + "/{userId}")
     suspend fun deleteUser(
-        @Path("userId") userId: Int,
 ```
 
 </details>
@@ -2457,7 +2460,7 @@ _No KDoc at source._
 ```kotlin
 data class Changes(
 ```
-_No KDoc at source._
+Fields changed by a password update.
 
 <details><summary>Used in the template — <code>core/data/src/commonTest/kotlin/kpt/core/data/infra/SyncTestSupport.kt:56</code></summary>
 
@@ -2477,9 +2480,9 @@ _No KDoc at source._
 ```kotlin
 data class User(
 ```
-_No KDoc at source._
+An authenticated Fineract user with credentials, roles, permissions and linked clients.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:123</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:128</code></summary>
 
 ```kotlin
 
@@ -2498,13 +2501,13 @@ _No KDoc at source._
 ```kotlin
 data class AccessToken(
 ```
-_No KDoc at source._
+Two-factor access token with its validity window.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/TwoFactorAuthRepository.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/TwoFactorAuthRepository.kt:25</code></summary>
 
 ```kotlin
-    suspend fun requestOTP(deliveryMethod: String): ScreenStateStream<String>
 
+    /** Validates the OTP token and streams the resulting [AccessToken]. */
     suspend fun validateToken(token: String): ScreenStateStream<AccessToken>
 }
 ```
@@ -2516,18 +2519,17 @@ _No KDoc at source._
 ```kotlin
 data class DeliveryMethod(
 ```
-_No KDoc at source._
+A channel (for example SMS or email) over which a two-factor code can be delivered.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/TwoFactorAuthRepository.kt:17</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/TwoFactorAuthRepository.kt:19</code></summary>
 
 ```kotlin
-interface TwoFactorAuthRepository {
     // Phase-3 cutover — Flow-shaped 2FA reads/submissions on ScreenState.
+    /** Streams the available OTP delivery methods. */
     suspend fun deliveryMethods(): ScreenStateStream<List<DeliveryMethod>>
 
+    /** Requests an OTP through the given delivery method. */
     suspend fun requestOTP(deliveryMethod: String): ScreenStateStream<String>
-
-    suspend fun validateToken(token: String): ScreenStateStream<AccessToken>
 ```
 
 </details>
@@ -2537,7 +2539,7 @@ interface TwoFactorAuthRepository {
 ```kotlin
 data class Notification(
 ```
-_No KDoc at source._
+A single in-app notification raised for the wallet user.
 
 <details><summary>Used in the template — <code>feature/notification/src/commonMain/kotlin/kpt/feature/notification/NotificationScreen.kt:63</code></summary>
 
@@ -2558,12 +2560,12 @@ internal fun NotificationScreen(
 ```kotlin
 data class NotificationPayload(
 ```
-_No KDoc at source._
+One page of notifications returned by the server.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/NotificationService.kt:18</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/NotificationService.kt:20</code></summary>
 
 ```kotlin
-interface NotificationService {
+    /** Fetches notifications filtered by read state. */
     @GET("notifications/")
     fun fetchNotifications(@Query("isRead") isRead: Boolean): Flow<NotificationPayload>
 }
@@ -2576,9 +2578,9 @@ interface NotificationService {
 ```kotlin
 data class Office(
 ```
-_No KDoc at source._
+A Fineract office (branch) that a client belongs to.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:266</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:264</code></summary>
 
 ```kotlin
         authenticated = true,
@@ -2597,7 +2599,7 @@ _No KDoc at source._
 ```kotlin
 data class PocketLinkPayload(
 ```
-_No KDoc at source._
+Request body that links one or more accounts to a pocket.
 
 <details><summary>Used in the template — <code>feature/pocket/src/commonTest/kotlin/kpt/feature/pocket/viewmodels/Fakes.kt:131</code></summary>
 
@@ -2618,9 +2620,9 @@ _No KDoc at source._
 ```kotlin
 data class PocketAccount(
 ```
-_No KDoc at source._
+An account that has been linked to a pocket.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:438</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:446</code></summary>
 
 ```kotlin
             }
@@ -2637,9 +2639,9 @@ _No KDoc at source._
 ```kotlin
 data class DetailedPocketAccount(
 ```
-_No KDoc at source._
+A pocket-linked account enriched with product, balance and currency details for display.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:437</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:445</code></summary>
 
 ```kotlin
                 return
@@ -2656,9 +2658,9 @@ _No KDoc at source._
 ```kotlin
 data class LinkableAccount(
 ```
-_No KDoc at source._
+An account that the user can link to a pocket, with its balance and currency details.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:533</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:532</code></summary>
 
 ```kotlin
         clientId: Long,
@@ -2675,9 +2677,9 @@ _No KDoc at source._
 ```kotlin
 enum class AccountStatus
 ```
-_No KDoc at source._
+Lifecycle status of a savings account as shown for pocket accounts.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:451</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:459</code></summary>
 
 ```kotlin
                 status = state.selectedAccount?.status?.let {
@@ -2696,7 +2698,7 @@ _No KDoc at source._
 ```kotlin
 data class CardPayload(
 ```
-_No KDoc at source._
+Request body for saving a new payment card.
 
 <details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/createOrUpdate/AddEditCardViewModel.kt:349</code></summary>
 
@@ -2717,7 +2719,7 @@ _No KDoc at source._
 ```kotlin
 data class SavedCard(
 ```
-_No KDoc at source._
+A payment card the user has saved in the wallet.
 
 <details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreen.kt:149</code></summary>
 
@@ -2738,9 +2740,9 @@ internal fun CardsScreen(
 ```kotlin
 data class AccountType(
 ```
-_No KDoc at source._
+Savings account type reference (id, code and label).
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:320</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:326</code></summary>
 
 ```kotlin
         officeName = "Head Office",
@@ -2759,18 +2761,18 @@ _No KDoc at source._
 ```kotlin
 data class BlockUnblockResponseEntity(
 ```
-_No KDoc at source._
+Server response after blocking or unblocking a savings account.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/SavingsAccountsService.kt:51</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/SavingsAccountsService.kt:57</code></summary>
 
 ```kotlin
         @Path("accountId") accountId: Long,
         @Query("command") command: String?,
     ): BlockUnblockResponseEntity
 
+    /** Fetches a transaction of a savings account. */
     @GET(
         ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}/" + ApiEndPoints.TRANSACTIONS +
-            "/{transactionId}",
 ```
 
 </details>
@@ -2778,14 +2780,14 @@ _No KDoc at source._
 ```kotlin
 data class ChangesEntity(
 ```
-_No KDoc at source._
+The set of changes reported by a block/unblock command.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/CreateNewSavingEntity.kt`
 
 ```kotlin
 data class CreateNewSavingEntity(
 ```
-_No KDoc at source._
+Request body for opening a new savings account for a client.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:439</code></summary>
 
@@ -2806,18 +2808,18 @@ _No KDoc at source._
 ```kotlin
 data class Currency(
 ```
-_No KDoc at source._
+Currency definition used by savings accounts.
 
 <details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:949</code></summary>
 
 ```kotlin
-            balance = 1000.0,
-            id = 1L,
-            currency = Currency(
-                code = "USD",
-                name = "US Dollar",
-                decimalPlaces = 2,
-                displaySymbol = "$",
+        balance = 1000.0,
+        id = 1L,
+        currency = Currency(
+            code = "USD",
+            name = "US Dollar",
+            decimalPlaces = 2,
+            displaySymbol = "$",
 ```
 
 </details>
@@ -2827,9 +2829,9 @@ _No KDoc at source._
 ```kotlin
 data class DepositType(
 ```
-_No KDoc at source._
+Deposit account type (savings, fixed or recurring) as reported by the server.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:280</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:282</code></summary>
 
 ```kotlin
         id = 1L,
@@ -2848,9 +2850,9 @@ _No KDoc at source._
 ```kotlin
 data class InterestPeriod(
 ```
-_No KDoc at source._
+Interest-related period or calculation option (id, code and label).
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:365</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:367</code></summary>
 
 ```kotlin
             blockDebit = false,
@@ -2869,9 +2871,9 @@ _No KDoc at source._
 ```kotlin
 data class PaymentDetailData(
 ```
-_No KDoc at source._
+Payment details attached to a savings transaction.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/TransactionMapper.kt:49</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/TransactionMapper.kt:51</code></summary>
 
 ```kotlin
         },
@@ -2890,13 +2892,13 @@ _No KDoc at source._
 ```kotlin
 data class PaymentType(
 ```
-_No KDoc at source._
+Payment type reference attached to a transaction.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/TransactionMapper.kt:62</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/TransactionMapper.kt:65</code></summary>
 
 ```kotlin
-}
 
+/** Maps a network [PaymentType] to the domain [Transaction.PaymentType]. */
 fun PaymentType.toModalUi(): Transaction.PaymentType {
     return Transaction.PaymentType(
         id = this.id ?: 0,
@@ -2911,7 +2913,7 @@ fun PaymentType.toModalUi(): Transaction.PaymentType {
 ```kotlin
 data class SavingAccount(
 ```
-_No KDoc at source._
+Summary of a savings account as listed for a client.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:90</code></summary>
 
@@ -2932,7 +2934,7 @@ _No KDoc at source._
 ```kotlin
 data class SavingAccountDetail(
 ```
-_No KDoc at source._
+Detailed view of a savings account including summary and transactions.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:184</code></summary>
 
@@ -2951,14 +2953,14 @@ private fun SavingAccountDetails(
 ```kotlin
 fun SavingAccountDetail.toAccount(): Account
 ```
-_No KDoc at source._
+Converts this detail into the lightweight `Account` model used by the UI.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/SavingAccountEntity.kt`
 
 ```kotlin
 data class SavingAccountEntity(
 ```
-_No KDoc at source._
+Persisted savings account row with its status, currency and balance.
 
 <details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt:551</code></summary>
 
@@ -2979,7 +2981,7 @@ _No KDoc at source._
 ```kotlin
 data class SavingAccountTemplate(
 ```
-_No KDoc at source._
+Template returned by the server with defaults and options for creating a savings account.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:97</code></summary>
 
@@ -3000,9 +3002,9 @@ _No KDoc at source._
 ```kotlin
 data class SavingCharge(
 ```
-_No KDoc at source._
+A charge applied to a savings account.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/SavingAccountTemplate.kt:26</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/SavingAccountTemplate.kt:41</code></summary>
 
 ```kotlin
     val isDormancyTrackingActive: Boolean,
@@ -3018,9 +3020,9 @@ _No KDoc at source._
 ```kotlin
 data class SavingProductOption(
 ```
-_No KDoc at source._
+A savings product that can be selected when opening an account.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/SavingAccountTemplate.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/SavingAccountTemplate.kt:40</code></summary>
 
 ```kotlin
     val withHoldTax: Boolean,
@@ -3037,13 +3039,13 @@ _No KDoc at source._
 ```kotlin
 data class SavingsWithAssociationsEntity(
 ```
-_No KDoc at source._
+A savings account loaded together with its transactions and interest settings.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/MerchantViewModel.kt:155</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/MerchantViewModel.kt:191</code></summary>
 
 ```kotlin
-    data object Empty : MerchantUiState()
-    data class Error(val message: String) : MerchantUiState()
+     * @property merchants The merchants (savings accounts) to display.
+     */
     data class ShowMerchants(val merchants: List<SavingsWithAssociationsEntity>) : MerchantUiState()
 }
 ```
@@ -3055,9 +3057,9 @@ _No KDoc at source._
 ```kotlin
 data class Status(
 ```
-_No KDoc at source._
+Savings account status with the individual state flags reported by the server.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:480</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:481</code></summary>
 
 ```kotlin
 @Composable
@@ -3076,9 +3078,9 @@ private fun SavingAccountStatusCard(
 ```kotlin
 data class SubStatus(
 ```
-_No KDoc at source._
+Savings account sub-status (for example dormant or blocked) with state flags.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:353</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:355</code></summary>
 
 ```kotlin
         ),
@@ -3097,7 +3099,7 @@ _No KDoc at source._
 ```kotlin
 data class Summary(
 ```
-_No KDoc at source._
+Balance summary of a savings account.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:222</code></summary>
 
@@ -3116,16 +3118,16 @@ private fun SavingAccountSummaryCard(
 ```kotlin
 fun Summary.formatAmount(amount: Double): String
 ```
-_No KDoc at source._
+Formats `amount` using this summary currency code.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/savingsaccount/Timeline.kt`
 
 ```kotlin
 data class Timeline(
 ```
-_No KDoc at source._
+Key lifecycle dates and acting users of a savings account.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:305</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:307</code></summary>
 
 ```kotlin
             matured = false,
@@ -3144,7 +3146,7 @@ _No KDoc at source._
 ```kotlin
 data class Transaction(
 ```
-_No KDoc at source._
+A savings account transaction.
 
 <details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:124</code></summary>
 
@@ -3165,9 +3167,9 @@ _No KDoc at source._
 ```kotlin
 enum class TransactionType
 ```
-_No KDoc at source._
+Direction of a savings transaction as shown to the user.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:135</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:136</code></summary>
 
 ```kotlin
                     HistoryScreenHeader(
@@ -3186,13 +3188,13 @@ _No KDoc at source._
 ```kotlin
 data class TransactionsEntity(
 ```
-_No KDoc at source._
+A savings transaction as returned with a savings account association.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/TransactionMapper.kt:22</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/TransactionMapper.kt:24</code></summary>
 
 ```kotlin
-}
 
+/** Maps a transactions network entity to a domain [Transaction]. */
 fun TransactionsEntity.toModel(): Transaction {
     return Transaction(
         reversed = this.reversed,
@@ -3207,9 +3209,9 @@ fun TransactionsEntity.toModel(): Transaction {
 ```kotlin
 data class Transfer(
 ```
-_No KDoc at source._
+Account transfer attached to a savings transaction.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:509</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:508</code></summary>
 
 ```kotlin
         screenDataStreamForTesting(state = flowOf(StoreScreenState.Empty))
@@ -3228,9 +3230,9 @@ private class FakePocketRepository : PocketRepository {
 ```kotlin
 data class TransferDetail(
 ```
-_No KDoc at source._
+Full detail of an account transfer, including source and destination parties.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:62</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:63</code></summary>
 
 ```kotlin
 @Composable
@@ -3249,7 +3251,7 @@ fun HistoryScreen(
 ```kotlin
 data class UpdateSavingAccountEntity(
 ```
-_No KDoc at source._
+Request body for updating a savings account.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:456</code></summary>
 
@@ -3270,9 +3272,9 @@ _No KDoc at source._
 ```kotlin
 data class AccountResult(
 ```
-_No KDoc at source._
+An account found by a search, with its parent client details.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:496</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonTest/kotlin/kpt/feature/mpay/qr/MpayQrViewModelTest.kt:495</code></summary>
 
 ```kotlin
         screenDataStreamForTesting(state = flowOf(StoreScreenState.Empty))
@@ -3291,7 +3293,7 @@ _No KDoc at source._
 ```kotlin
 data class SearchResult(
 ```
-_No KDoc at source._
+A single hit returned by the server search.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModelTest.kt:139</code></summary>
 
@@ -3312,7 +3314,7 @@ _No KDoc at source._
 ```kotlin
 data class SITemplate(
 ```
-_No KDoc at source._
+Template returned by the server with defaults and options for creating a standing instruction.
 
 <details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt:612</code></summary>
 
@@ -3333,9 +3335,9 @@ _No KDoc at source._
 ```kotlin
 data class SIUpdatePayload(
 ```
-_No KDoc at source._
+Request body for updating an existing standing instruction.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/StandingInstructionRepository.kt:60</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/StandingInstructionRepository.kt:66</code></summary>
 
 ```kotlin
     suspend fun updateStandingInstruction(
@@ -3343,8 +3345,8 @@ _No KDoc at source._
         payload: SIUpdatePayload,
     )
 
+    /** Deletes a standing instruction. */
     suspend fun deleteStandingInstruction(instructionId: Long)
-}
 ```
 
 </details>
@@ -3354,9 +3356,9 @@ _No KDoc at source._
 ```kotlin
 data class StandingInstruction(
 ```
-_No KDoc at source._
+A recurring transfer (standing instruction) between two accounts.
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:146</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:147</code></summary>
 
 ```kotlin
 @Composable
@@ -3375,7 +3377,7 @@ internal fun StandingInstructionScreen(
 ```kotlin
 data class StandingInstructionPayload(
 ```
-_No KDoc at source._
+Request body for creating a standing instruction.
 
 <details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt:394</code></summary>
 
@@ -3394,7 +3396,7 @@ _No KDoc at source._
 ```kotlin
 fun StandingInstructionPayload.toSIUploadPayload(): SIUpdatePayload
 ```
-_No KDoc at source._
+Converts this payload into the `SIUpdatePayload` used to update an existing instruction.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/user/AuthState.kt`
 
@@ -3429,9 +3431,9 @@ The user's dark-mode preference: follow the system, or force light/dark. `osValu
 ```kotlin
 data class Language(
 ```
-_No KDoc at source._
+A language the user can choose in the app.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:249</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:251</code></summary>
 
 ```kotlin
     override val selectedInterbankInstance: StateFlow<InterbankServer?> = MutableStateFlow(null)
@@ -3448,7 +3450,7 @@ _No KDoc at source._
 ```kotlin
 fun LanguageConfig.toLanguage(): Language
 ```
-_No KDoc at source._
+Converts this `LanguageConfig` into a `Language`.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/user/LanguageConfig.kt`
 
@@ -3476,9 +3478,9 @@ Every language the app can be switched to, in the user's OWN language. GENERATED
 ```kotlin
 class NewUser(
 ```
-_No KDoc at source._
+Details required to register a new user.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:460</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:462</code></summary>
 
 ```kotlin
 
@@ -3497,9 +3499,9 @@ _No KDoc at source._
 ```kotlin
 data class RoleInfo(
 ```
-_No KDoc at source._
+A role assigned to a user.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/UserMapper.kt:46</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/UserMapper.kt:49</code></summary>
 
 ```kotlin
     officeId = officeId,
@@ -3567,9 +3569,9 @@ Everything the app persists about the current user — theme, language, onboardi
 ```kotlin
 data class UserInfo(
 ```
-_No KDoc at source._
+Authenticated user details returned at login.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:47</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:49</code></summary>
 
 ```kotlin
     // Submitting/Submitted/Failed lifecycle; we observe it below to drive this screen's
@@ -3609,7 +3611,7 @@ Represents the languages supported by the app.
 ```kotlin
 data class UserData(
 ```
-_No KDoc at source._
+Locally stored data about the signed-in wallet user.
 
 <details><summary>Used in the template — <code>feature/onboarding/src/commonTest/kotlin/kpt/feature/onboarding/ui/OnboardingViewModelTest.kt:67</code></summary>
 
@@ -3630,7 +3632,7 @@ _No KDoc at source._
 ```kotlin
 data class Country(
 ```
-_No KDoc at source._
+A country with its codes, region and states.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/signup/SignUpViewModelTest.kt:706</code></summary>
 
@@ -3649,18 +3651,18 @@ _No KDoc at source._
 ```kotlin
 data class State(
 ```
-_No KDoc at source._
+A state or province of a country.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:49</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:53</code></summary>
 
 ```kotlin
     private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
+        /** Client id read from user preferences when the view model is created. */
         val clientId = userRepository.clientId.value
-        val defaultAccount = userRepository.defaultAccountId.value
 
-        AccountState(
+        /** Default account id read from user preferences when the view model is created. */
 ```
 
 </details>
@@ -3670,7 +3672,7 @@ _No KDoc at source._
 ```kotlin
 data class CurrencyCode(
 ```
-_No KDoc at source._
+A currency with the country that uses it and its symbol.
 
 <details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/SetAmountDialog.kt:52</code></summary>
 
@@ -3689,14 +3691,14 @@ _No KDoc at source._
 ```kotlin
 fun List<CurrencyCode>.filterList(text: String): List<CurrencyCode>
 ```
-_No KDoc at source._
+Returns the entries whose country name or currency code contains `text`, ignoring case; all if blank.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/utils/Locale.kt`
 
 ```kotlin
 data class Locale(
 ```
-_No KDoc at source._
+A locale entry with country and language names.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:160</code></summary>
 
@@ -3715,7 +3717,7 @@ internal fun AddEditSavingAccountScreenContent(
 ```kotlin
 fun List<Locale>.filterLocales(filterText: String): List<Locale>
 ```
-_No KDoc at source._
+Returns the locales whose country, local or dominant name contains `filterText`, ignoring case; all if blank.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/utils/PaymentQrData.kt`
 
@@ -3724,7 +3726,7 @@ data class PaymentQrData(
 ```
 Parcelable data class representing the UPI payment request details
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyViewModel.kt:204</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyViewModel.kt:210</code></summary>
 
 ```kotlin
                     if (StandardUpiQrCodeProcessor.isValidUpiQrCode(action.requestData)) {
@@ -3741,7 +3743,7 @@ Parcelable data class representing the UPI payment request details
 ```kotlin
 fun PaymentQrData.toAccount(): AccountResult
 ```
-_No KDoc at source._
+Converts the payment QR data into an `AccountResult` describing the wallet account.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/utils/QrCodeData.kt`
 
@@ -3767,7 +3769,7 @@ Data class representing QR code data for MPay transactions. Supports multiple QR
 ```kotlin
 fun QrCodeData.toAccount(): AccountResult
 ```
-_No KDoc at source._
+Converts the scanned QR data into an `AccountResult` describing the wallet account.
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/utils/QrCodeType.kt`
 
@@ -3812,5 +3814,5 @@ Data class representing standard UPI QR code data Based on UPI QR code specifica
 
 ---
 
-_195 type(s), 15 function(s)/property(ies); 24 carry KDoc at source; 2 authored example(s); 177 live call site(s)._
+_195 type(s), 15 function(s)/property(ies); 210 carry KDoc at source; 2 authored example(s); 177 live call site(s)._
 <!-- api-docs:end -->

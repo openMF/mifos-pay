@@ -2694,6 +2694,8 @@
 |    |    |    |    |    +--- io.insert-koin:koin-core:4.2.2 (*)
 |    |    |    |    |    +--- io.insert-koin:koin-annotations:4.2.2 (*)
 |    |    |    |    |    +--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0 (*)
+|    |    |    |    |    +--- org.jetbrains.compose.runtime:runtime:1.12.0 (*)
+|    |    |    |    |    +--- org.jetbrains.compose.components:components-resources:1.12.0 (*)
 |    |    |    |    |    +--- project ':core:datastore'
 |    |    |    |    |    |    +--- project ':core-base:datastore'
 |    |    |    |    |    |    |    +--- androidx.security:security-crypto:1.1.0 (*)
@@ -2745,9 +2747,7 @@
 |    |    |    |    |    +--- io.ktor:ktor-client-auth:3.5.1 (*)
 |    |    |    |    |    +--- io.ktor:ktor-serialization-kotlinx-json:3.5.1 (*)
 |    |    |    |    |    +--- de.jensklingenberg.ktorfit:ktorfit-lib:2.7.5 (*)
-|    |    |    |    |    +--- com.squareup.okio:okio:3.17.0 (*)
-|    |    |    |    |    +--- org.jetbrains.compose.runtime:runtime:1.11.1 -> 1.12.0 (*)
-|    |    |    |    |    \--- org.jetbrains.compose.components:components-resources:1.11.1 -> 1.12.0 (*)
+|    |    |    |    |    \--- com.squareup.okio:okio:3.17.0 (*)
 |    |    |    |    +--- io.github.mobilebytelabs:cmp-network-monitor:3.5.34 (*)
 |    |    |    |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0 (*)
 |    |    |    |    +--- org.jetbrains.kotlinx:kotlinx-datetime:0.8.0 (*)
@@ -2825,6 +2825,8 @@
 |    |    +--- io.insert-koin:koin-core:4.2.2 (*)
 |    |    +--- io.insert-koin:koin-annotations:4.2.2 (*)
 |    |    +--- org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0 (*)
+|    |    +--- org.jetbrains.compose.runtime:runtime:1.12.0 (*)
+|    |    +--- org.jetbrains.compose.components:components-resources:1.12.0 (*)
 |    |    +--- project ':core:common' (*)
 |    |    +--- project ':core:database' (*)
 |    |    +--- project ':core-base:database' (*)
@@ -2836,8 +2838,6 @@
 |    |    +--- project ':core-base:observability' (*)
 |    |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0 (*)
 |    |    +--- org.jetbrains.kotlinx:kotlinx-datetime:0.8.0 (*)
-|    |    +--- org.jetbrains.compose.runtime:runtime:1.11.1 -> 1.12.0 (*)
-|    |    +--- org.jetbrains.compose.components:components-resources:1.11.1 -> 1.12.0 (*)
 |    |    +--- io.github.openmf:mifos-authenticator-biometrics:2.3.0-beta
 |    |    |    \--- io.github.openmf:mifos-authenticator-biometrics-android:2.3.0-beta
 |    |    |         +--- androidx.activity:activity-compose:1.12.2 -> 1.13.0 (*)

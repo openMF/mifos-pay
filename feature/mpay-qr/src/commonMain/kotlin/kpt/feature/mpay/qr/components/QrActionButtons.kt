@@ -24,9 +24,9 @@ import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosOutlinedButton
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.mpay_qr.generated.resources.Res
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_download_qr
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_share_qr
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_download_qr
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_share_qr
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /**

@@ -44,8 +44,8 @@ import kpt.core.ui.utils.EventsEffect
 import kpt.feature.standing.instruction.components.FrequencyChip
 import kpt.feature.standing.instruction.components.InstructionTypeChip
 import kpt.feature.standing.instruction.components.PriorityChip
-import mifos_pay.feature.standing_instruction.generated.resources.Res
-import mifos_pay.feature.standing_instruction.generated.resources.feature_standing_instruction_error_oops
+import kpt.feature.standing.instruction.generated.resources.Res
+import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_error_oops
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 @Composable
@@ -432,6 +432,7 @@ private inline fun RowBlock(
     }
 }
 
+/** Returns the error color when [value] is null, otherwise the normal text color. */
 @Composable
 fun colorForMissing(value: String?): Color {
     return if (value == null) {

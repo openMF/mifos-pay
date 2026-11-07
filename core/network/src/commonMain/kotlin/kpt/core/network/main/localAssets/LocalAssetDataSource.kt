@@ -12,13 +12,18 @@ package kpt.core.network.main.localAssets
 import kpt.core.model.network.entity.signup.City
 import kpt.core.model.network.entity.signup.Country
 import kpt.core.model.network.entity.signup.State
+/** Source of static reference data (countries, states, banks, cities) bundled with the app. */
 interface LocalAssetDataSource {
 
+    /** Returns the available countries. */
     suspend fun getCountries(): List<Country>
 
+    /** Returns the available states. */
     suspend fun getStateList(): List<State>
 
+    /** Returns the available bank names. */
     suspend fun getBanks(): List<String>
 
+    /** Returns the available cities. */
     suspend fun getCities(): List<City>
 }

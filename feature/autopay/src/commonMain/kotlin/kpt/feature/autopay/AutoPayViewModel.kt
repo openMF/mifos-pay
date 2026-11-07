@@ -26,12 +26,14 @@ import kpt.core.ui.utils.BaseViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** View model for the AutoPay dashboard; loads schedules and upcoming payments and routes to related screens. */
 class AutoPayViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AutoPayState, AutoPayEvent, AutoPayAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: AutoPayState(),
 ) {
 
+    /** Holds the saved-state key used to persist the state. */
     companion object {
         private const val KEY_STATE = "autopay_state"
     }
@@ -235,6 +237,17 @@ class AutoPayViewModel(
     }
 }
 
+/**
+ * UI state of the AutoPay dashboard.
+ *
+ * @property isAutoPayEnabled Whether AutoPay is switched on.
+ * @property isLoading Whether data is loading.
+ * @property error Error message to show, or null.
+ * @property activeSchedules Currently active schedules.
+ * @property upcomingPayments Payments due soon.
+ * @property totalActiveSchedules Number of active schedules.
+ * @property totalUpcomingPayments Number of upcoming payments.
+ */
 @Serializable
 data class AutoPayState(
     val isAutoPayEnabled: Boolean = false,
@@ -246,6 +259,19 @@ data class AutoPayState(
     val totalUpcomingPayments: Int = 0,
 )
 
+/**
+ * A recurring payment schedule.
+ *
+ * @property id Schedule id.
+ * @property name Schedule name.
+ * @property amount Amount paid each time.
+ * @property currency Currency of the amount.
+ * @property frequency How often the payment recurs.
+ * @property nextPaymentDate Date of the next payment.
+ * @property status Status of the schedule.
+ * @property recipientName Name of the payee.
+ * @property accountNumber Payee account number.
+ */
 @Serializable
 data class AutoPaySchedule(
     val id: String,
@@ -259,6 +285,17 @@ data class AutoPaySchedule(
     val accountNumber: String,
 )
 
+/**
+ * A payment due soon.
+ *
+ * @property id Payment id.
+ * @property scheduleName Name of the schedule it belongs to.
+ * @property amount Amount due.
+ * @property currency Currency of the amount.
+ * @property dueDate Date the payment is due.
+ * @property status Status of the payment.
+ * @property recipientName Name of the payee.
+ */
 @Serializable
 data class UpcomingPayment(
     val id: String,
@@ -270,46 +307,115 @@ data class UpcomingPayment(
     val recipientName: String,
 )
 
+/** Lifecycle status of an AutoPay schedule. */
 @Serializable
 enum class AutoPayStatus {
+    /** The schedule is running. */
     ACTIVE,
+
+    /** The schedule is paused. */
     PAUSED,
+
+    /** The schedule was cancelled. */
     CANCELLED,
+
+    /** The schedule finished. */
     COMPLETED,
 }
 
+/** Status of an individual payment. */
 @Serializable
 enum class PaymentStatus {
+    /** The payment is scheduled but not yet due. */
     UPCOMING,
+
+    /** The payment is being processed. */
     PROCESSING,
+
+    /** The payment completed. */
     COMPLETED,
+
+    /** The payment failed. */
     FAILED,
 
+    /** The payment was cancelled. */
     CANCELLED,
 }
 
+/** One-off events emitted by the AutoPay dashboard view model. */
 sealed interface AutoPayEvent {
+    /** Navigate to schedule management. */
     data object NavigateToScheduleManagement : AutoPayEvent
+
+    /** Navigate to preferences. */
     data object NavigateToPreferences : AutoPayEvent
+
+    /** Navigate to history. */
     data object NavigateToHistory : AutoPayEvent
+
+    /** Navigate to add biller. */
     data object NavigateToAddBiller : AutoPayEvent
+
+    /** Navigate to the biller list. */
     data object NavigateToBillerList : AutoPayEvent
+
+    /** Navigate to add bill. */
     data object NavigateToAddBill : AutoPayEvent
+
+    /** Navigate to the bill list. */
     data object NavigateToBillList : AutoPayEvent
+
+    /**
+     * Navigate to schedule details.
+     *
+     * @property scheduleId Id of the schedule.
+     */
     data class NavigateToScheduleDetails(val scheduleId: String) : AutoPayEvent
 }
 
+/** User actions handled by the AutoPay dashboard view model. */
 sealed interface AutoPayAction {
+    /** The user chose to manage recurring payments. */
     data object ManageRecurringPayment : AutoPayAction
+
+    /** The user chose to manage payment preferences. */
     data object ManagePaymentPreferences : AutoPayAction
+
+    /** The user chose to view payment history. */
     data object GetPaymentHistory : AutoPayAction
+
+    /**
+     * Toggle AutoPay.
+     *
+     * @property enabled Desired AutoPay state.
+     */
     data class ToggleAutoPay(val enabled: Boolean) : AutoPayAction
+
+    /** Reload the dashboard. */
     data object RefreshDashboard : AutoPayAction
+
+    /** Add a new schedule. */
     data object AddNewSchedule : AutoPayAction
+
+    /** Manage existing schedules. */
     data object ManageExistingSchedules : AutoPayAction
+
+    /** Add a new biller. */
     data object AddNewBiller : AutoPayAction
+
+    /** View the biller list. */
     data object ViewBillerList : AutoPayAction
+
+    /** Add a new bill. */
     data object AddNewBill : AutoPayAction
+
+    /** View the bill list. */
     data object ViewBillList : AutoPayAction
+
+    /**
+     * View a schedule's details.
+     *
+     * @property scheduleId Id of the schedule.
+     */
     data class ViewScheduleDetails(val scheduleId: String) : AutoPayAction
 }

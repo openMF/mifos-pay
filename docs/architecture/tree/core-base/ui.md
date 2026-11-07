@@ -177,7 +177,7 @@ IndependentCardLayout(states = cards, onRetry = vm::onRetryCard) { i, content ->
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -196,7 +196,7 @@ fun List<ScreenState<*>>.toDashboardProgressState(): DashboardProgressState =
 ```
 Pure conversion from a list of per-card states to a single `DashboardProgressState`. Exposed so tests + non-Flow call sites can re-use the aggregation contract.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:88</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:97</code></summary>
 
 ```kotlin
                     // dedicated Empty ViewState variant exists here).
@@ -316,7 +316,7 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:110</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -335,7 +335,7 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:110</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -833,7 +833,7 @@ fun SavingsScreen(vm: SavingsViewModel) {
 
 </details>
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:179</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:180</code></summary>
 
 ```kotlin
         // the stream's pre-decided `ScreenState`. Only the Content list body is
@@ -861,7 +861,7 @@ ScreenContent(stream = viewModel.alerts) { alerts, _ -> LazyColumn { … } }
 
 </details>
 
-<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:179</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/list/BeneficiaryListScreen.kt:180</code></summary>
 
 ```kotlin
         // the stream's pre-decided `ScreenState`. Only the Content list body is
@@ -1522,7 +1522,7 @@ expect object ShareUtils
 ```
 Platform-specific utility for sharing content with other applications. This expect class requires platform-specific implementations.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:303</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:310</code></summary>
 
 ```kotlin
     private fun shareQrCode(data: ByteArray) {
@@ -1673,7 +1673,7 @@ object TransitionProviders
 ```
 Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a typical composable destination.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:30</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:31</code></summary>
 
 ```kotlin
         arguments = arguments,
@@ -1745,16 +1745,16 @@ interface BackgroundEvent
 ```
 Almost all the events in the app involve navigation or toasts. To prevent accidentally navigating to the same view twice, by default, events are ignored if the view is not currently resumed.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:70</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:93</code></summary>
 
 ```kotlin
-    data object NavigateToFineractPayments : SendMoneyOptionsEvent
-    data object NavigateToAutoPay : SendMoneyOptionsEvent
+     * @property data Raw scanned value.
+     */
     data class QrCodeScanned(val data: String) : SendMoneyOptionsEvent, BackgroundEvent
-    data class NavigateToPayeeDetails(val qrCodeData: String) : SendMoneyOptionsEvent, BackgroundEvent
-}
 
-sealed interface SendMoneyOptionsAction {
+    /**
+     * Navigate to payee details for a scanned QR code.
+     * @property qrCodeData Raw scanned QR value.
 ```
 
 </details>
@@ -1813,15 +1813,15 @@ abstract class BaseViewModel<S, E, A>(
 ```
 A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:48</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:52</code></summary>
 
 ```kotlin
     private val repository: SelfServiceRepository,
     private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
+        /** Client id read from user preferences when the view model is created. */
         val clientId = userRepository.clientId.value
-        val defaultAccount = userRepository.defaultAccountId.value
 ```
 
 </details>

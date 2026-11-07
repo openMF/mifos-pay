@@ -41,14 +41,18 @@ import kpt.core.ui.utils.BackgroundEvent
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.send.money.SendMoneyAction.HandleRequestData
 import kpt.feature.send.money.SendMoneyState.DialogState.Error
-import mifos_pay.feature.send_money.generated.resources.Res
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_error_account_cannot_be_empty
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_error_amount_cannot_be_empty
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_error_invalid_amount
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_error_requesting_payment_qr_but_found
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_error_requesting_payment_qr_data_missing
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_upi_qr_parsed_successfully
+import kpt.feature.send.money.generated.resources.Res
+import kpt.feature.send.money.generated.resources.feature_send_money_error_account_cannot_be_empty
+import kpt.feature.send.money.generated.resources.feature_send_money_error_amount_cannot_be_empty
+import kpt.feature.send.money.generated.resources.feature_send_money_error_invalid_amount
+import kpt.feature.send.money.generated.resources.feature_send_money_error_requesting_payment_qr_but_found
+import kpt.feature.send.money.generated.resources.feature_send_money_error_requesting_payment_qr_data_missing
+import kpt.feature.send.money.generated.resources.feature_send_money_upi_qr_parsed_successfully
 import org.jetbrains.compose.resources.StringResource
+/**
+ * ViewModel for the Fineract send-money screen; searches accounts by number and builds the payment QR data.
+ * @property scanner QR scanner used to scan a payment code.
+ */
 class SendMoneyViewModel(
     private val scanner: QrScanner,
     repository: AccountRepository,
@@ -57,10 +61,12 @@ class SendMoneyViewModel(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: SendMoneyState(),
 ) {
 
+    /** Holds the saved-state key for this view model. */
     companion object {
         private const val KEY_STATE = "send_payment_state"
     }
 
+    /** Account search results, debounced and emitted once at least four digits of the account number are typed. */
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     val accountListState = stateFlow.map { it.accountNumber }
         .distinctUntilChanged()
@@ -236,6 +242,13 @@ class SendMoneyViewModel(
     }
 }
 
+/**
+ * State of the send-money screen.
+ * @property amount Amount typed by the user.
+ * @property accountNumber Destination account number typed by the user.
+ * @property selectedAccount Account picked from the search results.
+ * @property dialogState Dialog currently shown, if any.
+ */
 @Serializable
 data class SendMoneyState(
     val amount: String = "",
@@ -243,14 +256,17 @@ data class SendMoneyState(
     val selectedAccount: AccountResult? = null,
     @Transient val dialogState: DialogState? = null,
 ) {
+    /** True if the amount parses to a number greater than zero. */
     val amountIsValid: Boolean
         get() = amount.isNotEmpty() &&
             amount.toDoubleOrNull() != null &&
             amount.toDouble() > 0
 
+    /** True once an account is selected and the amount is valid. */
     val isProceedEnabled: Boolean
         get() = selectedAccount != null && amountIsValid
 
+    /** QR payload describing the selected account and amount. */
     val paymentQrData: PaymentQrData
         get() = PaymentQrData(
             clientId = selectedAccount?.parentId ?: 0,
@@ -260,18 +276,30 @@ data class SendMoneyState(
             amount = amount,
         )
 
+    /** Dialogs the send-money screen can show. */
     sealed interface DialogState {
 
+        /** A loading dialog. */
         data object Loading : DialogState
 
+        /** Error dialogs. */
         @Serializable
         sealed class Error : DialogState {
+            /**
+             * Error dialog with a single string resource message.
+             * @property message Message resource to display.
+             */
             @Serializable
             data class ResourceMessage(
                 @Serializable(with = StringResourceSerializer::class)
                 val message: StringResource,
             ) : Error()
 
+            /**
+             * Error dialog with a formatted string resource message.
+             * @property message Message resource to display.
+             * @property args Format arguments for the message.
+             */
             data class GenericResourceMessage(
                 @Serializable(with = StringResourceSerializer::class)
                 val message: StringResource,
@@ -281,39 +309,95 @@ data class SendMoneyState(
     }
 }
 
+/** State of the account search results list. */
 sealed interface ViewState {
+    /** Search is in progress. */
     data object Loading : ViewState
+
+    /**
+     * Search failed.
+     * @property message Error message.
+     */
     data class Error(val message: String) : ViewState
+
+    /** Search returned no accounts. */
     data object Empty : ViewState
+
+    /** No search has been run yet. */
     data object InitialEmpty : ViewState
+
+    /**
+     * Search returned accounts.
+     * @property data Matching accounts.
+     */
     data class Content(val data: List<AccountResult>) : ViewState
 }
 
+/** One-off events emitted by the send-money screen. */
 sealed interface SendMoneyEvent {
+    /** Navigate back. */
     data object OnNavigateBack : SendMoneyEvent
+
+    /**
+     * Navigate to the transfer screen.
+     * @property data Serialized payment data to pass along.
+     */
     data class NavigateToTransferScreen(val data: String) : SendMoneyEvent
+
+    /** Navigate to the QR scan screen. */
     data object NavigateToScanQrScreen : SendMoneyEvent
 
+    /**
+     * Navigate to payee details for a scanned QR code.
+     * @property qrCodeData Raw scanned QR value.
+     */
     data class NavigateToPayeeDetails(val qrCodeData: String) : SendMoneyEvent, BackgroundEvent
+
+    /**
+     * Show a toast message.
+     * @property message Message resource to show.
+     */
     data class ShowToast(val message: StringResource) : SendMoneyEvent
 }
 
+/** User actions on the send-money screen. */
 sealed interface SendMoneyAction {
+    /** The user tapped back. */
     data object NavigateBack : SendMoneyAction
 
+    /** The user tapped scan. */
     data object OnClickScan : SendMoneyAction
 
+    /**
+     * The amount text changed.
+     * @property amount New amount text.
+     */
     data class AmountChanged(val amount: String) : SendMoneyAction
 
+    /**
+     * The account number text changed.
+     * @property accountNumber New account number text.
+     */
     data class AccountNumberChanged(val accountNumber: String) : SendMoneyAction
 
+    /**
+     * The user picked an account.
+     * @property account The selected account.
+     */
     data class SelectAccount(val account: AccountResult) : SendMoneyAction
 
+    /** The user cleared the selected account. */
     data object DeselectAccount : SendMoneyAction
 
+    /** The user dismissed the dialog. */
     data object DismissDialog : SendMoneyAction
 
+    /** The user tapped proceed. */
     data object OnProceedClicked : SendMoneyAction
 
+    /**
+     * Handles payment request data received from a scan or link.
+     * @property requestData Raw request data.
+     */
     data class HandleRequestData(val requestData: String) : SendMoneyAction
 }

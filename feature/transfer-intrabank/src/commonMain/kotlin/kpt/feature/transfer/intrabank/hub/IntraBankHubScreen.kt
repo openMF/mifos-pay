@@ -39,20 +39,21 @@ import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.ui.MifosProgressIndicatorMini
 import kpt.core.ui.SimpleSearchBar
 import kpt.core.ui.utils.EventsEffect
+import kpt.feature.transfer.intrabank.generated.resources.Res
+import kpt.feature.transfer.intrabank.generated.resources.feature_select_account_placeholder
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_see_all
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_send
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_tab_beneficiaries
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_tab_recents
 import kpt.feature.transfer.intrabank.hub.components.BeneficiaryCard
 import kpt.feature.transfer.intrabank.hub.components.EmptyBeneficiariesState
 import kpt.feature.transfer.intrabank.hub.components.EmptyRecentsState
 import kpt.feature.transfer.intrabank.hub.components.QuickActionsGrid
 import kpt.feature.transfer.intrabank.hub.components.RecentPayeeCard
-import mifos_pay.feature.transfer_intrabank.generated.resources.Res
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_select_account_placeholder
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_see_all
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_send
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_tab_beneficiaries
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_tab_recents
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Intra-bank transfer hub with quick actions, recent payees and saved beneficiaries. */
 @Composable
 fun IntraBankHubScreen(
     navigateToSelectAccountScreen: () -> Unit,

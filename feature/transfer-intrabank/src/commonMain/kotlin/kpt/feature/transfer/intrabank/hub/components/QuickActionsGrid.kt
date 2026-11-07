@@ -35,13 +35,14 @@ import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.transfer_intrabank.generated.resources.Res
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_add_payee
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_history
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_request
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_scan_qr
+import kpt.feature.transfer.intrabank.generated.resources.Res
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_add_payee
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_history
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_request
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_scan_qr
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Grid of quick actions on the hub: add payee, history, scan QR and request money. */
 @Composable
 fun QuickActionsGrid(
     onAddPayeeClick: () -> Unit,

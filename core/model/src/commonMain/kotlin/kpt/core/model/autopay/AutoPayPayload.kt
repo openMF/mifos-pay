@@ -13,6 +13,30 @@ import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
 // TODO: Align data models with final API response schema once confirmed by backend
+/**
+ * Request body for creating an auto-pay schedule.
+ *
+ * @property name Display name of the schedule.
+ * @property description Free-text description.
+ * @property amount Amount per payment, as a string.
+ * @property currency Currency code.
+ * @property frequency Recurrence frequency code.
+ * @property frequencyInterval Number of frequency units between payments.
+ * @property recipientName Name of the payee.
+ * @property recipientAccountNumber Account number of the payee.
+ * @property recipientBankCode Bank code of the payee's bank.
+ * @property sourceAccountId Id of the account payments are drawn from.
+ * @property sourceAccountNumber Account number of the source account.
+ * @property sourceAccountType Type of the source account.
+ * @property clientId Id of the owning client.
+ * @property validFrom Start date of the schedule.
+ * @property validTill End date of the schedule.
+ * @property maxAmount Upper limit for a single payment.
+ * @property minAmount Lower limit for a single payment.
+ * @property paymentMethod Payment method used to execute payments.
+ * @property locale Locale used to parse numbers in the request.
+ * @property dateFormat Format pattern used for date fields.
+ */
 @Serializable
 @Parcelize
 data class AutoPayPayload(
@@ -38,6 +62,27 @@ data class AutoPayPayload(
     val dateFormat: String = "dd MMMM yyyy",
 ) : Parcelable
 
+/**
+ * Request body for updating an auto-pay schedule; only non-null fields are changed.
+ *
+ * @property name New display name.
+ * @property description New description.
+ * @property amount New amount per payment.
+ * @property currency New currency code.
+ * @property frequency New frequency code.
+ * @property frequencyInterval New number of frequency units between payments.
+ * @property recipientName New payee name.
+ * @property recipientAccountNumber New payee account number.
+ * @property recipientBankCode New payee bank code.
+ * @property validFrom New start date.
+ * @property validTill New end date.
+ * @property maxAmount New upper limit per payment.
+ * @property minAmount New lower limit per payment.
+ * @property paymentMethod New payment method.
+ * @property status New status.
+ * @property locale Locale used to parse numbers in the request.
+ * @property dateFormat Format pattern used for date fields.
+ */
 @Serializable
 @Parcelize
 data class AutoPayUpdatePayload(
@@ -60,6 +105,22 @@ data class AutoPayUpdatePayload(
     val dateFormat: String = "dd MMMM yyyy",
 ) : Parcelable
 
+/**
+ * A historical record of one auto-pay payment attempt.
+ *
+ * @property id Id of the history record.
+ * @property autoPayId Id of the auto-pay schedule that produced it.
+ * @property amount Amount paid.
+ * @property currency Currency code.
+ * @property status Outcome of the payment.
+ * @property transactionDate Date the payment was made.
+ * @property recipientName Name of the payee.
+ * @property recipientAccountNumber Account number of the payee.
+ * @property sourceAccountNumber Account number the payment was drawn from.
+ * @property referenceNumber Reference number of the payment.
+ * @property failureReason Reason for failure, when the payment failed.
+ * @property createdDate Date the record was created.
+ */
 @Serializable
 @Parcelize
 data class AutoPayHistory(
@@ -77,6 +138,20 @@ data class AutoPayHistory(
     val createdDate: String? = null,
 ) : Parcelable
 
+/**
+ * A payment due soon under an auto-pay schedule.
+ *
+ * @property id Id of the upcoming payment.
+ * @property autoPayId Id of the auto-pay schedule it belongs to.
+ * @property scheduleName Name of the schedule.
+ * @property amount Amount due.
+ * @property currency Currency code.
+ * @property dueDate Date the payment is due.
+ * @property status Current status of the payment.
+ * @property recipientName Name of the payee.
+ * @property recipientAccountNumber Account number of the payee.
+ * @property sourceAccountNumber Account number the payment will be drawn from.
+ */
 @Serializable
 @Parcelize
 data class UpcomingPayment(

@@ -11,6 +11,13 @@ package kpt.core.model.network.entity.templates.beneficiary
 
 import kotlinx.serialization.Serializable
 
+/**
+ * An account type selectable when adding a beneficiary.
+ *
+ * @property id Unique id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ */
 @Serializable
 data class AccountTypeOption(
     val id: Int? = null,

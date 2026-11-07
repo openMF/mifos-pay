@@ -18,7 +18,7 @@ import kpt.core.common.ScreenState
 import kpt.core.common.asScreenStateFlow
 import kpt.core.model.instance.InstancesConfig
 import kpt.core.network.SupabaseApiManager
-import mifos_pay.core.network.generated.resources.Res
+import kpt.core.network.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 /**
  * Instance config loader that fetches configuration from Supabase.
@@ -56,6 +56,7 @@ class SupabaseInstanceConfigLoader(
         }
     }
 
+    /** Default configuration, an empty list of instances. */
     companion object {
         private val DEFAULT_CONFIG = InstancesConfig(instances = emptyList())
     }

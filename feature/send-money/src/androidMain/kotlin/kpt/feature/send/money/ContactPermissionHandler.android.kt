@@ -11,6 +11,7 @@ package kpt.feature.send.money
 
 import androidx.compose.runtime.Composable
 import kpt.core.designsystem.component.PermissionBox
+/** Android actual: shows a permission box prompting for READ_CONTACTS access. */
 @Composable
 actual fun ContactPermissionHandler() {
     PermissionBox(

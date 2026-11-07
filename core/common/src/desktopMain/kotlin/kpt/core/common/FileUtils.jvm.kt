@@ -10,4 +10,5 @@
 package kpt.core.common
 
 // JVM and Android implementation
+/** Creates the platform [FileUtils] implementation. */
 actual fun createPlatformFileUtils(): FileUtils = CommonFileUtils()

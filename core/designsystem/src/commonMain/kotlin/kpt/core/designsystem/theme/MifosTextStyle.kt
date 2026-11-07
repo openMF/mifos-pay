@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
+/** Medium-weight 16sp sans-serif text style. */
 val styleMedium16sp =
     TextStyle(
         fontSize = 16.sp,
@@ -23,6 +24,7 @@ val styleMedium16sp =
         fontWeight = FontWeight.Medium,
     )
 
+/** Normal-weight 18sp sans-serif text style. */
 val styleNormal18sp =
     TextStyle(
         fontSize = 18.sp,
@@ -30,6 +32,7 @@ val styleNormal18sp =
         fontWeight = FontWeight.Normal,
     )
 
+/** Medium-weight 30sp sans-serif text style. */
 val styleMedium30sp =
     TextStyle(
         fontSize = 30.sp,
@@ -37,6 +40,7 @@ val styleMedium30sp =
         fontWeight = FontWeight.Medium,
     )
 
+/** Semi-bold dark text style used for top bar titles. */
 val styleMifosTopBar =
     TextStyle(
         color = Color(0xFF212121),
@@ -44,5 +48,8 @@ val styleMifosTopBar =
         fontSize = 20.sp,
     )
 
+/** Center-aligned text style for settings buttons. */
 val styleSettingsButton = TextStyle(textAlign = TextAlign.Center)
+
+/** 16sp text style for transaction history items. */
 val historyItemTextStyle = TextStyle(fontSize = 16.sp)

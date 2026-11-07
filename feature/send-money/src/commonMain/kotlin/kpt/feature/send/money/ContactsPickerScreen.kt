@@ -49,9 +49,11 @@ import kpt.core.designsystem.component.MifosTopBar
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.AvatarBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Composable that requests contacts permission on platforms that need it. */
 @Composable
 expect fun ContactPermissionHandler()
 
+/** Screen that lists and searches device contacts so the user can pick a payment recipient. */
 @Composable
 fun ContactsPickerScreen(
     onBackClick: () -> Unit,
@@ -252,6 +254,7 @@ private fun ContactItem(
     }
 }
 
+/** Preview of [ContactsPickerScreen]. */
 @Preview
 @Composable
 fun ContactsPickerScreenPreview() {

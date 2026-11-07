@@ -17,5 +17,7 @@ package kpt.core.store.wallet.standinginstruction
  * (`StandingInstructionDao.replacePage(clientId, entities)`) AND as the API
  * query parameter (`GET /standinginstructions?clientId=<clientId>`), so
  * per-client scoping is enforced end-to-end.
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class StandingInstructionKey(val clientId: Long)

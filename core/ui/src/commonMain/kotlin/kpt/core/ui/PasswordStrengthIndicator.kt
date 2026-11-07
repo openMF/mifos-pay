@@ -58,6 +58,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Error card combining the strength bar, character counter and error text for a password. */
 @Suppress("LongMethod", "CyclomaticComplexMethod")
 @Composable
 fun CombinedPasswordErrorCard(
@@ -265,6 +266,7 @@ fun CombinedPasswordErrorCard(
     }
 }
 
+/** Strength meter and hint text reflecting the given [PasswordStrengthState]. */
 @Suppress("LongMethod", "CyclomaticComplexMethod", "MagicNumber")
 @Composable
 fun PasswordStrengthIndicator(
@@ -387,13 +389,27 @@ private fun MinimumCharacterCount(
     }
 }
 
+/** Password strength levels displayed by the indicator, from empty to very strong. */
 enum class PasswordStrengthState {
+    /** No password entered. */
     NONE,
+
+    /** Weak password, level 1. */
     WEAK_1,
+
+    /** Weak password, level 2. */
     WEAK_2,
+
+    /** Weak password, level 3. */
     WEAK_3,
+
+    /** Acceptable password. */
     GOOD,
+
+    /** Strong password. */
     STRONG,
+
+    /** Very strong password. */
     VERY_STRONG,
 }
 

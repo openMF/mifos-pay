@@ -13,6 +13,15 @@ import kotlinx.serialization.Serializable
 import kpt.core.model.network.entity.loanAccount.LoanAccountResponseDto
 import kpt.core.model.network.entity.shareAccount.ShareAccountResponseDto
 import kpt.core.model.savingsaccount.SavingAccountEntity
+/**
+ * All accounts owned by a client, grouped by account type.
+ *
+ * @property savingsAccounts Savings accounts of the client.
+ * @property loanAccounts Loan accounts.
+ * @property shareAccounts Share accounts.
+ * @property groupLoanIndividualMonitoringAccounts Group loan individual monitoring (GLIM) accounts.
+ * @property guarantorAccounts Loans guaranteed by the client.
+ */
 @Serializable
 data class ClientAccountsEntity(
     var savingsAccounts: List<SavingAccountEntity> = emptyList(),
@@ -22,13 +31,17 @@ data class ClientAccountsEntity(
     val guarantorAccounts: List<GuarantorAccountEntity> = emptyList(),
 ) {
 
+    /** Replaces the savings accounts and returns this entity for chaining. */
     fun withSavingsAccounts(savingsAccounts: List<SavingAccountEntity>): ClientAccountsEntity {
         this.savingsAccounts = savingsAccounts
         return this
     }
 
+    /** Savings accounts whose deposit type is recurring. */
     val recurringSavingsAccounts: List<SavingAccountEntity?>
         get() = getSavingsAccounts(true)
+
+    /** Savings accounts whose deposit type is not recurring. */
     val nonRecurringSavingsAccounts: List<SavingAccountEntity?>
         get() = getSavingsAccounts(false)
 

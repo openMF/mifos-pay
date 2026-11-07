@@ -11,6 +11,16 @@ package kpt.core.model.client
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Data needed to register a new client.
+ *
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property externalId External reference id.
+ * @property mobileNo Mobile phone number.
+ * @property address Postal address.
+ * @property savingsProductId Id of the savings product to open.
+ */
 @Parcelize
 data class NewClient(
     val firstname: String,

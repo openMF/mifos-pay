@@ -27,12 +27,13 @@ import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosOutlinedButton
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.transfer_intrabank.generated.resources.Res
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_add_payee
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_no_recents
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_no_recents_subtitle
+import kpt.feature.transfer.intrabank.generated.resources.Res
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_add_payee
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_no_recents
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_no_recents_subtitle
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Placeholder shown when there are no recent payees, with an optional add-payee action. */
 @Composable
 fun EmptyRecentsState(
     onAddPayeeClick: (() -> Unit)? = null,

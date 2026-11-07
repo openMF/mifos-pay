@@ -29,12 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_close
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_help
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_scan_any_qr
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_supported_transfers
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_close
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_help
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_scan_any_qr
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_supported_transfers
 import org.jetbrains.compose.resources.stringResource
+/** Top bar of the scanner with close and help buttons. */
 @Composable
 fun QrScanTopBar(
     onCloseClick: () -> Unit,

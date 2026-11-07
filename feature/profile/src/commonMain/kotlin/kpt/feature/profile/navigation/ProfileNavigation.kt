@@ -16,12 +16,16 @@ import androidx.navigation.navigation
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.profile.fork.ProfileScreen
 private const val PROFILE_NAVIGATION = "profile_navigation"
+
+/** Navigation route of the profile screen. */
 const val PROFILE_ROUTE = "profile_route"
 
+/** Navigates to the profile screen. */
 fun NavController.navigateToProfile(navOptions: NavOptions? = null) {
     this.navigate(PROFILE_ROUTE, navOptions)
 }
 
+/** Registers the profile screen destination. */
 fun NavGraphBuilder.profileScreen(
     navigateBack: () -> Unit,
     onEditProfile: () -> Unit,
@@ -38,6 +42,7 @@ fun NavGraphBuilder.profileScreen(
     }
 }
 
+/** Registers the profile nested graph containing the profile and edit-profile screens. */
 fun NavGraphBuilder.profileNavGraph(
     navController: NavController,
     navigateBack: () -> Unit,

@@ -11,6 +11,15 @@ package kpt.core.model.client
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Editable profile fields sent when updating a client.
+ *
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property externalId External reference id.
+ * @property mobileNo Mobile phone number.
+ * @property emailAddress Email address.
+ */
 @Parcelize
 data class UpdatedClient(
     val firstname: String,

@@ -12,6 +12,16 @@ package kpt.core.model.standinginstruction
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Request body for updating an existing standing instruction.
+ *
+ * @property priority Priority code of the instruction.
+ * @property status Status code of the instruction.
+ * @property locale Locale used to parse numbers and dates.
+ * @property validFrom Date from which the instruction is valid.
+ * @property validTill Date until which the instruction is valid.
+ * @property dateFormat Format used for date values.
+ */
 @Serializable
 @Parcelize
 data class SIUpdatePayload(

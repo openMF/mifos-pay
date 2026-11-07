@@ -28,6 +28,11 @@ private const val ADD_EDIT_ITEM_ROUTE: String =
         "/{$ADD_EDIT_ITEM_TYPE}" +
         "?$EDIT_ITEM_ID={$EDIT_ITEM_ID}"
 
+/**
+ * Navigation arguments of the add/edit savings account screen.
+ *
+ * @property savingsAddEditType Whether to add a new account or edit an existing one.
+ */
 data class SavingAccountAddEditArgs(
     val savingsAddEditType: SavingsAddEditType,
 ) {
@@ -45,6 +50,7 @@ data class SavingAccountAddEditArgs(
     )
 }
 
+/** Registers the add/edit savings account destination. */
 fun NavGraphBuilder.addEditSavingAccountScreen(
     navigateBack: () -> Unit,
 ) {
@@ -60,6 +66,7 @@ fun NavGraphBuilder.addEditSavingAccountScreen(
     }
 }
 
+/** Navigates to the add/edit savings account screen for [addEditType]. */
 fun NavController.navigateToSavingAccountAddEdit(
     addEditType: SavingsAddEditType,
     navOptions: NavOptions? = null,

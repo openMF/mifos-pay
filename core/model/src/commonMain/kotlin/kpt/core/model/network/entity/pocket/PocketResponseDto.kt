@@ -11,6 +11,13 @@ package kpt.core.model.network.entity.pocket
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Accounts linked to a pocket, grouped by loan, savings and share accounts.
+ *
+ * @property loanAccounts Loan accounts.
+ * @property savingsAccounts Savings accounts of the client.
+ * @property shareAccounts Share accounts.
+ */
 @Serializable
 data class PocketResponseDto(
     val loanAccounts: List<PocketAccountDto> = emptyList(),
@@ -18,6 +25,15 @@ data class PocketResponseDto(
     val shareAccounts: List<PocketAccountDto> = emptyList(),
 )
 
+/**
+ * An account linked to a pocket.
+ *
+ * @property pocketId Id of the pocket.
+ * @property accountId Id of the account.
+ * @property accountType Type of the account.
+ * @property accountNumber Account number.
+ * @property id Unique id.
+ */
 @Serializable
 data class PocketAccountDto(
     val pocketId: Long? = null,

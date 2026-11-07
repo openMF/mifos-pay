@@ -8,14 +8,21 @@
 
 privacy_policy_url: https://raw.githubusercontent.com/openMF/kmp-project-template/main/legal/output/privacy-policy.md
 
+# Whether the app collects personal data.
 collects_data: false
+# What is collected and why, when [collects_data] is true.
 data_collection_notes: >
   App collects and transmits NO user data. All state (loans, reminders,
   calculator inputs) is stored locally on-device only. Read-only public-data
   calls (FRED interest rates, World Bank macro data, currency exchange
   rates) carry no personal identifiers.
 
+# Whether the app shows ads.
 contains_ads: false
+# Whether an account is required to use the app.
 requires_account: false
+# Whether the app uses encryption — the Microsoft Store's equivalent of Apple's export
+# compliance question.
 uses_encryption: true
+# Which encryption is used, for the export declaration.
 encryption_notes: Standard OS-provided HTTPS/TLS only for outbound public-data reads.

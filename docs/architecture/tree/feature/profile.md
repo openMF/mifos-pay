@@ -25,10 +25,10 @@ only the app's display name, yet it is a real domain model rather than a raw `St
 replaces the *fetcher*, not the screen. Swapping in a signed-in user means widening the model and
 returning it from the store, with the ViewModel and composable untouched.
 
-<!-- api-docs:begin module=feature/profile sha=446ca11efe2b83c9618d40da0a9d418855012cf3 -->
+<!-- api-docs:begin module=feature/profile sha=bd42c8d051f984742f2727d1cdbe315805f71feb -->
 ## API reference
 
-_Generated from `feature/profile` at tree `446ca11efe2b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/profile` at tree `bd42c8d051f9` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -41,12 +41,12 @@ rather than re-declaring what they already own.
 ```kotlin
 data object ProfileRoute
 ```
-_No KDoc at source._
+Type-safe navigation route of the profile screen.
 
 ```kotlin
 fun NavController.navigateToProfile(navOptions: NavOptions? = null) = navigate(ProfileRoute, navOptions)
 ```
-_No KDoc at source._
+Navigates to the profile screen.
 
 ```kotlin
 fun NavGraphBuilder.profileDestination(profileBody: @Composable () -> Unit = {})
@@ -81,7 +81,7 @@ Append-only test-tag registry for the profile feature. Consumed by Compose UI te
 ```kotlin
 fun ProfileDetailsCard(
 ```
-_No KDoc at source._
+Card listing the client profile details such as username, email and mobile number.
 
 <details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/fork/ProfileScreen.kt:146</code></summary>
 
@@ -99,14 +99,14 @@ _No KDoc at source._
 ```kotlin
 fun ProfileItem(
 ```
-_No KDoc at source._
+A labeled profile field showing a label above its value.
 
 ### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/components/ProfileImage.kt`
 
 ```kotlin
 fun ProfileImage(
 ```
-_No KDoc at source._
+Displays the client profile image decoded from a base64 string.
 
 <details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/fork/ProfileScreen.kt:144</code></summary>
 
@@ -125,7 +125,7 @@ _No KDoc at source._
 ```kotlin
 fun EditableProfileImage(
 ```
-_No KDoc at source._
+Profile image that can be tapped to pick a new picture.
 
 <details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileScreen.kt:119</code></summary>
 
@@ -146,14 +146,14 @@ _No KDoc at source._
 ```kotlin
 val ProfileModule = module
 ```
-_No KDoc at source._
+Koin module providing the profile and edit-profile ViewModels.
 
 ### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileViewModel.kt`
 
 ```kotlin
 sealed interface EditProfileEvent
 ```
-_No KDoc at source._
+One-shot events emitted by the edit-profile ViewModel.
 
 <details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileScreen.kt:67</code></summary>
 
@@ -172,7 +172,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface EditProfileAction
 ```
-_No KDoc at source._
+Actions dispatched to the edit-profile ViewModel.
 
 <details><summary>Used in the template — <code>feature/profile/src/commonMain/kotlin/kpt/feature/profile/edit/EditProfileScreen.kt:89</code></summary>
 
@@ -193,26 +193,26 @@ _No KDoc at source._
 ```kotlin
 fun NavController.navigateToEditProfile(navOptions: NavOptions? = null) =
 ```
-_No KDoc at source._
+Navigates to the edit-profile screen.
 
 ### `feature/profile/src/commonMain/kotlin/kpt/feature/profile/navigation/ProfileNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToProfile(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the profile screen.
 
 ```kotlin
 fun NavGraphBuilder.profileScreen(
 ```
-_No KDoc at source._
+Registers the profile screen destination.
 
 ```kotlin
 fun NavGraphBuilder.profileNavGraph(
 ```
-_No KDoc at source._
+Registers the profile nested graph containing the profile and edit-profile screens.
 
 ---
 
-_4 type(s), 12 function(s)/property(ies); 3 carry KDoc at source; 0 authored example(s); 6 live call site(s)._
+_4 type(s), 12 function(s)/property(ies); 16 carry KDoc at source; 0 authored example(s); 6 live call site(s)._
 <!-- api-docs:end -->

@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 
+/** Alert dialog showing an [icon], [title] and [message] with confirm/dismiss actions. */
 @Composable
 fun MifosAlertDialog(
     title: String,

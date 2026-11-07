@@ -11,6 +11,23 @@ package kpt.core.model.network.entity.client
 
 import kotlinx.serialization.Serializable
 import kpt.core.common.DateHelper
+/**
+ * Request body for registering a new client; the secondary constructor fills default office, legal form and dates.
+ *
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property externalId External identifier.
+ * @property mobileNo Mobile phone number.
+ * @property address Postal address.
+ * @property savingsProductId Id of the savings product.
+ * @property officeId Id of the office.
+ * @property legalFormId Id of the legal form.
+ * @property active Whether it is active.
+ * @property dateFormat Date format pattern used for the date fields.
+ * @property activationDate Activation date.
+ * @property submittedOnDate Date submitted, as [year, month, day].
+ * @property locale Locale used to parse numbers and dates.
+ */
 @Serializable
 data class NewClientEntity(
     val firstname: String,
@@ -51,6 +68,16 @@ data class NewClientEntity(
     )
 }
 
+/**
+ * Postal address submitted when registering a client.
+ *
+ * @property addressLine1 First address line.
+ * @property addressLine2 Second address line.
+ * @property postalCode Postal code.
+ * @property stateProvinceId Id of the state or province.
+ * @property countryId Id of the country.
+ * @property addressTypeId Id of the address type (default 805).
+ */
 @Serializable
 data class Address(
     val addressLine1: String,

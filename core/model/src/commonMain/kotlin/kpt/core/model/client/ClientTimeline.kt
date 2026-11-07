@@ -11,6 +11,15 @@ package kpt.core.model.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Key lifecycle dates and the staff member who activated a client.
+ *
+ * @property submittedOnDate Date the client was submitted.
+ * @property activatedOnDate Date the client was activated.
+ * @property activatedByUsername Username of the activating user.
+ * @property activatedByFirstname First name of the activating user.
+ * @property activatedByLastname Last name of the activating user.
+ */
 @Serializable
 data class ClientTimeline(
     val submittedOnDate: List<Long> = emptyList(),

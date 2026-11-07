@@ -9,5 +9,8 @@
  */
 package kpt.feature.settings
 
+/** Desktop actual of [getPlatform]. */
 actual fun getPlatform(): Platform = Platform.Desktop
+
+/** Desktop actual; dynamic theming is not supported. */
 actual fun supportsDynamicTheming(): Boolean = false

@@ -46,8 +46,8 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.faq.generated.resources.Res
-import mifos_pay.feature.faq.generated.resources.feature_faq
+import kpt.feature.faq.generated.resources.Res
+import kpt.feature.faq.generated.resources.feature_faq
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel

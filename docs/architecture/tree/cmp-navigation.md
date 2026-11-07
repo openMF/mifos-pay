@@ -1,20 +1,20 @@
 # `cmp-navigation/`
 
 > **Kind:** Kotlin Multiplatform module  
-> **Measured:** 77 tracked files — 50× `.kt`, 23× `.xml`, 3× `.md`, 1× `.kts`
+> **Measured:** 78 tracked files — 51× `.kt`, 23× `.xml`, 3× `.md`, 1× `.kts`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
-| `cmp-navigation/src/` | 74 |
+| `cmp-navigation/src/` | 75 |
 | (files at the root) | 3 |
 
 ## Modules
 
 | | |
 |---|---|
-| `cmp-navigation:src` | 50 Kotlin files |
+| `cmp-navigation:src` | 51 Kotlin files |
 
 ## Docs in the tree
 

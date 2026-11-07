@@ -17,12 +17,15 @@ import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
 import kpt.core.base.ui.nav.composableWithStayTransitions
 
+/** Type-safe navigation destination of the home graph. */
 @Serializable
 data object HomeDestination
 
+/** Type-safe route of the home screen. */
 @Serializable
 data object HomeRoute
 
+/** Navigates to the home destination, optionally with [navOptions]. */
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     navigate(HomeDestination, navOptions)
 }

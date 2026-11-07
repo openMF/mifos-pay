@@ -22,6 +22,7 @@ import kpt.core.model.network.entity.Page
 import kpt.core.network.FineractApiManager
 // TODO: Align repository with final API response/request schema once confirmed by backend
 
+/** Default [AutoPayHistoryRepository]. */
 class AutoPayHistoryRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

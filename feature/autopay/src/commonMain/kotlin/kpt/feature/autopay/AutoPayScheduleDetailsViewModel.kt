@@ -20,6 +20,7 @@ import kotlinx.serialization.Serializable
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.ui.utils.BaseViewModel
+/** View model for the AutoPay schedule details screen; loads a schedule and handles pause, resume and cancel. */
 class AutoPayScheduleDetailsViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<AutoPayScheduleDetailsState, AutoPayScheduleDetailsEvent, AutoPayScheduleDetailsAction>(
@@ -28,6 +29,7 @@ class AutoPayScheduleDetailsViewModel(
     ),
 ) {
 
+    /** Holds the saved-state key used to persist the state. */
     companion object {
         private const val KEY_STATE = "autopay_schedule_details_state"
     }
@@ -122,6 +124,14 @@ class AutoPayScheduleDetailsViewModel(
     }
 }
 
+/**
+ * UI state of the schedule details screen.
+ *
+ * @property scheduleId Id of the schedule shown.
+ * @property isLoading Whether the schedule is loading.
+ * @property schedule The loaded schedule, or null.
+ * @property error Error message to show, or null.
+ */
 @Serializable
 data class AutoPayScheduleDetailsState(
     val scheduleId: String,
@@ -130,18 +140,42 @@ data class AutoPayScheduleDetailsState(
     val error: String? = null,
 )
 
+/** One-off events emitted by the schedule details view model. */
 sealed interface AutoPayScheduleDetailsEvent {
+    /** Navigate back. */
     data object NavigateBack : AutoPayScheduleDetailsEvent
+
+    /** The schedule was paused. */
     data object SchedulePaused : AutoPayScheduleDetailsEvent
+
+    /** The schedule was resumed. */
     data object ScheduleResumed : AutoPayScheduleDetailsEvent
+
+    /** The schedule was cancelled. */
     data object ScheduleCancelled : AutoPayScheduleDetailsEvent
+
+    /**
+     * Navigate to the edit screen.
+     *
+     * @property scheduleId Id of the schedule to edit.
+     */
     data class NavigateToEdit(val scheduleId: String) : AutoPayScheduleDetailsEvent
 }
 
+/** User actions handled by the schedule details view model. */
 sealed interface AutoPayScheduleDetailsAction {
+    /** Pause the schedule. */
     data object PauseSchedule : AutoPayScheduleDetailsAction
+
+    /** Resume the schedule. */
     data object ResumeSchedule : AutoPayScheduleDetailsAction
+
+    /** Edit the schedule. */
     data object EditSchedule : AutoPayScheduleDetailsAction
+
+    /** Cancel the schedule. */
     data object CancelSchedule : AutoPayScheduleDetailsAction
+
+    /** Navigate back. */
     data object NavigateBack : AutoPayScheduleDetailsAction
 }

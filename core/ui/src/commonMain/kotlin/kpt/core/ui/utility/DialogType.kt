@@ -9,8 +9,14 @@
  */
 package kpt.core.ui.utility
 
+/** Kinds of confirmation dialog shown from profile and settings screens. */
 enum class DialogType {
+    /** No dialog. */
     NONE,
+
+    /** Confirm disabling an account. */
     DISABLE_ACCOUNT,
+
+    /** Confirm logging out. */
     LOGOUT,
 }

@@ -28,3 +28,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.notification.generated.resources"
+}

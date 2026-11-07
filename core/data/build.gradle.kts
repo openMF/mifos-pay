@@ -10,11 +10,15 @@
 plugins {
     alias(libs.plugins.kmp.library.convention)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.components.resources)
             implementation(projects.core.common)
             implementation(projects.core.database)
             implementation(projects.coreBase.database)
@@ -55,6 +59,13 @@ kotlin {
             implementation(libs.koin.test)
         }
     }
+}
+
+// Bundled files (`composeResources/files/…`, read with `Res.readBytes`): a fork ships its own data here.
+compose.resources {
+    publicResClass = true
+    generateResClass = always
+    packageOfResClass = "kpt.core.data.generated.resources"
 }
 
 // ── Fork-owned dependency seam (white-label, mirrors `feature-deps.gradle.kts`) ────────────────

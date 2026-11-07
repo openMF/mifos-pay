@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Four-digit card expiry (MM/YY) input rendered as individual character boxes. */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ExpiryDateInput(
@@ -99,6 +100,7 @@ fun ExpiryDateInput(
     }
 }
 
+/** Single character box of the expiry input, with a slash separator after the second digit. */
 @Composable
 fun FormattedDateView(
     index: Int,
@@ -128,6 +130,7 @@ fun FormattedDateView(
     )
 }
 
+/** Preview of [ExpiryDateInput]. */
 @DevicePreviews
 @Composable
 fun ExpiryDateInputPreview() {

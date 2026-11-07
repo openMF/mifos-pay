@@ -14,6 +14,11 @@ import kotlinx.serialization.Serializable
 /**
  * Represents a specific error detail in the Mifos/Fineract error response.
  * This is typically used for validation errors where multiple fields may have issues.
+ *
+ * @property developerMessage Technical message for developers.
+ * @property defaultUserMessage Default message suitable for display.
+ * @property userMessageGlobalisationCode Localization key of the user message.
+ * @property parameterName Name of the offending request parameter.
  */
 @Serializable
 data class MifosErrorDetail(

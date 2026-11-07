@@ -12,6 +12,13 @@ package kpt.core.model.utils
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A locale entry with country and language names.
+ *
+ * @property countryName Name of the country.
+ * @property localName Name in the local language.
+ * @property dominantName Name of the dominant language.
+ */
 @Parcelize
 @Serializable
 data class Locale(
@@ -20,6 +27,7 @@ data class Locale(
     val dominantName: String,
 ) : Parcelable
 
+/** Returns the locales whose country, local or dominant name contains [filterText], ignoring case; all if blank. */
 fun List<Locale>.filterLocales(filterText: String): List<Locale> {
     return if (filterText.isNotEmpty()) {
         this.filter {

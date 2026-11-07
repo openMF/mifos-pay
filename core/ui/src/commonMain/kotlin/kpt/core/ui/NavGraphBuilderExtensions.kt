@@ -17,6 +17,7 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kpt.core.ui.utils.TransitionProviders
+/** Registers a composable destination for [route] using the slide enter/exit transitions. */
 fun NavGraphBuilder.composableWithSlideTransitions(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
@@ -35,6 +36,7 @@ fun NavGraphBuilder.composableWithSlideTransitions(
     )
 }
 
+/** Registers a composable destination for [route] using the stay enter/exit transitions. */
 fun NavGraphBuilder.composableWithStayTransitions(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
@@ -53,6 +55,7 @@ fun NavGraphBuilder.composableWithStayTransitions(
     )
 }
 
+/** Registers a composable destination for [route] using the push enter/exit transitions. */
 fun NavGraphBuilder.composableWithPushTransitions(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
@@ -71,6 +74,7 @@ fun NavGraphBuilder.composableWithPushTransitions(
     )
 }
 
+/** Registers a composable destination for [route] using the root-push enter/exit transitions. */
 fun NavGraphBuilder.composableWithRootPushTransitions(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),

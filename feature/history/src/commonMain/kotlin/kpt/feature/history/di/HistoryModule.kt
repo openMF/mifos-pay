@@ -15,6 +15,7 @@ import kpt.feature.history.detail.TransactionDetailViewModel
 import kpt.feature.history.transactions.SpecificTransactionsViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the history and specific-transactions ViewModels plus the platform PDF module. */
 @OptIn(ExperimentalPdfGeneratorApi::class)
 val HistoryModule = module {
     includes(HistoryPdfModule)

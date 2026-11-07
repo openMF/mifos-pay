@@ -16,6 +16,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import kpt.feature.transfer.intrabank.confirm.TransferResult
+/**
+ * Navigation route of the transfer success screen.
+ * @property transactionId Id of the completed transaction.
+ * @property amount Amount transferred.
+ * @property fromAccountNo Source account number.
+ * @property fromAccountName Source account holder name.
+ * @property toAccountNo Destination account number.
+ * @property toAccountName Destination account holder name.
+ * @property transferDate Transfer date formatted for display.
+ * @property description Description of the transfer.
+ * @property returnDestination Destination to return to after the screen.
+ */
 @Serializable
 data class TransferSuccessRoute(
     val transactionId: String = "",
@@ -29,6 +41,7 @@ data class TransferSuccessRoute(
     val returnDestination: String = "home",
 )
 
+/** Registers the transfer success destination. */
 fun NavGraphBuilder.transferSuccessScreen(
     navigateBack: (String) -> Unit,
 ) {
@@ -51,6 +64,7 @@ fun NavGraphBuilder.transferSuccessScreen(
     }
 }
 
+/** Navigates to the transfer success screen for [transferResult]. */
 fun NavController.navigateTransferSuccess(
     transferResult: TransferResult,
     returnDestination: String = "home",

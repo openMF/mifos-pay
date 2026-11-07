@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/ui sha=b874720234897aa72090c010c574cc05f8e7194a -->
+<!-- api-docs:begin module=core/ui sha=fe10c2aaf5602cb12041e7a759af4f9442ddbd95 -->
 ## API reference
 
-_Generated from `core/ui` at tree `b87472023489` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/ui` at tree `fe10c2aaf560` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/AmountEditText.kt`
@@ -29,7 +29,7 @@ fun AmountEditText(
 ```
 AmountEditText - Generic amount input component with validation
 
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/TransferDetailsScreen.kt:175</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/TransferDetailsScreen.kt:176</code></summary>
 
 ```kotlin
                         color = KptTheme.colorScheme.onSurfaceVariant,
@@ -48,9 +48,9 @@ AmountEditText - Generic amount input component with validation
 ```kotlin
 fun AvatarBox(
 ```
-_No KDoc at source._
+Circular avatar showing the initials of `name`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:372</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:373</code></summary>
 
 ```kotlin
                 },
@@ -67,9 +67,9 @@ _No KDoc at source._
 ```kotlin
 fun AvatarBox(
 ```
-_No KDoc at source._
+Circular avatar showing an `icon`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:372</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:373</code></summary>
 
 ```kotlin
                 },
@@ -90,11 +90,11 @@ annotation class DevicePreviews
 ```
 Multipreview annotation that represents various device sizes. Add this annotation to a composable to render various devices.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/EmptyContentScreen.kt:237</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/EmptyContentScreen.kt:243</code></summary>
 
 ```kotlin
-}
 
+/** Preview of the empty-state screen with a drawable image. */
 @DevicePreviews
 @Composable
 fun EmptyContentScreenDrawableImagePreview() {
@@ -111,7 +111,7 @@ fun DropdownBox(
 ```
 Prefer to use when text field is not read only
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:136</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillScreen.kt:137</code></summary>
 
 ```kotlin
                 )
@@ -128,7 +128,7 @@ Prefer to use when text field is not read only
 ```kotlin
 fun ExposedDropdownBox(
 ```
-_No KDoc at source._
+Read-only text field that opens a dropdown menu of `content` items.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:324</code></summary>
 
@@ -147,7 +147,7 @@ _No KDoc at source._
 ```kotlin
 fun DropdownBoxItem(
 ```
-_No KDoc at source._
+Single selectable `text` row inside a dropdown menu.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:332</code></summary>
 
@@ -168,28 +168,9 @@ _No KDoc at source._
 ```kotlin
 fun EmptyContentScreen(
 ```
-_No KDoc at source._
+Empty-state screen with title, subtitle and a caller-provided image.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
-
-```kotlin
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
-                        modifier = Modifier,
-                        iconTint = KptTheme.colorScheme.error,
-```
-
-</details>
-
-```kotlin
-fun EmptyContentScreen(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
 
 ```kotlin
 
@@ -206,28 +187,9 @@ _No KDoc at source._
 ```kotlin
 fun EmptyContentScreen(
 ```
-_No KDoc at source._
+Empty-state screen with title, subtitle, an image and an action button with icon.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
-
-```kotlin
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
-                        modifier = Modifier,
-                        iconTint = KptTheme.colorScheme.error,
-```
-
-</details>
-
-```kotlin
-fun EmptyContentScreen(
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
 
 ```kotlin
 
@@ -244,9 +206,47 @@ _No KDoc at source._
 ```kotlin
 fun EmptyContentScreen(
 ```
-_No KDoc at source._
+Empty-state screen with title, subtitle and a drawable-resource image.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:193</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
+
+```kotlin
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
+                        modifier = Modifier,
+                        iconTint = KptTheme.colorScheme.error,
+```
+
+</details>
+
+```kotlin
+fun EmptyContentScreen(
+```
+Empty-state screen with title, subtitle and a default artwork drawable.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
+
+```kotlin
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+                        subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
+                        modifier = Modifier,
+                        iconTint = KptTheme.colorScheme.error,
+```
+
+</details>
+
+```kotlin
+fun EmptyContentScreen(
+```
+Empty-state screen with title, subtitle, an image-vector icon and an action button.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
 
 ```kotlin
 
@@ -263,12 +263,12 @@ _No KDoc at source._
 ```kotlin
 fun EmptyContentScreenDrawableImagePreview()
 ```
-_No KDoc at source._
+Preview of the empty-state screen with a drawable image.
 
 ```kotlin
 fun EmptyContentScreenImageVectorPreview()
 ```
-_No KDoc at source._
+Preview of the empty-state screen with an image-vector icon.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/ErrorBottomSheet.kt`
 
@@ -369,7 +369,7 @@ Singleton instance of `ErrorMessageProviderImpl` for easy access.
 ```kotlin
 fun ErrorScreenContent(
 ```
-_No KDoc at source._
+Error state with title, subtitle and a retry button wired to `onClickRetry`.
 
 <details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/transactions/SpecificTransactionsScreen.kt:104</code></summary>
 
@@ -388,14 +388,14 @@ _No KDoc at source._
 ```kotlin
 fun ErrorContentScreenDrawableImagePreview()
 ```
-_No KDoc at source._
+Preview of `ErrorScreenContent`.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/ExpiryDateInput.kt`
 
 ```kotlin
 fun ExpiryDateInput(
 ```
-_No KDoc at source._
+Four-digit card expiry (MM/YY) input rendered as individual character boxes.
 
 <details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/DebitCardScreenContent.kt:83</code></summary>
 
@@ -414,19 +414,19 @@ _No KDoc at source._
 ```kotlin
 fun FormattedDateView(
 ```
-_No KDoc at source._
+Single character box of the expiry input, with a slash separator after the second digit.
 
 ```kotlin
 fun ExpiryDateInputPreview()
 ```
-_No KDoc at source._
+Preview of `ExpiryDateInput`.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/HeadingTitle.kt`
 
 ```kotlin
 fun VerifyStepHeader(
 ```
-_No KDoc at source._
+Step heading with a verified/unverified status icon next to `text`.
 
 <details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/DebitCardScreen.kt:80</code></summary>
 
@@ -445,12 +445,12 @@ _No KDoc at source._
 ```kotlin
 fun VerifyStepHeaderVerifiedPreview()
 ```
-_No KDoc at source._
+Preview of `VerifyStepHeader` in the verified state.
 
 ```kotlin
 fun VerifyStepHeaderUnverifiedPreview()
 ```
-_No KDoc at source._
+Preview of `VerifyStepHeader` in the unverified state.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/InfoBottomSheet.kt`
 
@@ -504,7 +504,7 @@ TimeZone that can be provided with the TimeZoneMonitor. This way, it's not neede
 ```kotlin
 fun MifosDivider(
 ```
-_No KDoc at source._
+Horizontal divider with configurable thickness and color.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:416</code></summary>
 
@@ -525,7 +525,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosPasswordField(
 ```
-_No KDoc at source._
+Password field with a show/hide toggle whose visibility state is owned by the caller.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
 
@@ -544,7 +544,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosPasswordField(
 ```
-_No KDoc at source._
+Password field that manages its own show/hide toggle state.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
 
@@ -565,9 +565,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosProgressIndicator(
 ```
-_No KDoc at source._
+Full-size Lottie loading animation.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:190</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:191</code></summary>
 
 ```kotlin
         ) {
@@ -584,9 +584,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosProgressIndicatorMini(
 ```
-_No KDoc at source._
+Small Lottie loading animation for inline use.
 
-<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:926</code></summary>
+<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:928</code></summary>
 
 ```kotlin
 
@@ -603,7 +603,7 @@ _No KDoc at source._
 ```kotlin
 fun MifosProgressIndicatorOverlay(
 ```
-_No KDoc at source._
+Lottie loading animation drawn over existing content.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:105</code></summary>
 
@@ -624,9 +624,9 @@ _No KDoc at source._
 ```kotlin
 fun MifosSearchBar(
 ```
-_No KDoc at source._
+Search bar with query text, placeholder and optional clear button.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:206</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:207</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -643,9 +643,9 @@ _No KDoc at source._
 ```kotlin
 fun SimpleSearchBar(
 ```
-_No KDoc at source._
+Compact search field with query text and placeholder.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:153</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:154</code></summary>
 
 ```kotlin
                 Spacer(Modifier.height(KptTheme.spacing.sm))
@@ -662,21 +662,21 @@ _No KDoc at source._
 ```kotlin
 fun PreviewMifosSearchBar()
 ```
-_No KDoc at source._
+Preview of `MifosSearchBar`.
 
 ```kotlin
 fun PreviewSimpleSearchBar()
 ```
-_No KDoc at source._
+Preview of `SimpleSearchBar`.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosSmallChip.kt`
 
 ```kotlin
 fun MifosSmallChip(
 ```
-_No KDoc at source._
+Small non-interactive chip showing a `label`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:500</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:501</code></summary>
 
 ```kotlin
 @Composable
@@ -695,29 +695,29 @@ private fun StatusChip(label: String, color: Color) {
 ```kotlin
 fun MifosUserImage(
 ```
-_No KDoc at source._
+Circular user picture from `bitmap`, falling back to the initials of `username` or a default icon.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt`
 
 ```kotlin
 fun NavGraphBuilder.composableWithSlideTransitions(
 ```
-_No KDoc at source._
+Registers a composable destination for `route` using the slide enter/exit transitions.
 
 ```kotlin
 fun NavGraphBuilder.composableWithStayTransitions(
 ```
-_No KDoc at source._
+Registers a composable destination for `route` using the stay enter/exit transitions.
 
 ```kotlin
 fun NavGraphBuilder.composableWithPushTransitions(
 ```
-_No KDoc at source._
+Registers a composable destination for `route` using the push enter/exit transitions.
 
 ```kotlin
 fun NavGraphBuilder.composableWithRootPushTransitions(
 ```
-_No KDoc at source._
+Registers a composable destination for `route` using the root-push enter/exit transitions.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/NavigationItem.kt`
 
@@ -753,7 +753,7 @@ fun KptBottomBar(
 ```kotlin
 fun nonLetterColorVisualTransformation(): VisualTransformation
 ```
-_No KDoc at source._
+Remembers a visual transformation that colors digits and special characters differently from letters.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/OtpTextField.kt`
 
@@ -779,19 +779,19 @@ Pure digit collector — it does NOT decide correctness itself. `onOtpEntered` f
 ```kotlin
 fun CharView(
 ```
-_No KDoc at source._
+Single box showing one OTP character at `index` of `text`.
 
 ```kotlin
 fun PreviewOtpTextField()
 ```
-_No KDoc at source._
+Preview of the OTP text field.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/PasswordStrengthIndicator.kt`
 
 ```kotlin
 fun CombinedPasswordErrorCard(
 ```
-_No KDoc at source._
+Error card combining the strength bar, character counter and error text for a password.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:253</code></summary>
 
@@ -810,7 +810,7 @@ _No KDoc at source._
 ```kotlin
 fun PasswordStrengthIndicator(
 ```
-_No KDoc at source._
+Strength meter and hint text reflecting the given `PasswordStrengthState`.
 
 <details><summary>Used in the template — <code>feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/EditPasswordScreen.kt:143</code></summary>
 
@@ -829,9 +829,9 @@ _No KDoc at source._
 ```kotlin
 enum class PasswordStrengthState
 ```
-_No KDoc at source._
+Password strength levels displayed by the indicator, from empty to very strong.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:273</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:275</code></summary>
 
 ```kotlin
         if (action.password.isEmpty()) {
@@ -850,9 +850,9 @@ _No KDoc at source._
 ```kotlin
 fun RevealSwipe(
 ```
-_No KDoc at source._
+Swipeable card that reveals a background action layer behind the foreground content.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:297</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:298</code></summary>
 
 ```kotlin
     )
@@ -869,7 +869,7 @@ _No KDoc at source._
 ```kotlin
 fun BaseRevealSwipe(
 ```
-_No KDoc at source._
+Lower-level reveal-swipe implementation that takes explicit shape and colors.
 
 <details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/input/RevealSwipe.kt:147</code></summary>
 
@@ -888,9 +888,9 @@ _No KDoc at source._
 ```kotlin
 enum class RevealDirection
 ```
-_No KDoc at source._
+Directions in which a `RevealSwipe` can be swiped open.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:294</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:295</code></summary>
 
 ```kotlin
     val state = rememberRevealState(
@@ -931,9 +931,9 @@ Create and `remember` a `RevealState` with the default animation clock.
 ```kotlin
 data class RevealState(
 ```
-_No KDoc at source._
+Anchored-draggable state of a `RevealSwipe`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:292</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:293</code></summary>
 
 ```kotlin
     onClickViewAccount: (Long) -> Unit,
@@ -961,7 +961,7 @@ Reset the component to the default position, with an animation.
 ```kotlin
 fun MifosScrollableTabRow(
 ```
-_No KDoc at source._
+Scrollable tab row linked to a pager, one tab per `TabContent`.
 
 <details><summary>Used in the template — <code>feature/finance/src/commonMain/kotlin/kpt/feature/finance/FinanceScreen.kt:28</code></summary>
 
@@ -982,9 +982,9 @@ _No KDoc at source._
 ```kotlin
 fun TransactionFilterBottomSheet(
 ```
-_No KDoc at source._
+Bottom sheet for filtering transaction history by account and transaction type.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:160</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:161</code></summary>
 
 ```kotlin
                 }
@@ -1001,19 +1001,19 @@ _No KDoc at source._
 ```kotlin
 fun TransactionTypeFilter(
 ```
-_No KDoc at source._
+Row of chips for selecting the transaction type filter.
 
 ```kotlin
 fun FilterAccountDropDown(
 ```
-_No KDoc at source._
+Dropdown for selecting which account to filter transactions by.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/TransactionHistoryCard.kt`
 
 ```kotlin
 fun TransactionHistoryCard(
 ```
-_No KDoc at source._
+Card listing recent `Transaction`s with an optional "View all" action.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:210</code></summary>
 
@@ -1034,12 +1034,12 @@ _No KDoc at source._
 ```kotlin
 fun TransactionItemCard(
 ```
-_No KDoc at source._
+Card wrapping a single `Transaction` row, clickable to open its details.
 
 ```kotlin
 fun TransactionItem(
 ```
-_No KDoc at source._
+Row showing a `Transaction` amount, type and date with an optional leading icon.
 
 <details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/components/TransactionList.kt:69</code></summary>
 
@@ -1137,7 +1137,7 @@ enum class PasswordStrengthState
 ```
 Rendered strength bands, from weakest to strongest.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:273</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:275</code></summary>
 
 ```kotlin
         if (action.password.isEmpty()) {
@@ -1158,7 +1158,7 @@ fun RevealSwipe(
 ```
 Swipe-to-reveal row: drag aside to expose actions (delete, archive) behind the content. The revealed actions must ALSO be reachable another way — a swipe is invisible to a screen reader and unavailable to keyboard or pointer users.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:297</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:298</code></summary>
 
 ```kotlin
     )
@@ -1177,7 +1177,7 @@ fun BaseRevealSwipe(
 ```
 Unstyled `RevealSwipe` core — gesture and offset handling with no chrome, for a caller that wants its own presentation.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/RevealSwipe.kt:140</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/RevealSwipe.kt:141</code></summary>
 
 ```kotlin
     var pressOffset by remember { mutableStateOf(DpOffset.Zero) }
@@ -1196,7 +1196,7 @@ enum class RevealDirection
 ```
 Which side(s) a row may be dragged toward to reveal its actions.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:294</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:295</code></summary>
 
 ```kotlin
     val state = rememberRevealState(
@@ -1215,7 +1215,7 @@ enum class RevealValue
 ```
 Possible values of `RevealState`.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/RevealSwipe.kt:230</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/RevealSwipe.kt:231</code></summary>
 
 ```kotlin
                         {
@@ -1239,7 +1239,7 @@ data class RevealState(
 ```
 Current offset and reveal state of one `RevealSwipe` row; hoist it to reset a row programmatically.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:292</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:293</code></summary>
 
 ```kotlin
     onClickViewAccount: (Long) -> Unit,
@@ -1363,7 +1363,7 @@ data class FloatingActionButtonContent(
 ```
 Declarative FAB spec — icon, description and click — so a caller configures the FAB without passing a composable slot.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosScaffold.kt:52</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosScaffold.kt:53</code></summary>
 
 ```kotlin
     topBarTitle: String? = null,
@@ -1449,16 +1449,16 @@ KptScaffold(
 ```kotlin
 fun AddCardChip(
 ```
-_No KDoc at source._
+Chip with text and an add button, used to prompt adding a card.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/utility/DialogState.kt`
 
 ```kotlin
 data class DialogState(
 ```
-_No KDoc at source._
+State of a confirmation dialog.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:132</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:141</code></summary>
 
 ```kotlin
                     is SubmitState.Submitting -> {
@@ -1477,12 +1477,12 @@ _No KDoc at source._
 ```kotlin
 enum class DialogType
 ```
-_No KDoc at source._
+Kinds of confirmation dialog shown from profile and settings screens.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utility/DialogState.kt:13</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utility/DialogState.kt:19</code></summary>
 
 ```kotlin
-
+ */
 data class DialogState(
     val type: DialogType = DialogType.NONE,
     val onConfirm: () -> Unit = {},
@@ -1496,7 +1496,7 @@ data class DialogState(
 ```kotlin
 data class TabContent(
 ```
-_No KDoc at source._
+A tab together with its page content.
 
 <details><summary>Used in the template — <code>feature/finance/src/commonMain/kotlin/kpt/feature/finance/FinanceScreen.kt:22</code></summary>
 
@@ -1516,9 +1516,9 @@ internal fun FinanceRoute(
 ```kotlin
 object AuthenticationUtils
 ```
-_No KDoc at source._
+Default placeholder identity values used for the signed-in user.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/BiometricsSetupScreenViewmodel.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreenViewmodel.kt:75</code></summary>
 
 ```kotlin
             val client = mutableStateFlow.value.client
@@ -1532,9 +1532,9 @@ _No KDoc at source._
 
 </details>
 
-- `const val DEFAULT_USER_ID = "mifosUser"`
-- `const val DEFAULT_USER_EMAIL = "mifospay@mifos.org"`
-- `const val DEFAULT_DISPLAY_NAME = "Mifos Pay User"`
+- `const val DEFAULT_USER_ID = "mifosUser"` — Default user id.
+- `const val DEFAULT_USER_EMAIL = "mifospay@mifos.org"` — Default user email address.
+- `const val DEFAULT_DISPLAY_NAME = "Mifos Pay User"` — Default user display name.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/BackgroundEvent.kt`
 
@@ -1543,16 +1543,16 @@ interface BackgroundEvent
 ```
 Almost all the events in the app involve navigation or toasts. To prevent accidentally navigating to the same view twice, by default, events are ignored if the view is not currently resumed.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:70</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:93</code></summary>
 
 ```kotlin
-    data object NavigateToFineractPayments : SendMoneyOptionsEvent
-    data object NavigateToAutoPay : SendMoneyOptionsEvent
+     * @property data Raw scanned value.
+     */
     data class QrCodeScanned(val data: String) : SendMoneyOptionsEvent, BackgroundEvent
-    data class NavigateToPayeeDetails(val qrCodeData: String) : SendMoneyOptionsEvent, BackgroundEvent
-}
 
-sealed interface SendMoneyOptionsAction {
+    /**
+     * Navigate to payee details for a scanned QR code.
+     * @property qrCodeData Raw scanned QR value.
 ```
 
 </details>
@@ -1564,15 +1564,15 @@ abstract class BaseViewModel<S, E, A>(
 ```
 A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:48</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:52</code></summary>
 
 ```kotlin
     private val repository: SelfServiceRepository,
     private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
+        /** Client id read from user preferences when the view model is created. */
         val clientId = userRepository.clientId.value
-        val defaultAccount = userRepository.defaultAccountId.value
 ```
 
 </details>
@@ -1589,7 +1589,26 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:110</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
+
+```kotlin
+    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel) { event ->
+        when (event) {
+            is AccountEvent.OnAddEditSavingsAccount -> {
+                onAddEditSavingsAccount(event.type)
+            }
+```
+
+</details>
+
+```kotlin
+fun <E> EventsEffect(
+```
+`EventsEffect` over a bare event flow — pass `viewModel.eventFlow` rather than the view model, so a screen does not forward its view model into another composable.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -1629,9 +1648,9 @@ fun LivecycleEventEffect(
 ```kotlin
 object LottieConstants
 ```
-_No KDoc at source._
+Resource paths of bundled Lottie animations.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosProgressIndicator.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosProgressIndicator.kt:42</code></summary>
 
 ```kotlin
     val composition by rememberLottieComposition {
@@ -1644,7 +1663,7 @@ _No KDoc at source._
 
 </details>
 
-- `const val LOADING_ANIMATION = "files/loading_animation.json"`
+- `const val LOADING_ANIMATION = "files/loading_animation.json"` — Path of the loading animation JSON file.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/PasswordChecker.kt`
 
@@ -1653,7 +1672,7 @@ object PasswordChecker
 ```
 Scores a password against the app's rules and explains what is missing. Pure and platform-free, so the same verdict drives the indicator and any validation.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:265</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:267</code></summary>
 
 ```kotlin
             it.copy(
@@ -1686,7 +1705,7 @@ sealed class PasswordStrengthResult
 ```
 The verdict: a strength band plus the unmet requirements, so the UI can say WHAT to fix rather than only that it is weak.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:252</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:254</code></summary>
 
 ```kotlin
             }
@@ -1707,7 +1726,7 @@ enum class PasswordStrength
 ```
 Password strength bands used by `PasswordChecker`.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:287</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:289</code></summary>
 
 ```kotlin
             is PasswordStrengthResult.Success -> {
@@ -1782,7 +1801,7 @@ expect object ShareUtils
 ```
 Platform-specific utilities for sharing content such as text and files. This expect declaration should be implemented for each platform (e.g., Android, iOS) to handle the specifics of sharing functionality.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:303</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:310</code></summary>
 
 ```kotlin
     private fun shareQrCode(data: ByteArray) {
@@ -1804,7 +1823,7 @@ enum class MimeType
 ```
 Represents supported MIME types for file sharing.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:307</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:314</code></summary>
 
 ```kotlin
                     fileName = "qr_code.png",
@@ -1823,7 +1842,7 @@ data class ShareFileModel(
 ```
 Model representing a file to be shared.
 
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:304</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:311</code></summary>
 
 ```kotlin
         viewModelScope.launch {
@@ -1944,7 +1963,7 @@ object TransitionProviders
 ```
 Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a typical composable destination.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:30</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:31</code></summary>
 
 ```kotlin
         arguments = arguments,
@@ -2009,9 +2028,9 @@ Contains standard "transition providers" that may be used to specify the `EnterT
 ```kotlin
 object PasswordChecker
 ```
-_No KDoc at source._
+Evaluates password strength and produces improvement feedback.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:265</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:267</code></summary>
 
 ```kotlin
             it.copy(
@@ -2025,7 +2044,7 @@ _No KDoc at source._
 
 </details>
 
-- `fun getPasswordStrengthResult(password: String): PasswordStrengthResult`
+- `fun getPasswordStrengthResult(password: String): PasswordStrengthResult` — Computes the `PasswordStrength` of `password` and wraps it in a `PasswordStrengthResult`.
 - `val length = password.length`
 - `val hasUpperCase = password.any { it.isUpperCase() }`
 - `val hasLowerCase = password.any { it.isLowerCase() }`
@@ -2034,15 +2053,15 @@ _No KDoc at source._
 - `val numTypesPresent =`
 - `val entropyBits = calculateEntropy(password)`
 - `val charPool = 26 + 26 + 10 + 33 // lowercase + uppercase + digits + symbols`
-- `fun getPasswordFeedback(password: String): List<String>`
+- `fun getPasswordFeedback(password: String): List<String>` — Returns human-readable hints on how to make `password` stronger.
 - `val feedback = mutableListOf<String>()`
 
 ```kotlin
 sealed class PasswordStrengthResult
 ```
-_No KDoc at source._
+Result of a password strength evaluation.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:252</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:254</code></summary>
 
 ```kotlin
             }
@@ -2061,9 +2080,9 @@ _No KDoc at source._
 ```kotlin
 enum class PasswordStrength
 ```
-_No KDoc at source._
+Password strength from weakest (level 0) to strongest (level 5).
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:287</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:289</code></summary>
 
 ```kotlin
             is PasswordStrengthResult.Success -> {
@@ -2091,5 +2110,5 @@ Converts the given `PasswordStrength` to an `Int`.
 
 ---
 
-_41 type(s), 159 function(s)/property(ies); 105 carry KDoc at source; 3 authored example(s); 86 live call site(s)._
+_41 type(s), 160 function(s)/property(ies); 173 carry KDoc at source; 3 authored example(s); 87 live call site(s)._
 <!-- api-docs:end -->

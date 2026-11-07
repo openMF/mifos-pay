@@ -15,12 +15,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
+/** Type-safe navigation route of the select-transfer-type screen. */
 @Serializable
 data object SelectTransferTypeRoute
 
+/** Navigates to the select-transfer-type screen. */
 fun NavController.navigateToSelectTransferType(navOptions: NavOptions? = null) =
     navigate(SelectTransferTypeRoute, navOptions)
 
+/** Registers the select-transfer-type destination. */
 fun NavGraphBuilder.selectTransferTypeScreen(
     onIntraBankTransferClick: () -> Unit,
     onInterBankTransferClick: () -> Unit,

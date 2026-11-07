@@ -15,6 +15,7 @@ import kpt.core.common.MifosDispatchers
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+/** Koin module binding the IO [kotlinx.coroutines.CoroutineDispatcher] qualified by MifosDispatchers.IO. */
 actual val ioDispatcherModule: Module
     get() = module {
         single<CoroutineDispatcher>(named(MifosDispatchers.IO.name)) { Dispatchers.Default }

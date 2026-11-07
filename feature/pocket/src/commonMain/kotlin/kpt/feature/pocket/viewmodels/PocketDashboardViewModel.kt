@@ -101,10 +101,24 @@ internal class PocketDashboardViewModel(
     }
 }
 
+/**
+ * UI state of the pocket dashboard screen.
+ *
+ * @property clientId Id of the client whose pockets are shown.
+ */
 data class PocketDashboardState(
     val clientId: Long = 0,
 )
 
+/**
+ * A pocket (account) entry shown on the pocket dashboard.
+ *
+ * @property accountId Id of the account backing the pocket.
+ * @property name Display name of the pocket.
+ * @property accountNumber Account number of the pocket.
+ * @property balanceOrStatus Balance, or status text when no balance applies.
+ * @property status Account status of the pocket.
+ */
 data class DetailedPocket(
     val accountId: Long,
     val name: String?,

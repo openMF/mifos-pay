@@ -14,7 +14,9 @@ package org.mifos.lib.loan.core.model
  */
 enum class LoanState {
 
+    /** The application is a new loan being created. */
     CREATE,
 
+    /** The application edits an existing loan. */
     UPDATE,
 }

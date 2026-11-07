@@ -31,10 +31,10 @@ The **sync-and-drafts** screen makes the offline write queue visible, which is t
 `UserEditableSettings` is deliberately narrower than `UserData`, so a settings screen cannot write a
 session or lock field it has no business touching.
 
-<!-- api-docs:begin module=feature/settings sha=99e23ec474d28a5f24d4b2456b8b3b64d5422eba -->
+<!-- api-docs:begin module=feature/settings sha=1bb3558ab4a02e5c8f1f37b438d5a909c9a18ebd -->
 ## API reference
 
-_Generated from `feature/settings` at tree `99e23ec474d2` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/settings` at tree `1bb3558ab4a0` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -54,7 +54,7 @@ DevMenuEntry — a generic row in the Settings screen's "Developer" section.
 ```kotlin
 fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel())
 ```
-_No KDoc at source._
+Language chooser dialog bound to `SettingsViewModel`, dismissed through `onDismiss`.
 
 <details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:345</code></summary>
 
@@ -72,7 +72,7 @@ _No KDoc at source._
 ```kotlin
 fun LanguageDialog(
 ```
-_No KDoc at source._
+Stateless language chooser dialog rendering `settingsUiState` and reporting the choice via `onChangeLanguage`.
 
 <details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:345</code></summary>
 
@@ -90,9 +90,9 @@ _No KDoc at source._
 ```kotlin
 fun LanguageChooserRow(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier)
 ```
-_No KDoc at source._
+Selectable row showing one language option.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/language/LanguageScreen.kt:109</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/language/LanguageScreen.kt:111</code></summary>
 
 ```kotlin
     Column(Modifier.selectableGroup()) {
@@ -111,23 +111,23 @@ _No KDoc at source._
 ```kotlin
 expect fun getPlatform(): Platform
 ```
-_No KDoc at source._
+Returns the `Platform` the app is running on.
 
 ```kotlin
 enum class Platform
 ```
-_No KDoc at source._
+Platforms the settings feature distinguishes between.
 
-<details><summary>Used in the template — <code>feature/settings/src/androidMain/kotlin/kpt/feature/settings/Platform.android.kt:15</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/androidMain/kotlin/kpt/feature/settings/Platform.android.kt:16</code></summary>
 
 ```kotlin
-import androidx.annotation.ChecksSdkIntAtLeast
 
+/** Android actual of [getPlatform]. */
 actual fun getPlatform(): Platform {
     return Platform.Android
 }
 
-@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
+/** Android actual; dynamic (Material You) color is supported only on Android 12 and above. */
 ```
 
 </details>
@@ -135,37 +135,37 @@ actual fun getPlatform(): Platform {
 ```kotlin
 expect fun supportsDynamicTheming(): Boolean
 ```
-_No KDoc at source._
+Whether the current platform supports dynamic (Material You) theming.
 
 ### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsDialog.kt`
 
 ```kotlin
 fun SettingsDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel())
 ```
-_No KDoc at source._
+Settings dialog for theme brand, dynamic color and dark theme bound to `SettingsViewModel`.
 
 ```kotlin
 fun SettingsDialog(
 ```
-_No KDoc at source._
+Stateless settings dialog rendering `settingsUiState` and reporting preference changes through the callbacks.
 
 ```kotlin
 fun SettingsDialogThemeChooserRow(
 ```
-_No KDoc at source._
+Selectable row for one theme option in the settings dialog.
 
 ### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsModule.kt`
 
 ```kotlin
 val SettingsModule = module
 ```
-_No KDoc at source._
+Koin module providing the template settings and sync-and-drafts view models.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/di/SettingsModule.kt:22</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/di/SettingsModule.kt:23</code></summary>
 
 ```kotlin
-val MifosSettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
 
+/** Koin module providing the fork settings view model under its qualifier. */
 val SettingsModule = module {
     viewModelOf(::SettingsViewModel) { qualifier = MifosSettingsViewModelQualifier }
 }
@@ -178,32 +178,32 @@ val SettingsModule = module {
 ```kotlin
 data object SettingsRoute
 ```
-_No KDoc at source._
+Navigation route of the settings screen.
 
 ```kotlin
 data object NotificationRoute
 ```
-_No KDoc at source._
+Navigation route of the notification screen.
 
 ```kotlin
 data object SyncAndDraftsRoute
 ```
-_No KDoc at source._
+Navigation route of the sync-and-drafts screen.
 
 ```kotlin
 fun NavController.navigateToSettings(navOptions: NavOptions? = null) = navigate(SettingsRoute, navOptions)
 ```
-_No KDoc at source._
+Navigates to the settings screen.
 
 ```kotlin
 fun NavController.navigateToNotification(navOptions: NavOptions? = null) = navigate(NotificationRoute, navOptions)
 ```
-_No KDoc at source._
+Navigates to the notification screen.
 
 ```kotlin
 fun NavController.navigateToSyncAndDrafts(navOptions: NavOptions? = null) = navigate(SyncAndDraftsRoute, navOptions)
 ```
-_No KDoc at source._
+Navigates to the sync-and-drafts screen.
 
 ```kotlin
 fun NavGraphBuilder.settingsDestination(settingsBody: @Composable () -> Unit = {})
@@ -213,12 +213,12 @@ The settings backbone destination.
 ```kotlin
 fun NavGraphBuilder.notificationDestination(onBackClick: () -> Unit)
 ```
-_No KDoc at source._
+Registers the notification destination.
 
 ```kotlin
 fun NavGraphBuilder.syncAndDraftsDestination(onBackClick: () -> Unit)
 ```
-_No KDoc at source._
+Registers the sync-and-drafts destination.
 
 ### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsViewModel.kt`
 
@@ -227,10 +227,10 @@ class SettingsViewModel(
 ```
 Settings ViewModel — the toolkit's `local_only_prefs` demo, on the MVI `BaseViewModel` idiom (state + typed actions), consistent with every other feature.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:46</code></summary>
 
 ```kotlin
-
+/** Language chooser dialog bound to [SettingsViewModel], dismissed through [onDismiss]. */
 @Composable
 fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel()) {
     val settingsUiState by viewModel.settingsUiState.collectAsStateWithLifecycle()
@@ -263,9 +263,9 @@ Preference-mutation intents accepted by `SettingsViewModel`.
 ```kotlin
 data class UserEditableSettings(
 ```
-_No KDoc at source._
+User-editable appearance and language preferences.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsDialog.kt:129</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsDialog.kt:131</code></summary>
 
 ```kotlin
 @Composable
@@ -282,9 +282,9 @@ private fun ColumnScope.SettingsPanel(
 ```kotlin
 sealed interface SettingsUiState
 ```
-_No KDoc at source._
+UI state of the settings dialogs.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:56</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:58</code></summary>
 
 ```kotlin
 @Composable
@@ -305,7 +305,7 @@ class SyncAndDraftsViewModel(
 ```
 ViewModel for the template-level **Sync & Drafts** screen (Settings).
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsModule.kt:17</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsModule.kt:18</code></summary>
 
 ```kotlin
 val SettingsModule = module {
@@ -390,13 +390,13 @@ Koin qualifier for this feature's `SettingsViewModel`. On JS / Wasm Koin keys a 
 ```kotlin
 val SettingsModule = module
 ```
-_No KDoc at source._
+Koin module providing the fork settings view model under its qualifier.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsModule.kt:15</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsModule.kt:16</code></summary>
 
 ```kotlin
-import org.koin.dsl.module
 
+/** Koin module providing the template settings and sync-and-drafts view models. */
 val SettingsModule = module {
     viewModelOf(::SettingsViewModel)
     viewModelOf(::SyncAndDraftsViewModel)
@@ -412,10 +412,10 @@ class SettingsViewModel(
 ```
 ViewModel for `SettingsScreen`.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:46</code></summary>
 
 ```kotlin
-
+/** Language chooser dialog bound to [SettingsViewModel], dismissed through [onDismiss]. */
 @Composable
 fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel()) {
     val settingsUiState by viewModel.settingsUiState.collectAsStateWithLifecycle()
@@ -429,9 +429,9 @@ fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinVie
 ```kotlin
 data class SettingsState(
 ```
-_No KDoc at source._
+UI state of the settings screen.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/language/LanguageScreen.kt:63</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/language/LanguageScreen.kt:65</code></summary>
 
 ```kotlin
 @Composable
@@ -448,9 +448,9 @@ fun LanguageDialogContent(
 ```kotlin
 sealed interface DialogState
 ```
-_No KDoc at source._
+Dialogs the settings screen can show.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:132</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:141</code></summary>
 
 ```kotlin
                     is SubmitState.Submitting -> {
@@ -467,7 +467,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface SettingsEvent
 ```
-_No KDoc at source._
+One-shot events emitted by the settings view model.
 
 <details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/fork/SettingsScreen.kt:126</code></summary>
 
@@ -486,7 +486,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface SettingsAction
 ```
-_No KDoc at source._
+Actions handled by the settings view model.
 
 <details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/SettingsViewModel.kt:33</code></summary>
 
@@ -506,12 +506,12 @@ _No KDoc at source._
 ```kotlin
 fun LanguageDialog(
 ```
-_No KDoc at source._
+Language chooser dialog bound to the fork `SettingsViewModel`, dismissed through `onDismiss`.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:46</code></summary>
 
 ```kotlin
-
+/** Language chooser dialog bound to [SettingsViewModel], dismissed through [onDismiss]. */
 @Composable
 fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel()) {
     val settingsUiState by viewModel.settingsUiState.collectAsStateWithLifecycle()
@@ -525,14 +525,14 @@ fun LanguageDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinVie
 ```kotlin
 fun LanguageDialogContent(
 ```
-_No KDoc at source._
+Stateless language chooser dialog content rendering `settingsUiState` and reporting the choice.
 
 ```kotlin
 fun LanguageChooserRow(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier)
 ```
-_No KDoc at source._
+Selectable row showing one language option.
 
-<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:109</code></summary>
+<details><summary>Used in the template — <code>feature/settings/src/commonMain/kotlin/kpt/feature/settings/LanguageDialog.kt:111</code></summary>
 
 ```kotlin
     Column(Modifier.selectableGroup()) {
@@ -560,5 +560,5 @@ Registers the settings destination. Hoists the destination's own `androidx.lifec
 
 ---
 
-_18 type(s), 26 function(s)/property(ies); 16 carry KDoc at source; 0 authored example(s); 21 live call site(s)._
+_18 type(s), 26 function(s)/property(ies); 44 carry KDoc at source; 0 authored example(s); 21 live call site(s)._
 <!-- api-docs:end -->

@@ -11,6 +11,16 @@ package kpt.core.model.network.entity.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A currency definition as reported by Fineract, with display metadata.
+ *
+ * @property code Currency code.
+ * @property name Currency name.
+ * @property decimalPlaces Number of decimal places.
+ * @property displaySymbol Symbol shown for the currency.
+ * @property nameCode Localization key of the name.
+ * @property displayLabel Label shown to the user.
+ */
 @Serializable
 data class Currency(
     val code: String? = null,

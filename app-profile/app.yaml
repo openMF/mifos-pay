@@ -104,6 +104,7 @@ module_packages:
   - core/ui/module-packages.yaml
   - feature/module-packages.yaml
 
+# The publishing organisation: name and contacts used in store listings, review details and legal pages.
 org:
   name: Mifos Initiative
   email: info@mifos.org                      # real App Store review contact email, from dev fastlane/metadata/ios/review_information
@@ -123,18 +124,25 @@ org:
   # another org sets its own workspace slug (e.g. `mbs`).
   secrets_namespace: mifos-x
 
+# Legal entity behind the app — rendered into the generated privacy policy and terms.
+# Required before a store submission; a store rejects a listing whose policy names no entity.
 legal:
   company_name: Mifos Initiative
   jurisdiction: United States
   effective_date: June 6, 2026
   contact_email: team@mifos.org
 
+# Distinguished name baked into a generated Android keystore.
+# Used ONCE, at keystore creation. Changing it afterwards has no effect — the existing
+# keystore keeps the DN it was born with, and replacing the keystore breaks app updates.
 keystore_dn:
   org_unit: Mobile
   city: Arusha
   state: Arusha
   country: TZ
 
+# Store-listing copy: title, descriptions, keywords, category — Mifos Pay's published listing.
+# A new listing variant is authored outside this file and replaces it only by an explicit promote.
 store:
   primary_locale: en-US
   # Store copy pulled from the real, previously-authored listing already published on the `dev`
@@ -254,6 +262,9 @@ privacy:
   analytics_enabled_by_default: false
   crash_reporting_enabled_by_default: false
 
+# Fork-owned media sources: screenshots, feature graphic, promo video.
+# Paths are relative to app-profile/; a missing file is a skip, not an error, so a fork can add
+# platform media incrementally.
 media:
   root: media
 

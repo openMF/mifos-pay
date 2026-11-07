@@ -15,6 +15,7 @@ import kpt.core.data.mapper.toSearchResult
 import kpt.core.data.repository.SearchRepository
 import kpt.core.model.search.SearchResult
 import kpt.core.network.FineractApiManager
+/** Default [SearchRepository] backed by the search API. */
 class SearchRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

@@ -15,6 +15,7 @@ import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kpt.core.model.autopay.AutoPayPayload
 import kpt.core.model.autopay.AutoPayUpdatePayload
+/** Client-side validation of auto-pay payloads before they are submitted. */
 @OptIn(FormatStringsInDatetimeFormats::class)
 object AutoPayValidator {
 
@@ -22,11 +23,19 @@ object AutoPayValidator {
         byUnicodePattern("dd MMMM yyyy")
     }
 
+    /** Outcome of validating an auto-pay payload. */
     sealed class ValidationResult {
+        /** Result with no violations. */
         data object Valid : ValidationResult()
+
+        /**
+         * Result carrying a validation failure.
+         * @property errorMessage Human-readable description of the violation.
+         */
         data class Invalid(val errorMessage: String) : ValidationResult()
     }
 
+    /** Validates a new auto-pay payload and returns the first violation, if any. */
     fun validateAutoPayPayload(payload: AutoPayPayload): ValidationResult {
         return when {
             payload.name.isBlank() -> ValidationResult.Invalid("Schedule name is required")
@@ -70,6 +79,7 @@ object AutoPayValidator {
         }
     }
 
+    /** Validates an auto-pay update payload and returns the first violation, if any. */
     fun validateAutoPayUpdatePayload(payload: AutoPayUpdatePayload): ValidationResult {
         return when {
             payload.name?.let { it.isBlank() } == true -> ValidationResult.Invalid("Schedule name cannot be empty")

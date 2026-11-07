@@ -22,3 +22,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.finance.generated.resources"
+}

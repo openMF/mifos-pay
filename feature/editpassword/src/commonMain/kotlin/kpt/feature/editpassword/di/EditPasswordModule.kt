@@ -12,6 +12,7 @@ package kpt.feature.editpassword.di
 import kpt.feature.editpassword.EditPasswordViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the edit-password ViewModel. */
 val EditPasswordModule = module {
     viewModelOf(::EditPasswordViewModel)
 }

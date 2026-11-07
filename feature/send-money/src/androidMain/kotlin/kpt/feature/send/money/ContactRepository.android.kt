@@ -15,12 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 
+/** Android actual: remembers an [AndroidContactRepository] bound to the current context. */
 @Composable
 actual fun rememberContactRepository(): ContactRepository {
     val context = LocalContext.current
     return remember { AndroidContactRepository(context.contentResolver) }
 }
 
+/**
+ * Android [ContactRepository] that reads device contacts through the ContactsContract provider.
+ * @property contentResolver Resolver used to query the contacts provider.
+ */
 class AndroidContactRepository(
     private val contentResolver: ContentResolver,
 ) : ContactRepository {

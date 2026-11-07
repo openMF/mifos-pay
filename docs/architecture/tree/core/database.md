@@ -24,10 +24,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/database sha=10d42b5c53f5dda0d50a46fd2aedede70a97333b -->
+<!-- api-docs:begin module=core/database sha=98ba481a4d782a7a57752280dfae66169adeb614 -->
 ## API reference
 
-_Generated from `core/database` at tree `10d42b5c53f5` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/database` at tree `98ba481a4d78` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/database/src/commonMain/kotlin/kpt/core/database/config/DatabaseConfig.kt`
@@ -125,7 +125,7 @@ interface SavingAccountDetailDao
 ```
 Data-access object for the `wallet_saving_account_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per account — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/account/AccountDetailStore.kt:116</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/account/AccountDetailStore.kt:113</code></summary>
 
 ```kotlin
 fun provideAccountDetailStore(
@@ -185,7 +185,7 @@ interface BeneficiaryDao
 ```
 Data-access object for the `wallet_beneficiaries` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/beneficiary/BeneficiaryStore.kt:84</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/beneficiary/BeneficiaryStore.kt:81</code></summary>
 
 ```kotlin
 fun provideBeneficiaryStore(
@@ -245,7 +245,7 @@ interface BillDao
 ```
 Data-access object for the `wallet_autopay_bills` OFFLINE_LOCAL_ONLY table (GOAL D12). All reads are reactive `Flow`s; all writes are `suspend` one-shots.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillOfflineRepositoryImpl.kt:78</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillOfflineRepositoryImpl.kt:75</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalTime::class)
@@ -309,7 +309,7 @@ interface BillerDao
 ```
 Data-access object for the `wallet_autopay_billers` OFFLINE_LOCAL_ONLY table (GOAL D12) — mirrors the shape of [`BillDao`]`kpt.core.database.wallet.bill.BillDao`. All reads are reactive `Flow`s; all writes are `suspend` one-shots.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillerOfflineRepositoryImpl.kt:95</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillerOfflineRepositoryImpl.kt:92</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalTime::class)
@@ -374,7 +374,7 @@ interface ClientDetailDao
 ```
 Data-access object for the `wallet_client_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per client — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/client/ClientDetailStore.kt:111</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/client/ClientDetailStore.kt:108</code></summary>
 
 ```kotlin
 fun provideClientDetailStore(
@@ -434,7 +434,7 @@ interface InvoiceDao
 ```
 Data-access object for the `wallet_invoices` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/invoice/InvoiceStore.kt:90</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/invoice/InvoiceStore.kt:87</code></summary>
 
 ```kotlin
 fun provideInvoiceStore(
@@ -461,16 +461,16 @@ data class InvoiceEntity(
 ```
 Persistent row for a single invoice — the Room mirror of the `kpt.core.model.datatables.invoice.Invoice` domain model. Stored in the `wallet_invoices` table. LEDGER shape — many rows per client, page-keyed by `clientId`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/InvoiceRepository.kt:62</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/InvoiceRepository.kt:66</code></summary>
 
 ```kotlin
-    // SubmitHandler maps success/exception to SubmitState. The user-facing success
     // message is a feature StringResource surfaced by the ViewModel, not repo copy.
+    /** Creates an invoice for the given client. */
     suspend fun createInvoice(clientId: Long, invoice: InvoiceEntity)
 
+    /** Updates an invoice of the given client. */
     suspend fun updateInvoice(
         clientId: Long,
-        invoiceId: Long,
 ```
 
 </details>
@@ -494,7 +494,7 @@ interface LinkableAccountDao
 ```
 Data-access object for the `wallet_linkable_accounts` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/linkableaccount/LinkableAccountStore.kt:126</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/linkableaccount/LinkableAccountStore.kt:123</code></summary>
 
 ```kotlin
 fun provideLinkableAccountsStore(
@@ -554,7 +554,7 @@ interface NotificationDao
 ```
 Data-access object for the `wallet_notifications` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/notification/NotificationStore.kt:95</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/notification/NotificationStore.kt:92</code></summary>
 
 ```kotlin
 fun provideNotificationStore(
@@ -614,7 +614,7 @@ interface OfficeDao
 ```
 Data-access object for the `wallet_offices` global-reference table. ## Access pattern (GOAL D13 — global LEDGER variant, singleton key) - **Reads** are reactive `Flow`s over the WHOLE table — `observeAll`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/office/OfficeStore.kt:87</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/office/OfficeStore.kt:84</code></summary>
 
 ```kotlin
 fun provideOfficeStore(
@@ -673,7 +673,7 @@ interface PocketDao
 ```
 Data-access object for the `wallet_pockets` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:51</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:52</code></summary>
 
 ```kotlin
     private val storeNetworkMonitor: StoreNetworkMonitor? = null,
@@ -697,10 +697,10 @@ Data-access object for the `wallet_pockets` LEDGER table. ## Access pattern (GOA
 - `val filteredNetworkEntities = entities.map`
 - `val networkAccountKeys = entities.map { "${it.accountId}_${it.accountType}" }.toSet()`
 - `val pendingLinks = pending.filter`
-- `suspend fun upsert(entity: PocketEntity)`
-- `fun observeLinkedByClient(clientId: Long): Flow<List<PocketEntity>>`
-- `suspend fun getPendingSyncs(): List<PocketEntity>`
-- `suspend fun getPendingSyncsByClient(clientId: Long): List<PocketEntity>`
+- `suspend fun upsert(entity: PocketEntity)` — Inserts or replaces a single pocket row.
+- `fun observeLinkedByClient(clientId: Long): Flow<List<PocketEntity>>` — Observes the pockets linked for `clientId`, excluding rows pending delink, ordered by account type and number.
+- `suspend fun getPendingSyncs(): List<PocketEntity>` — Returns all pockets with a pending link or delink awaiting sync to the server.
+- `suspend fun getPendingSyncsByClient(clientId: Long): List<PocketEntity>` — Returns the pending link/delink pockets of `clientId`.
   _…more members; read the file._
 
 ### `core/database/src/commonMain/kotlin/kpt/core/database/wallet/pocket/PocketEntity.kt`
@@ -739,7 +739,7 @@ Convert a fetched domain `DetailedPocketAccount` into a persistable row.
 ```kotlin
 fun DetailedPocketAccount.toPendingLinkEntity(clientId: Long, fetchedAtEpochMs: Long): PocketEntity =
 ```
-_No KDoc at source._
+Maps this account to a `PocketEntity` marked PENDING_LINK for `clientId`, awaiting upload.
 
 ### `core/database/src/commonMain/kotlin/kpt/core/database/wallet/recentpayee/RecentPayeeDao.kt`
 
@@ -748,7 +748,7 @@ interface RecentPayeeDao
 ```
 Data-access object for the `wallet_recent_payees` LOCAL-DERIVED table (GOAL D12 — persist-on-derive variant of the OFFLINE_LOCAL_ONLY archetype).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:71</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:68</code></summary>
 
 ```kotlin
     // construct it. Production DI in `RepositoryModule` wires this
@@ -808,7 +808,7 @@ interface SavedCardDao
 ```
 Data-access object for the `wallet_saved_cards` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/savedcards/SavedCardStore.kt:81</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/savedcards/SavedCardStore.kt:78</code></summary>
 
 ```kotlin
 fun provideSavedCardStore(
@@ -868,7 +868,7 @@ interface SelfAccountDao
 ```
 Data-access object for the `wallet_self_accounts` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/selfaccounts/SelfAccountsStore.kt:102</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/selfaccounts/SelfAccountsStore.kt:99</code></summary>
 
 ```kotlin
 fun provideSelfAccountsStore(
@@ -928,7 +928,7 @@ interface StandingInstructionDao
 ```
 Data-access object for the `wallet_standing_instructions` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/standinginstruction/StandingInstructionStore.kt:93</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/standinginstruction/StandingInstructionStore.kt:90</code></summary>
 
 ```kotlin
 fun provideStandingInstructionStore(
@@ -988,7 +988,7 @@ interface TransactionDao
 ```
 Data-access object for the `wallet_transactions` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per account — `observeByAccount`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:68</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:69</code></summary>
 
 ```kotlin
     // injected so getTransaction(...) can read the cached row offline-first before
@@ -1051,7 +1051,7 @@ interface TransferDetailDao
 ```
 Data-access object for the `wallet_transfer_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per transfer — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/transferdetail/TransferDetailStore.kt:86</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/transferdetail/TransferDetailStore.kt:83</code></summary>
 
 ```kotlin
 fun provideTransferDetailStore(
@@ -1105,5 +1105,5 @@ Convert a fetched domain `TransferDetail` into a persistable row.
 
 ---
 
-_34 type(s), 138 function(s)/property(ies); 162 carry KDoc at source; 1 authored example(s); 35 live call site(s)._
+_34 type(s), 138 function(s)/property(ies); 167 carry KDoc at source; 1 authored example(s); 35 live call site(s)._
 <!-- api-docs:end -->

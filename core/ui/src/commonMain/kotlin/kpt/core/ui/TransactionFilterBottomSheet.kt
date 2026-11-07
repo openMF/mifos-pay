@@ -66,6 +66,7 @@ import kpt.core.ui.generated.resources.core_ui_filter_title
 import kpt.core.ui.generated.resources.core_ui_filter_transaction_type
 import kpt.core.ui.generated.resources.core_ui_select_account
 import org.jetbrains.compose.resources.stringResource
+/** Bottom sheet for filtering transaction history by account and transaction type. */
 @Composable
 fun TransactionFilterBottomSheet(
     modifier: Modifier = Modifier,
@@ -133,6 +134,7 @@ fun TransactionFilterBottomSheet(
     }
 }
 
+/** Row of chips for selecting the transaction type filter. */
 @Composable
 fun TransactionTypeFilter(
     selectedTransactionType: TransactionType,
@@ -197,6 +199,7 @@ private fun FilterItem(
     }
 }
 
+/** Dropdown for selecting which account to filter transactions by. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterAccountDropDown(

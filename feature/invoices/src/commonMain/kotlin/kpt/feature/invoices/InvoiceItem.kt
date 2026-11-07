@@ -22,9 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.ui.AvatarBox
-import mifos_pay.feature.invoices.generated.resources.Res
-import mifos_pay.feature.invoices.generated.resources.ic_check
-import mifos_pay.feature.invoices.generated.resources.ic_remove
+import kpt.feature.invoices.generated.resources.Res
+import kpt.feature.invoices.generated.resources.ic_check
+import kpt.feature.invoices.generated.resources.ic_remove
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable

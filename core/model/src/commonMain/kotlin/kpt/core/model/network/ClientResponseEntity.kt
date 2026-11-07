@@ -11,6 +11,14 @@ package kpt.core.model.network
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Fineract response returned after creating a client with a savings account.
+ *
+ * @property officeId Id of the office.
+ * @property clientId Id of the client.
+ * @property resourceId Id of the created or affected resource.
+ * @property savingsId Id of the savings account.
+ */
 @Serializable
 data class ClientResponseEntity(
     val officeId: Int,

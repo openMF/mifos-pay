@@ -62,6 +62,10 @@ import kpt.core.base.database.annotation.DbEntity
  * @property legalFormJson JSON encoding of `ClientStatus` (legal form).
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property lastname Client last name.
+ * @property displayName Client display name.
+ * @property emailAddress Client email address.
  */
 @DbEntity
 @Entity(

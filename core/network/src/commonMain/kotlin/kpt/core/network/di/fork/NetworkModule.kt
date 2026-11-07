@@ -46,6 +46,7 @@ private val ioDispatcher = named(MifosDispatchers.IO.name)
 // kpt.core.base.network.SupabaseConfigClient is bound too, so this one needs its own key.
 private val supabaseConfigClient = named("org.mifos.corebase.network.SupabaseConfigClient")
 
+/** Koin module providing the HTTP clients, Ktorfit instances, API managers and service wiring of the network layer. */
 @OptIn(ExperimentalEncodingApi::class)
 val NetworkModule = module {
     single(supabaseConfigClient) {

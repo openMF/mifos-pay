@@ -28,10 +28,11 @@ import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.history.components.HistoryHtmlTemplate
-import mifos_pay.feature.history.generated.resources.Res
-import mifos_pay.feature.history.generated.resources.feature_history_error
-import mifos_pay.feature.history.generated.resources.feature_history_no_account
+import kpt.feature.history.generated.resources.Res
+import kpt.feature.history.generated.resources.feature_history_error
+import kpt.feature.history.generated.resources.feature_history_no_account
 import org.jetbrains.compose.resources.StringResource
+/** ViewModel that loads, filters and exports (as PDF) the client's transaction history. */
 class HistoryViewModel
 @OptIn(ExperimentalPdfGeneratorApi::class)
 constructor(
@@ -41,6 +42,7 @@ constructor(
     private val accountRepository: AccountRepository,
 ) : BaseViewModel<HistoryState, HistoryEvent, HistoryAction>(
     initialState = run {
+        /** Id of the signed-in client, read from preferences. */
         val clientId = requireNotNull(preferencesRepository.clientId.value)
         HistoryState(
             clientId = clientId,
@@ -282,6 +284,17 @@ constructor(
     }
 }
 
+/**
+ * UI state of the history screen.
+ * @property clientId Id of the signed-in client.
+ * @property viewState Loading, empty, error or content state.
+ * @property selectedTransactionType Applied transaction type filter.
+ * @property transactions Transactions currently shown.
+ * @property accounts Accounts available for filtering.
+ * @property selectedAccount Account filter, or null for all accounts.
+ * @property showFilter Whether the filter sheet is visible.
+ * @property isExportingPdf Whether a PDF export is in progress.
+ */
 data class HistoryState(
     val clientId: Long,
     val viewState: ViewState,
@@ -292,26 +305,72 @@ data class HistoryState(
     val showFilter: Boolean = false,
     val isExportingPdf: Boolean = false,
 ) {
+    /** Display state of the history list. */
     sealed interface ViewState {
+        /** Transactions are loading. */
         data object Loading : ViewState
+
+        /** There are no transactions to show. */
         data object Empty : ViewState
+
+        /**
+         * Loading failed.
+         * @property message Localized error message.
+         */
         data class Error(val message: StringResource) : ViewState
+
+        /**
+         * Transactions loaded.
+         * @property list Transactions to display.
+         */
         data class Content(val list: List<Transaction>) : ViewState
     }
 }
 
+/** One-off events emitted by [HistoryViewModel]. */
 sealed interface HistoryEvent {
+    /**
+     * Requests navigation to a transaction's detail.
+     * @property transferId Id of the transfer to open.
+     */
     data class OnTransactionDetail(val transferId: Long) : HistoryEvent
+
+    /**
+     * Reports that exporting the PDF failed.
+     * @property message Error message to display.
+     */
     data class PdfExportError(val message: String) : HistoryEvent
 }
 
+/** User actions handled by [HistoryViewModel]. */
 sealed interface HistoryAction {
+    /**
+     * Applies a transaction type filter.
+     * @property filter Transaction type to filter by.
+     */
     data class SetTransactionType(val filter: TransactionType) : HistoryAction
+
+    /**
+     * Opens a transaction's detail.
+     * @property transferId Id of the transfer to view.
+     */
     data class ViewTransaction(val transferId: Long) : HistoryAction
+
+    /** User tapped the filter button. */
     data object OnFilterClick : HistoryAction
+
+    /**
+     * Selects an account to filter by.
+     * @property account Account to filter by.
+     */
     data class SetSelectedAccount(val account: Account) : HistoryAction
+
+    /** User confirmed the selected filters. */
     data object OnApplyFilterClick : HistoryAction
+
+    /** User cleared all filters. */
     data object ClearFilters : HistoryAction
 
+    /** User requested a PDF export of the history. */
     data object ExportPdf : HistoryAction
 }

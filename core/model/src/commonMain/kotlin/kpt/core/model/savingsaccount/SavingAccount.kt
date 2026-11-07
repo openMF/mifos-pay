@@ -9,6 +9,24 @@
  */
 package kpt.core.model.savingsaccount
 
+/**
+ * Summary of a savings account as listed for a client.
+ *
+ * @property id Unique identifier.
+ * @property accountNo Account number.
+ * @property productId Identifier of the savings product.
+ * @property productName Name of the savings product.
+ * @property shortProductName Short name of the savings product.
+ * @property status Current status.
+ * @property currency Currency of the amounts.
+ * @property accountBalance Current account balance.
+ * @property accountType Type of the account.
+ * @property timeline Lifecycle dates of the account.
+ * @property subStatus Sub-status of the account.
+ * @property lastActiveTransactionDate Date of the last active transaction as year, month and day components.
+ * @property depositType Deposit account type.
+ * @property externalId External identifier.
+ */
 data class SavingAccount(
     val id: Long,
     val accountNo: String,

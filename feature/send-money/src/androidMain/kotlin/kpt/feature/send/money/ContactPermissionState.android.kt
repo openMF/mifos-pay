@@ -21,6 +21,7 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 
+/** Android actual: remembers a [ContactPermissionState] backed by the READ_CONTACTS runtime permission. */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 actual fun rememberContactPermissionState(): ContactPermissionState {
@@ -34,6 +35,11 @@ actual fun rememberContactPermissionState(): ContactPermissionState {
     return wrapper
 }
 
+/**
+ * Wraps an Accompanist [PermissionState] as a [ContactPermissionState] for READ_CONTACTS.
+ * @property permissionState Accompanist state tracking the READ_CONTACTS permission.
+ * @property context Context used to open the app settings screen.
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 class AccompanistContactPermissionWrapper(
     private val permissionState: PermissionState,

@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/** Tab row synchronised with a pager, rendering one page per tab. */
 @Composable
 fun MifosTabPager(
     pagerState: PagerState,

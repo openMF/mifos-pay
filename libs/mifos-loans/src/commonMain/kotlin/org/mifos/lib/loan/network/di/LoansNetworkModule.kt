@@ -31,6 +31,7 @@ import org.mifos.lib.loan.network.createLoansService
  */
 val LoansClient = named("LoansClient")
 
+/** Koin module binding the loans [Ktorfit] client and [LoansService]. */
 val LoansNetworkModule = module {
     single<Ktorfit>(qualifier = LoansClient) {
         val preferencesRepository = get<ForkPreferencesRepository>()

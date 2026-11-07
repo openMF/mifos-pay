@@ -11,6 +11,18 @@ package kpt.core.model.savingsaccount
 
 import kotlinx.serialization.Serializable
 import kpt.core.common.CurrencyFormatter
+/**
+ * Balance summary of a savings account.
+ *
+ * @property currency Currency of the amounts.
+ * @property totalDeposits Total amount deposited.
+ * @property totalWithdrawals Total amount withdrawn.
+ * @property totalInterestPosted Total interest posted.
+ * @property accountBalance Current account balance.
+ * @property totalOverdraftInterestDerived Total overdraft interest derived.
+ * @property interestNotPosted Interest accrued but not yet posted.
+ * @property availableBalance Balance available for withdrawal.
+ */
 @Serializable
 data class Summary(
     val currency: Currency,
@@ -23,6 +35,7 @@ data class Summary(
     val availableBalance: Double = 0.0,
 )
 
+/** Formats [amount] using this summary currency code. */
 fun Summary.formatAmount(amount: Double): String {
     return CurrencyFormatter.format(
         balance = amount,

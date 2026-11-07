@@ -19,6 +19,7 @@ private const val ACCOUNT_ID = "accountId"
 
 private const val BASE_ROUTE = "$ROUTE?$ACCOUNT_ID={$ACCOUNT_ID}"
 
+/** Registers the savings account detail destination. */
 fun NavGraphBuilder.savingAccountDetailRoute(
     navigateBack: () -> Unit,
     onViewTransaction: (Long, Long) -> Unit,
@@ -36,6 +37,7 @@ fun NavGraphBuilder.savingAccountDetailRoute(
     }
 }
 
+/** Navigates to the details of the savings account with [accountId]. */
 fun NavController.navigateToSavingAccountDetails(accountId: Long) {
     navigate("$ROUTE?$ACCOUNT_ID=$accountId")
 }

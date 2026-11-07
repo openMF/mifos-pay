@@ -11,6 +11,20 @@ package kpt.core.model.network.entity.shareAccount
 
 import kotlinx.serialization.Serializable
 import kpt.core.model.network.entity.common.CurrencyResponseDto
+/**
+ * A client share account as returned by Fineract.
+ *
+ * @property id Unique id.
+ * @property accountNo Account number.
+ * @property totalApprovedShares Number of approved shares.
+ * @property totalPendingForApprovalShares Number of shares pending approval.
+ * @property productId Id of the product.
+ * @property productName Name of the product.
+ * @property shortProductName Short name of the product.
+ * @property status Current status.
+ * @property currency Currency.
+ * @property timeline Lifecycle timeline.
+ */
 @Serializable
 data class ShareAccountResponseDto(
 

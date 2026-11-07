@@ -30,6 +30,7 @@ internal fun KYCLevel3Screen(
     )
 }
 
+/** Static KYC level 3 (review and submit) screen body with a back button via [navigateBack]. */
 @Composable
 fun KYCLevel3ScreenContent(
     modifier: Modifier = Modifier,

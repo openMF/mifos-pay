@@ -33,16 +33,17 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.payments.generated.resources.Res
-import mifos_pay.feature.payments.generated.resources.baseline_content_copy
-import mifos_pay.feature.payments.generated.resources.feature_payments_mobile_number
-import mifos_pay.feature.payments.generated.resources.feature_payments_receive
-import mifos_pay.feature.payments.generated.resources.feature_payments_show_code
-import mifos_pay.feature.payments.generated.resources.feature_payments_vpa
+import kpt.feature.payments.generated.resources.Res
+import kpt.feature.payments.generated.resources.baseline_content_copy
+import kpt.feature.payments.generated.resources.feature_payments_mobile_number
+import kpt.feature.payments.generated.resources.feature_payments_receive
+import kpt.feature.payments.generated.resources.feature_payments_show_code
+import kpt.feature.payments.generated.resources.feature_payments_vpa
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen for requesting money, showing the client details and a button to show the QR code. */
 @Composable
 fun RequestScreen(
     showQr: () -> Unit,

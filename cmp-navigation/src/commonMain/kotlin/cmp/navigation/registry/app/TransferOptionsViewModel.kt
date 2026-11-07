@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.base.ui.viewmodel.BaseViewModel
 
+/** Drives the transfer-options sheet by deciding which transfer methods (inter-bank, UPI) are offered. */
 class TransferOptionsViewModel : BaseViewModel<TransferOptionState, Unit, Unit>(
     initialState = TransferOptionState(),
 ) {
@@ -47,6 +48,13 @@ class TransferOptionsViewModel : BaseViewModel<TransferOptionState, Unit, Unit>(
     }
 }
 
+/**
+ * UI state for the transfer-options sheet.
+ *
+ * @property isLoading True until the available options have been resolved.
+ * @property isInterTransferOptionEnabled Whether the inter-bank transfer option is shown.
+ * @property isUpiEnabled Whether the UPI send-money option is shown.
+ */
 data class TransferOptionState(
     val isLoading: Boolean = true,
     val isInterTransferOptionEnabled: Boolean = false,

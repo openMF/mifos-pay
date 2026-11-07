@@ -29,24 +29,31 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.savedcards.SavedCard
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.savedcards.createOrUpdate.CardAddEditType
-import mifos_pay.feature.savedcards.generated.resources.Res
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_card_deleted_successfully
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_confirm_delete_card
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_delete_card
+import kpt.feature.savedcards.generated.resources.Res
+import kpt.feature.savedcards.generated.resources.feature_savedcards_card_deleted_successfully
+import kpt.feature.savedcards.generated.resources.feature_savedcards_confirm_delete_card
+import kpt.feature.savedcards.generated.resources.feature_savedcards_delete_card
 import org.jetbrains.compose.resources.StringResource
+/**
+ * ViewModel of the saved cards list screen; loads cards for the signed-in client and handles view, edit, add and
+ * delete actions.
+ */
 class CardsScreenViewModel(
     private val repository: SavedCardRepository,
     userRepository: ForkPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<CardState, CardEvent, CardAction>(
     initialState = savedStateHandle.getSerialized(key = KEY_STATE) ?: run {
+        /**
+         * Id of the signed-in client, read from the user preferences repository.
+         */
         val clientId = requireNotNull(userRepository.clientId.value)
 
         CardState(clientId = clientId)
     },
 ) {
 
-    companion object {
+    private companion object {
         private const val KEY_STATE = "saved_card_state"
     }
 
@@ -61,12 +68,14 @@ class CardsScreenViewModel(
         scope = viewModelScope,
     )
 
+    /** The client's saved cards, as a screen state. */
     val cardState: StateFlow<ScreenState<List<SavedCard>>> = stream.state.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ScreenState.Loading,
     )
 
+    /** Reloads the saved cards. */
     fun retry() = stream.refresh()
 
     // Template idiom (core-base/store): the one-shot card WRITE (deleteCard) goes
@@ -158,6 +167,11 @@ class CardsScreenViewModel(
     }
 }
 
+/**
+ * UI state of the saved cards screen.
+ * @property clientId Id of the client whose cards are managed.
+ * @property dialogState Dialog currently shown over the screen, or null when none (not persisted).
+ */
 @Serializable
 data class CardState(
     val clientId: Long,
@@ -165,11 +179,27 @@ data class CardState(
     val dialogState: DialogState? = null,
 ) {
 
+    /**
+     * Dialogs that can be shown on the saved cards screen.
+     */
     sealed interface DialogState {
+        /**
+         * Progress dialog shown while a card operation is running.
+         */
         data object Loading : DialogState
 
+        /**
+         * Error dialog.
+         * @property message Error text to display.
+         */
         data class Error(val message: String) : DialogState
 
+        /**
+         * Confirmation dialog shown before deleting a card.
+         * @property title String resource for the dialog title.
+         * @property message String resource for the dialog message.
+         * @property onConfirm Callback invoked when the user confirms deletion.
+         */
         data class DeleteCard(
             val title: StringResource,
             val message: StringResource,
@@ -178,20 +208,69 @@ data class CardState(
     }
 }
 
+/**
+ * One-off events emitted by the saved cards ViewModel to the UI.
+ */
 sealed interface CardEvent {
+    /**
+     * Navigate to the details of a card.
+     * @property cardId Id of the card to open.
+     */
     data class OnNavigateToCardDetails(val cardId: Long) : CardEvent
+
+    /**
+     * Navigate to the add/edit card screen.
+     * @property type Whether a card is being added or edited.
+     */
     data class OnNavigateToAddEdit(val type: CardAddEditType) : CardEvent
+
+    /**
+     * Show a toast message.
+     * @property message String resource of the message.
+     */
     data class ShowToast(val message: StringResource) : CardEvent
 }
 
+/**
+ * User and internal actions handled by the saved cards ViewModel.
+ */
 sealed interface CardAction {
+    /**
+     * User opened the details of a card.
+     * @property cardId Id of the selected card.
+     */
     data class ViewCardDetails(val cardId: Long) : CardAction
+
+    /**
+     * User chose to edit a card.
+     * @property cardId Id of the card to edit.
+     */
     data class EditCardDetails(val cardId: Long) : CardAction
+
+    /**
+     * User tapped delete on a card; shows the confirmation dialog.
+     * @property cardId Id of the card to delete.
+     */
     data class DeleteCardClicked(val cardId: Long) : CardAction
+
+    /**
+     * Dismisses the currently shown dialog.
+     */
     data object DismissDialog : CardAction
+
+    /**
+     * User chose to add a new card.
+     */
     data object AddNewCard : CardAction
 
+    /**
+     * Actions dispatched by the ViewModel itself rather than the UI.
+     */
     sealed interface Internal : CardAction {
+        /**
+         * Deletes a card after the user confirmed.
+         * @property cardId Id of the card to delete.
+         */
         data class DeleteCard(val cardId: Long) : Internal
     }
 }

@@ -42,6 +42,9 @@ class SetUpUpiViewModal(
         }
     }
 
+    /**
+     * Requests an OTP through the first available delivery method and updates [SetUpUpiState.otpRequestState].
+     */
     fun requestOtp() {
         viewModelScope.launch {
             mutableStateFlow.update { it.copy(otpRequestState = OtpRequestState.Requesting) }
@@ -74,6 +77,9 @@ class SetUpUpiViewModal(
         }
     }
 
+    /**
+     * Validates the OTP [code] and updates [SetUpUpiState.otpVerifyState].
+     */
     fun verifyOtp(code: String) {
         viewModelScope.launch {
             mutableStateFlow.update { it.copy(otpVerifyState = OtpVerifyState.Verifying) }
@@ -93,37 +99,106 @@ class SetUpUpiViewModal(
         }
     }
 
+    /**
+     * Requests setting the UPI PIN [mSetupUpiPin] for [bankAccountDetails].
+     */
     fun setupUpiPin(bankAccountDetails: BankAccountDetails?, mSetupUpiPin: String?) {
         trySendAction(SetUpUpiAction.SetupUpiPin(bankAccountDetails, mSetupUpiPin))
     }
 }
 
+/**
+ * UI state of the UPI PIN setup flow.
+ * @property otpRequestState Progress of sending the OTP.
+ * @property otpVerifyState Progress of verifying the OTP.
+ */
 data class SetUpUpiState(
     val otpRequestState: OtpRequestState = OtpRequestState.Idle,
     val otpVerifyState: OtpVerifyState = OtpVerifyState.Idle,
 )
 
+/**
+ * Progress of requesting an OTP.
+ */
 sealed interface OtpRequestState {
+    /**
+     * No OTP requested yet.
+     */
     data object Idle : OtpRequestState
+
+    /**
+     * OTP request in flight.
+     */
     data object Requesting : OtpRequestState
+
+    /**
+     * OTP sent.
+     * @property target Masked destination the OTP was sent to.
+     */
     data class Sent(val target: String) : OtpRequestState
+
+    /**
+     * OTP request failed.
+     * @property message Error text.
+     */
     data class Error(val message: String) : OtpRequestState
 }
 
+/**
+ * Progress of verifying an OTP.
+ */
 sealed interface OtpVerifyState {
+    /**
+     * No verification attempted yet.
+     */
     data object Idle : OtpVerifyState
+
+    /**
+     * Verification in flight.
+     */
     data object Verifying : OtpVerifyState
+
+    /**
+     * OTP accepted.
+     */
     data object Verified : OtpVerifyState
+
+    /**
+     * OTP rejected or validation failed.
+     */
     data object Failed : OtpVerifyState
 }
 
+/**
+ * One-off events of the UPI setup ViewModel.
+ */
 sealed interface SetUpUpiEvent {
+    /**
+     * Emitted once the OTP has been verified successfully.
+     */
     data object OnOtpVerified : SetUpUpiEvent
 }
 
+/**
+ * Actions handled by the UPI setup ViewModel.
+ */
 sealed interface SetUpUpiAction {
+    /**
+     * Request an OTP.
+     */
     data object RequestOtp : SetUpUpiAction
+
+    /**
+     * Verify an OTP.
+     * @property code OTP entered by the user.
+     */
     data class VerifyOtp(val code: String) : SetUpUpiAction
+
+    /**
+     * Set the UPI PIN.
+     * @property bankAccountDetails Account the PIN is for.
+     * @property mSetupUpiPin PIN chosen by the user.
+     */
     data class SetupUpiPin(
         val bankAccountDetails: BankAccountDetails?,
         val mSetupUpiPin: String?,

@@ -17,6 +17,9 @@ import androidx.navigation.navArgument
 import kpt.core.common.Constants
 import kpt.core.model.bank.BankAccountDetails
 import kpt.feature.upi.setup.screens.SetupUpiPinScreenRoute
+/**
+ * Base route name of the set-up UPI PIN screen.
+ */
 const val SETUP_UPI_PIN_ROUTE = "setup_upi_pin_route"
 
 /**
@@ -68,6 +71,9 @@ fun NavGraphBuilder.setupUpiPinScreen(
     }
 }
 
+/**
+ * Navigates to the UPI PIN screen for [type] (setup, change or forgot) of the given bank account.
+ */
 fun NavController.navigateToSetupUpiPin(
     bankAccountDetails: BankAccountDetails,
     index: Int,

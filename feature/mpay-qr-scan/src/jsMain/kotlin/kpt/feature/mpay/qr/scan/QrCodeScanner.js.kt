@@ -33,6 +33,7 @@ private enum class WebScanMode {
     FILE_PICKER,
 }
 
+/** Browser actual of [QrCodeScanner] using the html5-qrcode web camera scanner. */
 @Composable
 actual fun QrCodeScanner(
     types: List<CodeType>,

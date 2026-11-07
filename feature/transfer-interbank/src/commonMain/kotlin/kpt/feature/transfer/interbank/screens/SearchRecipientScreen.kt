@@ -43,17 +43,18 @@ import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosProgressIndicator
-import mifos_pay.feature.transfer_interbank.generated.resources.Res
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_bank
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_enter_phone_number
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_enter_phone_to_search
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_found_recipients
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_no_recipients_found
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_no_results
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_search_recipient
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_to_account_interbank
+import kpt.feature.transfer.interbank.generated.resources.Res
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_bank
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_enter_phone_number
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_enter_phone_to_search
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_found_recipients
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_no_recipients_found
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_no_results
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_search_recipient
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_to_account_interbank
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Step for searching a recipient by phone number and choosing from the results. */
 @Composable
 fun SearchRecipientScreen(
     searchQuery: String,
@@ -218,6 +219,7 @@ private fun RecipientSelectionCard(
     }
 }
 
+/** Compose preview of [SearchRecipientScreen] with results. */
 @Preview
 @Composable
 fun SearchRecipientScreenPreview() {
@@ -260,6 +262,7 @@ fun SearchRecipientScreenPreview() {
     }
 }
 
+/** Compose preview of [SearchRecipientScreen] with no query. */
 @Preview
 @Composable
 fun SearchRecipientScreenEmptyPreview() {
@@ -275,6 +278,7 @@ fun SearchRecipientScreenEmptyPreview() {
     }
 }
 
+/** Compose preview of [SearchRecipientScreen] with no matching recipients. */
 @Preview
 @Composable
 fun SearchRecipientScreenNoResultsPreview() {
@@ -290,6 +294,7 @@ fun SearchRecipientScreenNoResultsPreview() {
     }
 }
 
+/** Compose preview of [SearchRecipientScreen] while searching. */
 @Preview
 @Composable
 fun SearchRecipientScreenLoadingPreview() {

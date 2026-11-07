@@ -27,11 +27,11 @@ import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosProgressIndicator
 import kpt.core.ui.utils.EventsEffect
 import kpt.feature.history.components.TransactionDetail
-import mifos_pay.feature.history.generated.resources.Res
-import mifos_pay.feature.history.generated.resources.feature_history_error
-import mifos_pay.feature.history.generated.resources.feature_history_error_oops
-import mifos_pay.feature.history.generated.resources.feature_history_share
-import mifos_pay.feature.history.generated.resources.feature_history_transaction_details
+import kpt.feature.history.generated.resources.Res
+import kpt.feature.history.generated.resources.feature_history_error
+import kpt.feature.history.generated.resources.feature_history_error_oops
+import kpt.feature.history.generated.resources.feature_history_share
+import kpt.feature.history.generated.resources.feature_history_transaction_details
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 @Composable

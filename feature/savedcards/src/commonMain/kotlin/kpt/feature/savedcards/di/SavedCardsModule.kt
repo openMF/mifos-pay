@@ -14,6 +14,9 @@ import kpt.feature.savedcards.createOrUpdate.AddEditCardViewModel
 import kpt.feature.savedcards.details.CardDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/**
+ * Koin module providing the ViewModels of the saved cards feature.
+ */
 val SavedCardsModule = module {
     viewModelOf(::CardsScreenViewModel)
     viewModelOf(::CardDetailViewModel)

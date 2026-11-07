@@ -30,10 +30,11 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosOutlinedButton
 import kpt.core.designsystem.component.MifosTextUserImage
 import kpt.core.model.beneficiary.Beneficiary
-import mifos_pay.feature.transfer_intrabank.generated.resources.Res
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_pay_button
+import kpt.feature.transfer.intrabank.generated.resources.Res
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_pay_button
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Card showing a saved beneficiary with a pay button. */
 @Composable
 fun BeneficiaryCard(
     beneficiary: Beneficiary,

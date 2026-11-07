@@ -28,6 +28,10 @@ private const val ADD_EDIT_ITEM_ROUTE: String =
         "/{$ADD_EDIT_ITEM_TYPE}" +
         "?$EDIT_ITEM_ID={$EDIT_ITEM_ID}"
 
+/**
+ * Arguments of the add/edit card screen, parsed from saved state.
+ * @property cardAddEditType Whether a card is being added or an existing one edited.
+ */
 data class CardAddEditArgs(
     val cardAddEditType: CardAddEditType,
 ) {
@@ -46,6 +50,9 @@ data class CardAddEditArgs(
     )
 }
 
+/**
+ * Registers the add/edit card screen in the navigation graph.
+ */
 fun NavGraphBuilder.addEditCardScreen(
     navigateBack: () -> Unit,
 ) {
@@ -61,6 +68,9 @@ fun NavGraphBuilder.addEditCardScreen(
     }
 }
 
+/**
+ * Navigates to the add/edit card screen for the given [addEditType].
+ */
 fun NavController.navigateToCardAddEdit(
     addEditType: CardAddEditType,
     navOptions: NavOptions? = null,

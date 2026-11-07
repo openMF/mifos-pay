@@ -57,6 +57,7 @@ import kpt.core.store.wallet.history.TransactionKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [SelfServiceRepository] backed by the self-service API. */
 @OptIn(ExperimentalCoroutinesApi::class)
 class SelfServiceRepositoryImpl(
     private val apiManager: SelfServiceApiManager,

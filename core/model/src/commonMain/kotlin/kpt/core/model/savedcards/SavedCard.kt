@@ -14,6 +14,20 @@ import kotlinx.serialization.Serializable
 import kpt.core.common.IgnoredOnParcel
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A payment card the user has saved in the wallet.
+ *
+ * @property id Identifier of the saved card; 0 before it is stored.
+ * @property clientId Identifier of the client.
+ * @property firstName Cardholder first name.
+ * @property lastName Cardholder last name.
+ * @property cardNumber Card number.
+ * @property cvv Card verification value.
+ * @property expiryDate Card expiry date as MMYY.
+ * @property backgroundColor Background colour of the card as shown in the UI.
+ * @property createdAt Creation timestamp components as reported by the server.
+ * @property updatedAt Last-update timestamp components as reported by the server.
+ */
 @Serializable
 @Parcelize
 data class SavedCard(
@@ -31,13 +45,16 @@ data class SavedCard(
     @SerialName("updated_at")
     val updatedAt: List<Long>,
 ) : Parcelable {
+    /** Cardholder first and last name combined. */
     @IgnoredOnParcel
     val fullName = "$firstName $lastName"
 
+    /** Expiry date formatted as MM/YY. */
     @IgnoredOnParcel
     val formattedExpiryDate: String
         get() = "${expiryDate.substring(0, 2)}/${expiryDate.substring(2, 4)}"
 
+    /** CVV replaced with asterisks for display. */
     @IgnoredOnParcel
     val maskedCvv: String
         get() = "*".repeat(cvv.length)

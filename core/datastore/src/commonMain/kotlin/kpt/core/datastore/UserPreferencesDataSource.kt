@@ -40,6 +40,10 @@ private const val SELECTED_INTERBANK_INSTANCE_KEY = "selectedInterbankInstance"
 private const val ACCOUNT_EXTERNAL_IDS_KEY = "accountExternalIds"
 private const val LANGUAGE_KEY = "language"
 
+/**
+ * Settings-backed store of the user session: user and client info, token, default account, selected server instances,
+ * external ids and language.
+ */
 @OptIn(ExperimentalSerializationApi::class)
 class UserPreferencesDataSource(
     private val settings: Settings,
@@ -105,25 +109,36 @@ class UserPreferencesDataSource(
         ) ?: Language.DEFAULT,
     )
 
+    /** Stream of the Base64 authentication key from the stored user info. */
     val token = _userInfo.map {
         it.base64EncodedAuthenticationKey
     }
+
+    /** Stream of the stored [UserInfo]. */
     val userInfo = _userInfo.map(UserInfoPreferences::toUserInfo)
 
+    /** Stream of the stored [Client]. */
     val clientInfo = _clientInfo.map(ClientPreferences::toClientInfo)
 
+    /** Stream of the stored client id. */
     val clientId = _clientInfo.map { it.id }
 
+    /** Stream of the default account, or null if none was chosen. */
     val defaultAccount = _defaultAccount.map { it.takeIf { it.accountId != 0L } }
 
+    /** Currently selected server instance, null if unset. */
     val selectedInstance = _selectedInstance
 
+    /** Currently selected interbank server, null if unset. */
     val selectedInterbankInstance = _selectedInterbankInstance
 
+    /** Map of account id to external id. */
     val accountExternalIds = _accountExternalIds
 
+    /** Selected app language. */
     val language = selectedLanguage
 
+    /** Persists [client] as the stored client. */
     suspend fun updateClientInfo(client: Client) {
         withContext(dispatcher) {
             settings.putClientPreference(client.toClientPreferences())
@@ -131,6 +146,7 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Persists [userInfo] as the stored user. */
     suspend fun updateUserInfo(userInfo: UserInfo) {
         withContext(dispatcher) {
             settings.putUserInfoPreference(userInfo.toUserInfoPreferences())
@@ -138,6 +154,7 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Updates the stored client's name, contact details and external id from [client]. */
     suspend fun updateClientProfile(client: UpdatedClient) {
         withContext(dispatcher) {
             val updatedClient = _clientInfo.value.copy(
@@ -154,6 +171,7 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Persists the selected [language]. */
     suspend fun setLanguage(language: Language) {
         withContext(dispatcher) {
             settings.putLanguageConfig(language)
@@ -161,6 +179,7 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Replaces the stored user info with a default one carrying [token] as authentication key. */
     suspend fun updateToken(token: String) {
         withContext(dispatcher) {
             settings.putUserInfoPreference(
@@ -174,20 +193,24 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Persists [account] as the default account. */
     fun updateDefaultAccount(account: DefaultAccount) {
         settings.putDefaultAccount(account)
 
         _defaultAccount.value = account
     }
 
+    /** Persists the auth [token] string. */
     fun updateAuthToken(token: String) {
         settings.putString(AUTH_TOKEN, token)
     }
 
+    /** Returns the stored auth token, or null when empty. */
     fun getAuthToken(): String? {
         return settings.getString(AUTH_TOKEN, "").ifEmpty { null }
     }
 
+    /** Persists the selected server [instance]. */
     suspend fun updateSelectedInstance(instance: ServerInstance) {
         withContext(dispatcher) {
             settings.putSelectedInstance(instance)
@@ -195,6 +218,7 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Persists the selected interbank server [instance]. */
     suspend fun updateSelectedInterbankInstance(instance: InterbankServer) {
         withContext(dispatcher) {
             settings.putSelectedInterbankInstance(instance)
@@ -202,6 +226,7 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Persists the account id to external id map. */
     suspend fun updateAccountExternalIds(accountExternalIds: Map<Long, String>) {
         withContext(dispatcher) {
             settings.putAccountExternalIds(accountExternalIds)
@@ -209,18 +234,24 @@ class UserPreferencesDataSource(
         }
     }
 
+    /** Returns the external id of [accountId], or null. */
     fun getAccountExternalId(accountId: Long): String? {
         return _accountExternalIds.value[accountId]
     }
 
+    /** Clears all stored settings (logout). */
     suspend fun clearInfo() {
         withContext(dispatcher) {
             settings.clear()
         }
     }
 
+    /** Settings key names. */
     companion object {
+        /** Settings key under which the auth token is stored. */
         const val AUTH_TOKEN = "authToken"
+
+        /** Settings key under which the default account is stored. */
         const val DEFAULT_ACCOUNT = "default_account"
     }
 }

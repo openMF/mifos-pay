@@ -12,6 +12,15 @@ package org.mifos.lib.loan.network.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Network response DTO for the loan purpose options, as returned by the Fineract loans API.
+ *
+ * @property id Unique identifier.
+ * @property name Name.
+ * @property position Position in the ordering.
+ * @property description Description.
+ * @property active Whether this entry is active.
+ */
 @Serializable
 data class LoanPurposeOptionsResponseDto(
 

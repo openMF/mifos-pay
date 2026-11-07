@@ -9,6 +9,8 @@
  */
 package kpt.core.network.main.localAssets
 
+/** Reads bundled asset files by name. */
 fun interface LocalAssetManager {
+    /** Opens the bundled asset with the given file name and returns its contents. */
     fun open(fileName: String): String
 }

@@ -41,17 +41,18 @@ import kpt.core.designsystem.component.MifosOutlinedButton
 import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.send_money.generated.resources.Res
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_banking_name
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_done
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_paid_to
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_payment_success
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_payment_success_description
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_powered_by_upi
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_share_screenshot
+import kpt.feature.send.money.generated.resources.Res
+import kpt.feature.send.money.generated.resources.feature_send_money_banking_name
+import kpt.feature.send.money.generated.resources.feature_send_money_done
+import kpt.feature.send.money.generated.resources.feature_send_money_paid_to
+import kpt.feature.send.money.generated.resources.feature_send_money_payment_success
+import kpt.feature.send.money.generated.resources.feature_send_money_payment_success_description
+import kpt.feature.send.money.generated.resources.feature_send_money_powered_by_upi
+import kpt.feature.send.money.generated.resources.feature_send_money_share_screenshot
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen confirming a completed payment, with share, done and send-again actions. */
 @Composable
 expect fun PaymentSuccessScreen(
     onShareScreenshot: () -> Unit,
@@ -318,6 +319,7 @@ private fun ActionButtons(
     }
 }
 
+/** Preview of [PaymentSuccessScreen]. */
 @Preview
 @Composable
 fun PaymentSuccessScreenPreview() {
@@ -329,6 +331,7 @@ fun PaymentSuccessScreenPreview() {
     )
 }
 
+/** Preview of the payment success header. */
 @Preview
 @Composable
 fun PaymentSuccessHeaderPreview() {
@@ -341,6 +344,7 @@ fun PaymentSuccessHeaderPreview() {
     PaymentSuccessHeader(state = state, modifier = Modifier)
 }
 
+/** Preview of the payment details card. */
 @Preview
 @Composable
 fun PaymentDetailsCardPreview() {
@@ -353,18 +357,21 @@ fun PaymentDetailsCardPreview() {
     PaymentDetailsCard(state = state, modifier = Modifier)
 }
 
+/** Preview of the placeholder banner. */
 @Preview
 @Composable
 fun PlaceholderBannerPreview() {
     PlaceholderBanner(modifier = Modifier)
 }
 
+/** Preview of the UPI logo. */
 @Preview
 @Composable
 fun UpilogoPreview() {
     Upilogo(modifier = Modifier)
 }
 
+/** Preview of the action buttons. */
 @Preview
 @Composable
 fun ActionButtonsPreview() {

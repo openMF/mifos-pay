@@ -11,6 +11,24 @@ package kpt.core.model.network.entity.loanAccount
 
 import kotlinx.serialization.Serializable
 import kpt.core.model.network.entity.common.CurrencyResponseDto
+/**
+ * Financial summary of a loan: principal, interest, fees, penalties and outstanding amounts.
+ *
+ * @property principalDisbursed Principal disbursed.
+ * @property principalPaid Principal paid.
+ * @property interestCharged Interest charged.
+ * @property interestPaid Interest paid.
+ * @property feeChargesCharged Fee charges applied.
+ * @property penaltyChargesCharged Penalty charges applied.
+ * @property penaltyChargesWaived Penalty charges waived.
+ * @property totalExpectedRepayment Total repayment expected.
+ * @property interestWaived Interest waived.
+ * @property totalRepayment Total repaid.
+ * @property feeChargesWaived Fee charges waived.
+ * @property totalOutstanding Total outstanding amount.
+ * @property overdueSinceDate Date since which the loan is overdue.
+ * @property currency Currency.
+ */
 @Serializable
 data class LoanSummaryResponseDto(
     val principalDisbursed: Double? = null,

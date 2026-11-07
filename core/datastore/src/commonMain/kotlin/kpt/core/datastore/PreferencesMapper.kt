@@ -15,6 +15,7 @@ import kpt.core.datastore.model.UserInfoPreferences
 import kpt.core.model.client.Client
 import kpt.core.model.user.RoleInfo
 import kpt.core.model.user.UserInfo
+/** Maps stored [ClientPreferences] to the domain [Client]. */
 fun ClientPreferences.toClientInfo(): Client {
     return Client(
         id = id,
@@ -35,6 +36,7 @@ fun ClientPreferences.toClientInfo(): Client {
     )
 }
 
+/** Maps the domain [Client] to its stored [ClientPreferences] form. */
 fun Client.toClientPreferences(): ClientPreferences {
     return ClientPreferences(
         id = id,
@@ -55,6 +57,7 @@ fun Client.toClientPreferences(): ClientPreferences {
     )
 }
 
+/** Maps stored [RolePreferences] to the domain [RoleInfo]. */
 fun RolePreferences.toRoleInfo(): RoleInfo {
     return RoleInfo(
         id = id,
@@ -64,6 +67,7 @@ fun RolePreferences.toRoleInfo(): RoleInfo {
     )
 }
 
+/** Maps the domain [RoleInfo] to its stored [RolePreferences] form. */
 fun RoleInfo.toRolePreferences(): RolePreferences {
     return RolePreferences(
         id = id,
@@ -73,6 +77,7 @@ fun RoleInfo.toRolePreferences(): RolePreferences {
     )
 }
 
+/** Maps stored [UserInfoPreferences] to the domain [UserInfo]. */
 fun UserInfoPreferences.toUserInfo(): UserInfo {
     return UserInfo(
         username = username,
@@ -89,6 +94,7 @@ fun UserInfoPreferences.toUserInfo(): UserInfo {
     )
 }
 
+/** Maps the domain [UserInfo] to its stored [UserInfoPreferences] form. */
 fun UserInfo.toUserInfoPreferences(): UserInfoPreferences {
     return UserInfoPreferences(
         username = username,

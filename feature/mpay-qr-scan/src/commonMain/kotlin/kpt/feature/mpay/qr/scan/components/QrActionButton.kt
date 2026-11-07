@@ -31,6 +31,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/** Icon-over-label action button used on the scanner screen. */
 @Composable
 fun QrActionButton(
     icon: ImageVector,

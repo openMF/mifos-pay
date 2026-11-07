@@ -14,6 +14,7 @@ import kpt.feature.auth.mobileVerify.MobileVerificationViewModel
 import kpt.feature.auth.signup.SignupViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module that registers the login, signup and mobile-verification view models. */
 val AuthModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignupViewModel)

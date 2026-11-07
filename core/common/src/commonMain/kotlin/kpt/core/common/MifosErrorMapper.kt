@@ -47,26 +47,21 @@ object MifosErrorMapper {
     fun <T> mapError(
         throwable: Throwable,
         userMessage: String? = null,
-    ): ScreenState<T> {
+    ): ScreenState<T> = when (throwable) {
         // Fork-level status wrappers first — they preserve the parsed message.
-        if (throwable is HttpStatusException) {
-            return if (throwable.statusCode in UnauthenticatedStatuses) {
+        is HttpStatusException ->
+            if (throwable.statusCode in UnauthenticatedStatuses) {
                 ScreenState.Unauthenticated
             } else {
                 ScreenState.Error(error = throwable, isNetworkError = false)
             }
-        }
-        if (throwable is NetworkException) {
-            return ScreenState.NoNetwork(isCaptivePortal = false)
-        }
-        if (throwable is IOException) {
-            return ScreenState.NoNetwork(isCaptivePortal = false)
-        }
+
+        is NetworkException, is IOException -> ScreenState.NoNetwork(isCaptivePortal = false)
 
         // Raw ktor exceptions — no response-body parse (that's the suspend path).
-        if (throwable is ClientRequestException) {
+        is ClientRequestException -> {
             val status = throwable.response.status.value
-            return if (status in UnauthenticatedStatuses) {
+            if (status in UnauthenticatedStatuses) {
                 ScreenState.Unauthenticated
             } else {
                 ScreenState.Error(
@@ -79,19 +74,17 @@ object MifosErrorMapper {
                 )
             }
         }
-        if (throwable is ServerResponseException) {
-            val status = throwable.response.status.value
-            return ScreenState.Error(
-                error = HttpStatusException(
-                    statusCode = status,
-                    userMessage = userMessage ?: (throwable.message ?: "Server error"),
-                    developerMessage = throwable.message,
-                ),
-                isNetworkError = false,
-            )
-        }
 
-        return ScreenState.Error(error = throwable, isNetworkError = false)
+        is ServerResponseException -> ScreenState.Error(
+            error = HttpStatusException(
+                statusCode = throwable.response.status.value,
+                userMessage = userMessage ?: (throwable.message ?: "Server error"),
+                developerMessage = throwable.message,
+            ),
+            isNetworkError = false,
+        )
+
+        else -> ScreenState.Error(error = throwable, isNetworkError = false)
     }
 
     /**

@@ -11,16 +11,27 @@ package kpt.core.common
 
 import org.koin.core.annotation.Qualifier
 
+/**
+ * Koin qualifier selecting a coroutine dispatcher by [MifosDispatchers] type.
+ * @property mifosDispatcher The dispatcher kind to inject.
+ */
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Dispatcher(val mifosDispatcher: MifosDispatchers)
 
+/** Kinds of coroutine dispatchers the app injects. */
 enum class MifosDispatchers {
+    /** Dispatcher for CPU-bound work. */
     Default,
+
+    /** Dispatcher for blocking I/O such as disk and network. */
     IO,
+
+    /** Dispatcher that runs in the caller thread until the first suspension. */
     Unconfined,
 }
 
+/** Koin qualifier for the application-wide [kotlinx.coroutines.CoroutineScope]. */
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ApplicationScope

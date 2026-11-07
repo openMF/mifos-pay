@@ -51,6 +51,9 @@ import kpt.core.base.database.annotation.DbEntity
  *   `Beneficiary.AccountType` fields.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property accountTypeCode Code of the beneficiary account type.
+ * @property accountTypeValue Display value of the beneficiary account type.
  */
 @DbEntity
 @Entity(

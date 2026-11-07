@@ -27,6 +27,7 @@ import kpt.core.store.wallet.office.OfficesKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [OfficeRepository] backed by the office API. */
 class OfficeRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
     private val ioDispatcher: CoroutineDispatcher,

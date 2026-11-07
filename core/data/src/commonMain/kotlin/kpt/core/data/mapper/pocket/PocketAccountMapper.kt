@@ -13,6 +13,7 @@ import kpt.core.model.enums.AccountType
 import kpt.core.model.network.entity.pocket.PocketAccountDto
 import kpt.core.model.network.entity.pocket.PocketResponseDto
 import kpt.core.model.pocket.PocketAccount
+/** Flattens a pocket response (loan, savings and share accounts) into a list of domain [PocketAccount]s. */
 fun PocketResponseDto.toDomainList(): List<PocketAccount> {
     val all = mutableListOf<PocketAccount>()
 
@@ -31,6 +32,7 @@ private fun PocketAccountDto.toDomain(type: AccountType) = PocketAccount(
     accountNumber = this.accountNumber ?: "",
 )
 
+/** Maps a loan [LoanStatusResponseDto] to a pocket [AccountStatus]. */
 fun kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
     when {
         active == true -> kpt.core.model.pocket.AccountStatus.ACTIVE
@@ -44,6 +46,7 @@ fun kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto.toAccountSta
         else -> kpt.core.model.pocket.AccountStatus.UNKNOWN
     }
 
+/** Maps a savings account [Status] to a pocket [AccountStatus]. */
 fun kpt.core.model.savingsaccount.Status.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
     when {
         active == true -> kpt.core.model.pocket.AccountStatus.ACTIVE
@@ -56,6 +59,7 @@ fun kpt.core.model.savingsaccount.Status.toAccountStatus(): kpt.core.model.pocke
         else -> kpt.core.model.pocket.AccountStatus.UNKNOWN
     }
 
+/** Maps a share account [ShareStatusResponseDto] to a pocket [AccountStatus]. */
 fun kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
     when {
         active == true -> kpt.core.model.pocket.AccountStatus.ACTIVE

@@ -11,6 +11,13 @@ package kpt.core.datastore.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Persisted snapshot of a user role.
+ * @property id Role id.
+ * @property name Role name.
+ * @property description Role description.
+ * @property disabled Whether the role is disabled.
+ */
 @Serializable
 data class RolePreferences(
     val id: String,
@@ -18,7 +25,9 @@ data class RolePreferences(
     val description: String,
     val disabled: Boolean,
 ) {
+    /** Holds the default (empty) value. */
     companion object {
+        /** Empty role. */
         val DEFAULT = RolePreferences(
             id = "",
             name = "",

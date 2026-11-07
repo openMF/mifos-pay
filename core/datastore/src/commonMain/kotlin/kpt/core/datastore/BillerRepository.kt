@@ -12,6 +12,7 @@ package kpt.core.datastore
 import kotlinx.coroutines.flow.Flow
 import kpt.core.model.autopay.Biller
 import kpt.core.model.autopay.BillerCategory
+/** Repository contract for saved billers. */
 interface BillerRepository {
     /**
      * Get all saved billers

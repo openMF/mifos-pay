@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.model.savingsaccount.Transaction
+/** Card listing recent [Transaction]s with an optional "View all" action. */
 @Composable
 fun TransactionHistoryCard(
     transactions: List<Transaction>,

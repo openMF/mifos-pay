@@ -25,10 +25,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/data sha=84030a90cc3afd916563303272e1901f0b6c52db -->
+<!-- api-docs:begin module=core/data sha=bc808f65a0b03e5396174d0ad00e60588c066960 -->
 ## API reference
 
-_Generated from `core/data` at tree `84030a90cc3a` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/data` at tree `bc808f65a0b0` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/di/ForkRepositoryModule.kt`
@@ -68,7 +68,7 @@ val DataModule = module
 ```
 DataModule — the INFRA-ONLY (framework) data aggregator, `owner: template` (E1 / C1).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:139</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:140</code></summary>
 
 ```kotlin
         }
@@ -92,9 +92,9 @@ Per-target repository bindings supplied by each `actual` — the pieces that can
 ```kotlin
 interface PlatformDependentDataModule
 ```
-_No KDoc at source._
+Platform-specific data dependencies (network and time-zone monitors) supplied by each target.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:24</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:25</code></summary>
 
 ```kotlin
     private val dispatcher: CoroutineDispatcher,
@@ -107,27 +107,27 @@ _No KDoc at source._
 
 </details>
 
-- `val networkMonitor: NetworkMonitor`
-- `val timeZoneMonitor: TimeZoneMonitor`
+- `val networkMonitor: NetworkMonitor` — Monitor that reports whether the device currently has network connectivity.
+- `val timeZoneMonitor: TimeZoneMonitor` — Monitor that emits the device's current time zone.
 
 ```kotlin
 expect val platformModule: Module
 ```
-_No KDoc at source._
+Platform-specific Koin module with the monitors and bindings each target needs.
 
 ```kotlin
 expect val getPlatformDataModule: PlatformDependentDataModule
 ```
-_No KDoc at source._
+Platform-specific `PlatformDependentDataModule` instance, resolved per target.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt`
 
 ```kotlin
 val RepositoryModule = module
 ```
-_No KDoc at source._
+Koin module wiring every wallet repository interface to its implementation and the shared data-layer dependencies.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:136</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:137</code></summary>
 
 ```kotlin
         val store = checkNotNull(selfAccountsStore) {
@@ -146,17 +146,17 @@ _No KDoc at source._
 ```kotlin
 fun ClientAccountsEntity.toAccount(): List<Account>
 ```
-_No KDoc at source._
+Maps the savings accounts of a client's accounts response to domain `Account`s.
 
 ```kotlin
 fun List<SavingAccountEntity>.toAccount(): List<Account>
 ```
-_No KDoc at source._
+Maps a list of savings account entities to domain `Account`s.
 
 ```kotlin
 fun NetworkAccountType.toModelAccountType(): AccountType
 ```
-_No KDoc at source._
+Maps a network account type to the domain `AccountType`.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/mapper/BillMapper.kt`
 
@@ -182,101 +182,100 @@ Utility class for mapping between different bill data models
 ```kotlin
 fun ClientEntity.toModel(): Client
 ```
-_No KDoc at source._
+Maps a client network entity to the domain `Client`.
 
 ```kotlin
 fun List<ClientEntity>.toModel(): List<Client> = map { it.toModel() }
 ```
-_No KDoc at source._
+Maps a list of client entities to domain `Client`s.
 
 ```kotlin
 fun Page<ClientEntity>.toModel(): Page<Client>
 ```
-_No KDoc at source._
+Maps a page of client entities to a page of domain `Client`s.
 
 ```kotlin
 fun NewClient.toEntity(): NewClientEntity
 ```
-_No KDoc at source._
+Maps a domain `NewClient` to the create-client network entity.
 
 ```kotlin
 fun ClientAddress.toEntity(): Address
 ```
-_No KDoc at source._
+Maps a domain `ClientAddress` to the network `Address` entity.
 
 ```kotlin
 fun Status.toModel(): ClientStatus
 ```
-_No KDoc at source._
+Maps a network client `Status` to the domain `ClientStatus`.
 
 ```kotlin
 fun ClientTimelineEntity.toModel(): ClientTimeline
 ```
-_No KDoc at source._
+Maps a client timeline entity to the domain `ClientTimeline`.
 
 ```kotlin
 fun UpdatedClient.toEntity(): UpdateClientEntity
 ```
-_No KDoc at source._
+Maps a domain `UpdatedClient` to the update-client network entity.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/mapper/SavingAccountMapper.kt`
 
 ```kotlin
 fun SavingAccountEntity.toModel(): SavingAccount
 ```
-_No KDoc at source._
+Maps a savings account network entity to the domain `SavingAccount`.
 
 ```kotlin
 fun SavingsWithAssociationsEntity.toSavingDetail(): SavingAccountDetail
 ```
-_No KDoc at source._
+Maps a savings-with-associations entity to a `SavingAccountDetail` including its transactions.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/mapper/SearchedEntitiesMapper.kt`
 
 ```kotlin
 fun SearchedEntity.toModel(): SearchResult
 ```
-_No KDoc at source._
+Maps a searched entity to a domain `SearchResult`.
 
 ```kotlin
 fun List<SearchedEntity>.toSearchResult(): List<SearchResult> = map { it.toModel() }
 ```
-_No KDoc at source._
+Maps a list of searched entities to domain `SearchResult`s.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/mapper/TransactionMapper.kt`
 
 ```kotlin
 fun SavingsWithAssociationsEntity.toTransactionList(): List<Transaction>
 ```
-_No KDoc at source._
+Extracts the transactions of a savings-with-associations entity as domain `Transaction`s.
 
 ```kotlin
 fun TransactionsEntity.toModel(): Transaction
 ```
-_No KDoc at source._
+Maps a transactions network entity to a domain `Transaction`.
 
 ```kotlin
 fun PaymentType.toModalUi(): Transaction.PaymentType
 ```
-_No KDoc at source._
+Maps a network `PaymentType` to the domain `Transaction.PaymentType`.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/mapper/UserMapper.kt`
 
 ```kotlin
 val NEW_USER_ROLE_IDS: ArrayList<Int> = arrayListOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)
 ```
-_No KDoc at source._
+Role ids assigned to newly created users: the mobile-wallet role and the super-user role.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/util/Constants.kt:22</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/util/Constants.kt:35</code></summary>
 
 ```kotlin
-    private const val SUPER_USER_ROLE_ID = 1
 
+    /** Role ids assigned to newly created users: the mobile-wallet role and the super-user role. */
     val NEW_USER_ROLE_IDS: List<Int> = listOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)
+
+    /** Entity type name for clients. */
     const val ENTITY_TYPE_CLIENTS = "clients"
-    const val FETCH_ACCOUNT_TRANSFER_USECASE = "FetchAccountTransfer"
-    const val NO_SAVED_CARDS = "No saved cards."
-    const val MIFOS_PASSWORD = "mifos:password"
 ```
 
 </details>
@@ -284,48 +283,48 @@ _No KDoc at source._
 ```kotlin
 fun NewUser.toEntity(): NewUserEntity
 ```
-_No KDoc at source._
+Maps a domain `NewUser` to the create-user network entity.
 
 ```kotlin
 fun User.toUserInfo() = UserInfo(
 ```
-_No KDoc at source._
+Maps a `User` to a `UserInfo`.
 
 ```kotlin
 fun Role.toRoleInfo() = RoleInfo(
 ```
-_No KDoc at source._
+Maps a `Role` to a `RoleInfo`.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/mapper/pocket/PocketAccountMapper.kt`
 
 ```kotlin
 fun PocketResponseDto.toDomainList(): List<PocketAccount>
 ```
-_No KDoc at source._
+Flattens a pocket response (loan, savings and share accounts) into a list of domain `PocketAccount`s.
 
 ```kotlin
 fun kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
 ```
-_No KDoc at source._
+Maps a loan `LoanStatusResponseDto` to a pocket `AccountStatus`.
 
 ```kotlin
 fun kpt.core.model.savingsaccount.Status.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
 ```
-_No KDoc at source._
+Maps a savings account `Status` to a pocket `AccountStatus`.
 
 ```kotlin
 fun kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto.toAccountStatus(): kpt.core.model.pocket.AccountStatus =
 ```
-_No KDoc at source._
+Maps a share account `ShareStatusResponseDto` to a pocket `AccountStatus`.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/AccountRepository.kt`
 
 ```kotlin
 interface AccountRepository
 ```
-_No KDoc at source._
+Repository for account transfers, transactions and account lookups.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt:41</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt:42</code></summary>
 
 ```kotlin
     private val repository: SelfServiceRepository,
@@ -333,19 +332,19 @@ _No KDoc at source._
     private val accountRepository: AccountRepository,
 ) : BaseViewModel<HistoryState, HistoryEvent, HistoryAction>(
     initialState = run {
+        /** Id of the signed-in client, read from preferences. */
         val clientId = requireNotNull(preferencesRepository.clientId.value)
-        HistoryState(
 ```
 
 </details>
 
-- `fun getTransaction(accountId: Long, transactionId: Long): Flow<ScreenState<Transaction>>`
-- `fun getAccountTransfer(transferId: Long): Flow<ScreenState<TransferDetail>>`
+- `fun getTransaction(accountId: Long, transactionId: Long): Flow<ScreenState<Transaction>>` — Streams a single transaction of an account.
+- `fun getAccountTransfer(transferId: Long): Flow<ScreenState<TransferDetail>>` — Streams the details of the account transfer identified by `transferId`.
 - `fun getAccountTransferStream(` — transfer-detail Store5 vertical — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
-- `fun searchAccounts(query: String): Flow<ScreenState<List<AccountResult>>>`
-- `fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>>`
+- `fun searchAccounts(query: String): Flow<ScreenState<List<AccountResult>>>` — Streams accounts matching the search `query`.
+- `fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>>` — Streams the self-service accounts of the given client.
 - `fun getSelfAccountsStream(` — Phase-5 Batch-3 LEDGER read — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
-- `suspend fun makeTransfer(payload: AccountTransferPayload)`
+- `suspend fun makeTransfer(payload: AccountTransferPayload)` — Submits an account-to-account transfer.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/AppLockRepository.kt`
 
@@ -354,7 +353,7 @@ interface AppLockRepository
 ```
 App-wide lock flag, persisted across process restarts.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/org/mifos/feature/passcode/MifosPasscodeViewModel.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/MifosPasscodeViewModel.kt:51</code></summary>
 
 ```kotlin
 class MifosPasscodeViewModel(
@@ -377,7 +376,7 @@ class MifosPasscodeViewModel(
 ```kotlin
 interface AssetRepository
 ```
-_No KDoc at source._
+Repository for static geographic reference data.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:59</code></summary>
 
@@ -393,16 +392,16 @@ _No KDoc at source._
 
 </details>
 
-- `fun getCountriesWithStates(): ScreenStateStream<Map<String, List<String>>>`
+- `fun getCountriesWithStates(): ScreenStateStream<Map<String, List<String>>>` — Streams the supported countries mapped to their states.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/AuthenticationRepository.kt`
 
 ```kotlin
 interface AuthenticationRepository
 ```
-_No KDoc at source._
+Repository for user authentication.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:55</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:57</code></summary>
 
 ```kotlin
     // wired in this module), so it cannot be `mock()`ed. Build a REAL use-case over
@@ -416,14 +415,14 @@ _No KDoc at source._
 
 </details>
 
-- `suspend fun authenticate(username: String, password: String): UserInfo`
+- `suspend fun authenticate(username: String, password: String): UserInfo` — Authenticates with the given credentials and returns the signed-in `UserInfo`.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayHistoryRepository.kt`
 
 ```kotlin
 interface AutoPayHistoryRepository
 ```
-_No KDoc at source._
+Repository for the execution history of auto-pay schedules.
 
 <details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryViewModel.kt:38</code></summary>
 
@@ -450,9 +449,9 @@ class AutoPayHistoryViewModel(
 ```kotlin
 data class AutoPayHistoryStatistics(
 ```
-_No KDoc at source._
+Aggregate execution counts and amounts of auto-pay history.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryViewModel.kt:541</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AutoPayHistoryViewModel.kt:555</code></summary>
 
 ```kotlin
     }
@@ -471,9 +470,9 @@ _No KDoc at source._
 ```kotlin
 interface AutoPayRepository
 ```
-_No KDoc at source._
+Repository for managing auto-pay (scheduled recurring payment) schedules.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:230</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:233</code></summary>
 
 ```kotlin
     single<TwoFactorAuthRepository> { TwoFactorAuthRepositoryImpl(get(), get(ioDispatcher)) }
@@ -503,9 +502,9 @@ _No KDoc at source._
 ```kotlin
 data class AutoPayStatistics(
 ```
-_No KDoc at source._
+Aggregate figures for a client's auto-pay schedules.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:126</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:127</code></summary>
 
 ```kotlin
     }
@@ -524,9 +523,9 @@ _No KDoc at source._
 ```kotlin
 interface BeneficiaryRepository
 ```
-_No KDoc at source._
+Repository for the beneficiaries a client can transfer to.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:118</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:121</code></summary>
 
 ```kotlin
         AuthenticationRepositoryImpl(get(), get(ioDispatcher))
@@ -540,20 +539,20 @@ _No KDoc at source._
 
 </details>
 
-- `suspend fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>>`
-- `suspend fun getBeneficiaryTemplate(): Flow<ScreenState<BeneficiaryTemplate>>`
-- `suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload)`
-- `suspend fun updateBeneficiary(`
-- `suspend fun deleteBeneficiary(beneficiaryId: Long)`
+- `suspend fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>>` — Streams the client's saved beneficiaries.
+- `suspend fun getBeneficiaryTemplate(): Flow<ScreenState<BeneficiaryTemplate>>` — Streams the template used to create or update beneficiaries.
+- `suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload)` — Creates a new beneficiary from the payload.
+- `suspend fun updateBeneficiary(` — Updates an existing beneficiary.
+- `suspend fun deleteBeneficiary(beneficiaryId: Long)` — Deletes the beneficiary with the given id.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/BillRepository.kt`
 
 ```kotlin
 interface BillRepository
 ```
-_No KDoc at source._
+Repository for bills and their statuses.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:40</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:41</code></summary>
 
 ```kotlin
 class AddBillViewModel(
@@ -586,7 +585,7 @@ class AddBillViewModel(
 ```kotlin
 data class BillStatistics(
 ```
-_No KDoc at source._
+Aggregate figures for a client's bills.
 
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt:165</code></summary>
 
@@ -607,9 +606,9 @@ _No KDoc at source._
 ```kotlin
 interface BillerRepository
 ```
-_No KDoc at source._
+Repository for the billers a wallet user can pay bills to.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:41</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:42</code></summary>
 
 ```kotlin
     savedStateHandle: SavedStateHandle,
@@ -637,9 +636,9 @@ _No KDoc at source._
 ```kotlin
 interface ClientRepository
 ```
-_No KDoc at source._
+Repository for clients, their profile images and accounts.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:76</code></summary>
 
 ```kotlin
     private val userRepository: UserRepository,
@@ -653,24 +652,24 @@ _No KDoc at source._
 
 </details>
 
-- `fun getClientInfo(clientId: Long): Flow<ScreenState<Client>>`
+- `fun getClientInfo(clientId: Long): Flow<ScreenState<Client>>` — Streams the details of the given client.
 - `fun getClientInfoStream(` — Phase-5 Batch-2 **SINGLE-ROW-PER-KEY read** for the `clientDetail` archetype (GOAL D13) — returns an offline-first `Flow<ScreenState<Client>>` consumed through the `clientDetail` Store5 [`Store`]`org.mobilenativefoundation.store.store5.Store` (`createStore` + Room [`SourceOfTruth`]`org.mobilenativefoundation.store.store5.SourceOfTruth` + single-row upsert writer) via [`Store.asScreenStream`]`kpt.core.base.store.screen.asScreenStream`. The store is driven by [`FetchPolicy.CACHE_FIRST_SWR`]`kpt.core.base.store.screen.FetchPolicy.CACHE_FIRST_SWR` (Phase-5 T10 default). Distinct from the transitional [`asScreenStateFlow`]`kpt.core.common.asScreenStateFlow` the legacy `getClientInfo` path uses; both signatures return `Flow<ScreenState<Client>>` so a consumer can swap between them without any downstream shape change. ### Write path (GOAL D1) This is a READ path. Profile mutation writes (`updateClient`, `updateClientImage`) continue to flow through their existing online paths and appear here on the next refresh cycle. `getClientImage` remains on the transitional shim — its blob-URL caching story is out of scope for this batch.
-- `suspend fun getClients(): Flow<ScreenState<Page<Client>>>`
-- `suspend fun getClient(clientId: Long): Client`
-- `suspend fun updateClient(clientId: Long, client: UpdatedClient)`
-- `fun getClientImage(clientId: Long): Flow<ScreenState<String>>`
-- `suspend fun updateClientImage(clientId: Long, image: String)`
-- `suspend fun getClientAccounts(clientId: Long): ClientAccountsEntity`
-- `suspend fun getAccounts(clientId: Long, accountType: String): Flow<ScreenState<List<Account>>>`
-- `suspend fun createClient(newClient: NewClient): Int`
-- `suspend fun deleteClient(clientId: Int): Int`
+- `suspend fun getClients(): Flow<ScreenState<Page<Client>>>` — Streams the page of clients visible to the signed-in user.
+- `suspend fun getClient(clientId: Long): Client` — Fetches a single client once.
+- `suspend fun updateClient(clientId: Long, client: UpdatedClient)` — Updates the client's details.
+- `fun getClientImage(clientId: Long): Flow<ScreenState<String>>` — Streams the client's profile image.
+- `suspend fun updateClientImage(clientId: Long, image: String)` — Uploads a new profile image for the client.
+- `suspend fun getClientAccounts(clientId: Long): ClientAccountsEntity` — Fetches the savings accounts of a client.
+- `suspend fun getAccounts(clientId: Long, accountType: String): Flow<ScreenState<List<Account>>>` — Streams the client's accounts of the given account type.
+- `suspend fun createClient(newClient: NewClient): Int` — Creates a client and returns the new client id.
+- `suspend fun deleteClient(clientId: Int): Int` — Deletes the client with the given id and returns the server response code.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/DocumentRepository.kt`
 
 ```kotlin
 interface DocumentRepository
 ```
-_No KDoc at source._
+Repository for documents attached to wallet entities such as clients.
 
 <details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCLevel2ViewModel.kt:39</code></summary>
 
@@ -686,21 +685,21 @@ internal class KYCLevel2ViewModel(
 
 </details>
 
-- `suspend fun getDocuments(entityType: String, entityId: Int): ScreenStateStream<List<Document>>`
-- `suspend fun createDocument(`
-- `suspend fun createDocument(`
-- `suspend fun downloadDocument(entityType: String, entityId: Int, documentId: Int): ScreenStateStream<Document>`
-- `suspend fun deleteDocument(entityType: String, entityId: Int, documentId: Int): ScreenStateStream<Unit>`
-- `suspend fun updateDocument(`
+- `suspend fun getDocuments(entityType: String, entityId: Int): ScreenStateStream<List<Document>>` — Streams the documents attached to the given entity.
+- `suspend fun createDocument(` — Uploads a new document for an entity.
+- `suspend fun createDocument(` — Uploads a new document for an entity from a file.
+- `suspend fun downloadDocument(entityType: String, entityId: Int, documentId: Int): ScreenStateStream<Document>` — Downloads a document of the given entity.
+- `suspend fun deleteDocument(entityType: String, entityId: Int, documentId: Int): ScreenStateStream<Unit>` — Deletes a document of the given entity.
+- `suspend fun updateDocument(` — Updates an existing document.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/InterBankRepository.kt`
 
 ```kotlin
 interface InterBankRepository
 ```
-_No KDoc at source._
+Repository for inter-bank (cross-institution) transfers.
 
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:72</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt:73</code></summary>
 
 ```kotlin
 class InterbankTransferViewModel(
@@ -714,22 +713,22 @@ class InterbankTransferViewModel(
 
 </details>
 
-- `suspend fun fetchParticipant(`
-- `suspend fun fetchPartyInfo(`
-- `fun findParticipant(`
-- `suspend fun interBankMakeTransfer(`
+- `suspend fun fetchParticipant(` — Fetches the participant that owns the given identifier.
+- `suspend fun fetchPartyInfo(` — Fetches party information for an inter-bank transfer.
+- `fun findParticipant(` — Finds a participant for the given identifier.
+- `suspend fun interBankMakeTransfer(` — Executes an inter-bank transfer.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/InvoiceRepository.kt`
 
 ```kotlin
 interface InvoiceRepository
 ```
-_No KDoc at source._
+Repository for client invoices.
 
-<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoicesViewModel.kt:27</code></summary>
+<details><summary>Used in the template — <code>feature/invoices/src/commonMain/kotlin/kpt/feature/invoices/InvoicesViewModel.kt:28</code></summary>
 
 ```kotlin
-import kpt.core.ui.utils.BaseViewModel
+/** ViewModel that loads the current client's invoices and emits navigation to invoice detail. */
 class InvoicesViewModel(
     invoiceRepository: InvoiceRepository,
     repository: ForkPreferencesRepository,
@@ -740,21 +739,21 @@ class InvoicesViewModel(
 
 </details>
 
-- `fun getInvoice(clientId: Long, invoiceId: Long): Flow<ScreenState<Invoice>>`
-- `fun getInvoices(clientId: Long): Flow<ScreenState<List<Invoice>>>`
+- `fun getInvoice(clientId: Long, invoiceId: Long): Flow<ScreenState<Invoice>>` — Streams a single invoice of the given client.
+- `fun getInvoices(clientId: Long): Flow<ScreenState<List<Invoice>>>` — Streams the invoices of the given client.
 - `fun getInvoicesStream(` — Phase-5 Batch-2 **LEDGER read** for the `invoice` archetype (GOAL D13) — returns an offline-first `Flow<ScreenState<List<Invoice>>>` consumed through the `invoice` Store5 [`Store`]`org.mobilenativefoundation.store.store5.Store` (`createStore` + Room [`SourceOfTruth`]`org.mobilenativefoundation.store.store5.SourceOfTruth` + atomic [`replacePage`]`kpt.core.database.wallet.invoice.InvoiceDao.replacePage` writer) via [`Store.asScreenStream`]`kpt.core.base.store.screen.asScreenStream` — the Store5-native bridge, distinct from the transitional [`asScreenStateFlow`]`kpt.core.common.asScreenStateFlow` the legacy `getInvoices` path uses. The store is driven by [`FetchPolicy.CACHE_FIRST_SWR`]`kpt.core.base.store.screen.FetchPolicy.CACHE_FIRST_SWR` (Phase-5 T10 default) — subscribers see the cached page instantly and a background revalidation fires on the Stale/VeryStale band edge. ### Write path (GOAL D1) This is a READ path. Invoice CRUD writes (`createInvoice`, `updateInvoice`, `deleteInvoice`) continue to flow through their existing online paths and appear here on the next refresh cycle — the LEDGER cache is server-truth.
-- `suspend fun createInvoice(clientId: Long, invoice: InvoiceEntity)`
-- `suspend fun updateInvoice(`
-- `suspend fun deleteInvoice(clientId: Long, invoiceId: Long)`
+- `suspend fun createInvoice(clientId: Long, invoice: InvoiceEntity)` — Creates an invoice for the given client.
+- `suspend fun updateInvoice(` — Updates an invoice of the given client.
+- `suspend fun deleteInvoice(clientId: Long, invoiceId: Long)` — Deletes an invoice of the given client.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/KycLevelRepository.kt`
 
 ```kotlin
 interface KycLevelRepository
 ```
-_No KDoc at source._
+Repository for KYC (know-your-customer) level 1 details.
 
-<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionViewModel.kt:31</code></summary>
+<details><summary>Used in the template — <code>feature/kyc/src/commonMain/kotlin/kpt/feature/kyc/KYCDescriptionViewModel.kt:32</code></summary>
 
 ```kotlin
 class KYCDescriptionViewModel(
@@ -763,21 +762,21 @@ class KYCDescriptionViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<KycState, KycEvent, KycAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: run {
-        val clientId = requireNotNull(repository.clientId.value)
+        /** Id of the logged-in client, read from the stored fork preferences. */
 ```
 
 </details>
 
-- `fun fetchKYCLevel1Details(clientId: Long): ScreenStateStream<KYCLevel1Details?>`
-- `suspend fun addKYCLevel1Details(`
-- `suspend fun updateKYCLevel1Details(`
+- `fun fetchKYCLevel1Details(clientId: Long): ScreenStateStream<KYCLevel1Details?>` — Streams the client's KYC level 1 details, or null when none exist.
+- `suspend fun addKYCLevel1Details(` — Adds KYC level 1 details for the client.
+- `suspend fun updateKYCLevel1Details(` — Updates the client's KYC level 1 details.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/LocalAssetRepository.kt`
 
 ```kotlin
 interface LocalAssetRepository
 ```
-_No KDoc at source._
+Repository for static reference data bundled with the app.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:59</code></summary>
 
@@ -793,15 +792,15 @@ _No KDoc at source._
 
 </details>
 
-- `val localeList: StateFlow<List<Locale>>`
-- `val currencyList: StateFlow<List<CurrencyCode>>`
+- `val localeList: StateFlow<List<Locale>>` — Locales available in the app.
+- `val currencyList: StateFlow<List<CurrencyCode>>` — Currency codes available in the app.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/NotificationRepository.kt`
 
 ```kotlin
 interface NotificationRepository
 ```
-_No KDoc at source._
+Repository for user notifications.
 
 <details><summary>Used in the template — <code>feature/notification/src/commonMain/kotlin/kpt/feature/notification/NotificationViewModel.kt:22</code></summary>
 
@@ -817,7 +816,7 @@ internal class NotificationViewModel(
 
 </details>
 
-- `fun fetchNotifications(): Flow<ScreenState<List<Notification>>>`
+- `fun fetchNotifications(): Flow<ScreenState<List<Notification>>>` — Streams the user's notifications.
 - `fun fetchNotificationsStream(` — Phase-5 Batch-2 **LEDGER read** for the `notification` archetype (GOAL D13) — returns an offline-first `Flow<ScreenState<List<Notification>>>` consumed through the `notification` Store5 [`Store`]`org.mobilenativefoundation.store.store5.Store` (`createStore` + Room [`SourceOfTruth`]`org.mobilenativefoundation.store.store5.SourceOfTruth` + atomic [`replacePage`]`kpt.core.database.wallet.notification.NotificationDao.replacePage` writer) via [`Store.asScreenStream`]`kpt.core.base.store.screen.asScreenStream` — the Store5-native bridge, distinct from the transitional [`asScreenStateFlow`]`kpt.core.common.asScreenStateFlow` the legacy `fetchNotifications` path uses. The store is driven by [`FetchPolicy.CACHE_FIRST_SWR`]`kpt.core.base.store.screen.FetchPolicy.CACHE_FIRST_SWR` (Phase-5 T10 default) — subscribers see the cached page instantly and a background revalidation fires on the Stale/VeryStale band edge. ### Cache-key scoping The Fineract `notifications/?isRead=true` endpoint returns the list for the authenticated session (no `clientId` parameter). The `clientId` here is used purely for CACHE SCOPING — the store key partitions the Room SoT so a logout-then-login as a different client never surfaces the previous user's cached list. Returns the native `ScreenDataStream` (template idiom) — the ViewModel holds it directly and exposes `stream.state` to the Screen (rendered by `core-base/ui` `ScreenContent`) and `stream.refresh()` for pull-to-refresh / retry. No fork-`ScreenState` bridge, no per-ViewModel `when` fold — `DecisionEngine` inside the stream pre-decides every render branch.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/OfficeRepository.kt`
@@ -825,7 +824,7 @@ internal class NotificationViewModel(
 ```kotlin
 interface OfficeRepository
 ```
-_No KDoc at source._
+Repository for Fineract offices.
 
 <details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:60</code></summary>
 
@@ -841,7 +840,7 @@ _No KDoc at source._
 
 </details>
 
-- `fun getOffices(): ScreenStateStream<List<Office>>`
+- `fun getOffices(): ScreenStateStream<List<Office>>` — Streams the list of offices.
 - `fun getOfficesStream(scope: CoroutineScope): ScreenDataStream<List<Office>>` — Phase-5 Batch-3 LEDGER read — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/PocketRepository.kt`
@@ -849,7 +848,7 @@ _No KDoc at source._
 ```kotlin
 interface PocketRepository
 ```
-_No KDoc at source._
+Repository for pocket accounts, which group a client's loan, savings and share accounts.
 
 <details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:82</code></summary>
 
@@ -865,12 +864,12 @@ _No KDoc at source._
 
 </details>
 
-- `fun getLinkedPocketAccountsStream(`
+- `fun getLinkedPocketAccountsStream(` — Streams the accounts currently linked to the client's pocket.
 - `fun getDetailedPocketAccountsStream(` — Phase-5 Batch-2 **LEDGER read** for the `pocket` archetype (GOAL D13) — returns an offline-first `Flow<ScreenState<List<DetailedPocketAccount>>>` consumed through the `pocket` Store5 [`Store`]`org.mobilenativefoundation.store.store5.Store` (`createStore` + Room [`SourceOfTruth`]`org.mobilenativefoundation.store.store5.SourceOfTruth` + atomic [`replacePage`]`kpt.core.database.wallet.pocket.PocketDao.replacePage` writer) via [`Store.asScreenStream`]`kpt.core.base.store.screen.asScreenStream`. The store is driven by [`FetchPolicy.CACHE_FIRST_SWR`]`kpt.core.base.store.screen.FetchPolicy.CACHE_FIRST_SWR` (Phase-5 T10 default) — subscribers see the cached page instantly and a background revalidation fires on the Stale/VeryStale band edge. ### Migration from the in-memory cache This method REPLACES the pre-store `getDetailedPocketAccounts(clientId, forceRefresh): Flow<DataState<List<DetailedPocketAccount>>>` that was Phase-4-deferred out of a Store5 migration. The `forceRefresh` parameter is gone — callers refresh by RE-SUBSCRIBING (i.e. wrapping this call in a `MutableSharedFlow<Unit>().flatMapLatest { ... }` in the VM, the same pattern `BeneficiaryListViewModel` uses). The in-memory `MutableStateFlow<DataState<...>>` cache in `PocketRepositoryImp` is REMOVED — Room is the SoT. ### Write path (GOAL D1) This is a READ path. Pocket CRUD writes (`linkAccounts`, `delinkAccounts`) continue to flow through their existing online paths and appear here on the next refresh cycle. The pre-store optimistic in-memory cache update inside those writes is REMOVED — the momentary "already-updated" impression is replaced by an SWR / manual re-subscribe pull through this store.
-- `fun observeLinkedPocketAccounts(clientId: Long): Flow<List<PocketAccount>>`
-- `fun getAvailableAccountsToLinkStream(clientId: Long, scope: CoroutineScope): ScreenDataStream<List<LinkableAccount>>`
-- `suspend fun linkAccounts(`
-- `suspend fun delinkAccounts(`
+- `fun observeLinkedPocketAccounts(clientId: Long): Flow<List<PocketAccount>>` — Observes the client's linked pocket accounts from the local cache.
+- `fun getAvailableAccountsToLinkStream(clientId: Long, scope: CoroutineScope): ScreenDataStream<List<LinkableAccount>>` — Streams the accounts the client can link to a pocket.
+- `suspend fun linkAccounts(` — Links accounts to the client's pocket.
+- `suspend fun delinkAccounts(` — Delinks accounts from the client's pocket.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/RecentPayeeRepository.kt`
 
@@ -879,10 +878,10 @@ interface RecentPayeeRepository
 ```
 Repository for fetching recent paid beneficiaries. Derives recent payees from transaction history by: 1. Fetching DEBIT transactions from savings account 2. Getting transfer details for each transaction 3.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubViewModel.kt:31</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubViewModel.kt:35</code></summary>
 
 ```kotlin
-import kpt.core.ui.utils.BaseViewModel
+ */
 class IntraBankHubViewModel(
     private val recentPayeeRepository: RecentPayeeRepository,
     private val repository: ThirdPartyTransferRepository,
@@ -900,9 +899,9 @@ class IntraBankHubViewModel(
 ```kotlin
 interface RegistrationRepository
 ```
-_No KDoc at source._
+Repository for user registration and verification.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:170</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:173</code></summary>
 
 ```kotlin
         )
@@ -916,17 +915,17 @@ _No KDoc at source._
 
 </details>
 
-- `suspend fun registerUser(registerPayload: RegisterPayload)`
-- `suspend fun verifyUser(userVerify: UserVerify)`
+- `suspend fun registerUser(registerPayload: RegisterPayload)` — Registers a new user.
+- `suspend fun verifyUser(userVerify: UserVerify)` — Verifies a newly registered user.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/RunReportRepository.kt`
 
 ```kotlin
 interface RunReportRepository
 ```
-_No KDoc at source._
+Repository for running Fineract reports.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:171</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:174</code></summary>
 
 ```kotlin
     }
@@ -940,19 +939,19 @@ _No KDoc at source._
 
 </details>
 
-- `suspend fun getTransactionReceipt(`
+- `suspend fun getTransactionReceipt(` — Fetches a transaction receipt by running a report.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/SavedCardRepository.kt`
 
 ```kotlin
 interface SavedCardRepository
 ```
-_No KDoc at source._
+Repository for a client's saved payment cards.
 
-<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreenViewModel.kt:38</code></summary>
+<details><summary>Used in the template — <code>feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/CardsScreenViewModel.kt:42</code></summary>
 
 ```kotlin
-import org.jetbrains.compose.resources.StringResource
+ */
 class CardsScreenViewModel(
     private val repository: SavedCardRepository,
     userRepository: ForkPreferencesRepository,
@@ -963,19 +962,19 @@ class CardsScreenViewModel(
 
 </details>
 
-- `fun getSavedCards(clientId: Long): Flow<ScreenState<List<SavedCard>>>`
+- `fun getSavedCards(clientId: Long): Flow<ScreenState<List<SavedCard>>>` — Streams the client's saved cards.
 - `fun getSavedCardsStream(` — Phase-5 Batch-1 **LEDGER read** for the `savedCards` archetype (GOAL D13) — returns an offline-first `Flow<ScreenState<List<SavedCard>>>` consumed through the `savedCards` Store5 [`Store`]`org.mobilenativefoundation.store.store5.Store` (`createStore` + Room [`SourceOfTruth`]`org.mobilenativefoundation.store.store5.SourceOfTruth` + atomic [`replacePage`]`kpt.core.database.wallet.savedcards.SavedCardDao.replacePage` writer) via [`Store.asScreenStream`]`kpt.core.base.store.screen.asScreenStream` — the Store5-native bridge, distinct from the transitional [`asScreenStateFlow`]`kpt.core.common.asScreenStateFlow` the legacy `getSavedCards` path uses. The store is driven by [`FetchPolicy.CACHE_FIRST_SWR`]`kpt.core.base.store.screen.FetchPolicy.CACHE_FIRST_SWR` (Phase-5 T10 default) — subscribers see the cached page instantly and a background revalidation fires on the Stale/VeryStale band edge. ### Write path (GOAL D1) This is a READ path. Card CRUD writes (`addSavedCard`, `updateCard`, `deleteCard`) continue to flow through their existing online paths and appear here on the next refresh cycle — the LEDGER cache is server-truth.
-- `fun getSavedCard(clientId: Long, cardId: Long): Flow<ScreenState<SavedCard>>`
-- `suspend fun addSavedCard(clientId: Long, card: CardPayload)`
-- `suspend fun deleteCard(clientId: Long, cardId: Long)`
-- `suspend fun updateCard(clientId: Long, cardId: Long, card: CardPayload)`
+- `fun getSavedCard(clientId: Long, cardId: Long): Flow<ScreenState<SavedCard>>` — Streams a single saved card of the client.
+- `suspend fun addSavedCard(clientId: Long, card: CardPayload)` — Adds a saved card for the client.
+- `suspend fun deleteCard(clientId: Long, cardId: Long)` — Deletes a saved card.
+- `suspend fun updateCard(clientId: Long, cardId: Long, card: CardPayload)` — Updates a saved card.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/SavingsAccountRepository.kt`
 
 ```kotlin
 interface SavingsAccountRepository
 ```
-_No KDoc at source._
+Repository for savings accounts and their transactions.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:57</code></summary>
 
@@ -991,29 +990,29 @@ internal class AddEditSavingViewModel(
 
 </details>
 
-- `suspend fun getSavingsAccounts(limit: Int): ScreenStateStream<Page<SavingsWithAssociationsEntity>>`
-- `suspend fun getSavingsWithAssociations(`
-- `fun getAccountDetail(accountId: Long): ScreenStateStream<SavingAccountDetail>`
+- `suspend fun getSavingsAccounts(limit: Int): ScreenStateStream<Page<SavingsWithAssociationsEntity>>` — Fetches savings accounts up to the given limit.
+- `suspend fun getSavingsWithAssociations(` — Fetches a savings account together with its associations.
+- `fun getAccountDetail(accountId: Long): ScreenStateStream<SavingAccountDetail>` — Streams the details of a savings account.
 - `fun getAccountDetailStream(` — Phase-5 Batch-1 **SINGLE-ROW-PER-KEY read** for the `accountDetail` archetype (GOAL D13) — returns an offline-first `ScreenStateStream<SavingAccountDetail>` consumed through the `accountDetail` Store5 [`Store`]`org.mobilenativefoundation.store.store5.Store` (`createStore` + Room [`SourceOfTruth`]`org.mobilenativefoundation.store.store5.SourceOfTruth` + single-row upsert writer) via [`Store.asScreenStream`]`kpt.core.base.store.screen.asScreenStream`. The store is driven by [`FetchPolicy.CACHE_FIRST_SWR`]`kpt.core.base.store.screen.FetchPolicy.CACHE_FIRST_SWR` (Phase-5 T10 default). Distinct from the transitional [`asScreenStateFlow`]`kpt.core.common.asScreenStateFlow` the legacy `getAccountDetail` path uses; both signatures return `ScreenStateStream<SavingAccountDetail>` so a consumer can swap between them without any downstream shape change. ### Write path (GOAL D1) This is a READ path. Account management writes (`blockAccount`, `unblockAccount`, `createSavingsAccount`, `updateSavingsAccount`) continue to flow through their existing online paths and appear here on the next refresh cycle.
-- `suspend fun getSavingAccountTransaction(`
-- `suspend fun payViaMobile(accountId: Long): ScreenStateStream<Transaction>`
-- `fun getSavingAccountTemplate(clientId: Long): ScreenStateStream<SavingAccountTemplate>`
-- `suspend fun createSavingsAccount(savingAccount: CreateNewSavingEntity)`
-- `suspend fun updateSavingsAccount(`
-- `suspend fun unblockAccount(`
-- `suspend fun blockAccount(`
+- `suspend fun getSavingAccountTransaction(` — Fetches a transaction of a savings account.
+- `suspend fun payViaMobile(accountId: Long): ScreenStateStream<Transaction>` — Initiates a pay-via-mobile transaction on the account.
+- `fun getSavingAccountTemplate(clientId: Long): ScreenStateStream<SavingAccountTemplate>` — Streams the template used to create a savings account for the client.
+- `suspend fun createSavingsAccount(savingAccount: CreateNewSavingEntity)` — Creates a savings account.
+- `suspend fun updateSavingsAccount(` — Updates a savings account.
+- `suspend fun unblockAccount(` — Unblocks the savings account.
+- `suspend fun blockAccount(` — Blocks the savings account.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/SearchRepository.kt`
 
 ```kotlin
 interface SearchRepository
 ```
-_No KDoc at source._
+Repository for searching Fineract resources.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:28</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:29</code></summary>
 
 ```kotlin
-import kpt.core.ui.utils.BaseViewModel
+/** View model that verifies a mobile number: requests an OTP for the number, then verifies the entered OTP. */
 class MobileVerificationViewModel(
     private val searchRepository: SearchRepository,
     savedStateHandle: SavedStateHandle,
@@ -1024,16 +1023,16 @@ class MobileVerificationViewModel(
 
 </details>
 
-- `suspend fun searchResources(`
+- `suspend fun searchResources(` — Searches Fineract resources by query.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/SelfServiceRepository.kt`
 
 ```kotlin
 interface SelfServiceRepository
 ```
-_No KDoc at source._
+Repository over the Fineract self-service API: login, clients, accounts, transactions and beneficiaries.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:46</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:50</code></summary>
 
 ```kotlin
 class AccountViewModel(
@@ -1042,24 +1041,24 @@ class AccountViewModel(
     private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
-        val clientId = userRepository.clientId.value
+        /** Client id read from user preferences when the view model is created. */
 ```
 
 </details>
 
-- `suspend fun loginSelf(payload: AuthenticationPayload): User`
-- `fun getSelfClientDetails(clientId: Long): Flow<ScreenState<Client>>`
-- `suspend fun getSelfClientDetails(): Flow<ScreenState<Page<Client>>>`
-- `fun getSelfAccountTransactions(`
-- `suspend fun getSelfAccountTransactionFromId(`
-- `fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>>`
-- `fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>>`
-- `fun getActiveAccountsWithTransactionsPerAccount(`
-- `fun getActiveAccounts(`
-- `fun getActiveAccountsWithAccountTransferTemplate(`
-- `fun getAccountsTransactions(clientId: Long): Flow<ScreenState<List<Transaction>>>`
-- `fun getTransactions(accountId: List<Long>, limit: Int?): Flow<List<Transaction>>`
-- `fun getTransactions(accountId: Long, limit: Int?): Flow<ScreenState<List<Transaction>>>`
+- `suspend fun loginSelf(payload: AuthenticationPayload): User` — Logs in through the self-service API and returns the authenticated `User`.
+- `fun getSelfClientDetails(clientId: Long): Flow<ScreenState<Client>>` — Streams the details of the given self-service client.
+- `suspend fun getSelfClientDetails(): Flow<ScreenState<Page<Client>>>` — Streams the page of clients visible to the self-service user.
+- `fun getSelfAccountTransactions(` — Streams the transactions of the given account.
+- `suspend fun getSelfAccountTransactionFromId(` — Fetches one transaction of an account.
+- `fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>>` — Streams the client's self-service accounts.
+- `fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>>` — Streams the user's beneficiaries.
+- `fun getActiveAccountsWithTransactionsPerAccount(` — Streams active accounts mapped to their recent transactions, limited to `limit` when set.
+- `fun getActiveAccounts(` — Streams the client's active accounts.
+- `fun getActiveAccountsWithAccountTransferTemplate(` — Streams active accounts with the account-transfer template used to start a transfer.
+- `fun getAccountsTransactions(clientId: Long): Flow<ScreenState<List<Transaction>>>` — Streams the transactions across all of the client's accounts.
+- `fun getTransactions(accountId: List<Long>, limit: Int?): Flow<List<Transaction>>` — Streams the transactions of several accounts, limited to `limit` when set.
+- `fun getTransactions(accountId: Long, limit: Int?): Flow<ScreenState<List<Transaction>>>` — Streams the transactions of a single account, limited to `limit` when set.
 - `fun getTransactionsStream(` — Phase-4 Batch-A **LEDGER read** for the `history` archetype (GOAL D13) — returns an offline-first `Flow<ScreenState<List<Transaction>>>` consumed through the `history` Store5 [`Store`]`org.mobilenativefoundation.store.store5.Store` (`createStore` + Room [`SourceOfTruth`]`org.mobilenativefoundation.store.store5.SourceOfTruth` + atomic [`replacePage`]`kpt.core.database.wallet.transaction.TransactionDao.replacePage` writer) via [`Store.asScreenStream`]`kpt.core.base.store.screen.asScreenStream` — the Store5-native bridge, distinct from the transitional [`asScreenStateFlow`]`kpt.core.common.asScreenStateFlow` the legacy `getTransactions` path uses. The store is driven by [`FetchPolicy.CACHE_FIRST_SWR`]`kpt.core.base.store.screen.FetchPolicy.CACHE_FIRST_SWR` (Phase-5 T10 default) so subscribers see the cached page instantly and a background revalidation fires on the Stale/VeryStale band edge — no reload spinner on tab-switch. ### Why the scope parameter `Store.asScreenStream(...)` launches child coroutines (reconnect debounce, periodic refresh, CACHE_FIRST_SWR side-fetch). It needs a lifecycle-bound scope so those coroutines stop when the ViewModel is cleared. Pass `viewModelScope` from the call site. ### Write path (GOAL D1) This is a READ path. Money-movement writes (transfer, deposit, withdrawal) continue to flow through their existing online repositories (`ThirdPartyTransferRepository`, `SavingsAccountRepository`, etc.) and appear here on the next refresh cycle — the LEDGER cache is server-truth.
   _…more members; read the file._
 
@@ -1068,9 +1067,9 @@ class AccountViewModel(
 ```kotlin
 interface StandingInstructionRepository
 ```
-_No KDoc at source._
+Repository for standing instructions (recurring transfers).
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionViewModel.kt:39</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionViewModel.kt:43</code></summary>
 
 ```kotlin
 class StandingInstructionViewModel(
@@ -1079,25 +1078,25 @@ class StandingInstructionViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SIUiState, SIEvent, SIAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: run {
-        val clientId = requireNotNull(repository.clientId.value)
+        /** Client id taken from the stored preferences; required to build the initial state. */
 ```
 
 </details>
 
-- `fun getStandingInstructionTemplate(`
-- `fun getAllStandingInstructions(`
+- `fun getStandingInstructionTemplate(` — Streams the template used to create a standing instruction.
+- `fun getAllStandingInstructions(` — Streams all standing instructions matching the given filters.
 - `fun getAllStandingInstructionsStream(` — Phase-5 Batch-3 LEDGER read — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
-- `fun getStandingInstruction(instructionId: Long): Flow<ScreenState<StandingInstruction>>`
-- `suspend fun createStandingInstruction(`
-- `suspend fun updateStandingInstruction(`
-- `suspend fun deleteStandingInstruction(instructionId: Long)`
+- `fun getStandingInstruction(instructionId: Long): Flow<ScreenState<StandingInstruction>>` — Streams a single standing instruction.
+- `suspend fun createStandingInstruction(` — Creates a standing instruction.
+- `suspend fun updateStandingInstruction(` — Updates a standing instruction.
+- `suspend fun deleteStandingInstruction(instructionId: Long)` — Deletes a standing instruction.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/ThirdPartyTransferRepository.kt`
 
 ```kotlin
 interface ThirdPartyTransferRepository
 ```
-_No KDoc at source._
+Repository for transfers to third-party accounts.
 
 <details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt:93</code></summary>
 
@@ -1113,15 +1112,15 @@ internal class TransferConfirmViewModel(
 
 </details>
 
-- `suspend fun getTransferTemplate(): AccountOptionsTemplate`
-- `fun makeTransfer(payload: TransferPayload): ScreenStateStream<TPTResponse>`
+- `suspend fun getTransferTemplate(): AccountOptionsTemplate` — Fetches the account options template for a third-party transfer.
+- `fun makeTransfer(payload: TransferPayload): ScreenStateStream<TPTResponse>` — Makes a third-party transfer and streams the response.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/TwoFactorAuthRepository.kt`
 
 ```kotlin
 interface TwoFactorAuthRepository
 ```
-_No KDoc at source._
+Repository for two-factor authentication.
 
 <details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/viewmodel/SetUpUpiViewModal.kt:28</code></summary>
 
@@ -1136,21 +1135,21 @@ class SetUpUpiViewModal(
 
 </details>
 
-- `suspend fun deliveryMethods(): ScreenStateStream<List<DeliveryMethod>>`
-- `suspend fun requestOTP(deliveryMethod: String): ScreenStateStream<String>`
-- `suspend fun validateToken(token: String): ScreenStateStream<AccessToken>`
+- `suspend fun deliveryMethods(): ScreenStateStream<List<DeliveryMethod>>` — Streams the available OTP delivery methods.
+- `suspend fun requestOTP(deliveryMethod: String): ScreenStateStream<String>` — Requests an OTP through the given delivery method.
+- `suspend fun validateToken(token: String): ScreenStateStream<AccessToken>` — Validates the OTP token and streams the resulting `AccessToken`.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/UserRepository.kt`
 
 ```kotlin
 interface UserRepository
 ```
-_No KDoc at source._
+Repository for users and their roles.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:73</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:74</code></summary>
 
 ```kotlin
-import org.jetbrains.compose.resources.StringResource
+/** View model for the signup screen; validates the form and registers a new user and client. */
 class SignupViewModel(
     private val userRepository: UserRepository,
     private val searchRepository: SearchRepository,
@@ -1161,13 +1160,13 @@ class SignupViewModel(
 
 </details>
 
-- `suspend fun getUsers(): ScreenStateStream<List<UserWithRole>>`
-- `suspend fun getUser(): ScreenStateStream<UserWithRole>`
-- `suspend fun updateUser(userId: Int, updatedUser: NewUser): ScreenStateStream<GenericResponse>`
-- `suspend fun createUser(newUser: NewUser): Int`
-- `suspend fun updateUserPassword(userId: Long, password: String)`
-- `suspend fun deleteUser(userId: Int): CommonResponse`
-- `suspend fun assignClientToUser(userId: Int, clientId: Int)`
+- `suspend fun getUsers(): ScreenStateStream<List<UserWithRole>>` — Streams all users with their roles.
+- `suspend fun getUser(): ScreenStateStream<UserWithRole>` — Streams the signed-in user with role.
+- `suspend fun updateUser(userId: Int, updatedUser: NewUser): ScreenStateStream<GenericResponse>` — Updates a user.
+- `suspend fun createUser(newUser: NewUser): Int` — Creates a user and returns its id.
+- `suspend fun updateUserPassword(userId: Long, password: String)` — Updates a user's password.
+- `suspend fun deleteUser(userId: Int): CommonResponse` — Deletes a user.
+- `suspend fun assignClientToUser(userId: Int, clientId: Int)` — Assigns a client to a user.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repository/UserVerificationRepository.kt`
 
@@ -1185,7 +1184,7 @@ One-shot, time-bounded "user passed a passcode/biometric verification just now" 
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SettingsState, SettingsEvent, SettingsAction>(
     initialState = run {
-        val client = requireNotNull(userPreferencesRepository.client.value)
+        /** Client taken from the stored user preferences; required to build the initial state. */
 ```
 
 </details>
@@ -1198,9 +1197,9 @@ One-shot, time-bounded "user passed a passcode/biometric verification just now" 
 ```kotlin
 class AccountRepositoryImpl(
 ```
-_No KDoc at source._
+Default `AccountRepository` backed by the network data sources.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:95</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:98</code></summary>
 
 ```kotlin
     single<AssetRepository> { AssetRepositoryImpl() }
@@ -1221,7 +1220,7 @@ class AppLockRepositoryImpl(
 ```
 `AppLockRepository` implementation backed by `com.russhwolf.settings.Settings` (single boolean entry under `APP_LOCK_FLAG`).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:268</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:271</code></summary>
 
 ```kotlin
     singleOf(::MifosPasscodeAdapterImpl).bind<PasscodeStorageAdapter>()
@@ -1240,9 +1239,9 @@ class AppLockRepositoryImpl(
 ```kotlin
 class AssetRepositoryImpl : AssetRepository
 ```
-_No KDoc at source._
+Default `AssetRepository`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:93</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:96</code></summary>
 
 ```kotlin
     single<Json> { Json { ignoreUnknownKeys = true } }
@@ -1261,9 +1260,9 @@ _No KDoc at source._
 ```kotlin
 class AuthenticationRepositoryImpl(
 ```
-_No KDoc at source._
+Default `AuthenticationRepository` backed by the authentication API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:116</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:119</code></summary>
 
 ```kotlin
     }
@@ -1282,9 +1281,9 @@ _No KDoc at source._
 ```kotlin
 class AutoPayHistoryRepositoryImpl(
 ```
-_No KDoc at source._
+Default `AutoPayHistoryRepository`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:273</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:276</code></summary>
 
 ```kotlin
     // QR Transfer Router for smart intra/inter-bank routing
@@ -1303,9 +1302,9 @@ _No KDoc at source._
 ```kotlin
 class AutoPayRepositoryImpl(
 ```
-_No KDoc at source._
+Default `AutoPayRepository`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:230</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:233</code></summary>
 
 ```kotlin
     single<TwoFactorAuthRepository> { TwoFactorAuthRepositoryImpl(get(), get(ioDispatcher)) }
@@ -1324,9 +1323,9 @@ _No KDoc at source._
 ```kotlin
 class BeneficiaryRepositoryImpl(
 ```
-_No KDoc at source._
+Default `BeneficiaryRepository` backed by the beneficiary API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:118</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:121</code></summary>
 
 ```kotlin
         AuthenticationRepositoryImpl(get(), get(ioDispatcher))
@@ -1355,7 +1354,7 @@ single<BillRepository> { BillOfflineRepositoryImpl(dao = get(), ioDispatcher = g
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:297</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:300</code></summary>
 
 ```kotlin
     // the same commit to avoid a double-registration on `BillRepository`.
@@ -1405,7 +1404,7 @@ single<BillerRepository> { BillerOfflineRepositoryImpl(dao = get(), ioDispatcher
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:307</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:310</code></summary>
 
 ```kotlin
     // `BillOfflineRepositoryImpl` cutover above.
@@ -1426,7 +1425,7 @@ class BillerRepositoryImpl(
 ```
 Network-based implementation of BillerRepository. TODO: This implementation uses placeholder API endpoints.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:289</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:292</code></summary>
 
 ```kotlin
     // kpt.core.datastore.BillerRepository below — unqualified, one replaces the other.
@@ -1447,7 +1446,7 @@ class BiometricsSetupAdapterImpl(
 ```
 `BiometricStorageAdapter` implementation backed by `com.russhwolf.settings.Settings`. Two-key layout: a boolean "registered" flag plus the registration blob string.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:267</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:270</code></summary>
 
 ```kotlin
     // token). See KDoc on the bound types for the contracts.
@@ -1466,9 +1465,9 @@ class BiometricsSetupAdapterImpl(
 ```kotlin
 class ClientRepositoryImpl(
 ```
-_No KDoc at source._
+Default `ClientRepository` backed by the client API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:120</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:123</code></summary>
 
 ```kotlin
     single<BeneficiaryRepository> { BeneficiaryRepositoryImpl(get(), get(ioDispatcher)) }
@@ -1487,9 +1486,9 @@ _No KDoc at source._
 ```kotlin
 class DocumentRepositoryImpl(
 ```
-_No KDoc at source._
+Default `DocumentRepository` backed by the document API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:132</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:135</code></summary>
 
 ```kotlin
         )
@@ -1508,9 +1507,9 @@ _No KDoc at source._
 ```kotlin
 class InterBankRepositoryImpl(
 ```
-_No KDoc at source._
+Default `InterBankRepository` backed by the inter-bank API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:145</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:148</code></summary>
 
 ```kotlin
         )
@@ -1529,9 +1528,9 @@ _No KDoc at source._
 ```kotlin
 class InvoiceRepositoryImpl(
 ```
-_No KDoc at source._
+Default `InvoiceRepository` backed by the invoice API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:134</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:137</code></summary>
 
 ```kotlin
     single<DocumentRepository> { DocumentRepositoryImpl(get(), get(ioDispatcher)) }
@@ -1550,9 +1549,9 @@ _No KDoc at source._
 ```kotlin
 class KycLevelRepositoryImpl(
 ```
-_No KDoc at source._
+Default `KycLevelRepository` backed by the KYC level 1 API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:146</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:149</code></summary>
 
 ```kotlin
     }
@@ -1571,9 +1570,9 @@ _No KDoc at source._
 ```kotlin
 class LocalAssetRepositoryImpl(
 ```
-_No KDoc at source._
+Default `LocalAssetRepository` providing locales and currencies.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:315</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:318</code></summary>
 
 ```kotlin
     single<TimeZoneMonitor>(MifosTimeZoneMonitorQualifier) { getPlatformDataModule.timeZoneMonitor }
@@ -1594,7 +1593,7 @@ class MifosPasscodeAdapterImpl(
 ```
 `PasscodeStorageAdapter` implementation backed by `com.russhwolf.settings.Settings`. Single-key layout — just the passcode itself.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:266</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:269</code></summary>
 
 ```kotlin
     // (the two adapters) plus the in-app re-auth machinery (lock + verification
@@ -1612,9 +1611,9 @@ class MifosPasscodeAdapterImpl(
 ```kotlin
 class NotificationRepositoryImpl(
 ```
-_No KDoc at source._
+Default `NotificationRepository` backed by the notification API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:148</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:151</code></summary>
 
 ```kotlin
     single<KycLevelRepository> { KycLevelRepositoryImpl(get(), get(ioDispatcher)) }
@@ -1633,9 +1632,9 @@ _No KDoc at source._
 ```kotlin
 class OfficeRepositoryImpl(
 ```
-_No KDoc at source._
+Default `OfficeRepository` backed by the office API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:232</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:235</code></summary>
 
 ```kotlin
     single<AutoPayRepository> { AutoPayRepositoryImpl(get(), get(ioDispatcher)) }
@@ -1654,9 +1653,9 @@ _No KDoc at source._
 ```kotlin
 class PocketRepositoryImp(
 ```
-_No KDoc at source._
+Default `PocketRepository` backed by the pocket and client APIs.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:244</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:247</code></summary>
 
 ```kotlin
     }
@@ -1677,7 +1676,7 @@ class RecentPayeeRepositoryImpl(
 ```
 Implementation of `RecentPayeeRepository` that fetches recent payees from transaction history and caches the DERIVED result in Room via the Store5 `recentPayee` offline store (Phase-5 Batch-4, GOAL D12/D13 hybrid).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:160</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:163</code></summary>
 
 ```kotlin
     }
@@ -1696,9 +1695,9 @@ Implementation of `RecentPayeeRepository` that fetches recent payees from transa
 ```kotlin
 class RegistrationRepositoryImpl(
 ```
-_No KDoc at source._
+Default `RegistrationRepository` backed by the registration API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:170</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:173</code></summary>
 
 ```kotlin
         )
@@ -1717,9 +1716,9 @@ _No KDoc at source._
 ```kotlin
 class RunReportRepositoryImpl(
 ```
-_No KDoc at source._
+Default `RunReportRepository` backed by the run-report API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:171</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:174</code></summary>
 
 ```kotlin
     }
@@ -1738,9 +1737,9 @@ _No KDoc at source._
 ```kotlin
 class SavedCardRepositoryImpl(
 ```
-_No KDoc at source._
+Default `SavedCardRepository` backed by the saved-card API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:173</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:176</code></summary>
 
 ```kotlin
     single<RunReportRepository> { RunReportRepositoryImpl(get(), get(ioDispatcher)) }
@@ -1759,9 +1758,9 @@ _No KDoc at source._
 ```kotlin
 class SavingsAccountRepositoryImpl(
 ```
-_No KDoc at source._
+Default `SavingsAccountRepository` backed by the savings accounts API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:185</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:188</code></summary>
 
 ```kotlin
     }
@@ -1780,9 +1779,9 @@ _No KDoc at source._
 ```kotlin
 class SearchRepositoryImpl(
 ```
-_No KDoc at source._
+Default `SearchRepository` backed by the search API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:196</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:199</code></summary>
 
 ```kotlin
         )
@@ -1801,9 +1800,9 @@ _No KDoc at source._
 ```kotlin
 class SelfServiceRepositoryImpl(
 ```
-_No KDoc at source._
+Default `SelfServiceRepository` backed by the self-service API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:198</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:201</code></summary>
 
 ```kotlin
     single<SearchRepository> { SearchRepositoryImpl(get(), get(ioDispatcher)) }
@@ -1822,9 +1821,9 @@ _No KDoc at source._
 ```kotlin
 class StandingInstructionRepositoryImpl(
 ```
-_No KDoc at source._
+Default `StandingInstructionRepository` backed by the standing-instruction API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:214</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:217</code></summary>
 
 ```kotlin
     }
@@ -1843,9 +1842,9 @@ _No KDoc at source._
 ```kotlin
 class ThirdPartyTransferRepositoryImpl(
 ```
-_No KDoc at source._
+Default `ThirdPartyTransferRepository` backed by the third-party transfer API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:226</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:229</code></summary>
 
 ```kotlin
     }
@@ -1864,9 +1863,9 @@ _No KDoc at source._
 ```kotlin
 class TwoFactorAuthRepositoryImpl(
 ```
-_No KDoc at source._
+Default `TwoFactorAuthRepository` backed by the two-factor API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:228</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:231</code></summary>
 
 ```kotlin
         ThirdPartyTransferRepositoryImpl(get(), get(ioDispatcher))
@@ -1885,9 +1884,9 @@ _No KDoc at source._
 ```kotlin
 class UserRepositoryImpl(
 ```
-_No KDoc at source._
+Default `UserRepository` backed by the user API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:229</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:232</code></summary>
 
 ```kotlin
     }
@@ -1908,7 +1907,7 @@ class UserVerificationRepositoryImpl : UserVerificationRepository
 ```
 `UserVerificationRepository` implementation backed by `TimeSource.Monotonic`, held in-process for the lifetime of this singleton. A wall-clock-based implementation (e.g.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:269</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:272</code></summary>
 
 ```kotlin
     singleOf(::BiometricsSetupAdapterImpl).bind<BiometricStorageAdapter>()
@@ -2071,13 +2070,13 @@ Default `UserLogoutManager`: clears every Store cache and draft row, then emits 
 ```kotlin
 enum class AppLockOption
 ```
-_No KDoc at source._
+How the app is locked on launch.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/util/Helpers.kt:17</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/util/Helpers.kt:22</code></summary>
 
 ```kotlin
-object Helpers {
 
+    /** Converts an [AppLockOption] to the string stored in preferences. */
     fun authOptionToStringMapperFunction(option: AppLockOption): String {
         return when (option) {
             AppLockOption.MifosPasscode -> MIFOS_PASSCODE_VALUE
@@ -2092,9 +2091,9 @@ object Helpers {
 ```kotlin
 object AutoPayValidator
 ```
-_No KDoc at source._
+Client-side validation of auto-pay payloads before they are submitted.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:149</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:150</code></summary>
 
 ```kotlin
     ) {
@@ -2108,10 +2107,10 @@ _No KDoc at source._
 
 </details>
 
-- `fun validateAutoPayPayload(payload: AutoPayPayload): ValidationResult`
+- `fun validateAutoPayPayload(payload: AutoPayPayload): ValidationResult` — Validates a new auto-pay payload and returns the first violation, if any.
 - `val startDate = parseDate(payload.validFrom)`
 - `val endDate = parseDate(payload.validTill)`
-- `fun validateAutoPayUpdatePayload(payload: AutoPayUpdatePayload): ValidationResult`
+- `fun validateAutoPayUpdatePayload(payload: AutoPayUpdatePayload): ValidationResult` — Validates an auto-pay update payload and returns the first violation, if any.
 - `val startDate = parseDate(payload.validFrom!!)`
 - `val endDate = parseDate(payload.validTill!!)`
 - `val validFrequencies = listOf("DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "YEARLY")`
@@ -2149,7 +2148,7 @@ object BillValidator
 ```
 Utility class for validating bill data before submission
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:148</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:150</code></summary>
 
 ```kotlin
 
@@ -2186,7 +2185,7 @@ object BillerValidator
 ```
 Validator for biller form data with comprehensive validation rules.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:124</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:127</code></summary>
 
 ```kotlin
 
@@ -2219,9 +2218,9 @@ Validator for biller form data with comprehensive validation rules.
 ```kotlin
 object Constants
 ```
-_No KDoc at source._
+Shared string and numeric constants used by the data layer.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:191</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:193</code></summary>
 
 ```kotlin
             val result = searchRepository.searchResources(
@@ -2235,20 +2234,20 @@ _No KDoc at source._
 
 </details>
 
-- `const val BASIC = "Basic "`
-- `const val SAVINGS = "savingsAccounts"`
-- `const val TRANSACTIONS = "transactions"`
-- `const val WALLET_ACCOUNT_SAVINGS_PRODUCT_ID = 1`
-- `const val MIFOS_MERCHANT_SAVINGS_PRODUCT_ID = 165 // 372`
-- `const val MIFOS_CONSUMER_SAVINGS_PRODUCT_ID = 165 // 373`
-- `val NEW_USER_ROLE_IDS: List<Int> = listOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)`
-- `const val ENTITY_TYPE_CLIENTS = "clients"`
-- `const val FETCH_ACCOUNT_TRANSFER_USECASE = "FetchAccountTransfer"`
-- `const val NO_SAVED_CARDS = "No saved cards."`
-- `const val MIFOS_PASSWORD = "mifos:password"`
-- `const val ERROR_VERIFYING_USER = "Error verifying user"`
-- `const val ERROR_REGISTERING_USER = "Error registering user"`
-- `const val NO_CLIENTS_FOUND = "No clients found"`
+- `const val BASIC = "Basic "` — Prefix of the HTTP Basic authorization header value.
+- `const val SAVINGS = "savingsAccounts"` — Resource name for savings accounts.
+- `const val TRANSACTIONS = "transactions"` — Resource name for transactions.
+- `const val WALLET_ACCOUNT_SAVINGS_PRODUCT_ID = 1` — Savings product id of the default wallet account.
+- `const val MIFOS_MERCHANT_SAVINGS_PRODUCT_ID = 165 // 372` — Savings product id used for merchant accounts.
+- `const val MIFOS_CONSUMER_SAVINGS_PRODUCT_ID = 165 // 373` — Savings product id used for consumer accounts.
+- `val NEW_USER_ROLE_IDS: List<Int> = listOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)` — Role ids assigned to newly created users: the mobile-wallet role and the super-user role.
+- `const val ENTITY_TYPE_CLIENTS = "clients"` — Entity type name for clients.
+- `const val FETCH_ACCOUNT_TRANSFER_USECASE = "FetchAccountTransfer"` — Use-case name used when fetching an account transfer.
+- `const val NO_SAVED_CARDS = "No saved cards."` — Message shown when the client has no saved cards.
+- `const val MIFOS_PASSWORD = "mifos:password"` — Default password for new mifos users.
+- `const val ERROR_VERIFYING_USER = "Error verifying user"` — Error message shown when verifying a user fails.
+- `const val ERROR_REGISTERING_USER = "Error registering user"` — Error message shown when registering a user fails.
+- `const val NO_CLIENTS_FOUND = "No clients found"` — Message shown when no clients are found.
   _…more members; read the file._
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/util/Helpers.kt`
@@ -2256,7 +2255,7 @@ _No KDoc at source._
 ```kotlin
 object Helpers
 ```
-_No KDoc at source._
+Helpers for persisting `AppLockOption` values as strings.
 
 <details><summary>Used in the template — <code>core-base/crypto/src/wasmJsMain/kotlin/kpt/core/base/crypto/WebSecureCrypto.wasmJs.kt:92</code></summary>
 
@@ -2272,8 +2271,8 @@ private external fun installHelpers(): KptSecureHelpers
 
 </details>
 
-- `fun authOptionToStringMapperFunction(option: AppLockOption): String`
-- `fun stringToAuthOptionMapperFunction(option: String): AppLockOption`
+- `fun authOptionToStringMapperFunction(option: AppLockOption): String` — Converts an `AppLockOption` to the string stored in preferences.
+- `fun stringToAuthOptionMapperFunction(option: String): AppLockOption` — Converts a stored string value back to an `AppLockOption`, defaulting to `AppLockOption.None`.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/util/MifosErrorParser.kt`
 
@@ -2322,7 +2321,7 @@ mpay://pay?qt=0&fsp=mifos-bank-1&ci=123&am=100&cn=John&an=ACC001&ai=456&cu=USD&o
 
 </details>
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayViewModel.kt:70</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayViewModel.kt:76</code></summary>
 
 ```kotlin
 
@@ -2359,7 +2358,7 @@ interface NetworkMonitor
 ```
 Utility for reporting app connectivity status
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:26</code></summary>
 
 ```kotlin
     private val scope: CoroutineScope,
@@ -2373,14 +2372,14 @@ Utility for reporting app connectivity status
 
 </details>
 
-- `val isOnline: Flow<Boolean>`
+- `val isOnline: Flow<Boolean>` — Emits true while the device has network connectivity.
 
 ```kotlin
 val MifosNetworkMonitorQualifier = named("kpt.core.data.util.NetworkMonitor")
 ```
 Koin qualifier for this `NetworkMonitor`.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/fork/AndroidPlatformModule.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/fork/AndroidPlatformModule.kt:30</code></summary>
 
 ```kotlin
     // `NetworkMonitorProvider.install()` (cmp-network-monitor 3.6.0+, which carries the
@@ -2419,7 +2418,7 @@ sealed interface QrRouteResult
 ```
 Result of QR code routing decision.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrViewModel.kt:119</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrViewModel.kt:139</code></summary>
 
 ```kotlin
             // to avoid StateFlow conflation issues)
@@ -2445,7 +2444,7 @@ fun <T> Flow<KptScreenState<T>>.toForkScreenStateFlow(): Flow<ForkScreenState<T>
 ```
 Flow-level convenience wrapper — every Store5 impl calls `store.asScreenStream(...).state.toForkScreenStateFlow()` to satisfy the fork repository return type.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -2473,7 +2472,7 @@ object StandardUpiQrCodeProcessor
 ```
 Standard UPI QR Code Processor Handles parsing of standard UPI QR codes according to UPI specification
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsViewModel.kt:30</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsViewModel.kt:34</code></summary>
 
 ```kotlin
         if (safeQrCodeDataString.isNotEmpty()) {
@@ -2506,7 +2505,7 @@ interface TimeZoneMonitor
 ```
 Utility for reporting current timezone the device has set. It always emits at least once with default setting and then for each TZ change.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:30</code></summary>
 
 ```kotlin
     }
@@ -2519,14 +2518,14 @@ Utility for reporting current timezone the device has set. It always emits at le
 
 </details>
 
-- `val currentTimeZone: Flow<TimeZone>`
+- `val currentTimeZone: Flow<TimeZone>` — Emits the device's current time zone, then each change.
 
 ```kotlin
 val MifosTimeZoneMonitorQualifier = named("kpt.core.data.util.TimeZoneMonitor")
 ```
 Koin qualifier for this `TimeZoneMonitor`.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/fork/AndroidPlatformModule.kt:33</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/fork/AndroidPlatformModule.kt:34</code></summary>
 
 ```kotlin
     }
@@ -2547,7 +2546,7 @@ object UpiQrCodeProcessor
 ```
 UPI QR Code Encoder and Decoder with validation
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyViewModel.kt:184</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyViewModel.kt:190</code></summary>
 
 ```kotlin
             }
@@ -2572,5 +2571,5 @@ UPI QR Code Encoder and Decoder with validation
 
 ---
 
-_90 type(s), 320 function(s)/property(ies); 146 carry KDoc at source; 6 authored example(s); 93 live call site(s)._
+_90 type(s), 320 function(s)/property(ies); 356 carry KDoc at source; 6 authored example(s); 93 live call site(s)._
 <!-- api-docs:end -->

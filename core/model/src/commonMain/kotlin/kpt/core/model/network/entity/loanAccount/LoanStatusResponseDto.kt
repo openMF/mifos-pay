@@ -11,6 +11,21 @@ package kpt.core.model.network.entity.loanAccount
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Loan status with its lifecycle flags.
+ *
+ * @property id Unique id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ * @property pendingApproval Pending approval.
+ * @property waitingForDisbursal Approved and waiting for disbursal.
+ * @property active Whether it is active.
+ * @property closedObligationsMet Closed with obligations met.
+ * @property closedWrittenOff Closed as written off.
+ * @property closedRescheduled Closed as rescheduled.
+ * @property closed Whether it is closed.
+ * @property overpaid Whether it is overpaid.
+ */
 @Serializable
 data class LoanStatusResponseDto(
     val id: Int? = null,

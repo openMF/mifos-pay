@@ -44,3 +44,7 @@ kotlin {
 // Top-level `dependencies { debugImplementation(compose.uiTooling) }` is not valid on
 // AGP-9 KMP-library modules — dropped. UI tooling is already available in preview via
 // compose.components.uiToolingPreview in commonMain.
+
+compose.resources {
+    packageOfResClass = "kpt.feature.transfer.intrabank.generated.resources"
+}

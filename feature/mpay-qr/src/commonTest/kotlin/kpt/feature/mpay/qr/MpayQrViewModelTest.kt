@@ -53,13 +53,14 @@ import kpt.core.model.user.UserInfo
 import kpt.core.model.utils.CurrencyCode
 import kpt.core.model.utils.Locale
 import kpt.core.model.utils.QrCodeType
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_no_default_account
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNull
-import kotlin.test.assertTrue
 import kpt.core.base.store.screen.ScreenState as StoreScreenState
 
 /**
@@ -142,13 +143,11 @@ class MpayQrViewModelTest {
         val viewModel = createViewModel()
         advanceUntilIdle()
 
-        // Then — the message is a StringResource read on a real IO dispatcher, so await it.
-        viewModel.stateFlow.test {
-            var state = awaitItem()
-            while (state.viewState is MpayQrState.ViewState.Loading) state = awaitItem()
-            val error = assertIs<MpayQrState.ViewState.Error>(state.viewState)
-            assertTrue(error.message.contains("default account"))
-        }
+        // Then
+        assertEquals(
+            MpayQrState.ViewState.Error(Res.string.feature_mpay_qr_no_default_account),
+            viewModel.stateFlow.value.viewState,
+        )
     }
 
     @Test

@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+/** Decodes a QR code from an image file on Android using ZXing, returning the decoded text or null if none is found. */
 actual suspend fun decodeQrFromFile(file: PlatformFile): String? = withContext(Dispatchers.IO) {
     try {
         val bytes = file.readBytes()

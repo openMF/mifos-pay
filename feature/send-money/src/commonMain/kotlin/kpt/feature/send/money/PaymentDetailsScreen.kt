@@ -56,6 +56,7 @@ import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.AvatarBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen showing the full details of a past payment with share, pay-again and retry actions. */
 @Composable
 expect fun PaymentDetailsScreen(
     onBackClick: () -> Unit,
@@ -689,6 +690,7 @@ private fun BrandingSection(
     }
 }
 
+/** Preview of [PaymentDetailsScreen]. */
 @Preview
 @Composable
 fun PaymentDetailsScreenPreview() {

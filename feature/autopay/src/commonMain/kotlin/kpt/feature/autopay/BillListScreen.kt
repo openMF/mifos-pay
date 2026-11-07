@@ -55,6 +55,7 @@ import kpt.core.model.autopay.BillStatus
 import kpt.core.ui.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.ExperimentalTime
+/** Screen listing the user's bills with add, edit and delete actions. */
 @Composable
 fun BillListScreen(
     onNavigateBack: () -> Unit,

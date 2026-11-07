@@ -32,9 +32,6 @@ import kpt.core.network.SelfServiceApiManager
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-/** Room `@Entity(tableName = …)` string — must match `RecentPayeeEntity`'s. */
-private const val RECENT_PAYEES_TABLE = "wallet_recent_payees"
-
 /**
  * Implementation of [RecentPayeeRepository] that fetches recent payees from
  * transaction history and caches the DERIVED result in Room via the Store5
@@ -241,6 +238,7 @@ class RecentPayeeRepositoryImpl(
         }
     }
 
+    /** Limits and keys used when deriving recent payees from account transactions. */
     companion object {
         private const val ASSOCIATIONS_TRANSACTIONS = "transactions"
         private const val MAX_TRANSACTIONS_TO_PROCESS = 50

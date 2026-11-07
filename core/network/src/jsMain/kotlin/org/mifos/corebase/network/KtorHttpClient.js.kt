@@ -13,6 +13,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.js.Js
 
+/** JS actual: creates an [HttpClient] on the Js engine, configured by [config]. */
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Js) {
     config(this)
     // Installed after the caller's config, so it sees the host DynamicBaseUrlPlugin chose.

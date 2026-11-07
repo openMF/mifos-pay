@@ -32,14 +32,18 @@ import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.accounts.AccountAction.Internal.DeleteBeneficiary
 import kpt.feature.accounts.AccountEvent.OnAddEditSavingsAccount
+import kpt.feature.accounts.generated.resources.Res
+import kpt.feature.accounts.generated.resources.delete_beneficiary_subtitle
+import kpt.feature.accounts.generated.resources.delete_beneficiary_title
+import kpt.feature.accounts.generated.resources.feature_accounts_beneficiary_deleted
+import kpt.feature.accounts.generated.resources.feature_accounts_default_account_updated
 import kpt.feature.accounts.savingsaccount.SavingsAddEditType
 import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
-import mifos_pay.feature.accounts.generated.resources.Res
-import mifos_pay.feature.accounts.generated.resources.delete_beneficiary_subtitle
-import mifos_pay.feature.accounts.generated.resources.delete_beneficiary_title
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_beneficiary_deleted
-import mifos_pay.feature.accounts.generated.resources.feature_accounts_default_account_updated
 import org.jetbrains.compose.resources.StringResource
+/**
+ * Loads the user's savings accounts and beneficiaries, and handles default-account, beneficiary and
+ * navigation actions.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 class AccountViewModel(
     private val userRepository: ForkPreferencesRepository,
@@ -47,7 +51,10 @@ class AccountViewModel(
     private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
+        /** Client id read from user preferences when the view model is created. */
         val clientId = userRepository.clientId.value
+
+        /** Default account id read from user preferences when the view model is created. */
         val defaultAccount = userRepository.defaultAccountId.value
 
         AccountState(
@@ -65,6 +72,7 @@ class AccountViewModel(
     // `SelfServiceRepositoryImpl.foldAccountAndBeneficiary` for the fold's
     // implementation; the template's `combineScreenStates` helper cannot be
     // used verbatim because it is typed against the template's ScreenState.
+    /** The signed-in client's accounts, as a screen state. */
     val accountState = mutableStateFlow
         .flatMapLatest { currentState ->
             val clientId = currentState.clientId
@@ -72,7 +80,8 @@ class AccountViewModel(
                 repository.getAccountAndBeneficiaryListScreen(clientId, viewModelScope)
             } else {
                 flowOf(
-                    ScreenState.Error(IllegalStateException("Client ID not available")) as ScreenState<kpt.core.model.account.AccountContent>,
+                    ScreenState.Error(IllegalStateException("Client ID not available"))
+                        as ScreenState<kpt.core.model.account.AccountContent>,
                 )
             }
         }
@@ -240,14 +249,37 @@ class AccountViewModel(
     }
 }
 
+/**
+ * UI state of the accounts screen.
+ *
+ * @property clientId Id of the signed-in client, or null.
+ * @property defaultAccountId Id of the user's default account, or null.
+ * @property dialogState Dialog currently displayed, or null.
+ */
 data class AccountState(
     val clientId: Long? = null,
     val defaultAccountId: Long? = null,
     val dialogState: DialogState? = null,
 ) {
+    /** Dialogs the accounts screen can display. */
     sealed interface DialogState {
+        /** Blocking progress dialog. */
         data object Loading : DialogState
+
+        /**
+         * Error dialog.
+         *
+         * @property message Error text to display.
+         */
         data class Error(val message: String) : DialogState
+
+        /**
+         * Confirmation dialog for deleting a beneficiary.
+         *
+         * @property title Dialog title resource.
+         * @property message Dialog message resource.
+         * @property onConfirm Invoked when the user confirms the deletion.
+         */
         data class DeleteBeneficiary(
             val title: StringResource,
             val message: StringResource,
@@ -255,21 +287,36 @@ data class AccountState(
         ) : DialogState
     }
 
+    /** Content states of the accounts screen. */
     sealed interface ViewState {
+        /** Whether a floating action button is shown. */
         val hasFab: Boolean
 
+        /** Whether pull-to-refresh is enabled. */
         val isPullToRefreshEnabled: Boolean
 
+        /** Accounts are loading. */
         data object Loading : ViewState {
             override val hasFab: Boolean get() = false
             override val isPullToRefreshEnabled: Boolean get() = false
         }
 
+        /**
+         * Loading failed.
+         *
+         * @property message Error text to display.
+         */
         data class Error(val message: String) : ViewState {
             override val hasFab: Boolean get() = false
             override val isPullToRefreshEnabled: Boolean get() = false
         }
 
+        /**
+         * Accounts and beneficiaries loaded.
+         *
+         * @property accounts The user's savings accounts.
+         * @property beneficiaries The user's third-party transfer beneficiaries.
+         */
         data class Content(
             val accounts: List<Account>,
             val beneficiaries: List<Beneficiary>,
@@ -280,29 +327,101 @@ data class AccountState(
     }
 }
 
+/** One-off events emitted by the accounts screen. */
 sealed interface AccountEvent {
+    /**
+     * Open the add or edit savings account screen.
+     *
+     * @property type Whether to add a new account or edit an existing one.
+     */
     data class OnAddEditSavingsAccount(val type: SavingsAddEditType) : AccountEvent
+
+    /**
+     * Open the savings account detail screen.
+     *
+     * @property accountId Id of the account to show.
+     */
     data class OnNavigateToAccountDetail(val accountId: Long) : AccountEvent
+
+    /**
+     * Open the add or edit beneficiary screen.
+     *
+     * @property type Whether to add a new beneficiary or edit an existing one.
+     */
     data class OnAddOrEditTPTBeneficiary(val type: BeneficiaryAddEditType) : AccountEvent
+
+    /**
+     * Open the loan application flow.
+     *
+     * @property clientId Id of the applying client.
+     */
     data class OnApplyForLoan(val clientId: Long) : AccountEvent
 
+    /**
+     * Show a transient message.
+     *
+     * @property message Message string resource.
+     */
     data class ShowToast(val message: StringResource) : AccountEvent
 }
 
+/** Actions the accounts screen can send to its view model. */
 sealed interface AccountAction {
+    /** Start adding a third-party transfer beneficiary. */
     data object AddTPTBeneficiary : AccountAction
+
+    /**
+     * Start editing a beneficiary.
+     *
+     * @property beneficiary The beneficiary to edit.
+     */
     data class EditBeneficiary(val beneficiary: Beneficiary) : AccountAction
+
+    /**
+     * Ask to delete a beneficiary (shows a confirmation first).
+     *
+     * @property beneficiaryId Id of the beneficiary.
+     */
     data class DeleteBeneficiary(val beneficiaryId: Long) : AccountAction
 
+    /** Start creating a savings account. */
     data object CreateSavingsAccount : AccountAction
+
+    /**
+     * Start editing a savings account.
+     *
+     * @property accountId Id of the account.
+     */
     data class EditSavingsAccount(val accountId: Long) : AccountAction
+
+    /**
+     * Open the details of a savings account.
+     *
+     * @property accountId Id of the account.
+     */
     data class ViewAccountDetails(val accountId: Long) : AccountAction
+
+    /**
+     * Make an account the user's default.
+     *
+     * @property accountId Id of the account.
+     * @property accountNo Account number of the account.
+     */
     data class SetDefaultAccount(val accountId: Long, val accountNo: String) : AccountAction
+
+    /** Start a loan application. */
     data object ApplyForLoan : AccountAction
 
+    /** Dismiss the currently shown dialog. */
     data object DismissDialog : AccountAction
 
+    /** Actions dispatched by the view model itself. */
     sealed interface Internal : AccountAction {
+        /**
+         * Perform the confirmed beneficiary deletion.
+         *
+         * @property beneficiaryId Id of the beneficiary.
+         */
         data class DeleteBeneficiary(val beneficiaryId: Long) : Internal
     }
 }

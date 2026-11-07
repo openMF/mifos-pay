@@ -44,6 +44,7 @@ import kpt.feature.settings.generated.resources.feature_settings_change_language
 import kpt.feature.settings.generated.resources.feature_settings_change_language_text
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+/** Language chooser dialog bound to the fork [SettingsViewModel], dismissed through [onDismiss]. */
 @Composable
 fun LanguageDialog(
     onDismiss: () -> Unit,
@@ -58,6 +59,7 @@ fun LanguageDialog(
     )
 }
 
+/** Stateless language chooser dialog content rendering [settingsUiState] and reporting the choice. */
 @Composable
 fun LanguageDialogContent(
     settingsUiState: SettingsState,
@@ -115,6 +117,7 @@ private fun LanguagePanel(currentLanguage: Language, onChangeLanguage: (language
     }
 }
 
+/** Selectable row showing one language option. */
 @Composable
 fun LanguageChooserRow(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(

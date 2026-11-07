@@ -11,6 +11,19 @@ package kpt.core.model.network.entity.shareAccount
 
 import kotlinx.serialization.Serializable
 import kpt.core.model.network.entity.common.CurrencyResponseDto
+/**
+ * Summary of a share account with approved and pending share counts.
+ *
+ * @property id Unique id.
+ * @property accountNo Account number.
+ * @property productId Id of the product.
+ * @property productName Name of the product.
+ * @property status Current status.
+ * @property currency Currency.
+ * @property timeline Lifecycle timeline.
+ * @property totalApprovedShares Number of approved shares.
+ * @property totalPendingForApprovalShares Number of shares pending approval.
+ */
 @Serializable
 data class ShareSummaryResponseDto(
     val id: Long? = null,

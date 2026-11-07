@@ -103,9 +103,13 @@ interface PocketDao {
         upsertAll(pendingLinks)
     }
 
+    /** Inserts or replaces a single pocket row. */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(entity: PocketEntity)
 
+    /**
+     * Observes the pockets linked for [clientId], excluding rows pending delink, ordered by account type and number.
+     */
     @Query(
         """
         SELECT * FROM wallet_pockets 
@@ -115,9 +119,11 @@ interface PocketDao {
     )
     fun observeLinkedByClient(clientId: Long): Flow<List<PocketEntity>>
 
+    /** Returns all pockets with a pending link or delink awaiting sync to the server. */
     @Query("SELECT * FROM wallet_pockets WHERE syncStatus = 'PENDING_LINK' OR syncStatus = 'PENDING_DELINK'")
     suspend fun getPendingSyncs(): List<PocketEntity>
 
+    /** Returns the pending link/delink pockets of [clientId]. */
     @Query(
         """
         SELECT * FROM wallet_pockets 
@@ -126,9 +132,11 @@ interface PocketDao {
     )
     suspend fun getPendingSyncsByClient(clientId: Long): List<PocketEntity>
 
+    /** Deletes the pocket [id] of [clientId]. */
     @Query("DELETE FROM wallet_pockets WHERE id = :id AND clientId = :clientId")
     suspend fun deleteById(id: Long, clientId: Long)
 
+    /** Returns the pockets linked for [clientId], excluding rows pending delink. */
     @Query("SELECT * FROM wallet_pockets WHERE clientId = :clientId AND syncStatus != 'PENDING_DELINK'")
     suspend fun getLinkedAccounts(clientId: Long): List<PocketEntity>
 }

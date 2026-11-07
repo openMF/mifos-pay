@@ -144,7 +144,7 @@ KptTheme {
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:197</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:198</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
@@ -1120,7 +1120,7 @@ interface Animatable
 ```
 Mixed into components with a tunable transition. See `theme/Motion.kt` for the shared durations; overriding per component is what makes an app's motion feel inconsistent.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/LoadingWheel.kt:61</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/LoadingWheel.kt:62</code></summary>
 
 ```kotlin
     // Specifies the float animation for slowly drawing out the lines on entering
@@ -1176,12 +1176,14 @@ interface KptColorScheme
 ```
 The full Material 3 color role set. Roles, not literal colors — a component asks for `onSurfaceVariant`, never a hex value, so light and dark themes and a fork's palette all work without touching the component.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/ColorScheme.kt:226</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/ColorScheme.kt:227</code></summary>
 
 ```kotlin
-)
 
+/** Light [KptColorScheme] built from the default light color scheme. */
 val lightKptColorScheme = LightDefaultColorScheme.toKptColorScheme()
+
+/** Dark [KptColorScheme] built from the default dark color scheme. */
 val darkKptColorScheme = DarkDefaultColorScheme.toKptColorScheme()
 ```
 
@@ -1985,7 +1987,7 @@ object KptTheme
 ```
 Composition-local accessor for the active design language — `KptTheme.colors`, `.typography`, `.shapes`, `.spacing`, `.elevation`. The read side of the theme; `kptTheme` is the write side.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:197</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:198</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),

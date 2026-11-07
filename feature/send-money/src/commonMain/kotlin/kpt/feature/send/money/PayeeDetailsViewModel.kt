@@ -16,6 +16,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.data.util.StandardUpiQrCodeProcessor
 import kpt.core.ui.utils.BaseViewModel
+/**
+ * ViewModel for the payee details screen; parses the payee from the navigation arguments
+ * and manages amount, note and account selection.
+ */
 class PayeeDetailsViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<PayeeDetailsState, PayeeDetailsEvent, PayeeDetailsAction>(
@@ -172,6 +176,24 @@ class PayeeDetailsViewModel(
     }
 }
 
+/**
+ * State of the payee details screen.
+ * @property payeeName Name of the payee.
+ * @property upiId UPI ID of the payee.
+ * @property phoneNumber Phone number of the payee.
+ * @property amount Payment amount in paise.
+ * @property inputAmount Amount text as typed by the user.
+ * @property note Note attached to the payment.
+ * @property isAmountEditable Whether the user can edit the amount.
+ * @property isUpiCode Whether the payment came from a UPI code.
+ * @property isLoading Whether a request is in progress.
+ * @property showMaxAmountMessage Whether to show the maximum amount message.
+ * @property showMinAmountMessage Whether to show the minimum amount message.
+ * @property hasNoteFieldBeenFocused Whether the note field has been focused.
+ * @property showAccountSelectionSheet Whether the account selection sheet is visible.
+ * @property selectedAccount Bank account chosen to pay from.
+ * @property refId Reference id of the payment.
+ */
 data class PayeeDetailsState(
     val payeeName: String = "",
     val upiId: String = "",
@@ -189,6 +211,7 @@ data class PayeeDetailsState(
     val selectedAccount: BankAccount? = null,
     val refId: String = "",
 ) {
+    /** The amount in rupees formatted with thousands separators for display. */
     val formattedAmount: String
         get() = if (amount.isEmpty()) {
             "0"
@@ -197,6 +220,7 @@ data class PayeeDetailsState(
             formatAmountWithCommas(rupees)
         }
 
+    /** The amount text shown in the input: typed text if any, otherwise the amount in rupees. */
     val displayAmount: String
         get() = if (inputAmount.isNotEmpty()) {
             inputAmount
@@ -206,12 +230,14 @@ data class PayeeDetailsState(
             ""
         }
 
+    /** True if the amount is above the 500000 rupee maximum. */
     val isAmountExceedingMax: Boolean
         get() {
             val rupees = if (amount.isNotEmpty()) AmountUtils.paiseToRupees(amount) else "0.00"
             return rupees.toDoubleOrNull()?.let { it > 500000 } ?: false
         }
 
+    /** True if the amount is below the 1 rupee minimum. */
     val isAmountBelowMin: Boolean
         get() {
             val rupees = if (amount.isNotEmpty()) AmountUtils.paiseToRupees(amount) else "0.00"
@@ -249,23 +275,69 @@ data class PayeeDetailsState(
     }
 }
 
+/** One-off events emitted by the payee details screen. */
 sealed interface PayeeDetailsEvent {
+    /** Navigate back. */
     data object NavigateBack : PayeeDetailsEvent
+
+    /**
+     * Navigate to the UPI payment flow.
+     * @property state Payee details state at the time of navigation.
+     */
     data class NavigateToUpiPayment(val state: PayeeDetailsState) : PayeeDetailsEvent
+
+    /**
+     * Navigate to the Fineract payment flow.
+     * @property state Payee details state at the time of navigation.
+     */
     data class NavigateToFineractPayment(val state: PayeeDetailsState) : PayeeDetailsEvent
 }
 
+/** User actions on the payee details screen. */
 sealed interface PayeeDetailsAction {
+    /** The user tapped back. */
     data object NavigateBack : PayeeDetailsAction
+
+    /**
+     * Updates the payment amount.
+     * @property amount New amount.
+     */
     data class UpdateAmount(val amount: String) : PayeeDetailsAction
+
+    /**
+     * Updates the amount text as typed.
+     * @property inputAmount New input text.
+     */
     data class UpdateInputAmount(val inputAmount: String) : PayeeDetailsAction
+
+    /**
+     * Updates the payment note.
+     * @property note New note.
+     */
     data class UpdateNote(val note: String) : PayeeDetailsAction
+
+    /** The note field gained focus. */
     data object NoteFieldFocused : PayeeDetailsAction
+
+    /** The amount field gained focus. */
     data object AmountFieldFocused : PayeeDetailsAction
+
+    /** The user tapped proceed. */
     data object ProceedToPayment : PayeeDetailsAction
+
+    /**
+     * The user chose a paying account.
+     * @property account The selected bank account.
+     */
     data class SelectAccount(val account: BankAccount) : PayeeDetailsAction
+
+    /** The user dismissed the account selection sheet. */
     data object DismissAccountSelection : PayeeDetailsAction
+
+    /** The user tapped continue in the account selection sheet. */
     data object ContinueFromBottomSheet : PayeeDetailsAction
+
+    /** The user confirmed the payment. */
     data object ConfirmPayment : PayeeDetailsAction
 }
 

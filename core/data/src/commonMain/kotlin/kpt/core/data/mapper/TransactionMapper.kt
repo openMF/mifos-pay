@@ -15,10 +15,12 @@ import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.model.savingsaccount.TransactionsEntity
+/** Extracts the transactions of a savings-with-associations entity as domain [Transaction]s. */
 fun SavingsWithAssociationsEntity.toTransactionList(): List<Transaction> {
     return this.transactions.map { it.toModel() }
 }
 
+/** Maps a transactions network entity to a domain [Transaction]. */
 fun TransactionsEntity.toModel(): Transaction {
     return Transaction(
         reversed = this.reversed,
@@ -59,6 +61,7 @@ fun TransactionsEntity.toModel(): Transaction {
     )
 }
 
+/** Maps a network [PaymentType] to the domain [Transaction.PaymentType]. */
 fun PaymentType.toModalUi(): Transaction.PaymentType {
     return Transaction.PaymentType(
         id = this.id ?: 0,

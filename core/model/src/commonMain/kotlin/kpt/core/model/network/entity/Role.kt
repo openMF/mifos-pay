@@ -11,6 +11,14 @@ package kpt.core.model.network.entity
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A user role in Fineract.
+ *
+ * @property id Role id.
+ * @property name Role name.
+ * @property description Description.
+ * @property disabled Whether the role is disabled.
+ */
 @Serializable
 data class Role(
     val id: String? = null,

@@ -9,5 +9,8 @@
  */
 package kpt.feature.settings
 
+/** iOS actual of [getPlatform]. */
 actual fun getPlatform(): Platform = Platform.IOS
+
+/** iOS actual; dynamic theming is not supported. */
 actual fun supportsDynamicTheming(): Boolean = false

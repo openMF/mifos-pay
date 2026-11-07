@@ -57,6 +57,9 @@ import kpt.core.base.database.annotation.DbEntity
  * @property autoPayPaymentMethod / [autoPaySourceAccount] / [autoPayMaxAmount]
  *   AutoPay configuration fields.
  * @property createdAt / [updatedAt] Epoch-millis timestamps set by the mapper.
+ * @property autoPaySourceAccount Account debited by AutoPay, if configured.
+ * @property autoPayMaxAmount Maximum amount AutoPay may charge per payment, if configured.
+ * @property updatedAt Epoch-millis timestamp of the last update.
  */
 @DbEntity
 @Entity(

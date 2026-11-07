@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Circular avatar showing the initials derived from [text]. */
 @Composable
 fun MifosTextUserImage(
     text: String,

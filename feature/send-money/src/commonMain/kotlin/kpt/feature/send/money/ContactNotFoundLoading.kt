@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Centered progress indicator with a "Checking..." label shown while a contact lookup is in progress. */
 @Composable
 fun ContactNotFoundLoading(
     modifier: Modifier = Modifier,

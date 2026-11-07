@@ -49,20 +49,21 @@ import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.model.savingsaccount.Currency
 import kpt.core.model.savingsaccount.Status
 import kpt.core.ui.AmountEditText
-import mifos_pay.feature.transfer_interbank.generated.resources.Res
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_amount
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_available_balance
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_continue
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_date
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_description
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_edit
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_from_account
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_to_account
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_to_account_interbank
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transfer_details
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_verified
+import kpt.feature.transfer.interbank.generated.resources.Res
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_amount
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_available_balance
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_continue
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_date
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_description
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_edit
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_from_account
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_to_account
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_to_account_interbank
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transfer_details
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_verified
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Step for entering the transfer amount, date and description. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferDetailsScreen(
@@ -401,6 +402,7 @@ private fun RecipientDetailCard(
     }
 }
 
+/** Compose preview of [TransferDetailsScreen] with details filled in. */
 @Preview
 @Composable
 fun TransferDetailsScreenPreview() {
@@ -471,6 +473,7 @@ fun TransferDetailsScreenPreview() {
     }
 }
 
+/** Compose preview of [TransferDetailsScreen] with empty fields. */
 @Preview
 @Composable
 fun TransferDetailsScreenEmptyPreview() {

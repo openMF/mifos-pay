@@ -22,10 +22,10 @@ ViewModels: `NotificationViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/notification sha=39788abf34bc1bac3476962b5197573018b72fa6 -->
+<!-- api-docs:begin module=feature/notification sha=a928888719beea26335003e0dcb6c0a2ccda69d4 -->
 ## API reference
 
-_Generated from `feature/notification` at tree `39788abf34bc` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/notification` at tree `a928888719be` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,21 +38,21 @@ rather than re-declaring what they already own.
 ```kotlin
 fun NavGraphBuilder.notificationScreen(
 ```
-_No KDoc at source._
+Registers the notification screen destination in the navigation graph.
 
 ```kotlin
 fun NavController.navigateToNotification(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the notification screen.
 
 ### `feature/notification/src/commonMain/kotlin/kpt/feature/notification/di/NotificationModule.kt`
 
 ```kotlin
 val NotificationModule = module
 ```
-_No KDoc at source._
+Koin module providing the `NotificationViewModel`.
 
 ---
 
-_0 type(s), 3 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
+_0 type(s), 3 function(s)/property(ies); 3 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
 <!-- api-docs:end -->

@@ -13,6 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 
+/**
+ * Android camera QR scanner; reports decoded values through [onScanned] and torch support
+ * through [onTorchAvailabilityChanged].
+ */
 @Composable
 actual fun QrCodeScanner(
     types: List<CodeType>,

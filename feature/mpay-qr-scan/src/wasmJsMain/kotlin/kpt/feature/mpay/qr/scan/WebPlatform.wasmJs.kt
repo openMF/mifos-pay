@@ -11,9 +11,12 @@ package kpt.feature.mpay.qr.scan
 
 import kotlinx.browser.window
 
+/** Wasm/JS actual of [WebPlatform]. */
 actual object WebPlatform {
+    /** Always true on Wasm/JS. */
     actual val isWeb: Boolean = true
 
+    /** True when the browser is not a mobile browser, judged from the user agent. */
     actual val isWebDesktop: Boolean by lazy {
         !isMobileBrowser()
     }

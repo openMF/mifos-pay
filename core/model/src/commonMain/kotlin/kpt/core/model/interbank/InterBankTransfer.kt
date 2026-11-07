@@ -12,6 +12,17 @@ package kpt.core.model.interbank
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Request to transfer money to a party in another bank.
+ *
+ * @property homeTransactionId Transaction id assigned by the sending bank.
+ * @property from Sending party.
+ * @property to Receiving party.
+ * @property amountType Whether the amount is a send or receive amount.
+ * @property amount Amount and currency to transfer.
+ * @property transactionType Scenario and initiator of the transaction.
+ * @property note Note attached to the transfer.
+ */
 @Serializable
 data class InterBankTransferRequest(
     @SerialName("homeTransactionId")
@@ -30,6 +41,13 @@ data class InterBankTransferRequest(
     val note: String,
 )
 
+/**
+ * A party in an interbank transfer, identified by provider and id.
+ *
+ * @property fspId Id of the financial service provider.
+ * @property idType Type of the party id.
+ * @property idValue Value of the party id.
+ */
 @Serializable
 data class Party(
     @SerialName("fspId")
@@ -40,6 +58,12 @@ data class Party(
     val idValue: String,
 )
 
+/**
+ * An amount of money with its currency.
+ *
+ * @property currencyCode Currency code.
+ * @property amount Numeric amount.
+ */
 @Serializable
 data class Amount(
     @SerialName("currencyCode")
@@ -48,6 +72,14 @@ data class Amount(
     val amount: Double,
 )
 
+/**
+ * Describes the scenario and initiator of an interbank transaction.
+ *
+ * @property scenario Transaction scenario.
+ * @property subScenario Transaction sub-scenario.
+ * @property initiator Who initiates the transaction.
+ * @property initiatorType Type of the initiator.
+ */
 @Serializable
 data class TransactionType(
     @SerialName("scenario")
@@ -60,6 +92,14 @@ data class TransactionType(
     val initiatorType: String,
 )
 
+/**
+ * Response to an interbank transfer request.
+ *
+ * @property homeTransactionId Transaction id assigned by the sending bank.
+ * @property transactionId Transaction id assigned by the switch.
+ * @property systemMessage Status message from the system.
+ * @property executionStatus Whether the transfer executed successfully.
+ */
 @Serializable
 data class InterBankTransferResponse(
     @SerialName("homeTransactionId")

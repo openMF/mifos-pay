@@ -49,17 +49,18 @@ import kpt.core.designsystem.component.MifosTextField
 import kpt.core.designsystem.component.MifosTopBar
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.send_money.generated.resources.Res
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_bank_branch
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_bank_name
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_cancel
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_continue
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_ifsc_code
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_search_ifsc
+import kpt.feature.send.money.generated.resources.Res
+import kpt.feature.send.money.generated.resources.feature_send_money_bank_branch
+import kpt.feature.send.money.generated.resources.feature_send_money_bank_name
+import kpt.feature.send.money.generated.resources.feature_send_money_cancel
+import kpt.feature.send.money.generated.resources.feature_send_money_continue
+import kpt.feature.send.money.generated.resources.feature_send_money_ifsc_code
+import kpt.feature.send.money.generated.resources.feature_send_money_search_ifsc
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 // TODO replace dummy data with actual data or call API
 // TODO fix bank name input box visibility
+/** Screen for searching a bank branch by IFSC code, bank, state, district and branch. */
 @Composable
 fun SearchIfscScreen(
     onBackClick: () -> Unit,

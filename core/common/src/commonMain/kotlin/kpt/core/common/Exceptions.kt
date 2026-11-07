@@ -22,8 +22,13 @@ class HttpStatusException(
     val userMessage: String,
     val developerMessage: String? = null,
 ) : Exception(userMessage) {
+    /** True for a 4xx response: the request itself was rejected. */
     val isClientError: Boolean get() = statusCode in 400..499
+
+    /** True for a 5xx response: the server failed to handle a valid request. */
     val isServerError: Boolean get() = statusCode in 500..599
+
+    /** Whether retrying may succeed; only server errors are worth retrying. */
     val canRetry: Boolean get() = isServerError
 }
 

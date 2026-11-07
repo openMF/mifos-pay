@@ -19,8 +19,10 @@ private const val OFFICE_ID = 1
 private const val MOBILE_WALLET_ROLE_ID = 2
 private const val SUPER_USER_ROLE_ID = 1
 
+/** Role ids assigned to newly created users: the mobile-wallet role and the super-user role. */
 val NEW_USER_ROLE_IDS: ArrayList<Int> = arrayListOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)
 
+/** Maps a domain [NewUser] to the create-user network entity. */
 fun NewUser.toEntity(): NewUserEntity {
     return NewUserEntity(
         username = username,
@@ -36,6 +38,7 @@ fun NewUser.toEntity(): NewUserEntity {
     )
 }
 
+/** Maps a [User] to a [UserInfo]. */
 fun User.toUserInfo() = UserInfo(
     username = username,
     userId = userId,
@@ -50,6 +53,7 @@ fun User.toUserInfo() = UserInfo(
     isTwoFactorAuthenticationRequired = isTwoFactorAuthenticationRequired,
 )
 
+/** Maps a [Role] to a [RoleInfo]. */
 fun Role.toRoleInfo() = RoleInfo(
     id = id ?: "",
     name = name ?: "",

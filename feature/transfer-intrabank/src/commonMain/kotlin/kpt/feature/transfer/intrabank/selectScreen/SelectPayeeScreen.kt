@@ -60,21 +60,22 @@ import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosProgressIndicator
 import kpt.core.ui.SimpleSearchBar
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.transfer_intrabank.generated.resources.Res
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_select_account_placeholder
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_select_payment_title
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_bottom_bar
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_close
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_no_accounts_found
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_no_accounts_found_for_search
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_oops
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_proceed
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_selected
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_something_went_wrong
-import mifos_pay.feature.transfer_intrabank.generated.resources.feature_send_money_to_account
+import kpt.feature.transfer.intrabank.generated.resources.Res
+import kpt.feature.transfer.intrabank.generated.resources.feature_select_account_placeholder
+import kpt.feature.transfer.intrabank.generated.resources.feature_select_payment_title
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_bottom_bar
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_close
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_no_accounts_found
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_no_accounts_found_for_search
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_oops
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_proceed
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_selected
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_something_went_wrong
+import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_to_account
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen for choosing the destination account by number or name and proceeding to the transfer. */
 @Composable
 fun SelectPayeeScreen(
     modifier: Modifier = Modifier,

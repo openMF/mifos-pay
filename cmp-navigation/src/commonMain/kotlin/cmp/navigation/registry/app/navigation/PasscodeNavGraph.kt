@@ -39,6 +39,7 @@ import androidx.navigation.navOptions
 //    }
 // }
 
+/** Navigates to the main graph, popping the passcode graph off the back stack. */
 fun NavController.navigateToMainGraph() {
     val options = navOptions {
         // Pop up to the start destination of the graph to

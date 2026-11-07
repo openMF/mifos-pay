@@ -12,6 +12,12 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A charge applied to a savings account.
+ *
+ * @property chargeId Identifier of the charge.
+ * @property amount Amount.
+ */
 @Parcelize
 @Serializable
 data class SavingCharge(

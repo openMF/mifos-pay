@@ -11,10 +11,18 @@ package kpt.core.model.instance
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Configured list of selectable server instances.
+ *
+ * @property instances The configured server instances.
+ */
 @Serializable
 data class InstancesConfig(
     val instances: List<ServerInstance> = emptyList(),
 ) {
+    /**
+     * Returns the instance flagged as default, else the first one, else null.
+     */
     fun getDefaultInstance(): ServerInstance? =
         instances.firstOrNull { it.isDefault } ?: instances.firstOrNull()
 }

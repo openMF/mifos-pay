@@ -12,5 +12,6 @@
 <!-- tree-scaffold:end -->
 ## Significance
 
-_Authored below this marker; regeneration never touches it. Say what this area is FOR,
-what breaks without it, and what a fork touches._
+Android signing keystores. A release must be signed with the same key as every earlier release, or
+the store rejects the update and installed users cannot upgrade. Signing material belongs in the
+secrets vault rather than the repository: treat these files as legacy and keep new keys out.

@@ -42,11 +42,11 @@ import kpt.feature.mpay.qr.scan.components.QrProcessingOverlay
 import kpt.feature.mpay.qr.scan.components.QrScanFooter
 import kpt.feature.mpay.qr.scan.components.QrScanTopBar
 import kpt.feature.mpay.qr.scan.components.QrViewfinder
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_no_qr_found
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_scan_success
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_torch
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_upload_qr
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_no_qr_found
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_scan_success
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_torch
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_upload_qr
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 @Composable
@@ -120,6 +120,7 @@ internal fun ScanQrCodeScreen(
     )
 }
 
+/** Stateless content of the scan-QR screen: camera viewfinder, torch and help controls, and gallery image import. */
 @Composable
 fun ScanQrCodeScreenContent(
     snackbarHostState: SnackbarHostState,

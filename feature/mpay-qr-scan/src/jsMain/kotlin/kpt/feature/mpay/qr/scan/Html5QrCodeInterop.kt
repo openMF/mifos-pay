@@ -57,6 +57,7 @@ external class Html5Qrcode(elementId: String) {
      */
     fun scanFile(file: dynamic, showImage: Boolean): Promise<String>
 
+    /** Static members of the html5-qrcode scanner. */
     companion object {
         /**
          * Get list of available cameras.
@@ -69,7 +70,10 @@ external class Html5Qrcode(elementId: String) {
  * Camera device information.
  */
 external interface Html5QrcodeCamera {
+    /** Camera device identifier. */
     val id: String
+
+    /** Human-readable camera label. */
     val label: String
 }
 
@@ -77,9 +81,18 @@ external interface Html5QrcodeCamera {
  * Scanning configuration.
  */
 external interface Html5QrcodeScanConfig {
+    /** Frames per second to scan at. */
     var fps: Int
+
+    /** Size of the scanning box, as a number or object. */
     var qrbox: dynamic
+
+    /** Aspect ratio of the camera feed. */
     var aspectRatio: Double?
+
+    /** Whether to disable flipping of the video feed. */
     var disableFlip: Boolean?
+
+    /** Extra video constraints passed to the browser camera. */
     var videoConstraints: dynamic
 }

@@ -20,10 +20,10 @@ ViewModels: `MerchantTransferViewModel`, `MerchantViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/merchants sha=b2797911c8b2765a422d7a45b92227d1ff8f3664 -->
+<!-- api-docs:begin module=feature/merchants sha=16d505f85fc77ebe3564c33833e39991bdd03fa5 -->
 ## API reference
 
-_Generated from `feature/merchants` at tree `b2797911c8b2` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/merchants` at tree `16d505f85fc7` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -36,9 +36,9 @@ rather than re-declaring what they already own.
 ```kotlin
 class MerchantTransferViewModel(
 ```
-_No KDoc at source._
+ViewModel of the merchant transfer screen; currently a stub with no backend or actions.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/di/MerchantsModule.kt:18</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/di/MerchantsModule.kt:19</code></summary>
 
 ```kotlin
 val MerchantsModule = module {
@@ -52,17 +52,17 @@ val MerchantsModule = module {
 ```kotlin
 sealed interface MerchantTransferEvent
 ```
-_No KDoc at source._
+One-off events of the merchant transfer screen (none defined).
 
 ```kotlin
 sealed interface MerchantTransferAction
 ```
-_No KDoc at source._
+User actions of the merchant transfer screen (none defined).
 
 ```kotlin
 sealed class MerchantTransferUiState
 ```
-_No KDoc at source._
+UI states of the merchant transfer screen.
 
 <details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantTransferScreen.kt:101</code></summary>
 
@@ -83,12 +83,12 @@ internal fun MerchantTransferScreen(
 ```kotlin
 class MerchantViewModel(
 ```
-_No KDoc at source._
+ViewModel of the merchants screen; holds the merchant list, search query and refresh state.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/di/MerchantsModule.kt:17</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/di/MerchantsModule.kt:18</code></summary>
 
 ```kotlin
-import org.koin.dsl.module
+/** Koin module providing the merchant list and merchant transfer view models. */
 val MerchantsModule = module {
     viewModelOf(::MerchantViewModel)
     viewModelOf(::MerchantTransferViewModel)
@@ -100,24 +100,24 @@ val MerchantsModule = module {
 ```kotlin
 data class MerchantState(
 ```
-_No KDoc at source._
+Single MVI state of the merchants screen.
 
 ```kotlin
 sealed interface MerchantEvent
 ```
-_No KDoc at source._
+One-off events of the merchants screen (none defined).
 
 ```kotlin
 sealed interface MerchantAction
 ```
-_No KDoc at source._
+User actions on the merchants screen.
 
 ```kotlin
 sealed class MerchantUiState
 ```
-_No KDoc at source._
+UI states of merchant content.
 
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:81</code></summary>
 
 ```kotlin
 @VisibleForTesting
@@ -136,33 +136,33 @@ internal fun MerchantScreen(
 ```kotlin
 val MerchantsModule = module
 ```
-_No KDoc at source._
+Koin module providing the merchant list and merchant transfer view models.
 
 ### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/navigation/MerchantTransferNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.merchantTransferScreen(
 ```
-_No KDoc at source._
+Registers the merchant transfer destination, taking merchant name, VPA and account number as arguments.
 
 ```kotlin
 fun NavController.navigateToMerchantTransferScreen(
 ```
-_No KDoc at source._
+Navigates to the transfer screen for the given merchant name, VPA and account number.
 
 ### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt`
 
 ```kotlin
 fun MerchantScreen(
 ```
-_No KDoc at source._
+Screen listing merchants with search and pull-to-refresh.
 
 ```kotlin
 val sampleMerchantList = List(10)
 ```
-_No KDoc at source._
+Sample merchant list used for previews.
 
 ---
 
-_9 type(s), 5 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
+_9 type(s), 5 function(s)/property(ies); 14 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
 <!-- api-docs:end -->

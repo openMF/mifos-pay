@@ -38,6 +38,7 @@ import kpt.core.ui.generated.resources.Res
 import kpt.core.ui.generated.resources.core_ui_money_in
 import kpt.core.ui.generated.resources.core_ui_money_out
 import org.jetbrains.compose.resources.painterResource
+/** Card wrapping a single [Transaction] row, clickable to open its details. */
 @Composable
 fun TransactionItemCard(
     transaction: Transaction,
@@ -115,6 +116,7 @@ fun TransactionItemCard(
     }
 }
 
+/** Row showing a [Transaction] amount, type and date with an optional leading icon. */
 @Composable
 fun TransactionItem(
     transaction: Transaction,

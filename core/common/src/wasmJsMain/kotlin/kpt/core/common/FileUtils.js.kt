@@ -9,4 +9,5 @@
  */
 package kpt.core.common
 
+/** Creates the platform [FileUtils] implementation. */
 actual fun createPlatformFileUtils(): FileUtils = CommonFileUtils()

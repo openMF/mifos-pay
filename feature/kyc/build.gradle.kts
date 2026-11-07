@@ -30,3 +30,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.kyc.generated.resources"
+}

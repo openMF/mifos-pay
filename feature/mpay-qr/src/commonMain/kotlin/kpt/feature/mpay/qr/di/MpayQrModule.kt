@@ -13,6 +13,7 @@ import kpt.core.common.MifosDispatchers
 import kpt.feature.mpay.qr.MpayQrViewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+/** Koin module providing the [MpayQrViewModel] factory. */
 val MpayQrModule = module {
     factory {
         MpayQrViewModel(

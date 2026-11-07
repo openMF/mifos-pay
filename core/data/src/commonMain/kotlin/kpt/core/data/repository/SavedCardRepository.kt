@@ -15,8 +15,10 @@ import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.common.ScreenState
 import kpt.core.model.savedcards.CardPayload
 import kpt.core.model.savedcards.SavedCard
+/** Repository for a client's saved payment cards. */
 interface SavedCardRepository {
     // Phase-3 cutover — reads on ScreenState.
+    /** Streams the client's saved cards. */
     fun getSavedCards(clientId: Long): Flow<ScreenState<List<SavedCard>>>
 
     /**
@@ -54,14 +56,18 @@ interface SavedCardRepository {
         scope: CoroutineScope,
     ): ScreenDataStream<List<SavedCard>>
 
+    /** Streams a single saved card of the client. */
     fun getSavedCard(clientId: Long, cardId: Long): Flow<ScreenState<SavedCard>>
 
     // Writes complete normally on success and throw on failure; the caller's
     // SubmitHandler maps success/exception to SubmitState. The user-facing success
     // message is a feature StringResource surfaced by the ViewModel, not repo copy.
+    /** Adds a saved card for the client. */
     suspend fun addSavedCard(clientId: Long, card: CardPayload)
 
+    /** Deletes a saved card. */
     suspend fun deleteCard(clientId: Long, cardId: Long)
 
+    /** Updates a saved card. */
     suspend fun updateCard(clientId: Long, cardId: Long, card: CardPayload)
 }

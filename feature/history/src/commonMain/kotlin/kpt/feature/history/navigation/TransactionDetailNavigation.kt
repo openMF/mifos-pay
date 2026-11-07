@@ -15,11 +15,15 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.history.detail.TransactionDetailScreen
+/** Base route of the transaction detail screen. */
 const val TRANSACTION_DETAIL_ROUTE = "transaction_detail"
+
+/** Route argument name for the transfer id. */
 const val TRANSFER_ID = "transferId"
 
 private const val BASE_ROUTE = "$TRANSACTION_DETAIL_ROUTE&$TRANSFER_ID={$TRANSFER_ID}"
 
+/** Registers the transaction detail screen in the nav graph; [navigateToReceipt] shares a transfer receipt. */
 fun NavGraphBuilder.transactionDetailNavigation(
     navigateBack: () -> Unit,
     navigateToReceipt: (transferId: Long) -> Unit = {},
@@ -37,6 +41,7 @@ fun NavGraphBuilder.transactionDetailNavigation(
     }
 }
 
+/** Navigates to the detail screen of the transfer with [transferId]. */
 fun NavHostController.navigateToTransactionDetail(transferId: Long) {
     navigate("$TRANSACTION_DETAIL_ROUTE&$TRANSFER_ID=$transferId")
 }

@@ -11,6 +11,12 @@ package kpt.core.model.account
 
 import kotlinx.serialization.Serializable
 import kpt.core.model.beneficiary.Beneficiary
+/**
+ * Combined payload of the user's accounts and saved beneficiaries.
+ *
+ * @property accounts The user's accounts.
+ * @property beneficiaries The user's saved beneficiaries.
+ */
 @Serializable
 data class AccountContent(
     val accounts: List<Account>,

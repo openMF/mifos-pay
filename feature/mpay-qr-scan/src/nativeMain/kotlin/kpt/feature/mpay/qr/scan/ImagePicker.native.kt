@@ -19,6 +19,7 @@ import platform.CoreImage.CIDetectorTypeQRCode
 import platform.CoreImage.CIImage
 import platform.CoreImage.CIQRCodeFeature
 
+/** Decodes a QR code from an image file on iOS, returning the decoded text or null if none is found. */
 @OptIn(ExperimentalForeignApi::class)
 actual suspend fun decodeQrFromFile(file: PlatformFile): String? {
     return try {

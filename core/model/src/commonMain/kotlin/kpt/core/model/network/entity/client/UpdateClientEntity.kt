@@ -11,6 +11,15 @@ package kpt.core.model.network.entity.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for updating a client's personal and contact details.
+ *
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property externalId External identifier.
+ * @property mobileNo Mobile phone number.
+ * @property emailAddress Email address.
+ */
 @Serializable
 data class UpdateClientEntity(
     val firstname: String,

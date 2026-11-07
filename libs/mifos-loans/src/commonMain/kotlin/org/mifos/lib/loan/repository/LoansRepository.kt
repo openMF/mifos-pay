@@ -26,8 +26,10 @@ import org.mifos.lib.loan.core.model.LoansPayload
  * provider once distinct adapters exist for each.
  */
 interface LoansRepository {
+    /** Loads the loan template for [clientId] via the adapter for [providerId]. */
     fun getLoanTemplate(providerId: String, clientId: Long): Flow<ScreenState<LoanTemplate>>
 
+    /** Loads the loan template for [clientId] and [productId] via the adapter for [providerId]. */
     fun getLoanTemplateByProduct(
         providerId: String,
         clientId: Long,

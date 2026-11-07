@@ -10,6 +10,12 @@
 package kpt.core.model.account
 
 import kpt.core.model.savingsaccount.Transaction
+/**
+ * Pairs a list of accounts with the transactions that belong to them.
+ *
+ * @property accounts The accounts.
+ * @property transactions The transactions across those accounts.
+ */
 data class AccountsWithTransactions(
     val accounts: List<Account>,
     val transactions: List<Transaction>,

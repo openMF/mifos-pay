@@ -22,6 +22,7 @@ import kpt.feature.autopay.EditBillViewModel
 import kpt.feature.autopay.EditBillerViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module that registers the AutoPay feature view models. */
 val AutoPayModule = module {
     viewModelOf(::AutoPayViewModel)
     viewModelOf(::AutoPayScheduleDetailsViewModel)

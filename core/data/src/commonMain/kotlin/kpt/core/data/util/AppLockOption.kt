@@ -9,8 +9,14 @@
  */
 package kpt.core.data.util
 
+/** How the app is locked on launch. */
 enum class AppLockOption {
+    /** Lock using the Mifos app passcode. */
     MifosPasscode,
+
+    /** Lock using the device's own authentication (biometrics or screen lock). */
     DeviceLock,
+
+    /** No app lock. */
     None,
 }

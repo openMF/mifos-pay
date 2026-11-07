@@ -57,17 +57,18 @@ import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
 import kpt.feature.beneficiary.deletebeneficiary.DeleteBeneficiaryBottomSheet
 import kpt.feature.beneficiary.deletebeneficiary.DeleteBeneficiaryState
 import kpt.feature.beneficiary.deletebeneficiary.DeleteBeneficiaryViewModel
-import mifos_pay.feature.beneficiary.generated.resources.Res
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_add
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_add_beneficiary
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_add_beneficiary_hint
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_delete_beneficiary
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_edit_beneficiary
-import mifos_pay.feature.beneficiary.generated.resources.feature_beneficiary_no_beneficiaries
+import kpt.feature.beneficiary.generated.resources.Res
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_add
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_add_beneficiary
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_add_beneficiary_hint
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_delete_beneficiary
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_edit_beneficiary
+import kpt.feature.beneficiary.generated.resources.feature_beneficiary_no_beneficiaries
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen listing the client's saved third-party transfer beneficiaries, with add, edit and delete actions. */
 @Composable
 fun BeneficiaryListScreen(
     onAddOrEditBeneficiary: (BeneficiaryAddEditType) -> Unit,
@@ -199,6 +200,9 @@ private fun BeneficiaryListScreenContent(
     }
 }
 
+/**
+ * Scrollable list of [beneficiaries]; row actions go to [onAction], deletes to [onDeleteBeneficiary].
+ */
 @Composable
 fun BeneficiariesList(
     beneficiaries: List<Beneficiary>,
@@ -224,6 +228,7 @@ fun BeneficiariesList(
     }
 }
 
+/** Single beneficiary row with edit and delete buttons. */
 @Composable
 fun BeneficiaryItem(
     beneficiary: Beneficiary,
@@ -296,6 +301,7 @@ fun BeneficiaryItem(
     }
 }
 
+/** Compose preview of the beneficiary list screen with sample data. */
 @Preview
 @Composable
 fun PreviewBeneficiaryListScreen() {

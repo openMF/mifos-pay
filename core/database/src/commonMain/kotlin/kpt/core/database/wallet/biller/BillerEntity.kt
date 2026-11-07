@@ -53,6 +53,7 @@ import kpt.core.base.database.annotation.DbEntity
  * @property address Optional biller address.
  * @property isActive Domain `isActive` flag.
  * @property createdAt / [updatedAt] Epoch-millis timestamps set by the mapper.
+ * @property updatedAt Epoch-millis timestamp of the last update.
  */
 @DbEntity
 @Entity(

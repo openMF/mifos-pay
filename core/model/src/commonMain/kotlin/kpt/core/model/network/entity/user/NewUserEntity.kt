@@ -11,6 +11,20 @@ package kpt.core.model.network.entity.user
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for creating a new Fineract user.
+ *
+ * @property username Login username.
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property email Email address.
+ * @property password Password.
+ * @property officeId Id of the office the user belongs to.
+ * @property roles Ids of the roles to assign.
+ * @property sendPasswordToEmail Whether the password is emailed to the user.
+ * @property isSelfServiceUser Whether the user is a self-service user.
+ * @property repeatPassword Password repeated for confirmation.
+ */
 @Serializable
 class NewUserEntity(
     val username: String,

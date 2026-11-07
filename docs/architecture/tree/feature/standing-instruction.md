@@ -22,10 +22,10 @@ ViewModels: `AddEditSIViewModel`, `SIDetailViewModel`, `StandingInstructionViewM
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/standing-instruction sha=6910aa73b232261d85a4410adf1d856e3e257a68 -->
+<!-- api-docs:begin module=feature/standing-instruction sha=2d823264815f61760beacd541db55388fa9101df -->
 ## API reference
 
-_Generated from `feature/standing-instruction` at tree `6910aa73b232` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/standing-instruction` at tree `2d823264815f` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,16 +38,16 @@ rather than re-declaring what they already own.
 ```kotlin
 fun StandingInstructionsScreen(
 ```
-_No KDoc at source._
+Screen listing the client's standing instructions with actions to add, edit, view or delete one.
 
 ### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionViewModel.kt`
 
 ```kotlin
 class StandingInstructionViewModel(
 ```
-_No KDoc at source._
+ViewModel for the standing-instructions list; loads the client's instructions and handles delete and navigation actions.
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:78</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:79</code></summary>
 
 ```kotlin
     onShowSIDetails: (Long) -> Unit,
@@ -63,9 +63,9 @@ _No KDoc at source._
 ```kotlin
 data class SIUiState(
 ```
-_No KDoc at source._
+UI state of the standing-instructions list.
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:116</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:117</code></summary>
 
 ```kotlin
 @Composable
@@ -82,9 +82,9 @@ private fun SIDialogs(
 ```kotlin
 sealed interface SIEvent
 ```
-_No KDoc at source._
+One-shot events emitted by `StandingInstructionViewModel`.
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:88</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:89</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -101,9 +101,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface SIAction
 ```
-_No KDoc at source._
+Actions handled by `StandingInstructionViewModel`.
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:101</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:102</code></summary>
 
 ```kotlin
         dialogState = state.dialogState,
@@ -122,7 +122,7 @@ _No KDoc at source._
 ```kotlin
 fun InstructionTypeChip(
 ```
-_No KDoc at source._
+Chip showing a standing instruction's type (fixed or dues), colored per type.
 
 <details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/details/SIDetailsScreen.kt:221</code></summary>
 
@@ -140,14 +140,14 @@ _No KDoc at source._
 ```kotlin
 enum class StandingInstructionType
 ```
-_No KDoc at source._
+Standing instruction types supported by the wallet.
 
 ### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/components/PriorityChip.kt`
 
 ```kotlin
 fun PriorityChip(
 ```
-_No KDoc at source._
+Chip showing a standing instruction's priority option, colored per priority.
 
 <details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/details/SIDetailsScreen.kt:211</code></summary>
 
@@ -168,7 +168,7 @@ _No KDoc at source._
 ```kotlin
 data class SIAddEditArgs(
 ```
-_No KDoc at source._
+Navigation arguments of the add/edit standing instruction screen.
 
 <details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt:61</code></summary>
 
@@ -187,19 +187,19 @@ _No KDoc at source._
 ```kotlin
 fun NavGraphBuilder.addEditSIScreen(
 ```
-_No KDoc at source._
+Registers the add/edit standing instruction destination.
 
 ```kotlin
 fun NavController.navigateToSIAddEdit(
 ```
-_No KDoc at source._
+Navigates to the add/edit standing instruction screen for `addEditType`.
 
 ### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIViewModel.kt`
 
 ```kotlin
 sealed interface AddEditSIEvent
 ```
-_No KDoc at source._
+One-shot events emitted by the add/edit standing instruction view model.
 
 <details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIScreen.kt:95</code></summary>
 
@@ -218,7 +218,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface AddEditSIAction
 ```
-_No KDoc at source._
+Actions handled by the add/edit standing instruction view model.
 
 <details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/createOrUpdate/AddEditSIScreen.kt:107</code></summary>
 
@@ -239,9 +239,9 @@ _No KDoc at source._
 ```kotlin
 sealed class SIAddEditType
 ```
-_No KDoc at source._
+Whether the add/edit screen creates a new standing instruction or edits an existing one.
 
-<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/StandingInstructionScreen.kt:76</code></summary>
 
 ```kotlin
 @Composable
@@ -260,28 +260,28 @@ fun StandingInstructionsScreen(
 ```kotlin
 fun NavGraphBuilder.siDetailsScreen(
 ```
-_No KDoc at source._
+Registers the standing instruction details destination.
 
 ```kotlin
 fun NavController.navigateSIDetails(instructionId: Long, navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the details of the standing instruction `instructionId`.
 
 ### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/details/SIDetailsScreen.kt`
 
 ```kotlin
 fun colorForMissing(value: String?): Color
 ```
-_No KDoc at source._
+Returns the error color when `value` is null, otherwise the normal text color.
 
 ### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/di/StandingInstructionModule.kt`
 
 ```kotlin
 val StandingInstructionModule = module
 ```
-_No KDoc at source._
+Koin module providing the standing instruction view models.
 
 ---
 
-_9 type(s), 9 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 10 live call site(s)._
+_9 type(s), 9 function(s)/property(ies); 18 carry KDoc at source; 0 authored example(s); 10 live call site(s)._
 <!-- api-docs:end -->

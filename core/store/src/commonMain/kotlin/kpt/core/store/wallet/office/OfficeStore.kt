@@ -28,9 +28,6 @@ import kotlin.time.Clock
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `OfficeEntity`. Shared with the DAO's writes. */
-private const val OFFICES_TABLE = "wallet_offices"
-
 /**
  * Build the LEDGER read [Store] for the global Fineract office list
  * (GOAL D13 — global-reference-data variant of the `history` archetype).

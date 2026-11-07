@@ -21,10 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_powered_by
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_powered_by
 import org.jetbrains.compose.resources.stringResource
 
+/** Footer caption displayed under the scanner viewfinder. */
 @Composable
 fun QrScanFooter(
     modifier: Modifier = Modifier,

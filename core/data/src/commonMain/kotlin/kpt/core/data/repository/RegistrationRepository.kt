@@ -11,8 +11,11 @@ package kpt.core.data.repository
 
 import kpt.core.model.network.entity.register.RegisterPayload
 import kpt.core.model.network.entity.register.UserVerify
+/** Repository for user registration and verification. */
 interface RegistrationRepository {
+    /** Registers a new user. */
     suspend fun registerUser(registerPayload: RegisterPayload)
 
+    /** Verifies a newly registered user. */
     suspend fun verifyUser(userVerify: UserVerify)
 }

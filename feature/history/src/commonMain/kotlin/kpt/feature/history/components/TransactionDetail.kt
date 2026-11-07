@@ -31,11 +31,11 @@ import kpt.core.common.CurrencyFormatter
 import kpt.core.common.DateHelper
 import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.ui.AvatarBox
-import mifos_pay.feature.history.generated.resources.Res
-import mifos_pay.feature.history.generated.resources.feature_history_debited_from
-import mifos_pay.feature.history.generated.resources.feature_history_paid_to
-import mifos_pay.feature.history.generated.resources.feature_history_transaction_date
-import mifos_pay.feature.history.generated.resources.feature_history_transaction_id
+import kpt.feature.history.generated.resources.Res
+import kpt.feature.history.generated.resources.feature_history_debited_from
+import kpt.feature.history.generated.resources.feature_history_paid_to
+import kpt.feature.history.generated.resources.feature_history_transaction_date
+import kpt.feature.history.generated.resources.feature_history_transaction_id
 import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun TransactionDetail(

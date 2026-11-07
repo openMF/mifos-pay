@@ -16,18 +16,6 @@
 // String configuration notation is required — type-safe `libs.`/`projects.`/`compose.` accessors
 // are not generated for applied script plugins.
 
-// Fork plugins: this module's fork code uses Compose resources (`Res` / StringResource), so it needs the
-// Compose + Compose-compiler plugins. They lived in the template-owned build.gradle.kts plugins {} block,
-// which a sync full-copies; apply(plugin = …) here survives it (moved at the 90ff6da6 template sync).
-apply(plugin = "org.jetbrains.compose")
-apply(plugin = "org.jetbrains.kotlin.plugin.compose")
-// generateResClass=auto skips the Res class when the resources dependency is declared through this seam rather
-// than the build file, so force it: fork code imports <module>.generated.resources.Res.
-// Plugin classes are not on a script plugin's classpath, so go through the Groovy builder (string → enum coerced).
-extensions.getByName("compose").withGroovyBuilder {
-    getProperty("resources").withGroovyBuilder { setProperty("generateResClass", "Always") }
-}
-
 val libs = extensions.getByType<org.gradle.api.artifacts.VersionCatalogsExtension>().named("libs")
 
 dependencies {
@@ -37,8 +25,6 @@ dependencies {
     "commonMainApi"(project(":core:model"))
     "commonMainApi"(project(":core:network"))
 
-    "commonMainImplementation"(libs.findLibrary("jb-composeRuntime").get())
-    "commonMainImplementation"(libs.findLibrary("jb-composeComponentsResources").get())
     "commonMainImplementation"(libs.findLibrary("mifos-authenticator-biometrics").get())
     "commonMainImplementation"(libs.findLibrary("mifos-authenticator-passcode").get())
 }

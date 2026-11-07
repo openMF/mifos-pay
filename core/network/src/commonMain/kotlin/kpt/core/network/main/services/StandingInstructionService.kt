@@ -22,8 +22,10 @@ import kpt.core.model.standinginstruction.SIUpdatePayload
 import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.model.standinginstruction.StandingInstructionPayload
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for standing instructions. */
 interface StandingInstructionService {
 
+    /** Fetches the template for creating a standing instruction. */
     @GET("${ApiEndPoints.STANDING_INSTRUCTION}/template")
     fun getStandingInstructionTemplate(
         @Query("fromOfficeId") fromOfficeId: Long,
@@ -39,12 +41,14 @@ interface StandingInstructionService {
         @Query("clientId") clientId: Long,
     ): Flow<Page<StandingInstruction>>
 
+    /** Fetches a single standing instruction. */
     @GET("${ApiEndPoints.STANDING_INSTRUCTION}/{standingInstructionId}")
     fun getStandingInstruction(
         @Path("standingInstructionId")
         standingInstructionId: Long,
     ): Flow<StandingInstruction>
 
+    /** Creates a standing instruction. */
     @POST(ApiEndPoints.STANDING_INSTRUCTION)
     suspend fun createStandingInstruction(
         @Body payload: StandingInstructionPayload,
@@ -63,6 +67,7 @@ interface StandingInstructionService {
         @Query("command") command: String,
     )
 
+    /** Updates a standing instruction. */
     @PUT("${ApiEndPoints.STANDING_INSTRUCTION}/{standingInstructionId}")
     suspend fun updateStandingInstruction(
         @Path("standingInstructionId") instructionId: Long,

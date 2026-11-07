@@ -11,6 +11,16 @@ package kpt.core.model.network.entity.payload
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for a payment transaction on a savings account.
+ *
+ * @property transactionDate Transaction date.
+ * @property transactionAmount Transaction amount.
+ * @property note Free-text note for the payment.
+ * @property dateFormat Date format pattern used for the date fields.
+ * @property paymentTypeId Id of the payment type.
+ * @property locale Locale used to parse numbers and dates.
+ */
 @Serializable
 data class PayPayload(
     val transactionDate: String,

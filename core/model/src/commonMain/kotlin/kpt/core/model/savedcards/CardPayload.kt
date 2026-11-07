@@ -11,6 +11,16 @@ package kpt.core.model.savedcards
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for saving a new payment card.
+ *
+ * @property firstName Cardholder first name.
+ * @property lastName Cardholder last name.
+ * @property cardNumber Card number.
+ * @property cvv Card verification value.
+ * @property expiryDate Card expiry date as MMYY.
+ * @property backgroundColor Background colour of the card as shown in the UI.
+ */
 @Serializable
 data class CardPayload(
     val firstName: String,

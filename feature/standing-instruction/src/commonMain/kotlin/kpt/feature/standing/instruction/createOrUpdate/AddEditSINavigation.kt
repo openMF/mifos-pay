@@ -28,6 +28,10 @@ private const val ADD_EDIT_ITEM_ROUTE: String =
         "/{$ADD_EDIT_ITEM_TYPE}" +
         "?$EDIT_ITEM_ID={$EDIT_ITEM_ID}"
 
+/**
+ * Navigation arguments of the add/edit standing instruction screen.
+ * @property addEditType Whether a new instruction is being added or an existing one edited.
+ */
 data class SIAddEditArgs(
     val addEditType: SIAddEditType,
 ) {
@@ -43,6 +47,7 @@ data class SIAddEditArgs(
     )
 }
 
+/** Registers the add/edit standing instruction destination. */
 fun NavGraphBuilder.addEditSIScreen(
     navigateBack: () -> Unit,
 ) {
@@ -58,6 +63,7 @@ fun NavGraphBuilder.addEditSIScreen(
     }
 }
 
+/** Navigates to the add/edit standing instruction screen for [addEditType]. */
 fun NavController.navigateToSIAddEdit(
     addEditType: SIAddEditType,
     navOptions: NavOptions? = null,

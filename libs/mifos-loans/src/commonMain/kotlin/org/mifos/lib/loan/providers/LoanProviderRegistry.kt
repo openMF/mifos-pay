@@ -31,5 +31,6 @@ class LoanProviderRegistry(
     private val providersById: Map<String, LoanProvider>,
     private val defaultProvider: LoanProvider,
 ) {
+    /** Returns the adapter registered for [providerId], or the default provider if none is registered. */
     fun resolve(providerId: String): LoanProvider = providersById[providerId] ?: defaultProvider
 }

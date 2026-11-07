@@ -12,20 +12,20 @@
 | `cmp-desktop/` | 12 | [`cmp-desktop/`](tree/cmp-desktop.md) |
 | `cmp-web/` | 22 | [`cmp-web/`](tree/cmp-web.md) |
 | `cmp-shared/` | 8 | [`cmp-shared/`](tree/cmp-shared.md) |
-| `cmp-navigation/` | 77 | [`cmp-navigation/`](tree/cmp-navigation.md) |
+| `cmp-navigation/` | 78 | [`cmp-navigation/`](tree/cmp-navigation.md) |
 
 ## Features
 
 | Area | Files | Page |
 |---|---:|---|
-| `feature/` | 765 | [`feature/`](tree/feature.md) |
+| `feature/` | 767 | [`feature/`](tree/feature.md) |
 
 ## Core layers
 
 | Area | Files | Page |
 |---|---:|---|
-| `core/` | 869 | [`core/`](tree/core.md) |
-| `core-base/` | 513 | [`core-base/`](tree/core-base.md) |
+| `core/` | 876 | [`core/`](tree/core.md) |
+| `core-base/` | 507 | [`core-base/`](tree/core-base.md) |
 
 ## Codegen
 
@@ -64,10 +64,8 @@
 
 | Area | Files | Page |
 |---|---:|---|
-| `idea-layer/` | 9 | [`idea-layer/`](tree/idea-layer.md) |
 | `keystores/` | 2 | [`keystores/`](tree/keystores.md) |
 | `libs/` | 138 | [`libs/`](tree/libs.md) |
-| `maestro/` | 8 | [`maestro/`](tree/maestro.md) |
 
 ## No page, and why
 
@@ -80,6 +78,6 @@ oversight. A directory missing from a map reads the same as one nobody looked at
 | `.run/` | 5 | IDE run configurations |
 | `META-INF/` | 1 | one service-registration file |
 | `config/` | 2 | the detekt config — documented where detekt is configured |
-| `docs/` | 224 | this documentation tree |
+| `docs/` | 220 | this documentation tree |
 | `kotlin-js-store/` | 2 | generated yarn.lock for Kotlin/JS |
 | `spotless/` | 1 | the license-header template applied by Spotless |

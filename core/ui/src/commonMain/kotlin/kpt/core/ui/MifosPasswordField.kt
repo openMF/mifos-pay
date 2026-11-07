@@ -38,6 +38,7 @@ import kpt.core.designsystem.component.MifosCustomTextField
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.utils.fork.tabNavigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Password field with a show/hide toggle whose visibility state is owned by the caller. */
 @Composable
 fun MifosPasswordField(
     label: String,
@@ -117,6 +118,7 @@ fun MifosPasswordField(
     }
 }
 
+/** Password field that manages its own show/hide toggle state. */
 @Composable
 fun MifosPasswordField(
     label: String,

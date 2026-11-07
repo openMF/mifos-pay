@@ -22,13 +22,17 @@ import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
 import org.jetbrains.compose.resources.StringResource
+/** ViewModel that loads the client's beneficiaries and handles add, edit and refresh actions. */
 class BeneficiaryListViewModel(
     private val userRepository: ForkPreferencesRepository,
     private val repository: SelfServiceRepository,
     private val json: Json,
 ) : BaseViewModel<BeneficiaryListState, BeneficiaryListEvent, BeneficiaryListAction>(
     initialState = run {
+        /** Id of the signed-in client, read from preferences. */
         val clientId = requireNotNull(userRepository.clientId.value)
+
+        /** Id of the client's default account, if one is set. */
         val defaultAccount = userRepository.defaultAccountId.value
 
         BeneficiaryListState(
@@ -50,6 +54,7 @@ class BeneficiaryListViewModel(
         scope = viewModelScope,
     )
 
+    /** The client's beneficiaries, as a screen state. */
     val listState: StateFlow<ScreenState<List<Beneficiary>>> = stream.state.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -91,19 +96,42 @@ class BeneficiaryListViewModel(
     }
 }
 
+/**
+ * UI state of the beneficiary list.
+ * @property clientId Id of the signed-in client.
+ * @property defaultAccountId Id of the client's default account, or null.
+ */
 data class BeneficiaryListState(
     val clientId: Long,
     val defaultAccountId: Long? = null,
 )
 
+/** One-off events emitted by [BeneficiaryListViewModel]. */
 sealed interface BeneficiaryListEvent {
+    /**
+     * Requests navigation to the add/edit third-party beneficiary screen.
+     * @property type Whether a beneficiary is being added or edited.
+     */
     data class OnAddOrEditTPTBeneficiary(val type: BeneficiaryAddEditType) : BeneficiaryListEvent
 
+    /**
+     * Requests a toast message to be shown.
+     * @property message Localized string resource to display.
+     */
     data class ShowToast(val message: StringResource) : BeneficiaryListEvent
 }
 
+/** User actions handled by [BeneficiaryListViewModel]. */
 sealed interface BeneficiaryListAction {
+    /** User tapped add to create a new third-party beneficiary. */
     data object AddTPTBeneficiary : BeneficiaryListAction
+
+    /**
+     * User chose to edit an existing beneficiary.
+     * @property beneficiary Beneficiary to edit.
+     */
     data class EditBeneficiary(val beneficiary: Beneficiary) : BeneficiaryListAction
+
+    /** User requested a reload of the beneficiary list. */
     data object RefreshList : BeneficiaryListAction
 }

@@ -20,10 +20,10 @@ Screens: `DebitCardScreen`, `OtpScreen`, `SetUpUPiPinScreen`, `UpiPinScreen`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/upi-setup sha=ac4e54568b0b73fd092e8cbf24711d486c1c5512 -->
+<!-- api-docs:begin module=feature/upi-setup sha=7652d08dd7170714f7883bd19d3600dee0a6b8d0 -->
 ## API reference
 
-_Generated from `feature/upi-setup` at tree `ac4e54568b0b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/upi-setup` at tree `7652d08dd717` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -36,7 +36,7 @@ rather than re-declaring what they already own.
 ```kotlin
 val UpiSetupModule = module
 ```
-_No KDoc at source._
+Koin module providing the ViewModels of the UPI setup feature.
 
 ### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/navigation/SetupUpiPinNavigation.kt`
 
@@ -48,48 +48,48 @@ Was a nav-registered-but-blank destination — the composable body called no scr
 ```kotlin
 fun NavController.navigateToSetupUpiPin(
 ```
-_No KDoc at source._
+Navigates to the UPI PIN screen for `type` (setup, change or forgot) of the given bank account.
 
 ### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/SetUpUPiPinScreen.kt`
 
 ```kotlin
 fun PreviewSetupUpiPin()
 ```
-_No KDoc at source._
+Preview of the set-up UPI PIN screen.
 
 ```kotlin
 fun PreviewChangeUpi()
 ```
-_No KDoc at source._
+Preview of the change UPI PIN screen.
 
 ```kotlin
 fun PreviewForgetUpi()
 ```
-_No KDoc at source._
+Preview of the forgot UPI PIN screen.
 
 ```kotlin
 fun getBankAccountDetails(): BankAccountDetails
 ```
-_No KDoc at source._
+Returns sample bank account details used by the previews.
 
 ### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/UpiPinScreen.kt`
 
 ```kotlin
 fun showSnackbar(snackbarHostState: SnackbarHostState, message: String)
 ```
-_No KDoc at source._
+Shows `message` in the snackbar host on the main dispatcher.
 
 ### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/viewmodel/DebitCardViewModal.kt`
 
 ```kotlin
 class DebitCardViewModel :
 ```
-_No KDoc at source._
+ViewModel that checks the format of a debit card number before UPI setup continues.
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/di/UpiSetupModule.kt:17</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/di/UpiSetupModule.kt:20</code></summary>
 
 ```kotlin
-import org.koin.dsl.module
+ */
 val UpiSetupModule = module {
     viewModelOf(::DebitCardViewModel)
     viewModelOf(::SetUpUpiViewModal)
@@ -101,17 +101,17 @@ val UpiSetupModule = module {
 ```kotlin
 sealed interface DebitCardEvent
 ```
-_No KDoc at source._
+One-off events of the debit card ViewModel (none defined).
 
 ```kotlin
 sealed interface DebitCardAction
 ```
-_No KDoc at source._
+Actions handled by the debit card ViewModel.
 
 ```kotlin
 sealed class DebitCardUiState
 ```
-_No KDoc at source._
+UI state of the debit card verification.
 
 <details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/DebitCardScreen.kt:56</code></summary>
 
@@ -134,7 +134,7 @@ class SetUpUpiViewModal(
 ```
 Real OTP request/verify — reads through `TwoFactorAuthRepository` (a real Fineract self-service two-factor-auth endpoint, previously bound in DI but never actually consumed anywhere in this app).
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/di/UpiSetupModule.kt:18</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/di/UpiSetupModule.kt:21</code></summary>
 
 ```kotlin
 val UpiSetupModule = module {
@@ -148,12 +148,12 @@ val UpiSetupModule = module {
 ```kotlin
 data class SetUpUpiState(
 ```
-_No KDoc at source._
+UI state of the UPI PIN setup flow.
 
 ```kotlin
 sealed interface OtpRequestState
 ```
-_No KDoc at source._
+Progress of requesting an OTP.
 
 <details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/OtpScreen.kt:42</code></summary>
 
@@ -172,7 +172,7 @@ internal fun OtpScreen(
 ```kotlin
 sealed interface OtpVerifyState
 ```
-_No KDoc at source._
+Progress of verifying an OTP.
 
 <details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/OtpScreen.kt:43</code></summary>
 
@@ -191,14 +191,14 @@ internal fun OtpScreen(
 ```kotlin
 sealed interface SetUpUpiEvent
 ```
-_No KDoc at source._
+One-off events of the UPI setup ViewModel.
 
 ```kotlin
 sealed interface SetUpUpiAction
 ```
-_No KDoc at source._
+Actions handled by the UPI setup ViewModel.
 
 ---
 
-_10 type(s), 8 function(s)/property(ies); 2 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
+_10 type(s), 8 function(s)/property(ies); 18 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
 <!-- api-docs:end -->

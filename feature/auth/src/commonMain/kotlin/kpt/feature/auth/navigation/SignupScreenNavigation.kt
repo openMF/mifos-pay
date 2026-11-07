@@ -17,8 +17,10 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import kpt.core.ui.composableWithPushTransitions
 import kpt.feature.auth.signup.SignupScreen
+/** Navigation route of the signup screen. */
 const val SIGNUP_ROUTE = "signup_route"
 
+/** Registers the signup destination, with optional savings product, mobile number and business name arguments. */
 fun NavGraphBuilder.signupScreen(
     onNavigateBack: () -> Unit,
     onNavigateToLogin: (String) -> Unit,
@@ -48,6 +50,7 @@ fun NavGraphBuilder.signupScreen(
     }
 }
 
+/** Navigates to the signup screen, optionally prefilling the savings product, mobile number and business name. */
 fun NavController.navigateToSignup(
     savingsProductId: Int = 0,
     mobileNumber: String = "",

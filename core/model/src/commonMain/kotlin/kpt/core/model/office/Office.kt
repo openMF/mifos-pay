@@ -11,6 +11,16 @@ package kpt.core.model.office
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A Fineract office (branch) that a client belongs to.
+ *
+ * @property id Unique identifier.
+ * @property name Name of the office.
+ * @property nameDecorated Name decorated with its hierarchy level.
+ * @property externalId External identifier.
+ * @property openingDate Opening date as year, month and day components.
+ * @property hierarchy Hierarchy path of the office.
+ */
 @Serializable
 data class Office(
     val id: Long,

@@ -260,6 +260,7 @@ fun InterbankTransferFlowScreen(
     }
 }
 
+/** Compose preview of [InterbankTransferFlowScreen]. */
 @Preview
 @Composable
 fun InterbankTransferFlowScreenPreview() {

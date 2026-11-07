@@ -68,22 +68,23 @@ import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosDivider
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.send_money.generated.resources.Res
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_amount
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_bottom_bar
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_close
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_loading
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_no_accounts_found
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_oops
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_proceed
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_scan_qr
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_selected
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_send
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_something_went_wrong
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_to_account
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_vpa_mobile_account_number
+import kpt.feature.send.money.generated.resources.Res
+import kpt.feature.send.money.generated.resources.feature_send_money_amount
+import kpt.feature.send.money.generated.resources.feature_send_money_bottom_bar
+import kpt.feature.send.money.generated.resources.feature_send_money_close
+import kpt.feature.send.money.generated.resources.feature_send_money_loading
+import kpt.feature.send.money.generated.resources.feature_send_money_no_accounts_found
+import kpt.feature.send.money.generated.resources.feature_send_money_oops
+import kpt.feature.send.money.generated.resources.feature_send_money_proceed
+import kpt.feature.send.money.generated.resources.feature_send_money_scan_qr
+import kpt.feature.send.money.generated.resources.feature_send_money_selected
+import kpt.feature.send.money.generated.resources.feature_send_money_send
+import kpt.feature.send.money.generated.resources.feature_send_money_something_went_wrong
+import kpt.feature.send.money.generated.resources.feature_send_money_to_account
+import kpt.feature.send.money.generated.resources.feature_send_money_vpa_mobile_account_number
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen for entering an amount and sending money to a selected payee. */
 @Composable
 fun SendMoneyScreen(
     onBackClick: () -> Unit,

@@ -9,11 +9,25 @@
  */
 package kpt.core.model.enums
 
+/**
+ * Kind of account in Fineract, with its display label.
+ *
+ * @property value Human-readable label.
+ */
 enum class AccountType(val value: String) {
 
+    /**
+     * Savings account.
+     */
     SAVINGS("Savings Account"),
 
+    /**
+     * Loan account.
+     */
     LOAN("Loan Account"),
 
+    /**
+     * Share account.
+     */
     SHARE("Share Account"),
 }

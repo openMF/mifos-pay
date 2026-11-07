@@ -9,5 +9,8 @@
  */
 package kpt.core.common
 
+/** User-facing text: "payeeExternalId". */
 const val PAYEE_EXTERNAL_ID_ARG = "payeeExternalId"
+
+/** User-facing text: "transferAmount". */
 const val TRANSFER_AMOUNT_ARG = "transferAmount"

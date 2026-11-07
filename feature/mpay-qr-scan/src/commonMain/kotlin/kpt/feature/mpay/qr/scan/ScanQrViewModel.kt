@@ -39,15 +39,23 @@ class ScanQrViewModel(
 ) {
 
     private val _isTorchEnabled = MutableStateFlow(false)
+
+    /** Whether the camera torch is switched on. */
     val isTorchEnabled: StateFlow<Boolean> = _isTorchEnabled.asStateFlow()
 
     private val _showHelpDialog = MutableStateFlow(false)
+
+    /** Whether the QR help dialog is visible. */
     val showHelpDialog: StateFlow<Boolean> = _showHelpDialog.asStateFlow()
 
     private val _isProcessingImage = MutableStateFlow(false)
+
+    /** Whether an imported QR image is currently being decoded. */
     val isProcessingImage: StateFlow<Boolean> = _isProcessingImage.asStateFlow()
 
     private val _selectedImageBytes = MutableStateFlow<ByteArray?>(null)
+
+    /** Bytes of the image picked from the gallery for QR decoding, or null when none is selected. */
     val selectedImageBytes: StateFlow<ByteArray?> = _selectedImageBytes.asStateFlow()
 
     override fun handleAction(action: ScanQrAction) {
@@ -65,39 +73,51 @@ class ScanQrViewModel(
         }
     }
 
+    /** Flips the torch on or off. */
     fun toggleTorch() {
         _isTorchEnabled.update { !it }
     }
 
+    /** Sets the torch state explicitly. */
     fun setTorchEnabled(enabled: Boolean) {
         _isTorchEnabled.value = enabled
     }
 
+    /** Shows the QR help dialog. */
     fun showHelpDialog() {
         _showHelpDialog.value = true
     }
 
+    /** Hides the QR help dialog. */
     fun hideHelpDialog() {
         _showHelpDialog.value = false
     }
 
+    /** Marks whether an imported image is being processed. */
     fun setProcessingImage(processing: Boolean) {
         _isProcessingImage.value = processing
     }
 
+    /** Stores the bytes of the image picked for QR decoding. */
     fun setSelectedImageBytes(bytes: ByteArray?) {
         _selectedImageBytes.value = bytes
     }
 
+    /** Clears the picked image and resets the processing flag. */
     fun clearSelectedImage() {
         _selectedImageBytes.value = null
         _isProcessingImage.value = false
     }
 
+    /** Reports the result of decoding a QR from an imported image; [data] is null when no QR was found. */
     fun onImageQrScanned(data: String?) {
         trySendAction(ScanQrAction.OnImageQrScanned(data))
     }
 
+    /**
+     * Decodes a scanned QR string, routes it to the intra-bank, inter-bank or add-beneficiary flow
+     * and returns whether it was handled.
+     */
     fun onScanned(data: String): Boolean {
         Logger.d { "========== QR SCAN START ==========" }
         Logger.d { "QR Raw Data length: ${data.length}" }
@@ -185,21 +205,53 @@ class ScanQrViewModel(
     }
 }
 
+/** Empty UI state; the screen has no state beyond the view model's flows. */
 data object ScanQrState
 
+/** One-shot events emitted by [ScanQrViewModel]. */
 sealed interface ScanQrEvent {
+    /**
+     * Navigate to the intra-bank transfer flow.
+     * @property qrData Decoded QR payload identifying the payee.
+     */
     data class OnNavigateToIntraBankTransfer(val qrData: QrCodeData) : ScanQrEvent
+
+    /**
+     * Navigate to the inter-bank transfer flow.
+     * @property accountExternalId External id of the destination account.
+     * @property recipientName Name of the recipient.
+     * @property amount Amount encoded in the QR code.
+     */
     data class OnNavigateToInterbankTransfer(
         val accountExternalId: String,
         val recipientName: String,
         val amount: String,
     ) : ScanQrEvent
+
+    /**
+     * Navigate to the add-beneficiary screen.
+     * @property beneficiary Serialized beneficiary taken from the QR code.
+     */
     data class OnNavigateToAddBeneficiary(val beneficiary: String) : ScanQrEvent
+
+    /**
+     * Show a toast message.
+     * @property message Text to display.
+     */
     data class ShowToast(val message: String) : ScanQrEvent
+
+    /** The QR code was scanned successfully. */
     data object OnScanSuccess : ScanQrEvent
+
+    /** No QR code was found in the imported image. */
     data object OnNoQrFound : ScanQrEvent
 }
 
+/** Actions handled by [ScanQrViewModel]. */
 sealed interface ScanQrAction {
+    /**
+     * An imported image has been decoded.
+     * @property data Decoded QR text, or null if no QR code was found.
+     */
     data class OnImageQrScanned(val data: String?) : ScanQrAction
 }

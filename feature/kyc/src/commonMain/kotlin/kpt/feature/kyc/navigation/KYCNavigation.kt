@@ -13,12 +13,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kpt.feature.kyc.KYCScreen
+/** Navigation route of the KYC description screen. */
 const val KYC_ROUTE = "kyc_route"
 
+/** Navigates to the KYC description screen. */
 fun NavController.navigateToKYC() {
     this.navigate(KYC_ROUTE)
 }
 
+/** Registers the KYC description destination with callbacks for each KYC level. */
 fun NavGraphBuilder.kycScreen(
     onLevel1Clicked: () -> Unit,
     onLevel2Clicked: () -> Unit,

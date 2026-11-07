@@ -11,6 +11,11 @@ package kpt.core.model.network.entity.user
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for updating the clients linked to a user.
+ *
+ * @property clients Clients linked to the user.
+ */
 @Serializable
 data class UpdateUserEntityClients(
     val clients: ArrayList<Int>,

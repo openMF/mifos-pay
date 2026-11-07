@@ -32,6 +32,7 @@ import kpt.core.ui.utils.BaseViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** View model for the edit-bill form; validates input, computes upcoming payment dates and updates the bill. */
 class EditBillViewModel(
     savedStateHandle: SavedStateHandle,
     private val billRepository: BillRepository,
@@ -413,11 +414,23 @@ class EditBillViewModel(
         }
     }
 
+    /** Holds the saved-state key used to persist the form state. */
     companion object {
         private const val KEY_STATE = "edit_bill_state"
     }
 }
 
+/**
+ * UI state of the edit-bill form.
+ *
+ * @property formData Bill details being edited.
+ * @property validationResult Result of validating the form.
+ * @property isLoading Whether a load or save is in progress.
+ * @property isSuccess Whether the bill was updated.
+ * @property error Error message to show, or null.
+ * @property nextPaymentDates Upcoming payment dates for the chosen recurrence.
+ * @property availableBillers Billers the user can pick from.
+ */
 @Serializable
 data class EditBillState(
     val formData: BillFormData = BillFormData(),
@@ -429,26 +442,101 @@ data class EditBillState(
     val availableBillers: List<Biller> = emptyList(),
 )
 
+/** One-off events emitted by the edit-bill view model. */
 sealed interface EditBillEvent {
+    /**
+     * The bill was updated.
+     *
+     * @property bill The updated bill.
+     */
     data class BillUpdated(val bill: Bill) : EditBillEvent
 }
 
+/** User actions handled by the edit-bill view model. */
 sealed interface EditBillAction {
+    /**
+     * The bill name changed.
+     *
+     * @property name New bill name.
+     */
     data class UpdateBillName(val name: String) : EditBillAction
+
+    /**
+     * The amount changed.
+     *
+     * @property amount New amount as typed.
+     */
     data class UpdateAmount(val amount: String) : EditBillAction
+
+    /**
+     * The due date changed.
+     *
+     * @property dueDate New due date as epoch milliseconds.
+     */
     data class UpdateDueDate(val dueDate: Long) : EditBillAction
+
+    /**
+     * The recurrence pattern changed.
+     *
+     * @property recurrencePattern New recurrence pattern.
+     */
     data class UpdateRecurrencePattern(val recurrencePattern: RecurrencePattern) : EditBillAction
+
+    /**
+     * The description changed.
+     *
+     * @property description New description.
+     */
     data class UpdateDescription(val description: String) : EditBillAction
+
+    /** The user tapped update. */
     data object UpdateBill : EditBillAction
+
+    /** Validate the form. */
     data object ValidateForm : EditBillAction
+
+    /** Clear the current error. */
     data object ClearError : EditBillAction
+
+    /** Clear field-level validation errors. */
     data object ClearValidationErrors : EditBillAction
+
+    /** Recompute the upcoming payment dates. */
     data object CalculateNextPaymentDates : EditBillAction
+
+    /**
+     * A biller was selected.
+     *
+     * @property biller The selected biller.
+     */
     data class SelectBiller(val biller: Biller) : EditBillAction
 
     // AutoPay actions
+    /**
+     * AutoPay was switched on or off for the bill.
+     *
+     * @property enabled Whether AutoPay is enabled.
+     */
     data class UpdateAutoPayEnabled(val enabled: Boolean) : EditBillAction
+
+    /**
+     * The AutoPay payment method changed.
+     *
+     * @property paymentMethod New payment method.
+     */
     data class UpdateAutoPayPaymentMethod(val paymentMethod: String) : EditBillAction
+
+    /**
+     * The AutoPay source account changed.
+     *
+     * @property sourceAccount New source account.
+     */
     data class UpdateAutoPaySourceAccount(val sourceAccount: String) : EditBillAction
+
+    /**
+     * The AutoPay maximum amount changed.
+     *
+     * @property maxAmount New maximum amount as typed.
+     */
     data class UpdateAutoPayMaxAmount(val maxAmount: String) : EditBillAction
 }

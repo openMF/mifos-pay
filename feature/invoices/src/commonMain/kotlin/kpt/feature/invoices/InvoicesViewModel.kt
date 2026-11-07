@@ -23,19 +23,21 @@ import kpt.core.data.repository.InvoiceRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.ui.utils.BaseViewModel
+/** ViewModel that loads the current client's invoices and emits navigation to invoice detail. */
 class InvoicesViewModel(
     invoiceRepository: InvoiceRepository,
     repository: ForkPreferencesRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<InvoiceState, InvoiceEvent, InvoiceAction>(
     initialState = savedStateHandle.get(KEY_STATE) ?: run {
+        /** Id of the logged-in client, read from the stored fork preferences. */
         val clientId = requireNotNull(repository.clientId.value)
 
         InvoiceState(clientId = clientId)
     },
 ) {
 
-    companion object {
+    private companion object {
         private const val KEY_STATE = "InvoiceViewModel"
     }
 
@@ -56,12 +58,14 @@ class InvoicesViewModel(
         scope = viewModelScope,
     )
 
+    /** The client's invoices, as a screen state. */
     val invoiceUiState: StateFlow<ScreenState<List<Invoice>>> = stream.state.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ScreenState.Loading,
     )
 
+    /** Reloads the invoices. */
     fun retry() = stream.refresh()
 
     override fun handleAction(action: InvoiceAction) {
@@ -73,15 +77,32 @@ class InvoicesViewModel(
     }
 }
 
+/**
+ * Persisted UI state of the invoices screen.
+ *
+ * @property clientId Id of the client whose invoices are shown.
+ */
 @Serializable
 data class InvoiceState(
     val clientId: Long,
 )
 
+/** User actions on the invoices screen. */
 sealed interface InvoiceAction {
+    /**
+     * The user tapped the invoice with the given [invoiceId].
+     *
+     * @property invoiceId Id of the tapped invoice.
+     */
     data class InvoiceClicked(val invoiceId: Long) : InvoiceAction
 }
 
+/** One-off events emitted by the invoices screen. */
 sealed interface InvoiceEvent {
+    /**
+     * Navigate to the detail screen of an invoice.
+     *
+     * @property invoiceId Id of the invoice to open.
+     */
     data class NavigateToInvoiceDetail(val invoiceId: Long) : InvoiceEvent
 }

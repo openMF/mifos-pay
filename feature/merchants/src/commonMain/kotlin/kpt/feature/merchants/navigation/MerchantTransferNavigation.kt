@@ -15,8 +15,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import kpt.feature.merchants.ui.MerchantTransferScreenRoute
+/** Base navigation route of the merchant transfer screen. */
 const val MERCHANT_TRANSFER_ROUTE = "merchant_transfer_route"
 
+/** Registers the merchant transfer destination, taking merchant name, VPA and account number as arguments. */
 fun NavGraphBuilder.merchantTransferScreen(
     proceedWithMakeTransferFlow: (String, String?) -> Unit,
     onBackPressed: () -> Unit,
@@ -36,6 +38,7 @@ fun NavGraphBuilder.merchantTransferScreen(
     }
 }
 
+/** Navigates to the transfer screen for the given merchant name, VPA and account number. */
 fun NavController.navigateToMerchantTransferScreen(
     merchantName: String,
     merchantVPA: String,

@@ -11,6 +11,28 @@ package kpt.core.model.network.entity.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A Fineract client (wallet customer) with identity, contact and office details.
+ *
+ * @property id Unique id.
+ * @property accountNo Account number.
+ * @property externalId External identifier.
+ * @property status Client status.
+ * @property active Whether the client is active.
+ * @property activationDate Activation date.
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property displayName Full display name.
+ * @property mobileNo Mobile phone number.
+ * @property emailAddress Email address.
+ * @property dateOfBirth Date of birth.
+ * @property isStaff Whether the client is a staff member.
+ * @property officeId Id of the office.
+ * @property officeName Name of the office.
+ * @property timeline Lifecycle timeline.
+ * @property savingsProductName Name of the savings product.
+ * @property legalForm Legal form of the client.
+ */
 @Serializable
 data class ClientEntity(
     val id: Long? = null,
@@ -33,6 +55,15 @@ data class ClientEntity(
     val legalForm: Status? = null,
 )
 
+/**
+ * Timeline of key client lifecycle events (submission and activation).
+ *
+ * @property submittedOnDate Date submitted, as [year, month, day].
+ * @property activatedOnDate Date activated, as [year, month, day].
+ * @property activatedByUsername Username of the activating user.
+ * @property activatedByFirstname First name of the activating user.
+ * @property activatedByLastname Last name of the activating user.
+ */
 @Serializable
 data class ClientTimelineEntity(
     val submittedOnDate: List<Long> = emptyList(),

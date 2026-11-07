@@ -31,6 +31,7 @@ import kpt.core.store.wallet.savedcards.SavedCardKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [SavedCardRepository] backed by the saved-card API. */
 class SavedCardRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

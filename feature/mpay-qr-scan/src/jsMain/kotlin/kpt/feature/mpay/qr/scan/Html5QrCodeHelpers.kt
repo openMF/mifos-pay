@@ -13,7 +13,10 @@ package kpt.feature.mpay.qr.scan
  * Camera facing mode constraints.
  */
 object Html5QrcodeFacingMode {
+    /** Rear-facing camera constraint value. */
     const val ENVIRONMENT = "environment"
+
+    /** Front-facing camera constraint value. */
     const val USER = "user"
 }
 

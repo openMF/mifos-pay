@@ -52,9 +52,9 @@ import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.MifosProgressIndicator
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.kyc.generated.resources.Res
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_file_name
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_submit
+import kpt.feature.kyc.generated.resources.Res
+import kpt.feature.kyc.generated.resources.feature_kyc_file_name
+import kpt.feature.kyc.generated.resources.feature_kyc_submit
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel

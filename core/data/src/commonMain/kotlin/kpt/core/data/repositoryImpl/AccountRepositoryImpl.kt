@@ -45,6 +45,7 @@ import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 // TODO use self api for account operations later
+/** Default [AccountRepository] backed by the network data sources. */
 class AccountRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val selfManager: SelfServiceApiManager,

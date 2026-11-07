@@ -36,6 +36,8 @@ import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
 import kpt.core.model.user.UserInfo
 import kpt.core.network.config.InstanceConfigManager
+import kpt.feature.auth.generated.resources.Res
+import kpt.feature.auth.generated.resources.feature_auth_error_login_failed
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -188,15 +190,11 @@ class LoginViewModelTest {
             authenticationRepository.authenticate("Hekmat", "MyPassword")
         }
 
-        // On a failed authentication the ViewModel surfaces an error dialog whose copy
-        // comes from the feature StringResource (feature_auth_error_login_failed). getString
-        // reads the resource on a real IO dispatcher, which advanceUntilIdle() does not wait
-        // for — so await the state instead of reading it once.
-        viewModel.stateFlow.test {
-            var state = awaitItem()
-            while (state.dialogState is LoginState.DialogState.Loading) state = awaitItem()
-            assertIs<LoginState.DialogState.Error>(state.dialogState)
-        }
+        // A failed authentication surfaces the login-failed error dialog.
+        assertEquals(
+            LoginState.DialogState.Error(Res.string.feature_auth_error_login_failed),
+            viewModel.stateFlow.value.dialogState,
+        )
     }
 
     /**

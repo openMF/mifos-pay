@@ -11,6 +11,7 @@ package kpt.feature.send.money
 
 import androidx.compose.runtime.Composable
 
+/** WasmJs actual: returns a repository that never finds contacts. */
 @Composable
 actual fun rememberContactRepository(): ContactRepository {
     return object : ContactRepository {

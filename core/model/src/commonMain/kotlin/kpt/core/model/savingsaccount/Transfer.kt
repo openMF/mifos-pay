@@ -11,6 +11,16 @@ package kpt.core.model.savingsaccount
 
 import kotlinx.serialization.Serializable
 import kpt.core.common.DateAsStringSerializer
+/**
+ * Account transfer attached to a savings transaction.
+ *
+ * @property id Unique identifier.
+ * @property reversed Whether the transfer has been reversed.
+ * @property currency Currency of the transfer.
+ * @property transferAmount Amount transferred.
+ * @property transferDate Date of the transfer.
+ * @property transferDescription Description of the transfer.
+ */
 @Serializable
 data class Transfer(
     val id: Long? = null,

@@ -48,25 +48,26 @@ import kpt.core.designsystem.component.MifosCard
 import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
-import mifos_pay.feature.transfer_interbank.generated.resources.Res
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_amount_transferred
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_attempted_amount
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_available_balance_label
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_back_to_home
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_description
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_edit_transfer
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_failed
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_from_account_label
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_success
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_to_account_label
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transaction_date_label
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transaction_failed
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transaction_reference
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transfer_completed
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transfer_failed
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transfer_successful
+import kpt.feature.transfer.interbank.generated.resources.Res
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_amount_transferred
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_attempted_amount
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_available_balance_label
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_back_to_home
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_description
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_edit_transfer
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_failed
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_from_account_label
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_success
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_to_account_label
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transaction_date_label
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transaction_failed
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transaction_reference
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transfer_completed
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transfer_failed
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transfer_successful
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Result screen shown after a successful transfer, with a receipt of the transaction. */
 @Composable
 fun TransferSuccessScreen(
     recipientName: String,
@@ -338,6 +339,7 @@ fun TransferSuccessScreen(
     }
 }
 
+/** Result screen shown when a transfer fails, with the reason and attempted details. */
 @Composable
 fun TransferFailedScreen(
     errorMessage: String,
@@ -664,6 +666,7 @@ fun TransferFailedScreen(
     }
 }
 
+/** Compose preview of [TransferSuccessScreen]. */
 @Preview
 @Composable
 fun TransferSuccessScreenPreview() {
@@ -683,6 +686,7 @@ fun TransferSuccessScreenPreview() {
     }
 }
 
+/** Compose preview of [TransferFailedScreen]. */
 @Preview
 @Composable
 fun TransferFailedScreenPreview() {

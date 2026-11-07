@@ -33,9 +33,6 @@ import kotlin.time.Clock
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `SavingAccountDetailEntity`. Shared with the DAO's writes. */
-private const val ACCOUNT_DETAIL_TABLE = "wallet_saving_account_details"
-
 /**
  * `apiManager.savingAccountsListApi.getSavingsWithAssociations(...)` `?associations=`
  * value. Same endpoint as the LEDGER `history` store — we consume the response as

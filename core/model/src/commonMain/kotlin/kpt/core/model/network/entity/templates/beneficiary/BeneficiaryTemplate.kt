@@ -11,6 +11,11 @@ package kpt.core.model.network.entity.templates.beneficiary
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Fineract beneficiary template listing the allowed account types.
+ *
+ * @property accountTypeOptions Allowed account types.
+ */
 @Serializable
 data class BeneficiaryTemplate(
     val accountTypeOptions: List<AccountTypeOption?>? = null,

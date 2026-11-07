@@ -13,6 +13,7 @@ import kpt.feature.fastmpay.FastMpayProcessor
 import kpt.feature.fastmpay.FastMpayViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the Fast Mpay QR processor and ViewModel. */
 val FastMpayModule = module {
     factory {
         // Phase-5 Batch-3: BeneficiaryRepository → SelfServiceRepository so the

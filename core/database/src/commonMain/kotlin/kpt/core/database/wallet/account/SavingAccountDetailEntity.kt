@@ -70,6 +70,12 @@ import kpt.core.base.database.annotation.DbEntity
  * @property transactionsJson JSON encoding of `List<Transaction>` — snapshot only.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property allowOverdraft Whether the account may go into overdraft.
+ * @property enforceMinRequiredBalance Whether the product's minimum required balance is enforced.
+ * @property lienAllowed Whether a lien may be placed on the account.
+ * @property withHoldTax Whether withholding tax applies to interest.
+ * @property isDormancyTrackingActive Whether dormancy tracking is active for the account.
  */
 @DbEntity
 @Entity(

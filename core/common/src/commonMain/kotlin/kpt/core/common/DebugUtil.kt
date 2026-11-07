@@ -11,10 +11,12 @@ package kpt.core.common
 
 import co.touchlab.kermit.Logger
 
+/** Debug logging helper. */
 object DebugUtil {
 
     private val logger = Logger.withTag("QXZ")
 
+    /** Logs [objects] joined by commas at debug level and returns them unchanged. */
     fun log(vararg objects: Any): Array<out Any> {
         val stringToPrint = objects.joinToString(", ")
         logger.d { stringToPrint }

@@ -14,8 +14,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kpt.core.ui.composableWithPushTransitions
 import kpt.feature.mpay.qr.MpayQrScreen
+/** Navigation route of the Mpay QR screen. */
 const val MPAY_QR_ROUTE = "mpay_qr_route"
 
+/** Registers the Mpay QR screen destination in the navigation graph. */
 fun NavGraphBuilder.mpayQrScreen(
     navigateBack: () -> Unit,
     navigateToSendScreen: (String) -> Unit,
@@ -33,6 +35,7 @@ fun NavGraphBuilder.mpayQrScreen(
     }
 }
 
+/** Navigates to the Mpay QR screen. */
 fun NavController.navigateToMpayQrScreen(navOptions: NavOptions? = null) {
     navigate(MPAY_QR_ROUTE, navOptions)
 }

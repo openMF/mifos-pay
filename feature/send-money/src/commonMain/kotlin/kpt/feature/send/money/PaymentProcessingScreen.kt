@@ -31,12 +31,13 @@ import kpt.core.designsystem.component.MifosLoadingWheel
 import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.send_money.generated.resources.Res
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_paid_to
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_paying_securely
+import kpt.feature.send.money.generated.resources.Res
+import kpt.feature.send.money.generated.resources.feature_send_money_paid_to
+import kpt.feature.send.money.generated.resources.feature_send_money_paying_securely
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen shown while a payment is being processed. */
 @Composable
 fun PaymentProcessingScreen(
     onPaymentComplete: (String, String, String, String) -> Unit,
@@ -130,6 +131,7 @@ private fun PaymentProcessingContent(
     }
 }
 
+/** Preview of [PaymentProcessingScreen]. */
 @Preview
 @Composable
 fun PaymentProcessingScreenPreview() {
@@ -140,6 +142,7 @@ fun PaymentProcessingScreenPreview() {
     )
 }
 
+/** Preview of the payment processing content. */
 @Preview
 @Composable
 fun PaymentProcessingContentPreview() {

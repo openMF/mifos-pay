@@ -13,6 +13,7 @@ import kpt.feature.pocket.viewmodels.ManagePocketViewModel
 import kpt.feature.pocket.viewmodels.PocketDashboardViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the pocket dashboard and manage-pocket ViewModels. */
 val PocketModule = module {
     viewModelOf(::PocketDashboardViewModel)
     viewModelOf(::ManagePocketViewModel)

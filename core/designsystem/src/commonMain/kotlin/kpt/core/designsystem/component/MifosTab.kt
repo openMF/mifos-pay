@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Single tab with a text label, used inside tab rows. */
 @Composable
 fun MifosTab(
     text: String,

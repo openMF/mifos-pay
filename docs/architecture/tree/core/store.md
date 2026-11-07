@@ -23,10 +23,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/store sha=b5b774385efc0175d81ab8db2d12c5b7402aafec -->
+<!-- api-docs:begin module=core/store sha=23104aab718f0375e57b482b0ae0691a7b3acf12 -->
 ## API reference
 
-_Generated from `core/store` at tree `b5b774385efc` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/store` at tree `23104aab718f` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/store/src/commonMain/kotlin/kpt/core/store/config/ForkErrorMapper.kt`
@@ -208,7 +208,7 @@ object WalletStoreTtl
 ```
 Freshness windows for mifos-pay's wallet stores.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:152</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:153</code></summary>
 
 ```kotlin
             isEmpty = { it.isEmpty() },
@@ -243,7 +243,7 @@ data class AccountDetailKey(val accountId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `accountDetail` store — one savings-account detail record per key.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavingsAccountRepositoryImpl.kt:50</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavingsAccountRepositoryImpl.kt:51</code></summary>
 
 ```kotlin
     // store harness continue to compile; getAccountDetail(...) — the legacy
@@ -278,7 +278,7 @@ data class BeneficiaryKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `beneficiary` store — one page of beneficiaries per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:78</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:79</code></summary>
 
 ```kotlin
     // the store harness continue to compile; getBeneficiaryList() — the legacy
@@ -313,7 +313,7 @@ data class ClientDetailKey(val clientId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `clientDetail` store — one client-info record per key.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt:51</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt:52</code></summary>
 
 ```kotlin
     // store harness continue to compile; getClientInfo(...) — the legacy
@@ -348,7 +348,7 @@ data class TransactionKey(val accountId: Long)
 ```
 Store5 key for the LEDGER `history` store — one page of transactions per savings account.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:70</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:71</code></summary>
 
 ```kotlin
     // to construct them; getTransactions(...) — the legacy asScreenStateFlow path — is
@@ -369,7 +369,7 @@ data class InvoiceKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `invoices` store — one page of invoices per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InvoiceRepositoryImpl.kt:42</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InvoiceRepositoryImpl.kt:43</code></summary>
 
 ```kotlin
     // the store harness continue to compile; getInvoices(...) — the legacy
@@ -397,7 +397,7 @@ data class LinkableAccountKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `linkableAccounts` store — one page of accounts eligible to link into the client's pocket, per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:46</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:47</code></summary>
 
 ```kotlin
     private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
@@ -425,7 +425,7 @@ data class NotificationKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `notifications` store — one page of notifications per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/NotificationRepositoryImpl.kt:40</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/NotificationRepositoryImpl.kt:41</code></summary>
 
 ```kotlin
     // the store harness continue to compile; fetchNotifications() — the legacy
@@ -460,7 +460,7 @@ data object OfficesKey
 ```
 Store5 key for the LEDGER `offices` store — the WHOLE Fineract office list.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/OfficeRepositoryImpl.kt:37</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/OfficeRepositoryImpl.kt:38</code></summary>
 
 ```kotlin
     // Nullable-default so existing unit tests without the store harness continue
@@ -481,7 +481,7 @@ data class PocketKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `pockets` store — one page of linked pocket accounts per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:44</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:45</code></summary>
 
 ```kotlin
     private val dataManager: SelfServiceApiManager,
@@ -509,7 +509,7 @@ data class RecentPayeeKey(val sourceAccountId: Long)
 ```
 Store5 key for the LOCAL-DERIVED `recentPayee` store — one page of derived recent-payees per source savings-account.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/recentpayee/RecentPayeeStore.kt:65</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/recentpayee/RecentPayeeStore.kt:62</code></summary>
 
 ```kotlin
  */
@@ -537,7 +537,7 @@ data class SavedCardKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `savedCards` store — one page of saved payment cards per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavedCardRepositoryImpl.kt:42</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavedCardRepositoryImpl.kt:43</code></summary>
 
 ```kotlin
     // the store harness continue to compile; getSavedCards(...) — the legacy
@@ -565,7 +565,7 @@ data class SelfAccountsKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `selfAccounts` store — one page of the authenticated user's own accounts per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:57</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:58</code></summary>
 
 ```kotlin
     // store harness continue to compile; getSelfAccounts(...) — the legacy
@@ -593,7 +593,7 @@ data class StandingInstructionKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `standingInstruction` store — one page of standing instructions per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt:44</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt:45</code></summary>
 
 ```kotlin
     // store harness continue to compile; getAllStandingInstructions(...) — the
@@ -621,7 +621,7 @@ data class TransferDetailKey(val transferId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `transferDetail` store — one account-transfer detail record per key. Mirrors `AccountDetailKey`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:64</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:65</code></summary>
 
 ```kotlin
     // store harness continue to compile; the legacy getAccountTransfer(...) —

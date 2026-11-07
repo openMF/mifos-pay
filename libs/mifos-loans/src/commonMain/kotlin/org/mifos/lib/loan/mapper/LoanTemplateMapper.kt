@@ -32,6 +32,7 @@ import org.mifos.lib.loan.network.model.LoanPurposeOptionsResponseDto
 import org.mifos.lib.loan.network.model.LoanTemplateResponseDto
 import org.mifos.lib.loan.network.model.LoanTimelineResponseDto
 
+/** Maps this LoanTemplateResponseDto to the [LoanTemplate] domain model. */
 fun LoanTemplateResponseDto.toModel(): LoanTemplate =
     LoanTemplate(
         clientId = clientId,
@@ -117,11 +118,13 @@ fun LoanTemplateResponseDto.toModel(): LoanTemplate =
         accountLinkingOptions = accountLinkingOptions.map { it.toModel() },
     )
 
+/** Maps this LoanTimelineResponseDto to the [Timeline] domain model. */
 fun LoanTimelineResponseDto.toModel(): Timeline =
     Timeline(
         expectedDisbursementDate = expectedDisbursementDate,
     )
 
+/** Maps this LoanProductOptionsResponseDto to the [ProductOptions] domain model. */
 fun LoanProductOptionsResponseDto.toModel(): ProductOptions =
     ProductOptions(
         id = id,
@@ -137,6 +140,7 @@ fun LoanProductOptionsResponseDto.toModel(): ProductOptions =
         accountMovesOutOfNPAOnlyOnArrearsCompletion = accountMovesOutOfNPAOnlyOnArrearsCompletion,
     )
 
+/** Maps this LoanOfficerOptionsResponseDto to the [LoanOfficerOptions] domain model. */
 fun LoanOfficerOptionsResponseDto.toModel(): LoanOfficerOptions =
     LoanOfficerOptions(
         id = id,
@@ -151,6 +155,7 @@ fun LoanOfficerOptionsResponseDto.toModel(): LoanOfficerOptions =
         joiningDate = joiningDate,
     )
 
+/** Maps this LoanPurposeOptionsResponseDto to the [LoanPurposeOptions] domain model. */
 fun LoanPurposeOptionsResponseDto.toModel(): LoanPurposeOptions =
     LoanPurposeOptions(
         id = id,
@@ -160,12 +165,14 @@ fun LoanPurposeOptionsResponseDto.toModel(): LoanPurposeOptions =
         active = active,
     )
 
+/** Maps this FundOptionsResponseDto to the [FundOptions] domain model. */
 fun FundOptionsResponseDto.toModel(): FundOptions =
     FundOptions(
         id = id,
         name = name,
     )
 
+/** Maps this LoanCollateralOptionsResponseDto to the [LoanCollateralOptions] domain model. */
 fun LoanCollateralOptionsResponseDto.toModel(): LoanCollateralOptions =
     LoanCollateralOptions(
         id = id,
@@ -175,6 +182,7 @@ fun LoanCollateralOptionsResponseDto.toModel(): LoanCollateralOptions =
         active = active,
     )
 
+/** Maps this LoanProductResponseDto to the [Product] domain model. */
 fun LoanProductResponseDto.toModel(): Product =
     Product(
         id = id,
@@ -228,6 +236,7 @@ fun LoanProductResponseDto.toModel(): Product =
         allowAttributeOverrides = allowAttributeOverrides?.toModel(),
     )
 
+/** Maps this AccountLinkingOptionsResponseDto to the [AccountLinkingOptions] domain model. */
 fun AccountLinkingOptionsResponseDto.toModel(): AccountLinkingOptions =
     AccountLinkingOptions(
         accountNo = accountNo,
@@ -240,6 +249,7 @@ fun AccountLinkingOptionsResponseDto.toModel(): AccountLinkingOptions =
         productName = productName,
     )
 
+/** Maps this AllowAttributesOverridesResponseDto to the [AllowAttributeOverrides] domain model. */
 fun AllowAttributesOverridesResponseDto.toModel(): AllowAttributeOverrides =
     AllowAttributeOverrides(
         amortizationType = amortizationType,

@@ -15,13 +15,16 @@ import androidx.navigation.compose.dialog
 import cmp.navigation.registry.app.ui.components.TransferOptionsBottomSheet
 import kotlinx.serialization.Serializable
 
+/** Navigation route of the transfer-options dialog. */
 @Serializable
 data object TransferOptionsRoute
 
+/** Navigates to the transfer-options dialog. */
 fun NavController.navigateToTransferOptions() {
     this.navigate(TransferOptionsRoute)
 }
 
+/** Registers the transfer-options bottom-sheet dialog and wires its click callbacks. */
 fun NavGraphBuilder.transferOptionsDialog(
     onIntraBankTransferClick: () -> Unit,
     onInterBankTransferClick: () -> Unit,

@@ -47,19 +47,20 @@ import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_drag_drop_hint
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_drop_image_here
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_import_description
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_import_qr_code
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_powered_by
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_preview_image
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_processing
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_select_image
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_select_qr_image
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_supported_formats
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_supported_transfers
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_drag_drop_hint
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_drop_image_here
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_import_description
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_import_qr_code
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_powered_by
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_preview_image
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_processing
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_select_image
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_select_qr_image
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_supported_formats
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_supported_transfers
 import org.jetbrains.compose.resources.stringResource
+/** Screen for importing a QR code from an image, with preview, drag state and processing indicator. */
 @Composable
 fun QrImportScreen(
     isProcessing: Boolean,

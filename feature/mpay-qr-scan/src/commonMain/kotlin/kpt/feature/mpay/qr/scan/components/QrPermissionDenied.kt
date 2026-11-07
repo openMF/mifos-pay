@@ -35,12 +35,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_camera_permission_description
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_camera_permission_title
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_open_settings
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_upload_qr
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_permission_description
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_permission_title
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_open_settings
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_upload_qr
 import org.jetbrains.compose.resources.stringResource
+/** Content shown when camera permission is denied, offering to open settings or upload a QR image instead. */
 @Composable
 fun QrPermissionDenied(
     onOpenSettings: () -> Unit,

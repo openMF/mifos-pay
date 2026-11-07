@@ -42,18 +42,18 @@ import kpt.core.ui.generated.resources.core_ui_error_msg_generic
 import kpt.core.ui.generated.resources.core_ui_pocket_add_failed
 import kpt.core.ui.generated.resources.core_ui_pocket_added_successfully
 import kpt.core.ui.utils.BaseViewModel
-import mifos_pay.feature.transfer_interbank.generated.resources.Res
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_amount_greater_than_zero
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_enter_amount
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_enter_description
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_failed_to_search_recipient
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_invalid_amount
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_no_network
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_phone_number_digits
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_select_recipient
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_select_sender_account
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_error_session_expired
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_no_recipients_found
+import kpt.feature.transfer.interbank.generated.resources.Res
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_amount_greater_than_zero
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_enter_amount
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_enter_description
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_failed_to_search_recipient
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_invalid_amount
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_no_network
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_phone_number_digits
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_select_recipient
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_select_sender_account
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_session_expired
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_no_recipients_found
 import org.jetbrains.compose.resources.getString
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -61,6 +61,7 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 import kpt.core.ui.generated.resources.Res as CoreUiRes
 
+/** SavedStateHandle key used for the passcode verification round trip before an interbank transfer is confirmed. */
 const val INTER_BANK_TRANSFER_VERIFICATION_KEY = "inter-banking_transfer_verification_key"
 
 /**
@@ -75,6 +76,7 @@ class InterbankTransferViewModel(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<InterbankTransferState, InterbankTransferEvent, InterbankTransferAction>(
     initialState = run {
+        /** Client taken from the stored preferences; required to build the initial state. */
         val client = requireNotNull(preferencesRepository.client.value)
         InterbankTransferState(client = client)
     },
@@ -584,6 +586,26 @@ class InterbankTransferViewModel(
     }
 }
 
+/**
+ * UI state of the interbank transfer flow.
+ * @property client Client making the transfer.
+ * @property currentStep Step of the flow currently shown.
+ * @property loadingState Loading state of the source accounts.
+ * @property fromAccounts Accounts the transfer can be made from.
+ * @property selectedFromAccount Chosen source account, or null.
+ * @property selectedParticipantInfo Chosen recipient, or null.
+ * @property transferAmount Amount entered, as text.
+ * @property transferDate Transfer date formatted for display.
+ * @property initialDate Initial date picker value as epoch milliseconds.
+ * @property transferDescription Description (remark) of the transfer.
+ * @property isProcessing Whether the transfer is being submitted.
+ * @property errorMessage Error text, or null.
+ * @property transferResponse Response text of a completed transfer, or null.
+ * @property searchRecipientState State of the recipient search.
+ * @property searchResults Recipients found by the search.
+ * @property pocketAccountIds Ids of accounts already saved to the pocket.
+ * @property dialogState Dialog currently shown, or null.
+ */
 @OptIn(ExperimentalTime::class)
 data class InterbankTransferState(
     val client: Client,
@@ -609,74 +631,167 @@ data class InterbankTransferState(
     val pocketAccountIds: Set<Long> = emptySet(),
     @Transient val dialogState: DialogState? = null,
 ) {
+    /** Dialogs the transfer flow can show. */
     sealed interface DialogState {
+        /** Progress dialog. */
         data object Loading : DialogState
+
+        /** Asks whether to add the recipient to the pocket. */
         data object AddToPocketConfirmation : DialogState
+
+        /**
+         * Success dialog.
+         * @property message Message to display.
+         */
         data class Success(val message: String) : DialogState
+
+        /**
+         * Error dialog.
+         * @property message Error text to display.
+         */
         data class ErrorResource(val message: String) : DialogState
     }
+
+    /** Steps of the interbank transfer flow. */
     sealed interface Step {
+        /** Choose the source account. */
         data object SelectAccount : Step
 
+        /** Search for the recipient. */
         data object SearchRecipient : Step
 
+        /** Enter the amount, date and description. */
         data object TransferDetails : Step
 
+        /** Review the transfer before confirming. */
         data object PreviewTransfer : Step
 
+        /** The transfer succeeded. */
         data object TransferSuccess : Step
 
+        /** The transfer failed. */
         data object TransferFailed : Step
     }
 
+    /** Loading state of the source accounts. */
     sealed interface LoadingState {
+        /** Accounts are loading. */
         data object Loading : LoadingState
 
+        /** Accounts loaded. */
         data object Success : LoadingState
 
+        /**
+         * Loading failed.
+         * @property message Error text.
+         */
         data class Error(val message: String) : LoadingState
     }
 
+    /** State of the recipient search. */
     sealed interface SearchRecipientState {
+        /** No search has been made. */
         data object Idle : SearchRecipientState
 
+        /** A search is running. */
         data object Loading : SearchRecipientState
 
+        /** The search completed. */
         data object Success : SearchRecipientState
 
+        /**
+         * The search failed.
+         * @property message Error text.
+         */
         data class Error(val message: String) : SearchRecipientState
     }
 }
 
+/** One-shot events emitted by [InterbankTransferViewModel]. */
 sealed interface InterbankTransferEvent {
+    /** Navigate back out of the flow. */
     data object OnNavigateBack : InterbankTransferEvent
+
+    /** The transfer succeeded. */
     data object OnTransferSuccess : InterbankTransferEvent
+
+    /**
+     * The transfer failed.
+     * @property message Failure message.
+     */
     data class OnTransferFailed(val message: String) : InterbankTransferEvent
 }
 
+/** Actions handled by [InterbankTransferViewModel]. */
 sealed interface InterbankTransferAction {
     // Navigation
+    /**
+     * Move to recipient search for the chosen account.
+     * @property account Chosen source account.
+     */
     data class NavigateToRecipientSearch(val account: Account) : InterbankTransferAction
+
+    /**
+     * Move to the transfer details for the chosen recipient.
+     * @property participantInfo Chosen recipient.
+     */
     data class NavigateToTransferDetails(val participantInfo: InterBankPartyInfoResponse) :
         InterbankTransferAction
 
+    /** Move to the transfer preview step. */
     data object NavigateToPreview : InterbankTransferAction
+
+    /** Go back one step. */
     data object NavigateBack : InterbankTransferAction
+
+    /** Return to source account selection. */
     data object EditFromAccount : InterbankTransferAction
+
+    /** Return to recipient search. */
     data object EditRecipient : InterbankTransferAction
 
     // Transfer details
+    /**
+     * The amount changed.
+     * @property amount New amount as entered.
+     */
     data class UpdateAmount(val amount: String) : InterbankTransferAction
+
+    /**
+     * The transfer date changed.
+     * @property date New date as epoch milliseconds.
+     */
     data class UpdateDate(val date: Long) : InterbankTransferAction
+
+    /**
+     * The description changed.
+     * @property description New description.
+     */
     data class UpdateDescription(val description: String) : InterbankTransferAction
 
     // Recipient search
+    /**
+     * Search for a recipient by phone number.
+     * @property phoneNumber Phone number to look up.
+     */
     data class SearchRecipient(val phoneNumber: String) : InterbankTransferAction
 
     // Transfer confirmation
+    /** Confirm and submit the transfer. */
     data object ConfirmTransfer : InterbankTransferAction
+
+    /** Retry a failed transfer. */
     data object RetryTransfer : InterbankTransferAction
+
+    /** Dismiss the current error. */
     data object DismissError : InterbankTransferAction
+
+    /**
+     * Answer the add-to-pocket prompt.
+     * @property add True to add the recipient to the pocket.
+     */
     data class ConfirmAddToPocket(val add: Boolean) : InterbankTransferAction
+
+    /** Dismiss the currently shown dialog. */
     data object DismissDialog : InterbankTransferAction
 }

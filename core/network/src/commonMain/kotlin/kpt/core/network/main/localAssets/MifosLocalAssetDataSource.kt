@@ -14,6 +14,7 @@ import kotlinx.serialization.json.Json
 import kpt.core.model.network.entity.signup.City
 import kpt.core.model.network.entity.signup.Country
 import kpt.core.model.network.entity.signup.State
+/** Default [LocalAssetDataSource]; currently returns empty lists. */
 class MifosLocalAssetDataSource(
     private val ioDispatcher: CoroutineDispatcher,
     private val networkJson: Json,
@@ -35,6 +36,7 @@ class MifosLocalAssetDataSource(
         return emptyList()
     }
 
+    /** Names of the bundled asset files. */
     @Suppress("UnusedPrivateProperty")
     companion object {
         private const val COUNTRIES_ASSET = "countries.json"

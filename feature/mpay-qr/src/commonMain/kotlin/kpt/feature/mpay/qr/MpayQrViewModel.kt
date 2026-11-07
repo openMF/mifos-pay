@@ -64,17 +64,17 @@ import kpt.core.ui.utils.BaseViewModel
 import kpt.core.ui.utils.MimeType
 import kpt.core.ui.utils.ShareFileModel
 import kpt.core.ui.utils.ShareUtils
-import mifos_pay.feature.mpay_qr.generated.resources.Res
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_external_id_required
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_failed_to_generate
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_no_default_account
-import mifos_pay.feature.mpay_qr.generated.resources.logo
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_external_id_required
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_failed_to_generate
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_no_default_account
+import kpt.feature.mpay.qr.generated.resources.logo
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import kpt.core.ui.generated.resources.Res as UiRes
-import mifos_pay.feature.mpay_qr.generated.resources.Res as MpayQrRes
+import kpt.feature.mpay.qr.generated.resources.Res as MpayQrRes
 
+/** ViewModel of the QR screen; builds intra-bank and inter-bank QR codes for the selected account. */
 class MpayQrViewModel(
     localRepository: LocalAssetRepository,
     repository: ForkPreferencesRepository,
@@ -85,6 +85,7 @@ class MpayQrViewModel(
 ) : BaseViewModel<MpayQrState, MpayQrEvent, MpayQrAction>(
     initialState = run {
         // Always get fresh client and account data to avoid stale savedStateHandle values
+        /** Current client from preferences, or an empty placeholder when none is stored. */
         val client = repository.client.value ?: Client(
             id = 0,
             accountNo = "",
@@ -102,13 +103,18 @@ class MpayQrViewModel(
             officeName = "",
             savingsProductName = "",
         )
+
+        /** Default account from preferences, or the built-in default. */
         val defaultAccount = repository.defaultAccount.value ?: DefaultAccount.DEFAULT
         // Get the account external ID for inter-bank QR
+        /** External id of the default account, used for inter-bank QR codes. */
         val accountExternalId = repository.getAccountExternalId(defaultAccount.accountId)
         // Get the FSP ID (bank/tenant identifier) for routing
+        /** Bank/tenant identifier of the selected instance, used for routing. */
         val fspId = repository.selectedInstance.value?.platformTenantId ?: ""
 
         // Try to restore saved state but only use amount/currency, not client data
+        /** Previously saved state, of which only amount and currency are reused. */
         val savedState = savedStateHandle.getSerialized<MpayQrState>(KEY_STATE)
 
         Logger.d { "MpayQrViewModel init - fspId: $fspId, client.id: ${client.id}, client.officeId: ${client.officeId}, defaultAccount.accountId: ${defaultAccount.accountId}" }
@@ -124,10 +130,11 @@ class MpayQrViewModel(
     },
 ) {
 
-    companion object {
+    private companion object {
         private const val KEY_STATE = "mpay_qr_state"
     }
 
+    /** Currencies the amount dialog offers. */
     val currencyList = localRepository.currencyList.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -355,7 +362,7 @@ class MpayQrViewModel(
                 mutableStateFlow.update {
                     it.copy(
                         viewState = MpayQrState.ViewState.Error(
-                            getString(MpayQrRes.string.feature_mpay_qr_no_default_account),
+                            MpayQrRes.string.feature_mpay_qr_no_default_account,
                         ),
                     )
                 }
@@ -374,12 +381,13 @@ class MpayQrViewModel(
             val (interBankData, interBankReason) = withContext(ioDispatcher) {
                 if (state.accountExternalId.isBlank()) {
                     // No external ID - return null with reason
-                    null to getString(MpayQrRes.string.feature_mpay_qr_external_id_required)
+                    null to MpayQrRes.string.feature_mpay_qr_external_id_required
                 } else {
                     try {
                         MpayQrCodeProcessor.encodeMpayString(state.interBankQrData) to null
                     } catch (e: IllegalArgumentException) {
-                        null to (e.message ?: getString(MpayQrRes.string.feature_mpay_qr_failed_to_generate))
+                        Logger.w(e) { "Inter-bank QR could not be encoded" }
+                        null to MpayQrRes.string.feature_mpay_qr_failed_to_generate
                     }
                 }
             }
@@ -485,6 +493,17 @@ class MpayQrViewModel(
     }
 }
 
+/**
+ * Persisted UI state of the QR screen.
+ *
+ * @property client The current client.
+ * @property defaultAccount The default account.
+ * @property pocketAccountIds Ids of accounts already added to the pocket.
+ * @property viewState Loading, error or content state of the QR screen.
+ * @property selectedPage Selected tab: 0 for intra-bank, 1 for inter-bank.
+ * @property qrData Data encoded in the QR code.
+ * @property dialogState Dialog currently shown, or null.
+ */
 @Serializable
 data class MpayQrState(
     val client: Client,
@@ -567,15 +586,29 @@ data class MpayQrState(
             accountExternalId = currentExternalId,
         )
 
+    /** Display state of the QR screen. */
     sealed interface ViewState {
+        /** QR codes are being generated. */
         data object Loading : ViewState
 
-        data class Error(val message: String) : ViewState
+        /**
+         * QR generation failed.
+         *
+         * @property message Error message to display, resolved by the screen.
+         */
+        data class Error(val message: StringResource) : ViewState
 
+        /**
+         * QR codes are ready.
+         *
+         * @property intraBankData Encoded payload of the intra-bank QR code.
+         * @property interBankData Encoded payload of the inter-bank QR code, or null if unavailable.
+         * @property interBankUnavailableReason Why the inter-bank QR is unavailable, if it is.
+         */
         data class Content(
             val intraBankData: String,
             val interBankData: String?,
-            val interBankUnavailableReason: String? = null,
+            val interBankUnavailableReason: StringResource? = null,
         ) : ViewState {
 
             private val logo: QrLogo
@@ -617,6 +650,7 @@ data class MpayQrState(
                     frame = QrBrush.solid(androidx.compose.ui.graphics.Color.Black),
                 )
 
+            /** QR rendering options (shapes, colors, logo, error correction). */
             val options: QrOptions
                 @Composable
                 get() = QrOptions(
@@ -628,45 +662,117 @@ data class MpayQrState(
         }
     }
 
+    /** Dialogs shown over the QR screen. */
     sealed interface DialogState {
+        /** Asks whether to add the account to the pocket. */
         data object AddToPocketConfirmation : DialogState
+
+        /**
+         * Error dialog.
+         *
+         * @property messageRes String resource of the error message.
+         */
         data class Error(
             val messageRes: StringResource =
                 UiRes.string.core_ui_error_msg_generic,
         ) : DialogState
+
+        /** Progress dialog. */
         data object Loading : DialogState
+
+        /**
+         * Success dialog.
+         *
+         * @property messageRes String resource of the success message.
+         */
         data class Success(
             val messageRes: StringResource =
                 UiRes.string.core_ui_pocket_added_successfully,
         ) : DialogState
+
+        /** Dialog to set the QR amount. */
         data object ShowSetAmountDialog : DialogState
     }
 }
 
+/** One-off events of the QR screen. */
 sealed interface MpayQrEvent {
+    /** Navigate back. */
     data object OnNavigateBack : MpayQrEvent
+
+    /** The QR image was downloaded. */
     data object QrDownloaded : MpayQrEvent
+
+    /**
+     * Show a snackbar.
+     *
+     * @property message Text to display.
+     */
     data class ShowSnackbar(val message: String) : MpayQrEvent
 }
 
+/** User and internal actions of the QR screen. */
 sealed interface MpayQrAction {
 
+    /** The user navigated back. */
     data object NavigateBack : MpayQrAction
+
+    /** Open the set-amount dialog. */
     data object ShowSetAmountDialog : MpayQrAction
+
+    /** Dismiss the current dialog. */
     data object DismissDialog : MpayQrAction
+
+    /**
+     * Answer to the add-to-pocket confirmation.
+     *
+     * @property add True to add the account to the pocket.
+     */
     data class ConfirmAddToPocket(val add: Boolean) : MpayQrAction
 
     // Account picker actions
+    /** Open the account picker. */
     data object ShowAccountPicker : MpayQrAction
+
+    /** Close the account picker. */
     data object DismissAccountPicker : MpayQrAction
+
+    /**
+     * Select an account for QR generation.
+     *
+     * @property account The chosen account.
+     */
     data class SelectAccount(val account: Account) : MpayQrAction
 
+    /**
+     * The entered amount changed.
+     *
+     * @property amount The new amount text.
+     */
     data class AmountChanged(val amount: String) : MpayQrAction
+
+    /**
+     * The selected currency changed.
+     *
+     * @property currency The new currency code.
+     */
     data class CurrencyChanged(val currency: String) : MpayQrAction
+
+    /**
+     * The selected QR tab changed.
+     *
+     * @property page New page index: 0 intra-bank, 1 inter-bank.
+     */
     data class PageChanged(val page: Int) : MpayQrAction
 
+    /** Confirm the amount entered in the set-amount dialog. */
     data object ConfirmSetAmount : MpayQrAction
 
+    /**
+     * Share the QR image.
+     *
+     * @property data Encoded image bytes.
+     */
     data class ShareQrCode(val data: ByteArray) : MpayQrAction {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -682,6 +788,11 @@ sealed interface MpayQrAction {
         }
     }
 
+    /**
+     * Save the QR image.
+     *
+     * @property bytes Encoded image bytes.
+     */
     data class DownloadQrCode(val bytes: ByteArray) : MpayQrAction {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -697,9 +808,16 @@ sealed interface MpayQrAction {
         }
     }
 
+    /**
+     * Copy text to the clipboard.
+     *
+     * @property text Text to copy.
+     */
     data class CopyToClipboard(val text: String) : MpayQrAction
 
+    /** Actions dispatched by the ViewModel itself. */
     sealed interface Internal : MpayQrAction {
+        /** Generate the QR codes. */
         data object GenerateQr : Internal
     }
 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Circular avatar showing the initials of [name]. */
 @Composable
 fun AvatarBox(
     name: String,
@@ -54,6 +55,7 @@ fun AvatarBox(
     }
 }
 
+/** Circular avatar showing an [icon]. */
 @Composable
 fun AvatarBox(
     icon: ImageVector,

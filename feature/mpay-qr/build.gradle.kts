@@ -44,3 +44,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.mpay.qr.generated.resources"
+}

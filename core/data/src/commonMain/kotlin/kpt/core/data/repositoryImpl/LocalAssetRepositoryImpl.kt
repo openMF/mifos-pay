@@ -24,6 +24,7 @@ import kpt.core.data.util.SAMPLE_CURRENCY
 import kpt.core.data.util.SAMPLE_LOCALE
 import kpt.core.model.utils.CurrencyCode
 import kpt.core.model.utils.Locale
+/** Default [LocalAssetRepository] providing locales and currencies. */
 class LocalAssetRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher,
     unconfinedDispatcher: CoroutineDispatcher,

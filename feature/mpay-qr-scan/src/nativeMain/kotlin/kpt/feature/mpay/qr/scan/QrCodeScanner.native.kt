@@ -12,6 +12,7 @@ package kpt.feature.mpay.qr.scan
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/** iOS actual of [QrCodeScanner] using AVFoundation. */
 @Composable
 actual fun QrCodeScanner(
     types: List<CodeType>,

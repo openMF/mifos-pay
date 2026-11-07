@@ -11,6 +11,7 @@ package kpt.feature.beneficiary.addupdatebeneficiary
 
 import kotlinx.serialization.Serializable
 import kpt.core.model.utils.QrCodeType
+/** Whether the beneficiary form adds a new beneficiary or edits an existing one. */
 @Serializable
 sealed class BeneficiaryAddEditType {
 
@@ -22,6 +23,10 @@ sealed class BeneficiaryAddEditType {
      * - If [sourceQrData] is non-null: contains full QR data for post-add navigation
      *
      * Shows "Add Beneficiary" title and "Save" button, calls POST API.
+     *
+     * @property beneficiary Serialized beneficiary used to pre-fill the form, or null.
+     * @property sourceQrType QR type the add originated from, or null.
+     * @property sourceQrData Full QR data used for post-add navigation, or null.
      */
     @Serializable
     data class AddItem(
@@ -33,6 +38,8 @@ sealed class BeneficiaryAddEditType {
     /**
      * Edit an existing beneficiary.
      * Shows "Update Beneficiary" title and "Update" button, calls PUT API.
+     *
+     * @property beneficiary Serialized beneficiary to edit.
      */
     @Serializable
     data class EditItem(

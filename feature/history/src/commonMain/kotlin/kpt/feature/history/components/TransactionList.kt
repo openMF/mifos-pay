@@ -43,9 +43,9 @@ import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.ui.generated.resources.core_ui_money_in
 import kpt.core.ui.generated.resources.core_ui_money_out
 import kpt.feature.history.HistoryAction
-import mifos_pay.feature.history.generated.resources.Res
-import mifos_pay.feature.history.generated.resources.arrow_outward
-import mifos_pay.feature.history.generated.resources.feature_history_description
+import kpt.feature.history.generated.resources.Res
+import kpt.feature.history.generated.resources.arrow_outward
+import kpt.feature.history.generated.resources.feature_history_description
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
@@ -148,7 +148,9 @@ internal fun TransactionItem(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = vectorResource(mifos_pay.feature.history.generated.resources.Res.drawable.arrow_outward),
+                        imageVector = vectorResource(
+                            kpt.feature.history.generated.resources.Res.drawable.arrow_outward,
+                        ),
                         modifier = when (transaction.transactionType) {
                             TransactionType.DEBIT -> Modifier.size(16.dp)
                             TransactionType.CREDIT -> Modifier.graphicsLayer(rotationZ = 180f)

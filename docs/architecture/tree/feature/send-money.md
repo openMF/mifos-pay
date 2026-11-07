@@ -1,9 +1,9 @@
 # `feature/send-money/`
 
 > Part of [`feature/`](../feature.md)  
-> **Measured:** 74 tracked files — 72× `.kt`, 1× `.kts`, 1× `.xml`
+> **Measured:** 76 tracked files — 74× `.kt`, 1× `.kts`, 1× `.xml`
 
-**72 Kotlin files** — 13 screen(s), 12 ViewModel(s).
+**74 Kotlin files** — 13 screen(s), 12 ViewModel(s).
 
 Screens: `BankTransferScreen`, `ContactsPickerScreen`, `PayAnyoneScreen`, `PayeeDetailsScreen`, `PaymentChatHistoryScreen`, `PaymentDetailsScreen`, `PaymentProcessingScreen`, `PaymentSuccessScreen`, `SearchIfscScreen`, `SendMoneyOptionsScreen`, `SendMoneyScreen`, `UpiPinScreen`, `UpiTransactionHistoryScreen`
 
@@ -16,10 +16,10 @@ ViewModels: `BankTransferViewModel`, `PayAnyoneViewModel`, `PayeeDetailsViewMode
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/send-money sha=f6d285e705bbaefe4feab18f5000d2a5c2ff1c0f -->
+<!-- api-docs:begin module=feature/send-money sha=be78c4d2c380ef2f583ead59e9ee991885c0eb0d -->
 ## API reference
 
-_Generated from `feature/send-money` at tree `f6d285e705bb` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/send-money` at tree `be78c4d2c380` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -34,16 +34,16 @@ object AmountUtils
 ```
 Utility functions for converting between paise and rupees Navigation parameters use paise (stored as string) for precision UI displays use rupees with 2 decimal places
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:567</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeAccountSelection.kt:157</code></summary>
 
 ```kotlin
-    val isAmountValid = if (state.isUpiCode) {
-        state.amount.isNotEmpty() &&
-            AmountUtils.isValidPaise(state.amount) &&
-            AmountUtils.paiseToRupees(state.amount).toDoubleOrNull()?.let { it >= 0 } == true &&
-            !state.isAmountExceedingMax &&
-            !state.isAmountBelowMin
-    } else {
+                        text = stringResource(
+                            Res.string.feature_send_money_pay_amount,
+                            AmountUtils.formatPaiseForUI(state.amount),
+                        ),
+                        style = KptTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Medium,
+                    )
 ```
 
 </details>
@@ -69,9 +69,9 @@ Utility functions for converting between paise and rupees Navigation parameters 
 ```kotlin
 fun BankTransferScreen(
 ```
-_No KDoc at source._
+Screen for entering a beneficiary account number and IFSC code, or transferring between own accounts.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:266</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:186</code></summary>
 
 ```kotlin
         route = BANK_TRANSFER_ROUTE,
@@ -90,9 +90,9 @@ _No KDoc at source._
 ```kotlin
 class BankTransferViewModel : BaseViewModel<BankTransferState, BankTransferEvent, BankTransferAction>(
 ```
-_No KDoc at source._
+ViewModel for the bank transfer screen; validates account details and handles IFSC selection and self transfers.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:92</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:93</code></summary>
 
 ```kotlin
     onSearchIfscClick: () -> Unit,
@@ -108,9 +108,9 @@ _No KDoc at source._
 ```kotlin
 data class BankAccount(
 ```
-_No KDoc at source._
+A linked bank account of the user.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:619</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:620</code></summary>
 
 ```kotlin
             BankAccountSelectionList(
@@ -127,9 +127,9 @@ _No KDoc at source._
 ```kotlin
 data class BankTransferState(
 ```
-_No KDoc at source._
+State of the bank transfer screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:214</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:215</code></summary>
 
 ```kotlin
 @Composable
@@ -146,9 +146,9 @@ private fun BankTransferToOthersContent(
 ```kotlin
 sealed interface BankTransferEvent
 ```
-_No KDoc at source._
+One-off events emitted by the bank transfer screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:99</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:100</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -165,9 +165,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface BankTransferAction
 ```
-_No KDoc at source._
+User actions on the bank transfer screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:124</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferScreen.kt:125</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_bank_transfer),
@@ -186,9 +186,9 @@ _No KDoc at source._
 ```kotlin
 enum class ContactType
 ```
-_No KDoc at source._
+Whether a `Contact` is an individual or a business.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:434</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:435</code></summary>
 
 ```kotlin
                 name = contact.name,
@@ -205,9 +205,9 @@ _No KDoc at source._
 ```kotlin
 data class Contact(
 ```
-_No KDoc at source._
+A device contact that can be picked as a payment recipient.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:124</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerScreen.kt:125</code></summary>
 
 ```kotlin
 
@@ -226,9 +226,9 @@ _No KDoc at source._
 ```kotlin
 fun ContactNotFoundDialog(
 ```
-_No KDoc at source._
+Dialog shown when a contact is not on the app, letting the user pick a channel to send an invite.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:297</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:298</code></summary>
 
 ```kotlin
 
@@ -247,9 +247,9 @@ _No KDoc at source._
 ```kotlin
 fun ContactNotFoundLoading(
 ```
-_No KDoc at source._
+Centered progress indicator with a "Checking..." label shown while a contact lookup is in progress.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:264</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:265</code></summary>
 
 ```kotlin
                 }
@@ -267,9 +267,9 @@ _No KDoc at source._
 ```kotlin
 interface ContactPermissionState
 ```
-_No KDoc at source._
+Platform-agnostic holder for the contacts permission state and the actions to change it.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionState.android.kt:26</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionState.android.kt:27</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalPermissionsApi::class)
@@ -283,16 +283,16 @@ actual fun rememberContactPermissionState(): ContactPermissionState {
 
 </details>
 
-- `val status: ContactPermissionStatus`
-- `fun requestContactPermission()`
-- `fun goToSettings()`
+- `val status: ContactPermissionStatus` — Current contacts permission status.
+- `fun requestContactPermission()` — Launches the system prompt requesting contacts permission.
+- `fun goToSettings()` — Opens the system settings page where the user can change the contacts permission.
 
 ```kotlin
 enum class ContactPermissionStatus
 ```
-_No KDoc at source._
+Granted or denied status of the contacts permission.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionState.android.kt:42</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionState.android.kt:48</code></summary>
 
 ```kotlin
     private val context: Context,
@@ -309,19 +309,19 @@ _No KDoc at source._
 ```kotlin
 expect fun rememberContactPermissionState(): ContactPermissionState
 ```
-_No KDoc at source._
+Remembers a platform-specific `ContactPermissionState` for the current composition.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/ContactRepository.kt`
 
 ```kotlin
 interface ContactRepository
 ```
-_No KDoc at source._
+Source of the device contacts used when choosing a payee.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactRepository.android.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactRepository.android.kt:20</code></summary>
 
 ```kotlin
-
+/** Android actual: remembers an [AndroidContactRepository] bound to the current context. */
 @Composable
 actual fun rememberContactRepository(): ContactRepository {
     val context = LocalContext.current
@@ -331,25 +331,25 @@ actual fun rememberContactRepository(): ContactRepository {
 
 </details>
 
-- `suspend fun getContacts(): List<Contact>`
-- `suspend fun searchContacts(query: String): List<Contact>`
+- `suspend fun getContacts(): List<Contact>` — Returns all device contacts that have a valid phone number.
+- `suspend fun searchContacts(query: String): List<Contact>` — Returns contacts whose name or phone number matches `query`.
 
 ```kotlin
 expect fun rememberContactRepository(): ContactRepository
 ```
-_No KDoc at source._
+Remembers a platform-specific `ContactRepository` for the current composition.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/ContactsPickerScreen.kt`
 
 ```kotlin
 expect fun ContactPermissionHandler()
 ```
-_No KDoc at source._
+Composable that requests contacts permission on platforms that need it.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionHandler.android.kt:15</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactPermissionHandler.android.kt:16</code></summary>
 
 ```kotlin
-import kpt.core.designsystem.component.PermissionBox
+/** Android actual: shows a permission box prompting for READ_CONTACTS access. */
 @Composable
 actual fun ContactPermissionHandler() {
     PermissionBox(
@@ -363,9 +363,9 @@ actual fun ContactPermissionHandler() {
 ```kotlin
 fun ContactsPickerScreen(
 ```
-_No KDoc at source._
+Screen that lists and searches device contacts so the user can pick a payment recipient.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:318</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:241</code></summary>
 
 ```kotlin
         route = CONTACTS_PICKER_ROUTE,
@@ -382,16 +382,16 @@ _No KDoc at source._
 ```kotlin
 fun ContactsPickerScreenPreview()
 ```
-_No KDoc at source._
+Preview of `ContactsPickerScreen`.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt`
 
 ```kotlin
 fun PayAnyoneScreen(
 ```
-_No KDoc at source._
+Screen for paying any recipient by UPI ID, phone number or QR scan.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:303</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:225</code></summary>
 
 ```kotlin
     ) { backStackEntry ->
@@ -408,16 +408,16 @@ _No KDoc at source._
 ```kotlin
 fun PayAnyoneScreenPreview()
 ```
-_No KDoc at source._
+Preview of `PayAnyoneScreen`.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneViewModel.kt`
 
 ```kotlin
 class PayAnyoneViewModel(
 ```
-_No KDoc at source._
+ViewModel for the pay-anyone screen; handles input, contact search and invite sharing.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:76</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -433,12 +433,12 @@ _No KDoc at source._
 ```kotlin
 data class PayAnyoneState(
 ```
-_No KDoc at source._
+State of the pay-anyone screen.
 
 ```kotlin
 enum class SharingOption
 ```
-_No KDoc at source._
+Channel used to share an invite to a contact who is not on the app.
 
 <details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/SharingHelper.android.kt:30</code></summary>
 
@@ -457,9 +457,9 @@ _No KDoc at source._
 ```kotlin
 data class ContactSearchResult(
 ```
-_No KDoc at source._
+Contact search results grouped by kind.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:317</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:318</code></summary>
 
 ```kotlin
 @Composable
@@ -476,14 +476,14 @@ private fun SearchResultsContent(
 ```kotlin
 sealed interface PayAnyoneEvent
 ```
-_No KDoc at source._
+One-off events emitted by the pay-anyone screen.
 
 ```kotlin
 sealed interface PayAnyoneAction
 ```
-_No KDoc at source._
+User actions on the pay-anyone screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:135</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayAnyoneScreen.kt:136</code></summary>
 
 ```kotlin
                         value = state.inputValue,
@@ -497,14 +497,36 @@ _No KDoc at source._
 
 </details>
 
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeAccountSelection.kt`
+
+```kotlin
+fun AccountSelectionBottomSheetPreview()
+```
+Preview of the account selection bottom sheet.
+
+```kotlin
+fun AccountItemPreview()
+```
+Preview of a single account item.
+
+```kotlin
+fun SelectedAccountSectionPreview()
+```
+Preview of the selected account section.
+
+```kotlin
+fun AddBankAccountItemPreview()
+```
+Preview of the add-bank-account item.
+
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt`
 
 ```kotlin
 fun PayeeDetailsScreen(
 ```
-_No KDoc at source._
+Screen where the user reviews the payee, enters amount and note, and selects the paying account.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:340</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:264</code></summary>
 
 ```kotlin
         ),
@@ -521,61 +543,41 @@ _No KDoc at source._
 ```kotlin
 fun PayeeDetailsScreenPreview()
 ```
-_No KDoc at source._
+Preview of `PayeeDetailsScreen`.
 
 ```kotlin
 fun PayeeProfileSectionPreview()
 ```
-_No KDoc at source._
+Preview of the payee profile section.
 
 ```kotlin
 fun PaymentDetailsSectionPreview()
 ```
-_No KDoc at source._
+Preview of the payment details section.
 
 ```kotlin
 fun ExpandableAmountInputPreview()
 ```
-_No KDoc at source._
+Preview of the expandable amount input.
 
 ```kotlin
 fun ExpandableNoteInputPreview()
 ```
-_No KDoc at source._
+Preview of the expandable note input.
 
 ```kotlin
 fun ProceedButtonPreview()
 ```
-_No KDoc at source._
-
-```kotlin
-fun AccountSelectionBottomSheetPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun AccountItemPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun SelectedAccountSectionPreview()
-```
-_No KDoc at source._
-
-```kotlin
-fun AddBankAccountItemPreview()
-```
-_No KDoc at source._
+Preview of the proceed button.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsViewModel.kt`
 
 ```kotlin
 class PayeeDetailsViewModel(
 ```
-_No KDoc at source._
+ViewModel for the payee details screen; parses the payee from the navigation arguments and manages amount, note and account selection.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:93</code></summary>
 
 ```kotlin
     onNavigateToFineractPayment: (PayeeDetailsState) -> Unit,
@@ -592,18 +594,18 @@ _No KDoc at source._
 ```kotlin
 data class PayeeDetailsState(
 ```
-_No KDoc at source._
+State of the payee details screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:98</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeAccountSelection.kt:58</code></summary>
 
 ```kotlin
-fun PayeeDetailsScreen(
-    onBackClick: () -> Unit,
-    onNavigateToPaymentProcessing: (PayeeDetailsState) -> Unit,
-    onNavigateToUpiPayment: (PayeeDetailsState) -> Unit,
-    onNavigateToFineractPayment: (PayeeDetailsState) -> Unit,
+@Composable
+internal fun AccountSelectionBottomSheet(
+    state: PayeeDetailsState,
+    onAccountSelected: (BankAccount) -> Unit,
+    onDismiss: () -> Unit,
+    onConfirmPayment: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: PayeeDetailsViewModel = koinViewModel(),
 ```
 
 </details>
@@ -611,9 +613,9 @@ fun PayeeDetailsScreen(
 ```kotlin
 sealed interface PayeeDetailsEvent
 ```
-_No KDoc at source._
+One-off events emitted by the payee details screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:99</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -630,9 +632,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface PayeeDetailsAction
 ```
-_No KDoc at source._
+User actions on the payee details screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:121</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsScreen.kt:112</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_payee_details_title),
@@ -651,9 +653,9 @@ _No KDoc at source._
 ```kotlin
 fun PaymentChatHistoryScreen(
 ```
-_No KDoc at source._
+Chat-style screen showing the payment history with a payee, grouped by date.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:461</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/PaymentFlowNavigation.kt:317</code></summary>
 
 ```kotlin
         route = PAYMENT_CHAT_HISTORY_ROUTE,
@@ -670,9 +672,9 @@ _No KDoc at source._
 ```kotlin
 enum class UserType
 ```
-_No KDoc at source._
+Kind of payee shown in the payment chat history.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:52</code></summary>
 
 ```kotlin
         private fun createPlaceholderState(): PaymentChatHistoryState {
@@ -689,9 +691,9 @@ _No KDoc at source._
 ```kotlin
 data class PaymentTransaction(
 ```
-_No KDoc at source._
+A single payment shown as a chat bubble.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:73</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:74</code></summary>
 
 ```kotlin
                     date = "25 Sept 2025, 3:15 PM",
@@ -708,9 +710,9 @@ _No KDoc at source._
 ```kotlin
 data class PaymentHistoryGroup(
 ```
-_No KDoc at source._
+Payments that share the same date.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:69</code></summary>
 
 ```kotlin
          */
@@ -727,7 +729,7 @@ _No KDoc at source._
 ```kotlin
 data class PaymentChatHistoryState(
 ```
-_No KDoc at source._
+State of the payment chat history screen.
 
 <details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryViewModel.kt:22</code></summary>
 
@@ -750,7 +752,7 @@ class PaymentChatHistoryViewModel :
 ```
 ViewModel for the Payment Chat History screen Manages payment history state and user interactions Currently uses placeholder data for demonstration
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryScreen.kt:67</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentChatHistoryScreen.kt:68</code></summary>
 
 ```kotlin
     onTransactionClick: (String) -> Unit,
@@ -767,19 +769,19 @@ ViewModel for the Payment Chat History screen Manages payment history state and 
 ```kotlin
 sealed interface PaymentChatHistoryEvent
 ```
-_No KDoc at source._
+One-off events emitted by the payment chat history screen (none currently).
 
 ```kotlin
 sealed interface PaymentChatHistoryAction
 ```
-_No KDoc at source._
+User actions handled by `PaymentChatHistoryViewModel`.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.kt`
 
 ```kotlin
 expect fun PaymentDetailsScreen(
 ```
-_No KDoc at source._
+Screen showing the full details of a past payment with share, pay-again and retry actions.
 
 <details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.android.kt:30</code></summary>
 
@@ -798,7 +800,7 @@ actual fun PaymentDetailsScreen(
 ```kotlin
 fun PaymentDetailsScreenPreview()
 ```
-_No KDoc at source._
+Preview of `PaymentDetailsScreen`.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsState.kt`
 
@@ -807,7 +809,7 @@ data class PaymentDetailsState(
 ```
 Data class representing the state of the Payment Details screen Contains all necessary information for displaying comprehensive payment details
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.kt:222</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.kt:223</code></summary>
 
 ```kotlin
 @Composable
@@ -845,21 +847,21 @@ ViewModel for the Payment Details screen Manages payment details state and provi
 ```kotlin
 sealed interface PaymentDetailsEvent
 ```
-_No KDoc at source._
+One-off events emitted by the payment details screen (none currently).
 
 ```kotlin
 sealed interface PaymentDetailsAction
 ```
-_No KDoc at source._
+User actions handled by `PaymentDetailsViewModel`.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt`
 
 ```kotlin
 fun PaymentProcessingScreen(
 ```
-_No KDoc at source._
+Screen shown while a payment is being processed.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:412</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/PaymentFlowNavigation.kt:266</code></summary>
 
 ```kotlin
         ),
@@ -876,21 +878,21 @@ _No KDoc at source._
 ```kotlin
 fun PaymentProcessingScreenPreview()
 ```
-_No KDoc at source._
+Preview of `PaymentProcessingScreen`.
 
 ```kotlin
 fun PaymentProcessingContentPreview()
 ```
-_No KDoc at source._
+Preview of the payment processing content.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingViewModel.kt`
 
 ```kotlin
 class PaymentProcessingViewModel(
 ```
-_No KDoc at source._
+ViewModel for the payment processing screen; builds its state from the navigation arguments.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:46</code></summary>
 
 ```kotlin
     onPaymentFailed: (String) -> Unit,
@@ -907,9 +909,9 @@ _No KDoc at source._
 ```kotlin
 data class PaymentProcessingState(
 ```
-_No KDoc at source._
+State of the payment processing screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:82</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:83</code></summary>
 
 ```kotlin
 @Composable
@@ -926,9 +928,9 @@ private fun PaymentProcessingContent(
 ```kotlin
 sealed interface PaymentProcessingEvent
 ```
-_No KDoc at source._
+One-off events emitted by the payment processing screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentProcessingScreen.kt:52</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -945,14 +947,14 @@ _No KDoc at source._
 ```kotlin
 sealed interface PaymentProcessingAction
 ```
-_No KDoc at source._
+User actions on the payment processing screen.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt`
 
 ```kotlin
 expect fun PaymentSuccessScreen(
 ```
-_No KDoc at source._
+Screen confirming a completed payment, with share, done and send-again actions.
 
 <details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.android.kt:31</code></summary>
 
@@ -971,39 +973,39 @@ actual fun PaymentSuccessScreen(
 ```kotlin
 fun PaymentSuccessScreenPreview()
 ```
-_No KDoc at source._
+Preview of `PaymentSuccessScreen`.
 
 ```kotlin
 fun PaymentSuccessHeaderPreview()
 ```
-_No KDoc at source._
+Preview of the payment success header.
 
 ```kotlin
 fun PaymentDetailsCardPreview()
 ```
-_No KDoc at source._
+Preview of the payment details card.
 
 ```kotlin
 fun PlaceholderBannerPreview()
 ```
-_No KDoc at source._
+Preview of the placeholder banner.
 
 ```kotlin
 fun UpilogoPreview()
 ```
-_No KDoc at source._
+Preview of the UPI logo.
 
 ```kotlin
 fun ActionButtonsPreview()
 ```
-_No KDoc at source._
+Preview of the action buttons.
 
 ### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessViewModel.kt`
 
 ```kotlin
 class PaymentSuccessViewModel(
 ```
-_No KDoc at source._
+ViewModel for the payment success screen; builds its state from the navigation arguments.
 
 <details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.android.kt:36</code></summary>
 
@@ -1022,9 +1024,9 @@ _No KDoc at source._
 ```kotlin
 data class PaymentSuccessState(
 ```
-_No KDoc at source._
+State of the payment success screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:148</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:149</code></summary>
 
 ```kotlin
 @Composable
@@ -1041,9 +1043,9 @@ private fun PaymentSuccessHeader(
 ```kotlin
 sealed interface PaymentSuccessEvent
 ```
-_No KDoc at source._
+One-off events emitted by the payment success screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:77</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1060,9 +1062,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface PaymentSuccessAction
 ```
-_No KDoc at source._
+User actions on the payment success screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:133</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PaymentSuccessScreen.kt:134</code></summary>
 
 ```kotlin
                 ActionButtons(
@@ -1081,9 +1083,9 @@ _No KDoc at source._
 ```kotlin
 object PhoneNumberUtils
 ```
-_No KDoc at source._
+Helpers for formatting, validating, searching and filtering phone numbers from the contact list.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactRepository.android.kt:30</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/ContactRepository.android.kt:35</code></summary>
 
 ```kotlin
     override suspend fun getContacts(): List<Contact> {
@@ -1113,9 +1115,9 @@ _No KDoc at source._
 ```kotlin
 interface QrScanner
 ```
-_No KDoc at source._
+Platform-agnostic QR code scanner.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PlayScannerModule.kt:27</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PlayScannerModule.kt:28</code></summary>
 
 ```kotlin
     }
@@ -1129,18 +1131,18 @@ _No KDoc at source._
 
 </details>
 
-- `fun startScanning(): Flow<String?>`
+- `fun startScanning(): Flow<String?>` — Starts a scan and emits the raw scanned value, or null if scanning failed.
 
 ```kotlin
 expect val ScannerModule: Module
 ```
-_No KDoc at source._
+Platform-specific Koin module that provides the `QrScanner` implementation.
 
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/QrScanner.android.kt:57</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/QrScanner.android.kt:63</code></summary>
 
 ```kotlin
-}
 
+/** Android actual: provides [PlayScannerModule] as the QR scanner Koin module. */
 actual val ScannerModule: Module
     get() = PlayScannerModule
 ```
@@ -1152,9 +1154,9 @@ actual val ScannerModule: Module
 ```kotlin
 fun SearchIfscScreen(
 ```
-_No KDoc at source._
+Screen for searching a bank branch by IFSC code, bank, state, district and branch.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:280</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:201</code></summary>
 
 ```kotlin
         route = SEARCH_IFSC_ROUTE,
@@ -1173,9 +1175,9 @@ _No KDoc at source._
 ```kotlin
 class SearchIfscViewModel : BaseViewModel<SearchIfscState, SearchIfscEvent, SearchIfscAction>(
 ```
-_No KDoc at source._
+ViewModel for the IFSC search screen; filters banks and branches and emits the chosen IFSC code.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:68</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:69</code></summary>
 
 ```kotlin
     onIfscSelected: (IfscCode) -> Unit,
@@ -1192,18 +1194,18 @@ _No KDoc at source._
 ```kotlin
 data class IfscCode(
 ```
-_No KDoc at source._
+A bank branch IFSC record.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferViewModel.kt:230</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/BankTransferViewModel.kt:285</code></summary>
 
 ```kotlin
-    data object NavigateToNext : BankTransferEvent
-    data object AddBankAccount : BankTransferEvent
+     * @property ifscCode The chosen record.
+     */
     data class IfscCodeSelected(val ifscCode: IfscCode) : BankTransferEvent
 }
 
+/** User actions on the bank transfer screen. */
 sealed interface BankTransferAction {
-    data object NavigateBack : BankTransferAction
 ```
 
 </details>
@@ -1211,9 +1213,9 @@ sealed interface BankTransferAction {
 ```kotlin
 data class DummyBank(
 ```
-_No KDoc at source._
+Placeholder bank entry used by the IFSC search.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:281</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:282</code></summary>
 
 ```kotlin
 @Composable
@@ -1230,9 +1232,9 @@ private fun BankList(
 ```kotlin
 data class DummyBankBranch(
 ```
-_No KDoc at source._
+Placeholder bank branch entry used by the IFSC search.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:353</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:354</code></summary>
 
 ```kotlin
 @Composable
@@ -1249,14 +1251,14 @@ private fun BranchList(
 ```kotlin
 data class SearchIfscState(
 ```
-_No KDoc at source._
+State of the IFSC search screen.
 
 ```kotlin
 sealed interface SearchIfscEvent
 ```
-_No KDoc at source._
+One-off events emitted by the IFSC search screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:79</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:80</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1273,9 +1275,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface SearchIfscAction
 ```
-_No KDoc at source._
+User actions on the IFSC search screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:101</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SearchIfscScreen.kt:102</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_search_ifsc),
@@ -1294,9 +1296,9 @@ _No KDoc at source._
 ```kotlin
 fun SendMoneyOptionsScreen(
 ```
-_No KDoc at source._
+Landing screen of the send-money flow offering the ways to pay, plus recent payees.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:244</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:163</code></summary>
 
 ```kotlin
         route = SEND_MONEY_OPTIONS_ROUTE,
@@ -1313,7 +1315,7 @@ _No KDoc at source._
 ```kotlin
 data class TransactionItem(
 ```
-_No KDoc at source._
+A recent payment shown in the recent-payees list.
 
 <details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/components/TransactionList.kt:69</code></summary>
 
@@ -1334,9 +1336,9 @@ _No KDoc at source._
 ```kotlin
 class SendMoneyOptionsViewModel(
 ```
-_No KDoc at source._
+ViewModel for the send-money options screen; maps option taps and QR scans to navigation events.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:77</code></summary>
 
 ```kotlin
     onUpiTransactionHistoryClick: () -> Unit,
@@ -1353,14 +1355,14 @@ _No KDoc at source._
 ```kotlin
 data class SendMoneyOptionsState(
 ```
-_No KDoc at source._
+State of the send-money options screen.
 
 ```kotlin
 sealed interface SendMoneyOptionsEvent
 ```
-_No KDoc at source._
+One-off navigation events emitted by the send-money options screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:82</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:83</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1377,9 +1379,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface SendMoneyOptionsAction
 ```
-_No KDoc at source._
+User actions on the send-money options screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:112</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsScreen.kt:113</code></summary>
 
 ```kotlin
                     topBarTitle = stringResource(Res.string.feature_send_money_title),
@@ -1398,9 +1400,9 @@ _No KDoc at source._
 ```kotlin
 fun SendMoneyScreen(
 ```
-_No KDoc at source._
+Screen for entering an amount and sending money to a selected payee.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:220</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:138</code></summary>
 
 ```kotlin
         ),
@@ -1419,9 +1421,9 @@ _No KDoc at source._
 ```kotlin
 class SendMoneyViewModel(
 ```
-_No KDoc at source._
+ViewModel for the Fineract send-money screen; searches accounts by number and builds the payment QR data.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:95</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:96</code></summary>
 
 ```kotlin
     showTopBar: Boolean = true,
@@ -1437,9 +1439,9 @@ _No KDoc at source._
 ```kotlin
 data class SendMoneyState(
 ```
-_No KDoc at source._
+State of the send-money screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:141</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:142</code></summary>
 
 ```kotlin
 @Composable
@@ -1456,9 +1458,9 @@ private fun SendMoneyScreen(
 ```kotlin
 sealed interface ViewState
 ```
-_No KDoc at source._
+State of the account search results list.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:81</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:90</code></summary>
 
 ```kotlin
         .mapLatest { screenState ->
@@ -1475,9 +1477,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface SendMoneyEvent
 ```
-_No KDoc at source._
+One-off events emitted by the send-money screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:103</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1494,9 +1496,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface SendMoneyAction
 ```
-_No KDoc at source._
+User actions on the send-money screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:124</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyScreen.kt:125</code></summary>
 
 ```kotlin
         dialogState = state.dialogState,
@@ -1562,11 +1564,11 @@ data class PaymentDetails(
 ```
 Data class representing payment details for UPI transactions
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinViewModel.kt:38</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinViewModel.kt:51</code></summary>
 
 ```kotlin
-        }
 
+        /** Payment details shown on the PIN screen. */
         val paymentDetails = PaymentDetails(
             payeeName = payeeName,
             bankName = bankName,
@@ -1579,9 +1581,9 @@ Data class representing payment details for UPI transactions
 ```kotlin
 fun UpiPinScreen(
 ```
-_No KDoc at source._
+Screen where the user enters their UPI PIN to authorize a payment.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:382</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/PaymentFlowNavigation.kt:235</code></summary>
 
 ```kotlin
         ),
@@ -1600,9 +1602,9 @@ _No KDoc at source._
 ```kotlin
 class UpiPinViewModel(
 ```
-_No KDoc at source._
+ViewModel for the UPI PIN screen; builds its state from the navigation arguments.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinScreen.kt:79</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinScreen.kt:80</code></summary>
 
 ```kotlin
     onUpiPinEntered: (String, String, String, Boolean) -> Unit,
@@ -1618,19 +1620,19 @@ _No KDoc at source._
 ```kotlin
 data class UpiPinState(
 ```
-_No KDoc at source._
+State of the UPI PIN screen.
 
 ```kotlin
 sealed interface UpiPinEvent
 ```
-_No KDoc at source._
+One-off events emitted by the UPI PIN screen.
 
 ```kotlin
 sealed interface UpiPinAction
 ```
-_No KDoc at source._
+User actions on the UPI PIN screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinScreen.kt:124</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiPinScreen.kt:125</code></summary>
 
 ```kotlin
                         bankAccountDetails = state.paymentDetails,
@@ -1649,9 +1651,9 @@ _No KDoc at source._
 ```kotlin
 fun UpiTransactionHistoryScreen(
 ```
-_No KDoc at source._
+Screen listing UPI transactions grouped by month, with search.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt:475</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/PaymentFlowNavigation.kt:332</code></summary>
 
 ```kotlin
         route = UPI_TRANSACTION_HISTORY_ROUTE,
@@ -1668,9 +1670,9 @@ _No KDoc at source._
 ```kotlin
 data class UpiTransaction(
 ```
-_No KDoc at source._
+A UPI transaction in the history list.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryViewModel.kt:86</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryViewModel.kt:87</code></summary>
 
 ```kotlin
     }
@@ -1687,9 +1689,9 @@ _No KDoc at source._
 ```kotlin
 data class MonthTransactionGroup(
 ```
-_No KDoc at source._
+UPI transactions for one month.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryViewModel.kt:86</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryViewModel.kt:87</code></summary>
 
 ```kotlin
     }
@@ -1708,9 +1710,9 @@ _No KDoc at source._
 ```kotlin
 class UpiTransactionHistoryViewModel() : BaseViewModel<UpiTransactionHistoryState, UpiTransactionHistoryEvent, UpiTransactionHistoryAction>(
 ```
-_No KDoc at source._
+ViewModel for the UPI transaction history screen; supports searching grouped transactions.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:56</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:57</code></summary>
 
 ```kotlin
     onBackClick: () -> Unit,
@@ -1727,14 +1729,14 @@ _No KDoc at source._
 ```kotlin
 data class UpiTransactionHistoryState(
 ```
-_No KDoc at source._
+State of the UPI transaction history screen.
 
 ```kotlin
 sealed class UpiTransactionHistoryAction
 ```
-_No KDoc at source._
+User actions on the UPI transaction history screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:76</code></summary>
 
 ```kotlin
                 searchQuery = state.searchQuery,
@@ -1751,9 +1753,9 @@ _No KDoc at source._
 ```kotlin
 sealed class UpiTransactionHistoryEvent
 ```
-_No KDoc at source._
+One-off events emitted by the UPI transaction history screen.
 
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:62</code></summary>
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/UpiTransactionHistoryScreen.kt:63</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -1772,146 +1774,148 @@ _No KDoc at source._
 ```kotlin
 val SendMoneyModule = module
 ```
-_No KDoc at source._
+Koin module that registers the send-money view models and the platform `ScannerModule`.
 
-### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt`
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/PaymentFlowNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToPaymentDetailsScreen(
 ```
-_No KDoc at source._
-
-```kotlin
-fun NavController.navigateToPayAnyoneScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavController.navigateToContactsPickerScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavController.navigateToSendMoneyScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavController.navigateToSendMoneyOptionsScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavController.navigateToBankTransferScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavController.navigateToSearchIfscScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavController.navigateToPayeeDetailsScreen(
-```
-_No KDoc at source._
+Navigates to the payment details screen for `transactionId`.
 
 ```kotlin
 fun NavController.navigateToUpiPinScreen(
 ```
-_No KDoc at source._
+Navigates to the UPI PIN screen.
 
 ```kotlin
 fun NavController.navigateToPaymentProcessingScreen(
 ```
-_No KDoc at source._
+Navigates to the payment processing screen.
 
 ```kotlin
 fun NavController.navigateToPaymentSuccessScreen(
 ```
-_No KDoc at source._
+Navigates to the payment success screen.
 
 ```kotlin
 fun NavController.navigateToPaymentChatHistoryScreen(
 ```
-_No KDoc at source._
+Navigates to the payment chat history screen.
 
 ```kotlin
 fun NavController.navigateToUpiTransactionHistoryScreen(
 ```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.sendMoneyScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.sendMoneyOptionsScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.bankTransferScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.searchIfscScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.payAnyoneScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.contactsPickerScreen(
-```
-_No KDoc at source._
-
-```kotlin
-fun NavGraphBuilder.payeeDetailsScreen(
-```
-_No KDoc at source._
+Navigates to the UPI transaction history screen.
 
 ```kotlin
 fun NavGraphBuilder.upiPinScreen(
 ```
-_No KDoc at source._
+Registers the UPI PIN screen in the navigation graph.
 
 ```kotlin
 fun NavGraphBuilder.paymentProcessingScreen(
 ```
-_No KDoc at source._
+Registers the payment processing screen in the navigation graph.
 
 ```kotlin
 fun NavGraphBuilder.paymentSuccessScreen(
 ```
-_No KDoc at source._
+Registers the payment success screen in the navigation graph.
 
 ```kotlin
 fun NavGraphBuilder.paymentChatHistoryScreen(
 ```
-_No KDoc at source._
+Registers the payment chat history screen in the navigation graph.
 
 ```kotlin
 fun NavGraphBuilder.upiTransactionHistoryScreen(
 ```
-_No KDoc at source._
+Registers the UPI transaction history screen in the navigation graph.
 
 ```kotlin
 fun NavGraphBuilder.paymentDetailsScreen(
 ```
-_No KDoc at source._
+Registers the payment details screen in the navigation graph.
+
+### `feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/navigation/SendNavigation.kt`
+
+```kotlin
+fun NavController.navigateToPayAnyoneScreen(
+```
+Navigates to the pay-anyone screen.
+
+```kotlin
+fun NavController.navigateToContactsPickerScreen(
+```
+Navigates to the contacts picker screen.
 
 ```kotlin
 fun NavController.navigateToSendMoneyScreen(
 ```
-_No KDoc at source._
+Navigates to the send-money screen.
+
+```kotlin
+fun NavController.navigateToSendMoneyOptionsScreen(
+```
+Navigates to the send-money options screen.
+
+```kotlin
+fun NavController.navigateToBankTransferScreen(
+```
+Navigates to the bank transfer screen.
+
+```kotlin
+fun NavController.navigateToSearchIfscScreen(
+```
+Navigates to the IFSC search screen.
+
+```kotlin
+fun NavController.navigateToPayeeDetailsScreen(
+```
+Navigates to the payee details screen.
+
+```kotlin
+fun NavGraphBuilder.sendMoneyScreen(
+```
+Registers the send-money screen in the navigation graph.
+
+```kotlin
+fun NavGraphBuilder.sendMoneyOptionsScreen(
+```
+Registers the send-money options screen in the navigation graph.
+
+```kotlin
+fun NavGraphBuilder.bankTransferScreen(
+```
+Registers the bank transfer screen in the navigation graph.
+
+```kotlin
+fun NavGraphBuilder.searchIfscScreen(
+```
+Registers the IFSC search screen in the navigation graph.
+
+```kotlin
+fun NavGraphBuilder.payAnyoneScreen(
+```
+Registers the pay-anyone screen in the navigation graph.
+
+```kotlin
+fun NavGraphBuilder.contactsPickerScreen(
+```
+Registers the contacts picker screen in the navigation graph.
+
+```kotlin
+fun NavGraphBuilder.payeeDetailsScreen(
+```
+Registers the payee details screen in the navigation graph.
+
+```kotlin
+fun NavController.navigateToSendMoneyScreen(
+```
+Navigates to the send-money screen with `requestData`, clearing it from the back stack first.
 
 ---
 
-_72 type(s), 100 function(s)/property(ies); 20 carry KDoc at source; 0 authored example(s); 77 live call site(s)._
+_72 type(s), 100 function(s)/property(ies); 159 carry KDoc at source; 0 authored example(s); 77 live call site(s)._
 <!-- api-docs:end -->

@@ -11,12 +11,25 @@ package kpt.core.model.network.entity.user
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for changing a user's password.
+ *
+ * @property password New password.
+ * @property repeatPassword Password repeated for confirmation.
+ */
 @Serializable
 data class UpdateUserEntityPassword(
     val password: String,
     val repeatPassword: String,
 )
 
+/**
+ * Response returned after a password change.
+ *
+ * @property officeId Id of the office.
+ * @property resourceId Id of the created or affected resource.
+ * @property changes Fields that were changed.
+ */
 @Serializable
 data class UpdateUserPasswordResponse(
     val officeId: Long,
@@ -24,6 +37,11 @@ data class UpdateUserPasswordResponse(
     val changes: Changes,
 )
 
+/**
+ * Fields changed by a password update.
+ *
+ * @property password Whether the password was changed.
+ */
 @Serializable
 data class Changes(
     val password: Boolean,

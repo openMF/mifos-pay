@@ -11,6 +11,15 @@ package kpt.core.model.user
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Details required to register a new user.
+ *
+ * @property username Chosen login username.
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property email Email address.
+ * @property password Account password.
+ */
 @Parcelize
 class NewUser(
     val username: String,

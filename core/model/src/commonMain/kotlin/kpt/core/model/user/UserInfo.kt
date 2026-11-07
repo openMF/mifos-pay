@@ -11,6 +11,21 @@ package kpt.core.model.user
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Authenticated user details returned at login.
+ *
+ * @property username Login username.
+ * @property userId Identifier of the user.
+ * @property base64EncodedAuthenticationKey Base64-encoded key used to authenticate API calls.
+ * @property authenticated Whether the user is authenticated.
+ * @property officeId Identifier of the office.
+ * @property officeName Name of the office.
+ * @property roles Roles assigned to the user.
+ * @property permissions Permissions granted to the user.
+ * @property clients Identifiers of the clients linked to the user.
+ * @property shouldRenewPassword Whether the user must renew the password.
+ * @property isTwoFactorAuthenticationRequired Whether two-factor authentication is required.
+ */
 @Parcelize
 data class UserInfo(
     val username: String,

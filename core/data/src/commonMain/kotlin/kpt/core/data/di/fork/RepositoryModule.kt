@@ -87,6 +87,9 @@ import org.mifos.authenticator.passcode.PasscodeStorageAdapter
 private val ioDispatcher = named(MifosDispatchers.IO.name)
 private val unconfined = named(MifosDispatchers.Unconfined.name)
 
+/**
+ * Koin module wiring every wallet repository interface to its implementation and the shared data-layer dependencies.
+ */
 val RepositoryModule = module {
     single<Json> { Json { ignoreUnknownKeys = true } }
 

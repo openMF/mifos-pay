@@ -9,5 +9,8 @@
  */
 package kpt.feature.settings
 
+/** Kotlin/Wasm actual of [getPlatform]. */
 actual fun getPlatform(): Platform = Platform.Wasm
+
+/** Kotlin/Wasm actual; dynamic theming is not supported. */
 actual fun supportsDynamicTheming(): Boolean = false

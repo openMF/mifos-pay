@@ -16,13 +16,16 @@ import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.feature.transfer.intrabank.hub.IntraBankHubScreen
+/** Navigation route of the intra-bank hub. */
 @Serializable
 data object IntraBankHubRoute
 
+/** Navigates to the intra-bank hub. */
 fun NavController.navigateToIntraBankHub(navOptions: NavOptions? = null) {
     this.navigate(IntraBankHubRoute, navOptions)
 }
 
+/** Registers the intra-bank hub destination and its navigation callbacks. */
 fun NavGraphBuilder.intraBankHubScreen(
     navigateToSelectAccountScreen: () -> Unit,
     navigateToBeneficiary: () -> Unit,

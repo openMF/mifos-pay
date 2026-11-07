@@ -29,5 +29,7 @@ package kpt.core.store.wallet.recentpayee
  * the full derived list and the read path applies `.take(limit)` after the
  * DAO emission. This keeps the derive walk O(1) per source-account regardless
  * of how many screens ask for different limits.
+ *
+ * @property sourceAccountId Source (own) account id the cached payees belong to.
  */
 data class RecentPayeeKey(val sourceAccountId: Long)

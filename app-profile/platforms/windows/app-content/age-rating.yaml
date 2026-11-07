@@ -16,6 +16,7 @@ questionnaire:
   digital_purchases: false
   unrestricted_internet_access: false
 
+# The ratings the declarations should produce, per board, as a check against a misread question.
 expected_ratings:
   esrb: Everyone
   pegi: 3
@@ -24,6 +25,7 @@ expected_ratings:
   acb: G
   generic_iarc: 3+
 
+# Rationale for an answer a reviewer might query.
 notes: >
   No content triggers any IARC descriptor; expected outcome across every
   regional rating board is the lowest tier ("Everyone" / "PEGI 3" / "3+").

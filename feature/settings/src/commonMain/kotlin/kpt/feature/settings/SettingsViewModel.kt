@@ -90,19 +90,42 @@ class SettingsViewModel(
 
 /** Preference-mutation intents accepted by [SettingsViewModel]. */
 sealed interface SettingsAction {
-    /** Change the theme brand (Android / default). */
+    /**
+     * Change the theme brand (Android / default).
+     *
+     * @property themeBrand The newly selected theme brand.
+     */
     data class UpdateThemeBrand(val themeBrand: ThemeBrand) : SettingsAction
 
-    /** Change the dark-theme configuration (system / light / dark). */
+    /**
+     * Change the dark-theme configuration (system / light / dark).
+     *
+     * @property darkThemeConfig The newly selected dark-theme configuration.
+     */
     data class UpdateDarkThemeConfig(val darkThemeConfig: DarkThemeConfig) : SettingsAction
 
-    /** Toggle Material You dynamic color. */
+    /**
+     * Toggle Material You dynamic color.
+     *
+     * @property useDynamicColor Whether Material You dynamic color is enabled.
+     */
     data class UpdateDynamicColor(val useDynamicColor: Boolean) : SettingsAction
 
-    /** Change the app language. */
+    /**
+     * Change the app language.
+     *
+     * @property language The newly selected app language.
+     */
     data class UpdateLanguage(val language: LanguageConfig) : SettingsAction
 }
 
+/**
+ * User-editable appearance and language preferences.
+ * @property brand Selected theme brand.
+ * @property useDynamicColor Whether dynamic color is enabled.
+ * @property darkThemeConfig Dark-theme configuration.
+ * @property language Selected app language.
+ */
 data class UserEditableSettings(
     val brand: ThemeBrand,
     val useDynamicColor: Boolean,
@@ -110,8 +133,15 @@ data class UserEditableSettings(
     val language: LanguageConfig,
 )
 
+/** UI state of the settings dialogs. */
 sealed interface SettingsUiState {
+    /** Preferences are still loading. */
     data object Loading : SettingsUiState
+
+    /**
+     * Preferences loaded.
+     * @property settings Current user-editable settings.
+     */
     data class Success(val settings: UserEditableSettings) : SettingsUiState
 }
 

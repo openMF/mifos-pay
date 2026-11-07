@@ -46,6 +46,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
+/** Outlined text field with label, optional leading/trailing icon, error text and keyboard options. */
 @Composable
 fun MifosOutlinedTextField(
     value: String,
@@ -110,6 +111,7 @@ fun MifosOutlinedTextField(
     )
 }
 
+/** Filled text field with label, optional icons, error text and keyboard options. */
 @Composable
 fun MifosTextField(
     value: String,
@@ -189,6 +191,7 @@ fun MifosTextField(
     )
 }
 
+/** Custom-styled text field operating on a plain [String] value. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosCustomTextField(
@@ -278,6 +281,7 @@ fun MifosCustomTextField(
     }
 }
 
+/** Custom-styled text field operating on a [TextFieldValue], giving callers control over cursor and selection. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosCustomTextField(

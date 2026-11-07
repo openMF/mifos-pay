@@ -12,6 +12,17 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A savings product that can be selected when opening an account.
+ *
+ * @property id Unique identifier.
+ * @property name Display name.
+ * @property withdrawalFeeForTransfers Whether a withdrawal fee applies to transfers.
+ * @property allowOverdraft Whether overdraft is allowed.
+ * @property enforceMinRequiredBalance Whether the minimum required balance is enforced.
+ * @property lienAllowed Whether a lien can be placed on the account.
+ * @property withHoldTax Whether withholding tax applies.
+ */
 @Parcelize
 @Serializable
 data class SavingProductOption(

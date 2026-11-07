@@ -23,6 +23,7 @@ class SupabaseConfigClient(
     private val credentials: SupabaseCredentials,
     private val logLevel: LogLevel = LogLevel.INFO,
 ) {
+    /** Lazily created Supabase client with the Postgrest plugin installed. */
     val client: SupabaseClient by lazy {
         createSupabaseClient(
             supabaseUrl = credentials.url,
@@ -33,8 +34,10 @@ class SupabaseConfigClient(
         }
     }
 
+    /** The Postgrest (database) API of the configured Supabase project. */
     val postgrest get() = client.postgrest
 
+    /** Whether Supabase credentials are present. */
     val isConfigured: Boolean get() = credentials.isConfigured
 }
 
@@ -43,8 +46,13 @@ class SupabaseConfigClient(
  * Projects implement this with their own credential sources.
  */
 interface SupabaseCredentials {
+    /** Supabase project URL. */
     val url: String
+
+    /** Supabase anonymous API key. */
     val anonKey: String
+
+    /** Whether the credentials are configured. */
     val isConfigured: Boolean
         get() = url.isNotBlank() && anonKey.isNotBlank()
 }

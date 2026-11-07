@@ -11,6 +11,21 @@ package org.mifos.lib.loan.network.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Network response DTO for the charge options, as returned by the Fineract loans API.
+ *
+ * @property id Unique identifier.
+ * @property name Name.
+ * @property active Whether this entry is active.
+ * @property penalty Whether the charge is a penalty.
+ * @property currency Currency of the amount.
+ * @property amount Amount.
+ * @property chargeTimeType Charge time type.
+ * @property chargeAppliesTo Charge applies to.
+ * @property chargeCalculationType Charge calculation type.
+ * @property chargePaymentMode Charge payment mode.
+ * @property taxGroup Tax group.
+ */
 @Serializable
 data class ChargeOptionsResponseDto(
 
@@ -38,6 +53,12 @@ data class ChargeOptionsResponseDto(
 
 )
 
+/**
+ * Network response DTO for the tax group, as returned by the Fineract loans API.
+ *
+ * @property id Unique identifier.
+ * @property name Name.
+ */
 @Serializable
 data class TaxGroupResponseDto(
     val id: Int? = null,

@@ -18,6 +18,7 @@ import kpt.core.ui.utils.BaseViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** ViewModel for the payment processing screen; builds its state from the navigation arguments. */
 class PaymentProcessingViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<PaymentProcessingState, PaymentProcessingEvent, PaymentProcessingAction>(
@@ -83,26 +84,49 @@ class PaymentProcessingViewModel(
     }
 }
 
+/**
+ * State of the payment processing screen.
+ * @property payeeName Name of the payee being paid.
+ * @property amount Amount being paid, in paise.
+ * @property isUpiCode Whether the payment was started from a UPI code.
+ * @property isProcessing Whether the payment is still being processed.
+ */
 data class PaymentProcessingState(
     val payeeName: String = "",
     val amount: String = "",
     val isUpiCode: Boolean = false,
     val isProcessing: Boolean = true,
 ) {
+    /** The amount formatted for display. */
     val formattedAmount: String
         get() = AmountUtils.formatPaiseForUI(amount)
 }
 
+/** One-off events emitted by the payment processing screen. */
 sealed interface PaymentProcessingEvent {
+    /**
+     * Emitted when the payment completes.
+     * @property payeeName Name of the payee that was paid.
+     * @property amount Amount paid.
+     * @property upiName UPI name used for the payment.
+     * @property transactionTimestamp Formatted time of the transaction.
+     */
     data class PaymentComplete(
         val payeeName: String,
         val amount: String,
         val upiName: String,
         val transactionTimestamp: String,
     ) : PaymentProcessingEvent
+
+    /**
+     * Emitted when the payment fails.
+     * @property errorMessage Reason the payment failed.
+     */
     data class PaymentFailed(val errorMessage: String) : PaymentProcessingEvent
 }
 
+/** User actions on the payment processing screen. */
 sealed interface PaymentProcessingAction {
+    /** The user asked to retry the payment. */
     data object RetryPayment : PaymentProcessingAction
 }

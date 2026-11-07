@@ -27,8 +27,8 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.kyc.KYCLevel1Details
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.kyc.KycLevel1State.DialogState.Error
-import mifos_pay.feature.kyc.generated.resources.Res
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_successkyc1
+import kpt.feature.kyc.generated.resources.Res
+import kpt.feature.kyc.generated.resources.feature_kyc_successkyc1
 import org.jetbrains.compose.resources.StringResource
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime

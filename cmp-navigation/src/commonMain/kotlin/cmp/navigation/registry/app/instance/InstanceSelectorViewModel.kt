@@ -27,6 +27,7 @@ import kpt.core.model.instance.ServerInstance
 import kpt.core.network.config.InstanceConfigLoader
 import kpt.core.ui.utils.BaseViewModel
 import org.jetbrains.compose.resources.getString
+/** Loads the available server instances and applies the user's main and inter-bank selection to preferences. */
 class InstanceSelectorViewModel(
     instanceConfigLoader: InstanceConfigLoader,
     private val userPreferencesRepository: ForkPreferencesRepository,
@@ -171,6 +172,17 @@ class InstanceSelectorViewModel(
 }
 
 // State
+/**
+ * UI state of the instance selector.
+ *
+ * @property instances Server instances available to choose from.
+ * @property selectedMainInstance Currently persisted main instance.
+ * @property selectedInterbankInstance Currently persisted inter-bank server.
+ * @property tempSelectedMainInstance Main instance picked in the sheet but not yet applied.
+ * @property tempSelectedInterbankInstance Inter-bank server picked in the sheet but not yet applied.
+ * @property isLoading True while the instance configuration is loading.
+ * @property error Error message when loading failed, or null.
+ */
 data class InstanceSelectorState(
     val instances: List<ServerInstance> = emptyList(),
     val selectedMainInstance: ServerInstance? = null,
@@ -180,20 +192,43 @@ data class InstanceSelectorState(
     val isLoading: Boolean = true,
     val error: String? = null,
 ) {
+    /** True when a pending selection differs from the persisted one. */
     val isUpdateEnabled: Boolean
         get() = tempSelectedMainInstance != selectedMainInstance ||
             tempSelectedInterbankInstance != selectedInterbankInstance
 }
 
 // Events
+/** One-off events emitted by the instance selector. */
 sealed interface InstanceSelectorEvent {
+    /** Asks the UI to dismiss the sheet. */
     data object DismissSheet : InstanceSelectorEvent
 }
 
 // Actions
+/** User and internal actions handled by the instance selector. */
 sealed interface InstanceSelectorAction {
+    /**
+     * Picks a main server instance (not applied until update).
+     *
+     * @property instance The chosen main instance.
+     */
     data class SelectMainInstance(val instance: ServerInstance) : InstanceSelectorAction
+
+    /**
+     * Picks an inter-bank server (not applied until update).
+     *
+     * @property instance The chosen inter-bank server.
+     */
     data class SelectInterbankInstance(val instance: InterbankServer) : InstanceSelectorAction
+
+    /** Applies the pending selections and dismisses the sheet. */
     data object UpdateInstances : InstanceSelectorAction
+
+    /**
+     * Delivers the loaded instances configuration to the view model.
+     *
+     * @property config Loading, success or error state of the configuration.
+     */
     data class ConfigLoaded(val config: ScreenState<InstancesConfig>) : InstanceSelectorAction
 }

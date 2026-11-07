@@ -11,6 +11,18 @@ package kpt.core.model.network.entity.noncore
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Metadata of a document attached to a Fineract entity.
+ *
+ * @property id Document id.
+ * @property parentEntityType Type of the parent entity.
+ * @property parentEntityId Id of the parent entity.
+ * @property name Document name.
+ * @property fileName File name.
+ * @property size File size in bytes.
+ * @property type Type.
+ * @property description Document description.
+ */
 @Serializable
 data class Document(
     val id: Int = 0,

@@ -39,3 +39,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.passcode.generated.resources"
+}

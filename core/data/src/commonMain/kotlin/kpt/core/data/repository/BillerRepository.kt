@@ -12,6 +12,7 @@ package kpt.core.data.repository
 import kotlinx.coroutines.flow.Flow
 import kpt.core.model.autopay.Biller
 import kpt.core.model.autopay.BillerCategory
+/** Repository for the billers a wallet user can pay bills to. */
 interface BillerRepository {
     /**
      * Get all saved billers

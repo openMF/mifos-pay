@@ -52,6 +52,7 @@ import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.model.autopay.Biller
 import kpt.core.ui.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen listing saved billers with search, add, edit and delete actions. */
 @Composable
 fun BillerListScreen(
     onNavigateBack: () -> Unit,

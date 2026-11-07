@@ -12,6 +12,7 @@ package kpt.core.network.di
 import kpt.core.network.main.localAssets.JvmLocalAssetManager
 import kpt.core.network.main.localAssets.LocalAssetManager
 import org.koin.dsl.module
+/** Koin module providing the local asset manager and data source. */
 val LocalModule = module {
     single<LocalAssetManager> {
         JvmLocalAssetManager

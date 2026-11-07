@@ -54,6 +54,7 @@ import kpt.feature.settings.generated.resources.feature_settings_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
+/** Settings dialog for theme brand, dynamic color and dark theme bound to [SettingsViewModel]. */
 @Composable
 fun SettingsDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinViewModel()) {
     val settingsUiState by viewModel.settingsUiState.collectAsStateWithLifecycle()
@@ -66,6 +67,7 @@ fun SettingsDialog(onDismiss: () -> Unit, viewModel: SettingsViewModel = koinVie
     )
 }
 
+/** Stateless settings dialog rendering [settingsUiState] and reporting preference changes through the callbacks. */
 @Composable
 fun SettingsDialog(
     settingsUiState: SettingsUiState,
@@ -198,6 +200,7 @@ private fun SettingsDialogSectionTitle(text: String, modifier: Modifier = Modifi
     )
 }
 
+/** Selectable row for one theme option in the settings dialog. */
 @Composable
 fun SettingsDialogThemeChooserRow(
     text: String,

@@ -20,10 +20,10 @@ ViewModels: `TransferViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/payments sha=4eea3e806c8e65b9b7f7307ddb71186f8a1639f8 -->
+<!-- api-docs:begin module=feature/payments sha=a255c07276ccd7b6defa97d384a04f86e99e8539 -->
 ## API reference
 
-_Generated from `feature/payments` at tree `4eea3e806c8e` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/payments` at tree `a255c07276cc` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -36,21 +36,21 @@ rather than re-declaring what they already own.
 ```kotlin
 fun NavController.navigateToPayments(navOptions: NavOptions) = navigate(PAYMENTS_ROUTE, navOptions)
 ```
-_No KDoc at source._
+Navigates to the payments screen.
 
 ```kotlin
 fun NavGraphBuilder.paymentsScreen(
 ```
-_No KDoc at source._
+Registers the payments screen destination, rendering the given `tabContents`.
 
 ### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentsScreen.kt`
 
 ```kotlin
 fun PaymentsRoute(
 ```
-_No KDoc at source._
+Route-level composable of the payments screen, hosting the given `tabContents`.
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentNavigation.kt:25</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentNavigation.kt:28</code></summary>
 
 ```kotlin
 ) {
@@ -65,23 +65,23 @@ _No KDoc at source._
 ```kotlin
 enum class PaymentsScreenContents
 ```
-_No KDoc at source._
+Tabs available on the payments screen.
 
 ### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt`
 
 ```kotlin
 fun RequestScreen(
 ```
-_No KDoc at source._
+Screen for requesting money, showing the client details and a button to show the QR code.
 
 ### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/TransferViewModel.kt`
 
 ```kotlin
 class TransferViewModel(
 ```
-_No KDoc at source._
+ViewModel holding the client details used to send and request money.
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:50</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:51</code></summary>
 
 ```kotlin
     showQr: () -> Unit,
@@ -97,9 +97,9 @@ _No KDoc at source._
 ```kotlin
 data class TransferState(
 ```
-_No KDoc at source._
+Serializable UI state of the transfer screens, holding the client contact details.
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:77</code></summary>
 
 ```kotlin
 @Composable
@@ -116,9 +116,9 @@ private fun RequestScreenContent(
 ```kotlin
 sealed interface TransferEvent
 ```
-_No KDoc at source._
+One-shot events emitted by `TransferViewModel`.
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:57</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:58</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -135,9 +135,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface TransferAction
 ```
-_No KDoc at source._
+Actions dispatched to `TransferViewModel`.
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:77</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/RequestScreen.kt:78</code></summary>
 
 ```kotlin
 private fun RequestScreenContent(
@@ -156,33 +156,33 @@ private fun RequestScreenContent(
 ```kotlin
 val PaymentsModule = module
 ```
-_No KDoc at source._
+Koin module providing the `TransferViewModel`.
 
 ### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/selectTransferType/SelectTransferTypeNavigation.kt`
 
 ```kotlin
 data object SelectTransferTypeRoute
 ```
-_No KDoc at source._
+Type-safe navigation route of the select-transfer-type screen.
 
 ```kotlin
 fun NavController.navigateToSelectTransferType(navOptions: NavOptions? = null) =
 ```
-_No KDoc at source._
+Navigates to the select-transfer-type screen.
 
 ```kotlin
 fun NavGraphBuilder.selectTransferTypeScreen(
 ```
-_No KDoc at source._
+Registers the select-transfer-type destination.
 
 ### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/selectTransferType/SelectTransferTypeScreen.kt`
 
 ```kotlin
 fun SelectTransferTypeScreen(
 ```
-_No KDoc at source._
+Screen where the user chooses between an intra-bank and an inter-bank transfer.
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/selectTransferType/SelectTransferTypeNavigation.kt:29</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/selectTransferType/SelectTransferTypeNavigation.kt:32</code></summary>
 
 ```kotlin
 ) {
@@ -199,9 +199,9 @@ _No KDoc at source._
 ```kotlin
 fun SelectTransferTypeScreenPreview()
 ```
-_No KDoc at source._
+Preview of `SelectTransferTypeScreen`.
 
 ---
 
-_6 type(s), 9 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 6 live call site(s)._
+_6 type(s), 9 function(s)/property(ies); 15 carry KDoc at source; 0 authored example(s); 6 live call site(s)._
 <!-- api-docs:end -->

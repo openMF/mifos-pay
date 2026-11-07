@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Themed Material card wrapper with Mifos default shape, elevation and colors. */
 @Composable
 fun MifosCard(
     modifier: Modifier = Modifier,

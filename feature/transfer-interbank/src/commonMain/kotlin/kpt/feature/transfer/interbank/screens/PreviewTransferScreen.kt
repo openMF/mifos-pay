@@ -47,24 +47,25 @@ import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.MifosProgressIndicatorOverlay
-import mifos_pay.feature.transfer_interbank.generated.resources.Res
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_acknowledgement_section
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_amount
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_available_balance
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_confirm_pay
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_date
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_description
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_edit
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_from_account
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_i_acknowledged
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_preview_transfer
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_terms_acknowledged
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_terms_acknowledged_description
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_to_account
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_transfer_amount
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_verified_recipient
+import kpt.feature.transfer.interbank.generated.resources.Res
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_acknowledgement_section
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_amount
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_available_balance
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_confirm_pay
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_date
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_description
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_edit
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_from_account
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_i_acknowledged
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_preview_transfer
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_terms_acknowledged
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_terms_acknowledged_description
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_to_account
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_transfer_amount
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_verified_recipient
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Step showing a summary of the transfer for the user to review and confirm. */
 @Composable
 fun PreviewTransferScreen(
     amount: String,
@@ -495,6 +496,7 @@ private fun DisclaimerCheckboxCard(
     }
 }
 
+/** Compose preview of [PreviewTransferScreen]. */
 @Preview
 @Composable
 fun PreviewTransferScreenPreview() {
@@ -529,6 +531,7 @@ fun PreviewTransferScreenPreview() {
     }
 }
 
+/** Compose preview of [PreviewTransferScreen] while the transfer is processing. */
 @Preview
 @Composable
 fun PreviewTransferScreenProcessingPreview() {

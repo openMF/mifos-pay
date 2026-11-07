@@ -9,7 +9,11 @@
  */
 package kpt.feature.mpay.qr.scan
 
+/** Desktop actual of [WebPlatform]; never a web environment. */
 actual object WebPlatform {
+    /** Always false on desktop. */
     actual val isWeb: Boolean = false
+
+    /** Always false on desktop. */
     actual val isWebDesktop: Boolean = false
 }

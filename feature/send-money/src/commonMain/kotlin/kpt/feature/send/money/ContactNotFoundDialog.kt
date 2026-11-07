@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosButton
 import kpt.core.designsystem.icon.MifosIcons
+/** Dialog shown when a contact is not on the app, letting the user pick a channel to send an invite. */
 @Composable
 fun ContactNotFoundDialog(
     showDialog: Boolean,

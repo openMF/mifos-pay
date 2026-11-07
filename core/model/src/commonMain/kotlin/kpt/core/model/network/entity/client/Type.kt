@@ -11,6 +11,13 @@ package kpt.core.model.network.entity.client
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Generic Fineract type enumeration value (id, code and display value).
+ *
+ * @property id Type id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ */
 @Serializable
 data class Type(
     val id: Int? = null,

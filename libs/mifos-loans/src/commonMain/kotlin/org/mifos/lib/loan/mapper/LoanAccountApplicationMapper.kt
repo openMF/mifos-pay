@@ -12,6 +12,7 @@ package org.mifos.lib.loan.mapper
 import org.mifos.lib.loan.core.model.LoansPayload
 import org.mifos.lib.loan.network.model.LoanAccountApplicationPayloadDto
 
+/** Maps this payload to the [LoanAccountApplicationPayloadDto] sent to the API. */
 fun LoansPayload.toDto(): LoanAccountApplicationPayloadDto =
     LoanAccountApplicationPayloadDto(
         clientId = clientId,

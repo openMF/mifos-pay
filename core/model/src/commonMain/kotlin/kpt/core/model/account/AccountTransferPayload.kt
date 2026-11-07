@@ -12,6 +12,23 @@ package kpt.core.model.account
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Request body for transferring funds between two accounts in the same Fineract instance.
+ *
+ * @property fromOfficeId Office id of the source account.
+ * @property fromClientId Client id of the source account owner.
+ * @property fromAccountType Account type code of the source account.
+ * @property fromAccountId Id of the source account.
+ * @property toOfficeId Office id of the destination account.
+ * @property toClientId Client id of the destination account owner.
+ * @property toAccountType Account type code of the destination account.
+ * @property toAccountId Id of the destination account.
+ * @property transferAmount Amount to transfer, as a string.
+ * @property transferDescription Free-text description of the transfer.
+ * @property locale Locale used to parse the amount.
+ * @property dateFormat Format pattern used to parse transferDate.
+ * @property transferDate Date of the transfer, formatted per dateFormat.
+ */
 @Serializable
 @Parcelize
 data class AccountTransferPayload(

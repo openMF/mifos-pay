@@ -44,19 +44,20 @@ import kpt.core.model.savingsaccount.Status
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.MifosProgressIndicator
-import mifos_pay.feature.transfer_interbank.generated.resources.Res
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_account
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_account_type
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_balance
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_choose_account_to_send
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_no_accounts
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_no_accounts_available
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_office
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_oops
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_select_account
-import mifos_pay.feature.transfer_interbank.generated.resources.feature_send_interbank_select_your_account
+import kpt.feature.transfer.interbank.generated.resources.Res
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_account
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_account_type
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_balance
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_choose_account_to_send
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_no_accounts
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_no_accounts_available
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_office
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_oops
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_select_account
+import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_select_your_account
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Step for choosing the account to transfer from. */
 @Composable
 fun SelectAccountScreen(
     accounts: List<Account>,
@@ -219,6 +220,7 @@ private fun AccountSelectionCard(
     }
 }
 
+/** Compose preview of [SelectAccountScreen] with accounts. */
 @Preview
 @Composable
 fun SelectAccountScreenPreview() {
@@ -312,6 +314,7 @@ fun SelectAccountScreenPreview() {
     }
 }
 
+/** Compose preview of [SelectAccountScreen] while loading. */
 @Preview
 @Composable
 fun SelectAccountScreenLoadingPreview() {
@@ -326,6 +329,7 @@ fun SelectAccountScreenLoadingPreview() {
     }
 }
 
+/** Compose preview of [SelectAccountScreen] in the error state. */
 @Preview
 @Composable
 fun SelectAccountScreenErrorPreview() {

@@ -11,6 +11,12 @@ package kpt.core.model.network.entity.authentication
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for authenticating a user against the Fineract self-service API.
+ *
+ * @property username Login username.
+ * @property password Password.
+ */
 @Serializable
 data class AuthenticationPayload(
     val username: String,

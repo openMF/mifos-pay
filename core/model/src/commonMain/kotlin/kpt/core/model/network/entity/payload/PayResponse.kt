@@ -11,6 +11,15 @@ package kpt.core.model.network.entity.payload
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Fineract response returned after a payment transaction.
+ *
+ * @property officeId Id of the office.
+ * @property clientId Id of the client.
+ * @property savingsId Id of the savings account.
+ * @property resourceId Id of the created or affected resource.
+ * @property changes Fields that were changed.
+ */
 @Serializable
 data class PayResponse(
     val officeId: Int,
@@ -20,6 +29,11 @@ data class PayResponse(
     val changes: kpt.core.model.network.entity.payload.Change,
 )
 
+/**
+ * Fields changed by a payment transaction.
+ *
+ * @property paymentTypeId Id of the payment type used.
+ */
 @Serializable
 data class Change(
     val paymentTypeId: Int,

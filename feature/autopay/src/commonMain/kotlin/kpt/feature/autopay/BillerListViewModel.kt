@@ -22,6 +22,7 @@ import kpt.core.common.getSerialized
 import kpt.core.datastore.BillerRepository
 import kpt.core.model.autopay.Biller
 import kpt.core.ui.utils.BaseViewModel
+/** View model for the biller list; loads, searches and deletes billers. */
 class BillerListViewModel(
     savedStateHandle: SavedStateHandle,
     private val billerRepository: BillerRepository,
@@ -147,11 +148,19 @@ class BillerListViewModel(
         }
     }
 
+    /** Holds the saved-state key used to persist the state. */
     companion object {
         private const val KEY_STATE = "biller_list_state"
     }
 }
 
+/**
+ * UI state of the biller list.
+ *
+ * @property billers Billers to display.
+ * @property isLoading Whether billers are loading.
+ * @property error Error message to show, or null.
+ */
 @Serializable
 data class BillerListState(
     val billers: List<Biller> = emptyList(),
@@ -159,16 +168,48 @@ data class BillerListState(
     val error: String? = null,
 )
 
+/** One-off events emitted by the biller list view model. */
 sealed interface BillerListEvent {
+    /**
+     * Navigate to the edit-biller screen.
+     *
+     * @property billerId Id of the biller to edit.
+     */
     data class NavigateToEditBiller(val billerId: String) : BillerListEvent
+
+    /** Navigate to the add-biller screen. */
     data object NavigateToAddBiller : BillerListEvent
+
+    /** A biller was deleted. */
     data object BillerDeleted : BillerListEvent
 }
 
+/** User actions handled by the biller list view model. */
 sealed interface BillerListAction {
+    /** Load the billers. */
     data object LoadBillers : BillerListAction
+
+    /**
+     * Search billers.
+     *
+     * @property query Search text.
+     */
     data class SearchBillers(val query: String) : BillerListAction
+
+    /**
+     * Delete a biller.
+     *
+     * @property billerId Id of the biller.
+     */
     data class DeleteBiller(val billerId: String) : BillerListAction
+
+    /**
+     * Edit a biller.
+     *
+     * @property billerId Id of the biller.
+     */
     data class EditBiller(val billerId: String) : BillerListAction
+
+    /** Add a new biller. */
     data object AddNewBiller : BillerListAction
 }

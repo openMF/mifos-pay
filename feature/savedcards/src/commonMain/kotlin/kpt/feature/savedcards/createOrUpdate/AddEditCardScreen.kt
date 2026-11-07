@@ -60,11 +60,11 @@ import kpt.core.ui.MifosPasswordField
 import kpt.core.ui.utils.EventsEffect
 import kpt.feature.savedcards.components.CreditCard
 import kpt.feature.savedcards.components.getCardNumberTransformation
-import mifos_pay.feature.savedcards.generated.resources.Res
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_card_number
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_expiry_date
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_first_name
-import mifos_pay.feature.savedcards.generated.resources.feature_savedcards_last_name
+import kpt.feature.savedcards.generated.resources.Res
+import kpt.feature.savedcards.generated.resources.feature_savedcards_card_number
+import kpt.feature.savedcards.generated.resources.feature_savedcards_expiry_date
+import kpt.feature.savedcards.generated.resources.feature_savedcards_first_name
+import kpt.feature.savedcards.generated.resources.feature_savedcards_last_name
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -289,6 +289,9 @@ private fun AddEditCardScreenContent(
     }
 }
 
+/**
+ * Horizontally scrolling row of color swatches for choosing a card color.
+ */
 @Composable
 fun CreditCardColorSelector(
     cardColors: List<Color>,
@@ -313,6 +316,9 @@ fun CreditCardColorSelector(
     }
 }
 
+/**
+ * A single selectable color swatch, outlined when [isSelected].
+ */
 @Composable
 fun ColorSelector(
     color: Color,

@@ -13,8 +13,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
+/** Navigation route of the signup method screen. */
 const val SIGNUP_METHOD_ROUTE = "signup_method_route"
 
+/** Registers the signup method destination in the nav graph. */
 fun NavGraphBuilder.signupMethodScreen(
     onNavigateBack: () -> Unit,
     onNavigateToSignUp: (savingsProductId: Int) -> Unit,
@@ -29,6 +31,7 @@ fun NavGraphBuilder.signupMethodScreen(
     }
 }
 
+/** Navigates to the signup method screen. */
 fun NavController.navigateToSignupMethod() {
     this.navigate(SIGNUP_METHOD_ROUTE)
 }

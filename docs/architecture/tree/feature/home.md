@@ -28,10 +28,10 @@ It is also a **fork seam**. `HomeDashboard` is public rather than internal becau
 package so `--clean` removes it together with that default. A fork replaces the body without touching
 the shell.
 
-<!-- api-docs:begin module=feature/home sha=888139f25545e5a0515930752914e5c3f8345141 -->
+<!-- api-docs:begin module=feature/home sha=93cd3f09484a41faa4b57dbfe2dc0458b4ddbec0 -->
 ## API reference
 
-_Generated from `feature/home` at tree `888139f25545` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/home` at tree `93cd3f09484a` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -44,17 +44,17 @@ rather than re-declaring what they already own.
 ```kotlin
 data object HomeDestination
 ```
-_No KDoc at source._
+Type-safe navigation destination of the home graph.
 
 ```kotlin
 data object HomeRoute
 ```
-_No KDoc at source._
+Type-safe route of the home screen.
 
 ```kotlin
 fun NavController.navigateToHome(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the home destination, optionally with `navOptions`.
 
 ```kotlin
 fun NavGraphBuilder.homeGraph(
@@ -66,12 +66,12 @@ The backbone home graph. `homeBody` is the fork-owned home content (default supp
 ```kotlin
 class HomeViewModel(
 ```
-_No KDoc at source._
+ViewModel for the home screen: client accounts, recent transactions, filters and navigation events.
 
-<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/di/fork/HomeModule.kt:16</code></summary>
+<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/di/fork/HomeModule.kt:17</code></summary>
 
 ```kotlin
-import org.koin.dsl.module
+/** Koin module providing the home feature [HomeViewModel]. */
 val MifosHomeModule = module {
     viewModelOf(::HomeViewModel)
 }
@@ -82,9 +82,9 @@ val MifosHomeModule = module {
 ```kotlin
 data class HomeState(
 ```
-_No KDoc at source._
+UI state of the home screen.
 
-<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:218</code></summary>
+<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:219</code></summary>
 
 ```kotlin
 @Composable
@@ -93,7 +93,7 @@ fun HomeScreenContent(
     viewState: ViewState,
     defaultAccountId: Long?,
     snackbarHostState: SnackbarHostState,
-    isRefreshing: Boolean = false,
+    pullRefreshState: PullToRefreshState,
 ```
 
 </details>
@@ -101,9 +101,9 @@ fun HomeScreenContent(
 ```kotlin
 sealed interface ViewState
 ```
-_No KDoc at source._
+Display state of the home screen.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:81</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:90</code></summary>
 
 ```kotlin
         .mapLatest { screenState ->
@@ -120,12 +120,12 @@ _No KDoc at source._
 ```kotlin
 sealed interface HomeEvent
 ```
-_No KDoc at source._
+One-off events emitted by `HomeViewModel`.
 
 <details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:171</code></summary>
 
 ```kotlin
-    EventsEffect(viewModel) { event ->
+    EventsEffect(eventFlow = viewModel.eventFlow) { event ->
         when (event) {
             is HomeEvent.NavigateBack -> onNavigateBack()
             is HomeEvent.NavigateToRequestScreen -> onRequest(event.vpa)
@@ -139,7 +139,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface HomeAction
 ```
-_No KDoc at source._
+User actions handled by `HomeViewModel`.
 
 ### `feature/home/src/commonMain/kotlin/kpt/feature/home/di/HomeModule.kt`
 
@@ -153,31 +153,31 @@ The backbone home module — `kpt.feature.home.HomeScreen` carries zero demo imp
 ```kotlin
 val MifosHomeModule = module
 ```
-_No KDoc at source._
+Koin module providing the home feature `HomeViewModel`.
 
 ### `feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt`
 
 ```kotlin
 fun HomeScreenContent(
 ```
-_No KDoc at source._
+Stateless home screen body that renders the wallet dashboard for the given `uiState` and `viewState`.
 
 ```kotlin
 fun CardDropdownBox(
 ```
-_No KDoc at source._
+Overflow icon button that opens a dropdown menu to make the account the default one via `onClickDefault`.
 
 ### `feature/home/src/commonMain/kotlin/kpt/feature/home/navigation/HomeNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToHome(navOptions: NavOptions? = null) = navigate(HOME_ROUTE, navOptions)
 ```
-_No KDoc at source._
+Navigates to the home screen, optionally applying `navOptions`.
 
 ```kotlin
 fun NavGraphBuilder.homeScreen(
 ```
-_No KDoc at source._
+Registers the home screen destination in the navigation graph with its navigation callbacks.
 
 ### `feature/home/src/commonMain/kotlin/kpt/feature/home/ui/TestTags.kt`
 
@@ -205,5 +205,5 @@ Test-tag registry for the home / bottom-nav dashboard. Consumed by: - `HomeScree
 
 ---
 
-_8 type(s), 10 function(s)/property(ies); 5 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
+_8 type(s), 10 function(s)/property(ies); 18 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
 <!-- api-docs:end -->

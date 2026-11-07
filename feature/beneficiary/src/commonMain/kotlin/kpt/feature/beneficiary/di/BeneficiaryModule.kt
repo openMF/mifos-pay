@@ -14,6 +14,7 @@ import kpt.feature.beneficiary.deletebeneficiary.DeleteBeneficiaryViewModel
 import kpt.feature.beneficiary.list.BeneficiaryListViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the beneficiary add/edit, list and delete ViewModels. */
 val BeneficiaryModule = module {
     viewModelOf(::AddEditBeneficiaryViewModel)
     viewModelOf(::BeneficiaryListViewModel)

@@ -11,6 +11,16 @@ package kpt.core.model.client
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Postal address submitted when registering a client.
+ *
+ * @property addressLine1 First address line.
+ * @property addressLine2 Second address line.
+ * @property postalCode Postal code.
+ * @property stateProvinceId Id of the state or province.
+ * @property countryId Id of the country.
+ * @property addressTypeId Id of the address type; defaults to 805.
+ */
 @Parcelize
 data class ClientAddress(
     val addressLine1: String,

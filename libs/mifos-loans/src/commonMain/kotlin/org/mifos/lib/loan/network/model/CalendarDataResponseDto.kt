@@ -11,6 +11,33 @@ package org.mifos.lib.loan.network.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Network response DTO for the calendar data, as returned by the Fineract loans API.
+ *
+ * @property id Unique identifier.
+ * @property calendarInstanceId Identifier of the calendar instance.
+ * @property entityId Identifier of the entity the calendar is attached to.
+ * @property entityType Type of the entity the calendar is attached to.
+ * @property title Title.
+ * @property startDate Start date.
+ * @property endDate End date.
+ * @property duration Duration.
+ * @property type Type.
+ * @property repeating Whether the event repeats.
+ * @property recurrence Recurrence rule.
+ * @property frequency Frequency.
+ * @property interval Interval between occurrences.
+ * @property repeatsOnNthDayOfMonth Repeats on nth day of month.
+ * @property firstReminder Days before the event of the first reminder.
+ * @property secondReminder Days before the event of the second reminder.
+ * @property humanReadable Human-readable description of the recurrence.
+ * @property createdDate Date the record was created.
+ * @property lastUpdatedDate Date the record was last updated.
+ * @property createdByUserId Identifier of the user who created the record.
+ * @property createdByUsername Username of the user who created the record.
+ * @property lastUpdatedByUserId Identifier of the user who last updated the record.
+ * @property lastUpdatedByUsername Username of the user who last updated the record.
+ */
 @Serializable
 data class CalendarDataResponseDto(
     val id: Int? = null,

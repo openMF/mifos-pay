@@ -32,8 +32,8 @@ import kpt.core.data.util.Constants
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.kyc.KycLevel2State.DialogState.Error
-import mifos_pay.feature.kyc.generated.resources.Res
-import mifos_pay.feature.kyc.generated.resources.feature_kyc_successkyc2
+import kpt.feature.kyc.generated.resources.Res
+import kpt.feature.kyc.generated.resources.feature_kyc_successkyc2
 import org.jetbrains.compose.resources.StringResource
 internal class KYCLevel2ViewModel(
     private val repository: DocumentRepository,

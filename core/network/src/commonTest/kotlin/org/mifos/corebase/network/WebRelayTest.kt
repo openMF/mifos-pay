@@ -15,13 +15,22 @@ import kotlin.test.assertEquals
 class WebRelayTest {
     @Test
     fun cloudflarePagesHostsUseTheirOwnRelay() {
-        assertEquals("https://mifos-pay.pages.dev", relayOriginFor("mifos-pay.pages.dev", "https://mifos-pay.pages.dev"))
-        assertEquals("https://abc.mifos-pay.pages.dev", relayOriginFor("abc.mifos-pay.pages.dev", "https://abc.mifos-pay.pages.dev"))
+        assertEquals(
+            "https://mifos-pay.pages.dev",
+            relayOriginFor("mifos-pay.pages.dev", "https://mifos-pay.pages.dev"),
+        )
+        assertEquals(
+            "https://abc.mifos-pay.pages.dev",
+            relayOriginFor("abc.mifos-pay.pages.dev", "https://abc.mifos-pay.pages.dev"),
+        )
     }
 
     @Test
     fun otherHostsUseTheHostedRelay() {
         assertEquals(HOSTED_RELAY_ORIGIN, relayOriginFor("openmf.github.io", "https://openmf.github.io"))
-        assertEquals(HOSTED_RELAY_ORIGIN, relayOriginFor("evilpages.dev.example.com", "https://evilpages.dev.example.com"))
+        assertEquals(
+            HOSTED_RELAY_ORIGIN,
+            relayOriginFor("evilpages.dev.example.com", "https://evilpages.dev.example.com"),
+        )
     }
 }

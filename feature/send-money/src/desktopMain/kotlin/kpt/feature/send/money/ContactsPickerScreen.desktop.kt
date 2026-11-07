@@ -11,6 +11,7 @@ package kpt.feature.send.money
 
 import androidx.compose.runtime.Composable
 
+/** Desktop actual: no permission prompt is needed, so nothing is shown. */
 @Composable
 actual fun ContactPermissionHandler() {
 }

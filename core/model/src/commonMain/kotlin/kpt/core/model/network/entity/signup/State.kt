@@ -12,6 +12,13 @@ package kpt.core.model.network.entity.signup
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * A state or province option used in the signup address form.
+ *
+ * @property id Unique id.
+ * @property name Display name.
+ * @property countryId Id of the country.
+ */
 @Serializable
 data class State(
     val id: String,

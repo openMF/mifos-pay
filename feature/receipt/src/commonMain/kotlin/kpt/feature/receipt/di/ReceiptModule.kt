@@ -12,6 +12,9 @@ package kpt.feature.receipt.di
 import kpt.feature.receipt.ReceiptViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/**
+ * Koin module providing the [kpt.feature.receipt.ReceiptViewModel] for the receipt feature.
+ */
 val ReceiptModule = module {
     viewModelOf(::ReceiptViewModel)
 }

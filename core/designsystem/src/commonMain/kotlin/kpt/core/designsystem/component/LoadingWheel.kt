@@ -49,6 +49,7 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.theme.fork.MifosTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Animated loading wheel with an accessibility content description. */
 @Composable
 fun MifosLoadingWheel(
     contentDesc: String,
@@ -130,6 +131,7 @@ fun MifosLoadingWheel(
     }
 }
 
+/** Loading wheel shown on a rounded overlay surface above the content. */
 @Composable
 fun MifosOverlayLoadingWheel(
     contentDesc: String,
@@ -148,6 +150,7 @@ fun MifosOverlayLoadingWheel(
     }
 }
 
+/** Overlay loading wheel with a default "Loading" description. */
 @Composable
 fun MfOverlayLoadingWheel(
     modifier: Modifier = Modifier,
@@ -167,6 +170,7 @@ fun MfOverlayLoadingWheel(
     }
 }
 
+/** Loading wheel with a default "Loading" description and configurable background color. */
 @Composable
 fun MfLoadingWheel(
     modifier: Modifier = Modifier,
@@ -187,6 +191,7 @@ fun MfLoadingWheel(
     }
 }
 
+/** Preview of [MifosLoadingWheel]. */
 @Preview
 @Composable
 fun MifosLoadingWheelPreview() {
@@ -197,6 +202,7 @@ fun MifosLoadingWheelPreview() {
     }
 }
 
+/** Preview of [MifosOverlayLoadingWheel]. */
 @Preview
 @Composable
 fun NiaOverlayLoadingWheelPreview() {

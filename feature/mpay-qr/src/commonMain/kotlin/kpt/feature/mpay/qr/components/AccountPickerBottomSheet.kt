@@ -34,10 +34,10 @@ import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.Currency
 import kpt.core.model.savingsaccount.Status
-import mifos_pay.feature.mpay_qr.generated.resources.Res
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_has_external_id
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_no_external_id
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_select_account
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_has_external_id
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_no_external_id
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_select_account
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /**

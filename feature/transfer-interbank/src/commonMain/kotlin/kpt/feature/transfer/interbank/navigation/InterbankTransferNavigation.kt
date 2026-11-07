@@ -16,6 +16,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import kpt.feature.transfer.interbank.InterbankTransferFlowScreen
+/**
+ * Navigation route of the interbank transfer flow, optionally prefilled from a scanned QR code.
+ * @property returnDestination Destination to return to after the flow.
+ * @property phoneNumber Prefilled recipient phone number, or null.
+ * @property recipientName Prefilled recipient name, or null.
+ * @property amount Prefilled amount, or null.
+ */
 @Serializable
 data class InterbankTransferRoute(
     val returnDestination: String = "home",
@@ -24,6 +31,7 @@ data class InterbankTransferRoute(
     val amount: String? = null,
 )
 
+/** Navigates to the interbank transfer flow with optional prefilled recipient details. */
 fun NavController.navigateToInterbankTransfer(
     returnDestination: String = "home",
     phoneNumber: String? = null,
@@ -42,6 +50,7 @@ fun NavController.navigateToInterbankTransfer(
     )
 }
 
+/** Registers the interbank transfer destination. */
 fun NavGraphBuilder.interbankTransferScreen(
     onBackClick: () -> Unit,
     onTransferSuccess: () -> Unit,

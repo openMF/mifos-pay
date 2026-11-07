@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.LayoutDirection
 
+/** Flips the content horizontally when the layout direction is right-to-left. */
 @Stable
 @Composable
 fun Modifier.mirrorIfRtl(): Modifier =
@@ -40,6 +41,7 @@ fun Modifier.mirrorIfRtl(): Modifier =
         this
     }
 
+/** Moves focus to the next/previous element when Tab/Shift+Tab is pressed (desktop and web keyboards). */
 @Stable
 @Composable
 fun Modifier.tabNavigation(): Modifier {
@@ -60,6 +62,7 @@ fun Modifier.tabNavigation(): Modifier {
     }
 }
 
+/** Makes the element clickable without a ripple unless an [indication] is supplied. */
 fun Modifier.onClick(
     indication: Indication? = null,
     enabled: Boolean = true,

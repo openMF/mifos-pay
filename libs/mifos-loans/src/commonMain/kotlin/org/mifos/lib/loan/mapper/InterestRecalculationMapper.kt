@@ -14,6 +14,7 @@ import org.mifos.lib.loan.core.model.InterestRecalculationData
 import org.mifos.lib.loan.network.model.CalendarDataResponseDto
 import org.mifos.lib.loan.network.model.InterestRecalculationDataResponseDto
 
+/** Maps this interest recalculation DTO to the [InterestRecalculationData] domain model. */
 fun InterestRecalculationDataResponseDto.toModel(): InterestRecalculationData =
     InterestRecalculationData(
         id = id,
@@ -31,6 +32,7 @@ fun InterestRecalculationDataResponseDto.toModel(): InterestRecalculationData =
         allowCompoundingOnEod = allowCompoundingOnEod,
     )
 
+/** Maps this calendar DTO to the [CalendarData] domain model. */
 fun CalendarDataResponseDto.toModel(): CalendarData =
     CalendarData(
         id = id,

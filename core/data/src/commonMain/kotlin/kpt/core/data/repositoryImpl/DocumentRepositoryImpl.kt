@@ -22,6 +22,7 @@ import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.DocumentRepository
 import kpt.core.model.network.entity.noncore.Document
 import kpt.core.network.FineractApiManager
+/** Default [DocumentRepository] backed by the document API. */
 class DocumentRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

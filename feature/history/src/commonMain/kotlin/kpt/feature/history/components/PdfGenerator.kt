@@ -33,8 +33,10 @@ import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionType
 import kotlin.time.ExperimentalTime
 
+/** Builds the HTML document used to render the transaction history as a PDF. */
 object HistoryHtmlTemplate {
 
+    /** Returns the HTML statement for [accountNumber] and [transactionType] listing the given [transactions]. */
     @OptIn(ExperimentalTime::class)
     fun generate(
         accountNumber: String,

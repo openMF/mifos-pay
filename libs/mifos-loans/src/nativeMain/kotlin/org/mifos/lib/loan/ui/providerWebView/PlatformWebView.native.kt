@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewState
 
+/** Native actual: renders [url] in a multiplatform WebView. */
 @Composable
 actual fun PlatformWebView(url: String, modifier: Modifier) {
     val state = rememberWebViewState(url)

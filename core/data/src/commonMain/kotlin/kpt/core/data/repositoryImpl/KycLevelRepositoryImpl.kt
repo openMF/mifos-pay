@@ -18,6 +18,7 @@ import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.KycLevelRepository
 import kpt.core.model.kyc.KYCLevel1Details
 import kpt.core.network.FineractApiManager
+/** Default [KycLevelRepository] backed by the KYC level 1 API. */
 class KycLevelRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

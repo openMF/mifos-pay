@@ -223,3 +223,8 @@ deployment/fastlane/.listing_sync_state.json
 # `KotlinMultiplatformLinkedPackageDylib` subpackage, whereas this committed copy depends on the
 # dev_gitlive_* subpackages directly. Do not "refresh" it by copying the build output — that is a
 # migration to a different linkage model, not a version bump.
+
+# Product-definition state (screens, tester flows, run logs) lives in the WORKSPACE project's
+# idea-layer, never in the source repo — a copy here drifts from the one the tooling reads.
+/idea-layer/
+/maestro/

@@ -39,12 +39,18 @@ class FastMpayViewModel(
 ) {
 
     private val _resultFlow = MutableStateFlow<QrProcessResult?>(null)
+
+    /** Result of processing the scanned QR data, or null until available. */
     val resultFlow = _resultFlow.asStateFlow()
 
     private val _errorFlow = MutableStateFlow<String?>(null)
+
+    /** Error message from QR processing, or null when there is none. */
     val errorFlow = _errorFlow.asStateFlow()
 
     private val _isLoading = MutableStateFlow(true)
+
+    /** True while the scanned QR data is being processed. */
     val isLoading = _isLoading.asStateFlow()
 
     init {
@@ -99,10 +105,17 @@ class FastMpayViewModel(
     }
 }
 
+/** Empty UI state; the Fast Mpay screen holds no state of its own. */
 data object FastMpayState
 
+/** One-off events of Fast Mpay (none defined). */
 sealed interface FastMpayEvent
 
+/** User actions handled by the Fast Mpay ViewModel. */
 sealed interface FastMpayAction {
+    /**
+     * Asks the ViewModel to process a scanned QR payload.
+     * @property encodedQrData Encoded QR string, or null if nothing was scanned.
+     */
     data class ProcessQrData(val encodedQrData: String?) : FastMpayAction
 }

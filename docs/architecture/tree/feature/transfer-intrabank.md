@@ -22,10 +22,10 @@ ViewModels: `IntraBankHubViewModel`, `SelectScreenViewModel`, `TransferConfirmVi
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/transfer-intrabank sha=344141e1e2bd0851da2cfff441e3e0e9a2f2a9b2 -->
+<!-- api-docs:begin module=feature/transfer-intrabank sha=296404f8e24b74809e629150818596f5e20f7b0a -->
 ## API reference
 
-_Generated from `feature/transfer-intrabank` at tree `344141e1e2bd` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/transfer-intrabank` at tree `296404f8e24b` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,7 +38,7 @@ rather than re-declaring what they already own.
 ```kotlin
 fun ClientCard(
 ```
-_No KDoc at source._
+Card showing a client's name and account number with an edit action.
 
 ### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/confirm/TransferConfirmViewModel.kt`
 
@@ -66,16 +66,16 @@ internal fun TransferConfirmScreen(
 ```kotlin
 val IntraBankModule = module
 ```
-_No KDoc at source._
+Koin module providing the intra-bank transfer view models.
 
 ### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt`
 
 ```kotlin
 fun IntraBankHubScreen(
 ```
-_No KDoc at source._
+Intra-bank transfer hub with quick actions, recent payees and saved beneficiaries.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/navigation/IntraBankHubNavigation.kt:44</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/navigation/IntraBankHubNavigation.kt:47</code></summary>
 
 ```kotlin
 ) {
@@ -94,12 +94,12 @@ _No KDoc at source._
 ```kotlin
 class IntraBankHubViewModel(
 ```
-_No KDoc at source._
+ViewModel for the intra-bank hub; loads recent payees, beneficiaries and the transfer template and handles hub actions.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/di/IntraBankModule.kt:18</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/di/IntraBankModule.kt:19</code></summary>
 
 ```kotlin
-import org.koin.dsl.module
+/** Koin module providing the intra-bank transfer view models. */
 val IntraBankModule = module {
     viewModelOf(::IntraBankHubViewModel)
     viewModelOf(::SelectScreenViewModel)
@@ -112,9 +112,9 @@ val IntraBankModule = module {
 ```kotlin
 enum class PayeeTab
 ```
-_No KDoc at source._
+Tabs of the payee list on the hub.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:183</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:184</code></summary>
 
 ```kotlin
             // Content based on selected tab
@@ -131,9 +131,9 @@ _No KDoc at source._
 ```kotlin
 data class IntraBankHubState(
 ```
-_No KDoc at source._
+UI state of the intra-bank hub.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:124</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:125</code></summary>
 
 ```kotlin
 @Composable
@@ -150,9 +150,9 @@ private fun IntraBankHubScreenContent(
 ```kotlin
 enum class RecentPayeesState
 ```
-_No KDoc at source._
+Loading state of the recent payees list.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:185</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:186</code></summary>
 
 ```kotlin
                 PayeeTab.Recents -> {
@@ -169,9 +169,9 @@ _No KDoc at source._
 ```kotlin
 enum class BeneficiariesState
 ```
-_No KDoc at source._
+Loading state of the beneficiaries list.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:233</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:234</code></summary>
 
 ```kotlin
                 PayeeTab.Beneficiaries -> {
@@ -188,9 +188,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface IntraBankHubEvent
 ```
-_No KDoc at source._
+One-shot navigation events emitted by `IntraBankHubViewModel`.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:81</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -207,9 +207,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface IntraBankHubAction
 ```
-_No KDoc at source._
+Actions handled by `IntraBankHubViewModel`.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:118</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:119</code></summary>
 
 ```kotlin
 
@@ -228,9 +228,9 @@ _No KDoc at source._
 ```kotlin
 fun BeneficiaryCard(
 ```
-_No KDoc at source._
+Card showing a saved beneficiary with a pay button.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:246</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:247</code></summary>
 
 ```kotlin
                         BeneficiariesState.Success -> {
@@ -249,9 +249,9 @@ _No KDoc at source._
 ```kotlin
 fun EmptyBeneficiariesState(
 ```
-_No KDoc at source._
+Placeholder shown when there are no beneficiaries, with an optional add-payee action.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:257</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:258</code></summary>
 
 ```kotlin
                         BeneficiariesState.Empty -> {
@@ -270,9 +270,9 @@ _No KDoc at source._
 ```kotlin
 fun EmptyRecentsState(
 ```
-_No KDoc at source._
+Placeholder shown when there are no recent payees, with an optional add-payee action.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:217</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:218</code></summary>
 
 ```kotlin
                         RecentPayeesState.Empty -> {
@@ -291,9 +291,9 @@ _No KDoc at source._
 ```kotlin
 fun QuickActionsGrid(
 ```
-_No KDoc at source._
+Grid of quick actions on the hub: add payee, history, scan QR and request money.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:165</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:166</code></summary>
 
 ```kotlin
 
@@ -312,9 +312,9 @@ _No KDoc at source._
 ```kotlin
 fun RecentPayeeCard(
 ```
-_No KDoc at source._
+Card showing a recent payee with a pay button.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:198</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:199</code></summary>
 
 ```kotlin
                         RecentPayeesState.Success -> {
@@ -333,17 +333,17 @@ _No KDoc at source._
 ```kotlin
 data object IntraBankHubRoute
 ```
-_No KDoc at source._
+Navigation route of the intra-bank hub.
 
 ```kotlin
 fun NavController.navigateToIntraBankHub(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the intra-bank hub.
 
 ```kotlin
 fun NavGraphBuilder.intraBankHubScreen(
 ```
-_No KDoc at source._
+Registers the intra-bank hub destination and its navigation callbacks.
 
 ### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/navigation/TransferConfirmNavigation.kt`
 
@@ -381,9 +381,9 @@ Registers the transfer-confirm destination. Hoists the destination's own `SavedS
 ```kotlin
 fun SelectPayeeScreen(
 ```
-_No KDoc at source._
+Screen for choosing the destination account by number or name and proceeding to the transfer.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectScreenNavigation.kt:46</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectScreenNavigation.kt:52</code></summary>
 
 ```kotlin
     composable<SelectAccountRoute> { backStackEntry ->
@@ -402,26 +402,26 @@ _No KDoc at source._
 ```kotlin
 data class SelectAccountRoute(
 ```
-_No KDoc at source._
+Navigation route of the select-account screen.
 
 ```kotlin
 fun NavController.navigateToSelectAccountScreen(
 ```
-_No KDoc at source._
+Navigates to the select-account screen.
 
 ```kotlin
 fun NavGraphBuilder.selectAccountScreenDestination(
 ```
-_No KDoc at source._
+Registers the select-account destination and its navigation callbacks.
 
 ### `feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectScreenViewModel.kt`
 
 ```kotlin
 class SelectScreenViewModel(
 ```
-_No KDoc at source._
+ViewModel for choosing a destination account; loads the destination options and filters them by the entered text.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/di/IntraBankModule.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/di/IntraBankModule.kt:20</code></summary>
 
 ```kotlin
 val IntraBankModule = module {
@@ -436,9 +436,9 @@ val IntraBankModule = module {
 ```kotlin
 data class SelectScreenState(
 ```
-_No KDoc at source._
+UI state of the select-account screen.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:125</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:126</code></summary>
 
 ```kotlin
 @Composable
@@ -455,9 +455,9 @@ private fun SelectAccountScreen(
 ```kotlin
 sealed interface SelectScreenEvent
 ```
-_No KDoc at source._
+One-shot events emitted by `SelectScreenViewModel`.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:97</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:98</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -474,9 +474,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface SelectScreenAction
 ```
-_No KDoc at source._
+Actions handled by `SelectScreenViewModel`.
 
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:127</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/selectScreen/SelectPayeeScreen.kt:128</code></summary>
 
 ```kotlin
     state: SelectScreenState,
@@ -495,19 +495,19 @@ _No KDoc at source._
 ```kotlin
 data class TransferSuccessRoute(
 ```
-_No KDoc at source._
+Navigation route of the transfer success screen.
 
 ```kotlin
 fun NavGraphBuilder.transferSuccessScreen(
 ```
-_No KDoc at source._
+Registers the transfer success destination.
 
 ```kotlin
 fun NavController.navigateTransferSuccess(
 ```
-_No KDoc at source._
+Navigates to the transfer success screen for `transferResult`.
 
 ---
 
-_16 type(s), 17 function(s)/property(ies); 4 carry KDoc at source; 0 authored example(s); 20 live call site(s)._
+_16 type(s), 17 function(s)/property(ies); 33 carry KDoc at source; 0 authored example(s); 20 live call site(s)._
 <!-- api-docs:end -->

@@ -40,15 +40,15 @@ import kpt.core.ui.utils.EventsEffect
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Content
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Error
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Loading
-import mifos_pay.feature.invoices.generated.resources.Res
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_amount
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_consumer_id
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_date
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_invoice_details
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_items_bought
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_merchant_id
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_status
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_transaction_id
+import kpt.feature.invoices.generated.resources.Res
+import kpt.feature.invoices.generated.resources.feature_invoices_amount
+import kpt.feature.invoices.generated.resources.feature_invoices_consumer_id
+import kpt.feature.invoices.generated.resources.feature_invoices_date
+import kpt.feature.invoices.generated.resources.feature_invoices_invoice_details
+import kpt.feature.invoices.generated.resources.feature_invoices_items_bought
+import kpt.feature.invoices.generated.resources.feature_invoices_merchant_id
+import kpt.feature.invoices.generated.resources.feature_invoices_status
+import kpt.feature.invoices.generated.resources.feature_invoices_transaction_id
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 @Composable

@@ -28,9 +28,6 @@ import kotlin.time.Clock
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `TransferDetailEntity`. Shared with the DAO's writes. */
-private const val TRANSFER_DETAIL_TABLE = "wallet_transfer_details"
-
 /**
  * Build the SINGLE-ROW-PER-KEY read [Store] for account-transfer details
  * (GOAL D13 — a variation of the `history` archetype). Mirrors

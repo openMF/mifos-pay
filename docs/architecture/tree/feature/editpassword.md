@@ -22,10 +22,10 @@ ViewModels: `EditPasswordViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/editpassword sha=da93fe84dfbdab8e69009af9074eb5c90e4c2c0e -->
+<!-- api-docs:begin module=feature/editpassword sha=acf17aa6223407bce5f2232ade012cda2e783cf3 -->
 ## API reference
 
-_Generated from `feature/editpassword` at tree `da93fe84dfbd` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/editpassword` at tree `acf17aa62234` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,21 +38,21 @@ rather than re-declaring what they already own.
 ```kotlin
 val EditPasswordModule = module
 ```
-_No KDoc at source._
+Koin module providing the edit-password ViewModel.
 
 ### `feature/editpassword/src/commonMain/kotlin/kpt/feature/editpassword/navigation/EditPasswordScreenNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.editPasswordScreen(
 ```
-_No KDoc at source._
+Registers the edit-password screen; `navigateBack` pops it, `onLogOut` runs after a password change.
 
 ```kotlin
 fun NavController.navigateToEditPassword()
 ```
-_No KDoc at source._
+Navigates to the edit-password screen.
 
 ---
 
-_0 type(s), 3 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
+_0 type(s), 3 function(s)/property(ies); 3 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
 <!-- api-docs:end -->

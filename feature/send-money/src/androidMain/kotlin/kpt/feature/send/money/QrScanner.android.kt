@@ -19,6 +19,11 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import org.koin.core.module.Module
 
+/**
+ * [QrScanner] backed by the Google Code Scanner; installs the Play scanner module if missing.
+ * @property scanner Google Play services barcode scanner client.
+ * @property playModule Client used to check for and install the scanner module.
+ */
 class QrScannerImp(
     private val scanner: GmsBarcodeScanner,
     private val playModule: ModuleInstallClient,
@@ -54,5 +59,6 @@ class QrScannerImp(
     }
 }
 
+/** Android actual: provides [PlayScannerModule] as the QR scanner Koin module. */
 actual val ScannerModule: Module
     get() = PlayScannerModule

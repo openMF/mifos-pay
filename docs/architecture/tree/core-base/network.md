@@ -239,7 +239,7 @@ val stagingClient = httpClient {
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:101</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:102</code></summary>
 
 ```kotlin
                             socketTimeoutMillis = 30_000
@@ -258,11 +258,11 @@ class DynamicBaseUrlConfig
 ```
 Configuration class for `DynamicBaseUrlPlugin`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt:33</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt:34</code></summary>
 
 ```kotlin
-    private val urlType: MultiUrlConfigProvider.UrlType,
 ) {
+    /** Installs [DynamicBaseUrlPlugin] into a Ktor client. */
     companion object Plugin : HttpClientPlugin<DynamicBaseUrlConfig, DynamicBaseUrlPlugin> {
         override val key: AttributeKey<DynamicBaseUrlPlugin> =
             AttributeKey("DynamicBaseUrlPlugin")
@@ -294,7 +294,7 @@ val client = httpClient(
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:89</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:90</code></summary>
 
 ```kotlin
                             baseUrl = "https://placeholder.local/",
@@ -341,7 +341,7 @@ class DynamicBaseUrlPlugin private constructor(
     private val multiConfigProvider: MultiUrlConfigProvider?,
     private val urlType: MultiUrlConfigProvider.UrlType,
 ) {
-    companion object Plugin : HttpClientPlugin<DynamicBaseUrlConfig, DynamicBaseUrlPlugin> {
+    /** Installs [DynamicBaseUrlPlugin] into a Ktor client. */
 ```
 
 </details>
@@ -624,9 +624,8 @@ Represents standardized error types for remote or network operations. This enum 
             } else {
                 ScreenState.Error(error = throwable, isNetworkError = false)
             }
-        }
-        if (throwable is NetworkException) {
-            return ScreenState.NoNetwork(isCaptivePortal = false)
+
+        is NetworkException, is IOException -> ScreenState.NoNetwork(isCaptivePortal = false)
 ```
 
 </details>
@@ -755,9 +754,9 @@ if (configClient.isConfigured) {
 class SupabaseApiManager(
     private val supabaseClient: SupabaseConfigClient,
 ) {
+    /** Service for fetching the app configuration (server instances) from Supabase. */
     val appConfigService by lazy {
         AppConfigService(supabaseClient.postgrest)
-    }
 ```
 
 </details>
@@ -794,8 +793,8 @@ class SupabaseConfigClient(
     private val credentials: SupabaseCredentials,
     private val logLevel: LogLevel = LogLevel.INFO,
 ) {
+    /** Lazily created Supabase client with the Postgrest plugin installed. */
     val client: SupabaseClient by lazy {
-        createSupabaseClient(
 ```
 
 </details>

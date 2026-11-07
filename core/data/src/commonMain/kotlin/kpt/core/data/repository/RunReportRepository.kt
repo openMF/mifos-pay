@@ -11,8 +11,10 @@ package kpt.core.data.repository
 
 import kpt.core.common.ScreenStateStream
 import kpt.core.model.savingsaccount.Transaction
+/** Repository for running Fineract reports. */
 interface RunReportRepository {
     // Phase-3 cutover — reads on ScreenState.
+    /** Fetches a transaction receipt by running a report. */
     suspend fun getTransactionReceipt(
         outputType: String,
         transactionId: String,

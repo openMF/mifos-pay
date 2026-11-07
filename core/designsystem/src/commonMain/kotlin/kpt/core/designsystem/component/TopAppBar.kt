@@ -27,6 +27,7 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Top app bar with a title and optional navigation icon and actions. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosTopAppBar(
@@ -69,6 +70,7 @@ fun MifosTopAppBar(
     )
 }
 
+/** Top app bar with a title and a back navigation button when [onNavigationClick] is provided. */
 @Composable
 fun MifosNavigationTopAppBar(
     titleRes: String,

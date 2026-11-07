@@ -11,6 +11,9 @@ package kpt.feature.savedcards.components
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Converts this color to HSL, returned as a float array of hue, saturation and lightness.
+ */
 fun Color.toHsl(): FloatArray {
     val redComponent = red
     val greenComponent = green
@@ -43,6 +46,9 @@ fun Color.toHsl(): FloatArray {
     return floatArrayOf(hue.coerceIn(0f, 360f), saturation, lightness)
 }
 
+/**
+ * Builds a [Color] from [hue] (degrees), [saturation] and [lightness] (0..1).
+ */
 fun hslToColor(hue: Float, saturation: Float, lightness: Float): Color {
     val chroma = (1 - kotlin.math.abs(2 * lightness - 1)) * saturation
     val secondaryColorComponent = chroma * (1 - kotlin.math.abs((hue / 60) % 2 - 1))
@@ -83,6 +89,9 @@ fun hslToColor(hue: Float, saturation: Float, lightness: Float): Color {
     return Color(red = red, green = green, blue = blue)
 }
 
+/**
+ * Returns this color with its saturation replaced by [newSaturation], keeping hue and lightness.
+ */
 fun Color.setSaturation(newSaturation: Float): Color {
     val hslValues = this.toHsl()
     // Adjusting the saturation while keeping hue and lightness the same

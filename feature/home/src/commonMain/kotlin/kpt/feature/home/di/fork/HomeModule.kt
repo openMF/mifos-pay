@@ -12,6 +12,7 @@ package kpt.feature.home.di.fork
 import kpt.feature.home.HomeViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the home feature [HomeViewModel]. */
 val MifosHomeModule = module {
     viewModelOf(::HomeViewModel)
 }

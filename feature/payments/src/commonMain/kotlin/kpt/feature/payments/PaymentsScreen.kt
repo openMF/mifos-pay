@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import kpt.core.ui.MifosScrollableTabRow
 import kpt.core.ui.utility.TabContent
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Route-level composable of the payments screen, hosting the given [tabContents]. */
 @Composable
 fun PaymentsRoute(
     tabContents: List<TabContent>,
@@ -59,12 +60,24 @@ private fun PaymentScreenContent(
 //  https://venus.mifos.community/fineract-provider/api/v1/standinginstructions?clientId=2
 //  https://venus.mifos.community/fineract-provider/api/v1/datatables/invoice/2
 //
+/** Tabs available on the payments screen. */
 enum class PaymentsScreenContents {
+    /** Send money tab. */
     SEND,
+
+    /** Request money tab. */
     REQUEST,
+
+    /** Transaction history tab. */
     HISTORY,
+
+    /** Standing instructions tab. */
     SI,
+
+    /** Invoices tab. */
     INVOICES,
+
+    /** Autopay tab. */
     AUTOPAY,
 }
 

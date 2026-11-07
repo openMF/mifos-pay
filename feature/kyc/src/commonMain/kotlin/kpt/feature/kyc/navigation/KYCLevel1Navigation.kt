@@ -13,12 +13,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import kpt.core.ui.composableWithPushTransitions
 import kpt.feature.kyc.KYCLevel1Screen
+/** Navigation route of the KYC level 1 screen. */
 const val KYC_LEVEL_1_ROUTE = "kyc_level_1_route"
 
+/** Navigates to the KYC level 1 screen. */
 fun NavController.navigateToKYCLevel1() {
     this.navigate(KYC_LEVEL_1_ROUTE)
 }
 
+/** Registers the KYC level 1 destination in the navigation graph. */
 fun NavGraphBuilder.kycLevel1Screen(
     navigateBack: () -> Unit,
     navigateToKycLevel2: () -> Unit,

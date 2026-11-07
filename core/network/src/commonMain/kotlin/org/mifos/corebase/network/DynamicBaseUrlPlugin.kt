@@ -30,6 +30,7 @@ class DynamicBaseUrlPlugin private constructor(
     private val multiConfigProvider: MultiUrlConfigProvider?,
     private val urlType: MultiUrlConfigProvider.UrlType,
 ) {
+    /** Installs [DynamicBaseUrlPlugin] into a Ktor client. */
     companion object Plugin : HttpClientPlugin<DynamicBaseUrlConfig, DynamicBaseUrlPlugin> {
         override val key: AttributeKey<DynamicBaseUrlPlugin> =
             AttributeKey("DynamicBaseUrlPlugin")
@@ -93,8 +94,13 @@ class DynamicBaseUrlPlugin private constructor(
  * Configuration class for [DynamicBaseUrlPlugin].
  */
 class DynamicBaseUrlConfig {
+    /** Provider of a single dynamic base URL. */
     var configProvider: DynamicUrlConfigProvider? = null
+
+    /** Provider of base URLs for multiple URL types. */
     var multiConfigProvider: MultiUrlConfigProvider? = null
+
+    /** Which URL type to use when [multiConfigProvider] is set. */
     var urlType: MultiUrlConfigProvider.UrlType = MultiUrlConfigProvider.UrlType.MAIN
 }
 

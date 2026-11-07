@@ -34,6 +34,7 @@ private const val CACHED_UPCOMING_PAYMENTS_KEY = "cached_upcoming_payments"
 private const val CACHED_AUTO_PAY_HISTORY_KEY = "cached_autopay_history"
 private const val LAST_SYNC_TIMESTAMP_KEY = "last_sync_timestamp"
 
+/** Settings-backed local cache for AutoPay: enabled flag, schedules, upcoming payments, history and last-sync time. */
 @OptIn(ExperimentalSerializationApi::class)
 class AutoPayPreferencesDataSource(
     private val settings: Settings,
@@ -72,12 +73,22 @@ class AutoPayPreferencesDataSource(
         settings.getLong(LAST_SYNC_TIMESTAMP_KEY, 0L),
     )
 
+    /** Whether AutoPay is enabled. */
     val isAutoPayEnabled: StateFlow<Boolean> = _isAutoPayEnabled
+
+    /** Cached AutoPay schedules. */
     val cachedAutoPaySchedules: Flow<List<AutoPay>> = _cachedAutoPaySchedules
+
+    /** Cached upcoming scheduled payments. */
     val cachedUpcomingPayments: Flow<List<UpcomingPayment>> = _cachedUpcomingPayments
+
+    /** Cached history of executed AutoPay payments. */
     val cachedAutoPayHistory: Flow<List<AutoPayHistory>> = _cachedAutoPayHistory
+
+    /** Epoch-millis time of the last successful sync, 0 if never synced. */
     val lastSyncTimestamp: StateFlow<Long> = _lastSyncTimestamp
 
+    /** Persists the AutoPay [enabled] flag. */
     suspend fun updateAutoPayEnabled(enabled: Boolean) {
         withContext(dispatcher) {
             settings.putBoolean(IS_AUTO_PAY_ENABLED_KEY, enabled)
@@ -85,6 +96,7 @@ class AutoPayPreferencesDataSource(
         }
     }
 
+    /** Replaces the cached AutoPay [schedules]. */
     suspend fun cacheAutoPaySchedules(schedules: List<AutoPay>) {
         withContext(dispatcher) {
             settings.putAutoPaySchedules(schedules)
@@ -92,6 +104,7 @@ class AutoPayPreferencesDataSource(
         }
     }
 
+    /** Replaces the cached upcoming [payments]. */
     suspend fun cacheUpcomingPayments(payments: List<UpcomingPayment>) {
         withContext(dispatcher) {
             settings.putUpcomingPayments(payments)
@@ -99,6 +112,7 @@ class AutoPayPreferencesDataSource(
         }
     }
 
+    /** Replaces the cached AutoPay [history]. */
     suspend fun cacheAutoPayHistory(history: List<AutoPayHistory>) {
         withContext(dispatcher) {
             settings.putAutoPayHistory(history)
@@ -106,6 +120,7 @@ class AutoPayPreferencesDataSource(
         }
     }
 
+    /** Persists [timestamp] as the last sync time. */
     suspend fun updateLastSyncTimestamp(timestamp: Long) {
         withContext(dispatcher) {
             settings.putLong(LAST_SYNC_TIMESTAMP_KEY, timestamp)
@@ -113,6 +128,7 @@ class AutoPayPreferencesDataSource(
         }
     }
 
+    /** Persists the current time as the last sync time. */
     @OptIn(ExperimentalTime::class)
     suspend fun updateLastSyncTimestamp() {
         withContext(dispatcher) {
@@ -122,6 +138,7 @@ class AutoPayPreferencesDataSource(
         }
     }
 
+    /** Clears all cached AutoPay data and resets the last sync time. */
     suspend fun clearCache() {
         withContext(dispatcher) {
             settings.remove(CACHED_AUTO_PAY_SCHEDULES_KEY)
@@ -136,10 +153,12 @@ class AutoPayPreferencesDataSource(
         }
     }
 
+    /** Returns the cached schedule with [autoPayId], or null. */
     suspend fun getCachedAutoPaySchedule(autoPayId: Long): AutoPay? {
         return _cachedAutoPaySchedules.value.find { autoPay -> autoPay.id == autoPayId }
     }
 
+    /** True when the last sync is older than [maxAgeMinutes]. */
     @OptIn(ExperimentalTime::class)
     suspend fun isCacheStale(maxAgeMinutes: Long): Boolean {
         val lastSync = _lastSyncTimestamp.value

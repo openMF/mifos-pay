@@ -13,12 +13,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kpt.feature.pocket.screens.ManagePocketScreen
+/** Navigation route of the manage-pocket screen. */
 const val MANAGE_POCKET_ROUTE = "manage_pocket_route"
 
+/** Navigates to the manage-pocket screen. */
 fun NavController.navigateToManagePocket() {
     navigate(MANAGE_POCKET_ROUTE)
 }
 
+/** Registers the manage-pocket screen destination. */
 fun NavGraphBuilder.managePocketDestination(
     navigateBack: () -> Unit,
 ) {

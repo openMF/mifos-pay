@@ -28,9 +28,6 @@ import kotlin.time.Clock
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `NotificationEntity`. Shared with the DAO's writes. */
-private const val NOTIFICATIONS_TABLE = "wallet_notifications"
-
 /**
  * `notificationApi.fetchNotifications(...)` `isRead` value. The pre-store
  * `NotificationRepositoryImpl.fetchNotifications()` also hardcodes `true` —

@@ -11,6 +11,7 @@ package kpt.feature.mpay.qr.scan
 
 import androidx.compose.runtime.Composable
 
+/** Desktop actual of [rememberCameraPermissionState]. */
 @Composable
 actual fun rememberCameraPermissionState(): CameraPermissionState {
     return object : CameraPermissionState {

@@ -26,6 +26,7 @@ import kpt.core.designsystem.theme.TintTheme
 import kpt.core.designsystem.theme.darkKptColorScheme
 import kpt.core.designsystem.theme.lightKptColorScheme
 
+/** Fork-level Mifos Material 3 theme that applies the color scheme and typography to [content]. */
 @Composable
 fun MifosTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

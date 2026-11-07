@@ -31,6 +31,12 @@ import kotlinx.serialization.Serializable
  *   ]
  * }
  * ```
+ *
+ * @property developerMessage Technical message for developers.
+ * @property httpStatusCode HTTP status code as a string.
+ * @property defaultUserMessage Default message suitable for display.
+ * @property userMessageGlobalisationCode Localization key of the user message.
+ * @property errors Detailed error entries.
  */
 @Serializable
 data class MifosError(

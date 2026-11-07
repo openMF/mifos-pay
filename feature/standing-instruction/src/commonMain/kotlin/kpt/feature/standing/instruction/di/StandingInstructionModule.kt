@@ -14,6 +14,7 @@ import kpt.feature.standing.instruction.createOrUpdate.AddEditSIViewModel
 import kpt.feature.standing.instruction.details.SIDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the standing instruction view models. */
 val StandingInstructionModule = module {
     viewModelOf(::StandingInstructionViewModel)
     viewModelOf(::AddEditSIViewModel)

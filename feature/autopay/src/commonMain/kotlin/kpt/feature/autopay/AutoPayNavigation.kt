@@ -23,22 +23,54 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navOptions
 
+/** Route names and argument keys for the AutoPay screens. */
 object AutoPayNavigation {
+    /** Route of the AutoPay dashboard. */
     const val AUTO_PAY_ROUTE = "autopay_route"
+
+    /** Route of the AutoPay schedule management screen. */
     const val AUTO_PAY_SCHEDULE_MANAGEMENT_ROUTE = "autopay_schedule_management_route"
+
+    /** Route of the AutoPay preferences screen. */
     const val AUTO_PAY_PREFERENCES_ROUTE = "autopay_preferences_route"
+
+    /** Route of the AutoPay history screen. */
     const val AUTO_PAY_HISTORY_ROUTE = "autopay_history_route"
+
+    /** Route of the AutoPay schedule details screen. */
     const val AUTO_PAY_SCHEDULE_DETAILS_ROUTE = "autopay_schedule_details_route"
+
+    /** Route of the add-biller screen. */
     const val AUTO_PAY_ADD_BILLER_ROUTE = "autopay_add_biller_route"
+
+    /** Route of the biller list screen. */
     const val AUTO_PAY_BILLER_LIST_ROUTE = "autopay_biller_list_route"
+
+    /** Route of the edit-biller screen. */
     const val AUTO_PAY_EDIT_BILLER_ROUTE = "autopay_edit_biller_route"
+
+    /** Route of the add-bill screen. */
     const val AUTO_PAY_ADD_BILL_ROUTE = "autopay_add_bill_route"
+
+    /** Route of the bill list screen. */
     const val AUTO_PAY_BILL_LIST_ROUTE = "autopay_bill_list_route"
+
+    /** Route of the edit-bill screen. */
     const val AUTO_PAY_EDIT_BILL_ROUTE = "autopay_edit_bill_route"
+
+    /** Argument key for the schedule id. */
     const val SCHEDULE_ID_ARG = "scheduleId"
+
+    /** Argument key for the biller id. */
     const val BILLER_ID_ARG = "billerId"
+
+    /** Argument key for the bill id. */
     const val BILL_ID_ARG = "billId"
+
+    /** Argument key for the screen the user came from. */
     const val SOURCE_ARG = "source"
+
+    /** Argument key for the AutoPay id. */
     const val AUTO_PAY_ID_ARG = "autoPayId"
 }
 
@@ -72,55 +104,67 @@ fun NavGraphBuilder.composableWithFadeTransitions(
     )
 }
 
+/** Navigates to the AutoPay dashboard. */
 fun NavController.navigateToAutoPay(navOptions: NavOptions? = null) {
     navigate(AutoPayNavigation.AUTO_PAY_ROUTE, navOptions)
 }
 
+/** Navigates to the AutoPay schedule management screen. */
 fun NavController.navigateToScheduleManagement(navOptions: NavOptions? = null) {
     navigate(AutoPayNavigation.AUTO_PAY_SCHEDULE_MANAGEMENT_ROUTE, navOptions)
 }
 
+/** Navigates to the AutoPay preferences screen. */
 fun NavController.navigateToAutoPayPreferences(navOptions: NavOptions? = null) {
     navigate(AutoPayNavigation.AUTO_PAY_PREFERENCES_ROUTE, navOptions)
 }
 
+/** Navigates to the AutoPay history screen for the given AutoPay id. */
 fun NavController.navigateToAutoPayHistory(autoPayId: Long = 0L, navOptions: NavOptions? = null) {
     val route = "${AutoPayNavigation.AUTO_PAY_HISTORY_ROUTE}?${AutoPayNavigation.AUTO_PAY_ID_ARG}=$autoPayId"
     navigate(route, navOptions)
 }
 
+/** Navigates to the details screen of an AutoPay schedule. */
 fun NavController.navigateToAutoPayScheduleDetails(scheduleId: String, navOptions: NavOptions? = null) {
     val route = "${AutoPayNavigation.AUTO_PAY_SCHEDULE_DETAILS_ROUTE}?${AutoPayNavigation.SCHEDULE_ID_ARG}=$scheduleId"
     navigate(route, navOptions)
 }
 
+/** Navigates to the add-biller screen, noting where the user came from. */
 fun NavController.navigateToAddBiller(source: String = "direct", navOptions: NavOptions? = null) {
     val route = "${AutoPayNavigation.AUTO_PAY_ADD_BILLER_ROUTE}?${AutoPayNavigation.SOURCE_ARG}=$source"
     navigate(route, navOptions)
 }
 
+/** Navigates to the biller list screen. */
 fun NavController.navigateToBillerList(navOptions: NavOptions? = null) {
     navigate(AutoPayNavigation.AUTO_PAY_BILLER_LIST_ROUTE, navOptions)
 }
 
+/** Navigates to the edit-biller screen for a biller. */
 fun NavController.navigateToEditBiller(billerId: String, navOptions: NavOptions? = null) {
     val route = "${AutoPayNavigation.AUTO_PAY_EDIT_BILLER_ROUTE}?${AutoPayNavigation.BILLER_ID_ARG}=$billerId"
     navigate(route, navOptions)
 }
 
+/** Navigates to the add-bill screen. */
 fun NavController.navigateToAddBill(navOptions: NavOptions? = null) {
     navigate(AutoPayNavigation.AUTO_PAY_ADD_BILL_ROUTE, navOptions)
 }
 
+/** Navigates to the bill list screen. */
 fun NavController.navigateToBillList(navOptions: NavOptions? = null) {
     navigate(AutoPayNavigation.AUTO_PAY_BILL_LIST_ROUTE, navOptions)
 }
 
+/** Navigates to the edit-bill screen for a bill. */
 fun NavController.navigateToEditBill(billId: String, navOptions: NavOptions? = null) {
     val route = "${AutoPayNavigation.AUTO_PAY_EDIT_BILL_ROUTE}?${AutoPayNavigation.BILL_ID_ARG}=$billId"
     navigate(route, navOptions)
 }
 
+/** Registers all AutoPay destinations in the nav graph and wires their callbacks. */
 fun NavGraphBuilder.autoPayGraph(
     navController: NavController,
     onNavigateBack: () -> Unit = { navController.navigateUp() },

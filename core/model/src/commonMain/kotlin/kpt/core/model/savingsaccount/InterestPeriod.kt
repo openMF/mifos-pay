@@ -12,6 +12,13 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Interest-related period or calculation option (id, code and label).
+ *
+ * @property id Unique identifier.
+ * @property code Code identifying the item.
+ * @property value Human-readable label.
+ */
 @Serializable
 @Parcelize
 data class InterestPeriod(

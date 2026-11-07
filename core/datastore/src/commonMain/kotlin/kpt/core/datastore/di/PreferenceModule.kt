@@ -19,6 +19,7 @@ import kpt.core.datastore.UserPreferencesDataSource
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+/** Koin module providing Settings and the settings-backed preference data sources. */
 val PreferencesModule = module {
     factory<Settings> { Settings() }
     // Use the IO dispatcher name - MifosDispatchers.IO.name

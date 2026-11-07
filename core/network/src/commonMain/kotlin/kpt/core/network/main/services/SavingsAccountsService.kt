@@ -23,33 +23,40 @@ import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
 import kpt.core.model.savingsaccount.TransactionsEntity
 import kpt.core.model.savingsaccount.UpdateSavingAccountEntity
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for savings accounts. */
 interface SavingsAccountsService {
+    /** Fetches a savings account with its associations. */
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}")
     fun getSavingsWithAssociations(
         @Path("accountId") accountId: Long,
         @Query("associations") associationType: String,
     ): Flow<SavingsWithAssociationsEntity>
 
+    /** Fetches savings accounts. */
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS)
     suspend fun getSavingsAccounts(
         @Query("limit") limit: Int,
     ): Flow<Page<SavingsWithAssociationsEntity>>
 
+    /** Creates a savings account. */
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS)
     suspend fun createSavingsAccount(@Body savingAccount: CreateNewSavingEntity)
 
+    /** Updates a savings account. */
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}")
     suspend fun updateSavingsAccount(
         @Path("accountId") accountId: Long,
         @Body savingAccount: UpdateSavingAccountEntity,
     )
 
+    /** Blocks or unblocks a savings account. */
     @POST(ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}")
     suspend fun blockUnblockAccount(
         @Path("accountId") accountId: Long,
         @Query("command") command: String?,
     ): BlockUnblockResponseEntity
 
+    /** Fetches a transaction of a savings account. */
     @GET(
         ApiEndPoints.SAVINGS_ACCOUNTS + "/{accountId}/" + ApiEndPoints.TRANSACTIONS +
             "/{transactionId}",
@@ -59,12 +66,14 @@ interface SavingsAccountsService {
         @Path("transactionId") transactionId: Long,
     ): Flow<TransactionsEntity>
 
+    /** Initiates a pay-via-mobile transaction on the account. */
     @POST(
         ApiEndPoints.SAVINGS_ACCOUNTS +
             "/{accountId}/" + ApiEndPoints.TRANSACTIONS + "?command=deposit",
     )
     suspend fun payViaMobile(@Path("accountId") accountId: Long): Flow<TransactionsEntity>
 
+    /** Fetches the template for creating a savings account. */
     @GET(ApiEndPoints.SAVINGS_ACCOUNTS + "/template")
     fun getSavingAccountTemplate(@Query("clientId") clientId: Long): Flow<SavingAccountTemplate>
 }

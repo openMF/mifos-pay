@@ -22,10 +22,10 @@ ViewModels: `ManagePocketViewModel`, `PocketDashboardViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/pocket sha=586f3d16991ba3f1421df482e7de7ba4104ca707 -->
+<!-- api-docs:begin module=feature/pocket sha=9cccb725bc8fe326f2ab5bbd95b0717308faf8fb -->
 ## API reference
 
-_Generated from `feature/pocket` at tree `586f3d16991b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/pocket` at tree `9cccb725bc8f` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,52 +38,52 @@ rather than re-declaring what they already own.
 ```kotlin
 val PocketModule = module
 ```
-_No KDoc at source._
+Koin module providing the pocket dashboard and manage-pocket ViewModels.
 
 ### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/navigation/ManagePocketRoute.kt`
 
 ```kotlin
 fun NavController.navigateToManagePocket()
 ```
-_No KDoc at source._
+Navigates to the manage-pocket screen.
 
 ```kotlin
 fun NavGraphBuilder.managePocketDestination(
 ```
-_No KDoc at source._
+Registers the manage-pocket screen destination.
 
 ### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/navigation/PocketDashboardRoute.kt`
 
 ```kotlin
 fun NavController.navigateToPocketDashboard()
 ```
-_No KDoc at source._
+Navigates to the pocket dashboard screen.
 
 ```kotlin
 fun NavGraphBuilder.pocketDashboardScreen(
 ```
-_No KDoc at source._
+Registers the pocket dashboard screen destination.
 
 ### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/screens/PocketDashboardScreen.kt`
 
 ```kotlin
 fun AccountStatus.toColor(): Color =
 ```
-_No KDoc at source._
+Maps an account status to the theme color used to display it.
 
 ### `feature/pocket/src/commonMain/kotlin/kpt/feature/pocket/viewmodels/PocketDashboardViewModel.kt`
 
 ```kotlin
 data class PocketDashboardState(
 ```
-_No KDoc at source._
+UI state of the pocket dashboard screen.
 
 ```kotlin
 data class DetailedPocket(
 ```
-_No KDoc at source._
+A pocket (account) entry shown on the pocket dashboard.
 
-<details><summary>Used in the template — <code>feature/pocket/src/commonTest/kotlin/kpt/feature/pocket/screens/PocketDashboardScreenTest.kt:47</code></summary>
+<details><summary>Used in the template — <code>feature/pocket/src/commonTest/kotlin/kpt/feature/pocket/screens/PocketDashboardScreenUiTest.kt:47</code></summary>
 
 ```kotlin
             totalBalance = "MX$ 10,000.00",
@@ -99,5 +99,5 @@ _No KDoc at source._
 
 ---
 
-_2 type(s), 6 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 1 live call site(s)._
+_2 type(s), 6 function(s)/property(ies); 8 carry KDoc at source; 0 authored example(s); 1 live call site(s)._
 <!-- api-docs:end -->

@@ -13,7 +13,12 @@ package org.mifos.lib.loan.component
  * Defines the available methods for providing a user signature during the loan application.
  */
 enum class SignatureUploadType {
+    /** Draw the signature directly on screen. */
     SIGN,
+
+    /** Capture the signature with the camera. */
     CAPTURE,
+
+    /** Pick a signature image from the gallery. */
     GALLERY,
 }

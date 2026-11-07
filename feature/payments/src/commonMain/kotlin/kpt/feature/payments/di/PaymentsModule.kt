@@ -12,6 +12,7 @@ package kpt.feature.payments.di
 import kpt.feature.payments.TransferViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the [TransferViewModel]. */
 val PaymentsModule = module {
     viewModelOf(::TransferViewModel)
 }

@@ -29,24 +29,29 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.standing.instruction.createOrUpdate.SIAddEditType
-import mifos_pay.feature.standing_instruction.generated.resources.Res
-import mifos_pay.feature.standing_instruction.generated.resources.feature_standing_instruction_delete
-import mifos_pay.feature.standing_instruction.generated.resources.feature_standing_instruction_delete_message
-import mifos_pay.feature.standing_instruction.generated.resources.feature_standing_instruction_deleted_successfully
+import kpt.feature.standing.instruction.generated.resources.Res
+import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_delete
+import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_delete_message
+import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_deleted_successfully
 import org.jetbrains.compose.resources.StringResource
+/**
+ * ViewModel for the standing-instructions list; loads the client's instructions and handles delete and
+ * navigation actions.
+ */
 class StandingInstructionViewModel(
     private val repository: ForkPreferencesRepository,
     private val siRepository: StandingInstructionRepository,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SIUiState, SIEvent, SIAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: run {
+        /** Client id taken from the stored preferences; required to build the initial state. */
         val clientId = requireNotNull(repository.clientId.value)
 
         SIUiState(clientId = clientId)
     },
 ) {
 
-    companion object {
+    private companion object {
         private const val KEY_STATE = "standing_instruction_state"
     }
 
@@ -63,12 +68,14 @@ class StandingInstructionViewModel(
         scope = viewModelScope,
     )
 
+    /** The client's standing instructions, as a screen state. */
     val viewState: StateFlow<ScreenState<List<StandingInstruction>>> = stream.state.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ScreenState.Loading,
     )
 
+    /** Reloads the standing instructions. */
     fun retry() = stream.refresh()
 
     // Template idiom (core-base/store): the delete WRITE goes through a
@@ -165,6 +172,11 @@ class StandingInstructionViewModel(
     }
 }
 
+/**
+ * UI state of the standing-instructions list.
+ * @property clientId Id of the client whose instructions are listed.
+ * @property dialogState Dialog currently shown, or null.
+ */
 @Serializable
 data class SIUiState(
     val clientId: Long,
@@ -172,11 +184,23 @@ data class SIUiState(
     val dialogState: DialogState? = null,
 ) {
 
+    /** Dialogs the list screen can show. */
     sealed interface DialogState {
+        /** Progress dialog. */
         data object Loading : DialogState
 
+        /**
+         * Error dialog.
+         * @property message Error text.
+         */
         data class Error(val message: String) : DialogState
 
+        /**
+         * Confirmation dialog for deleting a standing instruction.
+         * @property title Dialog title.
+         * @property message Dialog message.
+         * @property onConfirm Called when the user confirms.
+         */
         data class DeleteSI(
             val title: StringResource,
             val message: StringResource,
@@ -185,21 +209,59 @@ data class SIUiState(
     }
 }
 
+/** One-shot events emitted by [StandingInstructionViewModel]. */
 sealed interface SIEvent {
+    /**
+     * Show a toast message.
+     * @property message Text resource to display.
+     */
     data class ShowToast(val message: StringResource) : SIEvent
+
+    /**
+     * Navigate to the details of an instruction.
+     * @property siId Id of the standing instruction.
+     */
     data class OnNavigateToSIDetails(val siId: Long) : SIEvent
+
+    /**
+     * Open the add or edit form.
+     * @property type Whether to add a new instruction or edit an existing one.
+     */
     data class OnAddEditSI(val type: SIAddEditType) : SIEvent
 }
 
+/** Actions handled by [StandingInstructionViewModel]. */
 sealed interface SIAction {
+    /** Start creating a new standing instruction. */
     data object AddNewSI : SIAction
+
+    /**
+     * Delete a standing instruction.
+     * @property siId Id of the instruction to delete.
+     */
     data class OnDeleteSI(val siId: Long) : SIAction
+
+    /**
+     * Edit a standing instruction.
+     * @property siId Id of the instruction to edit.
+     */
     data class EditSIDetails(val siId: Long) : SIAction
+
+    /**
+     * View the details of a standing instruction.
+     * @property siId Id of the instruction to view.
+     */
     data class ViewSIDetails(val siId: Long) : SIAction
 
+    /** Dismiss the currently shown dialog. */
     data object DismissDialog : SIAction
 
+    /** Actions dispatched internally by the view model rather than by the UI. */
     sealed interface Internal : SIAction {
+        /**
+         * Perform the delete after confirmation.
+         * @property siId Id of the instruction to delete.
+         */
         data class DeleteSI(val siId: Long) : Internal
     }
 }

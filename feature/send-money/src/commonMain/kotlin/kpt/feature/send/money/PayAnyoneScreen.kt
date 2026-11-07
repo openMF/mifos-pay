@@ -65,6 +65,7 @@ import kpt.core.ui.AvatarBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 // TODO replace dummy data after backend APIs are finalized
+/** Screen for paying any recipient by UPI ID, phone number or QR scan. */
 @Composable
 fun PayAnyoneScreen(
     onBackClick: () -> Unit,
@@ -792,6 +793,7 @@ private fun ContactNotFoundMessage(
     }
 }
 
+/** Preview of [PayAnyoneScreen]. */
 @Preview
 @Composable
 fun PayAnyoneScreenPreview() {

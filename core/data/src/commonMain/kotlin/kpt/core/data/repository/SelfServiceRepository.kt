@@ -23,48 +23,62 @@ import kpt.core.model.network.entity.Page
 import kpt.core.model.network.entity.authentication.AuthenticationPayload
 import kpt.core.model.network.entity.user.User
 import kpt.core.model.savingsaccount.Transaction
+/** Repository over the Fineract self-service API: login, clients, accounts, transactions and beneficiaries. */
 interface SelfServiceRepository {
     // Point-lookup — one-shot suspend; returns the value and throws on error.
+    /** Logs in through the self-service API and returns the authenticated [User]. */
     suspend fun loginSelf(payload: AuthenticationPayload): User
 
     // Phase-3 cutover — streaming reads on ScreenState.
+    /** Streams the details of the given self-service client. */
     fun getSelfClientDetails(clientId: Long): Flow<ScreenState<Client>>
 
+    /** Streams the page of clients visible to the self-service user. */
     suspend fun getSelfClientDetails(): Flow<ScreenState<Page<Client>>>
 
     // Untyped stream (raw list) — no state envelope; leave as-is.
+    /** Streams the transactions of the given account. */
     fun getSelfAccountTransactions(
         accountId: Long,
     ): Flow<List<Transaction>>
 
     // One-shot suspend returning the raw transaction flow; throws on error.
+    /** Fetches one transaction of an account. */
     suspend fun getSelfAccountTransactionFromId(
         accountId: Long,
         transactionId: Long,
     ): Flow<Transaction>
 
+    /** Streams the client's self-service accounts. */
     fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>>
 
+    /** Streams the user's beneficiaries. */
     fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>>
 
+    /** Streams active accounts mapped to their recent transactions, limited to [limit] when set. */
     fun getActiveAccountsWithTransactionsPerAccount(
         clientId: Long,
         limit: Int?,
     ): Flow<ScreenState<Map<Account, List<Transaction>>>>
 
+    /** Streams the client's active accounts. */
     fun getActiveAccounts(
         clientId: Long,
     ): Flow<ScreenState<List<Account>>>
 
+    /** Streams active accounts with the account-transfer template used to start a transfer. */
     fun getActiveAccountsWithAccountTransferTemplate(
         clientId: Long,
     ): Flow<ScreenState<List<Account>>>
 
+    /** Streams the transactions across all of the client's accounts. */
     fun getAccountsTransactions(clientId: Long): Flow<ScreenState<List<Transaction>>>
 
     // Untyped list stream — no state envelope; leave as-is.
+    /** Streams the transactions of several accounts, limited to [limit] when set. */
     fun getTransactions(accountId: List<Long>, limit: Int?): Flow<List<Transaction>>
 
+    /** Streams the transactions of a single account, limited to [limit] when set. */
     fun getTransactions(accountId: Long, limit: Int?): Flow<ScreenState<List<Transaction>>>
 
     /**
@@ -160,6 +174,7 @@ interface SelfServiceRepository {
     // ScreenState via `asScreenStateFlow`. New callers SHOULD prefer
     // [getAccountAndBeneficiaryListScreen], the Phase-5 Batch-4 store-native
     // combinator; this simpler network-only variant is kept for BC.
+    /** Streams the client's accounts together with their beneficiaries. */
     fun getAccountAndBeneficiaryList(clientId: Long): Flow<ScreenState<AccountContent>>
 
     /**
@@ -204,12 +219,15 @@ interface SelfServiceRepository {
 
     // Beneficiary writes — plain suspend (throw on error). The success message is
     // now owned by each consumer VM as a feature StringResource.
+    /** Creates a beneficiary through the self-service API. */
     suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload)
 
+    /** Updates a beneficiary through the self-service API. */
     suspend fun updateBeneficiary(
         beneficiaryId: Long,
         payload: BeneficiaryUpdatePayload,
     )
 
+    /** Deletes a beneficiary through the self-service API. */
     suspend fun deleteBeneficiary(beneficiaryId: Long)
 }

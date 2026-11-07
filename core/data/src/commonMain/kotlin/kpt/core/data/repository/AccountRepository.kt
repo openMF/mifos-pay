@@ -18,10 +18,13 @@ import kpt.core.model.account.AccountTransferPayload
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.model.search.AccountResult
+/** Repository for account transfers, transactions and account lookups. */
 interface AccountRepository {
     // Phase-3 cutover — reads on ScreenState.
+    /** Streams a single transaction of an account. */
     fun getTransaction(accountId: Long, transactionId: Long): Flow<ScreenState<Transaction>>
 
+    /** Streams the details of the account transfer identified by [transferId]. */
     fun getAccountTransfer(transferId: Long): Flow<ScreenState<TransferDetail>>
 
     /**
@@ -41,8 +44,10 @@ interface AccountRepository {
         scope: CoroutineScope,
     ): ScreenDataStream<TransferDetail>
 
+    /** Streams accounts matching the search [query]. */
     fun searchAccounts(query: String): Flow<ScreenState<List<AccountResult>>>
 
+    /** Streams the self-service accounts of the given client. */
     fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>>
 
     /**
@@ -62,5 +67,6 @@ interface AccountRepository {
     ): ScreenDataStream<List<Account>>
 
     // Write migrated off legacy DataState — suspends and throws on failure.
+    /** Submits an account-to-account transfer. */
     suspend fun makeTransfer(payload: AccountTransferPayload)
 }

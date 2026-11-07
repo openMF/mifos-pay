@@ -16,10 +16,10 @@ ViewModels: `FastMpayViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/fast-mpay sha=1e1b204bfed7c5553920e1529e2de2ef46741898 -->
+<!-- api-docs:begin module=feature/fast-mpay sha=dcf910afab5c99f1dd47f7507b4e1a8dc98f2846 -->
 ## API reference
 
-_Generated from `feature/fast-mpay` at tree `1e1b204bfed7` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/fast-mpay` at tree `dcf910afab5c` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -54,7 +54,7 @@ fun FastMpayScreen(
 ```
 Fast MPay processing screen. This screen acts as a routing hub - it receives encoded QR data via navigation, decodes and processes it using `FastMpayProcessor`, and immediately navigates to the appropriate destination based on the QR type.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/navigation/FastMpayNavigation.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/navigation/FastMpayNavigation.kt:77</code></summary>
 
 ```kotlin
         ),
@@ -91,24 +91,24 @@ ViewModel for fast MPay QR code processing. Receives encoded QR data from naviga
 ```kotlin
 data object FastMpayState
 ```
-_No KDoc at source._
+Empty UI state; the Fast Mpay screen holds no state of its own.
 
 ```kotlin
 sealed interface FastMpayEvent
 ```
-_No KDoc at source._
+One-off events of Fast Mpay (none defined).
 
 ```kotlin
 sealed interface FastMpayAction
 ```
-_No KDoc at source._
+User actions handled by the Fast Mpay ViewModel.
 
 ### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/di/FastMpayModule.kt`
 
 ```kotlin
 val FastMpayModule = module
 ```
-_No KDoc at source._
+Koin module providing the Fast Mpay QR processor and ViewModel.
 
 ### `feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/model/QrProcessResult.kt`
 
@@ -117,7 +117,7 @@ sealed interface QrProcessResult
 ```
 Sealed interface representing the result of processing a QR code. Used by `FastMpayProcessor` to determine navigation target based on `QrCodeData.type`.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayProcessor.kt:81</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayProcessor.kt:83</code></summary>
 
 ```kotlin
      * @return [QrProcessResult] indicating where to navigate.
@@ -145,5 +145,5 @@ Registers the Fast MPay screen in the navigation graph.
 
 ---
 
-_6 type(s), 4 function(s)/property(ies); 6 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
+_6 type(s), 4 function(s)/property(ies); 10 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
 <!-- api-docs:end -->

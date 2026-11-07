@@ -11,6 +11,11 @@ package kpt.core.model.network.entity.payload
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for updating a client's virtual payment address (VPA) via its external id.
+ *
+ * @property externalId External identifier.
+ */
 @Serializable
 data class UpdateVpaPayload(
     val externalId: String? = null,

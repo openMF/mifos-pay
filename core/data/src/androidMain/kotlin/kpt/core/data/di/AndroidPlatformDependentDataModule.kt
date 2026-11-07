@@ -17,6 +17,7 @@ import kpt.core.data.util.ConnectivityManagerNetworkMonitor
 import kpt.core.data.util.NetworkMonitor
 import kpt.core.data.util.TimeZoneBroadcastMonitor
 import kpt.core.data.util.TimeZoneMonitor
+/** Android implementation of [PlatformDependentDataModule] backed by the app Context, with lazily created monitors. */
 class AndroidPlatformDependentDataModule(
     private val context: Context,
     private val dispatcher: CoroutineDispatcher,

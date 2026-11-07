@@ -223,5 +223,8 @@ private val DarkDefaultColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
+/** Light [KptColorScheme] built from the default light color scheme. */
 val lightKptColorScheme = LightDefaultColorScheme.toKptColorScheme()
+
+/** Dark [KptColorScheme] built from the default dark color scheme. */
 val darkKptColorScheme = DarkDefaultColorScheme.toKptColorScheme()

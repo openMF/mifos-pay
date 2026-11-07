@@ -9,11 +9,23 @@
  */
 package kpt.core.ui.utils.fork
 
+/** Password strength from weakest (level 0) to strongest (level 5). */
 enum class PasswordStrength {
+    /** Strength level 0. */
     LEVEL_0,
+
+    /** Strength level 1. */
     LEVEL_1,
+
+    /** Strength level 2. */
     LEVEL_2,
+
+    /** Strength level 3. */
     LEVEL_3,
+
+    /** Strength level 4. */
     LEVEL_4,
+
+    /** Strength level 5. */
     LEVEL_5,
 }

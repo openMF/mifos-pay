@@ -46,17 +46,18 @@ import kpt.core.ui.MifosProgressIndicator
 import kpt.core.ui.TransactionFilterBottomSheet
 import kpt.core.ui.utils.EventsEffect
 import kpt.feature.history.components.TransactionList
-import mifos_pay.feature.history.generated.resources.Res
-import mifos_pay.feature.history.generated.resources.feature_history_empty
-import mifos_pay.feature.history.generated.resources.feature_history_empty_filter
-import mifos_pay.feature.history.generated.resources.feature_history_error_oops
-import mifos_pay.feature.history.generated.resources.feature_history_filter_content_desc
-import mifos_pay.feature.history.generated.resources.feature_history_header_account
-import mifos_pay.feature.history.generated.resources.feature_history_header_all
-import mifos_pay.feature.history.generated.resources.feature_history_header_credit
-import mifos_pay.feature.history.generated.resources.feature_history_header_debit
+import kpt.feature.history.generated.resources.Res
+import kpt.feature.history.generated.resources.feature_history_empty
+import kpt.feature.history.generated.resources.feature_history_empty_filter
+import kpt.feature.history.generated.resources.feature_history_error_oops
+import kpt.feature.history.generated.resources.feature_history_filter_content_desc
+import kpt.feature.history.generated.resources.feature_history_header_account
+import kpt.feature.history.generated.resources.feature_history_header_all
+import kpt.feature.history.generated.resources.feature_history_header_credit
+import kpt.feature.history.generated.resources.feature_history_header_debit
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+/** Transaction history screen with type and account filters and PDF export; [viewTransferDetail] opens a transfer. */
 @Composable
 fun HistoryScreen(
     viewTransferDetail: (Long, Long) -> Unit,

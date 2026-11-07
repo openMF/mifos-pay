@@ -33,6 +33,11 @@ private const val ADD_EDIT_ITEM_ROUTE: String =
         "&$SOURCE_QR_TYPE={$SOURCE_QR_TYPE}" +
         "&$SOURCE_QR_DATA={$SOURCE_QR_DATA}"
 
+/**
+ * Navigation arguments of the add/edit beneficiary screen.
+ *
+ * @property addEditType Whether to add a new beneficiary or edit an existing one.
+ */
 data class BeneficiaryAddEditArgs(
     val addEditType: BeneficiaryAddEditType,
 ) {
@@ -55,6 +60,7 @@ data class BeneficiaryAddEditArgs(
     )
 }
 
+/** Registers the add/edit beneficiary destination. */
 fun NavGraphBuilder.addEditBeneficiaryScreen(
     navigateBack: () -> Unit,
     navigateToQrReaderScreen: () -> Unit,
@@ -84,6 +90,7 @@ fun NavGraphBuilder.addEditBeneficiaryScreen(
     }
 }
 
+/** Navigates to the add/edit beneficiary screen for [addEditType]. */
 fun NavController.navigateToBeneficiaryAddEdit(
     addEditType: BeneficiaryAddEditType,
     navOptions: NavOptions? = null,

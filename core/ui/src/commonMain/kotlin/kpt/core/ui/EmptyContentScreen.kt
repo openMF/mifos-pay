@@ -41,6 +41,7 @@ import kpt.core.ui.generated.resources.artwork
 import kpt.core.ui.generated.resources.core_ui_money_in
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+/** Empty-state screen with title, subtitle and a caller-provided image. */
 @Composable
 fun EmptyContentScreen(
     title: String,
@@ -91,6 +92,7 @@ fun EmptyContentScreen(
     }
 }
 
+/** Empty-state screen with title, subtitle, an image and an action button with icon. */
 @Composable
 fun EmptyContentScreen(
     title: String,
@@ -159,6 +161,7 @@ fun EmptyContentScreen(
     }
 }
 
+/** Empty-state screen with title, subtitle and a drawable-resource image. */
 @Composable
 fun EmptyContentScreen(
     title: String,
@@ -182,6 +185,7 @@ fun EmptyContentScreen(
     )
 }
 
+/** Empty-state screen with title, subtitle and a default artwork drawable. */
 @Composable
 fun EmptyContentScreen(
     title: String,
@@ -205,6 +209,7 @@ fun EmptyContentScreen(
     )
 }
 
+/** Empty-state screen with title, subtitle, an image-vector icon and an action button. */
 @Composable
 fun EmptyContentScreen(
     title: String,
@@ -234,6 +239,7 @@ fun EmptyContentScreen(
     )
 }
 
+/** Preview of the empty-state screen with a drawable image. */
 @DevicePreviews
 @Composable
 fun EmptyContentScreenDrawableImagePreview() {
@@ -248,6 +254,7 @@ fun EmptyContentScreenDrawableImagePreview() {
     }
 }
 
+/** Preview of the empty-state screen with an image-vector icon. */
 @DevicePreviews
 @Composable
 fun EmptyContentScreenImageVectorPreview() {

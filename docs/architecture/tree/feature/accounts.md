@@ -22,10 +22,10 @@ ViewModels: `AccountViewModel`, `AddEditSavingViewModel`, `SavingAccountDetailVi
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/accounts sha=6445274817a1b0bff6c5b974dc4cf6397b0d328b -->
+<!-- api-docs:begin module=feature/accounts sha=4411403c7af0fb165641ad2a62b8ec298558a7f4 -->
 ## API reference
 
-_Generated from `feature/accounts` at tree `6445274817a1` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/accounts` at tree `4411403c7af0` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,9 +38,9 @@ rather than re-declaring what they already own.
 ```kotlin
 class AccountViewModel(
 ```
-_No KDoc at source._
+Loads the user's savings accounts and beneficiaries, and handles default-account, beneficiary and navigation actions.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:103</code></summary>
 
 ```kotlin
     onApplyForLoanClick: (Long) -> Unit,
@@ -56,9 +56,9 @@ _No KDoc at source._
 ```kotlin
 data class AccountState(
 ```
-_No KDoc at source._
+UI state of the accounts screen.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:155</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:156</code></summary>
 
 ```kotlin
 internal fun AccountsScreenContent(
@@ -75,9 +75,9 @@ internal fun AccountsScreenContent(
 ```kotlin
 sealed interface AccountEvent
 ```
-_No KDoc at source._
+One-off events emitted by the accounts screen.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:112</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:113</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -94,9 +94,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface AccountAction
 ```
-_No KDoc at source._
+Actions the accounts screen can send to its view model.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:139</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:140</code></summary>
 
 ```kotlin
         dialogState = state.dialogState,
@@ -115,12 +115,12 @@ _No KDoc at source._
 ```kotlin
 fun AccountsScreen(
 ```
-_No KDoc at source._
+Screen listing the user's savings accounts and beneficiaries with add, edit and detail actions.
 
 ```kotlin
 enum class SavingAccountStatus(
 ```
-_No KDoc at source._
+Savings account lifecycle statuses, each mapped to a status predicate and label.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/details/SavingAccountDetailScreen.kt:475</code></summary>
 
@@ -139,21 +139,21 @@ _No KDoc at source._
 ```kotlin
 val SavingAccountStatus.color: Color
 ```
-_No KDoc at source._
+Chip container color used to display this status.
 
 ### `feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/di/AccountsModule.kt`
 
 ```kotlin
 val AccountsModule = module
 ```
-_No KDoc at source._
+Koin module providing the accounts feature view models and its Json instance.
 
 ### `feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingNavigation.kt`
 
 ```kotlin
 data class SavingAccountAddEditArgs(
 ```
-_No KDoc at source._
+Navigation arguments of the add/edit savings account screen.
 
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:64</code></summary>
 
@@ -172,21 +172,21 @@ _No KDoc at source._
 ```kotlin
 fun NavGraphBuilder.addEditSavingAccountScreen(
 ```
-_No KDoc at source._
+Registers the add/edit savings account destination.
 
 ```kotlin
 fun NavController.navigateToSavingAccountAddEdit(
 ```
-_No KDoc at source._
+Navigates to the add/edit savings account screen for `addEditType`.
 
 ### `feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/SavingsAddEditType.kt`
 
 ```kotlin
 sealed class SavingsAddEditType
 ```
-_No KDoc at source._
+Whether the savings account form creates a new account or edits an existing one.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:161</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:170</code></summary>
 
 ```kotlin
         when (action) {
@@ -205,14 +205,14 @@ _No KDoc at source._
 ```kotlin
 fun NavGraphBuilder.savingAccountDetailRoute(
 ```
-_No KDoc at source._
+Registers the savings account detail destination.
 
 ```kotlin
 fun NavController.navigateToSavingAccountDetails(accountId: Long)
 ```
-_No KDoc at source._
+Navigates to the details of the savings account with `accountId`.
 
 ---
 
-_7 type(s), 7 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 7 live call site(s)._
+_7 type(s), 7 function(s)/property(ies); 14 carry KDoc at source; 0 authored example(s); 7 live call site(s)._
 <!-- api-docs:end -->

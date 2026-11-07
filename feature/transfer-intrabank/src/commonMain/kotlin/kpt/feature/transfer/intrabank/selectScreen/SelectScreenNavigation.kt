@@ -16,11 +16,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
+/**
+ * Navigation route of the select-account screen.
+ * @property returnDestination Destination to return to after the transfer.
+ */
 @Serializable
 data class SelectAccountRoute(
     val returnDestination: String = "home",
 )
 
+/** Navigates to the select-account screen. */
 fun NavController.navigateToSelectAccountScreen(
     returnDestination: String = "home",
     navOptions: NavOptions? = null,
@@ -28,6 +33,7 @@ fun NavController.navigateToSelectAccountScreen(
     this.navigate(SelectAccountRoute(returnDestination = returnDestination), navOptions)
 }
 
+/** Registers the select-account destination and its navigation callbacks. */
 fun NavGraphBuilder.selectAccountScreenDestination(
     navigateBack: () -> Unit,
     navigateToTransferConfirm: (

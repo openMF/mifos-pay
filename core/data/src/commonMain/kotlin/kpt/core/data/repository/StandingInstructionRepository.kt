@@ -17,14 +17,17 @@ import kpt.core.model.standinginstruction.SITemplate
 import kpt.core.model.standinginstruction.SIUpdatePayload
 import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.model.standinginstruction.StandingInstructionPayload
+/** Repository for standing instructions (recurring transfers). */
 interface StandingInstructionRepository {
     // Phase-3 cutover — reads on ScreenState.
+    /** Streams the template used to create a standing instruction. */
     fun getStandingInstructionTemplate(
         fromOfficeId: Long,
         fromClientId: Long,
         fromAccountType: Long,
     ): Flow<ScreenState<SITemplate>>
 
+    /** Streams all standing instructions matching the given filters. */
     fun getAllStandingInstructions(
         clientId: Long,
     ): Flow<ScreenState<List<StandingInstruction>>>
@@ -46,19 +49,23 @@ interface StandingInstructionRepository {
         scope: CoroutineScope,
     ): ScreenDataStream<List<StandingInstruction>>
 
+    /** Streams a single standing instruction. */
     fun getStandingInstruction(instructionId: Long): Flow<ScreenState<StandingInstruction>>
 
     // Writes complete normally on success and throw on failure; the caller's
     // SubmitHandler maps success/exception to SubmitState. The user-facing success
     // message is a feature StringResource surfaced by the ViewModel, not repo copy.
+    /** Creates a standing instruction. */
     suspend fun createStandingInstruction(
         payload: StandingInstructionPayload,
     )
 
+    /** Updates a standing instruction. */
     suspend fun updateStandingInstruction(
         instructionId: Long,
         payload: SIUpdatePayload,
     )
 
+    /** Deletes a standing instruction. */
     suspend fun deleteStandingInstruction(instructionId: Long)
 }

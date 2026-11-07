@@ -14,6 +14,7 @@ import kpt.feature.transfer.intrabank.hub.IntraBankHubViewModel
 import kpt.feature.transfer.intrabank.selectScreen.SelectScreenViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the intra-bank transfer view models. */
 val IntraBankModule = module {
     viewModelOf(::IntraBankHubViewModel)
     viewModelOf(::SelectScreenViewModel)

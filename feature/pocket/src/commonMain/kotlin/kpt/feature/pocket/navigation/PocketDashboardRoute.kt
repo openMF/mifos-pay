@@ -13,12 +13,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kpt.feature.pocket.screens.PocketDashboardScreen
+/** Navigation route of the pocket dashboard screen. */
 const val POCKET_DASHBOARD_ROUTE = "pocket_dashboard_route"
 
+/** Navigates to the pocket dashboard screen. */
 fun NavController.navigateToPocketDashboard() {
     navigate(POCKET_DASHBOARD_ROUTE)
 }
 
+/** Registers the pocket dashboard screen destination. */
 fun NavGraphBuilder.pocketDashboardScreen(
     navigateBack: () -> Unit,
     navigateToManagePocket: () -> Unit,

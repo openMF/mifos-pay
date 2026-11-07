@@ -15,6 +15,7 @@ import kpt.feature.kyc.KYCLevel2ViewModel
 import kpt.feature.kyc.KYCLevel3ViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the KYC description and level 1 to 3 view models. */
 val KYCModule = module {
     viewModelOf(::KYCDescriptionViewModel)
     viewModelOf(::KYCLevel1ViewModel)

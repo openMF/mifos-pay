@@ -23,7 +23,11 @@
 # ═════════════════════════════════════════════════════════════════════════════
 
 schema_version: "1.0"
+# Which project this fork is, for cross-checking against app-profile/app.yaml.
 project: mifos-pay
+# Template version these targets were authored against.
+# A sync bumps it; a mismatch is how a stale deploy-target file is detected rather than
+# silently used against newer runner expectations.
 template_version: "2026.5.0"
 
 # Per-target fork state. `canonical_name` MUST match a target in the template

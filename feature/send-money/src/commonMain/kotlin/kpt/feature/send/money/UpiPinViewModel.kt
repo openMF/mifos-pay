@@ -17,24 +17,37 @@ import kotlinx.serialization.Serializable
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.ui.utils.BaseViewModel
+/** ViewModel for the UPI PIN screen; builds its state from the navigation arguments. */
 class UpiPinViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<UpiPinState, UpiPinEvent, UpiPinAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: run {
+        /** Name of the payee, from the navigation arguments. */
         val payeeName = requireNotNull(savedStateHandle.get<String>("payeeName"))
+
+        /** Amount in paise, from the navigation arguments. */
         val amountInPaise = requireNotNull(savedStateHandle.get<String>("amount"))
+
+        /** Whether the payment came from a UPI code, from the navigation arguments. */
         val isUpiCode = requireNotNull(savedStateHandle.get<Boolean>("isUpiCode"))
+
+        /** Name of the paying bank, from the navigation arguments. */
         val bankName = requireNotNull(savedStateHandle.get<String>("bankName"))
+
+        /** Paying account number, from the navigation arguments. */
         val accountNo = requireNotNull(savedStateHandle.get<String>("accountNo"))
 
+        /** Generated reference id for this payment. */
         val refId = generateRefId()
 
+        /** Amount converted from paise to rupees. */
         val amountInRupees = if (amountInPaise.isNotEmpty()) {
             AmountUtils.paiseToRupees(amountInPaise).toDoubleOrNull() ?: 0.0
         } else {
             0.0
         }
 
+        /** Payment details shown on the PIN screen. */
         val paymentDetails = PaymentDetails(
             payeeName = payeeName,
             bankName = bankName,
@@ -52,7 +65,7 @@ class UpiPinViewModel(
     },
 ) {
 
-    companion object {
+    private companion object {
         private const val KEY_STATE = "upi_pin_state"
     }
 
@@ -79,6 +92,13 @@ private fun generateRefId(): String {
     return (1..36).map { chars.random() }.joinToString("")
 }
 
+/**
+ * State of the UPI PIN screen.
+ * @property paymentDetails Details of the payment being authorized.
+ * @property amount Amount in rupees.
+ * @property refId Reference id of the payment.
+ * @property isUpiCode Whether the payment came from a UPI code.
+ */
 @Serializable
 data class UpiPinState(
     val paymentDetails: PaymentDetails,
@@ -87,10 +107,20 @@ data class UpiPinState(
     val isUpiCode: Boolean,
 )
 
+/** One-off events emitted by the UPI PIN screen. */
 sealed interface UpiPinEvent {
+    /**
+     * Emitted when the PIN has been entered.
+     * @property pin The entered UPI PIN.
+     */
     data class OnUpiPinEntered(val pin: String) : UpiPinEvent
 }
 
+/** User actions on the UPI PIN screen. */
 sealed interface UpiPinAction {
+    /**
+     * The user finished entering the PIN.
+     * @property pin The entered UPI PIN.
+     */
     data class UpiPinEntered(val pin: String) : UpiPinAction
 }

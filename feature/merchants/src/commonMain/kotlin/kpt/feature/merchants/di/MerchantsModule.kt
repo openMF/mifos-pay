@@ -13,6 +13,7 @@ import kpt.feature.merchants.MerchantTransferViewModel
 import kpt.feature.merchants.MerchantViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the merchant list and merchant transfer view models. */
 val MerchantsModule = module {
     viewModelOf(::MerchantViewModel)
     viewModelOf(::MerchantTransferViewModel)

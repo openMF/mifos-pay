@@ -39,6 +39,7 @@ import kpt.core.store.wallet.client.ClientDetailKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [ClientRepository] backed by the client API. */
 class ClientRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
     private val fineractApiManager: FineractApiManager,

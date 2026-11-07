@@ -11,6 +11,11 @@ package kpt.core.model.network.entity.user
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Request body for updating a user's email address.
+ *
+ * @property email New email address.
+ */
 @Serializable
 data class UpdateUserEntityEmail(
     val email: String?,

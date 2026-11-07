@@ -25,3 +25,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.accounts.generated.resources"
+}

@@ -15,8 +15,10 @@ import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.LinkableAccount
 import kpt.core.model.pocket.PocketAccount
+/** Repository for pocket accounts, which group a client's loan, savings and share accounts. */
 interface PocketRepository {
 
+    /** Streams the accounts currently linked to the client's pocket. */
     fun getLinkedPocketAccountsStream(
         clientId: Long,
         scope: CoroutineScope,
@@ -68,18 +70,22 @@ interface PocketRepository {
         scope: CoroutineScope,
     ): ScreenDataStream<List<DetailedPocketAccount>>
 
+    /** Observes the client's linked pocket accounts from the local cache. */
     fun observeLinkedPocketAccounts(clientId: Long): Flow<List<PocketAccount>>
 
+    /** Streams the accounts the client can link to a pocket. */
     fun getAvailableAccountsToLinkStream(clientId: Long, scope: CoroutineScope): ScreenDataStream<List<LinkableAccount>>
 
     // Writes complete normally on success and throw on failure; the caller's
     // SubmitHandler maps success/exception to SubmitState. The user-facing dialog
     // copy is a feature StringResource surfaced by the ViewModel, not repo copy.
+    /** Links accounts to the client's pocket. */
     suspend fun linkAccounts(
         explicitlyAddedAccounts: List<DetailedPocketAccount>,
         clientId: Long,
     )
 
+    /** Delinks accounts from the client's pocket. */
     suspend fun delinkAccounts(
         pocketAccountMappingIds: List<Long>,
         clientId: Long,

@@ -13,8 +13,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kpt.core.ui.composableWithSlideTransitions
+/** Navigation route of the notification screen. */
 const val NOTIFICATION_ROUTE = "notification_route"
 
+/** Registers the notification screen destination in the navigation graph. */
 fun NavGraphBuilder.notificationScreen(
     navigateBack: () -> Unit,
 ) {
@@ -25,6 +27,7 @@ fun NavGraphBuilder.notificationScreen(
     }
 }
 
+/** Navigates to the notification screen. */
 fun NavController.navigateToNotification(navOptions: NavOptions? = null) {
     navigate(NOTIFICATION_ROUTE, navOptions)
 }

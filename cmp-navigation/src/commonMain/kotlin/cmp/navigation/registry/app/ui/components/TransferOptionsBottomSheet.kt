@@ -29,17 +29,18 @@ import cmp.navigation.registry.app.TransferOptionsViewModel
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosBottomSheet
 import kpt.core.designsystem.theme.fork.MifosTheme
-import mifos_pay.feature.payments.generated.resources.Res
-import mifos_pay.feature.payments.generated.resources.feature_payments_inter_bank_transfer_description
-import mifos_pay.feature.payments.generated.resources.feature_payments_inter_bank_transfer_title
-import mifos_pay.feature.payments.generated.resources.feature_payments_intra_bank_transfer_description
-import mifos_pay.feature.payments.generated.resources.feature_payments_intra_bank_transfer_title
-import mifos_pay.feature.payments.generated.resources.feature_payments_transfer_options_title
+import kpt.feature.payments.generated.resources.Res
+import kpt.feature.payments.generated.resources.feature_payments_inter_bank_transfer_description
+import kpt.feature.payments.generated.resources.feature_payments_inter_bank_transfer_title
+import kpt.feature.payments.generated.resources.feature_payments_intra_bank_transfer_description
+import kpt.feature.payments.generated.resources.feature_payments_intra_bank_transfer_title
+import kpt.feature.payments.generated.resources.feature_payments_transfer_options_title
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import cmp.navigation.generated.resources.Res as SharedRes
 
+/** Bottom sheet listing the available ways to send money (intra-bank, inter-bank, UPI). */
 @Composable
 fun TransferOptionsBottomSheet(
     onIntraBankTransferClick: () -> Unit,
@@ -164,6 +165,7 @@ fun TransferOptionsBottomSheet(
     )
 }
 
+/** Preview of [TransferOptionsBottomSheet]. */
 @Preview
 @Composable
 fun TransferOptionsBottomSheetPreview() {

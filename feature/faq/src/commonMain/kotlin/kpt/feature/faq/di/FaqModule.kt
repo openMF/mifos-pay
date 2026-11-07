@@ -12,6 +12,7 @@ package kpt.feature.faq.di
 import kpt.feature.faq.FAQViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the FAQ ViewModel. */
 val FaqModule = module {
     viewModelOf(::FAQViewModel)
 }

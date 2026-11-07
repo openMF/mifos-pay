@@ -25,11 +25,11 @@ import androidx.compose.ui.Modifier
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.feature.mpay_qr.generated.resources.Res
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_account_ids
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_account_number
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_copy
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_external_id
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_account_ids
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_account_number
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_copy
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_external_id
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /**

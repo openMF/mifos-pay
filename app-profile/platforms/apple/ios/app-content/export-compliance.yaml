@@ -9,15 +9,23 @@
 # provides for standard networking.
 
 uses_encryption: true               # HTTPS/TLS counts as "uses encryption" for the ASC question
+# Whether the app's encryption use is exempt from US export rules.
+# Using only HTTPS and platform crypto is normally exempt; shipping your own algorithm is not.
 encryption_is_exempt: true          # exempt under Category 5 Part 2 (standard OS-provided TLS only)
+# Which exemption category applies, quoted in the submission.
 exemption_reason: >
   Uses only standard, OS-provided HTTPS/TLS for outbound requests to public
   read-only data APIs (FRED, World Bank, currency exchange rate feeds). No
   proprietary/custom encryption algorithm is implemented or shipped.
 
+# The literal Info.plist key Apple reads. Set false when exempt — omitting it makes every
+# upload stop and ask, which blocks an automated release.
 itsappusesnonexemptencryption: false   # Info.plist ITSAppUsesNonExemptEncryption
 
+# Whether a yearly self-classification report must be filed with BIS. True only for
+# non-exempt encryption.
 annual_self_classification_report_required: false
+# Rationale for the exemption claim, for whoever files next year's report.
 notes: >
   Because the only encryption used is standard TLS for networking (App
   Store Connect Category 5 Part 2 exemption, 15 CFR 740.17(b)(1)), no French

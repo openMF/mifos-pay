@@ -12,6 +12,13 @@ package kpt.core.model.utils
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A currency with the country that uses it and its symbol.
+ *
+ * @property countryName Name of the country.
+ * @property currencyCode ISO currency code.
+ * @property currencySymbol Currency symbol.
+ */
 @Serializable
 @Parcelize
 data class CurrencyCode(
@@ -20,6 +27,7 @@ data class CurrencyCode(
     val currencySymbol: String,
 ) : Parcelable
 
+/** Returns the entries whose country name or currency code contains [text], ignoring case; all if blank. */
 fun List<CurrencyCode>.filterList(text: String): List<CurrencyCode> {
     return if (text.isNotEmpty()) {
         this.filter {

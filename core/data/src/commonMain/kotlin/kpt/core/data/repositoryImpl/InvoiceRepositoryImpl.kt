@@ -31,6 +31,7 @@ import kpt.core.store.wallet.invoice.InvoiceKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [InvoiceRepository] backed by the invoice API. */
 class InvoiceRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

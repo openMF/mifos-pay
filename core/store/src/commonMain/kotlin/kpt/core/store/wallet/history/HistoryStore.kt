@@ -32,9 +32,6 @@ import kpt.core.model.savingsaccount.PaymentType as ModelPaymentType
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for [kpt.core.database.wallet.transaction.TransactionEntity]. Shared with the DAO's writes. */
-private const val TRANSACTIONS_TABLE = "wallet_transactions"
-
 /** `apiManager.savingAccountsListApi.getSavingsWithAssociations(...)` `?associations=` value. */
 private const val ASSOC_TRANSACTIONS = "transactions"
 

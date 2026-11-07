@@ -22,10 +22,10 @@ ViewModels: `HistoryViewModel`, `SpecificTransactionsViewModel`, `TransactionDet
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/history sha=376c3cec73abe3bec2b57be08442ec654afb1d7b -->
+<!-- api-docs:begin module=feature/history sha=a77c4a1695952b91b019cef74b1dd6203ec0c10b -->
 ## API reference
 
-_Generated from `feature/history` at tree `376c3cec73ab` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/history` at tree `a77c4a169595` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,9 +38,9 @@ rather than re-declaring what they already own.
 ```kotlin
 fun HistoryScreen(
 ```
-_No KDoc at source._
+Transaction history screen with type and account filters and PDF export; `viewTransferDetail` opens a transfer.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/HistoryNavigation.kt:23</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/HistoryNavigation.kt:25</code></summary>
 
 ```kotlin
 ) {
@@ -59,9 +59,9 @@ _No KDoc at source._
 ```kotlin
 class HistoryViewModel
 ```
-_No KDoc at source._
+ViewModel that loads, filters and exports (as PDF) the client's transaction history.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:64</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:65</code></summary>
 
 ```kotlin
     viewTransferDetail: (Long, Long) -> Unit,
@@ -78,9 +78,9 @@ _No KDoc at source._
 ```kotlin
 data class HistoryState(
 ```
-_No KDoc at source._
+UI state of the history screen.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:96</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:97</code></summary>
 
 ```kotlin
 @Composable
@@ -97,9 +97,9 @@ internal fun HistoryScreenContent(
 ```kotlin
 sealed interface HistoryEvent
 ```
-_No KDoc at source._
+One-off events emitted by `HistoryViewModel`.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:72</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:73</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -116,9 +116,9 @@ _No KDoc at source._
 ```kotlin
 sealed interface HistoryAction
 ```
-_No KDoc at source._
+User actions handled by `HistoryViewModel`.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:99</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryScreen.kt:100</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -137,9 +137,9 @@ _No KDoc at source._
 ```kotlin
 object HistoryHtmlTemplate
 ```
-_No KDoc at source._
+Builds the HTML document used to render the transaction history as a PDF.
 
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt:264</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt:266</code></summary>
 
 ```kotlin
         mutableStateFlow.update { it.copy(isExportingPdf = true) }
@@ -153,7 +153,7 @@ _No KDoc at source._
 
 </details>
 
-- `fun generate(`
+- `fun generate(` — Returns the HTML statement for `accountNumber` and `transactionType` listing the given `transactions`.
 - `val document = createHTML().html`
 - `val instant = kotlin.time.Clock.System.now()`
 
@@ -162,7 +162,7 @@ _No KDoc at source._
 ```kotlin
 val HistoryModule = module
 ```
-_No KDoc at source._
+Koin module providing the history and specific-transactions ViewModels plus the platform PDF module.
 
 ### `feature/history/src/commonMain/kotlin/kpt/feature/history/di/PdfGeneratorModule.kt`
 
@@ -171,10 +171,10 @@ expect val HistoryPdfModule: Module
 ```
 Provides a platform-appropriate `PdfGenerator` singleton (e.g. bound to an Android `Context` via `createPdfGenerator(context)` on Android).
 
-<details><summary>Used in the template — <code>feature/history/src/androidMain/kotlin/kpt/feature/history/di/HistoryAndroidModule.kt:57</code></summary>
+<details><summary>Used in the template — <code>feature/history/src/androidMain/kotlin/kpt/feature/history/di/HistoryAndroidModule.kt:58</code></summary>
 
 ```kotlin
-
+/** Android PDF module used by the history feature. */
 @OptIn(ExperimentalPdfGeneratorApi::class)
 actual val HistoryPdfModule: Module
     get() = HistoryPdfAndroidModule
@@ -187,38 +187,38 @@ actual val HistoryPdfModule: Module
 ```kotlin
 fun NavGraphBuilder.historyNavigation(
 ```
-_No KDoc at source._
+Registers the history screen in the nav graph; `viewTransactionDetail` opens a transfer (two ids).
 
 ```kotlin
 fun NavController.navigateToHistory(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the history screen, optionally with `navOptions`.
 
 ### `feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/SpecificTransactionsNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.specificTransactionsScreen(
 ```
-_No KDoc at source._
+Registers the specific-transactions screen in the nav graph.
 
 ```kotlin
 fun NavController.navigateToSpecificTransaction(accountId: Long, transactionId: Long)
 ```
-_No KDoc at source._
+Navigates to the specific-transactions screen for the given account and transaction.
 
 ### `feature/history/src/commonMain/kotlin/kpt/feature/history/navigation/TransactionDetailNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.transactionDetailNavigation(
 ```
-_No KDoc at source._
+Registers the transaction detail screen in the nav graph; `navigateToReceipt` shares a transfer receipt.
 
 ```kotlin
 fun NavHostController.navigateToTransactionDetail(transferId: Long)
 ```
-_No KDoc at source._
+Navigates to the detail screen of the transfer with `transferId`.
 
 ---
 
-_5 type(s), 12 function(s)/property(ies); 1 carry KDoc at source; 0 authored example(s); 7 live call site(s)._
+_5 type(s), 12 function(s)/property(ies); 15 carry KDoc at source; 0 authored example(s); 7 live call site(s)._
 <!-- api-docs:end -->

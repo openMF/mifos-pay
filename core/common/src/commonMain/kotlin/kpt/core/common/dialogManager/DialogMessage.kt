@@ -43,6 +43,7 @@ sealed interface DialogMessage {
      */
     class ResourceMessage(val message: StringResource) : DialogMessage
 
+    /** Helpers for building a [DialogMessage] from a [Throwable]. */
     companion object {
 
         /**

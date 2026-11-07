@@ -38,11 +38,11 @@ import kpt.core.designsystem.component.MifosTextField
 import kpt.core.designsystem.utils.fork.onClick
 import kpt.core.model.utils.CurrencyCode
 import kpt.core.ui.AvatarBox
-import mifos_pay.feature.mpay_qr.generated.resources.Res
-import mifos_pay.feature.mpay_qr.generated.resources.feature_request_money_cancel
-import mifos_pay.feature.mpay_qr.generated.resources.feature_request_money_confirm
-import mifos_pay.feature.mpay_qr.generated.resources.feature_request_money_enter_valid_amount
-import mifos_pay.feature.mpay_qr.generated.resources.feature_request_money_set_amount
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_request_money_cancel
+import kpt.feature.mpay.qr.generated.resources.feature_request_money_confirm
+import kpt.feature.mpay.qr.generated.resources.feature_request_money_enter_valid_amount
+import kpt.feature.mpay.qr.generated.resources.feature_request_money_set_amount
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable

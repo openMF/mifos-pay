@@ -14,11 +14,22 @@ package kpt.core.common
  * Implement this interface in the UI module to provide string resources.
  */
 interface ErrorMessageProvider {
+    /** Returns the localized dialog title for an HTTP [statusCode] error. */
     fun getHttpErrorTitle(statusCode: Int): String
+
+    /** Returns the localized message for an HTTP [statusCode] error, using [fallbackMessage] when no mapping exists. */
     fun getHttpErrorMessage(statusCode: Int, fallbackMessage: String?): String
+
+    /** Returns the localized dialog title for a network (connectivity) error. */
     fun getNetworkErrorTitle(): String
+
+    /** Returns the localized message for a network (connectivity) error. */
     fun getNetworkErrorMessage(): String
+
+    /** Returns the localized dialog title for an unclassified error. */
     fun getGenericErrorTitle(): String
+
+    /** Returns the localized message for an unclassified error, using [fallbackMessage] when available. */
     fun getGenericErrorMessage(fallbackMessage: String?): String
 }
 
@@ -45,6 +56,11 @@ interface ErrorMessageProvider {
  *     onDismiss = onDismiss,
  * )
  * ```
+ *
+ * @property title Short dialog title.
+ * @property message Detailed user-facing message.
+ * @property canRetry Whether the UI should offer a retry action.
+ * @property errorCode HTTP status code when the error came from the server, otherwise null.
  */
 data class UiError(
     val title: String,
@@ -52,6 +68,7 @@ data class UiError(
     val canRetry: Boolean,
     val errorCode: Int? = null,
 ) {
+    /** Factory methods that build a [UiError] from a [Throwable]. */
     companion object {
         /**
          * Creates a [UiError] from any [Throwable] using the provided [ErrorMessageProvider].

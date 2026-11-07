@@ -29,11 +29,12 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.invoices.generated.resources.Res
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_error_no_invoices_found
-import mifos_pay.feature.invoices.generated.resources.feature_invoices_error_oops
+import kpt.feature.invoices.generated.resources.Res
+import kpt.feature.invoices.generated.resources.feature_invoices_error_no_invoices_found
+import kpt.feature.invoices.generated.resources.feature_invoices_error_oops
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen listing the client's invoices; selecting one calls [navigateToInvoiceDetailScreen] with its id. */
 @Composable
 fun InvoiceScreen(
     navigateToInvoiceDetailScreen: (Long) -> Unit,

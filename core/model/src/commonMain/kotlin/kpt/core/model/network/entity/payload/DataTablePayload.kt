@@ -13,6 +13,16 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonElement
 
+/**
+ * Payload for a Fineract data table entry; transient fields are local bookkeeping and are not serialized.
+ *
+ * @property id Unique id.
+ * @property clientCreationTime Local creation time of the client (not serialized).
+ * @property dataTableString Local serialized form of the table (not serialized).
+ * @property registeredTableName Registered data table name.
+ * @property applicationTableName Table the data table is attached to.
+ * @property data Column values keyed by column name.
+ */
 @Serializable
 data class DataTablePayload(
     @Transient

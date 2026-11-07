@@ -11,6 +11,21 @@ package kpt.core.model.network.entity
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Persisted representation of an authenticated Fineract user.
+ *
+ * @property username Login username.
+ * @property userId Id of the user.
+ * @property base64EncodedAuthenticationKey Base64 encoded key used for basic authentication.
+ * @property authenticated Whether the user is authenticated.
+ * @property officeId Id of the office.
+ * @property officeName Name of the office.
+ * @property roles Roles assigned to the user.
+ * @property permissions Permissions granted to the user.
+ * @property clients Ids of the clients linked to the user.
+ * @property shouldRenewPassword Whether the password must be renewed.
+ * @property isTwoFactorAuthenticationRequired Whether two-factor authentication is required.
+ */
 @Serializable
 data class UserEntity(
     val username: String,

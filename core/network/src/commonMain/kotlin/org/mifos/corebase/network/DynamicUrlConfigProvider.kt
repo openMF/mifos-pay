@@ -36,8 +36,13 @@ interface MultiUrlConfigProvider : DynamicUrlConfigProvider {
      * URL type identifier for different API endpoints.
      */
     enum class UrlType {
+        /** Main Fineract API. */
         MAIN,
+
+        /** Self-service API. */
         SELF_SERVICE,
+
+        /** Interbank API. */
         INTERBANK,
     }
 

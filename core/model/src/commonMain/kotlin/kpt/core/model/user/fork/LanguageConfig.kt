@@ -13,44 +13,54 @@ package kpt.core.model.user.fork
  * Represents the languages supported by the app.
  */
 enum class LanguageConfig(
+    /** Locale code, or null for the system default. */
     val localeName: String?,
+    /** Name of the language shown in the UI. */
     val text: String,
 ) {
+    /** Follow the system language. */
     DEFAULT(
         localeName = null,
         text = "System Default",
     ),
 
+    /** Bengali. */
     BENGALI(
         localeName = "bn",
         text = "বাংলা",
     ),
 
+    /** Spanish. */
     SPANISH(
         localeName = "es",
         text = "Español",
     ),
 
+    /** French. */
     FRENCH(
         localeName = "fr",
         text = "Français",
     ),
 
+    /** Hindi. */
     HINDI(
         localeName = "hi",
         text = "हिन्दी",
     ),
 
+    /** Indonesian. */
     INDONESIAN(
         localeName = "id",
         text = "Bahasa Indonesia",
     ),
 
+    /** Portuguese. */
     PORTUGUESE(
         localeName = "pt",
         text = "Português",
     ),
 
+    /** Swahili. */
     SWAHILI(
         localeName = "sw",
         text = "Kiswahili",

@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Small non-interactive chip showing a [label]. */
 @Composable
 fun MifosSmallChip(
     label: String,

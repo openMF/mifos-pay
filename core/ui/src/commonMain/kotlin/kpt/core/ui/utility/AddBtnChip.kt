@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
+/** Chip with text and an add button, used to prompt adding a card. */
 @Composable
 fun AddCardChip(
     text: String,

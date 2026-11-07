@@ -11,6 +11,27 @@ package kpt.core.model.network.entity.shareAccount
 
 import kotlinx.serialization.Serializable
 import kpt.core.model.network.entity.common.CurrencyResponseDto
+/**
+ * A share account with its associated client, savings account, summary and dividends.
+ *
+ * @property id Unique id.
+ * @property accountNo Account number.
+ * @property clientId Id of the client.
+ * @property clientName Name of the client.
+ * @property productId Id of the product.
+ * @property productName Name of the product.
+ * @property status Current status.
+ * @property currency Currency.
+ * @property timeline Lifecycle timeline.
+ * @property summary Financial summary.
+ * @property currentMarketPrice Current market price per share.
+ * @property savingsAccountId Id of the linked savings account.
+ * @property savingsAccountNumber Number of the linked savings account.
+ * @property allowDividendCalculationForInactiveClients Whether dividends are calculated for inactive clients.
+ * @property lockinPeriod Lock-in period.
+ * @property minimumActivePeriod Minimum active period.
+ * @property dividends Dividends.
+ */
 @Serializable
 data class ShareWithAssociationsResponseDto(
     val id: Long? = null,

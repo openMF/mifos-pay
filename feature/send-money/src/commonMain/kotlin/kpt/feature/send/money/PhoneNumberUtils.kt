@@ -9,6 +9,7 @@
  */
 package kpt.feature.send.money
 
+/** Helpers for formatting, validating, searching and filtering phone numbers from the contact list. */
 object PhoneNumberUtils {
 
     /**

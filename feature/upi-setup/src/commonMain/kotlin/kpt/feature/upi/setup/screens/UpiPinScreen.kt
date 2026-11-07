@@ -42,11 +42,11 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.ui.VerifyStepHeader
-import mifos_pay.feature.upi_setup.generated.resources.Res
-import mifos_pay.feature.upi_setup.generated.resources.feature_upi_setup_enter_upi_pin
-import mifos_pay.feature.upi_setup.generated.resources.feature_upi_setup_invalid_upi_pin
-import mifos_pay.feature.upi_setup.generated.resources.feature_upi_setup_reenter_upi
-import mifos_pay.feature.upi_setup.generated.resources.feature_upi_setup_upi_pin_setup
+import kpt.feature.upi.setup.generated.resources.Res
+import kpt.feature.upi.setup.generated.resources.feature_upi_setup_enter_upi_pin
+import kpt.feature.upi.setup.generated.resources.feature_upi_setup_invalid_upi_pin
+import kpt.feature.upi.setup.generated.resources.feature_upi_setup_reenter_upi
+import kpt.feature.upi.setup.generated.resources.feature_upi_setup_upi_pin_setup
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
@@ -191,6 +191,9 @@ private fun UpiPinScreenContent(
     }
 }
 
+/**
+ * Shows [message] in the snackbar host on the main dispatcher.
+ */
 fun showSnackbar(snackbarHostState: SnackbarHostState, message: String) {
     CoroutineScope(Dispatchers.Main).launch {
         snackbarHostState.showSnackbar(message)

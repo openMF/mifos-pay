@@ -18,6 +18,7 @@ import kpt.core.data.mapper.toModel
 import kpt.core.data.repository.RunReportRepository
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.network.FineractApiManager
+/** Default [RunReportRepository] backed by the run-report API. */
 class RunReportRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

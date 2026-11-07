@@ -25,6 +25,8 @@ import kpt.core.model.user.Language
 import kpt.core.model.user.fork.LanguageConfig
 import kpt.core.model.user.toLanguage
 import kpt.core.ui.utils.BaseViewModel
+import kpt.feature.passcode.BiometricErrorMessages
+import kpt.feature.passcode.BiometricPromptStrings
 import kpt.feature.settings.generated.resources.Res
 import kpt.feature.settings.generated.resources.feature_settings_alert_disable_account
 import kpt.feature.settings.generated.resources.feature_settings_alert_disable_account_desc
@@ -37,8 +39,6 @@ import org.jetbrains.compose.resources.getString
 import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenticationProvider
 import org.mifos.authenticator.biometrics.platformAuthenticator.RegistrationResult
 import org.mifos.authenticator.passcode.PasscodeManager
-import org.mifos.feature.passcode.BiometricErrorMessages
-import org.mifos.feature.passcode.BiometricPromptStrings
 /**
  * `SavedStateHandle` key written by `internalMifosPasscodeScreen` and read by
  * [SettingsScreen]'s `LaunchedEffect` for the disable-biometrics
@@ -80,6 +80,7 @@ class SettingsViewModel(
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SettingsState, SettingsEvent, SettingsAction>(
     initialState = run {
+        /** Client taken from the stored user preferences; required to build the initial state. */
         val client = requireNotNull(userPreferencesRepository.client.value)
         SettingsState(
             client = client,
@@ -298,6 +299,7 @@ class SettingsViewModel(
         }
     }
 
+    /** Stages [language] as the pending choice; nothing is applied until [updateAppLocale]. */
     fun updateLanguage(language: LanguageConfig) {
         viewModelScope.launch {
             mutableStateFlow.update {
@@ -308,6 +310,7 @@ class SettingsViewModel(
         }
     }
 
+    /** Saves the pending language (or the current one) and asks the screen to apply its locale. */
     fun updateAppLocale() {
         viewModelScope.launch {
             val selectedLanguage = state.pendingLanguage ?: state.language
@@ -330,6 +333,13 @@ class SettingsViewModel(
     }
 }
 
+/**
+ * UI state of the settings screen.
+ * @property client Current client.
+ * @property dialogState Dialog currently shown, or null.
+ * @property language Language currently applied.
+ * @property pendingLanguage Language chosen in the dialog but not yet confirmed, or null.
+ */
 data class SettingsState(
     val client: Client,
     val dialogState: DialogState? = null,
@@ -337,42 +347,90 @@ data class SettingsState(
     val pendingLanguage: Language? = null,
 )
 
+/** Dialogs the settings screen can show. */
 sealed interface DialogState {
+    /** Progress dialog. */
     data object Loading : DialogState
+
+    /**
+     * Error dialog.
+     * @property message Error text.
+     */
     data class Error(val message: String) : DialogState
+
+    /**
+     * Confirmation dialog for disabling the account.
+     * @property title Dialog title.
+     * @property message Dialog message.
+     * @property onConfirm Called when the user confirms.
+     */
     data class DisableAccount(
         val title: StringResource,
         val message: StringResource,
         val onConfirm: () -> Unit,
     ) : DialogState
 
+    /**
+     * Confirmation dialog for logging out.
+     * @property title Dialog title.
+     * @property message Dialog message.
+     * @property onConfirm Called when the user confirms.
+     */
     data class Logout(
         val title: StringResource,
         val message: StringResource,
         val onConfirm: () -> Unit,
     ) : DialogState
 
+    /** Language selection dialog. */
     data object LanguageSelection : DialogState
 }
 
+/** One-shot events emitted by the settings view model. */
 sealed interface SettingsEvent {
+    /** Navigate back. */
     data object OnNavigateBack : SettingsEvent
+
+    /** Navigate to the edit-password screen. */
     data object OnNavigateToEditPasswordScreen : SettingsEvent
+
+    /** Navigate to the passcode screen. */
     data object NavigateToPasscodeScreen : SettingsEvent
+
+    /** Navigate to log out. */
     data object OnNavigateToLogout : SettingsEvent
+
+    /** Navigate to the FAQ screen. */
     data object OnNavigateToFaqScreen : SettingsEvent
+
+    /** Navigate to the profile screen. */
     data object OnNavigateToProfile : SettingsEvent
+
+    /** Navigate to the notification screen. */
     data object OnNavigateToNotificationScreen : SettingsEvent
 
+    /**
+     * Apply a new app locale.
+     * @property locale Locale name such as "en".
+     */
     data class ChangeLocale(val locale: String) : SettingsEvent
 }
 
+/** Actions handled by the settings view model. */
 sealed interface SettingsAction {
+    /** Navigate back. */
     data object NavigateBack : SettingsAction
+
+    /** Ask to log out. */
     data object Logout : SettingsAction
+
+    /** Ask to disable the account. */
     data object DisableAccount : SettingsAction
+
+    /** Biometrics are not available on this device. */
     data object BiometricsNotAvailable : SettingsAction
 
+    /** Show the language selection dialog. */
     data object ShowLanguageSelection : SettingsAction
 
     /**
@@ -390,6 +448,11 @@ sealed interface SettingsAction {
      * the verification result returns as [DisableBiometricsResult]. The
      * string holders are unused on this path but always carried so the
      * action shape stays stable.
+     *
+     * @property systemAuthProvider Platform authentication provider to register or unregister.
+     * @property isCurrentlyRegistered Whether biometrics are currently registered.
+     * @property errorMessages Localized messages used to map registration errors.
+     * @property promptStrings Localized strings for the OS biometric prompt.
      */
     data class ToggleSystemAuth(
         val systemAuthProvider: PlatformAuthenticationProvider,
@@ -405,6 +468,9 @@ sealed interface SettingsAction {
      * still-valid [UserVerificationRepository] token (30 s window), calls
      * `systemAuthProvider.unregister()`. On expiry or `success = false`,
      * just clears the savedStateHandle key.
+     *
+     * @property success Whether the passcode verification succeeded.
+     * @property systemAuthProvider Platform authentication provider to unregister when verification succeeded.
      */
     data class DisableBiometricsResult(
         val success: Boolean,
@@ -418,13 +484,25 @@ sealed interface SettingsAction {
      * [SettingsEvent.NavigateToPasscodeScreen].
      */
     data object ChangePasscode : SettingsAction
+
+    /** Ask to change the password. */
     data object ChangePassword : SettingsAction
+
+    /** Navigate to the FAQ screen. */
     data object NavigateToFaqScreen : SettingsAction
+
+    /** Navigate to the profile screen. */
     data object NavigateToProfile : SettingsAction
+
+    /** Navigate to the notification settings screen. */
     data object NavigateToNotificationSettings : SettingsAction
+
+    /** Dismiss the currently shown dialog. */
     data object DismissDialog : SettingsAction
 
+    /** Actions dispatched internally by the view model rather than by the UI. */
     sealed interface Internal : SettingsAction {
+        /** Perform the account disable after confirmation. */
         data object DisableAccount : Internal
     }
 }

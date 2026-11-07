@@ -15,10 +15,13 @@ import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.common.ScreenState
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.model.datatables.invoice.InvoiceEntity
+/** Repository for client invoices. */
 interface InvoiceRepository {
     // Phase-3 cutover — reads on ScreenState.
+    /** Streams a single invoice of the given client. */
     fun getInvoice(clientId: Long, invoiceId: Long): Flow<ScreenState<Invoice>>
 
+    /** Streams the invoices of the given client. */
     fun getInvoices(clientId: Long): Flow<ScreenState<List<Invoice>>>
 
     /**
@@ -59,13 +62,16 @@ interface InvoiceRepository {
     // Writes complete normally on success and throw on failure; the caller's
     // SubmitHandler maps success/exception to SubmitState. The user-facing success
     // message is a feature StringResource surfaced by the ViewModel, not repo copy.
+    /** Creates an invoice for the given client. */
     suspend fun createInvoice(clientId: Long, invoice: InvoiceEntity)
 
+    /** Updates an invoice of the given client. */
     suspend fun updateInvoice(
         clientId: Long,
         invoiceId: Long,
         invoice: InvoiceEntity,
     )
 
+    /** Deletes an invoice of the given client. */
     suspend fun deleteInvoice(clientId: Long, invoiceId: Long)
 }

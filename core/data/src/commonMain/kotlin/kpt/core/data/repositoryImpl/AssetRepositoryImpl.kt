@@ -13,10 +13,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.Json
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
+import kpt.core.data.generated.resources.Res
 import kpt.core.data.repository.AssetRepository
 import kpt.core.model.utils.Country
-import mifos_pay.core.data.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+/** Default [AssetRepository]. */
 class AssetRepositoryImpl : AssetRepository {
     @OptIn(ExperimentalResourceApi::class)
     override fun getCountriesWithStates(): ScreenStateStream<Map<String, List<String>>> {

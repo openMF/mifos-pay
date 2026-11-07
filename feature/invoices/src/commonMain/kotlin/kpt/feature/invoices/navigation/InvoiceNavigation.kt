@@ -15,13 +15,18 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import kpt.core.ui.composableWithPushTransitions
 import kpt.feature.invoices.details.InvoiceDetailScreen
+/** Base navigation route of the invoice detail screen. */
 const val INVOICE_ROUTE = "invoice_route"
+
+/** Name of the navigation argument carrying the invoice id. */
 const val INVOICE_DATA_ARG = "invoiceId"
 
+/** Navigates to the detail screen of the invoice with the given [invoiceId]. */
 fun NavController.navigateToInvoiceDetail(invoiceId: Long) {
     this.navigate("$INVOICE_ROUTE/$invoiceId")
 }
 
+/** Registers the invoice detail destination, which takes the invoice id as a long argument. */
 fun NavGraphBuilder.invoiceDetailScreen(
     onNavigateBack: () -> Unit,
 ) {

@@ -11,6 +11,13 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the term period frequency type used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property code Short code identifying the value.
+ * @property value Human-readable value.
+ */
 @Serializable
 data class TermPeriodFrequencyType(
     val id: Int? = null,

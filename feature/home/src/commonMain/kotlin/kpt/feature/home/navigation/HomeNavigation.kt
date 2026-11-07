@@ -14,10 +14,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kpt.feature.home.fork.HomeScreen
+/** Navigation route of the home screen. */
 const val HOME_ROUTE = "home_route"
 
+/** Navigates to the home screen, optionally applying [navOptions]. */
 fun NavController.navigateToHome(navOptions: NavOptions? = null) = navigate(HOME_ROUTE, navOptions)
 
+/** Registers the home screen destination in the navigation graph with its navigation callbacks. */
 fun NavGraphBuilder.homeScreen(
     onNavigateBack: () -> Unit,
     onRequest: (String) -> Unit,

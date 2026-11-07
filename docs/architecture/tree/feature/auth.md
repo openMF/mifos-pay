@@ -22,10 +22,10 @@ ViewModels: `LoginViewModel`, `MobileVerificationViewModel`, `SignupViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/auth sha=8ffafd2eab5e666f047f53c465aeb0956ee1099c -->
+<!-- api-docs:begin module=feature/auth sha=40c0cbb9ac560d4634623dd09a23c26bcc3e8dde -->
 ## API reference
 
-_Generated from `feature/auth` at tree `8ffafd2eab5e` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/auth` at tree `40c0cbb9ac56` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,19 +38,19 @@ rather than re-declaring what they already own.
 ```kotlin
 val AuthModule = module
 ```
-_No KDoc at source._
+Koin module that registers the login, signup and mobile-verification view models.
 
 ### `feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt`
 
 ```kotlin
 class LoginViewModel(
 ```
-_No KDoc at source._
+View model for the login screen; authenticates with username and password and drives the status dialog.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/di/AuthModule.kt:18</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/di/AuthModule.kt:19</code></summary>
 
 ```kotlin
-import org.koin.dsl.module
+/** Koin module that registers the login, signup and mobile-verification view models. */
 val AuthModule = module {
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignupViewModel)
@@ -63,7 +63,7 @@ val AuthModule = module {
 ```kotlin
 data class LoginState(
 ```
-_No KDoc at source._
+UI state of the login screen.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:104</code></summary>
 
@@ -81,7 +81,7 @@ _No KDoc at source._
 ```kotlin
 sealed class LoginEvent
 ```
-_No KDoc at source._
+One-off events emitted by the login view model.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:76</code></summary>
 
@@ -100,7 +100,7 @@ _No KDoc at source._
 ```kotlin
 sealed class LoginAction
 ```
-_No KDoc at source._
+User actions handled by the login view model.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:90</code></summary>
 
@@ -121,21 +121,21 @@ _No KDoc at source._
 ```kotlin
 fun PhoneNoVerifyContent(
 ```
-_No KDoc at source._
+Content for the phone-number entry step of mobile verification.
 
 ```kotlin
 fun OtpVerifyContent(
 ```
-_No KDoc at source._
+Content for the OTP entry step of mobile verification.
 
 ### `feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt`
 
 ```kotlin
 class MobileVerificationViewModel(
 ```
-_No KDoc at source._
+View model that verifies a mobile number: requests an OTP for the number, then verifies the entered OTP.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/di/AuthModule.kt:20</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/di/AuthModule.kt:21</code></summary>
 
 ```kotlin
     viewModelOf(::LoginViewModel)
@@ -149,7 +149,7 @@ _No KDoc at source._
 ```kotlin
 sealed class MobileVerificationState
 ```
-_No KDoc at source._
+UI state of the mobile verification flow, one subtype per step.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:94</code></summary>
 
@@ -168,7 +168,7 @@ private fun MobileVerificationScreen(
 ```kotlin
 sealed interface MobileVerificationEvent
 ```
-_No KDoc at source._
+One-off events emitted by the mobile verification view model.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:67</code></summary>
 
@@ -187,7 +187,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface MobileVerificationAction
 ```
-_No KDoc at source._
+User actions handled by the mobile verification view model.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationScreen.kt:95</code></summary>
 
@@ -220,33 +220,33 @@ Pushes `LOGIN_ROUTE`. Pre-fills the username field with `username` if non-empty 
 ```kotlin
 fun NavGraphBuilder.mobileVerificationScreen(
 ```
-_No KDoc at source._
+Registers the mobile verification destination in the nav graph.
 
 ```kotlin
 fun NavController.navigateToMobileVerification()
 ```
-_No KDoc at source._
+Navigates to the mobile verification screen.
 
 ### `feature/auth/src/commonMain/kotlin/kpt/feature/auth/navigation/SignupScreenNavigation.kt`
 
 ```kotlin
 fun NavGraphBuilder.signupScreen(
 ```
-_No KDoc at source._
+Registers the signup destination, with optional savings product, mobile number and business name arguments.
 
 ```kotlin
 fun NavController.navigateToSignup(
 ```
-_No KDoc at source._
+Navigates to the signup screen, optionally prefilling the savings product, mobile number and business name.
 
 ### `feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt`
 
 ```kotlin
 class SignupViewModel(
 ```
-_No KDoc at source._
+View model for the signup screen; validates the form and registers a new user and client.
 
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/di/AuthModule.kt:19</code></summary>
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/di/AuthModule.kt:20</code></summary>
 
 ```kotlin
 val AuthModule = module {
@@ -261,7 +261,7 @@ val AuthModule = module {
 ```kotlin
 data class SignUpState(
 ```
-_No KDoc at source._
+UI state of the signup form.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:121</code></summary>
 
@@ -280,7 +280,7 @@ private fun SignupScreen(
 ```kotlin
 sealed interface SignUpEvent
 ```
-_No KDoc at source._
+One-off events emitted by the signup view model.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:91</code></summary>
 
@@ -299,7 +299,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface SignUpAction
 ```
-_No KDoc at source._
+User actions handled by the signup view model.
 
 <details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupScreen.kt:104</code></summary>
 
@@ -320,14 +320,14 @@ _No KDoc at source._
 ```kotlin
 fun NavGraphBuilder.signupMethodScreen(
 ```
-_No KDoc at source._
+Registers the signup method destination in the nav graph.
 
 ```kotlin
 fun NavController.navigateToSignupMethod()
 ```
-_No KDoc at source._
+Navigates to the signup method screen.
 
 ---
 
-_12 type(s), 11 function(s)/property(ies); 2 carry KDoc at source; 0 authored example(s); 12 live call site(s)._
+_12 type(s), 11 function(s)/property(ies); 23 carry KDoc at source; 0 authored example(s); 12 live call site(s)._
 <!-- api-docs:end -->

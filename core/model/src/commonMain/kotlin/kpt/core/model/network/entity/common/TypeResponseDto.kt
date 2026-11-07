@@ -11,6 +11,13 @@ package kpt.core.model.network.entity.common
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Generic Fineract type enumeration value embedded in account responses.
+ *
+ * @property id Unique id.
+ * @property code Machine-readable code.
+ * @property value Human-readable display value.
+ */
 @Serializable
 data class TypeResponseDto(
     val id: Int? = null,

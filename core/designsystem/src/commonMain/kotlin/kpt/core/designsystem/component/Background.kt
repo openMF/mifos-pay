@@ -97,6 +97,7 @@ fun MifosGradientBackground(
     }
 }
 
+/** Preview of MifosBackground with the default theme. */
 @Preview
 @Composable
 fun BackgroundDefault() {
@@ -105,6 +106,7 @@ fun BackgroundDefault() {
     }
 }
 
+/** Preview of MifosBackground with a dynamic theme. */
 @Preview
 @Composable
 fun BackgroundDynamic() {
@@ -113,6 +115,7 @@ fun BackgroundDynamic() {
     }
 }
 
+/** Preview of MifosBackground with the Android theme. */
 @Preview
 @Composable
 fun BackgroundAndroid() {
@@ -121,6 +124,7 @@ fun BackgroundAndroid() {
     }
 }
 
+/** Preview of MifosGradientBackground with the default theme. */
 @Preview
 @Composable
 fun GradientBackgroundDefault() {
@@ -129,6 +133,7 @@ fun GradientBackgroundDefault() {
     }
 }
 
+/** Preview of MifosGradientBackground with the dynamic theme. */
 @Preview
 @Composable
 fun GradientBackgroundDynamic() {
@@ -137,6 +142,7 @@ fun GradientBackgroundDynamic() {
     }
 }
 
+/** Preview of MifosGradientBackground with the Android theme. */
 @Preview
 @Composable
 fun GradientBackgroundAndroid() {

@@ -32,11 +32,11 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.component.MifosTopAppBar
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
-import mifos_pay.feature.auth.generated.resources.Res
-import mifos_pay.feature.auth.generated.resources.feature_auth_create_an_account
-import mifos_pay.feature.auth.generated.resources.feature_auth_or
-import mifos_pay.feature.auth.generated.resources.feature_auth_sign_up_as_customer
-import mifos_pay.feature.auth.generated.resources.feature_auth_sign_up_as_merchant
+import kpt.feature.auth.generated.resources.Res
+import kpt.feature.auth.generated.resources.feature_auth_create_an_account
+import kpt.feature.auth.generated.resources.feature_auth_or
+import kpt.feature.auth.generated.resources.feature_auth_sign_up_as_customer
+import kpt.feature.auth.generated.resources.feature_auth_sign_up_as_merchant
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable

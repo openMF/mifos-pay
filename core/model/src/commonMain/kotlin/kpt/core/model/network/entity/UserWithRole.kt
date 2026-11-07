@@ -11,6 +11,16 @@ package kpt.core.model.network.entity
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A Fineract user together with the roles selected for that user.
+ *
+ * @property id Unique identifier.
+ * @property username Login username.
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property email Email address.
+ * @property selectedRoles Roles selected for the user.
+ */
 @Serializable
 data class UserWithRole(
     val id: String? = null,

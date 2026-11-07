@@ -19,17 +19,21 @@ import kpt.core.model.savingsaccount.SavingAccountTemplate
 import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.UpdateSavingAccountEntity
+/** Repository for savings accounts and their transactions. */
 interface SavingsAccountRepository {
     // Phase-3 cutover — Flow-shaped reads on ScreenState.
     // Page<T> is preserved inside Content (mirrors
     // `SelfServiceRepository.getSelfClientDetails(): Page<Client>` treatment).
+    /** Fetches savings accounts up to the given limit. */
     suspend fun getSavingsAccounts(limit: Int): ScreenStateStream<Page<SavingsWithAssociationsEntity>>
 
+    /** Fetches a savings account together with its associations. */
     suspend fun getSavingsWithAssociations(
         accountId: Long,
         associationType: String,
     ): ScreenStateStream<SavingsWithAssociationsEntity>
 
+    /** Streams the details of a savings account. */
     fun getAccountDetail(accountId: Long): ScreenStateStream<SavingAccountDetail>
 
     /**
@@ -66,27 +70,34 @@ interface SavingsAccountRepository {
         scope: CoroutineScope,
     ): ScreenDataStream<SavingAccountDetail>
 
+    /** Fetches a transaction of a savings account. */
     suspend fun getSavingAccountTransaction(
         accountId: Long,
         transactionId: Long,
     ): ScreenStateStream<Transaction>
 
+    /** Initiates a pay-via-mobile transaction on the account. */
     suspend fun payViaMobile(accountId: Long): ScreenStateStream<Transaction>
 
+    /** Streams the template used to create a savings account for the client. */
     fun getSavingAccountTemplate(clientId: Long): ScreenStateStream<SavingAccountTemplate>
 
     // Writes throw on failure (template idiom — consumed by a SubmitHandler).
+    /** Creates a savings account. */
     suspend fun createSavingsAccount(savingAccount: CreateNewSavingEntity)
 
+    /** Updates a savings account. */
     suspend fun updateSavingsAccount(
         accountId: Long,
         savingAccount: UpdateSavingAccountEntity,
     )
 
+    /** Unblocks the savings account. */
     suspend fun unblockAccount(
         accountId: Long,
     )
 
+    /** Blocks the savings account. */
     suspend fun blockAccount(
         accountId: Long,
     )

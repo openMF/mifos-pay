@@ -36,10 +36,11 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_viewfinder
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_viewfinder
 import org.jetbrains.compose.resources.stringResource
 
+/** Animated scan frame with a moving scan line drawn over the camera preview. */
 @Composable
 fun QrViewfinder(
     modifier: Modifier = Modifier,

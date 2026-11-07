@@ -72,15 +72,15 @@ import kpt.feature.mpay.qr.components.InterBankPlaceholder
 import kpt.feature.mpay.qr.components.QrActionButtons
 import kpt.feature.mpay.qr.components.QrCodeCard
 import kpt.feature.mpay.qr.components.QrType
-import mifos_pay.feature.mpay_qr.generated.resources.Res
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_copied
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_downloaded
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_external_id_required
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_go_back
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_receive_money
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_scan_to_pay
-import mifos_pay.feature.mpay_qr.generated.resources.feature_mpay_qr_unable_to_generate
-import mifos_pay.feature.mpay_qr.generated.resources.feature_request_money_set_amount
+import kpt.feature.mpay.qr.generated.resources.Res
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_copied
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_downloaded
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_external_id_required
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_go_back
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_receive_money
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_scan_to_pay
+import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_unable_to_generate
+import kpt.feature.mpay.qr.generated.resources.feature_request_money_set_amount
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -221,7 +221,7 @@ internal fun MpayQrScreen(
 
                 is MpayQrState.ViewState.Error -> {
                     MpayQrErrorContent(
-                        message = viewState.message,
+                        message = stringResource(viewState.message),
                         onNavigateBack = { onAction(MpayQrAction.NavigateBack) },
                     )
                 }
@@ -344,8 +344,10 @@ private fun MpayQrScreenContent(
                                 )
                             } else {
                                 InterBankPlaceholder(
-                                    reason = contentState.interBankUnavailableReason
-                                        ?: stringResource(Res.string.feature_mpay_qr_external_id_required),
+                                    reason = stringResource(
+                                        contentState.interBankUnavailableReason
+                                            ?: Res.string.feature_mpay_qr_external_id_required,
+                                    ),
                                     modifier = Modifier.padding(horizontal = KptTheme.spacing.sm),
                                 )
                             }

@@ -11,6 +11,13 @@ package kpt.core.model.network.twofactor
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Two-factor access token with its validity window.
+ *
+ * @property token The access token string.
+ * @property validFrom Start of the validity period.
+ * @property validTo End of the validity period.
+ */
 @Serializable
 data class AccessToken(
     val token: String? = null,

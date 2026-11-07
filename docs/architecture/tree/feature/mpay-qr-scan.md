@@ -22,10 +22,10 @@ ViewModels: `ScanQrViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/mpay-qr-scan sha=91d9ef6779e6d2a37bc51a2806351e411203f515 -->
+<!-- api-docs:begin module=feature/mpay-qr-scan sha=a4921e75fb5d8c8dc3b99cd005a6147feb15c806 -->
 ## API reference
 
-_Generated from `feature/mpay-qr-scan` at tree `91d9ef6779e6` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/mpay-qr-scan` at tree `a4921e75fb5d` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,7 +38,7 @@ rather than re-declaring what they already own.
 ```kotlin
 interface CameraPermissionState
 ```
-_No KDoc at source._
+Observable camera permission state plus the actions to request the permission or open system settings.
 
 <details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/CameraPermissionState.android.kt:29</code></summary>
 
@@ -54,19 +54,19 @@ actual fun rememberCameraPermissionState(): CameraPermissionState {
 
 </details>
 
-- `val status: CameraPermissionStatus`
-- `fun requestCameraPermission()`
-- `fun goToSettings()`
+- `val status: CameraPermissionStatus` — Current camera permission status.
+- `fun requestCameraPermission()` — Asks the user for camera permission.
+- `fun goToSettings()` — Opens the system settings screen so the user can grant camera permission manually.
 
 ```kotlin
 expect fun rememberCameraPermissionState(): CameraPermissionState
 ```
-_No KDoc at source._
+Remembers a platform-specific `CameraPermissionState` for the current composition.
 
 ```kotlin
 enum class CameraPermissionStatus
 ```
-_No KDoc at source._
+Camera permission status values reported by `CameraPermissionState`.
 
 <details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/CameraPermissionState.android.kt:48</code></summary>
 
@@ -87,9 +87,9 @@ _No KDoc at source._
 ```kotlin
 enum class CodeType
 ```
-_No KDoc at source._
+Barcode symbologies the scanner can be configured to detect.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.android.kt:18</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.android.kt:22</code></summary>
 
 ```kotlin
 @Composable
@@ -115,12 +115,12 @@ Decodes a QR code from an image file. Platform-specific implementations use nati
 ```kotlin
 expect fun QrCodeScanner(
 ```
-_No KDoc at source._
+Platform camera scanner that detects the given `types` and reports each decoded value via `onScanned`.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.android.kt:17</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.android.kt:21</code></summary>
 
 ```kotlin
-
+ */
 @Composable
 actual fun QrCodeScanner(
     types: List<CodeType>,
@@ -134,9 +134,9 @@ actual fun QrCodeScanner(
 ```kotlin
 fun QrScannerWithPermissions(
 ```
-_No KDoc at source._
+Wraps `QrCodeScanner` with a camera permission check, showing `permissionDeniedContent` when access is denied.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:174</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:175</code></summary>
 
 ```kotlin
         // Camera preview / QR Scanner (full screen)
@@ -155,7 +155,7 @@ _No KDoc at source._
 ```kotlin
 fun ScanQrCodeScreenContent(
 ```
-_No KDoc at source._
+Stateless content of the scan-QR screen: camera viewfinder, torch and help controls, and gallery image import.
 
 ### `feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrViewModel.kt`
 
@@ -181,12 +181,12 @@ ViewModel for QR code scanning screen.
 ```kotlin
 data object ScanQrState
 ```
-_No KDoc at source._
+Empty UI state; the screen has no state beyond the view model's flows.
 
 ```kotlin
 sealed interface ScanQrEvent
 ```
-_No KDoc at source._
+One-shot events emitted by `ScanQrViewModel`.
 
 <details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:74</code></summary>
 
@@ -205,7 +205,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface ScanQrAction
 ```
-_No KDoc at source._
+Actions handled by `ScanQrViewModel`.
 
 ### `feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/WebPlatform.kt`
 
@@ -214,15 +214,16 @@ expect object WebPlatform
 ```
 Platform detection for QR scanner UI behavior.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/WebPlatform.android.kt:12</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/androidMain/kotlin/kpt/feature/mpay/qr/scan/WebPlatform.android.kt:13</code></summary>
 
 ```kotlin
-package kpt.feature.mpay.qr.scan
 
+/** Android actual of [WebPlatform]; never a web environment. */
 actual object WebPlatform {
+    /** Always false on Android. */
     actual val isWeb: Boolean = false
-    actual val isWebDesktop: Boolean = false
-}
+
+    /** Always false on Android. */
 ```
 
 </details>
@@ -235,9 +236,9 @@ actual object WebPlatform {
 ```kotlin
 fun QrActionButton(
 ```
-_No KDoc at source._
+Icon-over-label action button used on the scanner screen.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:203</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:204</code></summary>
 
 ```kotlin
                     horizontalArrangement = Arrangement.spacedBy(48.dp),
@@ -256,9 +257,9 @@ _No KDoc at source._
 ```kotlin
 fun QrHelpDialog(
 ```
-_No KDoc at source._
+Dialog explaining how to scan a QR code; closed through `onDismiss`.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:246</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:247</code></summary>
 
 ```kotlin
         // Help dialog
@@ -277,9 +278,9 @@ _No KDoc at source._
 ```kotlin
 fun QrImportScreen(
 ```
-_No KDoc at source._
+Screen for importing a QR code from an image, with preview, drag state and processing indicator.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/desktopMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.desktop.kt:60</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/desktopMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.desktop.kt:61</code></summary>
 
 ```kotlin
     }
@@ -298,9 +299,9 @@ _No KDoc at source._
 ```kotlin
 fun QrPermissionDenied(
 ```
-_No KDoc at source._
+Content shown when camera permission is denied, offering to open settings or upload a QR image instead.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.kt:36</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/QrCodeScanner.kt:38</code></summary>
 
 ```kotlin
     permissionDeniedContent: @Composable (CameraPermissionState, () -> Unit) -> Unit =
@@ -319,9 +320,9 @@ _No KDoc at source._
 ```kotlin
 fun QrProcessingOverlay(
 ```
-_No KDoc at source._
+Overlay showing the selected image preview and a progress indicator while a QR image is decoded.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:230</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:231</code></summary>
 
 ```kotlin
         // Processing overlay
@@ -340,9 +341,9 @@ _No KDoc at source._
 ```kotlin
 fun QrScanFooter(
 ```
-_No KDoc at source._
+Footer caption displayed under the scanner viewfinder.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:217</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:218</code></summary>
 
 ```kotlin
                 }
@@ -361,9 +362,9 @@ _No KDoc at source._
 ```kotlin
 fun QrScanTopBar(
 ```
-_No KDoc at source._
+Top bar of the scanner with close and help buttons.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:222</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:223</code></summary>
 
 ```kotlin
 
@@ -382,9 +383,9 @@ _No KDoc at source._
 ```kotlin
 fun QrViewfinder(
 ```
-_No KDoc at source._
+Animated scan frame with a moving scan line drawn over the camera preview.
 
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:188</code></summary>
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrCodeScreen.kt:189</code></summary>
 
 ```kotlin
         if (!isWebDesktop) {
@@ -403,21 +404,21 @@ _No KDoc at source._
 ```kotlin
 val MpayQrScanModule = module
 ```
-_No KDoc at source._
+Koin module providing the QR scan feature's view model.
 
 ### `feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/navigation/MpayQrScanNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToScanQr(navOptions: NavOptions? = null) =
 ```
-_No KDoc at source._
+Navigates to the scan-QR screen.
 
 ```kotlin
 fun NavGraphBuilder.scanQrScreen(
 ```
-_No KDoc at source._
+Registers the scan-QR destination, wiring navigation callbacks for intra-bank, inter-bank and add-beneficiary results.
 
 ---
 
-_8 type(s), 21 function(s)/property(ies); 5 carry KDoc at source; 0 authored example(s); 16 live call site(s)._
+_8 type(s), 21 function(s)/property(ies); 29 carry KDoc at source; 0 authored example(s); 16 live call site(s)._
 <!-- api-docs:end -->

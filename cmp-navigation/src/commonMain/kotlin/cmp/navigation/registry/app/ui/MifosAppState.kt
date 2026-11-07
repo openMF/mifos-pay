@@ -88,12 +88,15 @@ internal class MifosAppState(
             else -> null
         }
 
+    /** True when the window is compact, so the bottom navigation bar is shown. */
     val shouldShowBottomBar: Boolean
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
+    /** True when the navigation rail is shown instead of the bottom bar. */
     val shouldShowNavRail: Boolean
         get() = !shouldShowBottomBar
 
+    /** Emits true while the device has no network connection. */
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
@@ -102,8 +105,10 @@ internal class MifosAppState(
             initialValue = false,
         )
 
+    /** Top-level destinations shown in the bottom bar or navigation rail. */
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
+    /** Current system time zone, kept in sync by the time-zone monitor. */
     val currentTimeZone = timeZoneMonitor.currentTimeZone
         .stateIn(
             coroutineScope,
@@ -111,6 +116,7 @@ internal class MifosAppState(
             TimeZone.currentSystemDefault(),
         )
 
+    /** Navigates to a top-level destination, restoring its saved state and avoiding duplicate entries. */
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         trace("Navigation: ${topLevelDestination.name}") {
             val topLevelNavOptions = navOptions {

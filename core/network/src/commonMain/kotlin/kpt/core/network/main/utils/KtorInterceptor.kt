@@ -19,10 +19,14 @@ import io.ktor.util.AttributeKey
 import kpt.core.common.GlobalAuthManager
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.network.config.InstanceConfigManager
+/**
+ * Ktor client plugin adding JSON, tenant and Basic auth headers and flagging 401 responses as unauthorized.
+ */
 class KtorInterceptor(
     private val getToken: () -> String?,
     private val configManager: InstanceConfigManager,
 ) {
+    /** Ktor plugin installer for [KtorInterceptor]. */
     companion object Plugin : HttpClientPlugin<Config, KtorInterceptor> {
 
         override val key: AttributeKey<KtorInterceptor> = AttributeKey("KtorInterceptor")
@@ -55,15 +59,21 @@ class KtorInterceptor(
     }
 }
 
+/** Configuration for [KtorInterceptor]. */
 class Config {
+    /** Supplier of the current auth token, or null when signed out. */
     lateinit var getToken: () -> String?
+
+    /** Source of the active server instance. */
     lateinit var configManager: InstanceConfigManager
 }
 
+/** Variant of [KtorInterceptor] that reads the auth token from the preferences repository. */
 class KtorInterceptorRe(
     private val repository: ForkPreferencesRepository,
     private val configManager: InstanceConfigManager,
 ) {
+    /** Ktor plugin installer for [KtorInterceptorRe]. */
     companion object Plugin : HttpClientPlugin<ConfigRe, KtorInterceptorRe> {
 
         override val key: AttributeKey<KtorInterceptorRe> = AttributeKey("KtorInterceptorRe")
@@ -98,7 +108,11 @@ class KtorInterceptorRe(
     }
 }
 
+/** Configuration for [KtorInterceptorRe]. */
 class ConfigRe {
+    /** Preferences repository providing the stored auth token. */
     lateinit var repository: ForkPreferencesRepository
+
+    /** Source of the active server instance. */
     lateinit var configManager: InstanceConfigManager
 }

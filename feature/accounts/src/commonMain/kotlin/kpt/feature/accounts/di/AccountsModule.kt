@@ -15,6 +15,7 @@ import kpt.feature.accounts.savingsaccount.AddEditSavingViewModel
 import kpt.feature.accounts.savingsaccount.details.SavingAccountDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the accounts feature view models and its Json instance. */
 val AccountsModule = module {
     single<Json> { Json { ignoreUnknownKeys = true } }
     viewModelOf(::AccountViewModel)

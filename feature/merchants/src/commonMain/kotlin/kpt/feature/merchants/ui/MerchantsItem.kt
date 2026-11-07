@@ -28,8 +28,8 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.component.MifosCard
 import kpt.core.designsystem.theme.styleMedium16sp
 import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
-import mifos_pay.feature.merchants.generated.resources.Res
-import mifos_pay.feature.merchants.generated.resources.feature_merchants_ic_bank
+import kpt.feature.merchants.generated.resources.Res
+import kpt.feature.merchants.generated.resources.feature_merchants_ic_bank
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalFoundationApi::class)

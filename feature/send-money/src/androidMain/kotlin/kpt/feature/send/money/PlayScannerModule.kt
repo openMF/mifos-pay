@@ -14,6 +14,7 @@ import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
+/** Koin module wiring the Google Play services barcode scanner and [QrScannerImp] as the [QrScanner]. */
 val PlayScannerModule = module {
 
     single {

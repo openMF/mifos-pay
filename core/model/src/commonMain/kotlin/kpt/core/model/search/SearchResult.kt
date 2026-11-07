@@ -11,6 +11,16 @@ package kpt.core.model.search
 
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * A single hit returned by the server search.
+ *
+ * @property entityId Identifier of the matched entity.
+ * @property entityAccountNo Account number of the matched entity.
+ * @property entityName Name of the matched entity.
+ * @property entityType Type of the matched entity.
+ * @property parentId Identifier of the parent entity.
+ * @property parentName Name of the parent entity.
+ */
 @Parcelize
 data class SearchResult(
     val entityId: Int,

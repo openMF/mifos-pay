@@ -10,6 +10,11 @@
 package kpt.core.model.client
 
 import kpt.core.model.savingsaccount.SavingAccount
+/**
+ * Accounts held by a client.
+ *
+ * @property savingAccounts The client's savings accounts.
+ */
 data class ClientAccount(
     val savingAccounts: List<SavingAccount>,
 )

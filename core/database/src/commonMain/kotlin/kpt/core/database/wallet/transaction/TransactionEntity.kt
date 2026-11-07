@@ -70,6 +70,13 @@ import kpt.core.base.database.annotation.DbEntity
  * @property paymentDetailJson Nullable JSON encoding of `Transaction.PaymentDetailData`.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future "stale-row eviction" prune.
+ *
+ * @property currencyName Currency name.
+ * @property currencyDecimalPlaces Currency decimal places.
+ * @property currencyInMultiplesOf Nullable minimum multiple the currency amount must be in.
+ * @property currencyDisplaySymbol Currency display symbol.
+ * @property currencyNameCode Currency name code.
+ * @property currencyDisplayLabel Currency display label.
  */
 @DbEntity
 @Entity(

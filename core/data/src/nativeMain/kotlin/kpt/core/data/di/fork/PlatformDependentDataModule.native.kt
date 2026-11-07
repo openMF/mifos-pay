@@ -12,9 +12,11 @@ package kpt.core.data.di.fork
 import kpt.core.data.NativePlatformDependentDataModule
 import org.koin.core.module.Module
 import org.koin.dsl.module
+/** Native [PlatformDependentDataModule] instance. */
 actual val getPlatformDataModule: PlatformDependentDataModule
     get() = NativePlatformDependentDataModule()
 
+/** Koin module binding the native [PlatformDependentDataModule]. */
 actual val platformModule: Module
     get() = module {
         single<PlatformDependentDataModule> { getPlatformDataModule }

@@ -11,6 +11,21 @@ package kpt.core.model.savingsaccount
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Template returned by the server with defaults and options for creating a savings account.
+ *
+ * @property clientId Identifier of the client.
+ * @property clientName Name of the client.
+ * @property nominalAnnualInterestRate Nominal annual interest rate.
+ * @property withdrawalFeeForTransfers Whether a withdrawal fee applies to transfers.
+ * @property allowOverdraft Whether overdraft is allowed.
+ * @property enforceMinRequiredBalance Whether the minimum required balance is enforced.
+ * @property lienAllowed Whether a lien can be placed on the account.
+ * @property withHoldTax Whether withholding tax applies.
+ * @property isDormancyTrackingActive Whether dormancy tracking is active.
+ * @property productOptions Savings products available for selection.
+ * @property chargeOptions Charges available for selection.
+ */
 @Serializable
 data class SavingAccountTemplate(
     val clientId: String,

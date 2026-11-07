@@ -31,3 +31,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.standing.instruction.generated.resources"
+}

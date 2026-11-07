@@ -12,6 +12,22 @@ package kpt.core.model.savingsaccount
 import kotlinx.serialization.Serializable
 import kpt.core.common.Parcelable
 import kpt.core.common.Parcelize
+/**
+ * Key lifecycle dates and acting users of a savings account.
+ *
+ * @property submittedOnDate Date of submission as year, month and day components.
+ * @property submittedByUsername Username of the user who submitted.
+ * @property submittedByFirstname First name of the user who submitted.
+ * @property submittedByLastname Last name of the user who submitted.
+ * @property approvedOnDate Date of approval as year, month and day components.
+ * @property approvedByUsername Username of the approver.
+ * @property approvedByFirstname First name of the approver.
+ * @property approvedByLastname Last name of the approver.
+ * @property activatedOnDate Date of activation as year, month and day components.
+ * @property activatedByUsername Username of the user who activated.
+ * @property activatedByFirstname First name of the user who activated.
+ * @property activatedByLastname Last name of the user who activated.
+ */
 @Serializable
 @Parcelize
 data class Timeline(

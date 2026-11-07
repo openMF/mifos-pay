@@ -34,6 +34,7 @@ fns="$F/scripts/white-label/fns.sh"
     awk -v f="$fn" '$0 ~ "^"f"\\(\\) \\{" {p=1} p{print} p&&/^}/{p=0}' "$ENGINE"
   done
 } > "$fns"
+# Runs bash code inside the fixture with the reader and the engine's functions loaded.
 run() {  # run <bash code> — in the fixture, with the reader and the engine's functions loaded
   ( cd "$F" && SCRIPT_DIR="$F/scripts/white-label" CS_CONTRACT="$F/customization-surface.yaml" MIGRATE_DIR="" \
       DRY_RUN=false MIRROR=false BASE_BRANCH=main FORK_STATE=fork PREV_TEMPLATE_SHA="${BASE:-}" \
@@ -67,6 +68,7 @@ cat > "$F/cmp-desktop/mac-app-store.entitlements" <<'XML'
 </dict>
 </plist>
 XML
+# git in the fixture repo, with a throwaway identity.
 g() { git -C "$F" -c user.email=t@t -c user.name=t "$@"; }
 echo v1 > "$F/cmp-desktop/build.gradle.kts"
 g init -q -b main; g add -A; g commit -q -m "last sync"; BASE="$(g rev-parse HEAD)"

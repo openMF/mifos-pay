@@ -16,6 +16,7 @@ package kpt.core.common.utils
  */
 fun String.isValidEmail(): Boolean = contains("@")
 
+/** Masks all but the last three characters of [input] with [maskChar]; short inputs are returned as is. */
 fun maskString(input: String, maskChar: Char = '*'): String {
     if (input.length <= 3) return input
 
@@ -28,14 +29,17 @@ fun maskString(input: String, maskChar: Char = '*'): String {
     }
 }
 
+/** Upper-cases the first letter of each space-separated word. */
 fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it ->
     it.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
 }
 
+/** True if this string contains a space. */
 fun String.hasSpaces(): Boolean {
     return this.contains(" ")
 }
 
+/** True if this string contains two identical characters in a row. */
 fun String.hasConsecutiveRepetitions(): Boolean {
     return Regex("(.)\\1").containsMatchIn(this)
 }

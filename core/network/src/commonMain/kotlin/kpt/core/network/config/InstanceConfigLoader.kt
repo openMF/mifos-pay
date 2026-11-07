@@ -12,7 +12,11 @@ package kpt.core.network.config
 import kotlinx.coroutines.flow.Flow
 import kpt.core.common.ScreenState
 import kpt.core.model.instance.InstancesConfig
+/** Loads the list of available server instances. */
 interface InstanceConfigLoader {
+    /** Fetches the server instances configuration once. */
     suspend fun fetchInstancesConfig(): InstancesConfig
+
+    /** Streams the server instances configuration wrapped in a [ScreenState]. */
     fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>
 }

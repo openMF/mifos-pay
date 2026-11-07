@@ -13,6 +13,7 @@ import kpt.feature.invoices.InvoicesViewModel
 import kpt.feature.invoices.details.InvoiceDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/** Koin module providing the invoice list and invoice detail view models. */
 val InvoicesModule = module {
     viewModelOf(::InvoicesViewModel)
     viewModelOf(::InvoiceDetailViewModel)

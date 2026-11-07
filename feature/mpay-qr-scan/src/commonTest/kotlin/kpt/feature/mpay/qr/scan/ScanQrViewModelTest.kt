@@ -320,7 +320,9 @@ class ScanQrViewModelTest {
 /**
  * Fake implementation of [ForkPreferencesRepository] for testing.
  */
-private class FakeUserPreferencesRepository : ForkPreferencesRepository, UserPreferencesRepository by templatePreferences() {
+private class FakeUserPreferencesRepository :
+    ForkPreferencesRepository,
+    UserPreferencesRepository by templatePreferences() {
     private val _selectedInstance = MutableStateFlow<ServerInstance?>(null)
 
     override val selectedInstance: StateFlow<ServerInstance?> = _selectedInstance

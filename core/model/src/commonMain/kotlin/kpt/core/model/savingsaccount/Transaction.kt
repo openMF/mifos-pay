@@ -11,6 +11,24 @@ package kpt.core.model.savingsaccount
 
 import kotlinx.serialization.Serializable
 
+/**
+ * A savings account transaction.
+ *
+ * @property reversed Whether the transaction has been reversed.
+ * @property accountId Identifier of the account.
+ * @property amount Amount.
+ * @property date Transaction date as a string.
+ * @property currency Currency of the transaction.
+ * @property transactionType Type of the transaction.
+ * @property transactionId Identifier of the transaction.
+ * @property accountNo Account number.
+ * @property transferId Identifier of the related transfer, if any.
+ * @property originalTransactionId Identifier of the transaction this one reverses or derives from.
+ * @property paymentDetailId Identifier of the payment details, if any.
+ * @property description Description.
+ * @property transfer Related transfer, if any.
+ * @property paymentDetailData Payment details, if any.
+ */
 @Serializable
 data class Transaction(
     val reversed: Boolean,
@@ -28,6 +46,13 @@ data class Transaction(
     val transfer: Transfer? = null,
     val paymentDetailData: PaymentDetailData? = null,
 ) {
+    /**
+     * Transaction type reference (id, code and label).
+     *
+     * @property id Unique identifier.
+     * @property code Code identifying the item.
+     * @property value Human-readable label.
+     */
     @Serializable
     data class Type(
         val id: Long,
@@ -35,6 +60,14 @@ data class Transaction(
         val value: String,
     )
 
+    /**
+     * Transfer information attached to a transaction.
+     *
+     * @property id Unique identifier.
+     * @property transferAmount Amount transferred.
+     * @property transferDescription Description of the transfer.
+     * @property reversed Whether the transfer has been reversed.
+     */
     @Serializable
     data class Transfer(
         val id: Long,
@@ -43,6 +76,17 @@ data class Transaction(
         val reversed: Boolean,
     )
 
+    /**
+     * Payment details attached to a transaction.
+     *
+     * @property id Unique identifier.
+     * @property paymentType Payment type used.
+     * @property accountNumber Account number.
+     * @property checkNumber Cheque number.
+     * @property routingCode Bank routing code.
+     * @property receiptNumber Receipt number.
+     * @property bankNumber Bank number.
+     */
     @Serializable
     data class PaymentDetailData(
         val id: Long,
@@ -54,6 +98,13 @@ data class Transaction(
         val bankNumber: String,
     )
 
+    /**
+     * Payment type reference used in transaction payment details.
+     *
+     * @property id Payment type id.
+     * @property name Payment type name.
+     * @property isSystemDefined Whether the type is predefined by the system.
+     */
     @Serializable
     data class PaymentType(
         val id: Int,

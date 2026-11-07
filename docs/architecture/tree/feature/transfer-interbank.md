@@ -23,10 +23,10 @@ ViewModels: `InterbankTransferViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/transfer-interbank sha=7cbfb56b55971d087f6a60f4ed0e23fbd5d9fd33 -->
+<!-- api-docs:begin module=feature/transfer-interbank sha=b52640c3fe8e998825aabd6a364ac3e6abe16c04 -->
 ## API reference
 
-_Generated from `feature/transfer-interbank` at tree `7cbfb56b5597` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/transfer-interbank` at tree `b52640c3fe8e` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -41,7 +41,7 @@ fun InterbankTransferFlowScreen(
 ```
 Main orchestrator screen for the interbank transfer flow Manages navigation between all steps of the transfer process
 
-<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/navigation/InterbankTransferNavigation.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/navigation/InterbankTransferNavigation.kt:60</code></summary>
 
 ```kotlin
     composable<InterbankTransferRoute> { backStackEntry ->
@@ -58,7 +58,7 @@ Main orchestrator screen for the interbank transfer flow Manages navigation betw
 ```kotlin
 fun InterbankTransferFlowScreenPreview()
 ```
-_No KDoc at source._
+Compose preview of `InterbankTransferFlowScreen`.
 
 ### `feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferViewModel.kt`
 
@@ -83,7 +83,7 @@ ViewModel for managing interbank transfer flow Handles all stages: account selec
 ```kotlin
 data class InterbankTransferState(
 ```
-_No KDoc at source._
+UI state of the interbank transfer flow.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:78</code></summary>
 
@@ -102,7 +102,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface InterbankTransferEvent
 ```
-_No KDoc at source._
+One-shot events emitted by `InterbankTransferViewModel`.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:70</code></summary>
 
@@ -121,7 +121,7 @@ _No KDoc at source._
 ```kotlin
 sealed interface InterbankTransferAction
 ```
-_No KDoc at source._
+Actions handled by `InterbankTransferViewModel`.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:63</code></summary>
 
@@ -141,31 +141,31 @@ _No KDoc at source._
 ```kotlin
 val interbankTransferModule = module
 ```
-_No KDoc at source._
+Koin module providing the interbank transfer view model.
 
 ### `feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/navigation/InterbankTransferNavigation.kt`
 
 ```kotlin
 data class InterbankTransferRoute(
 ```
-_No KDoc at source._
+Navigation route of the interbank transfer flow, optionally prefilled from a scanned QR code.
 
 ```kotlin
 fun NavController.navigateToInterbankTransfer(
 ```
-_No KDoc at source._
+Navigates to the interbank transfer flow with optional prefilled recipient details.
 
 ```kotlin
 fun NavGraphBuilder.interbankTransferScreen(
 ```
-_No KDoc at source._
+Registers the interbank transfer destination.
 
 ### `feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/PreviewTransferScreen.kt`
 
 ```kotlin
 fun PreviewTransferScreen(
 ```
-_No KDoc at source._
+Step showing a summary of the transfer for the user to review and confirm.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:155</code></summary>
 
@@ -184,19 +184,19 @@ _No KDoc at source._
 ```kotlin
 fun PreviewTransferScreenPreview()
 ```
-_No KDoc at source._
+Compose preview of `PreviewTransferScreen`.
 
 ```kotlin
 fun PreviewTransferScreenProcessingPreview()
 ```
-_No KDoc at source._
+Compose preview of `PreviewTransferScreen` while the transfer is processing.
 
 ### `feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/SearchRecipientScreen.kt`
 
 ```kotlin
 fun SearchRecipientScreen(
 ```
-_No KDoc at source._
+Step for searching a recipient by phone number and choosing from the results.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:100</code></summary>
 
@@ -215,29 +215,29 @@ _No KDoc at source._
 ```kotlin
 fun SearchRecipientScreenPreview()
 ```
-_No KDoc at source._
+Compose preview of `SearchRecipientScreen` with results.
 
 ```kotlin
 fun SearchRecipientScreenEmptyPreview()
 ```
-_No KDoc at source._
+Compose preview of `SearchRecipientScreen` with no query.
 
 ```kotlin
 fun SearchRecipientScreenNoResultsPreview()
 ```
-_No KDoc at source._
+Compose preview of `SearchRecipientScreen` with no matching recipients.
 
 ```kotlin
 fun SearchRecipientScreenLoadingPreview()
 ```
-_No KDoc at source._
+Compose preview of `SearchRecipientScreen` while searching.
 
 ### `feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/SelectAccountScreen.kt`
 
 ```kotlin
 fun SelectAccountScreen(
 ```
-_No KDoc at source._
+Step for choosing the account to transfer from.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:79</code></summary>
 
@@ -256,24 +256,24 @@ _No KDoc at source._
 ```kotlin
 fun SelectAccountScreenPreview()
 ```
-_No KDoc at source._
+Compose preview of `SelectAccountScreen` with accounts.
 
 ```kotlin
 fun SelectAccountScreenLoadingPreview()
 ```
-_No KDoc at source._
+Compose preview of `SelectAccountScreen` while loading.
 
 ```kotlin
 fun SelectAccountScreenErrorPreview()
 ```
-_No KDoc at source._
+Compose preview of `SelectAccountScreen` in the error state.
 
 ### `feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/TransferDetailsScreen.kt`
 
 ```kotlin
 fun TransferDetailsScreen(
 ```
-_No KDoc at source._
+Step for entering the transfer amount, date and description.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:126</code></summary>
 
@@ -292,19 +292,19 @@ _No KDoc at source._
 ```kotlin
 fun TransferDetailsScreenPreview()
 ```
-_No KDoc at source._
+Compose preview of `TransferDetailsScreen` with details filled in.
 
 ```kotlin
 fun TransferDetailsScreenEmptyPreview()
 ```
-_No KDoc at source._
+Compose preview of `TransferDetailsScreen` with empty fields.
 
 ### `feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/screens/TransferResultScreens.kt`
 
 ```kotlin
 fun TransferSuccessScreen(
 ```
-_No KDoc at source._
+Result screen shown after a successful transfer, with a receipt of the transaction.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:180</code></summary>
 
@@ -323,7 +323,7 @@ _No KDoc at source._
 ```kotlin
 fun TransferFailedScreen(
 ```
-_No KDoc at source._
+Result screen shown when a transfer fails, with the reason and attempted details.
 
 <details><summary>Used in the template — <code>feature/transfer-interbank/src/commonMain/kotlin/kpt/feature/transfer/interbank/InterbankTransferFlowScreen.kt:197</code></summary>
 
@@ -342,7 +342,7 @@ _No KDoc at source._
 ```kotlin
 fun TransferSuccessScreenPreview()
 ```
-_No KDoc at source._
+Compose preview of `TransferSuccessScreen`.
 
 <details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/success/TransferSuccessScreen.kt:299</code></summary>
 
@@ -361,9 +361,9 @@ private fun TransferSuccessScreenPreview() {
 ```kotlin
 fun TransferFailedScreenPreview()
 ```
-_No KDoc at source._
+Compose preview of `TransferFailedScreen`.
 
 ---
 
-_5 type(s), 24 function(s)/property(ies); 2 carry KDoc at source; 0 authored example(s); 12 live call site(s)._
+_5 type(s), 24 function(s)/property(ies); 29 carry KDoc at source; 0 authored example(s); 12 live call site(s)._
 <!-- api-docs:end -->

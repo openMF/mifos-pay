@@ -20,10 +20,10 @@ ViewModels: `FAQViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/faq sha=b5d1d13c90beb4526085a3cc6c6d645e0e08cb3f -->
+<!-- api-docs:begin module=feature/faq sha=fefbabf176f17f7dc230eeb9056d1e3d776e68ff -->
 ## API reference
 
-_Generated from `feature/faq` at tree `b5d1d13c90be` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/faq` at tree `fefbabf176f1` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -36,21 +36,21 @@ rather than re-declaring what they already own.
 ```kotlin
 val FaqModule = module
 ```
-_No KDoc at source._
+Koin module providing the FAQ ViewModel.
 
 ### `feature/faq/src/commonMain/kotlin/kpt/feature/faq/navigation/FAQNavigation.kt`
 
 ```kotlin
 fun NavController.navigateToFAQ(navOptions: NavOptions? = null)
 ```
-_No KDoc at source._
+Navigates to the FAQ screen, optionally with `navOptions`.
 
 ```kotlin
 fun NavGraphBuilder.faqScreen(
 ```
-_No KDoc at source._
+Registers the FAQ screen in the nav graph; `navigateBack` pops it.
 
 ---
 
-_0 type(s), 3 function(s)/property(ies); 0 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
+_0 type(s), 3 function(s)/property(ies); 3 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
 <!-- api-docs:end -->

@@ -34,6 +34,7 @@ class DeleteBeneficiaryViewModel(
     // Public view-state surface renamed from `state` → `deleteState`: BaseViewModel
     // already declares a protected `state: S` (the current-value accessor), so the
     // public StateFlow must use a distinct name. The Screen reads `deleteState`.
+    /** The delete screen's state, under the name the screen reads. */
     val deleteState: StateFlow<DeleteBeneficiaryState> get() = stateFlow
 
     // Template idiom (core-base/store): the delete write goes through a SubmitHandler
@@ -151,33 +152,67 @@ class DeleteBeneficiaryViewModel(
     }
 }
 
+/**
+ * UI state of the delete-beneficiary flow.
+ *
+ * @property dialogState Dialog currently displayed, or null.
+ * @property deleteSuccessful True once the beneficiary was deleted.
+ */
 data class DeleteBeneficiaryState(
     val dialogState: DialogState? = null,
     val deleteSuccessful: Boolean = false,
 ) {
+    /** Dialogs shown during beneficiary deletion. */
     sealed interface DialogState {
+        /**
+         * Asks the user to confirm deletion.
+         *
+         * @property beneficiaryId Id of the beneficiary.
+         * @property beneficiaryName Display name of the beneficiary.
+         */
         data class Confirmation(
             val beneficiaryId: Long,
             val beneficiaryName: String,
         ) : DialogState
 
+        /** Deletion request in progress. */
         data object Deleting : DialogState
 
+        /**
+         * Deletion failed.
+         *
+         * @property message Error text to display.
+         */
         data class Error(val message: String) : DialogState
     }
 }
 
+/** One-off events of the delete-beneficiary flow (none currently). */
 sealed interface DeleteBeneficiaryEvent
 
+/** Actions handled by the delete-beneficiary view model. */
 sealed interface DeleteBeneficiaryAction {
+    /**
+     * Show the delete confirmation dialog.
+     *
+     * @property beneficiaryId Id of the beneficiary.
+     * @property beneficiaryName Display name of the beneficiary.
+     */
     data class ShowDeleteConfirmation(
         val beneficiaryId: Long,
         val beneficiaryName: String,
     ) : DeleteBeneficiaryAction
 
+    /**
+     * Confirm the deletion.
+     *
+     * @property beneficiaryId Id of the beneficiary to delete.
+     */
     data class ConfirmDelete(val beneficiaryId: Long) : DeleteBeneficiaryAction
 
+    /** Dismiss the current dialog. */
     data object DismissDialog : DeleteBeneficiaryAction
 
+    /** Mark the success result as consumed. */
     data object ConsumeDeleteSuccess : DeleteBeneficiaryAction
 }

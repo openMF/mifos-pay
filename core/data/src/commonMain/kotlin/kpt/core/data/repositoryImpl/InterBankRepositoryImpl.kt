@@ -23,6 +23,7 @@ import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.model.interbank.InterBankTransferRequest
 import kpt.core.model.interbank.InterBankTransferResponse
 import kpt.core.network.InterBankApiManager
+/** Default [InterBankRepository] backed by the inter-bank API. */
 class InterBankRepositoryImpl(
     private val apiManager: InterBankApiManager,
     private val ioDispatcher: CoroutineDispatcher,

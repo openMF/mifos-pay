@@ -22,6 +22,7 @@ import kpt.core.model.network.entity.UserWithRole
 import kpt.core.model.network.entity.user.UpdateUserEntityPassword
 import kpt.core.model.user.NewUser
 import kpt.core.network.SelfServiceApiManager
+/** Default [UserRepository] backed by the user API. */
 class UserRepositoryImpl(
     private val selfServiceApiManager: SelfServiceApiManager,
     private val ioDispatcher: CoroutineDispatcher,

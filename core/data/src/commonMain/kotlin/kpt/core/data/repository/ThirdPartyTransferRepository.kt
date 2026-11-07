@@ -13,12 +13,15 @@ import kpt.core.common.ScreenStateStream
 import kpt.core.model.network.entity.TPTResponse
 import kpt.core.model.network.entity.payload.TransferPayload
 import kpt.core.model.network.entity.templates.account.AccountOptionsTemplate
+/** Repository for transfers to third-party accounts. */
 interface ThirdPartyTransferRepository {
+    /** Fetches the account options template for a third-party transfer. */
     suspend fun getTransferTemplate(): AccountOptionsTemplate
 
     // Phase-3 cutover — Flow-shaped submission surface exposes ScreenState
     // so screens can consume Loading / Content / Error uniformly.
     // Underlying network call remains a POST (a semantic write) but the
     // read-facing envelope is aligned with the rest of the fork.
+    /** Makes a third-party transfer and streams the response. */
     fun makeTransfer(payload: TransferPayload): ScreenStateStream<TPTResponse>
 }

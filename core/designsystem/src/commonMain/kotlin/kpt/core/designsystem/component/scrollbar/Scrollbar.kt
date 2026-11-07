@@ -66,6 +66,7 @@ private const val SCROLLBAR_PRESS_DELAY_MS = 10L
  */
 private const val SCROLLBAR_PRESS_DELTA_PCT = 0.02f
 
+/** Holds the packed scroll metrics of a scrollbar and exposes the derived thumb size. */
 class ScrollbarState {
     private var packedValue by mutableLongStateOf(0L)
 

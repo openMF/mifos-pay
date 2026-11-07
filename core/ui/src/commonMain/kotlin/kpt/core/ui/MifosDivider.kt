@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Horizontal divider with configurable thickness and color. */
 @Composable
 fun MifosDivider(
     modifier: Modifier = Modifier,

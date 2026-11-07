@@ -132,7 +132,8 @@ if [ -d "$net_root" ]; then
       src = File.read(f) rescue next
       src = src.gsub(%r{/\*.*?\*/}m, "").gsub(%r{//[^\n]*}, "")
       src.scan(/kpt\.core\.network\.([a-z0-9]+)\./).flatten.uniq.each do |pkg|
-        next if have.include?(pkg)
+        # "generated" is the Compose resource package of the module: build output, never on disk.
+        next if have.include?(pkg) || pkg == "generated"
         out << "#{f.sub(sb + "/", "")} -> kpt.core.network.#{pkg}"
       end
     end

@@ -28,17 +28,20 @@ import kotlinx.serialization.Serializable
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.ui.utils.BaseViewModel
+/** ViewModel for the pay-anyone screen; handles input, contact search and invite sharing. */
 class PayAnyoneViewModel(
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<PayAnyoneState, PayAnyoneEvent, PayAnyoneAction>(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: PayAnyoneState(),
 ) {
 
+    /** Holds the saved-state key, search constants and the list of UPI handles. */
     companion object {
         private const val KEY_STATE = "pay_anyone_state"
         private const val SEARCH_DEBOUNCE_DELAY = 300L
         private const val MIN_SEARCH_LENGTH = 1
 
+        /** UPI handle suffixes suggested after the user types a name or number. */
         val UPI_HANDLES = listOf(
             "@ybl", "@axl", "@ptsbi", "@oksbi", "@pthdfc", "@icici", "@paytm", "@phonepe", "@upi", "@okicici",
             "@kotak", "@hdfc", "@sbi", "@axis", "@unionbank", "@canara", "@pnb", "@yesbank",
@@ -403,6 +406,24 @@ class PayAnyoneViewModel(
     }
 }
 
+/**
+ * State of the pay-anyone screen.
+ * @property inputValue Text typed in the search field.
+ * @property isKeyboardNumeric Whether the numeric keyboard is shown.
+ * @property showClearIcon Whether the clear icon is visible.
+ * @property isSearching Whether a search is in progress.
+ * @property showPartialNumberNote Whether to show the partial number note.
+ * @property showUpiHandleSuggestions Whether UPI handle suggestions are shown.
+ * @property recentContacts Recently used contacts.
+ * @property allContacts All contacts.
+ * @property searchResults Contacts matching the current search.
+ * @property showContactNotFoundDialog Whether the contact-not-found dialog is visible.
+ * @property showContactNotFoundMessage Whether the contact-not-found message is visible.
+ * @property showContactNotFoundLoading Whether the contact-not-found lookup is loading.
+ * @property selectedSharingOption Currently selected invite sharing channel.
+ * @property defaultSharingOption Saved default sharing channel, if any.
+ * @property inviteMessage Invite message to share.
+ */
 @Serializable
 data class PayAnyoneState(
     val inputValue: String = "",
@@ -422,12 +443,22 @@ data class PayAnyoneState(
     val inviteMessage: String = "",
 )
 
+/** Channel used to share an invite to a contact who is not on the app. */
 @Serializable
 enum class SharingOption {
+    /** Share through WhatsApp. */
     WHATSAPP,
+
+    /** Share through SMS. */
     SMS,
 }
 
+/**
+ * Contact search results grouped by kind.
+ * @property people Matching people.
+ * @property others Other matching contacts.
+ * @property businesses Matching businesses.
+ */
 @Serializable
 data class ContactSearchResult(
     val people: List<Contact> = emptyList(),
@@ -596,22 +627,65 @@ private val sampleBusinessContacts = listOf(
     ),
 )
 
+/** One-off events emitted by the pay-anyone screen. */
 sealed interface PayAnyoneEvent {
+    /** Navigate back. */
     data object NavigateBack : PayAnyoneEvent
+
+    /** Navigate to the contact picker. */
     data object NavigateToContactPicker : PayAnyoneEvent
 }
 
+/** User actions on the pay-anyone screen. */
 sealed interface PayAnyoneAction {
+    /**
+     * The search text changed.
+     * @property value New search text.
+     */
     data class InputValueChanged(val value: String) : PayAnyoneAction
+
+    /**
+     * The user selected a phone number.
+     * @property phoneNumber The selected number.
+     */
     data class PhoneNumberSelected(val phoneNumber: String) : PayAnyoneAction
+
+    /** The user cleared the input. */
     data object ClearInput : PayAnyoneAction
+
+    /** The user toggled between text and numeric keyboards. */
     data object ToggleKeyboardType : PayAnyoneAction
+
+    /**
+     * The user picked a UPI handle suggestion.
+     * @property handle The selected handle.
+     */
     data class UpiHandleSelected(val handle: String) : PayAnyoneAction
+
+    /** Show the contact-not-found dialog. */
     data object ShowContactNotFoundDialog : PayAnyoneAction
+
+    /** Hide the contact-not-found dialog. */
     data object HideContactNotFoundDialog : PayAnyoneAction
+
+    /**
+     * The user picked a sharing channel.
+     * @property option The selected channel.
+     */
     data class SharingOptionSelected(val option: SharingOption) : PayAnyoneAction
+
+    /** Save the selected channel as the default. */
     data object SetAsDefaultSharingOption : PayAnyoneAction
+
+    /** The user declined to save a default channel. */
     data object NotNowSharingOption : PayAnyoneAction
+
+    /** Share the invite message. */
     data object ShareInviteMessage : PayAnyoneAction
+
+    /**
+     * The user selected a contact.
+     * @property contact The selected contact.
+     */
     data class ContactSelected(val contact: Contact) : PayAnyoneAction
 }

@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+/** Modal bottom sheet that hosts [content] and is dismissed via [onDismiss]. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosBottomSheet(
@@ -67,6 +68,7 @@ fun MifosBottomSheet(
     }
 }
 
+/** Preview of [MifosBottomSheet]. */
 @Preview
 @Composable
 fun MifosBottomSheetPreview() {

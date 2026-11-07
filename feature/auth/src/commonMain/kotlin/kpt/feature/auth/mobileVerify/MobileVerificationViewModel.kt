@@ -24,6 +24,7 @@ import kpt.core.common.setSerialized
 import kpt.core.data.repository.SearchRepository
 import kpt.core.data.util.Constants
 import kpt.core.ui.utils.BaseViewModel
+/** View model that verifies a mobile number: requests an OTP for the number, then verifies the entered OTP. */
 class MobileVerificationViewModel(
     private val searchRepository: SearchRepository,
     savedStateHandle: SavedStateHandle,
@@ -32,6 +33,7 @@ class MobileVerificationViewModel(
         ?: MobileVerificationState.VerifyPhoneState(),
 ) {
 
+    /** Holds the saved-state key used to persist the verification state. */
     companion object {
         private const val KEY_STATE = "mobile_verification"
     }
@@ -255,18 +257,33 @@ class MobileVerificationViewModel(
     }
 }
 
+/** UI state of the mobile verification flow, one subtype per step. */
 @Serializable
 sealed class MobileVerificationState {
+    /**
+     * State of the phone-number step.
+     *
+     * @property phoneNo Phone number typed by the user.
+     * @property dialogState Loading or error dialog currently shown, or null.
+     */
     @Serializable
     data class VerifyPhoneState(
         val phoneNo: String = "",
         @Transient
         val dialogState: DialogState? = null,
     ) : MobileVerificationState() {
+        /** True when the phone number has exactly 10 digits. */
         val isPhoneNoValid: Boolean
             get() = phoneNo.length == 10
     }
 
+    /**
+     * State of the OTP step.
+     *
+     * @property phoneNo Phone number the OTP was sent to.
+     * @property otp OTP typed by the user.
+     * @property dialogState Loading or error dialog currently shown, or null.
+     */
     @Serializable
     data class VerifyOtpState(
         val phoneNo: String,
@@ -274,30 +291,73 @@ sealed class MobileVerificationState {
         @Transient
         val dialogState: DialogState? = null,
     ) : MobileVerificationState() {
+        /** True when the OTP has exactly 6 digits. */
         val isOtpValid: Boolean
             get() = otp.length == 6
     }
 
+    /** Dialog shown over the verification screens. */
     sealed class DialogState {
+        /**
+         * Error dialog.
+         *
+         * @property message Error text to show.
+         */
         data class Error(val message: String) : DialogState()
+
+        /** Blocking progress dialog shown while a request is in flight. */
         data object Loading : DialogState()
     }
 }
 
+/** One-off events emitted by the mobile verification view model. */
 sealed interface MobileVerificationEvent {
+    /** Navigate back from the verification screen. */
     data object NavigateBack : MobileVerificationEvent
+
+    /**
+     * Navigate to signup once the number is verified.
+     *
+     * @property phoneNo Verified phone number to prefill.
+     */
     data class NavigateToSignup(val phoneNo: String) : MobileVerificationEvent
+
+    /**
+     * Show a toast.
+     *
+     * @property message Text of the toast.
+     */
     data class ShowToast(val message: String) : MobileVerificationEvent
 }
 
+/** User actions handled by the mobile verification view model. */
 sealed interface MobileVerificationAction {
+    /**
+     * The phone-number field changed.
+     *
+     * @property phoneNo New phone number value.
+     */
     data class PhoneNoChanged(val phoneNo: String) : MobileVerificationAction
+
+    /** The user tapped the button that requests an OTP. */
     data object VerifyPhoneBtnClicked : MobileVerificationAction
 
+    /**
+     * The OTP field changed.
+     *
+     * @property otp New OTP value.
+     */
     data class OtpChanged(val otp: String) : MobileVerificationAction
+
+    /** The user chose to go back and edit the phone number. */
     data object ChangePhoneNumber : MobileVerificationAction
+
+    /** The user tapped the button that verifies the OTP. */
     data object VerifyOtpBtnClicked : MobileVerificationAction
 
+    /** The user dismissed the open dialog. */
     data object DismissDialog : MobileVerificationAction
+
+    /** The user tapped the close button. */
     data object CloseButtonClick : MobileVerificationAction
 }

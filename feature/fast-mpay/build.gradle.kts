@@ -32,3 +32,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.fastmpay.generated.resources"
+}

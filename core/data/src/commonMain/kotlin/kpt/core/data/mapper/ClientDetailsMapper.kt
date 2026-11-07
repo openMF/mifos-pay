@@ -22,6 +22,7 @@ import kpt.core.model.network.entity.client.ClientTimelineEntity
 import kpt.core.model.network.entity.client.NewClientEntity
 import kpt.core.model.network.entity.client.Status
 import kpt.core.model.network.entity.client.UpdateClientEntity
+/** Maps a client network entity to the domain [Client]. */
 fun ClientEntity.toModel(): Client {
     return Client(
         id = id ?: 0,
@@ -45,8 +46,10 @@ fun ClientEntity.toModel(): Client {
     )
 }
 
+/** Maps a list of client entities to domain [Client]s. */
 fun List<ClientEntity>.toModel(): List<Client> = map { it.toModel() }
 
+/** Maps a page of client entities to a page of domain [Client]s. */
 fun Page<ClientEntity>.toModel(): Page<Client> {
     return Page(
         totalFilteredRecords = this.totalFilteredRecords,
@@ -54,6 +57,7 @@ fun Page<ClientEntity>.toModel(): Page<Client> {
     )
 }
 
+/** Maps a domain [NewClient] to the create-client network entity. */
 fun NewClient.toEntity(): NewClientEntity {
     return NewClientEntity(
         firstname = firstname,
@@ -65,6 +69,7 @@ fun NewClient.toEntity(): NewClientEntity {
     )
 }
 
+/** Maps a domain [ClientAddress] to the network [Address] entity. */
 fun ClientAddress.toEntity(): Address {
     return Address(
         addressLine1 = addressLine1,
@@ -76,6 +81,7 @@ fun ClientAddress.toEntity(): Address {
     )
 }
 
+/** Maps a network client [Status] to the domain [ClientStatus]. */
 fun Status.toModel(): ClientStatus {
     return ClientStatus(
         id = id ?: 0,
@@ -84,6 +90,7 @@ fun Status.toModel(): ClientStatus {
     )
 }
 
+/** Maps a client timeline entity to the domain [ClientTimeline]. */
 fun ClientTimelineEntity.toModel(): ClientTimeline {
     return ClientTimeline(
         submittedOnDate = submittedOnDate,
@@ -94,6 +101,7 @@ fun ClientTimelineEntity.toModel(): ClientTimeline {
     )
 }
 
+/** Maps a domain [UpdatedClient] to the update-client network entity. */
 fun UpdatedClient.toEntity(): UpdateClientEntity {
     return UpdateClientEntity(
         firstname = firstname,

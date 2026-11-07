@@ -18,19 +18,26 @@ import platform.UIKit.UIDevice
 import platform.UIKit.UIDeviceOrientation
 import platform.darwin.NSObject
 
+/**
+ * Observes iOS device orientation notifications and reports changes.
+ * @property orientationChanged Called with the new device orientation.
+ */
 @OptIn(ExperimentalForeignApi::class)
 class OrientationListener(
     val orientationChanged: (UIDeviceOrientation) -> Unit,
 ) : NSObject() {
 
+    /** Name of the device orientation change notification. */
     val notificationName = platform.UIKit.UIDeviceOrientationDidChangeNotification
 
+    /** Notification callback that forwards the current device orientation. */
     @Suppress("UNUSED_PARAMETER")
     @ObjCAction
     fun orientationDidChange(arg: NSNotification) {
         orientationChanged(UIDevice.currentDevice.orientation)
     }
 
+    /** Starts observing orientation change notifications. */
     fun register() {
         NSNotificationCenter.defaultCenter.addObserver(
             observer = this,
@@ -42,6 +49,7 @@ class OrientationListener(
         )
     }
 
+    /** Stops observing orientation change notifications. */
     fun unregister() {
         NSNotificationCenter.defaultCenter.removeObserver(
             observer = this,

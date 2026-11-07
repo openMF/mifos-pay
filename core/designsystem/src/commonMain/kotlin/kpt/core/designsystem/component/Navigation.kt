@@ -157,6 +157,7 @@ fun MifosNavigationRail(
     )
 }
 
+/** Preview of the Mifos bottom navigation bar. */
 @Preview
 @Composable
 fun MifosNavigationBarPreview() {
@@ -201,6 +202,7 @@ fun MifosNavigationBarPreview() {
     }
 }
 
+/** Preview of the Mifos navigation rail. */
 @Preview
 @Composable
 fun MifosNavigationRailPreview() {
@@ -249,12 +251,15 @@ fun MifosNavigationRailPreview() {
  * Now in Android navigation default values.
  */
 object MifosNavigationDefaults {
+    /** Color of unselected navigation item content. */
     @Composable
     fun navigationContentColor() = KptTheme.colorScheme.onSurfaceVariant
 
+    /** Color of the selected navigation item content. */
     @Composable
     fun navigationSelectedItemColor() = KptTheme.colorScheme.onPrimaryContainer
 
+    /** Color of the selected navigation item indicator. */
     @Composable
     fun navigationIndicatorColor() = KptTheme.colorScheme.primaryContainer
 }

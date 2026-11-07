@@ -17,6 +17,7 @@ import kpt.core.data.repository.TwoFactorAuthRepository
 import kpt.core.model.network.twofactor.AccessToken
 import kpt.core.model.network.twofactor.DeliveryMethod
 import kpt.core.network.FineractApiManager
+/** Default [TwoFactorAuthRepository] backed by the two-factor API. */
 class TwoFactorAuthRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

@@ -21,22 +21,28 @@ import kpt.core.model.beneficiary.BeneficiaryPayload
 import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.network.entity.templates.beneficiary.BeneficiaryTemplate
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for beneficiaries. */
 interface BeneficiaryService {
+    /** Fetches the list of beneficiaries. */
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt")
     fun beneficiaryList(): Flow<List<Beneficiary>>
 
+    /** Fetches the beneficiary template. */
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt/template")
     suspend fun beneficiaryTemplate(): Flow<BeneficiaryTemplate>
 
+    /** Creates a beneficiary. */
     @POST(ApiEndPoints.BENEFICIARIES + "/tpt")
     suspend fun createBeneficiary(@Body beneficiaryPayload: BeneficiaryPayload)
 
+    /** Updates a beneficiary. */
     @PUT(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")
     suspend fun updateBeneficiary(
         @Path("beneficiaryId") beneficiaryId: Long,
         @Body payload: BeneficiaryUpdatePayload,
     )
 
+    /** Deletes a beneficiary. */
     @DELETE(ApiEndPoints.BENEFICIARIES + "/tpt/{beneficiaryId}")
     suspend fun deleteBeneficiary(@Path("beneficiaryId") beneficiaryId: Long): Unit
 }

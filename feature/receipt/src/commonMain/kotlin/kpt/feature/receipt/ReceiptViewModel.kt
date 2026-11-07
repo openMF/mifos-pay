@@ -18,8 +18,8 @@ import kpt.core.data.repository.AccountRepository
 import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.ui.utils.BaseViewModel
-import mifos_pay.feature.receipt.generated.resources.Res
-import mifos_pay.feature.receipt.generated.resources.feature_receipt_not_found
+import kpt.feature.receipt.generated.resources.Res
+import kpt.feature.receipt.generated.resources.feature_receipt_not_found
 import org.jetbrains.compose.resources.StringResource
 /**
  * Reads OFF the shared `TransferDetail` Store5 vertical — the SAME store
@@ -37,6 +37,7 @@ class ReceiptViewModel(
     initialState = ReceiptUiState.Loading,
 ) {
 
+    /** Holds the saved-state key for the transfer id. */
     companion object {
         private const val TRANSFER_ID_KEY = "transferId"
     }
@@ -84,28 +85,53 @@ private fun ScreenState<TransferDetail>.toReceiptUiState(): ReceiptUiState = whe
     is ScreenState.Unauthenticated -> ReceiptUiState.Error(Res.string.feature_receipt_not_found)
 }
 
+/** One-shot events emitted by [ReceiptViewModel]. */
 sealed interface ReceiptEvent {
+    /** Event requesting navigation back. */
     data object OnNavigateBack : ReceiptEvent
+
+    /** Event requesting the receipt to be shared. */
     data object OnShareReceipt : ReceiptEvent
 }
 
+/** Actions dispatched to [ReceiptViewModel]. */
 sealed interface ReceiptAction {
+    /** User requested to navigate back. */
     data object NavigateBack : ReceiptAction
+
+    /** User requested to share the receipt. */
     data object ShareReceipt : ReceiptAction
 }
 
+/** UI state of the receipt screen. */
 sealed interface ReceiptUiState {
+    /**
+     * Receipt loaded successfully.
+     *
+     * @property transferDetail Transfer details rendered on the receipt.
+     */
     data class Success(
         val transferDetail: TransferDetail,
     ) : ReceiptUiState
 
+    /**
+     * Receipt failed to load, with a string-resource error message.
+     *
+     * @property messageRes String resource of the error message.
+     */
     data class Error(
         val messageRes: StringResource,
     ) : ReceiptUiState
 
+    /**
+     * Receipt failed to load, with a literal error message.
+     *
+     * @property message Error message text to display.
+     */
     data class ErrorMessage(
         val message: String,
     ) : ReceiptUiState
 
+    /** Receipt is being loaded. */
     data object Loading : ReceiptUiState
 }

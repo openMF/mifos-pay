@@ -13,6 +13,7 @@ import kpt.core.common.MifosDispatchers
 import kpt.core.domain.LoginUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+/** Koin module providing the domain use cases. */
 val DomainModule = module {
     single {
         LoginUseCase(

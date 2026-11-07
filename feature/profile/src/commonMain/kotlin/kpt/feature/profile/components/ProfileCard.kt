@@ -32,6 +32,7 @@ import kpt.feature.profile.generated.resources.feature_profile_mobile
 import kpt.feature.profile.generated.resources.feature_profile_username
 import kpt.feature.profile.generated.resources.feature_profile_vpa
 import org.jetbrains.compose.resources.stringResource
+/** Card listing the client profile details such as username, email and mobile number. */
 @Composable
 fun ProfileDetailsCard(
     client: Client,
@@ -73,6 +74,7 @@ fun ProfileDetailsCard(
     }
 }
 
+/** A labeled profile field showing a label above its value. */
 @Composable
 fun ProfileItem(
     label: String,

@@ -11,17 +11,21 @@ package kpt.feature.accounts.savingsaccount
 
 import kotlinx.serialization.Serializable
 
+/** Whether the savings account form creates a new account or edits an existing one. */
 @Serializable
 sealed class SavingsAddEditType {
 
+    /** Id of the account being edited, or null when adding. */
     abstract val savingsAccountId: Long?
 
+    /** Create a new savings account. */
     @Serializable
     data object AddItem : SavingsAddEditType() {
         override val savingsAccountId: Long?
             get() = null
     }
 
+    /** Edit an existing savings account. */
     @Serializable
     data class EditItem(
         override val savingsAccountId: Long,

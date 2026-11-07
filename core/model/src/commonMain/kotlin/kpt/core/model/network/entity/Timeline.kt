@@ -11,6 +11,22 @@ package kpt.core.model.network.entity
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Dates and actors for submission, activation and closure of an account.
+ *
+ * @property submittedOnDate Date submitted, as [year, month, day].
+ * @property submittedByUsername Username of the submitting user.
+ * @property submittedByFirstname First name of the submitting user.
+ * @property submittedByLastname Last name of the submitting user.
+ * @property activatedOnDate Date activated, as [year, month, day].
+ * @property activatedByUsername Username of the activating user.
+ * @property activatedByFirstname First name of the activating user.
+ * @property activatedByLastname Last name of the activating user.
+ * @property closedOnDate Date closed, as [year, month, day].
+ * @property closedByUsername Username of the closing user.
+ * @property closedByFirstname First name of the closing user.
+ * @property closedByLastname Last name of the closing user.
+ */
 @Serializable
 data class Timeline(
     val submittedOnDate: List<Int?> = ArrayList(),

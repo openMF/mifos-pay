@@ -11,6 +11,7 @@ package kpt.feature.send.money
 
 import androidx.compose.runtime.Composable
 
+/** JS actual: contact permission state is not implemented yet. */
 @Composable
 actual fun rememberContactPermissionState(): ContactPermissionState {
     TODO("Not yet implemented")

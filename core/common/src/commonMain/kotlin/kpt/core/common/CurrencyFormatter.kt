@@ -9,11 +9,16 @@
  */
 package kpt.core.common
 
+/** Platform-specific formatter that renders wallet balances as currency or plain grouped numbers. */
 expect object CurrencyFormatter {
+    /** Formats [balance] as a currency string for [currencyCode] with up to [maximumFractionDigits] decimals. */
     fun format(balance: Double?, currencyCode: String?, maximumFractionDigits: Int?): String
+
+    /** Formats [balance] as a plain number string with [maximumFractionDigits] decimals. */
     fun format(balance: Double?, maximumFractionDigits: Int?): String
 }
 
+/** Copies this list into a new [ArrayList]. */
 fun <T> List<T>.toArrayList(): ArrayList<T> {
     return ArrayList(this)
 }

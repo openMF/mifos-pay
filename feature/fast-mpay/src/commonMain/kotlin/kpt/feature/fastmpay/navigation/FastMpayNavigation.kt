@@ -23,6 +23,7 @@ import kpt.feature.fastmpay.FastMpayScreen
 private const val FAST_MPAY_ROUTE_BASE = "fast_mpay_route"
 internal const val QR_DATA_ARG = "qrData"
 
+/** Navigation route of the Fast Mpay screen, taking the encoded QR data as an argument. */
 const val FAST_MPAY_ROUTE = "$FAST_MPAY_ROUTE_BASE/{$QR_DATA_ARG}"
 
 /**

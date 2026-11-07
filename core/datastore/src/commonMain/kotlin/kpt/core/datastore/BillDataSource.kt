@@ -24,6 +24,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kpt.core.model.autopay.Bill
 private const val BILLS_KEY = "bills"
 
+/** Settings-backed local store of [Bill]s (superseded by Room, see PreferencesModule). */
 class BillDataSource(
     private val settings: Settings,
     private val dispatcher: CoroutineDispatcher,
@@ -36,8 +37,10 @@ class BillDataSource(
         ),
     )
 
+    /** Stored bills. */
     val bills: Flow<List<Bill>> = _bills
 
+    /** Replaces all stored [bills]. */
     suspend fun updateBills(bills: List<Bill>) {
         withContext(dispatcher) {
             settings.putBills(bills)
@@ -45,6 +48,7 @@ class BillDataSource(
         }
     }
 
+    /** Adds [bill] to the stored list. */
     suspend fun addBill(bill: Bill) {
         withContext(dispatcher) {
             val currentBills = _bills.value.toMutableList()
@@ -56,6 +60,7 @@ class BillDataSource(
         }
     }
 
+    /** Removes the bill with [billId]. */
     suspend fun removeBill(billId: String) {
         withContext(dispatcher) {
             val currentBills = _bills.value.toMutableList()
@@ -65,6 +70,7 @@ class BillDataSource(
         }
     }
 
+    /** Removes all stored bills. */
     suspend fun clearBills() {
         withContext(dispatcher) {
             settings.remove(BILLS_KEY)

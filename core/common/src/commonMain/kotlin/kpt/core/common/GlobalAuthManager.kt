@@ -11,13 +11,17 @@ package kpt.core.common
 
 import kotlinx.coroutines.flow.MutableStateFlow
 
+/** Process-wide holder of the 'session unauthorized' signal raised when the server answers 401. */
 object GlobalAuthManager {
+    /** Emits true once a request was rejected as unauthorized, so the app can force a re-login. */
     val isUnauthorized = MutableStateFlow(false)
 
+    /** Flags the session as unauthorized. */
     fun markUnauthorized() {
         isUnauthorized.value = true
     }
 
+    /** Clears the unauthorized flag, typically after a fresh login. */
     fun reset() {
         isUnauthorized.value = false
     }

@@ -12,6 +12,32 @@ package kpt.core.model.network.entity.loanAccount
 import kotlinx.serialization.Serializable
 import kpt.core.model.network.entity.common.CurrencyResponseDto
 import kpt.core.model.network.entity.common.TypeResponseDto
+/**
+ * A client loan account as returned by Fineract, with balances, status and timeline.
+ *
+ * @property id Unique id.
+ * @property loanProductId Id of the loan product.
+ * @property externalId External identifier.
+ * @property numberOfRepayments Number of repayments.
+ * @property accountNo Account number.
+ * @property productName Name of the product.
+ * @property productId Id of the product.
+ * @property loanProductName Name of the loan product.
+ * @property clientName Name of the client.
+ * @property loanProductDescription Description of the loan product.
+ * @property principal Principal amount.
+ * @property annualInterestRate Annual interest rate.
+ * @property status Current status.
+ * @property loanType Type of loan.
+ * @property loanCycle Loan cycle number.
+ * @property loanBalance Outstanding loan balance.
+ * @property amountPaid Total amount paid.
+ * @property currency Currency.
+ * @property inArrears Whether payments are overdue.
+ * @property summary Financial summary.
+ * @property loanPurposeName Purpose of the loan.
+ * @property timeline Lifecycle timeline.
+ */
 @Serializable
 data class LoanAccountResponseDto(
     val id: Long? = null,

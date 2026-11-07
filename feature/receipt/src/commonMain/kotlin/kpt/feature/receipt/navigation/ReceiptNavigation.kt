@@ -15,7 +15,14 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.receipt.ReceiptScreenRoute
+/**
+ * Base route name of the transaction receipt screen.
+ */
 const val RECEIPT_ROUTE = "receipt_route"
+
+/**
+ * Navigation argument key carrying the id of the transfer whose receipt is shown.
+ */
 const val RECEIPT_TRANSFER_ID = "transferId"
 
 private const val BASE_ROUTE = "$RECEIPT_ROUTE&$RECEIPT_TRANSFER_ID={$RECEIPT_TRANSFER_ID}"
@@ -38,6 +45,9 @@ fun NavGraphBuilder.receiptScreen(
     }
 }
 
+/**
+ * Navigates to the receipt screen for the transfer identified by [transferId].
+ */
 fun NavController.navigateToReceipt(transferId: Long) {
     this.navigate("$RECEIPT_ROUTE&$RECEIPT_TRANSFER_ID=$transferId")
 }

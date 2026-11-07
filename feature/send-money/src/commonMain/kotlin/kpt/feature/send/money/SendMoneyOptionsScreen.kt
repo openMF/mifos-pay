@@ -47,19 +47,20 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.component.MifosTopBar
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
-import mifos_pay.feature.send_money.generated.resources.Res
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_autopay
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_bank_transfer
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_choose_method
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_fineract_payments
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_merchants
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_more
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_pay_anyone
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_people
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_scan_qr_code
-import mifos_pay.feature.send_money.generated.resources.feature_send_money_title
+import kpt.feature.send.money.generated.resources.Res
+import kpt.feature.send.money.generated.resources.feature_send_money_autopay
+import kpt.feature.send.money.generated.resources.feature_send_money_bank_transfer
+import kpt.feature.send.money.generated.resources.feature_send_money_choose_method
+import kpt.feature.send.money.generated.resources.feature_send_money_fineract_payments
+import kpt.feature.send.money.generated.resources.feature_send_money_merchants
+import kpt.feature.send.money.generated.resources.feature_send_money_more
+import kpt.feature.send.money.generated.resources.feature_send_money_pay_anyone
+import kpt.feature.send.money.generated.resources.feature_send_money_people
+import kpt.feature.send.money.generated.resources.feature_send_money_scan_qr_code
+import kpt.feature.send.money.generated.resources.feature_send_money_title
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+/** Landing screen of the send-money flow offering the ways to pay, plus recent payees. */
 @Composable
 fun SendMoneyOptionsScreen(
     onBackClick: () -> Unit,
@@ -593,6 +594,13 @@ private fun TransactionItemRow(
     }
 }
 
+/**
+ * A recent payment shown in the recent-payees list.
+ * @property payeeName Name of the payee.
+ * @property amount Amount paid.
+ * @property date Formatted date of the payment.
+ * @property profileImageUrl URL of the payee's profile image, if any.
+ */
 data class TransactionItem(
     val payeeName: String,
     val amount: Double,

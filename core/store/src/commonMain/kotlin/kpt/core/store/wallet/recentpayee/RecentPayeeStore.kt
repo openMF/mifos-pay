@@ -16,9 +16,6 @@ import kpt.core.database.wallet.recentpayee.RecentPayeeEntity
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 
-/** Room `@Entity(tableName = …)` for [RecentPayeeEntity]. Shared with the DAO's writes. */
-private const val RECENT_PAYEES_TABLE = "wallet_recent_payees"
-
 /**
  * Build the LOCAL-DERIVED [Store] for recent-payee lists (GOAL D12 —
  * persist-on-derive variant of the OFFLINE_LOCAL_ONLY archetype).

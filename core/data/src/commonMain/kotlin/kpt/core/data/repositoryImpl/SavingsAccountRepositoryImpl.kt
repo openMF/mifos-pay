@@ -39,6 +39,7 @@ import kpt.core.store.wallet.account.AccountDetailKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [SavingsAccountRepository] backed by the savings accounts API. */
 class SavingsAccountRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
     private val ioDispatcher: CoroutineDispatcher,

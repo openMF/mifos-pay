@@ -17,16 +17,20 @@ import kotlinx.coroutines.flow.Flow
 import org.mifos.lib.loan.network.model.LoanAccountApplicationPayloadDto
 import org.mifos.lib.loan.network.model.LoanTemplateResponseDto
 
+/** Ktorfit API for the Fineract loans endpoints. */
 interface LoansService {
+    /** Fetches the individual loan template for [clientId]. */
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
     fun getLoanTemplate(@Query("clientId") clientId: Long?): Flow<LoanTemplateResponseDto>
 
+    /** Fetches the individual loan template for [clientId] and [productId]. */
     @GET(ApiEndPoints.LOANS + "/template?templateType=individual")
     fun getLoanTemplateByProduct(
         @Query("clientId") clientId: Long?,
         @Query("productId") productId: Long?,
     ): Flow<LoanTemplateResponseDto>
 
+    /** Submits a new loan application with [payload]. */
     @POST(ApiEndPoints.LOANS)
     suspend fun createLoansAccount(@Body payload: LoanAccountApplicationPayloadDto)
 }

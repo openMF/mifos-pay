@@ -19,8 +19,8 @@ import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.history.detail.TransactionDetailState.ViewState.Content
 import kpt.feature.history.detail.TransactionDetailState.ViewState.Error
-import mifos_pay.feature.history.generated.resources.Res
-import mifos_pay.feature.history.generated.resources.feature_history_error_fallback
+import kpt.feature.history.generated.resources.Res
+import kpt.feature.history.generated.resources.feature_history_error_fallback
 import org.jetbrains.compose.resources.StringResource
 internal class TransactionDetailViewModel(
     savedStateHandle: SavedStateHandle,

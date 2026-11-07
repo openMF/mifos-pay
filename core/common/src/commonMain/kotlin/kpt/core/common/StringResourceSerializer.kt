@@ -78,10 +78,12 @@ private fun extractResourceKey(stringResource: StringResource): String {
 object StringResourceRegistry {
     private val resourceMap = mutableMapOf<String, StringResource>()
 
+    /** Registers [stringResource] under [resourceKey] so it can be restored during deserialization. */
     fun register(resourceKey: String, stringResource: StringResource) {
         resourceMap[resourceKey] = stringResource
     }
 
+    /** Returns the [StringResource] registered for [resourceKey], or null if none. */
     fun getResource(resourceKey: String): StringResource? {
         return resourceMap[resourceKey]
     }

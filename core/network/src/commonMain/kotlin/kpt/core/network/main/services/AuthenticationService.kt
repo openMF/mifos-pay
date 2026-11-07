@@ -14,7 +14,9 @@ import de.jensklingenberg.ktorfit.http.POST
 import kpt.core.model.network.entity.authentication.AuthenticationPayload
 import kpt.core.model.network.entity.user.User
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for authentication. */
 interface AuthenticationService {
+    /** Authenticates with the given payload and returns the [User]. */
     @POST(ApiEndPoints.AUTHENTICATION)
     suspend fun authenticate(@Body authPayload: AuthenticationPayload): User
 }

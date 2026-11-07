@@ -39,15 +39,16 @@ import kpt.core.designsystem.component.MifosCard
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.designsystem.theme.fork.MifosTheme
 import kpt.core.ui.AvatarBox
-import mifos_pay.feature.payments.generated.resources.Res
-import mifos_pay.feature.payments.generated.resources.feature_payments_inter_bank_transfer_description
-import mifos_pay.feature.payments.generated.resources.feature_payments_inter_bank_transfer_title
-import mifos_pay.feature.payments.generated.resources.feature_payments_intra_bank_transfer_description
-import mifos_pay.feature.payments.generated.resources.feature_payments_intra_bank_transfer_title
-import mifos_pay.feature.payments.generated.resources.feature_payments_select_transfer_type_header
-import mifos_pay.feature.payments.generated.resources.feature_payments_select_transfer_type_subtitle
+import kpt.feature.payments.generated.resources.Res
+import kpt.feature.payments.generated.resources.feature_payments_inter_bank_transfer_description
+import kpt.feature.payments.generated.resources.feature_payments_inter_bank_transfer_title
+import kpt.feature.payments.generated.resources.feature_payments_intra_bank_transfer_description
+import kpt.feature.payments.generated.resources.feature_payments_intra_bank_transfer_title
+import kpt.feature.payments.generated.resources.feature_payments_select_transfer_type_header
+import kpt.feature.payments.generated.resources.feature_payments_select_transfer_type_subtitle
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Screen where the user chooses between an intra-bank and an inter-bank transfer. */
 @Composable
 fun SelectTransferTypeScreen(
     onIntraBankTransferClick: () -> Unit,
@@ -185,6 +186,7 @@ private fun TransferTypeCard(
     }
 }
 
+/** Preview of [SelectTransferTypeScreen]. */
 @Preview
 @Composable
 fun SelectTransferTypeScreenPreview() {

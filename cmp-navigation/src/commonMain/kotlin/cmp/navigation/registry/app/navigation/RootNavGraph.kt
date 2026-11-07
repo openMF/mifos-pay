@@ -23,12 +23,12 @@ import cmp.navigation.registry.app.instance.InstanceSelectorScreen
 import cmp.navigation.registry.app.ui.MifosApp
 import kpt.core.data.util.NetworkMonitor
 import kpt.core.data.util.TimeZoneMonitor
+import kpt.feature.passcode.biometricSetupScreen
+import kpt.feature.passcode.navigateToBiometricSetupScreen
+import kpt.feature.passcode.reAuthMifosPasscodeScreen
+import kpt.feature.passcode.rootMifosPasscodeScreen
 import org.mifos.authenticator.biometrics.platformAuthenticationProvider
 import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenticatorStatus
-import org.mifos.feature.passcode.biometricSetupScreen
-import org.mifos.feature.passcode.navigateToBiometricSetupScreen
-import org.mifos.feature.passcode.reAuthMifosPasscodeScreen
-import org.mifos.feature.passcode.rootMifosPasscodeScreen
 
 /**
  * Root nav graph composing the three login-perimeter destinations and the

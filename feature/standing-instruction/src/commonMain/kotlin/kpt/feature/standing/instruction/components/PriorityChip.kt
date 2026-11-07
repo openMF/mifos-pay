@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.model.standinginstruction.StandingInstruction
+/** Chip showing a standing instruction's priority option, colored per priority. */
 @Composable
 fun PriorityChip(
     priority: StandingInstruction.Option?,

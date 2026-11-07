@@ -15,6 +15,7 @@ import kotlinx.datetime.TimeZone
 import kpt.core.data.di.fork.PlatformDependentDataModule
 import kpt.core.data.util.NetworkMonitor
 import kpt.core.data.util.TimeZoneMonitor
+/** Desktop [PlatformDependentDataModule] that assumes the device is online and uses the system time zone. */
 class JsPlatformDependentDataModule : PlatformDependentDataModule {
     override val networkMonitor: NetworkMonitor by lazy {
         object : NetworkMonitor {

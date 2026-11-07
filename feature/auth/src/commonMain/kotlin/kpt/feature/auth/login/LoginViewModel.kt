@@ -24,9 +24,10 @@ import kpt.core.domain.LoginUseCase
 import kpt.core.model.user.UserInfo
 import kpt.core.network.config.InstanceConfigManager
 import kpt.core.ui.utils.BaseViewModel
-import mifos_pay.feature.auth.generated.resources.Res
-import mifos_pay.feature.auth.generated.resources.feature_auth_error_login_failed
-import org.jetbrains.compose.resources.getString
+import kpt.feature.auth.generated.resources.Res
+import kpt.feature.auth.generated.resources.feature_auth_error_login_failed
+import org.jetbrains.compose.resources.StringResource
+/** View model for the login screen; authenticates with username and password and drives the status dialog. */
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val instanceConfigManager: InstanceConfigManager,
@@ -36,6 +37,7 @@ class LoginViewModel(
         ?: LoginState(dialogState = null),
 ) {
 
+    /** Holds the saved-state key used to persist the login state. */
     companion object {
         private const val KEY_STATE = "state"
     }
@@ -63,10 +65,13 @@ class LoginViewModel(
                     }
 
                     is SubmitState.Failed -> {
-                        val message = getString(Res.string.feature_auth_error_login_failed)
+                        // The resource, not its text: the screen resolves it, so the state stays
+                        // synchronous and testable on every target.
                         mutableStateFlow.update {
                             it.copy(
-                                dialogState = LoginState.DialogState.Error(message),
+                                dialogState = LoginState.DialogState.Error(
+                                    Res.string.feature_auth_error_login_failed,
+                                ),
                             )
                         }
                         submitLogin.reset()
@@ -146,6 +151,16 @@ class LoginViewModel(
     }
 }
 
+/**
+ * UI state of the login screen.
+ *
+ * @property username Username typed by the user.
+ * @property password Password typed by the user (not persisted).
+ * @property isPasswordVisible Whether the password field shows plain text.
+ * @property dialogState Loading or error dialog currently shown, or null.
+ * @property selectedInstanceLabel Display label of the selected backend instance.
+ * @property selectedInstanceEndpoint Endpoint URL of the selected backend instance.
+ */
 @Serializable
 data class LoginState(
     val username: String = "",
@@ -159,24 +174,64 @@ data class LoginState(
     @Transient
     val selectedInstanceEndpoint: String? = null,
 ) {
+    /** Dialog shown over the login screen. */
     sealed class DialogState {
-        data class Error(val message: String) : DialogState()
+        /**
+         * Error dialog.
+         *
+         * @property message The error text, resolved by the screen.
+         */
+        data class Error(val message: StringResource) : DialogState()
+
+        /** Blocking progress dialog shown while the login request is in flight. */
         data object Loading : DialogState()
     }
 }
 
+/** One-off events emitted by the login view model. */
 sealed class LoginEvent {
+    /** Navigate back from the login screen. */
     data object NavigateBack : LoginEvent()
+
+    /** Navigate to the signup flow. */
     data object NavigateToSignup : LoginEvent()
+
+    /** Navigate to the passcode screen after a successful login. */
     data object NavigateToMifosPasscodeScreen : LoginEvent()
+
+    /**
+     * Show a toast.
+     *
+     * @property message Text of the toast.
+     */
     data class ShowToast(val message: String) : LoginEvent()
 }
 
+/** User actions handled by the login view model. */
 sealed class LoginAction {
+    /**
+     * The username field changed.
+     *
+     * @property username New username value.
+     */
     data class UsernameChanged(val username: String) : LoginAction()
+
+    /**
+     * The password field changed.
+     *
+     * @property password New password value.
+     */
     data class PasswordChanged(val password: String) : LoginAction()
+
+    /** The user toggled password visibility. */
     data object TogglePasswordVisibility : LoginAction()
+
+    /** The user dismissed the error dialog. */
     data object ErrorDialogDismiss : LoginAction()
+
+    /** The user tapped the login button. */
     data object LoginClicked : LoginAction()
+
+    /** The user tapped the signup link. */
     data object SignupClicked : LoginAction()
 }

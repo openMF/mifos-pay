@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.designsystem.icon.MifosIcons
+/** Card summarising a wallet account (number, type, balance) that can be clicked or have actions applied. */
 @Composable
 fun MifosAccountCard(
     accountId: Long,

@@ -11,6 +11,12 @@ package kpt.core.model.network.entity
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Response returned after a third-party transfer.
+ *
+ * @property savingsId Id of the savings account.
+ * @property resourceId Id of the created or affected resource.
+ */
 @Serializable
 data class TPTResponse(
     val savingsId: String? = null,

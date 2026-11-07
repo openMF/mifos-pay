@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kpt.core.base.designsystem.theme.KptTheme
 
+/** Chip showing a standing instruction's type (fixed or dues), colored per type. */
 @Composable
 fun InstructionTypeChip(
     type: String?,
@@ -54,12 +55,18 @@ fun InstructionTypeChip(
     }
 }
 
+/** Standing instruction types supported by the wallet. */
 enum class StandingInstructionType {
+    /** Transfers a fixed amount. */
     FIXED,
+
+    /** Transfers the dues amount. */
     DUES,
     ;
 
+    /** Lookup helpers for [StandingInstructionType]. */
     companion object {
+        /** Returns the type whose name matches [value] ignoring case, or null if there is none. */
         fun fromString(value: String?): StandingInstructionType? {
             return entries.find { it.name.equals(value, ignoreCase = true) }
         }

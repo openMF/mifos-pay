@@ -37,11 +37,12 @@ import coil3.ImageLoader
 import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
 import kpt.core.base.designsystem.theme.KptTheme
-import mifos_pay.feature.mpay_qr_scan.generated.resources.Res
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_preview_image
-import mifos_pay.feature.mpay_qr_scan.generated.resources.feature_qr_processing
+import kpt.feature.mpay.qr.scan.generated.resources.Res
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_preview_image
+import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_processing
 import org.jetbrains.compose.resources.stringResource
 
+/** Overlay showing the selected image preview and a progress indicator while a QR image is decoded. */
 @Composable
 fun QrProcessingOverlay(
     imageBytes: ByteArray?,

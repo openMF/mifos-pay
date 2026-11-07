@@ -43,6 +43,7 @@ import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.PaymentStatus
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen showing the read-only history of AutoPay payments, with search and filters. */
 @Composable
 fun AutoPayHistoryScreen(
     onNavigateBack: () -> Unit,

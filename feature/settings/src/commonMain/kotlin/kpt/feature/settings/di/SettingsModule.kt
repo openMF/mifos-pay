@@ -19,6 +19,7 @@ import org.koin.dsl.module
  */
 val MifosSettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
 
+/** Koin module providing the fork settings view model under its qualifier. */
 val SettingsModule = module {
     viewModelOf(::SettingsViewModel) { qualifier = MifosSettingsViewModelQualifier }
 }

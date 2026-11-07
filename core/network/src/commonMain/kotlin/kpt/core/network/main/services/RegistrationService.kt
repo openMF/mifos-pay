@@ -14,10 +14,13 @@ import de.jensklingenberg.ktorfit.http.POST
 import kpt.core.model.network.entity.register.RegisterPayload
 import kpt.core.model.network.entity.register.UserVerify
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for user registration. */
 interface RegistrationService {
+    /** Registers a new user. */
     @POST(ApiEndPoints.REGISTRATION)
     suspend fun registerUser(@Body registerPayload: RegisterPayload)
 
+    /** Verifies a registered user. */
     @POST(ApiEndPoints.REGISTRATION + "/user")
     suspend fun verifyUser(@Body userVerify: UserVerify)
 }

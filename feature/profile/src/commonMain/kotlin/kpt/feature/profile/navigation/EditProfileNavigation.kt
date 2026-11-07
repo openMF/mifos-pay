@@ -14,7 +14,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kpt.core.ui.composableWithPushTransitions
 import kpt.feature.profile.edit.EditProfileScreen
+/** Navigation route of the edit-profile screen. */
 const val EDIT_PROFILE_ROUTE = "edit_profile_route"
+
+/** Navigates to the edit-profile screen. */
 fun NavController.navigateToEditProfile(navOptions: NavOptions? = null) =
     navigate(EDIT_PROFILE_ROUTE, navOptions)
 

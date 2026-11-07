@@ -29,12 +29,16 @@ import kotlinx.serialization.ExperimentalSerializationApi
  * writes.
  */
 interface SyncStatePersister {
+    /** Reads the persisted versions, or an empty map if none. */
     suspend fun read(): ChangeListVersions
+
+    /** Persists [versions]. */
     suspend fun write(versions: ChangeListVersions)
 }
 
 private const val SYNC_VERSIONS_KEY = "sync_change_list_versions"
 
+/** [SyncStatePersister] backed by plain multiplatform Settings. */
 class SettingsSyncStatePersister(
     private val plainSettings: Settings,
 ) : SyncStatePersister {

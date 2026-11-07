@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/datastore sha=a0d0c3e66d36b2877d82c77c9e6a5fed08334fef -->
+<!-- api-docs:begin module=core/datastore sha=1b83a0910bbb7c0620f7328c869a2dbcc30742c0 -->
 ## API reference
 
-_Generated from `core/datastore` at tree `a0d0c3e66d36` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/datastore` at tree `1b83a0910bbb` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesDataSource.kt`
@@ -25,12 +25,12 @@ _Do not hand-edit inside this block — re-run the generator. Authored prose bel
 ```kotlin
 class AutoPayPreferencesDataSource(
 ```
-_No KDoc at source._
+Settings-backed local cache for AutoPay: enabled flag, schedules, upcoming payments, history and last-sync time.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepositoryImpl.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepositoryImpl.kt:24</code></summary>
 
 ```kotlin
-import kpt.core.model.autopay.UpcomingPayment
+ */
 class AutoPayPreferencesRepositoryImpl(
     private val autoPayPreferencesDataSource: AutoPayPreferencesDataSource,
     private val ioDispatcher: CoroutineDispatcher,
@@ -46,9 +46,9 @@ class AutoPayPreferencesRepositoryImpl(
 ```kotlin
 interface AutoPayPreferencesRepository
 ```
-_No KDoc at source._
+Repository contract for the locally cached AutoPay preferences and data.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepositoryImpl.kt:24</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesRepositoryImpl.kt:27</code></summary>
 
 ```kotlin
     private val ioDispatcher: CoroutineDispatcher,
@@ -80,9 +80,9 @@ _No KDoc at source._
 ```kotlin
 class AutoPayPreferencesRepositoryImpl(
 ```
-_No KDoc at source._
+`AutoPayPreferencesRepository` that delegates to `AutoPayPreferencesDataSource` and emits flows on the IO dispatcher.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/PreferenceModule.kt:55</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/PreferenceModule.kt:56</code></summary>
 
 ```kotlin
 
@@ -101,7 +101,7 @@ _No KDoc at source._
 ```kotlin
 class BillDataSource(
 ```
-_No KDoc at source._
+Settings-backed local store of `Bill`s (superseded by Room, see PreferencesModule).
 
 <details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillRepositoryImpl.kt:22</code></summary>
 
@@ -122,9 +122,9 @@ class BillRepositoryImpl(
 ```kotlin
 interface BillRepository
 ```
-_No KDoc at source._
+Repository contract for saved bills.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:40</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:41</code></summary>
 
 ```kotlin
 class AddBillViewModel(
@@ -171,7 +171,7 @@ class BillRepositoryImpl(
 ```kotlin
 class BillerDataSource(
 ```
-_No KDoc at source._
+Settings-backed local store of `Biller`s.
 
 <details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillerRepositoryImpl.kt:23</code></summary>
 
@@ -192,9 +192,9 @@ class BillerRepositoryImpl(
 ```kotlin
 interface BillerRepository
 ```
-_No KDoc at source._
+Repository contract for saved billers.
 
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:41</code></summary>
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:42</code></summary>
 
 ```kotlin
     savedStateHandle: SavedStateHandle,
@@ -224,7 +224,7 @@ class BillerRepositoryImpl(
 ```
 TODO: This implementation currently uses local storage (Multiplatform Settings) for biller data.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:289</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:292</code></summary>
 
 ```kotlin
     // kpt.core.datastore.BillerRepository below — unqualified, one replaces the other.
@@ -243,39 +243,39 @@ TODO: This implementation currently uses local storage (Multiplatform Settings) 
 ```kotlin
 fun ClientPreferences.toClientInfo(): Client
 ```
-_No KDoc at source._
+Maps stored `ClientPreferences` to the domain `Client`.
 
 ```kotlin
 fun Client.toClientPreferences(): ClientPreferences
 ```
-_No KDoc at source._
+Maps the domain `Client` to its stored `ClientPreferences` form.
 
 ```kotlin
 fun RolePreferences.toRoleInfo(): RoleInfo
 ```
-_No KDoc at source._
+Maps stored `RolePreferences` to the domain `RoleInfo`.
 
 ```kotlin
 fun RoleInfo.toRolePreferences(): RolePreferences
 ```
-_No KDoc at source._
+Maps the domain `RoleInfo` to its stored `RolePreferences` form.
 
 ```kotlin
 fun UserInfoPreferences.toUserInfo(): UserInfo
 ```
-_No KDoc at source._
+Maps stored `UserInfoPreferences` to the domain `UserInfo`.
 
 ```kotlin
 fun UserInfo.toUserInfoPreferences(): UserInfoPreferences
 ```
-_No KDoc at source._
+Maps the domain `UserInfo` to its stored `UserInfoPreferences` form.
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/UserPreferencesDataSource.kt`
 
 ```kotlin
 class UserPreferencesDataSource(
 ```
-_No KDoc at source._
+Settings-backed store of the user session: user and client info, token, default account, selected server instances, external ids and language.
 
 <details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:41</code></summary>
 
@@ -312,20 +312,20 @@ Repository interface for managing user preferences with reactive capabilities. T
 
 </details>
 
-- `val userData: StateFlow<UserData>`
-- `val authToken: String?`
-- `val passcode: String`
-- `val observeLanguage: Flow<LanguageConfig>`
-- `val observeDarkThemeConfig: Flow<DarkThemeConfig>`
-- `val observeDynamicColorPreference: Flow<Boolean>`
-- `val observeScreenCapturePreference: Flow<Boolean>`
-- `suspend fun setLanguage(language: LanguageConfig)`
-- `suspend fun setThemeBrand(themeBrand: ThemeBrand)`
-- `suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig)`
-- `suspend fun setDynamicColorPreference(useDynamicColor: Boolean)`
-- `suspend fun setIsAuthenticated(isAuthenticated: Boolean)`
-- `suspend fun setIsUnlocked(isUnlocked: Boolean)`
-- `suspend fun setIsPasscodeEnabled(isPasscodeEnabled: Boolean)`
+- `val userData: StateFlow<UserData>` — Current `UserData` (theme, language, auth and onboarding flags).
+- `val authToken: String?` — Stored auth token, or null.
+- `val passcode: String` — Stored app passcode.
+- `val observeLanguage: Flow<LanguageConfig>` — Stream of the selected language.
+- `val observeDarkThemeConfig: Flow<DarkThemeConfig>` — Stream of the dark-theme setting.
+- `val observeDynamicColorPreference: Flow<Boolean>` — Stream of whether dynamic color is enabled.
+- `val observeScreenCapturePreference: Flow<Boolean>` — Stream of whether screen capture is allowed.
+- `suspend fun setLanguage(language: LanguageConfig)` — Persists the selected `language`.
+- `suspend fun setThemeBrand(themeBrand: ThemeBrand)` — Persists the selected `themeBrand`.
+- `suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig)` — Persists the `darkThemeConfig`.
+- `suspend fun setDynamicColorPreference(useDynamicColor: Boolean)` — Persists whether to use dynamic color.
+- `suspend fun setIsAuthenticated(isAuthenticated: Boolean)` — Persists whether the user is authenticated.
+- `suspend fun setIsUnlocked(isUnlocked: Boolean)` — Persists whether the app is currently unlocked.
+- `suspend fun setIsPasscodeEnabled(isPasscodeEnabled: Boolean)` — Persists whether passcode protection is enabled.
   _…more members; read the file._
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/UserPreferencesRepositoryImpl.kt`
@@ -335,7 +335,7 @@ class UserPreferencesRepositoryImpl(
 ```
 Splits user data storage between plain (UI preferences) and secure (credentials/auth state) Settings backends.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:272</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:274</code></summary>
 
 ```kotlin
 
@@ -382,7 +382,7 @@ THE FORK'S datastore DI seam. Empty on the neutral template — this is yours to
 ```kotlin
 val PreferencesModule = module
 ```
-_No KDoc at source._
+Koin module providing Settings and the settings-backed preference data sources.
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/infra/ChangeListVersions.kt`
 
@@ -425,13 +425,13 @@ Persistence seam for the `Synchronizer`'s per-feature last-synced version map. B
 
 </details>
 
-- `suspend fun read(): ChangeListVersions`
-- `suspend fun write(versions: ChangeListVersions)`
+- `suspend fun read(): ChangeListVersions` — Reads the persisted versions, or an empty map if none.
+- `suspend fun write(versions: ChangeListVersions)` — Persists `versions`.
 
 ```kotlin
 class SettingsSyncStatePersister(
 ```
-_No KDoc at source._
+`SyncStatePersister` backed by plain multiplatform Settings.
 
 <details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/DatastoreModule.kt:52</code></summary>
 
@@ -450,13 +450,13 @@ _No KDoc at source._
 ```kotlin
 data class ClientPreferences(
 ```
-_No KDoc at source._
+Persisted snapshot of the logged-in client's profile.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:18</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:19</code></summary>
 
 ```kotlin
-import kpt.core.model.user.RoleInfo
 import kpt.core.model.user.UserInfo
+/** Maps stored [ClientPreferences] to the domain [Client]. */
 fun ClientPreferences.toClientInfo(): Client {
     return Client(
         id = id,
@@ -471,13 +471,13 @@ fun ClientPreferences.toClientInfo(): Client {
 ```kotlin
 data class RolePreferences(
 ```
-_No KDoc at source._
+Persisted snapshot of a user role.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:58</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:61</code></summary>
 
 ```kotlin
-}
 
+/** Maps stored [RolePreferences] to the domain [RoleInfo]. */
 fun RolePreferences.toRoleInfo(): RoleInfo {
     return RoleInfo(
         id = id,
@@ -492,13 +492,13 @@ fun RolePreferences.toRoleInfo(): RoleInfo {
 ```kotlin
 data class UserInfoPreferences(
 ```
-_No KDoc at source._
+Persisted snapshot of the authenticated user's login result.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:76</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:81</code></summary>
 
 ```kotlin
-}
 
+/** Maps stored [UserInfoPreferences] to the domain [UserInfo]. */
 fun UserInfoPreferences.toUserInfo(): UserInfo {
     return UserInfo(
         username = username,
@@ -563,7 +563,7 @@ interface ForkPreferencesRepository : UserPreferencesRepository
 ```
 The wallet's preferences, extending the framework's `UserPreferencesRepository`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:45</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:49</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -658,7 +658,7 @@ class UserPreferencesRepositoryImpl(
 ```
 Splits user data storage between plain (UI preferences) and secure (credentials/auth state) Settings backends.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:272</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:274</code></summary>
 
 ```kotlin
 
@@ -674,5 +674,5 @@ private fun templatePreferences(): UserPreferencesRepository = UserPreferencesRe
 
 ---
 
-_25 type(s), 84 function(s)/property(ies); 74 carry KDoc at source; 0 authored example(s); 25 live call site(s)._
+_25 type(s), 84 function(s)/property(ies); 109 carry KDoc at source; 0 authored example(s); 25 live call site(s)._
 <!-- api-docs:end -->

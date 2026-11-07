@@ -128,6 +128,15 @@ interface AutoPayService {
     ): Flow<AutoPayStatisticsResponse>
 }
 
+/**
+ * Network response with aggregate auto-pay schedule figures.
+ * @property totalActiveSchedules Number of active schedules.
+ * @property totalPausedSchedules Number of paused schedules.
+ * @property totalCompletedSchedules Number of completed schedules.
+ * @property totalUpcomingPayments Number of upcoming payments.
+ * @property totalAmountThisMonth Total amount scheduled for this month.
+ * @property currency Currency code of the amounts.
+ */
 data class AutoPayStatisticsResponse(
     val totalActiveSchedules: Int = 0,
     val totalPausedSchedules: Int = 0,

@@ -31,6 +31,10 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 
 // TODO:: Support for compose multiplatform
+/**
+ * Dialog-style gate that asks the user to grant an Android runtime permission,
+ * showing rationale text and confirm/dismiss buttons.
+ */
 @Suppress("LongMethod", "CyclomaticComplexMethod")
 @Composable
 fun PermissionBox(

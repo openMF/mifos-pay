@@ -12,7 +12,12 @@ package local
 import com.mobilebytelabs.kmpflavors.KmpFlavorExtension
 import org.gradle.api.Project
 
+/**
+ * This fork's own product flavors, added on top of the template's `prod` / `demo`. Fork-owned: a
+ * template sync never touches it. Empty by default; the commented example shows a second dimension.
+ */
 object LocalFlavors {
+    /** Adds the fork's flavors to [ext]; called once per module by the flavors convention plugin. */
     @JvmStatic
     fun apply(ext: KmpFlavorExtension, project: Project) {
         // ── Example: add a second "bank" dimension with two flavors ─────────────

@@ -38,9 +38,6 @@ import kpt.core.model.savingsaccount.Status as SavingsStatus
 // injects every provider parameter with get(), which cannot resolve a function type.
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for `PocketEntity`. Shared with the DAO's writes. */
-private const val POCKETS_TABLE = "wallet_pockets"
-
 /**
  * Build the LEDGER read [Store] for detailed pocket accounts
  * (GOAL D13 — the `history` archetype variant for a client-scoped list).

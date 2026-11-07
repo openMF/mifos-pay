@@ -13,6 +13,9 @@ import kpt.feature.upi.setup.viewmodel.DebitCardViewModel
 import kpt.feature.upi.setup.viewmodel.SetUpUpiViewModal
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+/**
+ * Koin module providing the ViewModels of the UPI setup feature.
+ */
 val UpiSetupModule = module {
     viewModelOf(::DebitCardViewModel)
     viewModelOf(::SetUpUpiViewModal)

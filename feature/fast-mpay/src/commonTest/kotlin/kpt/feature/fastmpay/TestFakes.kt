@@ -209,7 +209,9 @@ internal class FakeSelfServiceRepository : SelfServiceRepository {
 /**
  * Fake implementation of [ForkPreferencesRepository] for testing.
  */
-internal class FakeUserPreferencesRepository : ForkPreferencesRepository, UserPreferencesRepository by templatePreferences() {
+internal class FakeUserPreferencesRepository :
+    ForkPreferencesRepository,
+    UserPreferencesRepository by templatePreferences() {
     private val _selectedInstance = MutableStateFlow<ServerInstance?>(null)
     private val _clientId = MutableStateFlow<Long?>(0L)
 

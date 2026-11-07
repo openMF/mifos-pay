@@ -18,9 +18,11 @@ import org.mifos.corebase.network.SupabaseConfigClient
 class SupabaseApiManager(
     private val supabaseClient: SupabaseConfigClient,
 ) {
+    /** Service for fetching the app configuration (server instances) from Supabase. */
     val appConfigService by lazy {
         AppConfigService(supabaseClient.postgrest)
     }
 
+    /** Whether Supabase credentials are present; without them every call is skipped. */
     val isConfigured: Boolean get() = supabaseClient.isConfigured
 }

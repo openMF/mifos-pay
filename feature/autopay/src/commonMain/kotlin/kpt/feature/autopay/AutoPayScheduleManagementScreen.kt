@@ -58,6 +58,7 @@ import kpt.core.ui.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.ExperimentalTime
 
+/** Screen listing bills that have AutoPay, with toggles and edit, delete and add actions. */
 @Composable
 fun AutoPayScheduleManagementScreen(
     onNavigateBack: () -> Unit,

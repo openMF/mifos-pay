@@ -23,6 +23,7 @@ import kpt.core.common.setSerialized
 import kpt.core.datastore.BillRepository
 import kpt.core.model.autopay.Bill
 import kpt.core.ui.utils.BaseViewModel
+/** View model for the bill list; loads bills and handles deletion. */
 class BillListViewModel(
     savedStateHandle: SavedStateHandle,
     private val billRepository: BillRepository,
@@ -30,6 +31,7 @@ class BillListViewModel(
     initialState = savedStateHandle.getSerialized(KEY_STATE) ?: BillListState(),
 ) {
 
+    /** Holds the saved-state key used to persist the list state. */
     companion object {
         private const val KEY_STATE = "bill_list_state"
     }
@@ -136,6 +138,13 @@ class BillListViewModel(
     }
 }
 
+/**
+ * UI state of the bill list.
+ *
+ * @property isLoading Whether bills are loading.
+ * @property error Error message to show, or null.
+ * @property bills Bills to display.
+ */
 @Serializable
 data class BillListState(
     val isLoading: Boolean = false,
@@ -143,15 +152,41 @@ data class BillListState(
     val bills: List<Bill> = emptyList(),
 )
 
+/** One-off events emitted by the bill list view model. */
 sealed interface BillListEvent {
+    /** Navigate to the add-bill screen. */
     data object NavigateToAddBill : BillListEvent
+
+    /**
+     * Navigate to the edit-bill screen.
+     *
+     * @property billId Id of the bill to edit.
+     */
     data class NavigateToEditBill(val billId: String) : BillListEvent
+
+    /** A bill was deleted. */
     data object BillDeleted : BillListEvent
 }
 
+/** User actions handled by the bill list view model. */
 sealed interface BillListAction {
+    /** Reload the bills. */
     data object RefreshBills : BillListAction
+
+    /** The user tapped add bill. */
     data object AddNewBill : BillListAction
+
+    /**
+     * The user chose to edit a bill.
+     *
+     * @property billId Id of the bill.
+     */
     data class EditBill(val billId: String) : BillListAction
+
+    /**
+     * The user chose to delete a bill.
+     *
+     * @property billId Id of the bill.
+     */
     data class DeleteBill(val billId: String) : BillListAction
 }

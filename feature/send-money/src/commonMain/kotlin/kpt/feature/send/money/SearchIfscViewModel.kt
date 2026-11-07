@@ -12,6 +12,7 @@ package kpt.feature.send.money
 import kotlinx.coroutines.flow.update
 import kpt.core.ui.utils.BaseViewModel
 // TODO replace dummy data with actual data or call API
+/** ViewModel for the IFSC search screen; filters banks and branches and emits the chosen IFSC code. */
 class SearchIfscViewModel : BaseViewModel<SearchIfscState, SearchIfscEvent, SearchIfscAction>(
     initialState = SearchIfscState(),
 ) {
@@ -337,6 +338,15 @@ private val yesBranches = listOf(
     DummyBankBranch("Satellite", "Gujarat"),
 )
 
+/**
+ * A bank branch IFSC record.
+ * @property code IFSC code.
+ * @property bankName Name of the bank.
+ * @property branch Branch name.
+ * @property address Branch address.
+ * @property city City of the branch.
+ * @property state State of the branch.
+ */
 data class IfscCode(
     val code: String,
     val bankName: String,
@@ -346,15 +356,35 @@ data class IfscCode(
     val state: String,
 )
 
+/**
+ * Placeholder bank entry used by the IFSC search.
+ * @property name Bank name.
+ */
 data class DummyBank(
     val name: String,
 )
 
+/**
+ * Placeholder bank branch entry used by the IFSC search.
+ * @property name Branch name.
+ * @property state State where the branch is located.
+ */
 data class DummyBankBranch(
     val name: String,
     val state: String,
 )
 
+/**
+ * State of the IFSC search screen.
+ * @property bankName Bank name typed by the user.
+ * @property searchQuery Search text.
+ * @property searchState Result state of the search.
+ * @property selectedBank Bank chosen from the list.
+ * @property bankBranch Branch text typed by the user.
+ * @property selectedBranch Branch chosen from the list.
+ * @property filteredBranches Branches matching the current input.
+ * @property selectedIfscCode IFSC code chosen by the user.
+ */
 data class SearchIfscState(
     val bankName: String = "",
     val searchQuery: String = "",
@@ -365,27 +395,84 @@ data class SearchIfscState(
     val filteredBranches: List<DummyBankBranch> = emptyList(),
     val selectedIfscCode: String? = null,
 ) {
+    /** Result state of an IFSC search. */
     sealed interface SearchState {
+        /** Search is in progress. */
         data object Loading : SearchState
+
+        /** No search has been run or no query was given. */
         data object Empty : SearchState
+
+        /**
+         * Search succeeded.
+         * @property results Matching IFSC records.
+         */
         data class Success(val results: List<IfscCode>) : SearchState
+
+        /**
+         * Search failed.
+         * @property message Error message.
+         */
         data class Error(val message: String) : SearchState
     }
 }
 
+/** One-off events emitted by the IFSC search screen. */
 sealed interface SearchIfscEvent {
+    /** Navigate back. */
     data object NavigateBack : SearchIfscEvent
+
+    /**
+     * An IFSC code was chosen.
+     * @property ifscCode The chosen record.
+     */
     data class IfscSelected(val ifscCode: IfscCode) : SearchIfscEvent
 }
 
+/** User actions on the IFSC search screen. */
 sealed interface SearchIfscAction {
+    /** The user tapped back. */
     data object NavigateBack : SearchIfscAction
+
+    /**
+     * The bank name text changed.
+     * @property bankName New bank name text.
+     */
     data class UpdateBankName(val bankName: String) : SearchIfscAction
+
+    /**
+     * The search text changed.
+     * @property query New search text.
+     */
     data class UpdateSearchQuery(val query: String) : SearchIfscAction
+
+    /**
+     * The user picked an IFSC record.
+     * @property ifscCode The picked record.
+     */
     data class SelectIfscCode(val ifscCode: IfscCode) : SearchIfscAction
+
+    /**
+     * The user picked a bank.
+     * @property bank The picked bank.
+     */
     data class SelectBank(val bank: DummyBank) : SearchIfscAction
+
+    /**
+     * The branch text changed.
+     * @property bankBranch New branch text.
+     */
     data class UpdateBankBranch(val bankBranch: String) : SearchIfscAction
+
+    /** The user cleared the selected bank. */
     data object ClearBankSelection : SearchIfscAction
+
+    /**
+     * The user picked a branch.
+     * @property branch The picked branch.
+     */
     data class SelectBranch(val branch: DummyBankBranch) : SearchIfscAction
+
+    /** The user cleared the selected branch. */
     data object ClearBranchSelection : SearchIfscAction
 }

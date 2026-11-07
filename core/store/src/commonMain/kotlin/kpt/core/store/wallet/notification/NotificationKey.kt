@@ -22,5 +22,7 @@ package kpt.core.store.wallet.notification
  * session on the server side); the key is used purely for cache scoping, and
  * the mapper stamps the [clientId] into each persisted row at write time
  * (parity with `BeneficiaryKey`).
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class NotificationKey(val clientId: Long)

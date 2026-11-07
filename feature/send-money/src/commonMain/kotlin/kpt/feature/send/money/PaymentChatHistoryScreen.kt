@@ -58,6 +58,7 @@ import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.AvatarBox
 import org.koin.compose.viewmodel.koinViewModel
 // TODO make the topbar back button consistent with other screens
+/** Chat-style screen showing the payment history with a payee, grouped by date. */
 @Composable
 fun PaymentChatHistoryScreen(
     onBackClick: () -> Unit,
@@ -464,11 +465,25 @@ private fun formatAmount(amount: String): String {
     }
 }
 
+/** Kind of payee shown in the payment chat history. */
 enum class UserType {
+    /** A business payee. */
     BUSINESS,
+
+    /** An individual payee. */
     INDIVIDUAL,
 }
 
+/**
+ * A single payment shown as a chat bubble.
+ * @property transactionId Identifier of the transaction.
+ * @property recipientName Name of the recipient.
+ * @property amount Formatted payment amount.
+ * @property note Note attached to the payment.
+ * @property paymentDate Formatted date of the payment.
+ * @property timestamp Payment time as epoch milliseconds.
+ * @property isSent Whether the payment was sent (true) or received (false).
+ */
 data class PaymentTransaction(
     val transactionId: String,
     val recipientName: String,
@@ -479,11 +494,27 @@ data class PaymentTransaction(
     val isSent: Boolean,
 )
 
+/**
+ * Payments that share the same date.
+ * @property date Formatted date heading of the group.
+ * @property transactions Payments made on that date.
+ */
 data class PaymentHistoryGroup(
     val date: String,
     val transactions: List<PaymentTransaction>,
 )
 
+/**
+ * State of the payment chat history screen.
+ * @property userType Whether the payee is a business or an individual.
+ * @property businessName Name of the business payee.
+ * @property bankingName Registered banking name of the payee.
+ * @property upiId UPI ID of the payee.
+ * @property profileImageUrl URL of the payee's profile image, if any.
+ * @property paymentHistory Payments grouped by date.
+ * @property isLoading Whether history is loading.
+ * @property error Error message, if loading failed.
+ */
 data class PaymentChatHistoryState(
     val userType: UserType = UserType.INDIVIDUAL,
     val businessName: String = "",

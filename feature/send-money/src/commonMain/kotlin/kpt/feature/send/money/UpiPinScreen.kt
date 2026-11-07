@@ -71,6 +71,7 @@ data class PaymentDetails(
     val refId: String,
 )
 
+/** Screen where the user enters their UPI PIN to authorize a payment. */
 @Composable
 fun UpiPinScreen(
     onBackClick: () -> Unit,

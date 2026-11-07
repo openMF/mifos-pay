@@ -17,6 +17,7 @@ import kotlinx.serialization.Serializable
 import kpt.core.data.repository.ThirdPartyTransferRepository
 import kpt.core.model.network.entity.templates.account.AccountOption
 import kpt.core.ui.utils.BaseViewModel
+/** ViewModel for choosing a destination account; loads the destination options and filters them by the entered text. */
 class SelectScreenViewModel(
     private val repository: ThirdPartyTransferRepository,
 ) : BaseViewModel<SelectScreenState, SelectScreenEvent, SelectScreenAction>(
@@ -97,6 +98,15 @@ class SelectScreenViewModel(
     }
 }
 
+/**
+ * UI state of the select-account screen.
+ * @property amount Amount to transfer, as text.
+ * @property accountNumber Account number or name filter entered by the user.
+ * @property selectedAccount Chosen destination account, or null.
+ * @property state Loading state of the destination accounts.
+ * @property toAccountOptions All destination account options, or null.
+ * @property filteredToAccounts Destination options matching the filter, or null.
+ */
 @Serializable
 data class SelectScreenState(
     val amount: String = "",
@@ -107,31 +117,58 @@ data class SelectScreenState(
     val filteredToAccounts: List<AccountOption>? = emptyList(),
 ) {
 
+    /** Whether an account is selected and the user can proceed. */
     val isProceedEnabled: Boolean
         get() = selectedAccount != null
 
+    /** Loading state of the destination accounts. */
     sealed interface State {
+        /** Accounts are loading. */
         data object Loading : State
+
+        /** There are no destination accounts. */
         data object NoAccounts : State
+
+        /** Accounts loaded. */
         data object Success : State
+
+        /**
+         * Loading failed.
+         * @property message Error text.
+         */
         data class Error(val message: String) : State
     }
 }
 
+/** One-shot events emitted by [SelectScreenViewModel]. */
 sealed interface SelectScreenEvent {
+    /** Navigate to the transfer screen. */
     data object NavigateToTransferScreen : SelectScreenEvent
 
+    /** Navigate back. */
     data object NavigateBack : SelectScreenEvent
 }
 
+/** Actions handled by [SelectScreenViewModel]. */
 sealed interface SelectScreenAction {
+    /** Navigate back. */
     data object NavigateBack : SelectScreenAction
 
+    /**
+     * The account number filter changed.
+     * @property accountNumber New filter text.
+     */
     data class AccountNumberChanged(val accountNumber: String) : SelectScreenAction
 
+    /**
+     * A destination account was chosen.
+     * @property account Chosen account, or null.
+     */
     data class SelectAccount(val account: AccountOption?) : SelectScreenAction
 
+    /** The chosen account was cleared. */
     data object DeselectAccount : SelectScreenAction
 
+    /** The proceed button was clicked. */
     data object OnProceedClicked : SelectScreenAction
 }

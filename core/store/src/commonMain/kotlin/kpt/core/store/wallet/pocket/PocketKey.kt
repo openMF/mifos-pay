@@ -31,5 +31,7 @@ package kpt.core.store.wallet.pocket
  * cache in `PocketRepositoryImp` (`detailedPocketCache`) that was
  * Phase-4-deferred (see the pre-migration `TODO(phase-4)` comment on
  * `PocketRepositoryImp`). Room becomes the SoT.
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class PocketKey(val clientId: Long)

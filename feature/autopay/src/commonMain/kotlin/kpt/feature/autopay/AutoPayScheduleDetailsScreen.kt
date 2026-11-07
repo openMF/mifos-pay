@@ -41,6 +41,7 @@ import kpt.core.designsystem.component.MifosScaffold
 import kpt.core.designsystem.icon.MifosIcons
 import kpt.core.ui.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
+/** Screen showing the details of one AutoPay schedule, with pause, resume, edit and cancel actions. */
 @Composable
 fun AutoPayScheduleDetailsScreen(
     onNavigateBack: () -> Unit,

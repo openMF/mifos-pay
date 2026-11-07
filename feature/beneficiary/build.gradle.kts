@@ -29,3 +29,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.beneficiary.generated.resources"
+}

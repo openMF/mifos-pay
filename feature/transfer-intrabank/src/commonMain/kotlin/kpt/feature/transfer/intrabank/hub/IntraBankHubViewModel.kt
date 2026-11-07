@@ -27,6 +27,10 @@ import kpt.core.model.account.RecentPayee
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.network.entity.templates.account.AccountOption
 import kpt.core.ui.utils.BaseViewModel
+/**
+ * ViewModel for the intra-bank hub; loads recent payees, beneficiaries and the transfer template and handles hub
+ * actions.
+ */
 class IntraBankHubViewModel(
     private val recentPayeeRepository: RecentPayeeRepository,
     private val repository: ThirdPartyTransferRepository,
@@ -259,16 +263,30 @@ class IntraBankHubViewModel(
         }
     }
 
+    /** Constants for [IntraBankHubViewModel]. */
     companion object {
         private const val RECENT_PAYEES_LIMIT = 10
     }
 }
 
+/** Tabs of the payee list on the hub. */
 enum class PayeeTab {
+    /** Recently paid payees. */
     Recents,
+
+    /** Saved beneficiaries. */
     Beneficiaries,
 }
 
+/**
+ * UI state of the intra-bank hub.
+ * @property selectedTab Selected payee tab.
+ * @property toAccountOptionsTemplate Destination account options from the transfer template, or null if not loaded.
+ * @property recentPayees Recently paid payees.
+ * @property recentPayeesState Loading state of the recent payees.
+ * @property beneficiaries Saved beneficiaries.
+ * @property beneficiariesState Loading state of the beneficiaries.
+ */
 @Serializable
 data class IntraBankHubState(
     val selectedTab: PayeeTab = PayeeTab.Recents,
@@ -283,27 +301,64 @@ data class IntraBankHubState(
     val beneficiariesState: BeneficiariesState = BeneficiariesState.Loading,
 )
 
+/** Loading state of the recent payees list. */
 enum class RecentPayeesState {
+    /** Recent payees are loading. */
     Loading,
+
+    /** Recent payees loaded. */
     Success,
+
+    /** There are no recent payees. */
     Empty,
+
+    /** Recent payees failed to load. */
     Error,
 }
 
+/** Loading state of the beneficiaries list. */
 enum class BeneficiariesState {
+    /** Beneficiaries are loading. */
     Loading,
+
+    /** Beneficiaries loaded. */
     Success,
+
+    /** There are no beneficiaries. */
     Empty,
+
+    /** Beneficiaries failed to load. */
     Error,
 }
 
+/** One-shot navigation events emitted by [IntraBankHubViewModel]. */
 sealed interface IntraBankHubEvent {
+    /** Navigate to account search and selection. */
     data object NavigateToSearchAccountSelection : IntraBankHubEvent
+
+    /** Navigate back. */
     data object NavigateBack : IntraBankHubEvent
+
+    /** Navigate to the beneficiary screen. */
     data object NavigateToBeneficiary : IntraBankHubEvent
+
+    /** Navigate to the transaction history. */
     data object NavigateToHistory : IntraBankHubEvent
+
+    /** Navigate to the QR scanner. */
     data object NavigateToScanQr : IntraBankHubEvent
+
+    /** Navigate to request money. */
     data object NavigateToRequestMoney : IntraBankHubEvent
+
+    /**
+     * Navigate to the transfer confirmation for a payee.
+     * @property toOfficeId Office id of the destination account.
+     * @property toClientId Client id of the destination account.
+     * @property toAccountId Id of the destination account.
+     * @property accountName Destination account holder name.
+     * @property accountNo Destination account number.
+     */
     data class NavigateToTransfer(
         val toOfficeId: Int,
         val toClientId: Long,
@@ -311,22 +366,57 @@ sealed interface IntraBankHubEvent {
         val accountName: String,
         val accountNo: String,
     ) : IntraBankHubEvent
+
+    /**
+     * Navigate to the transfer to a saved beneficiary.
+     * @property beneficiary Beneficiary to pay.
+     */
     data class NavigateToTransferBeneficiary(
         val beneficiary: Beneficiary,
     ) : IntraBankHubEvent
 }
 
+/** Actions handled by [IntraBankHubViewModel]. */
 sealed interface IntraBankHubAction {
+    /** Navigate back. */
     data object NavigateBack : IntraBankHubAction
+
+    /** The search bar was clicked. */
     data object OnSearchBarClicked : IntraBankHubAction
+
+    /** The add-payee button was clicked. */
     data object OnAddPayeeClicked : IntraBankHubAction
+
+    /** The history button was clicked. */
     data object OnHistoryClicked : IntraBankHubAction
+
+    /** The scan-QR button was clicked. */
     data object OnScanQrClicked : IntraBankHubAction
+
+    /** The request-money button was clicked. */
     data object OnRequestMoneyClicked : IntraBankHubAction
+
+    /** The see-all-transactions link was clicked. */
     data object OnSeeAllTransactionsClicked : IntraBankHubAction
+
+    /**
+     * A payee tab was selected.
+     * @property tab Selected tab.
+     */
     data class OnTabSelected(val tab: PayeeTab) : IntraBankHubAction
+
+    /**
+     * A recent payee was chosen to pay.
+     * @property payee Chosen recent payee.
+     */
     data class OnPayRecentPayee(val payee: RecentPayee) : IntraBankHubAction
+
+    /**
+     * A beneficiary was chosen to pay.
+     * @property beneficiary Chosen beneficiary.
+     */
     data class OnPayBeneficiary(val beneficiary: Beneficiary) : IntraBankHubAction
 
+    /** Reload the beneficiaries. */
     data object RefreshBeneficiaries : IntraBankHubAction
 }

@@ -9,6 +9,12 @@
  */
 package kpt.core.ui.utility
 
+/**
+ * State of a confirmation dialog.
+ *
+ * @property type Which dialog is shown.
+ * @property onConfirm Invoked when the user confirms.
+ */
 data class DialogState(
     val type: DialogType = DialogType.NONE,
     val onConfirm: () -> Unit = {},

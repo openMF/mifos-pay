@@ -71,6 +71,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
+/** Screen with a form for adding a new bill, including recurrence and optional AutoPay settings. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddBillScreen(

@@ -33,6 +33,7 @@ import kpt.core.store.wallet.standinginstruction.StandingInstructionKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
+/** Default [StandingInstructionRepository] backed by the standing-instruction API. */
 class StandingInstructionRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val ioDispatcher: CoroutineDispatcher,

@@ -14,6 +14,11 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import kpt.feature.savedcards.utils.CardType
+/**
+ * Visual transformation that formats a card number into groups for the given card type, optionally masking it.
+ * @property cardType Card network that decides the grouping.
+ * @property isMasked Whether digits are hidden when displayed.
+ */
 class CreditCardVisualTransformation(
     private val cardType: CardType = CardType.UNKNOWN,
     private val isMasked: Boolean = false,
@@ -171,6 +176,9 @@ class CreditCardVisualTransformation(
     }
 }
 
+/**
+ * Returns a [VisualTransformation] for [cardNumber], detecting its card type and honoring [isMasked].
+ */
 // Extension function to detect card type and apply appropriate transformation
 fun getCardNumberTransformation(cardNumber: String, isMasked: Boolean): VisualTransformation {
     val cardType = CardType.detectCardType(cardNumber)

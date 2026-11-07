@@ -11,6 +11,11 @@ package kpt.core.network.di
 
 import org.koin.core.qualifier.named
 
+/** Koin qualifier for the HTTP client targeting the self-service API. */
 val SelfClient = named("SelfClient")
+
+/** Koin qualifier for the HTTP client targeting the base Fineract API. */
 val BaseClient = named("BaseClient")
+
+/** Koin qualifier for the HTTP client targeting the inter-bank API. */
 val InterBankClient = named("InterBankClient")

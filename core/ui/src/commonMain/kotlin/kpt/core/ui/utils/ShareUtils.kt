@@ -39,8 +39,13 @@ expect object ShareUtils {
  * Represents supported MIME types for file sharing.
  */
 enum class MimeType {
+    /** PDF document. */
     PDF,
+
+    /** Plain text. */
     TEXT,
+
+    /** Image file. */
     IMAGE,
 }
 

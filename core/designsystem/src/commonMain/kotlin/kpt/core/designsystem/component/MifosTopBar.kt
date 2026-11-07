@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.designsystem.icon.MifosIcons
+/** Top bar showing [topBarTitle] with a back button wired to [backPress]. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MifosTopBar(

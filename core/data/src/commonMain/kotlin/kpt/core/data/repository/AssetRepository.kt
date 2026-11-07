@@ -10,6 +10,8 @@
 package kpt.core.data.repository
 
 import kpt.core.common.ScreenStateStream
+/** Repository for static geographic reference data. */
 interface AssetRepository {
+    /** Streams the supported countries mapped to their states. */
     fun getCountriesWithStates(): ScreenStateStream<Map<String, List<String>>>
 }

@@ -16,13 +16,17 @@ import kotlinx.coroutines.flow.Flow
 import kpt.core.model.network.twofactor.AccessToken
 import kpt.core.model.network.twofactor.DeliveryMethod
 import kpt.core.network.main.utils.ApiEndPoints
+/** Ktorfit service for two-factor authentication. */
 interface TwoFactorAuthService {
+    /** Fetches the available OTP delivery methods. */
     @GET(ApiEndPoints.TWOFACTOR)
     suspend fun deliveryMethods(): Flow<List<DeliveryMethod>>
 
+    /** Requests an OTP through the given delivery method. */
     @POST(ApiEndPoints.TWOFACTOR)
     suspend fun requestOTP(@Query("deliveryMethod") deliveryMethod: String): Flow<String>
 
+    /** Validates an OTP token. */
     @POST(ApiEndPoints.TWOFACTOR + "/validate")
     suspend fun validateToken(@Query("token") token: String): Flow<AccessToken>
 }

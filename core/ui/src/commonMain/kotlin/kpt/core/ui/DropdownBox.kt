@@ -97,6 +97,7 @@ fun DropdownBox(
     }
 }
 
+/** Read-only text field that opens a dropdown menu of [content] items. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExposedDropdownBox(
@@ -147,6 +148,7 @@ fun ExposedDropdownBox(
     }
 }
 
+/** Single selectable [text] row inside a dropdown menu. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropdownBoxItem(

@@ -12,6 +12,21 @@ package org.mifos.lib.loan.core.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the product options used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property name Name.
+ * @property includeInBorrowerCycle Whether the loan counts toward the borrower cycle.
+ * @property useBorrowerCycle Whether borrower-cycle based limits are used.
+ * @property linkedToFloatingInterestRates Whether the product is linked to floating interest rates.
+ * @property floatingInterestRateCalculationAllowed Whether floating interest rate calculation is allowed.
+ * @property allowvaliableInstallments Whether variable installments are allowed.
+ * @property interestRecalculationEnabled Whether interest recalculation is enabled.
+ * @property canDefineInstallmentAmount Whether the installment amount can be defined.
+ * @property holdGuaranteeFunds Whether guarantee funds are held for the loan.
+ * @property accountMovesOutOfNPAOnlyOnArrearsCompletion Whether NPA status ends only after arrears clear.
+ */
 @Serializable
 data class ProductOptions(
 
