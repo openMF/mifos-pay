@@ -38,6 +38,13 @@ fun initKoin(config: KoinAppDeclaration? = null) {
         modules(KoinModules.allModules)
     }
 
+    // Create every `createdAtStart` single NOW, explicitly. On the web targets Koin 4.2's startKoin did
+    // not: the auth bridge (`selfservice`-style `auth: basic` points), the store logout purge and every
+    // other eager binding silently never ran, so the first request after sign-in went out with no
+    // Authorization and got a 403 (measured on mifos-pay's web build, 2026-11-07). Already-created
+    // singles are cached, so this is a no-op wherever startKoin did create them.
+    KoinPlatform.getKoin().createEagerInstances()
+
     // Privacy consent first: analytics starts OFF (core-base) and only the user's stored choice may turn it
     // on. commonMain, so every platform follows the same consent.
     KoinPlatform.getKoin().get<PrivacyConsentApplier>().start()

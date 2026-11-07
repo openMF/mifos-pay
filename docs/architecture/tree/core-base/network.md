@@ -56,10 +56,10 @@ Changing the server usually invalidates the session, so sign out on a change.
 
 Tests: `core/network/src/commonTest/.../config/{NetworkConfigRepositoryTest,NetworkConfigRequestTest,DynamicBaseUrlTest}.kt`.
 
-<!-- api-docs:begin module=core-base/network sha=0ec2d1c3e30381116ed2f75c72de13ead07a88c4 -->
+<!-- api-docs:begin module=core-base/network sha=7cb7e62e1ad119591c88d303ae9e58098c65844b -->
 ## API reference
 
-_Generated from `core-base/network` at tree `0ec2d1c3e303` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core-base/network` at tree `7cb7e62e1ad1` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **framework-shared and read-only to generators** (D9). Everything below is

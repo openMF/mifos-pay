@@ -10,6 +10,7 @@
 package kpt.core.base.network
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -66,7 +67,10 @@ class AuthHeaderBridge(
                     // stop sending the previous user's credential.
                     if (value == null) headers.clear(key) else headers[key] = value
                 }
-                .launchIn(scope)
+                // UNCONFINED: the header is written in the same call that publishes the token, so a
+                // sign-in that writes the token and immediately makes its first request sends it. On a
+                // background dispatcher that request raced the write and went out unauthenticated.
+                .launchIn(CoroutineScope(scope.coroutineContext + Dispatchers.Unconfined))
         }
     }
 }

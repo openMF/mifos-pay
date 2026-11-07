@@ -9,6 +9,10 @@
  */
 package kpt.core.network.config
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -73,6 +77,29 @@ class AuthSchemeTest {
         token.value = null
         testScheduler.advanceUntilIdle()
         assertNull(headers[key], "sign-out must CLEAR it, not leave the previous user's credential")
+    }
+
+    @Test
+    fun the_header_is_set_before_sign_in_returns() {
+        // A sign-in flow writes the token and IMMEDIATELY makes its first authenticated call. If the
+        // bridge applied the token on a background dispatcher, that call raced the write and went out
+        // with no Authorization (a 403 on the very next request — measured on mifos-pay, web + Android).
+        val token = MutableStateFlow<String?>(null)
+        val headers = RuntimeHeaderStore()
+        val key = AuthScheme.runtimeKeyFor("selfservice")
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+        AuthHeaderBridge(
+            points = listOf(point("selfservice", AuthScheme.BASIC)),
+            tokenSource = AuthTokenSource { token },
+            headers = headers,
+        ).start(scope)
+
+        token.value = "dXNlcjpwYXNz"
+        assertEquals("Basic dXNlcjpwYXNz", headers[key], "no wait: the next request must already carry it")
+        token.value = null
+        assertNull(headers[key], "sign-out must clear it before the next request too")
+        scope.cancel()
     }
 
     @Test
