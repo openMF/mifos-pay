@@ -18,28 +18,28 @@ import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.TwoFactorAuthRepository
 import kpt.core.model.network.twofactor.AccessToken
 import kpt.core.model.network.twofactor.DeliveryMethod
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.TwoFactorAuthService
 /** Default [TwoFactorAuthRepository] backed by the two-factor API. */
 @RepositoryBinding(binds = TwoFactorAuthRepository::class)
 class TwoFactorAuthRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val twoFactorAuthService: TwoFactorAuthService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : TwoFactorAuthRepository {
     override suspend fun deliveryMethods(): ScreenStateStream<List<DeliveryMethod>> {
-        return apiManager.twoFactorAuthApi.deliveryMethods()
+        return twoFactorAuthService.deliveryMethods()
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
     }
 
     override suspend fun requestOTP(deliveryMethod: String): ScreenStateStream<String> {
-        return apiManager.twoFactorAuthApi
+        return twoFactorAuthService
             .requestOTP(deliveryMethod)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
     }
 
     override suspend fun validateToken(token: String): ScreenStateStream<AccessToken> {
-        return apiManager.twoFactorAuthApi.validateToken(token)
+        return twoFactorAuthService.validateToken(token)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
     }

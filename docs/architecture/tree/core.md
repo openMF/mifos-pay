@@ -1,20 +1,20 @@
 # `core/`
 
 > **Kind:** Kotlin Multiplatform module group  
-> **Measured:** 876 tracked files — 718× `.kt`, 34× `.xml`, 33× `.md`, 24× `.kts`, 17× `.json`
+> **Measured:** 860 tracked files — 699× `.kt`, 35× `.md`, 34× `.xml`, 24× `.kts`, 18× `.json`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
 | `core/model/` | 163 |
-| `core/data/` | 141 |
-| `core/network/` | 100 |
+| `core/data/` | 143 |
 | `core/designsystem/` | 96 |
+| `core/database/` | 87 |
 | `core/ui/` | 87 |
-| `core/database/` | 84 |
+| `core/network/` | 78 |
 | `core/common/` | 67 |
-| `core/store/` | 66 |
+| `core/store/` | 67 |
 | `core/datastore/` | 38 |
 | `core/firebase/` | 14 |
 | `core/domain/` | 12 |
@@ -25,16 +25,16 @@
 | | |
 |---|---|
 | `core:common` | 58 Kotlin files — [guide](core/common.md) |
-| `core:data` | 126 Kotlin files — [guide](core/data.md) |
-| `core:database` | 70 Kotlin files — [guide](core/database.md) |
+| `core:data` | 128 Kotlin files — [guide](core/data.md) |
+| `core:database` | 72 Kotlin files — [guide](core/database.md) |
 | `core:datastore` | 29 Kotlin files — [guide](core/datastore.md) |
 | `core:designsystem` | 77 Kotlin files — [guide](core/designsystem.md) |
 | `core:domain` | 2 Kotlin files — [guide](core/domain.md) |
 | `core:firebase` | 6 Kotlin files — [guide](core/firebase.md) |
 | `core:model` | 154 Kotlin files — [guide](core/model.md) |
-| `core:network` | 84 Kotlin files — [guide](core/network.md) |
+| `core:network` | 60 Kotlin files — [guide](core/network.md) |
 | `core:platform` | 2 Kotlin files — [guide](core/platform.md) |
-| `core:store` | 40 Kotlin files — [guide](core/store.md) |
+| `core:store` | 41 Kotlin files — [guide](core/store.md) |
 | `core:ui` | 70 Kotlin files — [guide](core/ui.md) |
 
 ## Docs in the tree

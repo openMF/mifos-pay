@@ -16,20 +16,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.common.ScreenState
+import kpt.core.common.map
+import kpt.core.data.fork.util.toForkScreenStateFlow
+import kpt.core.data.serverconfig.ServerInstanceRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.instance.InstancesConfig
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
-import kpt.core.network.main.config.InstanceConfigLoader
 import kpt.core.ui.fork.utils.BaseViewModel
 import org.jetbrains.compose.resources.getString
 /** Loads the available server instances and applies the user's main and inter-bank selection to preferences. */
 class InstanceSelectorViewModel(
-    instanceConfigLoader: InstanceConfigLoader,
+    serverInstanceRepository: ServerInstanceRepository,
     private val userPreferencesRepository: ForkPreferencesRepository,
 ) : BaseViewModel<InstanceSelectorState, InstanceSelectorEvent, InstanceSelectorAction>(
     initialState = InstanceSelectorState(),
@@ -41,7 +44,8 @@ class InstanceSelectorViewModel(
     init {
         // Combine all sources and update state
         combine(
-            instanceConfigLoader.observeInstancesConfig(),
+            serverInstanceRepository.instancesStream(viewModelScope).state.toForkScreenStateFlow()
+                .map { state -> state.map(::InstancesConfig) },
             userPreferencesRepository.selectedInstance,
             userPreferencesRepository.selectedInterbankInstance,
             tempSelectedMainInstance,

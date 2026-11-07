@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
 import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.linkableaccount.LinkableAccountDao
@@ -25,7 +26,8 @@ import kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto
 import kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto
 import kpt.core.model.pocket.AccountStatus
 import kpt.core.model.pocket.LinkableAccount
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.ClientService
+import kpt.core.network.main.services.ShareAccountService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -60,12 +62,12 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
  * accounts) N additional round-trips — one per share account — for
  * market-price resolution:
  *
- * 1. `apiManager.clientsApi.getClientAccounts(clientId)` → client's full
+ * 1. `selfClientService.getClientAccounts(clientId)` → client's full
  *    account envelope (savings + loans + shares detail rows).
  * 2. `pocketDao.observeByClient(clientId).first()` → snapshot of already-linked
  *    accountIds (Room read, no network).
  * 3. For every SHARE account NOT in the linked set,
- *    `apiManager.shareAccountApi.getShareAccountDetails(share.id).first()` →
+ *    `shareAccountService.getShareAccountDetails(share.id).first()` →
  *    market-price snapshot for the current balance computation.
  *
  * This mirrors the pre-store `PocketRepositoryImp.getAvailableAccountsToLink`
@@ -119,14 +121,15 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "linkableAccounts")
 @CacheKey(fn = "of", key = "wallet_linkable_accounts-{clientId}", params = ["clientId:Long"])
 fun provideLinkableAccountsStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfClientService: ClientService,
+    shareAccountService: ShareAccountService,
     dao: LinkableAccountDao,
     pocketDao: PocketDao,
 ): Store<LinkableAccountKey, List<LinkableAccount>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: LinkableAccountKey ->
         // Step 1 — client-accounts envelope (per-client) for balance/product/status
         // resolution across the three account-type buckets.
-        val clientAccounts: ClientAccountsEntity = apiManager.clientsApi
+        val clientAccounts: ClientAccountsEntity = selfClientService
             .getClientAccounts(key.clientId)
 
         // Step 2 — snapshot the already-linked accountIds from the Room SoT
@@ -142,7 +145,7 @@ fun provideLinkableAccountsStore(
         buildLinkableAccounts(
             clientAccounts = clientAccounts,
             alreadyLinkedAccounts = emptySet(),
-            apiManager = apiManager,
+            shareAccountService = shareAccountService,
         )
     },
     sourceOfTruth = SourceOfTruth.of(
@@ -181,13 +184,13 @@ fun provideLinkableAccountsStore(
 private suspend fun buildLinkableAccounts(
     clientAccounts: ClientAccountsEntity,
     alreadyLinkedAccounts: Set<String>,
-    apiManager: SelfServiceApiManager,
+    shareAccountService: ShareAccountService,
 ): List<LinkableAccount> {
     val out = mutableListOf<LinkableAccount>()
 
     processLoanAccounts(clientAccounts, alreadyLinkedAccounts, out)
     processSavingsAccounts(clientAccounts, alreadyLinkedAccounts, out)
-    processShareAccounts(clientAccounts, alreadyLinkedAccounts, apiManager, out)
+    processShareAccounts(clientAccounts, alreadyLinkedAccounts, shareAccountService, out)
 
     return out
 }
@@ -244,7 +247,7 @@ private fun processSavingsAccounts(
 private suspend fun processShareAccounts(
     clientAccounts: ClientAccountsEntity,
     alreadyLinkedAccounts: Set<String>,
-    apiManager: SelfServiceApiManager,
+    shareAccountService: ShareAccountService,
     out: MutableList<LinkableAccount>,
 ) {
     clientAccounts.shareAccounts.forEach { share ->
@@ -256,7 +259,7 @@ private suspend fun processShareAccounts(
             var decimalPlaces: Int? = share.currency?.decimalPlaces
 
             try {
-                val shareAccountDetails = apiManager.shareAccountApi
+                val shareAccountDetails = shareAccountService
                     .getShareAccountDetails(shareId).first()
                 val approvedShares = shareAccountDetails.summary?.totalApprovedShares ?: 0
                 val currentMarketPrice = shareAccountDetails.currentMarketPrice ?: 0.0

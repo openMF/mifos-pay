@@ -10,6 +10,7 @@
 package kpt.core.datastore.di
 
 import com.russhwolf.settings.Settings
+import kotlinx.coroutines.launch
 import kpt.core.base.common.manager.DispatcherManager
 import kpt.core.common.ForkDispatchers
 import kpt.core.datastore.UserPreferencesDataSource
@@ -41,6 +42,14 @@ val ForkDatastoreModule = module {
             preferenceManager = get<UserPreferencesDataSource>(),
             ioDispatcher = get(named(ForkDispatchers.IO.name)),
             unconfinedDispatcher = get(named(ForkDispatchers.Unconfined.name)),
-        )
+        ).also { prefs ->
+            // A session signed in before the wallet wrote its token to the framework's store too: copy
+            // it once, so core-base's auth bridge — which reads the framework's store — keeps sending it.
+            val framework = get<UserPreferencesRepository>()
+            val walletToken = prefs.authToken
+            if (framework.authToken == null && walletToken != null) {
+                get<DispatcherManager>().appScope.launch { framework.setAuthToken(walletToken) }
+            }
+        }
     }
 }

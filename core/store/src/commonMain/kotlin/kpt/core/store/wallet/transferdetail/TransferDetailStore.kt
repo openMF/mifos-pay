@@ -12,13 +12,14 @@ package kpt.core.store.wallet.transferdetail
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
 import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.transferdetail.TransferDetailDao
 import kpt.core.database.wallet.transferdetail.toDomain
 import kpt.core.database.wallet.transferdetail.toEntity
 import kpt.core.model.savingsaccount.TransferDetail
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.AccountTransfersService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -79,13 +80,13 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "transferDetail")
 @CacheKey(fn = "of", key = "wallet_transfer_details-{transferId}", params = ["transferId:Long"])
 fun provideTransferDetailStore(
-    selfManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfAccountTransfersService: AccountTransfersService,
     dao: TransferDetailDao,
 ): Store<TransferDetailKey, TransferDetail> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: TransferDetailKey ->
         // Ktorfit returns Flow<TransferDetail> for getAccountTransfer — take the
         // first (and only) emission. The API path parameter is an Int.
-        selfManager.accountTransfersApi
+        selfAccountTransfersService
             .getAccountTransfer(key.transferId.toInt())
             .first()
     },

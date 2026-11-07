@@ -16,11 +16,11 @@ import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.data.mapper.toSearchResult
 import kpt.core.data.repository.SearchRepository
 import kpt.core.model.search.SearchResult
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.SearchService
 /** Default [SearchRepository] backed by the search API. */
 @RepositoryBinding(binds = SearchRepository::class)
 class SearchRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val searchService: SearchService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : SearchRepository {
     override suspend fun searchResources(
@@ -29,7 +29,7 @@ class SearchRepositoryImpl(
         exactMatch: Boolean,
     ): List<SearchResult> {
         return withContext(ioDispatcher) {
-            apiManager.searchApi.searchResources(query, resources, exactMatch).toSearchResult()
+            searchService.searchResources(query, resources, exactMatch).toSearchResult()
         }
     }
 }

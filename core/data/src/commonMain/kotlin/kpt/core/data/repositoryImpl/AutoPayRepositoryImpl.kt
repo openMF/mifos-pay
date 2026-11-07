@@ -27,11 +27,11 @@ import kpt.core.model.autopay.AutoPayTemplate
 import kpt.core.model.autopay.AutoPayUpdatePayload
 import kpt.core.model.autopay.UpcomingPayment
 import kpt.core.model.network.entity.Page
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.AutoPayService
 /** Default [AutoPayRepository]. */
 @RepositoryBinding(binds = AutoPayRepository::class)
 class AutoPayRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val autoPayService: AutoPayService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : AutoPayRepository {
 
@@ -39,7 +39,7 @@ class AutoPayRepositoryImpl(
         clientId: Long,
         sourceAccountId: Long,
     ): ScreenStateStream<AutoPayTemplate> {
-        return apiManager.autoPayApi
+        return autoPayService
             .getAutoPayTemplate(clientId, sourceAccountId)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
@@ -48,7 +48,7 @@ class AutoPayRepositoryImpl(
     override fun getAllAutoPaySchedules(
         clientId: Long,
     ): ScreenStateStream<List<AutoPay>> {
-        return apiManager.autoPayApi
+        return autoPayService
             .getAllAutoPaySchedules(clientId)
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
@@ -57,7 +57,7 @@ class AutoPayRepositoryImpl(
     override fun getAutoPaySchedule(
         autoPayId: Long,
     ): ScreenStateStream<AutoPay> {
-        return apiManager.autoPayApi
+        return autoPayService
             .getAutoPaySchedule(autoPayId)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
@@ -67,7 +67,7 @@ class AutoPayRepositoryImpl(
         payload: AutoPayPayload,
     ) {
         withContext(ioDispatcher) {
-            apiManager.autoPayApi.createAutoPaySchedule(payload)
+            autoPayService.createAutoPaySchedule(payload)
         }
     }
 
@@ -76,7 +76,7 @@ class AutoPayRepositoryImpl(
         payload: AutoPayUpdatePayload,
     ) {
         withContext(ioDispatcher) {
-            apiManager.autoPayApi.updateAutoPaySchedule(
+            autoPayService.updateAutoPaySchedule(
                 autoPayId = autoPayId,
                 payload = payload,
             )
@@ -87,7 +87,7 @@ class AutoPayRepositoryImpl(
         autoPayId: Long,
     ) {
         withContext(ioDispatcher) {
-            apiManager.autoPayApi.deleteAutoPaySchedule(autoPayId)
+            autoPayService.deleteAutoPaySchedule(autoPayId)
         }
     }
 
@@ -95,7 +95,7 @@ class AutoPayRepositoryImpl(
         autoPayId: Long,
     ) {
         withContext(ioDispatcher) {
-            apiManager.autoPayApi.pauseAutoPaySchedule(autoPayId)
+            autoPayService.pauseAutoPaySchedule(autoPayId)
         }
     }
 
@@ -103,7 +103,7 @@ class AutoPayRepositoryImpl(
         autoPayId: Long,
     ) {
         withContext(ioDispatcher) {
-            apiManager.autoPayApi.resumeAutoPaySchedule(autoPayId)
+            autoPayService.resumeAutoPaySchedule(autoPayId)
         }
     }
 
@@ -111,7 +111,7 @@ class AutoPayRepositoryImpl(
         autoPayId: Long,
         limit: Int,
     ): ScreenStateStream<Page<AutoPayHistory>> {
-        return apiManager.autoPayApi
+        return autoPayService
             .getAutoPayHistory(autoPayId, limit)
             .asScreenStateFlow(isEmpty = { it.pageItems.isEmpty() })
             .flowOn(ioDispatcher)
@@ -121,7 +121,7 @@ class AutoPayRepositoryImpl(
         clientId: Long,
         limit: Int,
     ): ScreenStateStream<List<UpcomingPayment>> {
-        return apiManager.autoPayApi
+        return autoPayService
             .getUpcomingPayments(clientId, limit)
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
@@ -130,7 +130,7 @@ class AutoPayRepositoryImpl(
     override fun getAutoPayStatistics(
         clientId: Long,
     ): ScreenStateStream<AutoPayStatistics> {
-        return apiManager.autoPayApi
+        return autoPayService
             .getAutoPayStatistics(clientId)
             .map { response ->
                 AutoPayStatistics(

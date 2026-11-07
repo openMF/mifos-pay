@@ -14,7 +14,8 @@ import kpt.core.base.data.annotation.DataProvider
 import kpt.core.base.data.annotation.FromQualifier
 import kpt.core.data.repository.BillRepository
 import kpt.core.data.repository.BillerRepository
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.BillService
+import kpt.core.network.main.services.BillerService
 
 /**
  * The network-backed bill and biller repositories, bound under their fully qualified names.
@@ -26,13 +27,13 @@ import kpt.core.network.FineractApiManager
  */
 @DataProvider(qualifier = "kpt.core.data.repository.BillerRepository")
 fun provideNetworkBillerRepository(
-    apiManager: FineractApiManager,
+    billerService: BillerService,
     @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
-): BillerRepository = BillerRepositoryImpl(apiManager, ioDispatcher)
+): BillerRepository = BillerRepositoryImpl(billerService, ioDispatcher)
 
 /** The network-backed [BillRepository]; see [provideNetworkBillerRepository] for why it is qualified. */
 @DataProvider(qualifier = "kpt.core.data.repository.BillRepository")
 fun provideNetworkBillRepository(
-    apiManager: FineractApiManager,
+    billService: BillService,
     @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
-): BillRepository = BillRepositoryImpl(apiManager, ioDispatcher)
+): BillRepository = BillRepositoryImpl(billService, ioDispatcher)

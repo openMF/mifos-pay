@@ -16,12 +16,14 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.beneficiary.BeneficiaryPayload
 import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.network.entity.templates.beneficiary.BeneficiaryTemplate
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for beneficiaries. */
+@ApiBinding("selfservice")
 interface BeneficiaryService {
     /** Fetches the list of beneficiaries. */
     @GET(ApiEndPoints.BENEFICIARIES + "/tpt")

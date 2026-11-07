@@ -1121,16 +1121,14 @@ data class InstancesConfig(
 ```
 Configured list of selectable server instances.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceConfigLoader.kt:18</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/ServerInstances.kt:43</code></summary>
 
 ```kotlin
-interface InstanceConfigLoader {
-    /** Fetches the server instances configuration once. */
-    suspend fun fetchInstancesConfig(): InstancesConfig
-
-    /** Streams the server instances configuration wrapped in a [ScreenState]. */
-    fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>
-}
+@OptIn(ExperimentalResourceApi::class)
+suspend fun bundledServerInstances(): List<ServerInstance> = runCatching {
+    json.decodeFromString<InstancesConfig>(Res.readBytes("files/instances_config_default.json").decodeToString())
+        .instances
+}.getOrDefault(emptyList())
 ```
 
 </details>
@@ -1382,7 +1380,7 @@ data class ClientResponseEntity(
 ```
 Fineract response returned after creating a client with a savings account.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ClientService.kt:74</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ClientService.kt:76</code></summary>
 
 ```kotlin
     /** Creates a client. */
@@ -1551,7 +1549,7 @@ Persisted representation of an authenticated Fineract user.
 
 ```kotlin
         withContext(ioDispatcher) {
-            selfServiceApiManager.userApi.updateUserPassword(
+            selfUserService.updateUserPassword(
                 updateUserEntity = UpdateUserEntityPassword(
                     password,
                     password,
@@ -2138,7 +2136,7 @@ data class PocketCommandResponse(
 ```
 Response to a pocket link command, carrying the created resource id.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/PocketService.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/PocketService.kt:34</code></summary>
 
 ```kotlin
         @Query("command") command: String = "linkAccounts",
@@ -2163,7 +2161,7 @@ Request body for removing accounts from a pocket by mapping id.
                 val serverIds = accountsToDelink.filter { it.id > 0 }.map { it.id }
                 if (serverIds.isNotEmpty()) {
                     val request = PocketDelinkRequest(serverIds)
-                    dataManager.pocketApi.delinkAccounts(request = request)
+                    pocketService.delinkAccounts(request = request)
                 }
 
                 // If successful, we can just delete them from Room (or mark them as SYNCED
@@ -2338,7 +2336,7 @@ data class ShareWithAssociationsResponseDto(
 ```
 A share account with its associated client, savings account, summary and dividends.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ShareAccountService.kt:26</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/ShareAccountService.kt:28</code></summary>
 
 ```kotlin
         @Path("accountId") accountId: Long,
@@ -2559,7 +2557,7 @@ Request body for changing a user's password.
 
 ```kotlin
         withContext(ioDispatcher) {
-            selfServiceApiManager.userApi.updateUserPassword(
+            selfUserService.updateUserPassword(
                 updateUserEntity = UpdateUserEntityPassword(
                     password,
                     password,
@@ -2574,7 +2572,7 @@ data class UpdateUserPasswordResponse(
 ```
 Response returned after a password change.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/UserService.kt:46</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/UserService.kt:48</code></summary>
 
 ```kotlin
     suspend fun updateUserPassword(
@@ -2693,7 +2691,7 @@ data class NotificationPayload(
 ```
 One page of notifications returned by the server.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/NotificationService.kt:20</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/NotificationService.kt:22</code></summary>
 
 ```kotlin
     /** Fetches notifications filtered by read state. */
@@ -2894,7 +2892,7 @@ data class BlockUnblockResponseEntity(
 ```
 Server response after blocking or unblocking a savings account.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/SavingsAccountsService.kt:57</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/SavingsAccountsService.kt:59</code></summary>
 
 ```kotlin
         @Path("accountId") accountId: Long,

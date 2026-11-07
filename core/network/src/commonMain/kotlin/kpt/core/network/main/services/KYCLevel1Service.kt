@@ -15,9 +15,11 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.kyc.KYCLevel1Details
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for KYC level 1 details. */
+@ApiBinding("main")
 interface KYCLevel1Service {
 
     /** Fetches a client's KYC level 1 details. */

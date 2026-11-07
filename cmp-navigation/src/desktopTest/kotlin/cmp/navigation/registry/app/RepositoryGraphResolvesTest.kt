@@ -15,7 +15,7 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 /**
- * Every repository binding in the app graph can actually be constructed.
+ * Every repository and API binding in the app graph can actually be constructed.
  *
  * The repositories bind themselves through `@RepositoryBinding` / `@DataProvider`, and data-ksp writes
  * the Koin lines. A compile proves those lines type-check; it does not prove each `get()` finds a
@@ -26,7 +26,7 @@ class RepositoryGraphResolvesTest {
 
     @OptIn(KoinInternalApi::class)
     @Test
-    fun everyRepositoryResolves() {
+    fun everyRepositoryAndApiResolves() {
         val app = koinApplication(createEagerInstances = false) {
             allowOverride(true)
             modules(cmp.navigation.di.KoinModules.allModules)
@@ -34,13 +34,16 @@ class RepositoryGraphResolvesTest {
         val failures = app.koin.instanceRegistry.instances.values
             .map { it.beanDefinition }
             .distinct()
-            .filter { it.primaryType.simpleName.orEmpty().endsWith("Repository") }
+            .filter { def ->
+                val name = def.primaryType.simpleName.orEmpty()
+                name.endsWith("Repository") || name.endsWith("Service")
+            }
             .mapNotNull { def ->
                 runCatching { app.koin.get<Any>(def.primaryType, def.qualifier) }
                     .exceptionOrNull()
                     ?.let { "${def.primaryType.qualifiedName} [${def.qualifier?.value.orEmpty()}]: ${it.message}" }
             }
         app.close()
-        assertTrue(failures.isEmpty(), "Repositories the graph cannot build:\n" + failures.joinToString("\n"))
+        assertTrue(failures.isEmpty(), "Bindings the graph cannot build:\n" + failures.joinToString("\n"))
     }
 }

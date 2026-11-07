@@ -16,4 +16,9 @@ plugins {
 
 dependencies {
     implementation("com.google.devtools.ksp:symbol-processing-api:${libs.versions.ksp.get()}")
+    testImplementation(libs.kotlin.test)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

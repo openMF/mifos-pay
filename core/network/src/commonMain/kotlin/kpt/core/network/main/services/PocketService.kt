@@ -13,12 +13,14 @@ import de.jensklingenberg.ktorfit.http.Body
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.Query
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.pocket.PocketCommandResponse
 import kpt.core.model.network.entity.pocket.PocketDelinkRequest
 import kpt.core.model.network.entity.pocket.PocketLinkRequest
 import kpt.core.model.network.entity.pocket.PocketResponseDto
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for pocket accounts. */
+@ApiBinding("selfservice")
 interface PocketService {
     /** Fetches the accounts linked to the pocket. */
     @GET(ApiEndPoints.POCKETS)

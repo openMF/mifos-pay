@@ -34,8 +34,26 @@ enum class HttpLogDetail(internal val level: LogLevel) {
 }
 
 /**
+ * How a WEB build reaches servers that do not answer CORS for the site's origin —
+ * `app-profile/app.yaml#network.web_cors.mode`.
+ */
+enum class WebCorsMode {
+    /**
+     * Requests to an allowlisted host go through the relay ([NetworkPolicy.webCorsProxy]): the browser
+     * talks to its own origin, so the server's CORS policy never applies. The default.
+     */
+    RELAY,
+
+    /**
+     * No rewriting: the browser calls each server itself. Nothing but the server sees the traffic, but
+     * every server must allow the site's origin, or the browser blocks the call.
+     */
+    DIRECT,
+}
+
+/**
  * App-wide network privacy policy — GENERATED from `app-profile/app.yaml#network` (`logging`,
- * `web_cors_proxy`) onto `AppAccessPoints.policy` by `syncForkConfig`. Every default is the
+ * `web_cors`) onto `AppAccessPoints.policy` by `syncForkConfig`. Every default is the
  * secure choice, so a fork whose app.yaml predates these keys gets the safe behaviour on sync.
  *
  * @property releaseLogging what a release build may log; never more than [HttpLogDetail.HEADERS].
@@ -43,15 +61,33 @@ enum class HttpLogDetail(internal val level: LogLevel) {
  * @property redactQueryParams query parameters whose values are masked in every logged URL (credentials
  *   such as FRED's `api_key` travel in the query string). Matched case-insensitively; the defaults are
  *   always applied and app.yaml adds to them.
- * @property webCorsProxy the CORS relay web builds route `proxied_host` calls through. A relay sees every
- *   request it forwards — a third-party processor — so it is `null` (no relay) unless declared.
+ * @property webCorsMode [WebCorsMode.RELAY] or [WebCorsMode.DIRECT] (`web_cors.mode`).
+ * @property webCorsProxy the CORS relay web builds route allowlisted hosts through (`web_cors.relay`): a
+ *   same-origin path (`/cors`, served by cmp-web's `_worker.js`) or an https:// external relay. A relay
+ *   sees every request it forwards, so a hand-built policy has none (`null`); the generated one sets it.
+ * @property webCorsAllowlist host patterns routed through the relay — an exact host or `*.example.com`
+ *   (subdomains only). Generated from every access point's host plus `web_cors.hosts`; the deployed
+ *   worker relays the same list (`relay-allowlist.json`).
  */
 data class NetworkPolicy(
     val releaseLogging: HttpLogDetail = HttpLogDetail.NONE,
     val debugLogging: HttpLogDetail = HttpLogDetail.BODY,
     val redactQueryParams: List<String> = emptyList(),
     val webCorsProxy: String? = null,
+    val webCorsMode: WebCorsMode = WebCorsMode.RELAY,
+    val webCorsAllowlist: List<String> = emptyList(),
 ) {
+    /** The relay a web build uses, or null when none applies ([WebCorsMode.DIRECT], or none declared). */
+    val activeWebCorsRelay: String?
+        get() = webCorsProxy.takeIf { webCorsMode == WebCorsMode.RELAY }
+
+    /**
+     * The host patterns [ap]'s client relays: the allowlist plus the point's legacy `proxied_host`.
+     * Empty in [WebCorsMode.DIRECT].
+     */
+    fun webCorsHostsFor(ap: AccessPoint): List<String> =
+        if (activeWebCorsRelay == null) emptyList() else (webCorsAllowlist + listOfNotNull(ap.proxiedHost)).distinct()
+
     /** The detail to log at for this build — a release build is clamped to headers at most. */
     fun logDetail(debugBuild: Boolean): HttpLogDetail =
         if (debugBuild) debugLogging else minOf(releaseLogging, HttpLogDetail.HEADERS)

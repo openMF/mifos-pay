@@ -18,6 +18,7 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.ClientResponseEntity
 import kpt.core.model.network.entity.Page
 import kpt.core.model.network.entity.client.ClientAccountsEntity
@@ -26,6 +27,7 @@ import kpt.core.model.network.entity.client.NewClientEntity
 import kpt.core.model.network.entity.client.UpdateClientEntity
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for clients. */
+@ApiBinding("main", "selfservice")
 interface ClientService {
     /** Fetches the page of clients. */
     @GET(ApiEndPoints.CLIENTS)

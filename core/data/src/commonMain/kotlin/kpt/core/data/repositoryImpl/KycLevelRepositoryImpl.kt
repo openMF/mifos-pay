@@ -19,17 +19,17 @@ import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.KycLevelRepository
 import kpt.core.model.kyc.KYCLevel1Details
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.KYCLevel1Service
 /** Default [KycLevelRepository] backed by the KYC level 1 API. */
 @RepositoryBinding(binds = KycLevelRepository::class)
 class KycLevelRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val kYCLevel1Service: KYCLevel1Service,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : KycLevelRepository {
     override fun fetchKYCLevel1Details(
         clientId: Long,
     ): ScreenStateStream<KYCLevel1Details?> {
-        return apiManager.kycLevel1Api
+        return kYCLevel1Service
             .fetchKYCLevel1Details(clientId)
             .map { it.firstOrNull() }
             .asScreenStateFlow()
@@ -41,7 +41,7 @@ class KycLevelRepositoryImpl(
         kycLevel1Details: KYCLevel1Details,
     ) {
         withContext(ioDispatcher) {
-            apiManager.kycLevel1Api.addKYCLevel1Details(clientId, kycLevel1Details)
+            kYCLevel1Service.addKYCLevel1Details(clientId, kycLevel1Details)
         }
     }
 
@@ -50,7 +50,7 @@ class KycLevelRepositoryImpl(
         kycLevel1Details: KYCLevel1Details,
     ) {
         withContext(ioDispatcher) {
-            apiManager.kycLevel1Api.updateKYCLevel1Details(clientId, kycLevel1Details)
+            kYCLevel1Service.updateKYCLevel1Details(clientId, kycLevel1Details)
         }
     }
 }

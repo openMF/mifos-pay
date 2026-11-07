@@ -12,6 +12,7 @@ package kpt.core.store.wallet.account
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
 import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.common.DateHelper
@@ -23,7 +24,7 @@ import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.model.savingsaccount.TransactionsEntity
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.SavingsAccountsService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -34,7 +35,7 @@ import kotlin.time.Clock
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
- * `apiManager.savingAccountsListApi.getSavingsWithAssociations(...)` `?associations=`
+ * `selfSavingsAccountsService.getSavingsWithAssociations(...)` `?associations=`
  * value. Same endpoint as the LEDGER `history` store — we consume the response as
  * `SavingAccountDetail` here (via `toSavingDetail()`) instead of stripping to
  * `List<Transaction>`, so the two stores share one API call in independent code
@@ -109,13 +110,13 @@ private const val ASSOC_TRANSACTIONS = "transactions"
 @StoreProvider(id = "accountDetail")
 @CacheKey(fn = "of", key = "wallet_saving_account_details-{accountId}", params = ["accountId:Long"])
 fun provideAccountDetailStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfSavingsAccountsService: SavingsAccountsService,
     dao: SavingAccountDetailDao,
 ): Store<AccountDetailKey, SavingAccountDetail> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: AccountDetailKey ->
         // Ktorfit returns Flow<SavingsWithAssociationsEntity> for
         // getSavingsWithAssociations — take the first (and only) emission.
-        val response: SavingsWithAssociationsEntity = apiManager.savingAccountsListApi
+        val response: SavingsWithAssociationsEntity = selfSavingsAccountsService
             .getSavingsWithAssociations(key.accountId, ASSOC_TRANSACTIONS)
             .first()
         response.toSavingAccountDetail()

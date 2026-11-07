@@ -35,12 +35,20 @@ object AppUrlTypes {
     /** `main` — REST access point. */
     val MAIN: UrlType = UrlType.MAIN
 
+    /** `selfservice` — REST access point. */
+    val SELFSERVICE: UrlType = UrlType("SELFSERVICE")
+
+    /** `interbank` — REST access point. */
+    val INTERBANK: UrlType = UrlType("INTERBANK")
+
     /** `lwmswhoxvvoagzkqxiyd` — Supabase access point. */
     val LWMSWHOXVVOAGZKQXIYD: UrlType = UrlType("LWMSWHOXVVOAGZKQXIYD")
 
     /** Every declared endpoint type, in app-profile order. */
     val all: List<UrlType> = listOf(
         MAIN,
+        SELFSERVICE,
+        INTERBANK,
         LWMSWHOXVVOAGZKQXIYD,
     )
     // syncForkConfig:url-types:end

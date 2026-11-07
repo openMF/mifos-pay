@@ -25,7 +25,7 @@ import kpt.core.common.ScreenState
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.NotificationRepository
 import kpt.core.model.notification.Notification
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.NotificationService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -36,7 +36,7 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [NotificationRepository] backed by the notification API. */
 @RepositoryBinding(binds = NotificationRepository::class)
 class NotificationRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val notificationService: NotificationService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.Notification) private val notificationStore: Store<NotificationKey, List<Notification>>?,
@@ -44,7 +44,7 @@ class NotificationRepositoryImpl(
     private val fetchedAtRepository: FetchedAtRepository?,
 ) : NotificationRepository {
     override fun fetchNotifications(): Flow<ScreenState<List<Notification>>> {
-        return apiManager.notificationApi
+        return notificationService
             .fetchNotifications(true)
             .map { it.pageItems }
             .asScreenStateFlow(isEmpty = { it.isEmpty() })

@@ -24,11 +24,11 @@ import kpt.core.model.interbank.InterBankPartyInfoRequest
 import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.model.interbank.InterBankTransferRequest
 import kpt.core.model.interbank.InterBankTransferResponse
-import kpt.core.network.InterBankApiManager
+import kpt.core.network.main.services.InterBankService
 /** Default [InterBankRepository] backed by the inter-bank API. */
 @RepositoryBinding(binds = InterBankRepository::class)
 class InterBankRepositoryImpl(
-    private val apiManager: InterBankApiManager,
+    private val interBankService: InterBankService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : InterBankRepository {
 
@@ -41,7 +41,7 @@ class InterBankRepositoryImpl(
             currencyCode = currencyCode,
             partyIdType = "MSISDN",
         )
-        apiManager.interBankApi.fetchParticipant(request)
+        interBankService.fetchParticipant(request)
     }
 
     override suspend fun fetchPartyInfo(
@@ -55,7 +55,7 @@ class InterBankRepositoryImpl(
             ownerFspId = ownerFspId,
             partyIdType = "MSISDN",
         )
-        apiManager.interBankApi.fetchPartyInfo(request)
+        interBankService.fetchPartyInfo(request)
     }
 
     override fun findParticipant(
@@ -77,6 +77,6 @@ class InterBankRepositoryImpl(
     override suspend fun interBankMakeTransfer(
         request: InterBankTransferRequest,
     ): InterBankTransferResponse = withContext(ioDispatcher) {
-        apiManager.interBankApi.interBankMakeTransfer(request)
+        interBankService.interBankMakeTransfer(request)
     }
 }

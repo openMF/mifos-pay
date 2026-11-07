@@ -17,6 +17,7 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillStatus
 import kpt.core.model.autopay.RecurrencePattern
@@ -24,6 +25,7 @@ import kpt.core.model.autopay.RecurrencePattern
  * TODO: Update endpoint paths when backend APIs are finalized, also use
  * Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
  */
+@ApiBinding("main")
 interface BillService {
     /** Fetches all bills of a client. */
     @GET("bills")

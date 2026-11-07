@@ -20,9 +20,11 @@ import de.jensklingenberg.ktorfit.http.Path
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.http.content.PartData
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.noncore.Document
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for documents. */
+@ApiBinding("main")
 interface DocumentService {
     /** Fetches the documents of an entity. */
     @GET("{entityType}/{entityId}/" + ApiEndPoints.DOCUMENTS)

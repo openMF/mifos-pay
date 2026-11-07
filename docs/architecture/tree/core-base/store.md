@@ -2,15 +2,15 @@
 
 > **Layer:** core-base — framework-shared; generators CONSUME, never write
 > **Corpus surface:** `CORE_BASE_STORE.md`
-> **Measured:** 112 Kotlin files, 51 test files
+> **Measured:** 113 Kotlin files, 51 test files
 
-**Defines annotations:** `@CacheKey`, `@ExperimentalScreenDataStreamTestingApi`, `@StoreProvider`
+**Defines annotations:** `@CacheKey`, `@ExperimentalScreenDataStreamTestingApi`, `@FromQualifier`, `@StoreProvider`
 
 **Consumes contracts:** `@ExperimentalScreenDataStreamTestingApi`
 
 ## Principal types
 
-`BatchResult`, `BatchSubmitHandler`, `BatchSubmitMode`, `BlockReason`, `CacheKey`, `CombinedState`, `CommandSpec`, `ConflictEntry`, `ConflictInbox`, `ConflictReport`, `ConflictResolution`, `ConflictStrategy`, `DataOrigin`, `DecisionEngine`  …and 58 more
+`BatchResult`, `BatchSubmitHandler`, `BatchSubmitMode`, `BlockReason`, `CacheKey`, `CombinedState`, `CommandSpec`, `ConflictEntry`, `ConflictInbox`, `ConflictReport`, `ConflictResolution`, `ConflictStrategy`, `DataOrigin`, `DecisionEngine`  …and 59 more
 
 <!-- scaffold:end -->
 
@@ -18,16 +18,37 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core-base/store sha=626b01f91a22231152882d91a1ffd8ae92b66071 -->
+<!-- api-docs:begin module=core-base/store sha=63039f6adaee1b33c9a1a7cc67efb343eb76f493 -->
 ## API reference
 
-_Generated from `core-base/store` at tree `626b01f91a22` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core-base/store` at tree `63039f6adaee` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **framework-shared and read-only to generators** (D9). Everything below is
 something a feature CALLS; re-declaring one of these in `core/**` is the duplicate-the-
 framework defect. A change here is a TEMPLATE change and flows upstream as a draft PR
 (RULE-TEMPLATE-MODULE-FIX-UPSTREAM-001), never a local fix.
+
+### `core-base/store/src/commonMain/kotlin/kpt/core/base/store/annotation/FromQualifier.kt`
+
+```kotlin
+annotation class FromQualifier(val name: String)
+```
+Resolves a `@StoreProvider` parameter from a NAMED Koin qualifier rather than by bare type.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:55</code></summary>
+
+```kotlin
+@RepositoryBinding(binds = AccountRepository::class)
+class AccountRepositoryImpl(
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+```
+
+</details>
 
 ### `core-base/store/src/commonMain/kotlin/kpt/core/base/store/annotation/StoreProvider.kt`
 
@@ -2264,5 +2285,5 @@ Why a write did not land, for a FAILED draft. `reasonOf` extracts the server's o
 
 ---
 
-_71 type(s), 126 function(s)/property(ies); 182 carry KDoc at source; 22 authored example(s); 78 live call site(s)._
+_72 type(s), 126 function(s)/property(ies); 183 carry KDoc at source; 22 authored example(s); 79 live call site(s)._
 <!-- api-docs:end -->

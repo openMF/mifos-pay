@@ -11,10 +11,12 @@ package kpt.core.network.main.services
 
 import de.jensklingenberg.ktorfit.http.Body
 import de.jensklingenberg.ktorfit.http.POST
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.authentication.AuthenticationPayload
 import kpt.core.model.network.entity.user.User
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for authentication. */
+@ApiBinding("main", "selfservice")
 interface AuthenticationService {
     /** Authenticates with the given payload and returns the [User]. */
     @POST(ApiEndPoints.AUTHENTICATION)

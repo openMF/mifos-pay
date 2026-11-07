@@ -2,13 +2,13 @@
 
 > **Layer:** core-base — framework-shared; generators CONSUME, never write
 > **Corpus surface:** `CORE_BASE_NETWORK.md`
-> **Measured:** 32 Kotlin files, 0 test files
+> **Measured:** 34 Kotlin files, 1 test files
 
 **Defines annotations:** `@ApiBinding`
 
 ## Principal types
 
-`AccessPoint`, `AccessPointKind`, `AccessPointRegistry`, `ApiBinding`, `AuthHeaderBridge`, `AuthProviders`, `AuthScheme`, `AuthTokenSource`, `DefaultHeaderProvider`, `DynamicBaseUrlConfig`, `DynamicBaseUrlPlugin`, `DynamicLoggableHosts`, `DynamicUrlConfigProvider`, `HeaderSpec`  …and 22 more
+`AccessPoint`, `AccessPointKind`, `AccessPointRegistry`, `ApiBinding`, `AuthHeaderBridge`, `AuthProviders`, `AuthScheme`, `AuthTokenSource`, `CorsRelayAvailability`, `DefaultHeaderProvider`, `DynamicBaseUrlConfig`, `DynamicBaseUrlPlugin`, `DynamicLoggableHosts`, `DynamicUrlConfigProvider`  …and 24 more
 
 <!-- scaffold:end -->
 
@@ -56,10 +56,10 @@ Changing the server usually invalidates the session, so sign out on a change.
 
 Tests: `core/network/src/commonTest/.../config/{NetworkConfigRepositoryTest,NetworkConfigRequestTest,DynamicBaseUrlTest}.kt`.
 
-<!-- api-docs:begin module=core-base/network sha=a7112889dc8d9eabe44ed1b46e3a06857ae7d445 -->
+<!-- api-docs:begin module=core-base/network sha=0ec2d1c3e30381116ed2f75c72de13ead07a88c4 -->
 ## API reference
 
-_Generated from `core-base/network` at tree `a7112889dc8d` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core-base/network` at tree `0ec2d1c3e303` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **framework-shared and read-only to generators** (D9). Everything below is
@@ -74,16 +74,16 @@ enum class AccessPointKind
 ```
 Transport kind of a declared network access point.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:37</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:39</code></summary>
 
 ```kotlin
         AccessPoint(
             id = "main",
             kind = AccessPointKind.REST,
-            baseUrl = "https://api.openmf.org/",
-            loggableHost = "api.openmf.org",
-        ),
-        AccessPoint(
+            baseUrl = "https://mifos-bank-2.mifos.community/",
+            basePath = "fineract-provider/api/v1/",
+            loggableHost = "mifos-bank-2.mifos.community",
+            isMain = true,
 ```
 
 </details>
@@ -93,7 +93,7 @@ data class AccessPoint(
 ```
 One declared network access point — a named endpoint the app talks to.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:34</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:36</code></summary>
 
 ```kotlin
     // `type` defaults to UrlType(id.uppercase()) — value-class-equal to the AppUrlTypes.* constants.
@@ -102,7 +102,7 @@ One declared network access point — a named endpoint the app talks to.
         AccessPoint(
             id = "main",
             kind = AccessPointKind.REST,
-            baseUrl = "https://api.openmf.org/",
+            baseUrl = "https://mifos-bank-2.mifos.community/",
 ```
 
 </details>
@@ -239,16 +239,16 @@ val stagingClient = httpClient {
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:99</code></summary>
+<details><summary>Used in the template — <code>core-base/network/src/commonMain/kotlin/kpt/core/base/network/KtorHttpClient.kt:323</code></summary>
 
 ```kotlin
-                            socketTimeoutMillis = 30_000
-                        }
-                        install(DynamicBaseUrlPlugin) {
-                            multiConfigProvider = configManager
-                            urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
-                        }
-                        install(KtorInterceptor) {
+    // static-URL path is unchanged (no regression).
+    when {
+        multiUrlProvider != null -> install(DynamicBaseUrlPlugin) {
+            multiConfigProvider = multiUrlProvider
+            this.urlType = urlType
+            staticBaseUrl = baseUrl
+        }
 ```
 
 </details>
@@ -257,20 +257,6 @@ val stagingClient = httpClient {
 class DynamicBaseUrlConfig
 ```
 Configuration class for `DynamicBaseUrlPlugin`.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt:34</code></summary>
-
-```kotlin
-) {
-    /** Installs [DynamicBaseUrlPlugin] into a Ktor client. */
-    companion object Plugin : HttpClientPlugin<DynamicBaseUrlConfig, DynamicBaseUrlPlugin> {
-        override val key: AttributeKey<DynamicBaseUrlPlugin> =
-            AttributeKey("DynamicBaseUrlPlugin")
-
-        override fun prepare(block: DynamicBaseUrlConfig.() -> Unit): DynamicBaseUrlPlugin {
-```
-
-</details>
 
 ```kotlin
 class DynamicLoggableHosts(
@@ -290,20 +276,6 @@ val client = httpClient(
         configProvider = myConfigProvider
     }
 }
-```
-
-</details>
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:87</code></summary>
-
-```kotlin
-                            baseUrl = "https://placeholder.local/",
-                            // Dynamic loggable hosts - reads current endpoints from configManager
-                            loggableHosts = DynamicLoggableHosts(configManager),
-                        ),
-                    ).config {
-                        // Fail-fast connect/request timeouts. The corebase default sets
-                        // request+socket to 60s but no connectTimeout; a shorter connect
 ```
 
 </details>
@@ -332,16 +304,16 @@ class MyConfigProvider(
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonTest/kotlin/kpt/core/network/config/DynamicBaseUrlTest.kt:44</code></summary>
 
 ```kotlin
- */
-class DynamicBaseUrlPlugin private constructor(
-    private val configProvider: DynamicUrlConfigProvider?,
-    private val multiConfigProvider: MultiUrlConfigProvider?,
-    private val urlType: MultiUrlConfigProvider.UrlType,
-) {
-    /** Installs [DynamicBaseUrlPlugin] into a Ktor client. */
+            baseUrl = "https://api.example.org/1.0/field/v1/",
+            dynamicUrlProvider = dynamicBase?.let { base ->
+                object : DynamicUrlConfigProvider {
+                    override fun getBaseUrl() = base
+                    override fun getLoggableHosts() = listOf("other.example")
+                }
+            },
 ```
 
 </details>
@@ -408,16 +380,16 @@ data class HeaderSpec(
 ```
 A header an access point sends on every request, declared in `app-profile/app.yaml#network.access_points[].headers[]`. Two kinds, because they have different lifetimes: - **static** (`value` set) — known at build time.
 
-<details><summary>Used in the template — <code>core/network/src/commonTest/kotlin/kpt/core/network/config/NetworkConfigRepositoryTest.kt:40</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:45</code></summary>
 
 ```kotlin
-        isMain = true,
-        headers = listOf(
-            HeaderSpec(name = "X-Tenant-Id", value = "tenant-a"),
-            HeaderSpec(name = "Authorization", runtimeKey = "main.auth"),
+            isMain = true,
+            headers = listOf(
+                HeaderSpec(name = "Fineract-Platform-TenantId", value = "mifos-bank-2"),
+            ),
         ),
-    )
-    private val staging = AccessPoint(
+        AccessPoint(
+            id = "selfservice",
 ```
 
 </details>
@@ -579,16 +551,16 @@ class NetworkConfigRepository(
 ```
 The app's network configs at runtime: every access point app-profile declares, changeable, plus any added at runtime — with one of them MAIN. **Main.** App-profile marks one access point `main: true`.
 
-<details><summary>Used in the template — <code>core/network/src/commonTest/kotlin/kpt/core/network/config/NetworkConfigRepositoryTest.kt:61</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceNetworkConfigBridge.kt:33</code></summary>
 
 ```kotlin
-
-    private fun repo(store: InMemoryNetworkConfigStore = InMemoryNetworkConfigStore()) =
-        NetworkConfigRepository(registry, store)
-
-    @Test
-    fun withNoChangesEveryPointUsesWhatAppProfileDeclares() {
-        val r = repo()
+class InstanceNetworkConfigBridge(
+    private val instances: InstanceConfigManager,
+    private val networkConfigs: NetworkConfigRepository,
+    private val scope: CoroutineScope,
+) {
+    /** Applies the current selection now, then re-applies it on every change. */
+    fun start() {
 ```
 
 </details>
@@ -637,16 +609,35 @@ enum class HttpLogDetail(internal val level: LogLevel)
 ```
 How much of an HTTP exchange may be written to the device log. Ordered least to most revealing.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:54</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:83</code></summary>
 
 ```kotlin
-    /** Network privacy policy — app-profile `network.logging` / `network.web_cors_proxy`. */
+    /** Network privacy policy — app-profile `network.logging` / `network.web_cors`. */
     val policy: NetworkPolicy = NetworkPolicy(
         releaseLogging = HttpLogDetail.NONE,
         debugLogging = HttpLogDetail.BODY,
-        webCorsProxy = "/cors",
-    )
-    // syncForkConfig:access-points:end
+        webCorsProxy = "https://mifos-pay.pages.dev/cors",
+        webCorsMode = kpt.core.base.network.WebCorsMode.RELAY,
+        webCorsAllowlist = listOf(
+```
+
+</details>
+
+```kotlin
+enum class WebCorsMode
+```
+How a WEB build reaches servers that do not answer CORS for the site's origin — `app-profile/app.yaml#network.web_cors.mode`.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:86</code></summary>
+
+```kotlin
+        debugLogging = HttpLogDetail.BODY,
+        webCorsProxy = "https://mifos-pay.pages.dev/cors",
+        webCorsMode = kpt.core.base.network.WebCorsMode.RELAY,
+        webCorsAllowlist = listOf(
+            "mifos-bank-2.mifos.community",
+            "apis.flexcore.mx",
+            "lwmswhoxvvoagzkqxiyd.supabase.co",
 ```
 
 </details>
@@ -654,18 +645,18 @@ How much of an HTTP exchange may be written to the device log. Ordered least to 
 ```kotlin
 data class NetworkPolicy(
 ```
-App-wide network privacy policy — GENERATED from `app-profile/app.yaml#network` (`logging`, `web_cors_proxy`) onto `AppAccessPoints.policy` by `syncForkConfig`.
+App-wide network privacy policy — GENERATED from `app-profile/app.yaml#network` (`logging`, `web_cors`) onto `AppAccessPoints.policy` by `syncForkConfig`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:53</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:82</code></summary>
 
 ```kotlin
 
-    /** Network privacy policy — app-profile `network.logging` / `network.web_cors_proxy`. */
+    /** Network privacy policy — app-profile `network.logging` / `network.web_cors`. */
     val policy: NetworkPolicy = NetworkPolicy(
         releaseLogging = HttpLogDetail.NONE,
         debugLogging = HttpLogDetail.BODY,
-        webCorsProxy = "/cors",
-    )
+        webCorsProxy = "https://mifos-pay.pages.dev/cors",
+        webCorsMode = kpt.core.base.network.WebCorsMode.RELAY,
 ```
 
 </details>
@@ -687,16 +678,15 @@ sealed interface NetworkResult<out D, out E : NetworkError>
 ```
 Represents the result of a network or remote operation, encapsulating either a success or an error.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/NetworkResult.kt:22</code></summary>
+<details><summary>Used in the template — <code>core-base/network/src/commonMain/kotlin/kpt/core/base/network/factory/ResultSuspendConverterFactory.kt:65</code></summary>
 
 ```kotlin
- * @param E The type of error returned on failure, constrained to [NetworkError].
- */
-sealed interface NetworkResult<out D, out E : NetworkError> {
-
-    /**
-     * Represents a successful result.
-     *
+        ktorfit: Ktorfit,
+    ): Converter.SuspendResponseConverter<HttpResponse, *>? {
+        if (typeData.typeInfo.type == NetworkResult::class) {
+            val successType = typeData.typeArgs.first().typeInfo
+            return object :
+                Converter.SuspendResponseConverter<HttpResponse, NetworkResult<Any, NetworkError>> {
 ```
 
 </details>
@@ -747,16 +737,15 @@ if (configClient.isConfigured) {
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt:19</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/lwmswhoxvvoagzkqxiyd/appserverconfig/api/impl/ServerInstanceApiImpl.kt:25</code></summary>
 
 ```kotlin
- */
-class SupabaseApiManager(
-    private val supabaseClient: SupabaseConfigClient,
-) {
-    /** Service for fetching the app configuration (server instances) from Supabase. */
-    val appConfigService by lazy {
-        AppConfigService(supabaseClient.postgrest)
+@ApiBinding("lwmswhoxvvoagzkqxiyd")
+class ServerInstanceApiImpl(
+    private val supabase: SupabaseConfigClient,
+) : ServerInstanceApi {
+
+    override val isConfigured: Boolean get() = supabase.isConfigured
 ```
 
 </details>
@@ -766,7 +755,7 @@ data class SupabaseSpec(
 ```
 A Supabase access point's client config — GENERATED onto `AccessPoint.supabase` by `syncForkConfig` from `app-profile/app.yaml#network.access_points[]`, so a fork configures Supabase in app-profile only.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:46</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt:75</code></summary>
 
 ```kotlin
             baseUrl = "https://lwmswhoxvvoagzkqxiyd.supabase.co",
@@ -785,16 +774,16 @@ interface SupabaseCredentials
 ```
 Supabase URL + client key for one `SupabaseConfigClient`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/SupabaseConfigClient.kt:23</code></summary>
+<details><summary>Used in the template — <code>core-base/network/src/commonMain/kotlin/kpt/core/base/network/SupabaseClientFactory.kt:58</code></summary>
 
 ```kotlin
- */
-class SupabaseConfigClient(
-    private val credentials: SupabaseCredentials,
-    private val logLevel: LogLevel = LogLevel.INFO,
-) {
-    /** Lazily created Supabase client with the Postgrest plugin installed. */
-    val client: SupabaseClient by lazy {
+            ?: registry.byId(id)?.supabase?.publishableKey.orEmpty()
+        val client = SupabaseConfigClient(
+            credentials = object : SupabaseCredentials {
+                override val url: String = url
+                override val publishableKey: String = key
+            },
+            logLevel = logLevel,
 ```
 
 </details>
@@ -851,10 +840,22 @@ fun HttpClientConfig<*>.notifyUnauthorized(accessPointId: String, handler: Unaut
 ```
 Notifies `handler` of a 401 on a request that sent an `Authorization` header. A 401 without one — a mistyped password on the sign-in call itself — is not a rejected session and is ignored.
 
+### `core-base/network/src/commonMain/kotlin/kpt/core/base/network/WebCorsRelay.kt`
+
+```kotlin
+fun corsRelayHostMatches(host: String, pattern: String): Boolean
+```
+True when `host` matches allowlist `pattern`: an exact host (case-insensitive), or `*.example.com`, which matches any subdomain of `example.com` but not `example.com` itself.
+
+```kotlin
+fun resolveCorsRelayBase(relay: String, origin: String): String = if (relay.startsWith("/")) origin + relay else relay
+```
+A relay given as a path (`/cors`) is served by the site itself — resolved against `origin`, the page's origin. An absolute URL (`https://relay.example.com/cors`) is used as-is.
+
 ### `core-base/network/src/commonMain/kotlin/kpt/core/base/network/annotation/ApiBinding.kt`
 
 ```kotlin
-annotation class ApiBinding(val accessPoint: String)
+annotation class ApiBinding(vararg val accessPoints: String)
 ```
 Binds this API type to a declared access point, so its Koin binding is derived rather than written.
 
@@ -863,6 +864,8 @@ Binds this API type to a declared access point, so its Koin binding is derived r
 ```kotlin
 @ApiBinding("coingecko")
 interface CoinGeckoApi { ... }
+@ApiBinding("main", "selfservice")
+interface ClientService { ... }
 ```
 
 </details>
@@ -939,21 +942,7 @@ interface ApiService {
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/factory/ResultSuspendConverterFactory.kt:49</code></summary>
-
-```kotlin
- */
-@Suppress("NestedBlockDepth")
-class ResultSuspendConverterFactory : Converter.Factory {
-
-    /**
-     * Creates a [Converter.SuspendResponseConverter] that wraps an HTTP
-     * response into a [NetworkResult] type.
-```
-
-</details>
-
 ---
 
-_32 type(s), 24 function(s)/property(ies); 56 carry KDoc at source; 11 authored example(s); 31 live call site(s)._
+_33 type(s), 26 function(s)/property(ies); 59 carry KDoc at source; 11 authored example(s); 29 live call site(s)._
 <!-- api-docs:end -->

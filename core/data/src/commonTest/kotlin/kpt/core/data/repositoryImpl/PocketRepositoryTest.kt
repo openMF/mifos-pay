@@ -29,8 +29,8 @@ import kpt.core.model.pocket.AccountStatus
 import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.LinkableAccount
 import kpt.core.model.pocket.PocketAccount
-import kpt.core.network.KtorfitClient
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.PocketService
+import kpt.core.network.main.services.createPocketService
 import kpt.core.store.wallet.linkableaccount.LinkableAccountKey
 import kpt.core.store.wallet.pocket.PocketKey
 import org.mobilenativefoundation.store.store5.Fetcher
@@ -121,7 +121,7 @@ class PocketRepositoryTest {
         pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
         linkableAccountsStore: Store<LinkableAccountKey, List<LinkableAccount>>? = null,
     ) = PocketRepositoryImp(
-        dataManager = fakeSelfServiceApiManager,
+        pocketService = unusedPocketService,
         ioDispatcher = Dispatchers.Default,
         pocketStore = pocketStore,
         linkableAccountsStore = linkableAccountsStore,
@@ -149,17 +149,14 @@ class PocketRepositoryTest {
 }
 
 /**
- * Uses the production manager type required by [PocketRepositoryImp] without making network calls.
- * Its lazily-created services are never touched because these tests exercise read-store wiring.
+ * A real [PocketService] that is never called: these tests exercise the read-store wiring, so no request
+ * leaves the process.
  */
-private val fakeSelfServiceApiManager = SelfServiceApiManager(
-    KtorfitClient(
-        Ktorfit.Builder()
-            .httpClient(HttpClient())
-            .baseUrl("https://example.com/")
-            .build(),
-    ),
-)
+private val unusedPocketService = Ktorfit.Builder()
+    .httpClient(HttpClient())
+    .baseUrl("https://example.com/")
+    .build()
+    .createPocketService()
 
 /** Keeps Store5 network behavior online and deterministic for repository stream tests. */
 private object FakeNetworkMonitor : NetworkMonitor {

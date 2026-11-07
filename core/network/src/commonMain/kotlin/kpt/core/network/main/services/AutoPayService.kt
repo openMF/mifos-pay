@@ -16,6 +16,7 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.autopay.AutoPay
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.AutoPayPayload
@@ -29,6 +30,7 @@ import kpt.core.network.main.utils.ApiEndPoints
 * also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
 */
 
+@ApiBinding("main")
 interface AutoPayService {
 
     /**

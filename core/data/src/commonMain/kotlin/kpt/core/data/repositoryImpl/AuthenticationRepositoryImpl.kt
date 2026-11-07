@@ -17,18 +17,18 @@ import kpt.core.data.mapper.toUserInfo
 import kpt.core.data.repository.AuthenticationRepository
 import kpt.core.model.fork.user.UserInfo
 import kpt.core.model.network.entity.authentication.AuthenticationPayload
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.AuthenticationService
 /** Default [AuthenticationRepository] backed by the authentication API. */
 @RepositoryBinding(binds = AuthenticationRepository::class)
 class AuthenticationRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") private val selfAuthenticationService: AuthenticationService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : AuthenticationRepository {
     override suspend fun authenticate(username: String, password: String): UserInfo {
         val payload = AuthenticationPayload(username, password)
 
         return withContext(ioDispatcher) {
-            apiManager.authenticationApi.authenticate(payload).toUserInfo()
+            selfAuthenticationService.authenticate(payload).toUserInfo()
         }
     }
 }

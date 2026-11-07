@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_NETWORK.md`
-> **Measured:** 84 Kotlin files, 14 test files
+> **Measured:** 60 Kotlin files, 14 test files
 
 ## Codegen contracts owned here
 
@@ -14,7 +14,7 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 ## Principal types
 
-`AccountTransfersService`, `ApiEndPoints`, `AppAccessPoints`, `AppConfigService`, `AppMultiUrlConfigProvider`, `AppUrlTypes`, `AuthenticationService`, `AutoPayService`, `AutoPayStatisticsResponse`, `BaseURL`, `BeneficiaryService`, `BillService`, `BillStatisticsResponse`, `BillerService`  …and 52 more
+`AccountTransfersService`, `ApiEndPoints`, `AppAccessPoints`, `AppMultiUrlConfigProvider`, `AppUrlTypes`, `AuthenticationService`, `AutoPayService`, `AutoPayStatisticsResponse`, `BaseURL`, `BeneficiaryService`, `BillService`, `BillStatisticsResponse`, `BillerService`, `ClientService`  …and 30 more
 
 <!-- scaffold:end -->
 
@@ -22,140 +22,11 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/network sha=602b5c8bb23e6e74eeb5a988140fcd2aa4844b6c -->
+<!-- api-docs:begin module=core/network sha=f7d119e3ce29bb920fcfbb565f3d73aadead7374 -->
 ## API reference
 
-_Generated from `core/network` at tree `602b5c8bb23e` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/network` at tree `f7d119e3ce29` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/FineractApiManager.kt`
-
-```kotlin
-class FineractApiManager(
-```
-Entry point for the Fineract API services; exposes each service created by `KtorfitClient`.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:55</code></summary>
-
-```kotlin
-@RepositoryBinding(binds = AccountRepository::class)
-class AccountRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val selfManager: SelfServiceApiManager,
-    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
-    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
-    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/InterBankApiManager.kt`
-
-```kotlin
-class InterBankApiManager(
-```
-Entry point for the inter-bank API service created by `KtorfitClient`.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:31</code></summary>
-
-```kotlin
-@RepositoryBinding(binds = InterBankRepository::class)
-class InterBankRepositoryImpl(
-    private val apiManager: InterBankApiManager,
-    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
-) : InterBankRepository {
-
-    override suspend fun fetchParticipant(
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt`
-
-```kotlin
-class KtorfitClient(
-```
-Creates and caches the Ktorfit-generated Fineract service implementations from a single `Ktorfit` instance.
-
-<details><summary>Used in the template — <code>core/data/src/commonTest/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryTest.kt:156</code></summary>
-
-```kotlin
- */
-private val fakeSelfServiceApiManager = SelfServiceApiManager(
-    KtorfitClient(
-        Ktorfit.Builder()
-            .httpClient(HttpClient())
-            .baseUrl("https://example.com/")
-            .build(),
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/PocketDataManager.kt`
-
-```kotlin
-interface PocketDataManager
-```
-Provides the network services needed to load a client's pocket accounts.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SelfServiceApiManager.kt:15</code></summary>
-
-```kotlin
-class SelfServiceApiManager(
-    private val ktorfitClient: KtorfitClient,
-) : PocketDataManager {
-    /** Authentication API. */
-    val authenticationApi by lazy { ktorfitClient.authenticationApi }
-
-    override val clientsApi by lazy { ktorfitClient.clientsApi }
-```
-
-</details>
-
-- `val clientsApi: ClientService` — Clients API.
-- `val pocketApi: PocketService` — Pocket accounts API.
-- `val shareAccountApi: ShareAccountService` — Share accounts API.
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/SelfServiceApiManager.kt`
-
-```kotlin
-class SelfServiceApiManager(
-```
-Entry point for the Fineract self-service API services created by `KtorfitClient`.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:56</code></summary>
-
-```kotlin
-class AccountRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val selfManager: SelfServiceApiManager,
-    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
-    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
-    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
-    private val storeNetworkMonitor: StoreNetworkMonitor?,
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt`
-
-```kotlin
-class SupabaseApiManager(
-```
-API manager for Supabase services. Similar to FineractApiManager but for Supabase-based APIs.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/SupabaseInstanceConfigLoader.kt:28</code></summary>
-
-```kotlin
- */
-class SupabaseInstanceConfigLoader(
-    private val supabaseApiManager: SupabaseApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    private val json: Json,
-) : InstanceConfigLoader {
-```
-
-</details>
 
 ### `core/network/src/commonMain/kotlin/kpt/core/network/config/AppAccessPoints.kt`
 
@@ -179,7 +50,7 @@ The per-fork list of network access points this app talks to — REST and Supaba
 </details>
 
 - `val points: List<AccessPoint> = listOf(` — This project's declared access points, in app-profile order.
-- `val policy: NetworkPolicy = NetworkPolicy(` — Network privacy policy — app-profile `network.logging` / `network.web_cors_proxy`.
+- `val policy: NetworkPolicy = NetworkPolicy(` — Network privacy policy — app-profile `network.logging` / `network.web_cors`.
 
 ### `core/network/src/commonMain/kotlin/kpt/core/network/config/AppMultiUrlConfigProvider.kt`
 
@@ -210,6 +81,8 @@ object AppUrlTypes
 Project-level catalogue of named API endpoints for runtime base-URL switching (see `kpt.core.base.network.MultiUrlConfigProvider` / `kpt.core.base.network.DynamicBaseUrlPlugin`).
 
 - `val MAIN: UrlType = UrlType.MAIN` — `main` — REST access point.
+- `val SELFSERVICE: UrlType = UrlType("SELFSERVICE")` — `selfservice` — REST access point.
+- `val INTERBANK: UrlType = UrlType("INTERBANK")` — `interbank` — REST access point.
 - `val LWMSWHOXVVOAGZKQXIYD: UrlType = UrlType("LWMSWHOXVVOAGZKQXIYD")` — `lwmswhoxvvoagzkqxiyd` — Supabase access point.
 - `val all: List<UrlType> = listOf(` — Every declared endpoint type, in app-profile order.
 
@@ -373,30 +246,6 @@ data class RemoteDemoAccountDto(val role: String, val username: String, val pass
 ```
 A PUBLISHED demo sign-in of a public demo instance — public by design, not a credential to protect.
 
-### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceConfigLoader.kt`
-
-```kotlin
-interface InstanceConfigLoader
-```
-Loads the list of available server instances.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/SupabaseInstanceConfigLoader.kt:31</code></summary>
-
-```kotlin
-    private val ioDispatcher: CoroutineDispatcher,
-    private val json: Json,
-) : InstanceConfigLoader {
-
-    override suspend fun fetchInstancesConfig(): InstancesConfig {
-        if (!supabaseApiManager.isConfigured) {
-            return loadFallbackConfig()
-```
-
-</details>
-
-- `suspend fun fetchInstancesConfig(): InstancesConfig` — Fetches the server instances configuration once.
-- `fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>` — Streams the server instances configuration wrapped in a `ScreenState`.
-
 ### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceConfigManager.kt`
 
 ```kotlin
@@ -418,26 +267,38 @@ class LoginViewModel(
 
 </details>
 
-### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/SupabaseInstanceConfigLoader.kt`
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceNetworkConfigBridge.kt`
 
 ```kotlin
-class SupabaseInstanceConfigLoader(
+class InstanceNetworkConfigBridge(
 ```
-Instance config loader that fetches configuration from Supabase. Uses SupabaseApiManager for API interactions.
+Points the three Fineract access points at the server the user picked. mifos-pay's servers are loaded at runtime (Supabase-hosted instances), each with its own host, path and tenant.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:61</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:38</code></summary>
 
 ```kotlin
-
-    single<InstanceConfigLoader> {
-        SupabaseInstanceConfigLoader(
-            supabaseApiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            json = get(),
-        )
+    // The selected server -> the access points' URLs and tenant, before any screen fetches.
+    single(createdAtStart = true) {
+        InstanceNetworkConfigBridge(
+            instances = get(),
+            networkConfigs = get(),
+            scope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
+        ).also { it.start() }
 ```
 
 </details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/ServerInstances.kt`
+
+```kotlin
+fun RemoteServerInstanceDto.toServerInstance(): ServerInstance = ServerInstance(
+```
+One `app_server_config` row as the wallet's `ServerInstance`, its inter-bank list included.
+
+```kotlin
+suspend fun bundledServerInstances(): List<ServerInstance> = runCatching
+```
+The server list shipped in the app (`files/instances_config_default.json`): what the picker offers with no Supabase key, or when the table holds no row for this app. Empty if the file cannot be read.
 
 ### `core/network/src/commonMain/kotlin/kpt/core/network/main/di/LocalModule.kt`
 
@@ -451,7 +312,7 @@ Koin module providing the local asset manager and data source.
 ```kotlin
 val NetworkModule = module
 ```
-Koin module providing the HTTP clients, Ktorfit instances, API managers and service wiring of the network layer.
+The wallet's network wiring that is not an API: how the selected server reaches the access points. The server list itself comes from the template's Supabase point (ServerInstanceApi) through the `serverInstances` store.
 
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/RepositoryModule.kt:39</code></summary>
 
@@ -463,65 +324,6 @@ val DataModule = module {
     // Every repository's Koin binding, GENERATED from `@RepositoryBinding` on the implementation.
     // Emitted into this same package, so this file needs no import and keeps its zero-demo-reference
     // property — which is what lets a template sync blind-copy it. A stripped fork simply generates
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/main/di/Qualifier.kt`
-
-```kotlin
-val SelfClient = named("SelfClient")
-```
-Koin qualifier for the HTTP client targeting the self-service API.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:76</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = SelfClient) {
-        val preferencesRepository = get<ForkPreferencesRepository>()
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-```
-
-</details>
-
-```kotlin
-val BaseClient = named("BaseClient")
-```
-Koin qualifier for the HTTP client targeting the base Fineract API.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:114</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = BaseClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-```
-
-</details>
-
-```kotlin
-val InterBankClient = named("InterBankClient")
-```
-Koin qualifier for the HTTP client targeting the inter-bank API.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:155</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = InterBankClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
 ```
 
 </details>
@@ -573,16 +375,16 @@ interface AccountTransfersService
 ```
 Ktorfit service for account transfers and account transactions.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:55</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:55</code></summary>
 
 ```kotlin
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
-
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
-
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
-
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
+@RepositoryBinding(binds = AccountRepository::class)
+class AccountRepositoryImpl(
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
 ```
 
 </details>
@@ -593,27 +395,6 @@ Ktorfit service for account transfers and account transactions.
 - `suspend fun makeTransfer(` — Makes an account transfer.
 - `fun getAccountTransferTemplate(): Flow<AccountOptionsTemplate>` — Fetches the template for creating an account transfer.
 
-### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/AppConfigService.kt`
-
-```kotlin
-class AppConfigService(
-```
-Service for interacting with app_config table in Supabase.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt:23</code></summary>
-
-```kotlin
-    /** Service for fetching the app configuration (server instances) from Supabase. */
-    val appConfigService by lazy {
-        AppConfigService(supabaseClient.postgrest)
-    }
-
-    /** Whether Supabase credentials are present; without them every call is skipped. */
-    val isConfigured: Boolean get() = supabaseClient.isConfigured
-```
-
-</details>
-
 ### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/AuthenticationService.kt`
 
 ```kotlin
@@ -621,16 +402,16 @@ interface AuthenticationService
 ```
 Ktorfit service for authentication.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AuthenticationRepositoryImpl.kt:24</code></summary>
 
 ```kotlin
-    ktorfit: Ktorfit,
-) {
-    internal val authenticationApi by lazy { ktorfit.createAuthenticationService() }
-
-    internal val clientsApi by lazy { ktorfit.createClientService() }
-
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
+@RepositoryBinding(binds = AuthenticationRepository::class)
+class AuthenticationRepositoryImpl(
+    @FromQualifier("selfservice") private val selfAuthenticationService: AuthenticationService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : AuthenticationRepository {
+    override suspend fun authenticate(username: String, password: String): UserInfo {
+        val payload = AuthenticationPayload(username, password)
 ```
 
 </details>
@@ -644,16 +425,16 @@ interface AutoPayService
 ```
 TODO: Sync with backend team and update service layer according to finalized API contract, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:73</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayHistoryRepositoryImpl.kt:30</code></summary>
 
 ```kotlin
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
+@RepositoryBinding(binds = AutoPayHistoryRepository::class)
+class AutoPayHistoryRepositoryImpl(
+    private val autoPayService: AutoPayService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : AutoPayHistoryRepository {
 
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
-
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
-
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
+    override fun getAutoPayHistory(autoPayId: Long): ScreenStateStream<List<AutoPayHistory>> {
 ```
 
 </details>
@@ -682,16 +463,16 @@ interface BeneficiaryService
 ```
 Ktorfit service for beneficiaries.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:75</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BeneficiaryRepositoryImpl.kt:29</code></summary>
 
 ```kotlin
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
-
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
-
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
-
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
+@RepositoryBinding(binds = BeneficiaryRepository::class)
+class BeneficiaryRepositoryImpl(
+    private val beneficiaryService: BeneficiaryService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : BeneficiaryRepository {
+    override suspend fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>> {
+        return beneficiaryService.beneficiaryList()
 ```
 
 </details>
@@ -709,16 +490,14 @@ interface BillService
 ```
 TODO: Update endpoint paths when backend APIs are finalized, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:83</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:37</code></summary>
 
 ```kotlin
-    internal val billerApi by lazy { ktorfit.createBillerService() }
-
-    internal val billApi by lazy { ktorfit.createBillService() }
-
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
-
-    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
+@DataProvider(qualifier = "kpt.core.data.repository.BillRepository")
+fun provideNetworkBillRepository(
+    billService: BillService,
+    @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
+): BillRepository = BillRepositoryImpl(billService, ioDispatcher)
 ```
 
 </details>
@@ -746,7 +525,7 @@ Network response with aggregate bill figures.
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt:168</code></summary>
 
 ```kotlin
-        return apiManager.billApi
+        return billService
             .getBillStatistics(clientId)
             .map { response: BillStatisticsResponse ->
                 BillStatistics(
@@ -764,16 +543,16 @@ interface BillerService
 ```
 TODO: Update endpoint paths when backend APIs are finalized, also use Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:81</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:30</code></summary>
 
 ```kotlin
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
+@DataProvider(qualifier = "kpt.core.data.repository.BillerRepository")
+fun provideNetworkBillerRepository(
+    billerService: BillerService,
+    @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
+): BillerRepository = BillerRepositoryImpl(billerService, ioDispatcher)
 
-    internal val billerApi by lazy { ktorfit.createBillerService() }
-
-    internal val billApi by lazy { ktorfit.createBillService() }
-
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
+/** The network-backed [BillRepository]; see [provideNetworkBillerRepository] for why it is qualified. */
 ```
 
 </details>
@@ -795,16 +574,16 @@ interface ClientService
 ```
 Ktorfit service for clients.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:43</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:56</code></summary>
 
 ```kotlin
-    internal val authenticationApi by lazy { ktorfit.createAuthenticationService() }
-
-    internal val clientsApi by lazy { ktorfit.createClientService() }
-
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
-
-    internal val searchApi by lazy { ktorfit.createSearchService() }
+class AccountRepositoryImpl(
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
 ```
 
 </details>
@@ -827,16 +606,16 @@ interface DocumentService
 ```
 Ktorfit service for documents.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:49</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/DocumentRepositoryImpl.kt:30</code></summary>
 
 ```kotlin
-    internal val searchApi by lazy { ktorfit.createSearchService() }
-
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
-
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
-
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
+@RepositoryBinding(binds = DocumentRepository::class)
+class DocumentRepositoryImpl(
+    private val documentService: DocumentService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : DocumentRepository {
+    override suspend fun getDocuments(
+        entityType: String,
 ```
 
 </details>
@@ -855,16 +634,16 @@ interface InterBankService
 ```
 Ktorfit service for inter-bank transfers.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:77</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:31</code></summary>
 
 ```kotlin
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
+@RepositoryBinding(binds = InterBankRepository::class)
+class InterBankRepositoryImpl(
+    private val interBankService: InterBankService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : InterBankRepository {
 
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
-
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
-
-    internal val billerApi by lazy { ktorfit.createBillerService() }
+    override suspend fun fetchParticipant(
 ```
 
 </details>
@@ -880,16 +659,16 @@ interface InvoiceService
 ```
 Ktorfit service for invoices.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:61</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InvoiceRepositoryImpl.kt:41</code></summary>
 
 ```kotlin
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
-
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
-
-    internal val userApi by lazy { ktorfit.createUserService() }
-
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
+@RepositoryBinding(binds = InvoiceRepository::class)
+class InvoiceRepositoryImpl(
+    private val invoiceService: InvoiceService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Invoice) private val invoiceStore: Store<InvoiceKey, List<Invoice>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
 ```
 
 </details>
@@ -907,16 +686,16 @@ interface KYCLevel1Service
 ```
 Ktorfit service for KYC level 1 details.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:59</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/KycLevelRepositoryImpl.kt:26</code></summary>
 
 ```kotlin
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
-
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
-
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
-
-    internal val userApi by lazy { ktorfit.createUserService() }
+@RepositoryBinding(binds = KycLevelRepository::class)
+class KycLevelRepositoryImpl(
+    private val kYCLevel1Service: KYCLevel1Service,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : KycLevelRepository {
+    override fun fetchKYCLevel1Details(
+        clientId: Long,
 ```
 
 </details>
@@ -932,16 +711,16 @@ interface NotificationService
 ```
 Ktorfit service for notifications.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:67</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/NotificationRepositoryImpl.kt:39</code></summary>
 
 ```kotlin
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
-
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
-
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
-
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
+@RepositoryBinding(binds = NotificationRepository::class)
+class NotificationRepositoryImpl(
+    private val notificationService: NotificationService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Notification) private val notificationStore: Store<NotificationKey, List<Notification>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
 ```
 
 </details>
@@ -955,16 +734,16 @@ interface OfficeService
 ```
 Ktorfit service for offices.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:79</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/OfficeRepositoryImpl.kt:37</code></summary>
 
 ```kotlin
-    internal val interBankApi by lazy { ktorfit.createInterBankService() }
-
-    internal val officeApi by lazy { ktorfit.createOfficeService() }
-
-    internal val billerApi by lazy { ktorfit.createBillerService() }
-
-    internal val billApi by lazy { ktorfit.createBillService() }
+@RepositoryBinding(binds = OfficeRepository::class)
+class OfficeRepositoryImpl(
+    private val officeService: OfficeService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Offices) private val officesStore: Store<OfficesKey, List<Office>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
 ```
 
 </details>
@@ -978,15 +757,16 @@ interface PocketService
 ```
 Ktorfit service for pocket accounts.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:85</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:48</code></summary>
 
 ```kotlin
-    internal val billApi by lazy { ktorfit.createBillService() }
-
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
-
-    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
-}
+@RepositoryBinding(binds = PocketRepository::class)
+class PocketRepositoryImp(
+    private val pocketService: PocketService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    @FromStore(AppStoreIds.Pocket) private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>?,
+    @FromStore(AppStoreIds.LinkableAccounts)
+    private val linkableAccountsStore: Store<LinkableAccountKey, List<LinkableAccount>>?,
 ```
 
 </details>
@@ -1002,16 +782,16 @@ interface RegistrationService
 ```
 Ktorfit service for user registration.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:45</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RegistrationRepositoryImpl.kt:23</code></summary>
 
 ```kotlin
-    internal val clientsApi by lazy { ktorfit.createClientService() }
-
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
-
-    internal val searchApi by lazy { ktorfit.createSearchService() }
-
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
+@RepositoryBinding(binds = RegistrationRepository::class)
+class RegistrationRepositoryImpl(
+    private val registrationService: RegistrationService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : RegistrationRepository {
+    override suspend fun registerUser(registerPayload: RegisterPayload) {
+        withContext(ioDispatcher) {
 ```
 
 </details>
@@ -1026,16 +806,16 @@ interface RunReportService
 ```
 Ktorfit service for running reports.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:51</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RunReportRepositoryImpl.kt:26</code></summary>
 
 ```kotlin
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
-
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
-
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
-
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
+@RepositoryBinding(binds = RunReportRepository::class)
+class RunReportRepositoryImpl(
+    private val runReportService: RunReportService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : RunReportRepository {
+    override suspend fun getTransactionReceipt(
+        outputType: String,
 ```
 
 </details>
@@ -1049,16 +829,16 @@ interface SavedCardService
 ```
 Ktorfit service for saved cards.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:57</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavedCardRepositoryImpl.kt:41</code></summary>
 
 ```kotlin
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
-
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
-
-    internal val kycLevel1Api by lazy { ktorfit.createKYCLevel1Service() }
-
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
+@RepositoryBinding(binds = SavedCardRepository::class)
+class SavedCardRepositoryImpl(
+    private val savedCardService: SavedCardService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SavedCards) private val savedCardStore: Store<SavedCardKey, List<SavedCard>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
 ```
 
 </details>
@@ -1076,16 +856,16 @@ interface SavingsAccountsService
 ```
 Ktorfit service for savings accounts.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:69</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:66</code></summary>
 
 ```kotlin
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
-
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
-
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
-
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
+@RepositoryBinding(binds = RecentPayeeRepository::class)
+class RecentPayeeRepositoryImpl(
+    @FromQualifier("selfservice") private val selfSavingsAccountsService: SavingsAccountsService,
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    private val recentPayeeDao: RecentPayeeDao?,
 ```
 
 </details>
@@ -1106,16 +886,16 @@ interface SearchService
 ```
 Ktorfit service for searching resources.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:47</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SearchRepositoryImpl.kt:23</code></summary>
 
 ```kotlin
-    internal val registrationAPi by lazy { ktorfit.createRegistrationService() }
-
-    internal val searchApi by lazy { ktorfit.createSearchService() }
-
-    internal val documentApi by lazy { ktorfit.createDocumentService() }
-
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
+@RepositoryBinding(binds = SearchRepository::class)
+class SearchRepositoryImpl(
+    private val searchService: SearchService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : SearchRepository {
+    override suspend fun searchResources(
+        query: String,
 ```
 
 </details>
@@ -1129,13 +909,16 @@ interface ShareAccountService
 ```
 Ktorfit service for share accounts.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:87</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/linkableaccount/LinkableAccountStore.kt:125</code></summary>
 
 ```kotlin
-    internal val pocketApi by lazy { ktorfit.createPocketService() }
-
-    internal val shareAccountApi by lazy { ktorfit.createShareAccountService() }
-}
+fun provideLinkableAccountsStore(
+    @FromQualifier("selfservice") selfClientService: ClientService,
+    shareAccountService: ShareAccountService,
+    dao: LinkableAccountDao,
+    pocketDao: PocketDao,
+): Store<LinkableAccountKey, List<LinkableAccount>> = StoreFactory.createStore(
+    fetcher = Fetcher.of { key: LinkableAccountKey ->
 ```
 
 </details>
@@ -1149,16 +932,16 @@ interface StandingInstructionService
 ```
 Ktorfit service for standing instructions.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:71</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt:43</code></summary>
 
 ```kotlin
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
-
-    internal val standingInstructionApi by lazy { ktorfit.createStandingInstructionService() }
-
-    internal val autoPayApi by lazy { ktorfit.createAutoPayService() }
-
-    internal val beneficiaryApi by lazy { ktorfit.createBeneficiaryService() }
+@RepositoryBinding(binds = StandingInstructionRepository::class)
+class StandingInstructionRepositoryImpl(
+    private val standingInstructionService: StandingInstructionService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.StandingInstruction)
+    private val standingInstructionStore: Store<StandingInstructionKey, List<StandingInstruction>>?,
 ```
 
 </details>
@@ -1177,16 +960,16 @@ interface ThirdPartyTransferService
 ```
 Ktorfit service for third-party transfers.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:65</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ThirdPartyTransferRepositoryImpl.kt:28</code></summary>
 
 ```kotlin
-    internal val userApi by lazy { ktorfit.createUserService() }
-
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
-
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
-
-    internal val savingsAccountsApi by lazy { ktorfit.createSavingsAccountsService() }
+@RepositoryBinding(binds = ThirdPartyTransferRepository::class)
+class ThirdPartyTransferRepositoryImpl(
+    @FromQualifier("selfservice") private val selfThirdPartyTransferService: ThirdPartyTransferService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : ThirdPartyTransferRepository {
+    override suspend fun getTransferTemplate(): AccountOptionsTemplate {
+        return selfThirdPartyTransferService
 ```
 
 </details>
@@ -1201,16 +984,16 @@ interface TwoFactorAuthService
 ```
 Ktorfit service for two-factor authentication.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:53</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/TwoFactorAuthRepositoryImpl.kt:25</code></summary>
 
 ```kotlin
-    internal val runReportApi by lazy { ktorfit.createRunReportService() }
-
-    internal val twoFactorAuthApi by lazy { ktorfit.createTwoFactorAuthService() }
-
-    internal val accountTransfersApi by lazy { ktorfit.createAccountTransfersService() }
-
-    internal val savedCardApi by lazy { ktorfit.createSavedCardService() }
+@RepositoryBinding(binds = TwoFactorAuthRepository::class)
+class TwoFactorAuthRepositoryImpl(
+    private val twoFactorAuthService: TwoFactorAuthService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : TwoFactorAuthRepository {
+    override suspend fun deliveryMethods(): ScreenStateStream<List<DeliveryMethod>> {
+        return twoFactorAuthService.deliveryMethods()
 ```
 
 </details>
@@ -1226,16 +1009,16 @@ interface UserService
 ```
 Ktorfit service for users.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/KtorfitClient.kt:63</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:30</code></summary>
 
 ```kotlin
-    internal val invoiceApi by lazy { ktorfit.createInvoiceService() }
-
-    internal val userApi by lazy { ktorfit.createUserService() }
-
-    internal val thirdPartyTransferApi by lazy { ktorfit.createThirdPartyTransferService() }
-
-    internal val notificationApi by lazy { ktorfit.createNotificationService() }
+@RepositoryBinding(binds = UserRepository::class)
+class UserRepositoryImpl(
+    @FromQualifier("selfservice") private val selfUserService: UserService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : UserRepository {
+    override suspend fun getUsers(): ScreenStateStream<List<UserWithRole>> {
+        return selfUserService.users()
 ```
 
 </details>
@@ -1255,7 +1038,7 @@ object ApiEndPoints
 ```
 Relative endpoint paths of the Fineract APIs used by the services.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/AccountTransfersService.kt:28</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/services/AccountTransfersService.kt:30</code></summary>
 
 ```kotlin
 
@@ -1292,20 +1075,6 @@ class BaseURL(
 ```
 Exposes the base URLs and tenant id of the active server instance from `InstanceConfigManager`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:73</code></summary>
-
-```kotlin
-
-    single {
-        BaseURL(configManager = get())
-    }
-
-    single<KtorfitClient>(qualifier = SelfClient) {
-        val preferencesRepository = get<ForkPreferencesRepository>()
-```
-
-</details>
-
 ### `core/network/src/commonMain/kotlin/kpt/core/network/main/utils/FlowConverterFactory.kt`
 
 ```kotlin
@@ -1313,189 +1082,16 @@ public class FlowConverterFactory : Converter.Factory
 ```
 Factory that enables the use of Flow<T> as return type
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:109</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:46</code></summary>
 
 ```kotlin
-                    },
-                )
-                .converterFactories(FlowConverterFactory())
-                .build(),
-        )
-    }
-```
 
-</details>
+    // The Fineract services return Flow<T>; every REST access point gets this converter.
+    single<Converter.Factory> { FlowConverterFactory() }
 
-### `core/network/src/commonMain/kotlin/kpt/core/network/main/utils/KtorInterceptor.kt`
-
-```kotlin
-class KtorInterceptor(
-```
-Ktor client plugin adding JSON, tenant and Basic auth headers and flagging 401 responses as unauthorized.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:103</code></summary>
-
-```kotlin
-                            urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
-                        }
-                        install(KtorInterceptor) {
-                            getToken = { preferencesRepository.authToken }
-                            this.configManager = configManager
-                        }
-                    },
-```
-
-</details>
-
-```kotlin
-class Config
-```
-Configuration for `KtorInterceptor`.
-
-<details><summary>Used in the template — <code>feature/history/src/commonMain/kotlin/kpt/feature/history/HistoryViewModel.kt:276</code></summary>
-
-```kotlin
-                    htmlContent = html,
-                    fileName = "transaction_history.pdf",
-                    pageConfig = PageConfig(),
-                )
-            } catch (e: PdfError) {
-                sendEvent(HistoryEvent.PdfExportError(message = "Couldn't export PDF: ${e.message}"))
-            }
-```
-
-</details>
-
-```kotlin
-class KtorInterceptorRe(
-```
-Variant of `KtorInterceptor` that reads the auth token from the preferences repository.
-
-```kotlin
-class ConfigRe
-```
-Configuration for `KtorInterceptorRe`.
-
-### `core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt`
-
-```kotlin
-class DynamicBaseUrlPlugin private constructor(
-```
-Ktor plugin that dynamically sets the base URL for each request based on a `DynamicUrlConfigProvider` or `MultiUrlConfigProvider`.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:99</code></summary>
-
-```kotlin
-                            socketTimeoutMillis = 30_000
-                        }
-                        install(DynamicBaseUrlPlugin) {
-                            multiConfigProvider = configManager
-                            urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
-                        }
-                        install(KtorInterceptor) {
-```
-
-</details>
-
-```kotlin
-class DynamicBaseUrlConfig
-```
-Configuration class for `DynamicBaseUrlPlugin`.
-
-<details><summary>Used in the template — <code>core-base/network/src/commonMain/kotlin/kpt/core/base/network/DynamicBaseUrlPlugin.kt:69</code></summary>
-
-```kotlin
-     * needs no per-call wiring.
-     */
-    companion object Plugin : HttpClientPlugin<DynamicBaseUrlConfig, DynamicBaseUrlPlugin> {
-        override val key: AttributeKey<DynamicBaseUrlPlugin> =
-            AttributeKey("DynamicBaseUrlPlugin")
-
-        override fun prepare(block: DynamicBaseUrlConfig.() -> Unit): DynamicBaseUrlPlugin {
-```
-
-</details>
-
-```kotlin
-class DynamicLoggableHosts(
-```
-A dynamic list that provides loggable hosts from a `DynamicUrlConfigProvider`.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:87</code></summary>
-
-```kotlin
-                            baseUrl = "https://placeholder.local/",
-                            // Dynamic loggable hosts - reads current endpoints from configManager
-                            loggableHosts = DynamicLoggableHosts(configManager),
-                        ),
-                    ).config {
-                        // Fail-fast connect/request timeouts. The corebase default sets
-                        // request+socket to 60s but no connectTimeout; a shorter connect
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicUrlConfigProvider.kt`
-
-```kotlin
-interface DynamicUrlConfigProvider
-```
-Interface for providing dynamic URL configuration at runtime. Implementations of this interface allow the HTTP client to dynamically switch between different server endpoints without recreating the client.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/DynamicBaseUrlPlugin.kt:29</code></summary>
-
-```kotlin
- */
-class DynamicBaseUrlPlugin private constructor(
-    private val configProvider: DynamicUrlConfigProvider?,
-    private val multiConfigProvider: MultiUrlConfigProvider?,
-    private val urlType: MultiUrlConfigProvider.UrlType,
-) {
-    /** Installs [DynamicBaseUrlPlugin] into a Ktor client. */
-```
-
-</details>
-
-- `fun getBaseUrl(): String` — Returns the current base URL to use for API requests.
-- `fun getLoggableHosts(): List<String>` — Returns the list of hostnames that should have HTTP logging enabled.
-
-```kotlin
-interface MultiUrlConfigProvider : DynamicUrlConfigProvider
-```
-Extension of `DynamicUrlConfigProvider` for applications with multiple URL types (e.g., main API, self-service API, interbank API).
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/AppMultiUrlConfigProvider.kt:29</code></summary>
-
-```kotlin
-class AppMultiUrlConfigProvider(
-    private val registry: AccessPointRegistry,
-) : MultiUrlConfigProvider {
-
-    override fun getBaseUrl(type: UrlType): String =
-        registry.restBaseUrl(type)
-            ?: registry.restBaseUrl(UrlType.MAIN)
-```
-
-</details>
-
-- `fun getBaseUrl(type: UrlType): String` — Returns the base URL for the specified URL type.
-
-### `core/network/src/commonMain/kotlin/org/mifos/corebase/network/KtorHttpClient.kt`
-
-```kotlin
-expect fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient
-```
-Creates a platform-specific `HttpClient` configured by `config`.
-
-```kotlin
-fun setupDefaultHttpClient(
-```
-Provides a default `HttpClientConfig` setup for use with a Ktor-based HTTP client.
-
-<details><summary>Example</summary>
-
-```kotlin
-val client = httpClient(setupDefaultHttpClient(baseUrl = "https://api.example.com"))
+    // A 401 on a signed-in request ends the session (the app shows its re-login dialog).
+    single<UnauthorizedHandler> { UnauthorizedHandler { GlobalAuthManager.markUnauthorized() } }
+}
 ```
 
 </details>
@@ -1520,103 +1116,7 @@ Represents standardized error types for remote or network operations. This enum 
 
 </details>
 
-### `core/network/src/commonMain/kotlin/org/mifos/corebase/network/NetworkResult.kt`
-
-```kotlin
-sealed interface NetworkResult<out D, out E : NetworkError>
-```
-Represents the result of a network or remote operation, encapsulating either a success or an error.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/org/mifos/corebase/network/factory/ResultSuspendConverterFactory.kt:64</code></summary>
-
-```kotlin
-        ktorfit: Ktorfit,
-    ): Converter.SuspendResponseConverter<HttpResponse, *>? {
-        if (typeData.typeInfo.type == NetworkResult::class) {
-            val successType = typeData.typeArgs.first().typeInfo
-            return object :
-                Converter.SuspendResponseConverter<HttpResponse, NetworkResult<Any, NetworkError>> {
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/org/mifos/corebase/network/SupabaseConfigClient.kt`
-
-```kotlin
-class SupabaseConfigClient(
-```
-Generic Supabase client wrapper for configuration/data fetching. Projects provide their own credentials implementation.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/SupabaseApiManager.kt:19</code></summary>
-
-```kotlin
- */
-class SupabaseApiManager(
-    private val supabaseClient: SupabaseConfigClient,
-) {
-    /** Service for fetching the app configuration (server instances) from Supabase. */
-    val appConfigService by lazy {
-        AppConfigService(supabaseClient.postgrest)
-```
-
-</details>
-
-```kotlin
-interface SupabaseCredentials
-```
-Interface for providing Supabase credentials. Projects implement this with their own credential sources.
-
-<details><summary>Used in the template — <code>core-base/network/src/commonMain/kotlin/kpt/core/base/network/SupabaseClientFactory.kt:58</code></summary>
-
-```kotlin
-            ?: registry.byId(id)?.supabase?.publishableKey.orEmpty()
-        val client = SupabaseConfigClient(
-            credentials = object : SupabaseCredentials {
-                override val url: String = url
-                override val publishableKey: String = key
-            },
-            logLevel = logLevel,
-```
-
-</details>
-
-- `val url: String` — Supabase project URL.
-- `val anonKey: String` — Supabase anonymous API key.
-- `val isConfigured: Boolean` — Whether the credentials are configured.
-
-### `core/network/src/commonMain/kotlin/org/mifos/corebase/network/factory/ResultSuspendConverterFactory.kt`
-
-```kotlin
-class ResultSuspendConverterFactory : Converter.Factory
-```
-A custom `Converter.Factory` for Ktorfit that provides a suspend response converter which wraps successful or error HTTP responses into a sealed `NetworkResult` type.
-
-<details><summary>Example</summary>
-
-```kotlin
-interface ApiService {
-    @GET("users")
-    suspend fun getUsers(): Result<List<User>, RemoteError>
-}
-```
-
-</details>
-
-<details><summary>Used in the template — <code>core-base/network/src/commonMain/kotlin/kpt/core/base/network/factory/ResultSuspendConverterFactory.kt:50</code></summary>
-
-```kotlin
- */
-@Suppress("NestedBlockDepth")
-class ResultSuspendConverterFactory : Converter.Factory {
-
-    /**
-     * Creates a [Converter.SuspendResponseConverter] that wraps an HTTP
-     * response into a [NetworkResult] type.
-```
-
-</details>
-
 ---
 
-_63 type(s), 159 function(s)/property(ies); 219 carry KDoc at source; 4 authored example(s); 62 live call site(s)._
+_42 type(s), 147 function(s)/property(ies); 186 carry KDoc at source; 2 authored example(s); 39 live call site(s)._
 <!-- api-docs:end -->

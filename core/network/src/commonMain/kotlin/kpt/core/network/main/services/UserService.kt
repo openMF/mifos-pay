@@ -16,6 +16,7 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.CommonResponse
 import kpt.core.model.network.GenericResponse
 import kpt.core.model.network.entity.UserWithRole
@@ -24,6 +25,7 @@ import kpt.core.model.network.entity.user.UpdateUserEntityPassword
 import kpt.core.model.network.entity.user.UpdateUserPasswordResponse
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for users. */
+@ApiBinding("main", "selfservice")
 interface UserService {
     /** Fetches all users with their roles. */
     @GET(ApiEndPoints.USER)

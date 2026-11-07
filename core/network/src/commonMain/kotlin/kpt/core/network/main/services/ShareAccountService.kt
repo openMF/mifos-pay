@@ -13,9 +13,11 @@ import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.shareAccount.ShareWithAssociationsResponseDto
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for share accounts. */
+@ApiBinding("selfservice")
 interface ShareAccountService {
 
     /** Fetches share account details. */

@@ -18,7 +18,7 @@ import kpt.core.database.wallet.invoice.InvoiceDao
 import kpt.core.database.wallet.invoice.toDomain
 import kpt.core.database.wallet.invoice.toEntity
 import kpt.core.model.datatables.invoice.Invoice
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.InvoiceService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -83,12 +83,12 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "invoice")
 @CacheKey(fn = "of", key = "wallet_invoices-{clientId}", params = ["clientId:Long"])
 fun provideInvoiceStore(
-    apiManager: FineractApiManager,
+    invoiceService: InvoiceService,
     dao: InvoiceDao,
 ): Store<InvoiceKey, List<Invoice>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: InvoiceKey ->
         // Ktorfit returns Flow<List<Invoice>> — take the first (and only) emission.
-        apiManager.invoiceApi.getInvoices(key.clientId).first()
+        invoiceService.getInvoices(key.clientId).first()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: InvoiceKey ->

@@ -12,6 +12,7 @@ package kpt.core.store.wallet.pocket
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
 import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.pocket.PocketDao
@@ -28,7 +29,9 @@ import kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto
 import kpt.core.model.pocket.AccountStatus
 import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.PocketAccount
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.ClientService
+import kpt.core.network.main.services.PocketService
+import kpt.core.network.main.services.ShareAccountService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -132,7 +135,9 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @CacheKey(fn = "linked", key = "wallet_pockets_linked-{clientId}", params = ["clientId:Long"])
 @CacheKey(fn = "detailed", key = "wallet_pockets_detailed-{clientId}", params = ["clientId:Long"])
 fun providePocketStore(
-    apiManager: SelfServiceApiManager,
+    pocketService: PocketService,
+    @FromQualifier("selfservice") selfClientService: ClientService,
+    shareAccountService: ShareAccountService,
     dao: PocketDao,
 ): Store<PocketKey, List<DetailedPocketAccount>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: PocketKey ->
@@ -160,7 +165,7 @@ fun providePocketStore(
                         )
                     },
                 )
-                apiManager.pocketApi.linkAccounts(request = request)
+                pocketService.linkAccounts(request = request)
                 pendingLinks.forEach {
                     dao.upsert(it.copy(syncStatus = "SYNCED"))
                 }
@@ -170,7 +175,7 @@ fun providePocketStore(
                 val serverIds = pendingDelinks.filter { it.id > 0 }.map { it.id }
                 if (serverIds.isNotEmpty()) {
                     val request = PocketDelinkRequest(serverIds)
-                    apiManager.pocketApi.delinkAccounts(request = request)
+                    pocketService.delinkAccounts(request = request)
                     pendingDelinks.forEach {
                         dao.deleteById(it.id, key.clientId)
                     }
@@ -182,20 +187,20 @@ fun providePocketStore(
         }
 
         // Step 1 — basic pockets (session-scoped on the server side).
-        val basicPockets: List<PocketAccount> = apiManager.pocketApi
+        val basicPockets: List<PocketAccount> = pocketService
             .getPocketAccounts()
             .toDomainList()
 
         // Step 2 — client accounts (per-client) for balance/product/status
         // resolution. Same suspend call the pre-store `syncPockets` used.
-        val clientAccounts: ClientAccountsEntity = apiManager.clientsApi
+        val clientAccounts: ClientAccountsEntity = selfClientService
             .getClientAccounts(key.clientId)
 
         // Step 3 — enrich each pocket. SHARE pockets fan out an extra
         // getShareAccountDetails call. The addPocketDetails() helper mirrors
         // the pre-store `addAccountDetails` verbatim — try/catch on share
         // fetches, fall back to the client-accounts row on failure.
-        basicPockets.map { pocket -> addPocketDetails(pocket, clientAccounts, apiManager) }
+        basicPockets.map { pocket -> addPocketDetails(pocket, clientAccounts, shareAccountService) }
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: PocketKey ->
@@ -282,7 +287,7 @@ private fun ShareStatusResponseDto.toAccountStatus(): AccountStatus = when {
 private suspend fun addPocketDetails(
     pocket: PocketAccount,
     clientAccounts: ClientAccountsEntity,
-    apiManager: SelfServiceApiManager,
+    shareAccountService: ShareAccountService,
 ): DetailedPocketAccount = when (pocket.accountType) {
     AccountType.LOAN -> {
         val detail = clientAccounts.loanAccounts.find { it.id == pocket.accountId }
@@ -319,7 +324,7 @@ private suspend fun addPocketDetails(
         var accountStatus: AccountStatus?
 
         try {
-            val shareAccountDetails = apiManager.shareAccountApi
+            val shareAccountDetails = shareAccountService
                 .getShareAccountDetails(pocket.accountId).first()
             productName = shareAccountDetails.productName
             currencyCode = shareAccountDetails.currency?.code

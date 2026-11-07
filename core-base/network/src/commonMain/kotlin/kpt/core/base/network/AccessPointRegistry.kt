@@ -31,7 +31,8 @@ enum class AccessPointKind {
  * @param kind [AccessPointKind.REST] (Ktor/Ktorfit) or [AccessPointKind.SUPABASE] (supabase-kt).
  * @param baseUrl the resolved base URL (REST) or the Supabase project URL.
  * @param loggableHost the host enabled for HTTP logging on this access point.
- * @param proxiedHost host routed through the platform proxy (Ktor's DynamicBaseUrlPlugin); null = none.
+ * @param proxiedHost a host a web build routes through the CORS relay (`proxied_host`). Redundant in relay
+ *   mode, where every declared point's host is already on [NetworkPolicy.webCorsAllowlist]; kept for compat.
  * @param type [UrlType] key for dynamic base-URL switching; defaults to the id upper-cased.
  */
 data class AccessPoint(

@@ -38,8 +38,8 @@ import kpt.core.model.account.AccountTransferPayload
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.model.search.AccountResult
-import kpt.core.network.FineractApiManager
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.AccountTransfersService
+import kpt.core.network.main.services.ClientService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -52,8 +52,8 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [AccountRepository] backed by the network data sources. */
 @RepositoryBinding(binds = AccountRepository::class)
 class AccountRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val selfManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
@@ -76,7 +76,7 @@ class AccountRepositoryImpl(
         accountId: Long,
         transactionId: Long,
     ): Flow<ScreenState<Transaction>> {
-        val dao = transactionDao ?: return selfManager.accountTransfersApi
+        val dao = transactionDao ?: return selfAccountTransfersService
             .getTransaction(accountId, transactionId)
             .map { it.toModel() }
             .asScreenStateFlow()
@@ -87,7 +87,7 @@ class AccountRepositoryImpl(
                 if (cached != null) {
                     flowOf(cached.toDomain()).asScreenStateFlow()
                 } else {
-                    selfManager.accountTransfersApi
+                    selfAccountTransfersService
                         .getTransaction(accountId, transactionId)
                         .map { it.toModel() }
                         .asScreenStateFlow()
@@ -97,21 +97,21 @@ class AccountRepositoryImpl(
     }
 
     override fun getAccountTransfer(transferId: Long): Flow<ScreenState<TransferDetail>> {
-        return selfManager.accountTransfersApi
+        return selfAccountTransfersService
             .getAccountTransfer(transferId.toInt())
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
     }
 
     override fun searchAccounts(query: String): Flow<ScreenState<List<AccountResult>>> {
-        return selfManager.accountTransfersApi
+        return selfAccountTransfersService
             .searchAccounts(query, "savings")
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
     }
 
     override fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>> {
-        return selfManager.clientsApi
+        return selfClientService
             .getAccounts(clientId, Constants.SAVINGS)
             .map { it.toAccount() }
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
@@ -184,7 +184,7 @@ class AccountRepositoryImpl(
 
     override suspend fun makeTransfer(payload: AccountTransferPayload) {
         withContext(ioDispatcher) {
-            selfManager.accountTransfersApi.makeTransfer(payload)
+            selfAccountTransfersService.makeTransfer(payload)
         }
     }
 }

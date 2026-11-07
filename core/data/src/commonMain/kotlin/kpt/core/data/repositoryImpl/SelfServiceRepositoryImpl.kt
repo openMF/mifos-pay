@@ -52,7 +52,11 @@ import kpt.core.model.network.entity.Page
 import kpt.core.model.network.entity.authentication.AuthenticationPayload
 import kpt.core.model.network.entity.user.User
 import kpt.core.model.savingsaccount.Transaction
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.AccountTransfersService
+import kpt.core.network.main.services.AuthenticationService
+import kpt.core.network.main.services.BeneficiaryService
+import kpt.core.network.main.services.ClientService
+import kpt.core.network.main.services.SavingsAccountsService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -65,7 +69,11 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 @OptIn(ExperimentalCoroutinesApi::class)
 @RepositoryBinding(binds = SelfServiceRepository::class)
 class SelfServiceRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") private val selfAuthenticationService: AuthenticationService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
+    @FromQualifier("selfservice") private val selfSavingsAccountsService: SavingsAccountsService,
+    private val beneficiaryService: BeneficiaryService,
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
     @FromQualifier("IO") private val dispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.History) private val historyStore: Store<TransactionKey, List<Transaction>>?,
@@ -76,12 +84,12 @@ class SelfServiceRepositoryImpl(
 ) : SelfServiceRepository {
     override suspend fun loginSelf(payload: AuthenticationPayload): User {
         return withContext(dispatcher) {
-            apiManager.authenticationApi.authenticate(payload)
+            selfAuthenticationService.authenticate(payload)
         }
     }
 
     override fun getSelfClientDetails(clientId: Long): Flow<ScreenState<Client>> {
-        return apiManager.clientsApi
+        return selfClientService
             .getClient(clientId)
             .map { it.toModel() }
             .asScreenStateFlow()
@@ -89,7 +97,7 @@ class SelfServiceRepositoryImpl(
     }
 
     override suspend fun getSelfClientDetails(): Flow<ScreenState<Page<Client>>> {
-        return apiManager.clientsApi.clients()
+        return selfClientService.clients()
             .map { it.toModel() }
             .asScreenStateFlow(isEmpty = { it.pageItems.isEmpty() })
             .flowOn(dispatcher)
@@ -98,7 +106,7 @@ class SelfServiceRepositoryImpl(
     override fun getSelfAccountTransactions(
         accountId: Long,
     ): Flow<List<Transaction>> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
             .map { it.toTransactionList() }
             .flowOn(dispatcher)
@@ -109,7 +117,7 @@ class SelfServiceRepositoryImpl(
         transactionId: Long,
     ): Flow<Transaction> {
         val result = withContext(dispatcher) {
-            apiManager.savingAccountsListApi.getSavingAccountTransaction(
+            selfSavingsAccountsService.getSavingAccountTransaction(
                 accountId,
                 transactionId,
             )
@@ -119,7 +127,7 @@ class SelfServiceRepositoryImpl(
     }
 
     override fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>> {
-        return apiManager.clientsApi
+        return selfClientService
             .getAccounts(clientId, Constants.SAVINGS)
             .map { it.toAccount() }
             .asScreenStateFlow(errorBodyParser = parseFineractError, isEmpty = { it.isEmpty() })
@@ -131,12 +139,12 @@ class SelfServiceRepositoryImpl(
     // [getAccountAndBeneficiaryListScreen] (Phase-5 Batch-4), the sanctioned
     // offline-first path.
     override fun getAccountAndBeneficiaryList(clientId: Long): Flow<ScreenState<AccountContent>> {
-        val accountList = apiManager.clientsApi
+        val accountList = selfClientService
             .getAccounts(clientId, Constants.SAVINGS)
             .map { it.toAccount() }
             .flowOn(dispatcher)
 
-        val beneficiaryList = apiManager.beneficiaryApi
+        val beneficiaryList = beneficiaryService
             .beneficiaryList()
             .flowOn(dispatcher)
 
@@ -151,7 +159,7 @@ class SelfServiceRepositoryImpl(
         clientId: Long,
         limit: Int?,
     ): Flow<ScreenState<Map<Account, List<Transaction>>>> {
-        val accounts = apiManager.clientsApi
+        val accounts = selfClientService
             .getAccounts(clientId, Constants.SAVINGS)
             .map { entity -> entity.savingsAccounts.filter { it.status.active } }
             .map { it.toAccount() }
@@ -172,7 +180,7 @@ class SelfServiceRepositoryImpl(
     override fun getActiveAccounts(
         clientId: Long,
     ): Flow<ScreenState<List<Account>>> {
-        return apiManager.clientsApi
+        return selfClientService
             .getAccounts(clientId, Constants.SAVINGS)
             .map { entity -> entity.savingsAccounts.filter { it.status.active } }
             .map { it.toAccount() }
@@ -183,12 +191,12 @@ class SelfServiceRepositoryImpl(
     override fun getActiveAccountsWithAccountTransferTemplate(
         clientId: Long,
     ): Flow<ScreenState<List<Account>>> {
-        val accountsFlow = apiManager.clientsApi
+        val accountsFlow = selfClientService
             .getAccounts(clientId, Constants.SAVINGS)
             .map { entity -> entity.savingsAccounts.filter { it.status.active } }
             .flowOn(dispatcher)
 
-        val templateFlow = apiManager.accountTransfersApi
+        val templateFlow = selfAccountTransfersService
             .getAccountTransferTemplate()
             .flowOn(dispatcher)
 
@@ -226,7 +234,7 @@ class SelfServiceRepositoryImpl(
     }
 
     override fun getTransactions(accountId: Long, limit: Int?): Flow<ScreenState<List<Transaction>>> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
             .map {
                 if (limit != null) {
@@ -280,7 +288,7 @@ class SelfServiceRepositoryImpl(
     override fun getAccountsTransactions(
         clientId: Long,
     ): Flow<ScreenState<List<Transaction>>> {
-        return apiManager.clientsApi
+        return selfClientService
             .getAccounts(clientId, Constants.SAVINGS)
             .map { it.toAccount() }
             .map { list -> list.filter { it.status.active } }
@@ -297,7 +305,7 @@ class SelfServiceRepositoryImpl(
     }
 
     override fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>> {
-        return apiManager.beneficiaryApi.beneficiaryList()
+        return beneficiaryService.beneficiaryList()
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(dispatcher)
     }
@@ -363,7 +371,7 @@ class SelfServiceRepositoryImpl(
         beneficiaryPayload: BeneficiaryPayload,
     ) {
         withContext(dispatcher) {
-            apiManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
+            beneficiaryService.createBeneficiary(beneficiaryPayload)
         }
     }
 
@@ -372,13 +380,13 @@ class SelfServiceRepositoryImpl(
         payload: BeneficiaryUpdatePayload,
     ) {
         withContext(dispatcher) {
-            apiManager.beneficiaryApi.updateBeneficiary(beneficiaryId, payload)
+            beneficiaryService.updateBeneficiary(beneficiaryId, payload)
         }
     }
 
     override suspend fun deleteBeneficiary(beneficiaryId: Long) {
         withContext(dispatcher) {
-            apiManager.beneficiaryApi.deleteBeneficiary(beneficiaryId)
+            beneficiaryService.deleteBeneficiary(beneficiaryId)
         }
     }
 }

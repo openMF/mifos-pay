@@ -54,8 +54,8 @@ internal class LoanRepositoryImpl(
 /** Default [AccountRepository] backed by the network data sources. */
 @RepositoryBinding(binds = AccountRepository::class)
 class AccountRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val selfManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ```
 
@@ -95,16 +95,16 @@ fun provideLoanOutbox(dao: DraftDao): SubmitOutbox<Loan> =
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:27</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:28</code></summary>
 
 ```kotlin
  * consumers yet; they wait for Fineract's bill-management endpoints.
  */
 @DataProvider(qualifier = "kpt.core.data.repository.BillerRepository")
 fun provideNetworkBillerRepository(
-    apiManager: FineractApiManager,
+    billerService: BillerService,
     @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
-): BillerRepository = BillerRepositoryImpl(apiManager, ioDispatcher)
+): BillerRepository = BillerRepositoryImpl(billerService, ioDispatcher)
 ```
 
 </details>
@@ -114,16 +114,16 @@ annotation class FromQualifier(val name: String)
 ```
 Resolves this parameter from a NAMED qualifier rather than by bare type. The counterpart to `FromStore` for bindings the data layer itself qualifies — chiefly a `SubmitOutbox<T>`, whose erased type is shared by every outbox in the graph.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:57</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:55</code></summary>
 
 ```kotlin
-    private val apiManager: FineractApiManager,
-    private val selfManager: SelfServiceApiManager,
+@RepositoryBinding(binds = AccountRepository::class)
+class AccountRepositoryImpl(
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
-    private val storeNetworkMonitor: StoreNetworkMonitor?,
-    private val fetchedAtRepository: FetchedAtRepository?,
 ```
 
 </details>

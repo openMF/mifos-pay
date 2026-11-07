@@ -16,22 +16,22 @@ import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.data.repository.RegistrationRepository
 import kpt.core.model.network.entity.register.RegisterPayload
 import kpt.core.model.network.entity.register.UserVerify
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.RegistrationService
 /** Default [RegistrationRepository] backed by the registration API. */
 @RepositoryBinding(binds = RegistrationRepository::class)
 class RegistrationRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val registrationService: RegistrationService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : RegistrationRepository {
     override suspend fun registerUser(registerPayload: RegisterPayload) {
         withContext(ioDispatcher) {
-            apiManager.registrationAPi.registerUser(registerPayload)
+            registrationService.registerUser(registerPayload)
         }
     }
 
     override suspend fun verifyUser(userVerify: UserVerify) {
         withContext(ioDispatcher) {
-            apiManager.registrationAPi.verifyUser(userVerify)
+            registrationService.verifyUser(userVerify)
         }
     }
 }

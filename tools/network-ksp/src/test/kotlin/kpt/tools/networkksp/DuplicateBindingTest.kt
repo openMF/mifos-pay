@@ -19,28 +19,58 @@ class DuplicateBindingTest {
     fun manyDifferentTypesOnOneAccessPointAreValid() {
         // A monolith backend: one server, one point, many resource APIs.
         val errors = duplicateBindingErrors(
-            listOf("mifos" to "a.ClientApi", "mifos" to "a.LoanApi", "mifos" to "a.SavingsApi"),
+            listOf(
+                ApiBindingKey("mifos", "a.ClientApi", qualified = false),
+                ApiBindingKey("mifos", "a.LoanApi", qualified = false),
+                ApiBindingKey("mifos", "a.SavingsApi", qualified = false),
+            ),
         )
         assertTrue(errors.isEmpty(), "different types on one point must not conflict: $errors")
     }
 
     @Test
     fun sameTypeTwiceOnOnePointIsAnError() {
-        val errors = duplicateBindingErrors(listOf("mifos" to "a.ClientApi", "mifos" to "a.ClientApi"))
+        val errors = duplicateBindingErrors(
+            listOf(
+                ApiBindingKey("mifos", "a.ClientApi", qualified = false),
+                ApiBindingKey("mifos", "a.ClientApi", qualified = false),
+            ),
+        )
         assertEquals(1, errors.size)
         assertTrue("a.ClientApi" in errors.single() && "2 times" in errors.single(), errors.single())
     }
 
     @Test
-    fun sameTypeOnTwoDifferentPointsIsAnError() {
-        // Keying on (point, type) would miss this: the binding is an unqualified single<T>.
-        val errors = duplicateBindingErrors(listOf("rest" to "a.ClientApi", "backup" to "a.ClientApi"))
+    fun sameTypeUnqualifiedOnTwoPointsIsAnError() {
+        // Two separate annotations each claiming the default (unqualified) binding: one key, two definitions.
+        val errors = duplicateBindingErrors(
+            listOf(
+                ApiBindingKey("rest", "a.ClientApi", qualified = false),
+                ApiBindingKey("backup", "a.ClientApi", qualified = false),
+            ),
+        )
         assertEquals(1, errors.size)
         assertTrue("rest" in errors.single() && "backup" in errors.single(), errors.single())
     }
 
     @Test
+    fun oneTypeOnSeveralPointsViaOneMultiPointBindingIsValid() {
+        // @ApiBinding("main", "selfservice"): the first point is the default, the others are qualified by id.
+        val errors = duplicateBindingErrors(
+            listOf(
+                ApiBindingKey("main", "a.ClientApi", qualified = false),
+                ApiBindingKey("selfservice", "a.ClientApi", qualified = true),
+            ),
+        )
+        assertTrue(errors.isEmpty(), "a qualified extra point is its own Koin key: $errors")
+    }
+
+    @Test
     fun oneBindingPerTypeIsValid() {
-        assertTrue(duplicateBindingErrors(listOf("a" to "x.A", "b" to "x.B")).isEmpty())
+        assertTrue(
+            duplicateBindingErrors(
+                listOf(ApiBindingKey("a", "x.A", qualified = false), ApiBindingKey("b", "x.B", qualified = false)),
+            ).isEmpty(),
+        )
     }
 }

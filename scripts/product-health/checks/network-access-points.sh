@@ -11,6 +11,7 @@
 #   AppAccessPoints.kt `supabase =`  each Supabase point's publishable key (NAP-5 spec · NAP-6 no committed key)
 #   core/network/build.gradle.kts  the BuildKonfig fields (NAP-8 every referenced field is declared)
 #   core/network/<id>/             the per-endpoint package  (NAP-9 exists · NAP-10 supabase id=ref)
+#   cmp-web/src/*Main/resources/relay-allowlist.json  the web CORS relay allowlist (NAP-14)
 #
 # WHY a gate and not just codegen: the generated files are COMMITTED (the build must work on a fresh
 # clone with no Gradle run), so nothing forces them to still match app.yaml. Whoever edits app.yaml
@@ -30,14 +31,17 @@ set -uo pipefail
 
 YAML="${NAP_YAML:-$HEALTH_ROOT/app-profile/app.yaml}"
 NET="${NAP_NET_DIR:-$HEALTH_ROOT/core/network/src/commonMain/kotlin/kpt/core/network}"
+WEB="${NAP_WEB_DIR:-$HEALTH_ROOT/cmp-web/src}"
 
 # A fork that stripped the white-label machinery has nothing to compare. PASS.
 [ -f "$YAML" ] || { echo "no app-profile/app.yaml — nothing to compare (ok)"; exit 0; }
 command -v ruby >/dev/null 2>&1 || { echo "ruby not available — cannot audit access points"; exit 1; }
 
-ruby - "$YAML" "$NET" <<'RUBY'
+ruby - "$YAML" "$NET" "$WEB" <<'RUBY'
 require 'yaml'
-yaml_path, net_dir = ARGV
+require 'json'
+require 'uri'
+yaml_path, net_dir, web_dir = ARGV
 profile = begin
   YAML.respond_to?(:unsafe_load) ? YAML.unsafe_load(File.read(yaml_path)) : YAML.load(File.read(yaml_path))
 rescue StandardError
@@ -159,8 +163,9 @@ Dir.glob(File.join(net_dir, "**", "*.kt")).each do |f|
   rescue StandardError
     next
   end
-  src.scan(/@ApiBinding\(\s*"([^"]+)"\s*\)\s*(?:@[\w.]+(?:\([^\n]*\))?\s*)*(?:public\s+|internal\s+|abstract\s+|open\s+|data\s+)*(?:class|interface|object)\s+(\w+)/m).each do |id, cls|
-    annotated_simple[id] = cls
+  # `@ApiBinding("a")` or a multi-point `@ApiBinding("a", "b")` — one type served by several endpoints.
+  src.scan(/@ApiBinding\(\s*((?:"[^"]+"\s*,?\s*)+)\)\s*(?:@[\w.]+(?:\([^\n]*\))?\s*)*(?:public\s+|internal\s+|abstract\s+|open\s+|data\s+)*(?:class|interface|object)\s+(\w+)/m).each do |ids, cls|
+    ids.scan(/"([^"]+)"/).flatten.each { |id| annotated_simple[id] = cls }
   end
 end
 annotated = annotated_simple.keys
@@ -183,7 +188,8 @@ else
   # (`single<T>` infers T from the factory lambda, so without the explicit type argument every
   # `get<Interface>()` would miss). Matching only the bare form reported that correct binding as
   # MISSING and then as "does not use supabaseApi(...)" — two failures for working code.
-  bound = bind_src.scan(/(?:restApi|supabaseApi)(?:<[^>]+>)?\("([^"]+)"\)/).flatten
+  # A further point of a multi-point binding carries `, qualifier = named("<id>")` after the id.
+  bound = bind_src.scan(/(?:restApi|supabaseApi)(?:<[^>]+>)?\("([^"]+)"[,)]/).flatten
   missing = want_bind.map { |p| p["id"].to_s } - bound
   extra   = bound - points.map { |p| p["id"].to_s }
   fail = bad("❌ NAP-4 @ApiBinding declared but no generated binding: #{missing.join(', ')}\n     → rebuild core/network") if missing.any?
@@ -194,7 +200,7 @@ else
     dsl    = p["type"].to_s.strip.downcase == "supabase" ? "supabaseApi" : "restApi"
     # Regex, not include? — the DSL call may carry an explicit type argument
     # (`supabaseApi<ServerInstanceApi>("project")`) when the API is split interface + impl.
-    unless bind_src =~ /#{Regexp.escape(dsl)}(?:<[^>]+>)?\(#{Regexp.escape(%Q{"#{id}"})}\)/
+    unless bind_src =~ /#{Regexp.escape(dsl)}(?:<[^>]+>)?\(#{Regexp.escape(%Q{"#{id}"})}(?:, qualifier = named\(#{Regexp.escape(%Q{"#{id}"})}\))?\)/
       fail = bad("❌ NAP-4 '#{id}' is #{p['type']} but its binding does not use #{dsl}(...)")
       next
     end
@@ -369,6 +375,45 @@ elsif dsl !~ /defaultHeaders\s*=\s*headerProvider\.headersFor\(/
 elsif dsl !~ /getOrNull<DefaultHeaderProvider>\(\)/
   fail = bad("❌ NAP-11 restApi no longer resolves DefaultHeaderProvider from Koin\n" \
              "     → the seam exists but nothing supplies it")
+end
+
+# ── NAP-14 — the web CORS relay allowlist matches app-profile ────────────────
+# The deployed _worker.js relays ONLY the hosts in relay-allowlist.json, and the app routes through the
+# relay the hosts in AppAccessPoints.policy — both generated from the same app.yaml. A stale JSON is the
+# silent half: the app sends a newly declared host to the relay, the relay answers 403, and the screen
+# shows a network error in production only. Same derivation as syncForkConfig's parseWebCors.
+net = profile["network"] || {}
+cors = net["web_cors"].is_a?(Hash) ? net["web_cors"] : nil
+legacy = net["web_cors_proxy"].to_s.strip
+mode = if cors
+         m = cors["mode"].to_s.strip.downcase
+         m.empty? ? "relay" : m
+       elsif net.key?("web_cors_proxy") && (legacy.empty? || legacy == "none")
+         "direct"  # the retired key's `none`, still honoured until the fork migrates
+       else
+         "relay"
+       end
+want_hosts = []
+if mode == "relay"
+  want_hosts += points.map { |p| (URI.parse(p["base_url"].to_s.strip).host rescue nil) }.compact.map(&:downcase)
+  want_hosts += points.map { |p| p["proxied_host"].to_s.strip.downcase }.reject(&:empty?)
+  want_hosts += Array(cors && cors["hosts"]).map { |h| h.to_s.strip.downcase }
+  want_hosts.uniq!
+end
+Dir.glob(File.join(web_dir, "{js,wasmJs}Main/resources")).sort.each do |dir|
+  f = File.join(dir, "relay-allowlist.json")
+  rel = f.sub(%r{\A.*/cmp-web/}, "cmp-web/")
+  unless File.exist?(f)
+    fail = bad("❌ NAP-14 #{rel} missing — the deployed relay would forward nothing\n     → run `./gradlew syncForkConfig`")
+    next
+  end
+  have = (JSON.parse(File.read(f)) rescue nil)
+  if !have.is_a?(Hash)
+    fail = bad("❌ NAP-14 #{rel} is not valid JSON — run `./gradlew syncForkConfig`")
+  elsif have["mode"] != mode || Array(have["hosts"]) != want_hosts
+    fail = bad("❌ NAP-14 #{rel} stale: mode #{have['mode'].inspect} hosts #{Array(have['hosts']).inspect}\n" \
+               "     want mode #{mode.inspect} hosts #{want_hosts.inspect}\n     → run `./gradlew syncForkConfig`")
+  end
 end
 
 # ── NAP-7 — no hand-rolled wiring ────────────────────────────────────────────

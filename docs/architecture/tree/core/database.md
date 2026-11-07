@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_DATABASE.md`
-> **Measured:** 70 Kotlin files, 8 test files
+> **Measured:** 72 Kotlin files, 8 test files
 
 ## Codegen contracts owned here
 
@@ -16,7 +16,7 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 ## Principal types
 
-`BeneficiaryDao`, `BeneficiaryEntity`, `BillDao`, `BillEntity`, `BillerDao`, `BillerEntity`, `ClientDetailDao`, `ClientDetailEntity`, `DatabaseConfig`, `ForkDatabaseConfig`, `InvoiceDao`, `InvoiceEntity`, `LinkableAccountDao`, `LinkableAccountEntity`  …and 20 more
+`BeneficiaryDao`, `BeneficiaryEntity`, `BillDao`, `BillEntity`, `BillerDao`, `BillerEntity`, `ClientDetailDao`, `ClientDetailEntity`, `DatabaseConfig`, `ForkDatabaseConfig`, `InvoiceDao`, `InvoiceEntity`, `LinkableAccountDao`, `LinkableAccountEntity`  …and 22 more
 
 <!-- scaffold:end -->
 
@@ -24,10 +24,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/database sha=eed7a57ce1f9633f37f0a4fe7de80def4b01e478 -->
+<!-- api-docs:begin module=core/database sha=fb6fdab7ad90d3053770626959a6a060b582cadf -->
 ## API reference
 
-_Generated from `core/database` at tree `eed7a57ce1f9` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/database` at tree `fb6fdab7ad90` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/database/src/commonMain/kotlin/kpt/core/database/config/DatabaseConfig.kt`
@@ -75,7 +75,7 @@ The fork's Room schema version. `owner: fork` — PRESERVED across `/kmp-project
 
 </details>
 
-- `const val VERSION = 10` — The fork's Room schema version — kept equal to `app-profile/migration-ledger.yaml#version` by product-health check LG-5.
+- `const val VERSION = 11` — The fork's Room schema version — kept equal to `app-profile/migration-ledger.yaml#version` by product-health check LG-5.
 
 ### `core/database/src/commonMain/kotlin/kpt/core/database/di/DatabaseModule.kt`
 
@@ -118,6 +118,53 @@ single { MyBackupScheduler(get<AppDatabase>()) }
 
 </details>
 
+### `core/database/src/commonMain/kotlin/kpt/core/database/serverconfig/dao/ServerInstanceDao.kt`
+
+```kotlin
+interface ServerInstanceDao
+```
+Room queries for server instance rows.
+
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/serverconfig/ServerInstancesStore.kt:48</code></summary>
+
+```kotlin
+@StoreProvider(id = "serverInstances", ttl = "12h", logout = false)
+@CacheKey(name = "KEY", key = "serverInstances")
+fun provideServerInstancesStore(api: ServerInstanceApi, dao: ServerInstanceDao): Store<Unit, List<ServerInstance>> =
+    StoreFactory.createStore(
+        fetcher = Fetcher.of { _: Unit ->
+            if (!api.isConfigured) return@of bundledServerInstances()
+            api.fetchInstances(SERVER_INSTANCES_APP_ID).map { it.toServerInstance() }
+```
+
+</details>
+
+- `fun observeAll(): Flow<List<ServerInstanceEntity>>` — Observes the `server_instances` rows, ordered by `position`.
+- `suspend fun insertAll(instances: List<ServerInstanceEntity>)` — Saves `instances`, replacing rows with the same key.
+- `suspend fun deleteAll()` — Deletes every `server_instances` row.
+- `suspend fun replaceAll(instances: List<ServerInstanceEntity>)` — The fetched list REPLACES the cached one: a server removed remotely leaves the picker.
+
+### `core/database/src/commonMain/kotlin/kpt/core/database/serverconfig/entity/ServerInstanceEntity.kt`
+
+```kotlin
+data class ServerInstanceEntity(
+```
+One server the user can pick — the local source of truth for the `serverInstances` store, filled from Supabase `app_server_config` (this app's rows).
+
+<details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/serverconfig/dao/ServerInstanceDao.kt:28</code></summary>
+
+```kotlin
+    /** Observes the `server_instances` rows, ordered by `position`. */
+    @Query("SELECT * FROM server_instances ORDER BY position")
+    fun observeAll(): Flow<List<ServerInstanceEntity>>
+
+    /** Saves `instances`, replacing rows with the same key. */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(instances: List<ServerInstanceEntity>)
+```
+
+</details>
+
 ### `core/database/src/commonMain/kotlin/kpt/core/database/wallet/account/SavingAccountDetailDao.kt`
 
 ```kotlin
@@ -125,11 +172,11 @@ interface SavingAccountDetailDao
 ```
 Data-access object for the `wallet_saving_account_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per account — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/account/AccountDetailStore.kt:113</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/account/AccountDetailStore.kt:114</code></summary>
 
 ```kotlin
 fun provideAccountDetailStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfSavingsAccountsService: SavingsAccountsService,
     dao: SavingAccountDetailDao,
 ): Store<AccountDetailKey, SavingAccountDetail> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: AccountDetailKey ->
@@ -189,12 +236,12 @@ Data-access object for the `wallet_beneficiaries` LEDGER table. ## Access patter
 
 ```kotlin
 fun provideBeneficiaryStore(
-    apiManager: SelfServiceApiManager,
+    beneficiaryService: BeneficiaryService,
     dao: BeneficiaryDao,
 ): Store<BeneficiaryKey, List<Beneficiary>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: BeneficiaryKey ->
         // Ktorfit returns Flow<List<Beneficiary>> — take the first (and only) emission.
-        apiManager.beneficiaryApi.beneficiaryList().first()
+        beneficiaryService.beneficiaryList().first()
 ```
 
 </details>
@@ -374,11 +421,11 @@ interface ClientDetailDao
 ```
 Data-access object for the `wallet_client_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per client — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/client/ClientDetailStore.kt:108</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/client/ClientDetailStore.kt:109</code></summary>
 
 ```kotlin
 fun provideClientDetailStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfClientService: ClientService,
     dao: ClientDetailDao,
 ): Store<ClientDetailKey, Client> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: ClientDetailKey ->
@@ -438,12 +485,12 @@ Data-access object for the `wallet_invoices` LEDGER table. ## Access pattern (GO
 
 ```kotlin
 fun provideInvoiceStore(
-    apiManager: FineractApiManager,
+    invoiceService: InvoiceService,
     dao: InvoiceDao,
 ): Store<InvoiceKey, List<Invoice>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: InvoiceKey ->
         // Ktorfit returns Flow<List<Invoice>> — take the first (and only) emission.
-        apiManager.invoiceApi.getInvoices(key.clientId).first()
+        invoiceService.getInvoices(key.clientId).first()
 ```
 
 </details>
@@ -494,11 +541,11 @@ interface LinkableAccountDao
 ```
 Data-access object for the `wallet_linkable_accounts` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/linkableaccount/LinkableAccountStore.kt:123</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/linkableaccount/LinkableAccountStore.kt:126</code></summary>
 
 ```kotlin
-fun provideLinkableAccountsStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfClientService: ClientService,
+    shareAccountService: ShareAccountService,
     dao: LinkableAccountDao,
     pocketDao: PocketDao,
 ): Store<LinkableAccountKey, List<LinkableAccount>> = StoreFactory.createStore(
@@ -558,7 +605,7 @@ Data-access object for the `wallet_notifications` LEDGER table. ## Access patter
 
 ```kotlin
 fun provideNotificationStore(
-    apiManager: FineractApiManager,
+    notificationService: NotificationService,
     dao: NotificationDao,
 ): Store<NotificationKey, List<Notification>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: NotificationKey ->
@@ -618,12 +665,12 @@ Data-access object for the `wallet_offices` global-reference table. ## Access pa
 
 ```kotlin
 fun provideOfficeStore(
-    apiManager: SelfServiceApiManager,
+    officeService: OfficeService,
     dao: OfficeDao,
 ): Store<OfficesKey, List<Office>> = StoreFactory.createStore(
     fetcher = Fetcher.of { _: OfficesKey ->
         // Ktorfit returns Flow<List<Office>> — take the first (and only) emission.
-        apiManager.officeApi.getOffices().first()
+        officeService.getOffices().first()
 ```
 
 </details>
@@ -748,7 +795,7 @@ interface RecentPayeeDao
 ```
 Data-access object for the `wallet_recent_payees` LOCAL-DERIVED table (GOAL D12 — persist-on-derive variant of the OFFLINE_LOCAL_ONLY archetype).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:68</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:70</code></summary>
 
 ```kotlin
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
@@ -812,12 +859,12 @@ Data-access object for the `wallet_saved_cards` LEDGER table. ## Access pattern 
 
 ```kotlin
 fun provideSavedCardStore(
-    apiManager: FineractApiManager,
+    savedCardService: SavedCardService,
     dao: SavedCardDao,
 ): Store<SavedCardKey, List<SavedCard>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: SavedCardKey ->
         // Ktorfit returns Flow<List<SavedCard>> — take the first (and only) emission.
-        apiManager.savedCardApi.getSavedCards(key.clientId).first()
+        savedCardService.getSavedCards(key.clientId).first()
 ```
 
 </details>
@@ -868,11 +915,11 @@ interface SelfAccountDao
 ```
 Data-access object for the `wallet_self_accounts` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/selfaccounts/SelfAccountsStore.kt:99</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/selfaccounts/SelfAccountsStore.kt:100</code></summary>
 
 ```kotlin
 fun provideSelfAccountsStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfClientService: ClientService,
     dao: SelfAccountDao,
 ): Store<SelfAccountsKey, List<Account>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: SelfAccountsKey ->
@@ -932,7 +979,7 @@ Data-access object for the `wallet_standing_instructions` LEDGER table. ## Acces
 
 ```kotlin
 fun provideStandingInstructionStore(
-    apiManager: FineractApiManager,
+    standingInstructionService: StandingInstructionService,
     dao: StandingInstructionDao,
 ): Store<StandingInstructionKey, List<StandingInstruction>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: StandingInstructionKey ->
@@ -1051,11 +1098,11 @@ interface TransferDetailDao
 ```
 Data-access object for the `wallet_transfer_details` SINGLE-ROW-PER-KEY table. ## Access pattern - **Reads** are reactive `Flow`s per transfer — `observeById`.
 
-<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/transferdetail/TransferDetailStore.kt:83</code></summary>
+<details><summary>Used in the template — <code>core/store/src/commonMain/kotlin/kpt/core/store/wallet/transferdetail/TransferDetailStore.kt:84</code></summary>
 
 ```kotlin
 fun provideTransferDetailStore(
-    selfManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfAccountTransfersService: AccountTransfersService,
     dao: TransferDetailDao,
 ): Store<TransferDetailKey, TransferDetail> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: TransferDetailKey ->
@@ -1105,5 +1152,5 @@ Convert a fetched domain `TransferDetail` into a persistable row.
 
 ---
 
-_34 type(s), 138 function(s)/property(ies); 167 carry KDoc at source; 1 authored example(s); 35 live call site(s)._
+_36 type(s), 142 function(s)/property(ies); 173 carry KDoc at source; 1 authored example(s); 37 live call site(s)._
 <!-- api-docs:end -->

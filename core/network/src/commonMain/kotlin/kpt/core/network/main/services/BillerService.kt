@@ -17,12 +17,14 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.autopay.Biller
 import kpt.core.model.autopay.BillerCategory
 /**
  * TODO: Update endpoint paths when backend APIs are finalized, also use
  * Flow only in get operations where List<T> is returned, do not use Flow for one-shot operations
  */
+@ApiBinding("main")
 interface BillerService {
     /** Fetches all billers. */
     @GET("billers")

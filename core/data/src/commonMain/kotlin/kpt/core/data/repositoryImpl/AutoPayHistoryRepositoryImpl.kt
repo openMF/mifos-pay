@@ -21,18 +21,18 @@ import kpt.core.data.repository.AutoPayHistoryStatistics
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.PaymentStatus
 import kpt.core.model.network.entity.Page
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.AutoPayService
 // TODO: Align repository with final API response/request schema once confirmed by backend
 
 /** Default [AutoPayHistoryRepository]. */
 @RepositoryBinding(binds = AutoPayHistoryRepository::class)
 class AutoPayHistoryRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val autoPayService: AutoPayService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : AutoPayHistoryRepository {
 
     override fun getAutoPayHistory(autoPayId: Long): ScreenStateStream<List<AutoPayHistory>> {
-        return apiManager.autoPayApi.getAutoPayHistory(autoPayId, 100)
+        return autoPayService.getAutoPayHistory(autoPayId, 100)
             .map { page -> page.pageItems }
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
@@ -43,7 +43,7 @@ class AutoPayHistoryRepositoryImpl(
         limit: Int,
         offset: Int,
     ): ScreenStateStream<Page<AutoPayHistory>> {
-        return apiManager.autoPayApi.getAutoPayHistory(autoPayId, limit)
+        return autoPayService.getAutoPayHistory(autoPayId, limit)
             .asScreenStateFlow(isEmpty = { it.pageItems.isEmpty() })
             .flowOn(ioDispatcher)
     }
@@ -53,7 +53,7 @@ class AutoPayHistoryRepositoryImpl(
     }
 
     override fun getHistoryByStatus(status: String): ScreenStateStream<List<AutoPayHistory>> {
-        return apiManager.autoPayApi.getAutoPayHistory(0, 100) // Get all and filter client-side
+        return autoPayService.getAutoPayHistory(0, 100) // Get all and filter client-side
             .map { page ->
                 page.pageItems.filter { it.status?.name == status }
             }
@@ -65,7 +65,7 @@ class AutoPayHistoryRepositoryImpl(
         fromDate: String,
         toDate: String,
     ): ScreenStateStream<List<AutoPayHistory>> {
-        return apiManager.autoPayApi.getAutoPayHistory(0, 100) // Get all and filter client-side
+        return autoPayService.getAutoPayHistory(0, 100) // Get all and filter client-side
             .map { page ->
                 page.pageItems.filter { history ->
                     val transactionDate = history.transactionDate
@@ -77,7 +77,7 @@ class AutoPayHistoryRepositoryImpl(
     }
 
     override fun searchHistory(query: String): ScreenStateStream<List<AutoPayHistory>> {
-        return apiManager.autoPayApi.getAutoPayHistory(0, 100) // Get all and filter client-side
+        return autoPayService.getAutoPayHistory(0, 100) // Get all and filter client-side
             .map { page ->
                 page.pageItems.filter { history ->
                     history.recipientName?.contains(query, ignoreCase = true) == true ||
@@ -89,7 +89,7 @@ class AutoPayHistoryRepositoryImpl(
     }
 
     override fun getHistoryStatistics(autoPayId: Long): ScreenStateStream<AutoPayHistoryStatistics> {
-        return apiManager.autoPayApi.getAutoPayHistory(autoPayId, 100)
+        return autoPayService.getAutoPayHistory(autoPayId, 100)
             .map { page ->
                 val historyList = page.pageItems
 

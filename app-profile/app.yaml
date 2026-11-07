@@ -53,18 +53,50 @@ network:
   # third party sees the traffic. An https:// URL names an external relay instead, which is a
   # third-party processor (declare it in the privacy policy). Omit for none. Hosts without a relay
   # (GitHub Pages) cannot serve `/cors`, so proxied calls fail there and the screen shows its error.
-  web_cors_proxy: /cors
+  # Web builds reach the Fineract servers through the relay on the Cloudflare Pages site (cmp-web
+  # _worker.js): the servers do not answer CORS for a browser origin. The same build is also served from
+  # GitHub Pages, which cannot run the worker, so the relay is named absolutely and that origin is
+  # allowed to use it. `hosts` adds the servers a user can switch to at runtime.
+  web_cors:
+    mode: relay
+    relay: https://mifos-pay.pages.dev/cors
+    hosts: ["*.mifos.community", "*.openmf.org", "apis.flexcore.mx"]
+    allowed_origins: ["https://openmf.github.io"]
   # Declarative access-point topology — every REST + Supabase endpoint the app talks to, in ONE place.
-  # mifos-pay talks to a single Mifos X (Fineract) platform API; the per-flavor BASE_URL above
-  # (demo/prod) is what KMPFlavorsConventionPlugin actually wires into BuildConfig today — this
-  # access_points list is the AppAccessPoints.kt SoT for forks that adopt core/network's
-  # AccessPointRegistry (not yet wired into this fork's core/network, so it's descriptive only).
+  # Apache Fineract serves the same resources on two APIs: the staff API and the customer self-service
+  # API (`/self/`), with different auth. Each is its own access point; an API type served by both lists
+  # both — `@ApiBinding("main", "selfservice")`. The URLs and tenant below are the defaults: the server
+  # the user picks at runtime (Supabase-loaded instances) rewrites all three through
+  # NetworkConfigRepository — see core/network main/config/InstanceNetworkConfigBridge.kt.
   access_points:
-    - id: main
+    - id: main                      # Fineract staff API — the runtime-switchable server
+      owner: fork
       type: rest
-      base_url: https://api.openmf.org/
-      loggable_host: api.openmf.org
-      auth: none                    # mifos-pay sets its own Fineract headers in KtorInterceptor (fork network stack)
+      main: true
+      base_url: https://mifos-bank-2.mifos.community/
+      base_path: fineract-provider/api/v1/
+      loggable_host: mifos-bank-2.mifos.community
+      auth: none                    # the instance bridge supplies this point's Authorization per server
+      headers:
+        - { name: Fineract-Platform-TenantId, value: mifos-bank-2 }
+    - id: selfservice               # Fineract self-service API — the signed-in customer's own data
+      owner: fork
+      type: rest
+      base_url: https://mifos-bank-2.mifos.community/
+      base_path: fineract-provider/api/v1/self/
+      loggable_host: mifos-bank-2.mifos.community
+      auth: basic                   # -> Authorization: Basic <session token>, from the signed-in user
+      headers:
+        - { name: Fineract-Platform-TenantId, value: mifos-bank-2 }
+    - id: interbank                 # inter-bank transfer switch
+      owner: fork
+      type: rest
+      base_url: https://apis.flexcore.mx/
+      base_path: v1.0/vnext2/
+      loggable_host: apis.flexcore.mx
+      auth: none
+      headers:
+        - { name: Fineract-Platform-TenantId, value: mifos-bank-2 }
     - id: lwmswhoxvvoagzkqxiyd
       owner: template
       type: supabase

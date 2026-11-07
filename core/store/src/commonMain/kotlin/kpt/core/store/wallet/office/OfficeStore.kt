@@ -18,7 +18,7 @@ import kpt.core.database.wallet.office.OfficeDao
 import kpt.core.database.wallet.office.toDomain
 import kpt.core.database.wallet.office.toEntity
 import kpt.core.model.office.Office
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.OfficeService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -80,12 +80,12 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "offices")
 @CacheKey(name = "ALL", key = "wallet_offices")
 fun provideOfficeStore(
-    apiManager: SelfServiceApiManager,
+    officeService: OfficeService,
     dao: OfficeDao,
 ): Store<OfficesKey, List<Office>> = StoreFactory.createStore(
     fetcher = Fetcher.of { _: OfficesKey ->
         // Ktorfit returns Flow<List<Office>> — take the first (and only) emission.
-        apiManager.officeApi.getOffices().first()
+        officeService.getOffices().first()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { _: OfficesKey ->

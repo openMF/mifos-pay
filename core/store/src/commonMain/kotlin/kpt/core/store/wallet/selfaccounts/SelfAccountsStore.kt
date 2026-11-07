@@ -12,6 +12,7 @@ package kpt.core.store.wallet.selfaccounts
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
 import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.selfaccounts.SelfAccountDao
@@ -20,7 +21,7 @@ import kpt.core.database.wallet.selfaccounts.toEntity
 import kpt.core.model.account.Account
 import kpt.core.model.network.entity.client.ClientAccountsEntity
 import kpt.core.model.savingsaccount.SavingAccountEntity
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.ClientService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -31,7 +32,7 @@ import kotlin.time.Clock
 private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
- * `apiManager.clientsApi.getAccounts(clientId, "savingsAccounts")` `?fields=`
+ * `selfClientService.getAccounts(clientId, "savingsAccounts")` `?fields=`
  * value — pulls back only the savings-accounts bucket of a client's account
  * envelope. This mirrors `AccountRepositoryImpl.getSelfAccounts`'s
  * `Constants.SAVINGS` argument (kept inlined here because `core/store` cannot
@@ -95,13 +96,13 @@ private const val SAVINGS_FIELDS = "savingsAccounts"
 @StoreProvider(id = "selfAccounts")
 @CacheKey(fn = "of", key = "wallet_self_accounts-{clientId}", params = ["clientId:Long"])
 fun provideSelfAccountsStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfClientService: ClientService,
     dao: SelfAccountDao,
 ): Store<SelfAccountsKey, List<Account>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: SelfAccountsKey ->
         // Ktorfit returns Flow<ClientAccountsEntity> for getAccounts — take the
         // first (and only) emission, then map via the inline mapper below.
-        apiManager.clientsApi
+        selfClientService
             .getAccounts(key.clientId, SAVINGS_FIELDS)
             .first()
             .toAccountsDomain()

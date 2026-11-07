@@ -12,11 +12,13 @@ package kpt.core.network.main.services
 import de.jensklingenberg.ktorfit.http.Body
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.POST
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.TPTResponse
 import kpt.core.model.network.entity.payload.TransferPayload
 import kpt.core.model.network.entity.templates.account.AccountOptionsTemplate
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for third-party transfers. */
+@ApiBinding("main", "selfservice")
 interface ThirdPartyTransferService {
     /** Fetches the account options template for a transfer. */
     @GET(ApiEndPoints.ACCOUNT_TRANSFER + "/template?type=tpt")

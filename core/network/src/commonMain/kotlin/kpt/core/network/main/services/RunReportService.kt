@@ -12,9 +12,11 @@ package kpt.core.network.main.services
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.savingsaccount.TransactionsEntity
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for running reports. */
+@ApiBinding("main")
 interface RunReportService {
     /** Fetches a transaction receipt by running a report. */
     @GET(ApiEndPoints.RUN_REPORT + "/Savings Transaction Receipt")

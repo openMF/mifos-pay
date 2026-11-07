@@ -9,56 +9,16 @@
  */
 package org.mifos.lib.loan.network.di
 
-import de.jensklingenberg.ktorfit.Ktorfit
-import kpt.core.datastore.prefs.ForkPreferencesRepository
-import kpt.core.network.main.config.InstanceConfigManager
-import kpt.core.network.main.utils.FlowConverterFactory
-import kpt.core.network.main.utils.KtorInterceptor
-import org.koin.core.qualifier.named
+import kpt.core.base.network.restApi
 import org.koin.dsl.module
-import org.mifos.corebase.network.DynamicBaseUrlPlugin
-import org.mifos.corebase.network.DynamicLoggableHosts
-import org.mifos.corebase.network.MultiUrlConfigProvider
-import org.mifos.corebase.network.httpClient
-import org.mifos.corebase.network.setupDefaultHttpClient
 import org.mifos.lib.loan.network.LoansService
 import org.mifos.lib.loan.network.createLoansService
+
 /**
- * Koin module providing the `libs/mifos-loans` module's own, self-contained Ktorfit/HttpClient
- * engine and [LoansService]. This mirrors the pattern used for the app's SelfClient in
- * `core/network`'s `NetworkModule`, but is owned entirely by this library so it can remain
- * independently publishable.
+ * Binds [LoansService] to the app's `selfservice` access point (app-profile): the signed-in customer's
+ * Fineract self-service API, with its URL, tenant and `Authorization` supplied by core-base — the same
+ * client every self-service API in the app uses. The library declares no client of its own.
  */
-val LoansClient = named("LoansClient")
-
-/** Koin module binding the loans [Ktorfit] client and [LoansService]. */
 val LoansNetworkModule = module {
-    single<Ktorfit>(qualifier = LoansClient) {
-        val preferencesRepository = get<ForkPreferencesRepository>()
-        val configManager = get<InstanceConfigManager>()
-        Ktorfit.Builder()
-            .httpClient(
-                client = httpClient(
-                    config = setupDefaultHttpClient(
-                        // Use placeholder - actual URL is set dynamically by DynamicBaseUrlPlugin
-                        baseUrl = "https://placeholder.local/",
-                        // Dynamic loggable hosts - reads current endpoints from configManager
-                        loggableHosts = DynamicLoggableHosts(configManager),
-                    ),
-                ).config {
-                    install(DynamicBaseUrlPlugin) {
-                        multiConfigProvider = configManager
-                        urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
-                    }
-                    install(KtorInterceptor) {
-                        getToken = { preferencesRepository.authToken }
-                        this.configManager = configManager
-                    }
-                },
-            )
-            .converterFactories(FlowConverterFactory())
-            .build()
-    }
-
-    single<LoansService> { get<Ktorfit>(LoansClient).createLoansService() }
+    restApi<LoansService>("selfservice") { it.createLoansService() }
 }

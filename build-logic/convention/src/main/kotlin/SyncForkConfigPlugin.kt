@@ -437,6 +437,7 @@ abstract class SyncForkConfigTask : DefaultTask() {
             // registry (incl. each Supabase point's publishable key) and the UrlType vocabulary in one
             // run — the reason a fork only writes the API type.
             regenerateAccessPoints(root, appProfile)
+            regenerateRelayAllowlist(appProfile)
             regenerateUrlTypes(root, appProfile)
             regenerateAppReviewConfig(root, appProfile)
             regenerateAppSecurityConfig(root, appProfile)
@@ -1064,10 +1065,10 @@ abstract class SyncForkConfigTask : DefaultTask() {
 
     /**
      * Emit `AppAccessPoints.policy` — the app-wide network privacy policy — from `network.logging` and
-     * `network.web_cors_proxy`. Every key is optional and absent means the SECURE default (release logs
-     * nothing, no CORS relay), so a fork whose app.yaml predates these keys becomes safer on sync, never
-     * louder. A value that would ship personal data fails the sync instead: release `body` logging, or a
-     * relay that is not https.
+     * `network.web_cors` ([parseWebCors]). Every key is optional: logging defaults to the SECURE choice
+     * (release logs nothing), and web CORS defaults to the site's own same-origin relay `/cors`, which no
+     * third party sees. A value that would ship personal data fails the sync instead: release `body`
+     * logging, or a relay that is neither a same-origin path nor https.
      */
     private fun appendNetworkPolicy(sb: StringBuilder, network: Map<*, *>) {
         val logging = (network["logging"] as? Map<*, *>).orEmpty()
@@ -1092,25 +1093,39 @@ abstract class SyncForkConfigTask : DefaultTask() {
         redact.firstOrNull { !identifier.matches(it) }?.let {
             throw org.gradle.api.GradleException("syncForkConfig: network.logging.redact_query_params entry '$it' is not a query-parameter name.")
         }
-        val proxy = network["web_cors_proxy"]?.toString()?.trim()?.takeIf { it.isNotEmpty() && it != "none" }
-        // A path ("/cors") is a same-origin relay the site serves itself (cmp-web's _worker.js on
-        // Cloudflare Pages), so it is as private as the site; anything else must be https.
-        if (proxy != null && !proxy.startsWith("https://") && !Regex("^/[A-Za-z0-9_-]+$").matches(proxy)) {
-            throw org.gradle.api.GradleException(
-                "syncForkConfig: network.web_cors_proxy '$proxy' must be an https:// URL, a same-origin path like /cors, " +
-                    "or omitted for no relay.",
-            )
-        }
+        val cors = parseWebCors(network)
         fun esc(v: String) = v.replace("\\", "\\\\").replace("\"", "\\\"")
-        sb.append("\n    /** Network privacy policy — app-profile `network.logging` / `network.web_cors_proxy`. */\n")
+        sb.append("\n    /** Network privacy policy — app-profile `network.logging` / `network.web_cors`. */\n")
         sb.append("    val policy: NetworkPolicy = NetworkPolicy(\n")
         sb.append("        releaseLogging = HttpLogDetail.${release.uppercase()},\n")
         sb.append("        debugLogging = HttpLogDetail.${debug.uppercase()},\n")
         if (redact.isNotEmpty()) {
             sb.append("        redactQueryParams = listOf(").append(redact.joinToString(", ") { "\"${esc(it)}\"" }).append("),\n")
         }
-        proxy?.let { sb.append("        webCorsProxy = \"${esc(it)}\",\n") }
+        cors.relay?.let { sb.append("        webCorsProxy = \"${esc(it)}\",\n") }
+        sb.append("        webCorsMode = kpt.core.base.network.WebCorsMode.${cors.mode.uppercase()},\n")
+        if (cors.allowlist.isNotEmpty()) {
+            sb.append("        webCorsAllowlist = listOf(\n")
+            cors.allowlist.forEach { sb.append("            \"${esc(it)}\",\n") }
+            sb.append("        ),\n")
+        }
         sb.append("    )\n")
+    }
+
+    /**
+     * Write `relay-allowlist.json` into both web resource dirs — the hosts the deployed `_worker.js` relays,
+     * the same list [appendNetworkPolicy] gives the app. Written in `direct` mode too (as an empty list), so
+     * a stale file can never keep a relay open. Skipped for a dir that does not exist (no web target).
+     */
+    private fun regenerateRelayAllowlist(appProfile: Map<String, Any?>) {
+        val network = appProfile["network"] as? Map<*, *> ?: return
+        val cors = parseWebCors(network)
+        cors.warnings.forEach { logger.warn("syncForkConfig: $it") }
+        val json = relayAllowlistJson(cors)
+        listOf(jsResourcesDir.get().asFile, wasmJsResourcesDir.get().asFile).filter { it.isDirectory }.forEach {
+            File(it, "relay-allowlist.json").writeText(json)
+        }
+        logger.lifecycle("syncForkConfig: regenerated relay-allowlist.json (mode=${cors.mode}, ${cors.allowlist.size} host(s))")
     }
 
     /** The `network.access_points` list, normalized to maps with a non-blank `id`. Empty when absent. */

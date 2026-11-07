@@ -21,7 +21,7 @@
 # `from`/`to` edge is a contract with every installed device, and renumbering strands them.
 
 # Effective Room schema version. Owned outright by this fork — the template does not contribute to it.
-version: 10
+version: 11
 
 # The template's framework tables as mifos-pay's v1 schema already had them (schemas/1.json:
 # store_bookkeeper, framework_fetched_at, framework_submit_drafts with uniqueKey).
@@ -33,12 +33,17 @@ baseline_units: [framework-fetched-at, framework-submit-drafts, drafts-unique-ke
 # framework_submit_drafts.attemptCount column in ONE schema step (core-base's DraftEntity already carries
 # the column, so a v10 schema without it cannot be produced); the ledger has one unit per row, so the
 # second unit is recorded under folded_units.
+#
+# 10 -> 11 (2026-11-07): added `server_instances` — the server picker's list (Supabase `app_server_config`,
+# this app's rows) as the local source of truth for the `serverInstances` store, as in the field officer
+# app. Purely additive: a plain AutoMigration (no spec).
 migrations:
   - { from: 1, to: 6,  unit: wallet-tables }
   - { from: 6, to: 7,  unit: wallet-linkable-accounts }
   - { from: 7, to: 8,  unit: wallet-transfer-details }
   - { from: 8, to: 9,  unit: wallet-pocket-columns }
   - { from: 9, to: 10, unit: framework-write-conflicts }
+  - { from: 10, to: 11, unit: fork-server-instances }
 
 # Template migration units this fork absorbed into an existing schema step instead of a version of
 # their own: `edge` names the migration that carries the unit's change.

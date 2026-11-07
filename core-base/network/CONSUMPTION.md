@@ -29,6 +29,10 @@
   `CertificatePinConfig.pins` per-hostname (declared in `core-base/security`, consumed here).
 - Framework-owned, don't fork: the per-platform `KtorHttpClient.<platform>.kt` actuals,
   `DynamicBaseUrlPlugin` / `DynamicUrlConfigProvider` (runtime base-URL switching for `AppUrlTypes`).
+- Web CORS: `restClientConfig` installs the web relay for `NetworkPolicy.webCorsHostsFor(ap)` through
+  `NetworkPolicy.activeWebCorsRelay` (`WebCorsRelayPlugin`, exact or `*.` wildcard hosts; nothing in
+  `WebCorsMode.DIRECT`). Configure it in `app-profile/app.yaml#network.web_cors`, never here — see
+  `docs/architecture/tree/core-base/network.md` "Web CORS".
 - Never hardcode a base URL in a fetcher — it always resolves through the `AccessPointRegistry`, so one
   id can back REST or Supabase without call-site changes.
 

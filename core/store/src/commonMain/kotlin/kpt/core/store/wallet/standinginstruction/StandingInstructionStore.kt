@@ -18,7 +18,7 @@ import kpt.core.database.wallet.standinginstruction.StandingInstructionDao
 import kpt.core.database.wallet.standinginstruction.toDomain
 import kpt.core.database.wallet.standinginstruction.toEntity
 import kpt.core.model.standinginstruction.StandingInstruction
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.StandingInstructionService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -86,14 +86,14 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "standingInstruction")
 @CacheKey(fn = "of", key = "wallet_standing_instructions-{clientId}", params = ["clientId:Long"])
 fun provideStandingInstructionStore(
-    apiManager: FineractApiManager,
+    standingInstructionService: StandingInstructionService,
     dao: StandingInstructionDao,
 ): Store<StandingInstructionKey, List<StandingInstruction>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: StandingInstructionKey ->
         // Ktorfit returns Flow<Page<StandingInstruction>> — take the first (and
         // only) emission and strip the Page envelope to List (parity with
         // StandingInstructionRepositoryImpl.getAllStandingInstructions).
-        apiManager.standingInstructionApi
+        standingInstructionService
             .getAllStandingInstructions(key.clientId)
             .first()
             .pageItems

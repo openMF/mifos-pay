@@ -30,7 +30,8 @@ import kpt.core.database.wallet.recentpayee.toDomain
 import kpt.core.database.wallet.recentpayee.toEntity
 import kpt.core.model.account.RecentPayee
 import kpt.core.model.savingsaccount.TransferDetail
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.AccountTransfersService
+import kpt.core.network.main.services.SavingsAccountsService
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
@@ -62,7 +63,8 @@ import kotlin.time.ExperimentalTime
 @OptIn(ExperimentalTime::class)
 @RepositoryBinding(binds = RecentPayeeRepository::class)
 class RecentPayeeRepositoryImpl(
-    private val selfServiceApiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") private val selfSavingsAccountsService: SavingsAccountsService,
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     private val recentPayeeDao: RecentPayeeDao?,
@@ -121,8 +123,8 @@ class RecentPayeeRepositoryImpl(
      * callers apply their own `.take(limit)`.
      */
     private suspend fun deriveRecentPayees(accountId: Long): List<RecentPayee> = withContext(ioDispatcher) {
-        val savingsApi = selfServiceApiManager.savingAccountsListApi
-        val accountTransfersApi = selfServiceApiManager.accountTransfersApi
+        val savingsApi = selfSavingsAccountsService
+        val accountTransfersApi = selfAccountTransfersService
 
         Logger.d { "RecentPayee: Fetching transactions for account $accountId" }
 

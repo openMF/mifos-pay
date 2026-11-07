@@ -11,9 +11,11 @@ package kpt.core.network.main.services
 
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Query
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.SearchedEntity
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for searching resources. */
+@ApiBinding("main")
 interface SearchService {
     /** Searches Fineract resources. */
     @GET(ApiEndPoints.SEARCH)

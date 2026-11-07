@@ -11,6 +11,7 @@ package kpt.core.network.main.services
 
 import de.jensklingenberg.ktorfit.http.Body
 import de.jensklingenberg.ktorfit.http.POST
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.interbank.InterBankParticipantRequest
 import kpt.core.model.interbank.InterBankParticipantResponse
 import kpt.core.model.interbank.InterBankPartyInfoRequest
@@ -18,6 +19,7 @@ import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.model.interbank.InterBankTransferRequest
 import kpt.core.model.interbank.InterBankTransferResponse
 /** Ktorfit service for inter-bank transfers. */
+@ApiBinding("interbank")
 interface InterBankService {
     /** Fetches a participant. */
     @POST("participant")

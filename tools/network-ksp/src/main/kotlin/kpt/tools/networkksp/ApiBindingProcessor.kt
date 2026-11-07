@@ -60,82 +60,120 @@ class ApiBindingProcessor(
             .filterIsInstance<KSClassDeclaration>()
             .toList()
 
-        val bindings = annotated.mapNotNull { decl ->
-            val id = decl.annotations
+        // One binding per (type, access point). `@ApiBinding("main", "selfservice")` is ONE interface
+        // served by several endpoints — a Fineract client API on the admin server and on its
+        // self-service API, say. The FIRST id is the default (unqualified) binding; each further id is
+        // qualified by its own id, so a consumer picks it with `@FromQualifier("<id>")`.
+        val bindings = annotated.flatMap { decl ->
+            val ids = decl.annotations
                 .firstOrNull { it.shortName.asString() == "ApiBinding" }
-                ?.arguments?.firstOrNull { it.name?.asString() == "accessPoint" }
-                ?.value as? String
-            if (id.isNullOrBlank()) {
-                logger.error("network-ksp: @ApiBinding on ${decl.simpleName.asString()} has a blank accessPoint")
-                return@mapNotNull null
+                ?.arguments?.firstOrNull { it.name?.asString() == "accessPoints" }
+                ?.value.let { v -> (v as? List<*>)?.filterIsInstance<String>() ?: listOfNotNull(v as? String) }
+            if (ids.isEmpty() || ids.any(String::isBlank)) {
+                logger.error("network-ksp: @ApiBinding on ${decl.simpleName.asString()} has a blank access point")
+                return@flatMap emptyList()
             }
-            val kind = kinds[id]
-            if (kind == null) {
+            if (ids.toSet().size != ids.size) {
                 logger.error(
-                    "network-ksp: @ApiBinding(\"$id\") on ${decl.simpleName.asString()} names an access point " +
-                        "that app-profile does not declare (declared: ${kinds.keys.joinToString(", ")})",
+                    "network-ksp: @ApiBinding on ${decl.simpleName.asString()} lists an access point twice: $ids",
                 )
-                return@mapNotNull null
+                return@flatMap emptyList()
             }
-            val fqn = decl.qualifiedName?.asString() ?: return@mapNotNull null
-
-            // SUPABASE: bind the INTERFACE, not the concrete class.
-            //
-            // `supabaseApi<T>` is `single<T> { … }` with T inferred from the factory lambda, so
-            // `{ ServerInstanceApiImpl(it) }` would register the IMPL type and `get<ServerInstanceApi>()` would
-            // fail at runtime — after compiling cleanly, which is the worst place to find it. The
-            // annotation stays on the impl (that is what gets constructed); the processor resolves
-            // its single directly-implemented interface and binds that instead.
-            //
-            // Exactly one supertype interface is required: zero means there is no seam to bind
-            // against (the old one-concrete-class shape — still valid, bind the class itself), and
-            // more than one is ambiguous, which is an author error rather than something to guess at.
-            val bound = if (kind == "supabase") {
-                val ifaces = decl.superTypes
-                    .mapNotNull { it.resolve().declaration as? KSClassDeclaration }
-                    .filter { it.classKind == ClassKind.INTERFACE }
-                    .mapNotNull { it.qualifiedName?.asString() }
-                    .toList()
-                when (ifaces.size) {
-                    0 -> fqn
-                    1 -> ifaces.single()
-                    else -> {
-                        logger.error(
-                            "network-ksp: @ApiBinding(\"$id\") on ${decl.simpleName.asString()} implements " +
-                                "${ifaces.size} interfaces (${ifaces.joinToString()}) — cannot decide which to " +
-                                "bind. Give the API type exactly one interface.",
-                        )
-                        return@mapNotNull null
-                    }
-                }
-            } else {
-                fqn
-            }
-            Triple(id, "$fqn|$bound", kind)
+            ids.mapIndexedNotNull { index, id -> bindingFor(decl, id, kinds, qualified = index > 0) }
         }
 
-        duplicateBindingErrors(bindings.map { (id, packed, _) -> id to packed.substringAfter('|') })
+        duplicateBindingErrors(bindings.map { ApiBindingKey(it.id, it.bound, it.qualified) })
             .forEach(logger::error)
 
         // app-profile order, so the generated file reads like the declaration it mirrors — and is
         // stable, which KSP's own symbol order is not.
-        val ordered = bindings.sortedBy { kinds.keys.indexOf(it.first) }
+        val ordered = bindings.sortedWith(compareBy({ kinds.keys.indexOf(it.id) }, { it.impl }))
         write(render(ordered), annotated)
         logger.info("network-ksp: ${ordered.size} api binding(s)")
         return emptyList()
     }
 
-    private fun render(bindings: List<Triple<String, String, String>>): String {
+    /** One generated binding: the API type [impl] (bound as [bound]) on access point [id]. */
+    private data class Binding(
+        val id: String,
+        val impl: String,
+        val bound: String,
+        val kind: String,
+        val qualified: Boolean,
+    )
+
+    /** The binding of [decl] on access point [id], or null (with an error logged) when it cannot be derived. */
+    private fun bindingFor(
+        decl: KSClassDeclaration,
+        id: String,
+        kinds: Map<String, String>,
+        qualified: Boolean,
+    ): Binding? {
+        val kind = kinds[id]
+        val fqn = decl.qualifiedName?.asString()
+        if (kind == null || fqn == null) {
+            if (kind == null) {
+                logger.error(
+                    "network-ksp: @ApiBinding(\"$id\") on ${decl.simpleName.asString()} names an access point " +
+                        "that app-profile does not declare (declared: ${kinds.keys.joinToString(", ")})",
+                )
+            }
+            return null
+        }
+        return boundTypeFor(decl, id, fqn, kind)
+            ?.let { bound -> Binding(id = id, impl = fqn, bound = bound, kind = kind, qualified = qualified) }
+    }
+
+    /**
+     * The type [decl] is bound as on a point of [kind]: itself for REST, its single interface for Supabase.
+     *
+     * SUPABASE binds the INTERFACE, not the concrete class. `supabaseApi<T>` is `single<T> { … }` with T
+     * inferred from the factory lambda, so `{ ServerInstanceApiImpl(it) }` would register the IMPL type and
+     * `get<ServerInstanceApi>()` would fail at runtime — after compiling cleanly, which is the worst place to
+     * find it. The annotation stays on the impl (that is what gets constructed); this resolves its single
+     * directly-implemented interface. Zero interfaces means there is no seam (bind the class itself); more
+     * than one is ambiguous — an author error, logged, null.
+     */
+    private fun boundTypeFor(decl: KSClassDeclaration, id: String, fqn: String, kind: String): String? {
+        if (kind != "supabase") return fqn
+        val ifaces = decl.superTypes
+            .mapNotNull { it.resolve().declaration as? KSClassDeclaration }
+            .filter { it.classKind == ClassKind.INTERFACE }
+            .mapNotNull { it.qualifiedName?.asString() }
+            .toList()
+        return when (ifaces.size) {
+            0 -> fqn
+            1 -> ifaces.single()
+            else -> {
+                logger.error(
+                    "network-ksp: @ApiBinding(\"$id\") on ${decl.simpleName.asString()} implements " +
+                        "${ifaces.size} interfaces (${ifaces.joinToString()}) — cannot decide which to " +
+                        "bind. Give the API type exactly one interface.",
+                )
+                null
+            }
+        }
+    }
+
+    private fun render(bindings: List<Binding>): String {
         val imports = sortedSetOf("org.koin.core.module.Module", "org.koin.dsl.module")
         val lines = StringBuilder()
         var rest = 0
         var supa = 0
-        bindings.forEach { (id, packed, kind) ->
-            val implFqn = packed.substringBefore('|')
-            val boundFqn = packed.substringAfter('|')
-            val fqn = implFqn
+        bindings.forEach { b ->
+            val id = b.id
+            val kind = b.kind
+            val implFqn = b.impl
+            val boundFqn = b.bound
             val pkg = implFqn.substringBeforeLast('.')
             val simple = implFqn.substringAfterLast('.')
+            // A further access point of a multi-point binding is qualified by its own id.
+            val point = if (b.qualified) {
+                imports += "org.koin.core.qualifier.named"
+                "\"$id\", qualifier = named(\"$id\")"
+            } else {
+                "\"$id\""
+            }
             if (kind == "supabase") {
                 imports += implFqn
                 imports += "kpt.core.base.network.supabaseApi"
@@ -144,16 +182,16 @@ class ApiBindingProcessor(
                     // `get<Interface>()` misses.
                     imports += boundFqn
                     val boundSimple = boundFqn.substringAfterLast('.')
-                    lines.append("    supabaseApi<$boundSimple>(\"$id\") { $simple(it) }\n")
+                    lines.append("    supabaseApi<$boundSimple>($point) { $simple(it) }\n")
                 } else {
-                    lines.append("    supabaseApi(\"$id\") { $simple(it) }\n")
+                    lines.append("    supabaseApi($point) { $simple(it) }\n")
                 }
                 supa++
             } else {
                 // Ktorfit emits `create<Simple>()` as a top-level extension beside the interface.
                 imports += "$pkg.create$simple"
                 imports += "kpt.core.base.network.restApi"
-                lines.append("    restApi(\"$id\") { it.create$simple() }\n")
+                lines.append("    restApi($point) { it.create$simple() }\n")
                 rest++
             }
         }
@@ -167,6 +205,8 @@ class ApiBindingProcessor(
             append(" * To add an API: declare the endpoint in `app-profile/app.yaml#network.access_points`\n")
             append(" * (its URL, kind and owner are deployment config, not a property of the class), then write\n")
             append(" * the API type and annotate it `@ApiBinding(\"<id>\")`. There is no wiring step.\n")
+            append(" * One type served by several endpoints lists them all — `@ApiBinding(\"main\", \"self\")`:\n")
+            append(" * the first is the default binding, the others are qualified by their id.\n")
             append(" *\n")
             append(" * $rest REST + $supa Supabase binding(s).\n")
             append(" *\n")
@@ -194,25 +234,32 @@ class ApiBindingProcessor(
 }
 
 /**
- * The one binding conflict that is real: the same bound TYPE registered twice.
- *
- * Every binding expands to an UNQUALIFIED `single<T>` (`restApi` / `supabaseApi` in
- * `core-base/network/NetworkDsl.kt`), so Koin keys it by type alone. Two different types on one access
- * point are two independent definitions — one point serves any number of APIs (a monolith backend binds
- * ~22 to a single point). The same type bound twice, on one point or on two, is one key defined twice:
- * the later definition silently wins for every injection site. This used to group by access point,
- * which rejected the valid case and missed the cross-point one.
- *
- * @param bindings (access point id, bound type FQN) per `@ApiBinding`.
- * @return one error message per type bound more than once; empty when the graph is sound.
+ * One Koin key a generated binding defines: the bound [type] on access point [accessPoint], [qualified] by
+ * that point's id when it is not the type's first (default) point.
  */
-internal fun duplicateBindingErrors(bindings: List<Pair<String, String>>): List<String> =
-    bindings.groupBy({ it.second }, { it.first })
+internal data class ApiBindingKey(val accessPoint: String, val type: String, val qualified: Boolean)
+
+/**
+ * The one binding conflict that is real: the same Koin key defined twice.
+ *
+ * A type's first access point binds it UNQUALIFIED (`single<T>`), so Koin keys it by type alone; each
+ * further point of a multi-point `@ApiBinding` is qualified by its id and is a key of its own. Two
+ * different types on one point are independent — one point serves any number of APIs (a monolith binds
+ * ~22 to one point). The same type bound UNQUALIFIED twice — by two annotations, on one point or on two —
+ * is one key defined twice: the later definition silently wins for every injection site.
+ *
+ * @param bindings one key per generated binding.
+ * @return one error message per type bound unqualified more than once; empty when the graph is sound.
+ */
+internal fun duplicateBindingErrors(bindings: List<ApiBindingKey>): List<String> =
+    bindings.filterNot { it.qualified }
+        .groupBy({ it.type }, { it.accessPoint })
         .filterValues { it.size > 1 }
         .map { (type, points) ->
             "network-ksp: $type is bound ${points.size} times (access points: ${points.joinToString()}) — " +
-                "each binding is an unqualified single<$type>, so all but the last are silently lost. " +
-                "Bind a type once; one access point may serve any number of different types."
+                "each is an unqualified single<$type>, so all but the last are silently lost. " +
+                "Bind a type once; to serve it from several endpoints list them in ONE " +
+                "@ApiBinding(\"a\", \"b\")."
         }
 
 /**

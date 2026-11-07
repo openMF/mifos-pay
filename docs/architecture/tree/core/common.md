@@ -511,16 +511,13 @@ object GlobalAuthManager
 ```
 Process-wide holder of the 'session unauthorized' signal raised when the server answers 401.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/utils/KtorInterceptor.kt:49</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:49</code></summary>
 
 ```kotlin
-            scope.responsePipeline.intercept(HttpResponsePipeline.After) {
-                if (context.response.status == HttpStatusCode.Unauthorized) {
-                    GlobalAuthManager.markUnauthorized()
-                }
-                proceedWith(subject)
-            }
-        }
+
+    // A 401 on a signed-in request ends the session (the app shows its re-login dialog).
+    single<UnauthorizedHandler> { UnauthorizedHandler { GlobalAuthManager.markUnauthorized() } }
+}
 ```
 
 </details>

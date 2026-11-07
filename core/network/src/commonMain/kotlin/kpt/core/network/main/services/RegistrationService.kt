@@ -11,10 +11,12 @@ package kpt.core.network.main.services
 
 import de.jensklingenberg.ktorfit.http.Body
 import de.jensklingenberg.ktorfit.http.POST
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.register.RegisterPayload
 import kpt.core.model.network.entity.register.UserVerify
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for user registration. */
+@ApiBinding("main", "selfservice")
 interface RegistrationService {
     /** Registers a new user. */
     @POST(ApiEndPoints.REGISTRATION)

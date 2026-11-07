@@ -15,7 +15,7 @@ rc_ok=0
 
 cell() { # <tree> <expected-exit> <label> [app.yaml variant]
   local tree="$1" exp="$2" lbl="$3" yaml="$HERE/${4:-app.yaml}" out rc
-  out="$(HEALTH_ROOT="$HERE" NAP_YAML="$yaml" NAP_NET_DIR="$HERE/$tree" bash "$CHECK" 2>&1)"; rc=$?
+  out="$(HEALTH_ROOT="$HERE" NAP_YAML="$yaml" NAP_NET_DIR="$HERE/$tree" NAP_WEB_DIR="$HERE/${WEBDIR:-web-good}" bash "$CHECK" 2>&1)"; rc=$?
   # The label names the rule (e.g. "NAP-3 ..."); when a leg is expected to FAIL, require the output
   # to actually cite that rule. Exit code alone cannot distinguish "NAP-3 caught it" from "some other
   # rule fired" — nor from a vacuously-passing NAP-3 while a different rule keeps the exit non-zero.
@@ -38,6 +38,8 @@ cell nap1-missing-point   1 "NAP-1 point absent from registry  → FAIL"
 cell nap2-stale-url       1 "NAP-2 registry base_url stale     → FAIL"
 cell nap3-missing-urltype 1 "NAP-3 no UrlType const (silent!)  → FAIL"
 cell nap4-missing-binding 1 "NAP-4 @ApiBinding, not bound      → FAIL"
+cell multipoint-good      0 "multi-point @ApiBinding, all bound → PASS"
+cell nap4-multipoint-unbound 1 "NAP-4 multi-point, a point unbound → FAIL"
 cell nap5-missing-spec    1 "NAP-5 Supabase point, no spec     → FAIL"
 cell nap6-literal-key     1 "NAP-6 publishable key committed   → FAIL"
 cell nap7-handwired       1 "NAP-7 hand-wired binding          → FAIL"
@@ -47,4 +49,6 @@ cell nap7-handwired       1 "NAP-7 hand-wired binding          → FAIL"
 cell nap3-sanitized-key   1 "NAP-3 UrlType key sanitized too   → FAIL"
 cell good                 1 "NAP-13 restates JSON Content-Type → FAIL" nap13-json-declared.yaml
 cell good                 0 "NAP-13 non-JSON override allowed  → PASS" nap13-override.yaml
+# The web relay allowlist is the silent half: stale, the deployed relay 403s a host the app routes to it.
+WEBDIR=web-stale cell good 1 "NAP-14 relay-allowlist.json stale  → FAIL"
 exit "$rc_ok"

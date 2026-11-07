@@ -23,7 +23,7 @@ import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.OfficeRepository
 import kpt.core.model.office.Office
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.OfficeService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -34,7 +34,7 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [OfficeRepository] backed by the office API. */
 @RepositoryBinding(binds = OfficeRepository::class)
 class OfficeRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
+    private val officeService: OfficeService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.Offices) private val officesStore: Store<OfficesKey, List<Office>>?,
@@ -42,7 +42,7 @@ class OfficeRepositoryImpl(
     private val fetchedAtRepository: FetchedAtRepository?,
 ) : OfficeRepository {
     override fun getOffices(): ScreenStateStream<List<Office>> {
-        return apiManager.officeApi.getOffices()
+        return officeService.getOffices()
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
     }

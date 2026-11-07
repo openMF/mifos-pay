@@ -73,16 +73,16 @@ data class LoanEntity(...)
 
 </details>
 
-<details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/account/SavingAccountDetailEntity.kt:80</code></summary>
+<details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/serverconfig/entity/ServerInstanceEntity.kt:21</code></summary>
 
 ```kotlin
- * @property isDormancyTrackingActive Whether dormancy tracking is active for the account.
+ * sign-out so the login screen can offer it offline.
  */
 @DbEntity
-@Entity(
-    tableName = "wallet_saving_account_details",
-    indices = [
-        Index(value = ["clientId"]),
+@Entity(tableName = "server_instances")
+data class ServerInstanceEntity(
+    /** `endpoint/tenant` — the pair the remote table keys on. */
+    @PrimaryKey
 ```
 
 </details>
@@ -102,16 +102,16 @@ interface LoanDao { ... }
 
 </details>
 
-<details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/wallet/account/SavingAccountDetailDao.kt:34</code></summary>
+<details><summary>Used in the template — <code>core/database/src/commonMain/kotlin/kpt/core/database/serverconfig/dao/ServerInstanceDao.kt:22</code></summary>
 
 ```kotlin
- * N/A — [observeById] returns 0 or 1 row.
- */
+
+/** Room queries for server instance rows. */
 @DbDao
 @Dao
-interface SavingAccountDetailDao {
+interface ServerInstanceDao {
 
-    /**
+    /** Observes the `server_instances` rows, ordered by `position`. */
 ```
 
 </details>

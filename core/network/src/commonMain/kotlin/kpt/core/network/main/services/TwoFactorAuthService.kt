@@ -13,10 +13,12 @@ import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.twofactor.AccessToken
 import kpt.core.model.network.twofactor.DeliveryMethod
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for two-factor authentication. */
+@ApiBinding("main")
 interface TwoFactorAuthService {
     /** Fetches the available OTP delivery methods. */
     @GET(ApiEndPoints.TWOFACTOR)

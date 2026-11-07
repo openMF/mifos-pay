@@ -34,9 +34,21 @@ package kpt.core.base.network.annotation
  * annotation it is checked by the compiler, cannot drift from a rename, and travels with the class
  * when `remove-demo.sh` deletes its package.
  *
- * @param accessPoint the point's `id:` in app-profile. An id no point declares is a BUILD ERROR —
- *                    a binding for an endpoint that does not exist would fail at graph construction.
+ * ## One type, several endpoints
+ * A backend can expose the same resource on more than one endpoint — Apache Fineract serves its client,
+ * savings and transfer APIs both to staff (basic auth, `/api/v1`) and to customers (the self-service API,
+ * `/api/v1/self`). Each endpoint is its own access point, with its own URL, auth and headers; the API type
+ * lists them all:
+ * ```kotlin
+ * @ApiBinding("main", "selfservice")
+ * interface ClientService { ... }
+ * ```
+ * The FIRST id is the default binding (`get<ClientService>()`); each further id is bound qualified by its
+ * id, so a consumer picks it with `@FromQualifier("selfservice")` (data-ksp) or `get(named("selfservice"))`.
+ *
+ * @param accessPoints the points' `id:`s in app-profile, default first. An id no point declares is a BUILD
+ *                     ERROR — a binding for an endpoint that does not exist would fail at graph construction.
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
-annotation class ApiBinding(val accessPoint: String)
+annotation class ApiBinding(vararg val accessPoints: String)

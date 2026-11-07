@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_STORE.md`
-> **Measured:** 40 Kotlin files, 2 test files
+> **Measured:** 41 Kotlin files, 2 test files
 
 ## Codegen contracts owned here
 
@@ -23,10 +23,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/store sha=23104aab718f0375e57b482b0ae0691a7b3acf12 -->
+<!-- api-docs:begin module=core/store sha=b6263a0325ab8656d26e870d30fbd6446624c26e -->
 ## API reference
 
-_Generated from `core/store` at tree `23104aab718f` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/store` at tree `b6263a0325ab` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/store/src/commonMain/kotlin/kpt/core/store/config/ForkErrorMapper.kt`
@@ -201,6 +201,13 @@ fun provideUserDataStore(source: UserDataSource): Store<Unit, UserData> =
 ```
 OFFLINE_LOCAL_ONLY Store5 store over user preferences (`feature_profile.combo_id: local_only_prefs`).
 
+### `core/store/src/commonMain/kotlin/kpt/core/store/serverconfig/ServerInstancesStore.kt`
+
+```kotlin
+fun provideServerInstancesStore(api: ServerInstanceApi, dao: ServerInstanceDao): Store<Unit, List<ServerInstance>> =
+```
+_No KDoc at source._
+
 ### `core/store/src/commonMain/kotlin/kpt/core/store/wallet/WalletStoreTtl.kt`
 
 ```kotlin
@@ -278,7 +285,7 @@ data class BeneficiaryKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `beneficiary` store — one page of beneficiaries per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:75</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:83</code></summary>
 
 ```kotlin
     private val fetchedAtRepository: FetchedAtRepository?,
@@ -287,7 +294,7 @@ Store5 key for the LEDGER `beneficiary` store — one page of beneficiaries per 
 ) : SelfServiceRepository {
     override suspend fun loginSelf(payload: AuthenticationPayload): User {
         return withContext(dispatcher) {
-            apiManager.authenticationApi.authenticate(payload)
+            selfAuthenticationService.authenticate(payload)
 ```
 
 </details>
@@ -313,7 +320,7 @@ data class ClientDetailKey(val clientId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `clientDetail` store — one client-info record per key.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt:53</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt:52</code></summary>
 
 ```kotlin
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
@@ -348,7 +355,7 @@ data class TransactionKey(val accountId: Long)
 ```
 Store5 key for the LEDGER `history` store — one page of transactions per savings account.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:71</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:79</code></summary>
 
 ```kotlin
     @FromQualifier("IO") private val dispatcher: CoroutineDispatcher,
@@ -484,7 +491,7 @@ Store5 key for the LEDGER `pockets` store — one page of linked pocket accounts
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:50</code></summary>
 
 ```kotlin
-    private val dataManager: SelfServiceApiManager,
+    private val pocketService: PocketService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     @FromStore(AppStoreIds.Pocket) private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>?,
     @FromStore(AppStoreIds.LinkableAccounts)
@@ -643,5 +650,5 @@ Build the SINGLE-ROW-PER-KEY read `Store` for account-transfer details (GOAL D13
 
 ---
 
-_19 type(s), 38 function(s)/property(ies); 57 carry KDoc at source; 4 authored example(s); 19 live call site(s)._
+_19 type(s), 39 function(s)/property(ies); 57 carry KDoc at source; 4 authored example(s); 19 live call site(s)._
 <!-- api-docs:end -->

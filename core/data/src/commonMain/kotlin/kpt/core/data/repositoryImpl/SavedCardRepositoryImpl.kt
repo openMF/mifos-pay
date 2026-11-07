@@ -27,7 +27,7 @@ import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.SavedCardRepository
 import kpt.core.model.savedcards.CardPayload
 import kpt.core.model.savedcards.SavedCard
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.SavedCardService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -38,7 +38,7 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [SavedCardRepository] backed by the saved-card API. */
 @RepositoryBinding(binds = SavedCardRepository::class)
 class SavedCardRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val savedCardService: SavedCardService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.SavedCards) private val savedCardStore: Store<SavedCardKey, List<SavedCard>>?,
@@ -46,7 +46,7 @@ class SavedCardRepositoryImpl(
     private val fetchedAtRepository: FetchedAtRepository?,
 ) : SavedCardRepository {
     override fun getSavedCards(clientId: Long): Flow<ScreenState<List<SavedCard>>> {
-        return apiManager.savedCardApi
+        return savedCardService
             .getSavedCards(clientId)
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
@@ -85,7 +85,7 @@ class SavedCardRepositoryImpl(
     }
 
     override fun getSavedCard(clientId: Long, cardId: Long): Flow<ScreenState<SavedCard>> {
-        return apiManager.savedCardApi
+        return savedCardService
             .getSavedCard(clientId, cardId)
             .map { it.first() }
             .asScreenStateFlow()
@@ -94,13 +94,13 @@ class SavedCardRepositoryImpl(
 
     override suspend fun addSavedCard(clientId: Long, card: CardPayload) {
         withContext(ioDispatcher) {
-            apiManager.savedCardApi.addSavedCard(clientId, card)
+            savedCardService.addSavedCard(clientId, card)
         }
     }
 
     override suspend fun deleteCard(clientId: Long, cardId: Long) {
         withContext(ioDispatcher) {
-            apiManager.savedCardApi.deleteCard(clientId, cardId)
+            savedCardService.deleteCard(clientId, cardId)
         }
     }
 
@@ -110,7 +110,7 @@ class SavedCardRepositoryImpl(
         card: CardPayload,
     ) {
         withContext(ioDispatcher) {
-            apiManager.savedCardApi.updateCard(clientId, cardId, card)
+            savedCardService.updateCard(clientId, cardId, card)
         }
     }
 }

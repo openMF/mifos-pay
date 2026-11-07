@@ -83,7 +83,9 @@ codegen_contracts:
     notes: >-
       Declares qualifier, TTL and the logout purge in one place. `logout` drives BOTH the binding
       and the purge, so they cannot disagree; `logout = false` only for a MutableStore, which
-      Store5 5.1 cannot register.
+      Store5 5.1 cannot register. Provider parameters resolve by type; one annotated
+      @FromQualifier("<name>") resolves by name — e.g. the self-service binding of an API served by
+      several access points.
 
   - annotation: CacheKey
     defined_in: core-base/store
@@ -108,8 +110,10 @@ codegen_contracts:
       SupabaseConfigClient arg). Never build a second createSupabaseClient — the generated binding
       hands annotated types a different instance carrying no session, so RLS calls resolve nothing.
       One access point serves ANY number of different API types (a monolith backend binds ~22 to one
-      point). A bound TYPE may be bound only once, on any point: every binding is an unqualified
-      single<T>, so a second binding of the same type is a build error — it would silently replace the first.
+      point). One TYPE may be served by SEVERAL points — list them in one annotation,
+      @ApiBinding("main", "selfservice"): the first is the default (unqualified single<T>), each further
+      point is bound qualified by its id (consumers pick it with @FromQualifier("<id>")). The same type
+      bound unqualified twice — by two annotations — is a build error: it would silently replace the first.
 
   - annotation: DbEntity
     defined_in: core-base/database

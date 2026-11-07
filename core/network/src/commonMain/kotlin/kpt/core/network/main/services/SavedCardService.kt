@@ -16,10 +16,12 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.savedcards.CardPayload
 import kpt.core.model.savedcards.SavedCard
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for saved cards. */
+@ApiBinding("main")
 interface SavedCardService {
 
     /** Fetches a client's saved cards. */

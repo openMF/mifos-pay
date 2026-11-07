@@ -32,7 +32,7 @@ import kpt.core.model.network.entity.pocket.PocketLinkRequest
 import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.LinkableAccount
 import kpt.core.model.pocket.PocketAccount
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.PocketService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -45,7 +45,7 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [PocketRepository] backed by the pocket and client APIs. */
 @RepositoryBinding(binds = PocketRepository::class)
 class PocketRepositoryImp(
-    private val dataManager: SelfServiceApiManager,
+    private val pocketService: PocketService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     @FromStore(AppStoreIds.Pocket) private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>?,
     @FromStore(AppStoreIds.LinkableAccounts)
@@ -146,7 +146,7 @@ class PocketRepositoryImp(
                         )
                     },
                 )
-                dataManager.pocketApi.linkAccounts(request = request)
+                pocketService.linkAccounts(request = request)
 
                 // If successful, save directly as SYNCED so the UI updates instantly
                 explicitlyAddedAccounts.forEach {
@@ -192,7 +192,7 @@ class PocketRepositoryImp(
                 val serverIds = accountsToDelink.filter { it.id > 0 }.map { it.id }
                 if (serverIds.isNotEmpty()) {
                     val request = PocketDelinkRequest(serverIds)
-                    dataManager.pocketApi.delinkAccounts(request = request)
+                    pocketService.delinkAccounts(request = request)
                 }
 
                 // If successful, we can just delete them from Room (or mark them as SYNCED

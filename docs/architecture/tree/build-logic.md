@@ -1,20 +1,20 @@
 # `build-logic/`
 
 > **Kind:** Gradle convention plugins (a separate build)  
-> **Measured:** 44 tracked files — 39× `.kt`, 2× `.kts`, 1× `.md`, 1× `.gitkeep`, 1× `.properties`
+> **Measured:** 46 tracked files — 41× `.kt`, 2× `.kts`, 1× `.md`, 1× `.gitkeep`, 1× `.properties`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
-| `build-logic/convention/` | 41 |
+| `build-logic/convention/` | 43 |
 | (files at the root) | 3 |
 
 ## Subsections
 
 | Unit | Files | Page |
 |---|---:|---|
-| `build-logic/convention/` | 41 | [convention](build-logic/convention.md) |
+| `build-logic/convention/` | 43 | [convention](build-logic/convention.md) |
 
 ## Docs in the tree
 

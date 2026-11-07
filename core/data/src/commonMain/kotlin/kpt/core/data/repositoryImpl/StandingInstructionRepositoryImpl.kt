@@ -29,7 +29,7 @@ import kpt.core.model.standinginstruction.SITemplate
 import kpt.core.model.standinginstruction.SIUpdatePayload
 import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.model.standinginstruction.StandingInstructionPayload
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.StandingInstructionService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -40,7 +40,7 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [StandingInstructionRepository] backed by the standing-instruction API. */
 @RepositoryBinding(binds = StandingInstructionRepository::class)
 class StandingInstructionRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val standingInstructionService: StandingInstructionService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.StandingInstruction)
@@ -53,7 +53,7 @@ class StandingInstructionRepositoryImpl(
         fromClientId: Long,
         fromAccountType: Long,
     ): Flow<ScreenState<SITemplate>> {
-        return apiManager.standingInstructionApi
+        return standingInstructionService
             .getStandingInstructionTemplate(fromOfficeId, fromClientId, fromAccountType)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
@@ -62,7 +62,7 @@ class StandingInstructionRepositoryImpl(
     override fun getAllStandingInstructions(
         clientId: Long,
     ): Flow<ScreenState<List<StandingInstruction>>> {
-        return apiManager.standingInstructionApi
+        return standingInstructionService
             .getAllStandingInstructions(clientId)
             .map { it.pageItems }
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
@@ -104,7 +104,7 @@ class StandingInstructionRepositoryImpl(
     override fun getStandingInstruction(
         instructionId: Long,
     ): Flow<ScreenState<StandingInstruction>> {
-        return apiManager.standingInstructionApi
+        return standingInstructionService
             .getStandingInstruction(instructionId)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
@@ -114,7 +114,7 @@ class StandingInstructionRepositoryImpl(
         payload: StandingInstructionPayload,
     ) {
         withContext(ioDispatcher) {
-            apiManager.standingInstructionApi.createStandingInstruction(payload)
+            standingInstructionService.createStandingInstruction(payload)
         }
     }
 
@@ -123,7 +123,7 @@ class StandingInstructionRepositoryImpl(
         payload: SIUpdatePayload,
     ) {
         withContext(ioDispatcher) {
-            apiManager.standingInstructionApi.updateStandingInstruction(
+            standingInstructionService.updateStandingInstruction(
                 instructionId = instructionId,
                 payload = payload,
                 command = "update",
@@ -135,7 +135,7 @@ class StandingInstructionRepositoryImpl(
         instructionId: Long,
     ) {
         withContext(ioDispatcher) {
-            apiManager.standingInstructionApi.deleteStandingInstruction(
+            standingInstructionService.deleteStandingInstruction(
                 instructionId = instructionId,
                 command = "delete",
             )

@@ -13,11 +13,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
-import org.mifos.corebase.network.MultiUrlConfigProvider
 /** Provides the active Fineract server instance and interbank server, and resolves the API base URLs. */
 class InstanceConfigManager(
     private val userPreferencesRepository: ForkPreferencesRepository,
-) : MultiUrlConfigProvider {
+) {
     /** Built-in default instance configuration. */
     companion object {
         // Default main instance configuration
@@ -91,16 +90,4 @@ class InstanceConfigManager(
 
     /** Full base URL of the current interbank server. */
     fun getInterbankUrl(): String = getCurrentInterbankInstance().fullUrl
-
-    // MultiUrlConfigProvider implementation
-    override fun getBaseUrl(type: MultiUrlConfigProvider.UrlType): String = when (type) {
-        MultiUrlConfigProvider.UrlType.MAIN -> getUrl()
-        MultiUrlConfigProvider.UrlType.SELF_SERVICE -> getSelfServiceUrl()
-        MultiUrlConfigProvider.UrlType.INTERBANK -> getInterbankUrl()
-    }
-
-    override fun getLoggableHosts(): List<String> = listOf(
-        getEndpoint(),
-        getCurrentInterbankInstance().endpoint,
-    )
 }

@@ -42,11 +42,11 @@ import co.touchlab.kermit.Logger.Companion as KermitLogger
 expect fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient
 
 /**
- * Platform hook: installs a CORS proxy plugin on web targets; no-op on native/Android/Desktop.
+ * Platform hook: installs the CORS relay plugin on web targets; no-op on native/Android/Desktop.
  *
  * Called automatically by [setupDefaultHttpClient] when [proxiedHosts] is non-empty.
- * On web, requests to any host in [proxiedHosts] are transparently rewritten through
- * [corsProxyBaseUrl] (format: "https://proxy-host/path?" — original URL is appended as-is).
+ * On web, requests to a host matching [proxiedHosts] (exact, or `*.example.com`) are rewritten through
+ * [corsProxyBaseUrl] as `<relay>/?<original url>` (see [WebCorsRelayPlugin]).
  */
 internal expect fun HttpClientConfig<*>.installProxyPlugin(
     proxiedHosts: List<String>,

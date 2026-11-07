@@ -102,7 +102,12 @@ class ForkPreferencesRepositoryImpl(
     override fun getAccountExternalId(accountId: Long): String? =
         preferenceManager.getAccountExternalId(accountId)
 
-    override suspend fun updateToken(token: String) = preferenceManager.updateAuthToken(token)
+    // The framework's token too: core-base's auth bridge reads it for every `auth: basic` access point
+    // (the `selfservice` Fineract API), so the signed-in user's requests carry it.
+    override suspend fun updateToken(token: String) {
+        preferenceManager.updateAuthToken(token)
+        delegate.setAuthToken(token)
+    }
 
     override suspend fun updateClientInfo(client: Client) = preferenceManager.updateClientInfo(client)
 
@@ -115,5 +120,8 @@ class ForkPreferencesRepositoryImpl(
 
     // Store caches (pocket, linkable accounts, …) are drained by StoreCacheManager.clearAll() in
     // UserLogoutManagerImpl; this clears the wallet's own preferences.
-    override suspend fun logOut() = preferenceManager.clearInfo()
+    override suspend fun logOut() {
+        preferenceManager.clearInfo()
+        delegate.setAuthToken(null)
+    }
 }

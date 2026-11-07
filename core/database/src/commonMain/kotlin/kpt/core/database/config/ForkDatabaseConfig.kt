@@ -31,5 +31,5 @@ object ForkDatabaseConfig {
      * The fork's Room schema version — kept equal to `app-profile/migration-ledger.yaml#version` by product-health
      * check LG-5.
      */
-    const val VERSION = 10
+    const val VERSION = 11
 }

@@ -11,9 +11,11 @@ package kpt.core.network.main.services
 
 import de.jensklingenberg.ktorfit.http.GET
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.office.Office
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for offices. */
+@ApiBinding("selfservice")
 interface OfficeService {
     /** Fetches the list of offices. */
     @GET(ApiEndPoints.OFFICES)

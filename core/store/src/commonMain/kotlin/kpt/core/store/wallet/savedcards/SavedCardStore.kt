@@ -18,7 +18,7 @@ import kpt.core.database.wallet.savedcards.SavedCardDao
 import kpt.core.database.wallet.savedcards.toDomain
 import kpt.core.database.wallet.savedcards.toEntity
 import kpt.core.model.savedcards.SavedCard
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.SavedCardService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -74,12 +74,12 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "savedCards")
 @CacheKey(fn = "of", key = "wallet_saved_cards-{clientId}", params = ["clientId:Long"])
 fun provideSavedCardStore(
-    apiManager: FineractApiManager,
+    savedCardService: SavedCardService,
     dao: SavedCardDao,
 ): Store<SavedCardKey, List<SavedCard>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: SavedCardKey ->
         // Ktorfit returns Flow<List<SavedCard>> — take the first (and only) emission.
-        apiManager.savedCardApi.getSavedCards(key.clientId).first()
+        savedCardService.getSavedCards(key.clientId).first()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: SavedCardKey ->

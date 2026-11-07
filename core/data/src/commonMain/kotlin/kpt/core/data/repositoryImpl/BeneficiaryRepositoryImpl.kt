@@ -22,21 +22,21 @@ import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.beneficiary.BeneficiaryPayload
 import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.network.entity.templates.beneficiary.BeneficiaryTemplate
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.BeneficiaryService
 /** Default [BeneficiaryRepository] backed by the beneficiary API. */
 @RepositoryBinding(binds = BeneficiaryRepository::class)
 class BeneficiaryRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
+    private val beneficiaryService: BeneficiaryService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : BeneficiaryRepository {
     override suspend fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>> {
-        return apiManager.beneficiaryApi.beneficiaryList()
+        return beneficiaryService.beneficiaryList()
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
     }
 
     override suspend fun getBeneficiaryTemplate(): Flow<ScreenState<BeneficiaryTemplate>> {
-        return apiManager.beneficiaryApi.beneficiaryTemplate()
+        return beneficiaryService.beneficiaryTemplate()
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
     }
@@ -45,7 +45,7 @@ class BeneficiaryRepositoryImpl(
         beneficiaryPayload: BeneficiaryPayload,
     ) {
         withContext(ioDispatcher) {
-            apiManager.beneficiaryApi.createBeneficiary(beneficiaryPayload)
+            beneficiaryService.createBeneficiary(beneficiaryPayload)
         }
     }
 
@@ -54,13 +54,13 @@ class BeneficiaryRepositoryImpl(
         payload: BeneficiaryUpdatePayload,
     ) {
         withContext(ioDispatcher) {
-            apiManager.beneficiaryApi.updateBeneficiary(beneficiaryId, payload)
+            beneficiaryService.updateBeneficiary(beneficiaryId, payload)
         }
     }
 
     override suspend fun deleteBeneficiary(beneficiaryId: Long) {
         withContext(ioDispatcher) {
-            apiManager.beneficiaryApi.deleteBeneficiary(beneficiaryId)
+            beneficiaryService.deleteBeneficiary(beneficiaryId)
         }
     }
 }

@@ -19,18 +19,18 @@ import kpt.core.common.asScreenStateFlow
 import kpt.core.data.mapper.toModel
 import kpt.core.data.repository.RunReportRepository
 import kpt.core.model.savingsaccount.Transaction
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.RunReportService
 /** Default [RunReportRepository] backed by the run-report API. */
 @RepositoryBinding(binds = RunReportRepository::class)
 class RunReportRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val runReportService: RunReportService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : RunReportRepository {
     override suspend fun getTransactionReceipt(
         outputType: String,
         transactionId: String,
     ): ScreenStateStream<Transaction> {
-        return apiManager.runReportApi
+        return runReportService
             .getTransactionReceipt(outputType, transactionId)
             .map { it.toModel() }
             .asScreenStateFlow()

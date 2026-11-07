@@ -36,7 +36,7 @@ private data class StoreSpec(
     val pkg: String,
     val providerFqn: String,
     val providerName: String,
-    val deps: List<String>,
+    val deps: List<Pair<String, String?>>,
     val keys: List<KeySpec>,
 )
 
@@ -118,7 +118,14 @@ class StoreProviderProcessor(
         val logout = a.arguments.firstOrNull { it.name?.asString() == "logout" }?.value as? Boolean ?: true
 
         // The payoff: dependencies are READ from the signature, never restated.
-        val deps = fn.parameters.mapNotNull { it.name?.asString() }
+        // A `@FromQualifier("x")` parameter resolves by name, like a data-ksp dependency — so a store can
+        // fetch from the self-service binding of an API served by several access points.
+        val deps = fn.parameters.mapNotNull { param ->
+            val name = param.name?.asString() ?: return@mapNotNull null
+            val qualifier = param.annotations.firstOrNull { it.shortName.asString() == "FromQualifier" }
+                ?.arguments?.firstOrNull { it.name?.asString() == "name" }?.value as? String
+            name to qualifier
+        }
 
         // Providers live in `<domain>.impl`; their keys belong beside the domain, not inside impl.
         val pkg = fn.packageName.asString().removeSuffix(".impl")
@@ -349,6 +356,7 @@ class StoreProviderProcessor(
             add("$CONFIG_PKG.AppStoreRegistry")
             add("org.koin.core.module.Module")
             add("org.koin.dsl.module")
+            if (specs.any { s -> s.deps.any { !it.second.isNullOrBlank() } }) add("org.koin.core.qualifier.named")
         }.filter { it.isNotBlank() }.distinct().sorted()
 
         val sb = StringBuilder()
@@ -366,7 +374,7 @@ class StoreProviderProcessor(
         sb.append(" */\n")
         sb.append("val GeneratedStoreBindings: Module = module {\n")
         specs.forEach { s ->
-            val args = s.deps.joinToString(", ") { "$it = get()" }
+            val args = s.deps.joinToString(", ") { (name, qualifier) -> storeDependencyArg(name, qualifier) }
             sb.append("    single(AppStoreRegistry.${s.qualifier}) { ${s.providerName}($args) }\n")
         }
         if (purged.isNotEmpty()) {
@@ -397,3 +405,10 @@ class StoreProviderProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
         StoreProviderProcessor(environment.codeGenerator, environment.logger)
 }
+
+/**
+ * The generated argument for one `@StoreProvider` parameter: `name = get()`, or `name = get(named("q"))`
+ * when the parameter is annotated `@FromQualifier("q")`.
+ */
+internal fun storeDependencyArg(name: String, qualifier: String?): String =
+    if (qualifier.isNullOrBlank()) "$name = get()" else "$name = get(named(\"$qualifier\"))"

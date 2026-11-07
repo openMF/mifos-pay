@@ -12,6 +12,7 @@ package kpt.core.store.wallet.client
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
 import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.client.ClientDetailDao
@@ -23,7 +24,7 @@ import kpt.core.model.client.ClientTimeline
 import kpt.core.model.network.entity.client.ClientEntity
 import kpt.core.model.network.entity.client.ClientTimelineEntity
 import kpt.core.model.network.entity.client.Status
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.ClientService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -104,13 +105,13 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "clientDetail")
 @CacheKey(fn = "of", key = "wallet_client_details-{clientId}", params = ["clientId:Long"])
 fun provideClientDetailStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfClientService: ClientService,
     dao: ClientDetailDao,
 ): Store<ClientDetailKey, Client> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: ClientDetailKey ->
         // Ktorfit returns Flow<ClientEntity> — take the first (and only) emission,
         // then map to the domain via the private mapper below.
-        apiManager.clientsApi.getClient(key.clientId).first().toDomain()
+        selfClientService.getClient(key.clientId).first().toDomain()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: ClientDetailKey ->

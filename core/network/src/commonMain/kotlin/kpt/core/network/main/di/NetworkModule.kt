@@ -9,191 +9,42 @@
  */
 package kpt.core.network.main.di
 
-import de.jensklingenberg.ktorfit.Ktorfit
-import io.github.jan.supabase.logging.LogLevel
-import io.ktor.client.plugins.HttpTimeout
-import io.ktor.client.plugins.auth.providers.BasicAuthCredentials
-import kpt.core.common.ForkDispatchers
-import kpt.core.datastore.prefs.ForkPreferencesRepository
-import kpt.core.network.FineractApiManager
-import kpt.core.network.InterBankApiManager
-import kpt.core.network.KtorfitClient
-import kpt.core.network.SelfServiceApiManager
-import kpt.core.network.SupabaseApiManager
-import kpt.core.network.main.config.InstanceConfigLoader
+import de.jensklingenberg.ktorfit.converter.Converter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kpt.core.base.network.UnauthorizedHandler
+import kpt.core.common.GlobalAuthManager
 import kpt.core.network.main.config.InstanceConfigManager
-import kpt.core.network.main.config.SupabaseCredentialsImpl
-import kpt.core.network.main.config.SupabaseInstanceConfigLoader
-import kpt.core.network.main.utils.BaseURL
+import kpt.core.network.main.config.InstanceNetworkConfigBridge
 import kpt.core.network.main.utils.FlowConverterFactory
-import kpt.core.network.main.utils.KtorInterceptor
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import org.mifos.corebase.network.DynamicBaseUrlPlugin
-import org.mifos.corebase.network.DynamicLoggableHosts
-import org.mifos.corebase.network.MultiUrlConfigProvider
-import org.mifos.corebase.network.SupabaseConfigClient
-import org.mifos.corebase.network.httpClient
-import org.mifos.corebase.network.setupDefaultHttpClient
-import kotlin.io.encoding.ExperimentalEncodingApi
 
-private val ioDispatcher = named(ForkDispatchers.IO.name)
-
-// On JS / Wasm Koin keys a binding by the type's simple name; the template's
-// kpt.core.base.network.SupabaseConfigClient is bound too, so this one needs its own key.
-private val supabaseConfigClient = named("org.mifos.corebase.network.SupabaseConfigClient")
-
-/** Koin module providing the HTTP clients, Ktorfit instances, API managers and service wiring of the network layer. */
-@OptIn(ExperimentalEncodingApi::class)
+/**
+ * The wallet's network wiring that is not an API: how the selected server reaches the access points.
+ * The server list itself comes from the template's Supabase point (ServerInstanceApi) through the
+ * `serverInstances` store.
+ *
+ * The Fineract services themselves bind through `@ApiBinding` (GeneratedApiBindings) on the `main`,
+ * `selfservice` and `interbank` access points declared in app-profile.
+ */
 val NetworkModule = module {
-    single(supabaseConfigClient) {
-        SupabaseConfigClient(
-            credentials = SupabaseCredentialsImpl,
-            logLevel = LogLevel.DEBUG,
-        )
-    }
-
-    single {
-        SupabaseApiManager(supabaseClient = get(supabaseConfigClient))
-    }
-
-    single<InstanceConfigLoader> {
-        SupabaseInstanceConfigLoader(
-            supabaseApiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            json = get(),
-        )
-    }
-
     single {
         InstanceConfigManager(userPreferencesRepository = get())
     }
 
-    single {
-        BaseURL(configManager = get())
+    // The selected server -> the access points' URLs and tenant, before any screen fetches.
+    single(createdAtStart = true) {
+        InstanceNetworkConfigBridge(
+            instances = get(),
+            networkConfigs = get(),
+            scope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
+        ).also { it.start() }
     }
 
-    single<KtorfitClient>(qualifier = SelfClient) {
-        val preferencesRepository = get<ForkPreferencesRepository>()
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-                    client = httpClient(
-                        config = setupDefaultHttpClient(
-                            // Use placeholder - actual URL is set dynamically by DynamicBaseUrlPlugin
-                            baseUrl = "https://placeholder.local/",
-                            // Dynamic loggable hosts - reads current endpoints from configManager
-                            loggableHosts = DynamicLoggableHosts(configManager),
-                        ),
-                    ).config {
-                        // Fail-fast connect/request timeouts. The corebase default sets
-                        // request+socket to 60s but no connectTimeout; a shorter connect
-                        // bound + request timeout surfaces a stalled call as an Error/Retry
-                        // the offline-first layer handles, instead of a long spinner.
-                        install(HttpTimeout) {
-                            requestTimeoutMillis = 30_000
-                            connectTimeoutMillis = 20_000
-                            socketTimeoutMillis = 30_000
-                        }
-                        install(DynamicBaseUrlPlugin) {
-                            multiConfigProvider = configManager
-                            urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
-                        }
-                        install(KtorInterceptor) {
-                            getToken = { preferencesRepository.authToken }
-                            this.configManager = configManager
-                        }
-                    },
-                )
-                .converterFactories(FlowConverterFactory())
-                .build(),
-        )
-    }
+    // The Fineract services return Flow<T>; every REST access point gets this converter.
+    single<Converter.Factory> { FlowConverterFactory() }
 
-    single<KtorfitClient>(qualifier = BaseClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-                    client = httpClient(
-                        config = setupDefaultHttpClient(
-                            // Use placeholder - actual URL is set dynamically by DynamicBaseUrlPlugin
-                            baseUrl = "https://placeholder.local/",
-                            basicCredentialsProvider = {
-                                BasicAuthCredentials(
-                                    username = "mifos",
-                                    password = "password",
-                                )
-                            },
-                            // Headers are set dynamically by KtorInterceptor
-                            defaultHeaders = mapOf(
-                                BaseURL.HEADER_CONTENT_TYPE to BaseURL.HEADER_CONTENT_TYPE_VALUE,
-                                BaseURL.HEADER_ACCEPT to BaseURL.HEADER_ACCEPT_VALUE,
-                            ),
-                            // Dynamic loggable hosts - reads current endpoints from configManager
-                            loggableHosts = DynamicLoggableHosts(configManager),
-                        ),
-                    ).config {
-                        install(DynamicBaseUrlPlugin) {
-                            multiConfigProvider = configManager
-                            urlType = MultiUrlConfigProvider.UrlType.MAIN
-                        }
-                        install(KtorInterceptor) {
-                            getToken = { null }
-                            this.configManager = configManager
-                        }
-                    },
-                )
-                .converterFactories(
-                    FlowConverterFactory(),
-                )
-                .build(),
-        )
-    }
-
-    single<KtorfitClient>(qualifier = InterBankClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-                    client = httpClient(
-                        config = setupDefaultHttpClient(
-                            // Use placeholder - actual URL is set dynamically by DynamicBaseUrlPlugin
-                            baseUrl = "https://placeholder.local/",
-                            // Headers are set dynamically by KtorInterceptor
-                            defaultHeaders = mapOf(
-                                BaseURL.HEADER_CONTENT_TYPE to BaseURL.HEADER_CONTENT_TYPE_VALUE,
-                                BaseURL.HEADER_ACCEPT to BaseURL.HEADER_ACCEPT_VALUE,
-                            ),
-                            // Dynamic loggable hosts - reads current endpoints from configManager
-                            loggableHosts = DynamicLoggableHosts(configManager),
-                        ),
-                    ).config {
-                        install(DynamicBaseUrlPlugin) {
-                            multiConfigProvider = configManager
-                            urlType = MultiUrlConfigProvider.UrlType.INTERBANK
-                        }
-                        install(KtorInterceptor) {
-                            getToken = { null }
-                            this.configManager = configManager
-                        }
-                    },
-                )
-                .converterFactories(FlowConverterFactory())
-                .build(),
-        )
-    }
-
-    single {
-        FineractApiManager(ktorfitClient = get(BaseClient))
-    }
-
-    single {
-        SelfServiceApiManager(ktorfitClient = get(SelfClient))
-    }
-
-    single {
-        InterBankApiManager(ktorfitClient = get(InterBankClient))
-    }
+    // A 401 on a signed-in request ends the session (the app shows its re-login dialog).
+    single<UnauthorizedHandler> { UnauthorizedHandler { GlobalAuthManager.markUnauthorized() } }
 }

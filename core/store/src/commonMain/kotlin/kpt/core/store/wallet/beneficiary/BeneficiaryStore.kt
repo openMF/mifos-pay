@@ -18,7 +18,7 @@ import kpt.core.database.wallet.beneficiary.BeneficiaryDao
 import kpt.core.database.wallet.beneficiary.toDomain
 import kpt.core.database.wallet.beneficiary.toEntity
 import kpt.core.model.beneficiary.Beneficiary
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.BeneficiaryService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -77,12 +77,12 @@ private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 @StoreProvider(id = "beneficiary")
 @CacheKey(fn = "of", key = "wallet_beneficiaries-{clientId}", params = ["clientId:Long"])
 fun provideBeneficiaryStore(
-    apiManager: SelfServiceApiManager,
+    beneficiaryService: BeneficiaryService,
     dao: BeneficiaryDao,
 ): Store<BeneficiaryKey, List<Beneficiary>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: BeneficiaryKey ->
         // Ktorfit returns Flow<List<Beneficiary>> — take the first (and only) emission.
-        apiManager.beneficiaryApi.beneficiaryList().first()
+        beneficiaryService.beneficiaryList().first()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: BeneficiaryKey ->

@@ -23,18 +23,18 @@ import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.DocumentRepository
 import kpt.core.model.network.entity.noncore.Document
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.DocumentService
 /** Default [DocumentRepository] backed by the document API. */
 @RepositoryBinding(binds = DocumentRepository::class)
 class DocumentRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val documentService: DocumentService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : DocumentRepository {
     override suspend fun getDocuments(
         entityType: String,
         entityId: Int,
     ): ScreenStateStream<List<Document>> {
-        return apiManager.documentApi
+        return documentService
             .getDocuments(entityType, entityId)
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
@@ -47,7 +47,7 @@ class DocumentRepositoryImpl(
         description: String,
         fileName: PartData.FileItem,
     ): ScreenStateStream<Unit> {
-        return apiManager.documentApi
+        return documentService
             .createDocument(entityType, entityId, name, description, fileName)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
@@ -79,7 +79,7 @@ class DocumentRepositoryImpl(
         )
 
         withContext(ioDispatcher) {
-            apiManager.documentApi.createDocumentFile(
+            documentService.createDocumentFile(
                 entityType = entityType,
                 entityId = entityId,
                 file = formData,
@@ -92,7 +92,7 @@ class DocumentRepositoryImpl(
         entityId: Int,
         documentId: Int,
     ): ScreenStateStream<Document> {
-        return apiManager.documentApi
+        return documentService
             .downloadDocument(entityType, entityId, documentId)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
@@ -103,7 +103,7 @@ class DocumentRepositoryImpl(
         entityId: Int,
         documentId: Int,
     ): ScreenStateStream<Unit> {
-        return apiManager.documentApi
+        return documentService
             .removeDocument(entityType, entityId, documentId)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
@@ -117,7 +117,7 @@ class DocumentRepositoryImpl(
         description: String,
         fileName: PartData.FileItem,
     ): ScreenStateStream<Unit> {
-        return apiManager.documentApi
+        return documentService
             .updateDocument(entityType, entityId, documentId, name, description, fileName)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)

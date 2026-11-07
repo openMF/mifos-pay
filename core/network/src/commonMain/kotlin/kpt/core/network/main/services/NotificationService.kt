@@ -12,8 +12,10 @@ package kpt.core.network.main.services
 import de.jensklingenberg.ktorfit.http.GET
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.notification.NotificationPayload
 /** Ktorfit service for notifications. */
+@ApiBinding("main")
 interface NotificationService {
     /** Fetches notifications filtered by read state. */
     @GET("notifications/")

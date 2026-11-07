@@ -35,7 +35,7 @@ import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionsEntity
 import kpt.core.model.savingsaccount.UpdateSavingAccountEntity
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.SavingsAccountsService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -46,7 +46,7 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [SavingsAccountRepository] backed by the savings accounts API. */
 @RepositoryBinding(binds = SavingsAccountRepository::class)
 class SavingsAccountRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") private val selfSavingsAccountsService: SavingsAccountsService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.AccountDetail) private val accountDetailStore: Store<AccountDetailKey, SavingAccountDetail>?,
@@ -56,7 +56,7 @@ class SavingsAccountRepositoryImpl(
     override suspend fun getSavingsAccounts(
         limit: Int,
     ): ScreenStateStream<Page<SavingsWithAssociationsEntity>> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .getSavingsAccounts(limit)
             .asScreenStateFlow(isEmpty = { it.pageItems.isEmpty() })
             .flowOn(ioDispatcher)
@@ -66,14 +66,14 @@ class SavingsAccountRepositoryImpl(
         accountId: Long,
         associationType: String,
     ): ScreenStateStream<SavingsWithAssociationsEntity> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .getSavingsWithAssociations(accountId, associationType)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)
     }
 
     override fun getAccountDetail(accountId: Long): ScreenStateStream<SavingAccountDetail> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
             .map(SavingsWithAssociationsEntity::toSavingDetail)
             .asScreenStateFlow()
@@ -115,7 +115,7 @@ class SavingsAccountRepositoryImpl(
         savingAccount: CreateNewSavingEntity,
     ) {
         withContext(ioDispatcher) {
-            apiManager.savingAccountsListApi.createSavingsAccount(savingAccount)
+            selfSavingsAccountsService.createSavingsAccount(savingAccount)
         }
     }
 
@@ -124,7 +124,7 @@ class SavingsAccountRepositoryImpl(
         savingAccount: UpdateSavingAccountEntity,
     ) {
         withContext(ioDispatcher) {
-            apiManager.savingAccountsListApi.updateSavingsAccount(accountId, savingAccount)
+            selfSavingsAccountsService.updateSavingsAccount(accountId, savingAccount)
         }
     }
 
@@ -132,13 +132,13 @@ class SavingsAccountRepositoryImpl(
         accountId: Long,
     ) {
         withContext(ioDispatcher) {
-            apiManager.savingAccountsListApi.blockUnblockAccount(accountId, "unblock")
+            selfSavingsAccountsService.blockUnblockAccount(accountId, "unblock")
         }
     }
 
     override suspend fun blockAccount(accountId: Long) {
         withContext(ioDispatcher) {
-            apiManager.savingAccountsListApi.blockUnblockAccount(accountId, "block")
+            selfSavingsAccountsService.blockUnblockAccount(accountId, "block")
         }
     }
 
@@ -146,7 +146,7 @@ class SavingsAccountRepositoryImpl(
         accountId: Long,
         transactionId: Long,
     ): ScreenStateStream<Transaction> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .getSavingAccountTransaction(accountId, transactionId)
             .map(TransactionsEntity::toModel)
             .asScreenStateFlow()
@@ -154,7 +154,7 @@ class SavingsAccountRepositoryImpl(
     }
 
     override suspend fun payViaMobile(accountId: Long): ScreenStateStream<Transaction> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .payViaMobile(accountId)
             .map(TransactionsEntity::toModel)
             .asScreenStateFlow()
@@ -162,7 +162,7 @@ class SavingsAccountRepositoryImpl(
     }
 
     override fun getSavingAccountTemplate(clientId: Long): ScreenStateStream<SavingAccountTemplate> {
-        return apiManager.savingAccountsListApi
+        return selfSavingsAccountsService
             .getSavingAccountTemplate(clientId)
             .asScreenStateFlow()
             .flowOn(ioDispatcher)

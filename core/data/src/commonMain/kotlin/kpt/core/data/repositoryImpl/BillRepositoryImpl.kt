@@ -29,7 +29,7 @@ import kpt.core.data.repository.BillStatistics
 import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillStatus
 import kpt.core.model.autopay.RecurrencePattern
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.BillService
 import kpt.core.network.main.services.BillStatisticsResponse
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -42,12 +42,12 @@ import kotlin.time.ExperimentalTime
  * models according to the actual API contract.
  */
 class BillRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val billService: BillService,
     private val ioDispatcher: CoroutineDispatcher,
 ) : BillRepository {
 
     override fun getAllBills(clientId: Long): ScreenStateStream<List<Bill>> {
-        return apiManager.billApi
+        return billService
             .getAllBills(clientId)
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
@@ -55,7 +55,7 @@ class BillRepositoryImpl(
 
     override suspend fun getBillById(id: String): Bill {
         return withContext(ioDispatcher) {
-            apiManager.billApi.getBillById(id).first()
+            billService.getBillById(id).first()
         }
     }
 
@@ -67,7 +67,7 @@ class BillRepositoryImpl(
             updatedAt = Clock.System.now().toEpochMilliseconds(),
         )
         return withContext(ioDispatcher) {
-            apiManager.billApi.createBill(billWithId).first()
+            billService.createBill(billWithId).first()
         }
     }
 
@@ -78,20 +78,20 @@ class BillRepositoryImpl(
             updatedAt = Clock.System.now().toEpochMilliseconds(),
         )
         return withContext(ioDispatcher) {
-            apiManager.billApi.updateBill(billId, updatedBill).first()
+            billService.updateBill(billId, updatedBill).first()
         }
     }
 
     override suspend fun deleteBill(id: String) {
         withContext(ioDispatcher) {
-            apiManager.billApi.deleteBill(id).first()
+            billService.deleteBill(id).first()
         }
     }
 
     override suspend fun getBillsByStatus(status: BillStatus): List<Bill> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billApi.getBillsByStatus(status).first()
+                billService.getBillsByStatus(status).first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -101,7 +101,7 @@ class BillRepositoryImpl(
     override suspend fun getBillsByBillerId(billerId: String): List<Bill> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billApi.getBillsByBillerId(billerId).first()
+                billService.getBillsByBillerId(billerId).first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -111,7 +111,7 @@ class BillRepositoryImpl(
     override suspend fun getBillsByRecurrencePattern(pattern: RecurrencePattern): List<Bill> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billApi.getBillsByRecurrencePattern(pattern).first()
+                billService.getBillsByRecurrencePattern(pattern).first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -121,7 +121,7 @@ class BillRepositoryImpl(
     override suspend fun searchBillsByName(query: String): List<Bill> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billApi.searchBillsByName(query).first()
+                billService.searchBillsByName(query).first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -131,7 +131,7 @@ class BillRepositoryImpl(
     override suspend fun getOverdueBills(): List<Bill> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billApi.getOverdueBills().first()
+                billService.getOverdueBills().first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -141,7 +141,7 @@ class BillRepositoryImpl(
     override suspend fun getUpcomingBills(fromDate: Long, toDate: Long): List<Bill> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billApi.getUpcomingBills(fromDate, toDate).first()
+                billService.getUpcomingBills(fromDate, toDate).first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -150,7 +150,7 @@ class BillRepositoryImpl(
 
     override suspend fun updateBillStatus(billId: String, status: BillStatus): Bill {
         return withContext(ioDispatcher) {
-            apiManager.billApi.updateBillStatus(billId, status).first()
+            billService.updateBillStatus(billId, status).first()
         }
     }
 
@@ -163,7 +163,7 @@ class BillRepositoryImpl(
     }
 
     override fun getBillStatistics(clientId: Long): ScreenStateStream<BillStatistics> {
-        return apiManager.billApi
+        return billService
             .getBillStatistics(clientId)
             .map { response: BillStatisticsResponse ->
                 BillStatistics(
@@ -182,7 +182,7 @@ class BillRepositoryImpl(
 
     override suspend fun clearAllBills() {
         withContext(ioDispatcher) {
-            apiManager.billApi.clearAllBills().first()
+            billService.clearAllBills().first()
         }
     }
 

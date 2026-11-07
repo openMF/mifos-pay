@@ -16,6 +16,7 @@ import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.network.entity.Page
 import kpt.core.model.standinginstruction.SITemplate
 import kpt.core.model.standinginstruction.SIUpdatePayload
@@ -23,6 +24,7 @@ import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.model.standinginstruction.StandingInstructionPayload
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for standing instructions. */
+@ApiBinding("main")
 interface StandingInstructionService {
 
     /** Fetches the template for creating a standing instruction. */

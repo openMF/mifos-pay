@@ -15,6 +15,7 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.Path
 import de.jensklingenberg.ktorfit.http.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.account.AccountTransferPayload
 import kpt.core.model.network.entity.templates.account.AccountOptionsTemplate
 import kpt.core.model.savingsaccount.TransactionsEntity
@@ -22,6 +23,7 @@ import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.model.search.AccountResult
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for account transfers and account transactions. */
+@ApiBinding("main", "selfservice")
 interface AccountTransfersService {
 
     /** Fetches a transaction of a savings account. */

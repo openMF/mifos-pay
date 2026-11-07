@@ -9,11 +9,17 @@
  */
 package kpt.core.network.config
 
+import de.jensklingenberg.ktorfit.Ktorfit
+import de.jensklingenberg.ktorfit.converter.Converter
+import de.jensklingenberg.ktorfit.converter.TypeData
+import io.ktor.client.statement.HttpResponse
+import io.ktor.util.reflect.typeInfo
 import kpt.core.base.network.AccessPoint
 import kpt.core.base.network.AccessPointKind
 import kpt.core.base.network.AccessPointRegistry
 import kpt.core.base.network.ktorfitFor
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotSame
 import kotlin.test.assertSame
 
@@ -86,6 +92,27 @@ class SharedHttpClientTest {
             registry.ktorfitFor("other").httpClient,
             "Two hosts shared one client — a per-endpoint credential would reach the wrong server.",
         )
+    }
+
+    @Test
+    fun converter_factories_reach_the_ktorfit() {
+        // A `Flow<T>` (or any non-plain) return type only works when its converter is on the Ktorfit;
+        // restApi passes every Converter.Factory bound in Koin through here.
+        val asked = mutableListOf<String>()
+        val recorder = object : Converter.Factory {
+            override fun responseConverter(
+                typeData: TypeData,
+                ktorfit: Ktorfit,
+            ): Converter.ResponseConverter<HttpResponse, *>? {
+                asked += typeData.qualifiedName
+                return null
+            }
+        }
+        val ktorfit = registry().ktorfitFor("primary", converterFactories = listOf(recorder))
+
+        ktorfit.nextResponseConverter(null, TypeData("kotlin.String", typeInfo = typeInfo<String>()))
+
+        assertEquals(listOf("kotlin.String"), asked, "the bound converter factory was never consulted")
     }
 
     @Test

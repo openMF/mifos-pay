@@ -21,20 +21,20 @@ import kpt.core.data.repository.ThirdPartyTransferRepository
 import kpt.core.model.network.entity.TPTResponse
 import kpt.core.model.network.entity.payload.TransferPayload
 import kpt.core.model.network.entity.templates.account.AccountOptionsTemplate
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.ThirdPartyTransferService
 /** Default [ThirdPartyTransferRepository] backed by the third-party transfer API. */
 @RepositoryBinding(binds = ThirdPartyTransferRepository::class)
 class ThirdPartyTransferRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") private val selfThirdPartyTransferService: ThirdPartyTransferService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : ThirdPartyTransferRepository {
     override suspend fun getTransferTemplate(): AccountOptionsTemplate {
-        return apiManager.thirdPartyTransferApi
+        return selfThirdPartyTransferService
             .accountTransferTemplate()
     }
 
     override fun makeTransfer(payload: TransferPayload): ScreenStateStream<TPTResponse> {
-        return flow { emit(apiManager.thirdPartyTransferApi.makeTransfer(payload)) }
+        return flow { emit(selfThirdPartyTransferService.makeTransfer(payload)) }
             .asScreenStateFlow(errorBodyParser = parseFineractError)
             .flowOn(ioDispatcher)
     }

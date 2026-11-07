@@ -27,7 +27,7 @@ import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.InvoiceRepository
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.model.datatables.invoice.InvoiceEntity
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.InvoiceService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -38,7 +38,7 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [InvoiceRepository] backed by the invoice API. */
 @RepositoryBinding(binds = InvoiceRepository::class)
 class InvoiceRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val invoiceService: InvoiceService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.Invoice) private val invoiceStore: Store<InvoiceKey, List<Invoice>>?,
@@ -46,7 +46,7 @@ class InvoiceRepositoryImpl(
     private val fetchedAtRepository: FetchedAtRepository?,
 ) : InvoiceRepository {
     override fun getInvoice(clientId: Long, invoiceId: Long): Flow<ScreenState<Invoice>> {
-        return apiManager.invoiceApi
+        return invoiceService
             .getInvoice(clientId, invoiceId)
             .map { it.first() }
             .asScreenStateFlow()
@@ -54,7 +54,7 @@ class InvoiceRepositoryImpl(
     }
 
     override fun getInvoices(clientId: Long): Flow<ScreenState<List<Invoice>>> {
-        return apiManager.invoiceApi
+        return invoiceService
             .getInvoices(clientId)
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
             .flowOn(ioDispatcher)
@@ -94,7 +94,7 @@ class InvoiceRepositoryImpl(
 
     override suspend fun createInvoice(clientId: Long, invoice: InvoiceEntity) {
         withContext(ioDispatcher) {
-            apiManager.invoiceApi.addInvoice(clientId, invoice)
+            invoiceService.addInvoice(clientId, invoice)
         }
     }
 
@@ -104,13 +104,13 @@ class InvoiceRepositoryImpl(
         invoice: InvoiceEntity,
     ) {
         withContext(ioDispatcher) {
-            apiManager.invoiceApi.updateInvoice(clientId, invoiceId, invoice)
+            invoiceService.updateInvoice(clientId, invoiceId, invoice)
         }
     }
 
     override suspend fun deleteInvoice(clientId: Long, invoiceId: Long) {
         withContext(ioDispatcher) {
-            apiManager.invoiceApi.deleteInvoice(clientId, invoiceId)
+            invoiceService.deleteInvoice(clientId, invoiceId)
         }
     }
 }

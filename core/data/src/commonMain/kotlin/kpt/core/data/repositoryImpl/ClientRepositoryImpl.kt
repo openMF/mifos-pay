@@ -34,8 +34,7 @@ import kpt.core.model.client.NewClient
 import kpt.core.model.client.UpdatedClient
 import kpt.core.model.network.entity.Page
 import kpt.core.model.network.entity.client.ClientAccountsEntity
-import kpt.core.network.FineractApiManager
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.ClientService
 import kpt.core.store.config.AppCacheKeys
 import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
@@ -46,8 +45,8 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 /** Default [ClientRepository] backed by the client API. */
 @RepositoryBinding(binds = ClientRepository::class)
 class ClientRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
-    private val fineractApiManager: FineractApiManager,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
+    private val clientService: ClientService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
     // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
     @FromStore(AppStoreIds.ClientDetail) private val clientDetailStore: Store<ClientDetailKey, Client>?,
@@ -55,14 +54,14 @@ class ClientRepositoryImpl(
     private val fetchedAtRepository: FetchedAtRepository?,
 ) : ClientRepository {
     override suspend fun getClients(): Flow<ScreenState<Page<Client>>> {
-        return apiManager.clientsApi.clients()
+        return selfClientService.clients()
             .map { it.toModel() }
             .asScreenStateFlow(isEmpty = { it.pageItems.isEmpty() })
             .flowOn(ioDispatcher)
     }
 
     override fun getClientInfo(clientId: Long): Flow<ScreenState<Client>> {
-        return apiManager.clientsApi
+        return selfClientService
             .getClient(clientId)
             .map { it.toModel() }
             .asScreenStateFlow()
@@ -102,18 +101,18 @@ class ClientRepositoryImpl(
 
     override suspend fun getClient(clientId: Long): Client {
         return withContext(ioDispatcher) {
-            apiManager.clientsApi.getClientForId(clientId).toModel()
+            selfClientService.getClientForId(clientId).toModel()
         }
     }
 
     override suspend fun updateClient(clientId: Long, client: UpdatedClient) {
         withContext(ioDispatcher) {
-            fineractApiManager.clientsApi.updateClient(clientId, client.toEntity())
+            clientService.updateClient(clientId, client.toEntity())
         }
     }
 
     override fun getClientImage(clientId: Long): Flow<ScreenState<String>> {
-        return apiManager.clientsApi
+        return selfClientService
             .getClientImage(clientId)
             .asScreenStateFlow(isEmpty = { it.isBlank() })
             .flowOn(ioDispatcher)
@@ -121,7 +120,7 @@ class ClientRepositoryImpl(
 
     override suspend fun updateClientImage(clientId: Long, image: String) {
         withContext(ioDispatcher) {
-            fineractApiManager.clientsApi.updateClientImage(
+            clientService.updateClientImage(
                 clientId = clientId,
                 typedFile = "data:image/png;base64,$image",
             )
@@ -129,7 +128,7 @@ class ClientRepositoryImpl(
     }
 
     override suspend fun getClientAccounts(clientId: Long): ClientAccountsEntity {
-        return apiManager.clientsApi
+        return selfClientService
             .getClientAccounts(clientId)
     }
 
@@ -137,7 +136,7 @@ class ClientRepositoryImpl(
         clientId: Long,
         accountType: String,
     ): Flow<ScreenState<List<Account>>> {
-        return apiManager.clientsApi
+        return selfClientService
             .getAccounts(clientId, accountType)
             .map { it.toAccount() }
             .asScreenStateFlow(isEmpty = { it.isEmpty() })
@@ -146,13 +145,13 @@ class ClientRepositoryImpl(
 
     override suspend fun createClient(newClient: NewClient): Int {
         return withContext(ioDispatcher) {
-            fineractApiManager.clientsApi.createClient(newClient.toEntity()).clientId
+            clientService.createClient(newClient.toEntity()).clientId
         }
     }
 
     override suspend fun deleteClient(clientId: Int): Int {
         return withContext(ioDispatcher) {
-            fineractApiManager.clientsApi.deleteClient(clientId).clientId
+            clientService.deleteClient(clientId).clientId
         }
     }
 }

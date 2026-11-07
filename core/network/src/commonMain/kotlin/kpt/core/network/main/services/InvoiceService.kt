@@ -16,10 +16,12 @@ import de.jensklingenberg.ktorfit.http.POST
 import de.jensklingenberg.ktorfit.http.PUT
 import de.jensklingenberg.ktorfit.http.Path
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.network.annotation.ApiBinding
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.model.datatables.invoice.InvoiceEntity
 import kpt.core.network.main.utils.ApiEndPoints
 /** Ktorfit service for invoices. */
+@ApiBinding("main")
 interface InvoiceService {
     /** Fetches a client's invoices. */
     @GET(ApiEndPoints.DATATABLES + "/invoice/{clientId}")

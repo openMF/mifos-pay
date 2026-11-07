@@ -18,7 +18,7 @@ import kpt.core.database.wallet.notification.NotificationDao
 import kpt.core.database.wallet.notification.toDomain
 import kpt.core.database.wallet.notification.toEntity
 import kpt.core.model.notification.Notification
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.NotificationService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -88,14 +88,14 @@ private const val IS_READ_FLAG: Boolean = true
 @StoreProvider(id = "notification")
 @CacheKey(fn = "of", key = "wallet_notifications-{clientId}", params = ["clientId:Long"])
 fun provideNotificationStore(
-    apiManager: FineractApiManager,
+    notificationService: NotificationService,
     dao: NotificationDao,
 ): Store<NotificationKey, List<Notification>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: NotificationKey ->
         // Ktorfit returns Flow<NotificationPayload> — take the first emission,
         // strip to the pageItems list (parity with
         // NotificationRepositoryImpl.fetchNotifications).
-        apiManager.notificationApi.fetchNotifications(IS_READ_FLAG).first().pageItems
+        notificationService.fetchNotifications(IS_READ_FLAG).first().pageItems
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: NotificationKey ->

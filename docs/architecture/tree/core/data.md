@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_DATA.md`
-> **Measured:** 126 Kotlin files, 9 test files
+> **Measured:** 128 Kotlin files, 9 test files
 
 ## Codegen contracts owned here
 
@@ -17,7 +17,7 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 ## Principal types
 
-`AccountRepository`, `AccountRepositoryImpl`, `AndroidPlatformDependentDataModule`, `AppLockOption`, `AppLockRepository`, `AppLockRepositoryImpl`, `AssetRepository`, `AssetRepositoryImpl`, `AuthenticationRepository`, `AuthenticationRepositoryImpl`, `AutoPayHistoryRepository`, `AutoPayHistoryRepositoryImpl`, `AutoPayHistoryStatistics`, `AutoPayRepository`  …and 81 more
+`AccountRepository`, `AccountRepositoryImpl`, `AndroidPlatformDependentDataModule`, `AppLockOption`, `AppLockRepository`, `AppLockRepositoryImpl`, `AssetRepository`, `AssetRepositoryImpl`, `AuthenticationRepository`, `AuthenticationRepositoryImpl`, `AutoPayHistoryRepository`, `AutoPayHistoryRepositoryImpl`, `AutoPayHistoryStatistics`, `AutoPayRepository`  …and 83 more
 
 <!-- scaffold:end -->
 
@@ -25,10 +25,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/data sha=c250ebda7347b9cbbfa5b180368e05291a070ead -->
+<!-- api-docs:begin module=core/data sha=af357fd25596eb6c4eea36f801c34d0ea3c143fc -->
 ## API reference
 
-_Generated from `core/data` at tree `c250ebda7347` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/data` at tree `af357fd25596` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/di/ForkRepositoryModule.kt`
@@ -970,11 +970,11 @@ Repository for managing auto-pay (scheduled recurring payment) schedules.
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:32</code></summary>
 
 ```kotlin
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.AutoPayService
 /** Default [AutoPayRepository]. */
 @RepositoryBinding(binds = AutoPayRepository::class)
 class AutoPayRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val autoPayService: AutoPayService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : AutoPayRepository {
 ```
@@ -1007,7 +1007,7 @@ Aggregate figures for a client's auto-pay schedules.
     override fun getAutoPayStatistics(
         clientId: Long,
     ): ScreenStateStream<AutoPayStatistics> {
-        return apiManager.autoPayApi
+        return autoPayService
             .getAutoPayStatistics(clientId)
 ```
 
@@ -1023,11 +1023,11 @@ Repository for the beneficiaries a client can transfer to.
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BeneficiaryRepositoryImpl.kt:27</code></summary>
 
 ```kotlin
-import kpt.core.network.SelfServiceApiManager
+import kpt.core.network.main.services.BeneficiaryService
 /** Default [BeneficiaryRepository] backed by the beneficiary API. */
 @RepositoryBinding(binds = BeneficiaryRepository::class)
 class BeneficiaryRepositoryImpl(
-    private val apiManager: SelfServiceApiManager,
+    private val beneficiaryService: BeneficiaryService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : BeneficiaryRepository {
 ```
@@ -1088,7 +1088,7 @@ Aggregate figures for a client's bills.
     }
 
     override fun getBillStatistics(clientId: Long): ScreenStateStream<BillStatistics> {
-        return apiManager.billApi
+        return billService
             .getBillStatistics(clientId)
             .map { response: BillStatisticsResponse ->
                 BillStatistics(
@@ -1399,11 +1399,11 @@ Repository for user registration and verification.
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RegistrationRepositoryImpl.kt:21</code></summary>
 
 ```kotlin
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.RegistrationService
 /** Default [RegistrationRepository] backed by the registration API. */
 @RepositoryBinding(binds = RegistrationRepository::class)
 class RegistrationRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val registrationService: RegistrationService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : RegistrationRepository {
 ```
@@ -1423,11 +1423,11 @@ Repository for running Fineract reports.
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RunReportRepositoryImpl.kt:24</code></summary>
 
 ```kotlin
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.RunReportService
 /** Default [RunReportRepository] backed by the run-report API. */
 @RepositoryBinding(binds = RunReportRepository::class)
 class RunReportRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val runReportService: RunReportService,
     @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : RunReportRepository {
 ```
@@ -1770,12 +1770,12 @@ class BillRepositoryImpl(
 ```
 Network-based implementation of BillRepository. TODO: This implementation uses placeholder API endpoints.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:38</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:39</code></summary>
 
 ```kotlin
-    apiManager: FineractApiManager,
+    billService: BillService,
     @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
-): BillRepository = BillRepositoryImpl(apiManager, ioDispatcher)
+): BillRepository = BillRepositoryImpl(billService, ioDispatcher)
 ```
 
 </details>
@@ -1802,12 +1802,12 @@ class BillerRepositoryImpl(
 ```
 Network-based implementation of BillerRepository. TODO: This implementation uses placeholder API endpoints.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:31</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:32</code></summary>
 
 ```kotlin
-    apiManager: FineractApiManager,
+    billerService: BillerService,
     @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
-): BillerRepository = BillerRepositoryImpl(apiManager, ioDispatcher)
+): BillerRepository = BillerRepositoryImpl(billerService, ioDispatcher)
 
 /** The network-backed [BillRepository]; see [provideNetworkBillerRepository] for why it is qualified. */
 @DataProvider(qualifier = "kpt.core.data.repository.BillRepository")
@@ -1899,7 +1899,7 @@ Default `PocketRepository` backed by the pocket and client APIs.
         pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
         linkableAccountsStore: Store<LinkableAccountKey, List<LinkableAccount>>? = null,
     ) = PocketRepositoryImp(
-        dataManager = fakeSelfServiceApiManager,
+        pocketService = unusedPocketService,
         ioDispatcher = Dispatchers.Default,
         pocketStore = pocketStore,
         linkableAccountsStore = linkableAccountsStore,
@@ -1990,6 +1990,28 @@ Default `UserRepository` backed by the user API.
 class UserVerificationRepositoryImpl : UserVerificationRepository
 ```
 `UserVerificationRepository` implementation backed by `TimeSource.Monotonic`, held in-process for the lifetime of this singleton. A wall-clock-based implementation (e.g.
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/serverconfig/ServerInstanceRepository.kt`
+
+```kotlin
+interface ServerInstanceRepository
+```
+The servers the user can pick, read through `core/data` like every other value a screen shows.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/serverconfig/impl/ServerInstanceRepositoryImpl.kt:23</code></summary>
+
+```kotlin
+import org.mobilenativefoundation.store.store5.Store
+
+@RepositoryBinding(binds = ServerInstanceRepository::class)
+internal class ServerInstanceRepositoryImpl(
+    @FromStore(AppStoreIds.ServerInstances) private val store: Store<Unit, List<ServerInstance>>,
+) : ServerInstanceRepository {
+```
+
+</details>
+
+- `fun instancesStream(scope: CoroutineScope): ScreenDataStream<List<ServerInstance>>` — Supabase `app_server_config` (this app's rows) through the `serverInstances` store, cached locally.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/user/AuthTokenBridge.kt`
 
@@ -2144,5 +2166,5 @@ Creates a `MutableSharedFlow` with a buffer of `Int.MAX_VALUE` and the given `re
 
 ---
 
-_90 type(s), 322 function(s)/property(ies); 358 carry KDoc at source; 6 authored example(s); 62 live call site(s)._
+_91 type(s), 323 function(s)/property(ies); 360 carry KDoc at source; 6 authored example(s); 63 live call site(s)._
 <!-- api-docs:end -->

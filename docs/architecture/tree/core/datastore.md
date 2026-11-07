@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/datastore sha=6bee378d64be97cc991a41e1be13fbeb0127c5a4 -->
+<!-- api-docs:begin module=core/datastore sha=e120b64ae4ac703bbd63630dc1580b92f1ce8d09 -->
 ## API reference
 
-_Generated from `core/datastore` at tree `6bee378d64be` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/datastore` at tree `e120b64ae4ac` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesDataSource.kt`
@@ -153,12 +153,12 @@ class BillRepositoryImpl(
 ```
 TODO: This implementation currently uses local storage (Multiplatform Settings) for bill data.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:38</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:39</code></summary>
 
 ```kotlin
-    apiManager: FineractApiManager,
+    billService: BillService,
     @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
-): BillRepository = BillRepositoryImpl(apiManager, ioDispatcher)
+): BillRepository = BillRepositoryImpl(billService, ioDispatcher)
 ```
 
 </details>
@@ -221,12 +221,12 @@ class BillerRepositoryImpl(
 ```
 TODO: This implementation currently uses local storage (Multiplatform Settings) for biller data.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:31</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:32</code></summary>
 
 ```kotlin
-    apiManager: FineractApiManager,
+    billerService: BillerService,
     @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
-): BillerRepository = BillerRepositoryImpl(apiManager, ioDispatcher)
+): BillerRepository = BillerRepositoryImpl(billerService, ioDispatcher)
 
 /** The network-backed [BillRepository]; see [provideNetworkBillerRepository] for why it is qualified. */
 @DataProvider(qualifier = "kpt.core.data.repository.BillRepository")
@@ -274,7 +274,7 @@ class UserPreferencesDataSource(
 ```
 Settings-backed store of the user session: user and client info, token, default account, selected server instances, external ids and language.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:42</code></summary>
 
 ```kotlin
             secureSettings = get<Settings>(named("secure")),
@@ -282,8 +282,8 @@ Settings-backed store of the user session: user and client info, token, default 
             preferenceManager = get<UserPreferencesDataSource>(),
             ioDispatcher = get(named(ForkDispatchers.IO.name)),
             unconfinedDispatcher = get(named(ForkDispatchers.Unconfined.name)),
-        )
-    }
+        ).also { prefs ->
+            // A session signed in before the wallet wrote its token to the framework's store too: copy
 ```
 
 </details>
@@ -597,7 +597,7 @@ class ForkPreferencesRepositoryImpl(
 ```
 Implementation of `ForkPreferencesRepository`. `owner: fork` — never synced. `by delegate` forwards every framework preference to the template's implementation, so this class stays complete when the template adds one.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:34</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/ForkDatastoreModule.kt:35</code></summary>
 
 ```kotlin
 val ForkDatastoreModule = module {

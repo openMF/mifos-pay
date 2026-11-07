@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
 import kpt.core.data.repository.BillerRepository
 import kpt.core.model.autopay.Biller
 import kpt.core.model.autopay.BillerCategory
-import kpt.core.network.FineractApiManager
+import kpt.core.network.main.services.BillerService
 /**
  * Network-based implementation of BillerRepository.
  *
@@ -33,12 +33,12 @@ import kpt.core.network.FineractApiManager
  * `ScreenStateStream<T>` envelope.
  */
 class BillerRepositoryImpl(
-    private val apiManager: FineractApiManager,
+    private val billerService: BillerService,
     private val ioDispatcher: CoroutineDispatcher,
 ) : BillerRepository {
 
     override fun getAllBillers(): Flow<List<Biller>> {
-        return apiManager.billerApi
+        return billerService
             .getAllBillers()
             .catch {
                 // Return empty list on error for now
@@ -50,7 +50,7 @@ class BillerRepositoryImpl(
     override suspend fun getBillerById(id: String): Biller? {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billerApi.getBillerById(id).first()
+                billerService.getBillerById(id).first()
             }
         } catch (e: Exception) {
             null
@@ -59,27 +59,27 @@ class BillerRepositoryImpl(
 
     override suspend fun saveBiller(biller: Biller): Biller {
         return withContext(ioDispatcher) {
-            apiManager.billerApi.createBiller(biller).first()
+            billerService.createBiller(biller).first()
         }
     }
 
     override suspend fun updateBiller(biller: Biller): Biller {
         val billerId = requireNotNull(biller.id) { "Biller ID is required for update" }
         return withContext(ioDispatcher) {
-            apiManager.billerApi.updateBiller(billerId, biller).first()
+            billerService.updateBiller(billerId, biller).first()
         }
     }
 
     override suspend fun deleteBiller(id: String) {
         withContext(ioDispatcher) {
-            apiManager.billerApi.deleteBiller(id).first()
+            billerService.deleteBiller(id).first()
         }
     }
 
     override suspend fun getBillersByCategory(category: BillerCategory): List<Biller> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billerApi.getBillersByCategory(category).first()
+                billerService.getBillersByCategory(category).first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -89,7 +89,7 @@ class BillerRepositoryImpl(
     override suspend fun searchBillersByName(query: String): List<Biller> {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billerApi.searchBillersByName(query).first()
+                billerService.searchBillersByName(query).first()
             }
         } catch (e: Exception) {
             emptyList()
@@ -99,7 +99,7 @@ class BillerRepositoryImpl(
     override suspend fun isBillerExists(name: String, accountNumber: String): Boolean {
         return try {
             withContext(ioDispatcher) {
-                apiManager.billerApi.isBillerExists(name, accountNumber).first()
+                billerService.isBillerExists(name, accountNumber).first()
             }
         } catch (e: Exception) {
             false
@@ -108,7 +108,7 @@ class BillerRepositoryImpl(
 
     override suspend fun clearAllBillers() {
         withContext(ioDispatcher) {
-            apiManager.billerApi.clearAllBillers().first()
+            billerService.clearAllBillers().first()
         }
     }
 }
