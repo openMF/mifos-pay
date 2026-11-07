@@ -18,15 +18,15 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kpt.core.common.ScreenState
+import kpt.core.data.fork.util.toForkScreenStateFlow
 import kpt.core.data.repository.RecentPayeeRepository
 import kpt.core.data.repository.SelfServiceRepository
 import kpt.core.data.repository.ThirdPartyTransferRepository
-import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.account.RecentPayee
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.network.entity.templates.account.AccountOption
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * ViewModel for the intra-bank hub; loads recent payees, beneficiaries and the transfer template and handles hub
  * actions.

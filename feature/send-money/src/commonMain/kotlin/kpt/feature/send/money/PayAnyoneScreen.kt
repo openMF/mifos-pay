@@ -56,11 +56,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.AvatarBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -100,11 +100,11 @@ fun PayAnyoneScreen(
         }
     }
 
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = "Pay Anyone",
                     backPress = onBackClick,
                 )
@@ -130,7 +130,7 @@ fun PayAnyoneScreen(
 
                     Spacer(modifier = Modifier.height(KptTheme.spacing.lg))
 
-                    MifosOutlinedTextField(
+                    ForkOutlinedTextField(
                         value = state.inputValue,
                         onValueChange = {
                             viewModel.trySendAction(PayAnyoneAction.InputValueChanged(it))
@@ -182,7 +182,7 @@ fun PayAnyoneScreen(
                                             ),
                                         ) {
                                             Icon(
-                                                imageVector = MifosIcons.Close,
+                                                imageVector = ForkIcons.Close,
                                                 contentDescription = "Clear input",
                                                 modifier = Modifier.size(20.dp),
                                             )
@@ -213,7 +213,7 @@ fun PayAnyoneScreen(
                                                 ),
                                             ) {
                                                 Icon(
-                                                    imageVector = MifosIcons.Contact,
+                                                    imageVector = ForkIcons.Contact,
                                                     contentDescription = "Select from contacts",
                                                     modifier = Modifier.size(20.dp),
                                                 )
@@ -738,7 +738,7 @@ private fun PartialNumberNote(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MifosIcons.Info,
+                imageVector = ForkIcons.Info,
                 contentDescription = "Information",
                 modifier = Modifier.size(16.dp),
                 tint = KptTheme.colorScheme.primary,
@@ -776,7 +776,7 @@ private fun ContactNotFoundMessage(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MifosIcons.Info,
+                imageVector = ForkIcons.Info,
                 contentDescription = "Information",
                 modifier = Modifier.size(16.dp),
                 tint = KptTheme.colorScheme.error,

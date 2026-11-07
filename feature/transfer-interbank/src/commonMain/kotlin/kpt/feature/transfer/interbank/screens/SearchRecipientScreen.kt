@@ -32,17 +32,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.ForkProgressIndicator
 import kpt.feature.transfer.interbank.generated.resources.Res
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_bank
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_enter_phone_number
@@ -69,10 +69,10 @@ fun SearchRecipientScreen(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.feature_send_interbank_search_recipient),
                 backPress = onBackClick,
             )
@@ -86,7 +86,7 @@ fun SearchRecipientScreen(
                 .padding(KptTheme.spacing.md),
             verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
-            MifosTextField(
+            ForkTextField(
                 label = stringResource(Res.string.feature_send_interbank_enter_phone_number),
                 value = searchQuery,
                 onValueChange = onSearchQueryChanged,
@@ -96,7 +96,7 @@ fun SearchRecipientScreen(
                 modifier = Modifier.fillMaxWidth(),
             )
 
-            MifosButton(
+            ForkButton(
                 onClick = {
                     keyboardController?.hide()
                     onSearchClick(searchQuery)
@@ -114,7 +114,7 @@ fun SearchRecipientScreen(
                         .padding(vertical = KptTheme.spacing.lg),
                     contentAlignment = Alignment.Center,
                 ) {
-                    MifosProgressIndicator()
+                    ForkProgressIndicator()
                 }
             } else if (searchError != null) {
                 EmptyContentScreen(
@@ -170,7 +170,7 @@ private fun RecipientSelectionCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(KptTheme.spacing.xs)
@@ -208,7 +208,7 @@ private fun RecipientSelectionCard(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.Person,
+                    icon = ForkIcons.Person,
                     backgroundColor = KptTheme.colorScheme.secondaryContainer,
                 )
             },
@@ -223,7 +223,7 @@ private fun RecipientSelectionCard(
 @Preview
 @Composable
 fun SearchRecipientScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         val mockRecipients = listOf(
             InterBankPartyInfoResponse(
                 sourceFspId = "mifos-bank-1",
@@ -266,7 +266,7 @@ fun SearchRecipientScreenPreview() {
 @Preview
 @Composable
 fun SearchRecipientScreenEmptyPreview() {
-    MifosTheme {
+    ForkTheme {
         SearchRecipientScreen(
             searchQuery = "",
             onSearchQueryChanged = {},
@@ -282,7 +282,7 @@ fun SearchRecipientScreenEmptyPreview() {
 @Preview
 @Composable
 fun SearchRecipientScreenNoResultsPreview() {
-    MifosTheme {
+    ForkTheme {
         SearchRecipientScreen(
             searchQuery = "999999",
             onSearchQueryChanged = {},
@@ -298,7 +298,7 @@ fun SearchRecipientScreenNoResultsPreview() {
 @Preview
 @Composable
 fun SearchRecipientScreenLoadingPreview() {
-    MifosTheme {
+    ForkTheme {
         SearchRecipientScreen(
             searchQuery = "9388006020",
             onSearchQueryChanged = {},

@@ -11,12 +11,12 @@ package kpt.core.common.di
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kpt.core.common.MifosDispatchers
+import kpt.core.common.ForkDispatchers
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-/** Koin module binding the IO [kotlinx.coroutines.CoroutineDispatcher] qualified by MifosDispatchers.IO. */
+/** Koin module binding the IO [kotlinx.coroutines.CoroutineDispatcher] qualified by ForkDispatchers.IO. */
 actual val ioDispatcherModule: Module
     get() = module {
-        single<CoroutineDispatcher>(named(MifosDispatchers.IO.name)) { Dispatchers.Default }
+        single<CoroutineDispatcher>(named(ForkDispatchers.IO.name)) { Dispatchers.Default }
     }

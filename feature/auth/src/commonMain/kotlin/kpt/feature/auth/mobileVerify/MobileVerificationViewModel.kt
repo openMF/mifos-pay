@@ -21,9 +21,9 @@ import kpt.core.base.store.submit.SubmitState
 import kpt.core.base.store.submit.submitHandler
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
+import kpt.core.data.fork.util.Constants
 import kpt.core.data.repository.SearchRepository
-import kpt.core.data.util.Constants
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** View model that verifies a mobile number: requests an OTP for the number, then verifies the entered OTP. */
 class MobileVerificationViewModel(
     private val searchRepository: SearchRepository,

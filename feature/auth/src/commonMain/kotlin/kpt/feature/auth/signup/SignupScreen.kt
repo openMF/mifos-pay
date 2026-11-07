@@ -41,20 +41,20 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopAppBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopAppBar
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.CombinedPasswordErrorCard
 import kpt.core.ui.DropdownBoxItem
 import kpt.core.ui.ExposedDropdownBox
-import kpt.core.ui.MifosPasswordField
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkPasswordField
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.auth.generated.resources.Res
 import kpt.feature.auth.generated.resources.feature_auth_address_line_1
 import kpt.feature.auth.generated.resources.feature_auth_address_line_2
@@ -125,16 +125,16 @@ private fun SignupScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
-    MifosScaffold(
+    ForkScaffold(
         snackbarHostState = snackbarHostState,
         modifier = modifier,
         containerColor = KptTheme.colorScheme.background,
         topBar = {
-            MifosTopAppBar(
+            ForkTopAppBar(
                 title = stringResource(Res.string.feature_auth_complete_your_registration),
                 subtitle = stringResource(Res.string.feature_auth_all_fields_are_mandatory),
                 scrollBehavior = scrollBehavior,
-                navigationIcon = MifosIcons.Back,
+                navigationIcon = ForkIcons.Back,
                 navigationIconContentDescription = "Back",
                 onNavigationIconClick = {
                     onAction(SignUpAction.CloseClick)
@@ -163,7 +163,7 @@ private fun SignupScreenContent(
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
     ) {
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.firstNameInput,
                 label = stringResource(Res.string.feature_auth_first_name),
                 modifier = Modifier.fillMaxWidth(),
@@ -177,7 +177,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.lastNameInput,
                 label = stringResource(Res.string.feature_auth_last_name),
                 modifier = Modifier.fillMaxWidth(),
@@ -191,7 +191,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.userNameInput,
                 label = stringResource(Res.string.feature_auth_username),
                 modifier = Modifier.fillMaxWidth(),
@@ -205,7 +205,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.emailInput,
                 label = stringResource(Res.string.feature_auth_email),
                 modifier = Modifier.fillMaxWidth(),
@@ -219,7 +219,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.mobileNumberInput,
                 label = stringResource(Res.string.feature_auth_mobile_no),
                 modifier = Modifier.fillMaxWidth(),
@@ -238,7 +238,7 @@ private fun SignupScreenContent(
                 val interactionSource = remember { MutableInteractionSource() }
                 val isFocused by interactionSource.collectIsFocusedAsState()
 
-                MifosPasswordField(
+                ForkPasswordField(
                     value = state.passwordInput,
                     label = stringResource(Res.string.feature_auth_password),
                     modifier = Modifier.fillMaxWidth(),
@@ -263,7 +263,7 @@ private fun SignupScreenContent(
         item {
             var showPassword by rememberSaveable { mutableStateOf(false) }
 
-            MifosPasswordField(
+            ForkPasswordField(
                 value = state.confirmPasswordInput,
                 label = stringResource(Res.string.feature_auth_confirm_password),
                 modifier = Modifier.fillMaxWidth(),
@@ -276,7 +276,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.addressLine1Input,
                 label = stringResource(Res.string.feature_auth_address_line_1),
                 modifier = Modifier.fillMaxWidth(),
@@ -287,7 +287,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.addressLine2Input,
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(Res.string.feature_auth_address_line_2),
@@ -298,7 +298,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.pinCodeInput,
                 label = stringResource(Res.string.feature_auth_pin_code),
                 modifier = Modifier.fillMaxWidth(),
@@ -341,7 +341,7 @@ private fun SignupScreenContent(
 
                 // State Dropdown
                 if (state.statesForSelectedCountry.isNullOrEmpty()) {
-                    MifosOutlinedTextField(
+                    ForkOutlinedTextField(
                         value = state.stateInput,
                         label = stringResource(Res.string.feature_auth_state),
                         onValueChange = {
@@ -372,7 +372,7 @@ private fun SignupScreenContent(
         }
 
         item {
-            MifosButton(
+            ForkButton(
                 modifier = Modifier
                     .fillMaxWidth(),
                 enabled = true,
@@ -395,16 +395,16 @@ private fun SignUpDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        DialogState.Loading -> MifosLoadingDialog(
+        DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
-        is DialogState.Error.StringMessage -> MifosBasicDialog(
+        is DialogState.Error.StringMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(dialogState.message),
             onDismissRequest = onDismissRequest,
         )
 
-        is DialogState.Error.ResourceMessage -> MifosBasicDialog(
+        is DialogState.Error.ResourceMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(stringResource(dialogState.message)),
             onDismissRequest = onDismissRequest,
         )

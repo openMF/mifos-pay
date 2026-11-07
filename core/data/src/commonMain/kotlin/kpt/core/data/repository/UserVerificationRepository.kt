@@ -17,7 +17,7 @@ package kpt.core.data.repository
  *
  * Pattern:
  *  1. The internal passcode screen calls [recordVerification] from
- *     `MifosNavHost`'s `onAuthenticationSuccess` callback after the user
+ *     `ForkNavHost`'s `onAuthenticationSuccess` callback after the user
  *     successfully verifies.
  *  2. The calling feature (settings disable-biometrics, intra-bank transfer)
  *     observes the saved-state-handle round-trip boolean, then calls

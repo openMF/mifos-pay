@@ -18,7 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import kpt.core.common.Constants
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.feature.upi.setup.viewmodel.OtpRequestState
 import kpt.feature.upi.setup.viewmodel.OtpVerifyState
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -146,7 +146,7 @@ private fun ChangeUpi(
 @Preview
 @Composable
 private fun PreviewSetUpUpiPin() {
-    MifosTheme {
+    ForkTheme {
         SetUpUpiScreenContent(
             type = Constants.SETUP,
             otpRequestState = OtpRequestState.Idle,
@@ -161,7 +161,7 @@ private fun PreviewSetUpUpiPin() {
 @Preview
 @Composable
 private fun PreviewForgetUpiPin() {
-    MifosTheme {
+    ForkTheme {
         SetUpUpiScreenContent(
             type = Constants.FORGOT,
             otpRequestState = OtpRequestState.Idle,
@@ -176,7 +176,7 @@ private fun PreviewForgetUpiPin() {
 @Preview
 @Composable
 private fun PreviewChangeUpiPin() {
-    MifosTheme {
+    ForkTheme {
         SetUpUpiScreenContent(
             type = Constants.CHANGE,
             otpRequestState = OtpRequestState.Idle,

@@ -47,8 +47,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.designsystem.theme.toRoundedCornerShape
 import kpt.core.ui.generated.resources.Res
 import kpt.core.ui.generated.resources.core_ui_error_icon_description
@@ -161,7 +161,7 @@ fun CombinedPasswordErrorCard(
                             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                         ) {
                             Icon(
-                                imageVector = MifosIcons.OutlinedInfo,
+                                imageVector = ForkIcons.OutlinedInfo,
                                 contentDescription = stringResource(Res.string.core_ui_error_icon_description),
                                 tint = KptTheme.colorScheme.error,
                                 modifier = Modifier.size(KptTheme.spacing.md),
@@ -416,7 +416,7 @@ enum class PasswordStrengthState {
 @Preview
 @Composable
 private fun PasswordStrengthIndicatorPreview_minCharMet() {
-    MifosTheme {
+    ForkTheme {
         PasswordStrengthIndicator(
             state = PasswordStrengthState.WEAK_3,
             currentCharacterCount = 12,
@@ -428,7 +428,7 @@ private fun PasswordStrengthIndicatorPreview_minCharMet() {
 @Preview
 @Composable
 private fun PasswordStrengthIndicatorPreview_minCharNotMet() {
-    MifosTheme {
+    ForkTheme {
         PasswordStrengthIndicator(
             state = PasswordStrengthState.WEAK_3,
             currentCharacterCount = 11,
@@ -440,7 +440,7 @@ private fun PasswordStrengthIndicatorPreview_minCharNotMet() {
 @Preview
 @Composable
 private fun PasswordStrengthIndicatorPreview_noMinChar() {
-    MifosTheme {
+    ForkTheme {
         PasswordStrengthIndicator(
             state = PasswordStrengthState.WEAK_3,
             currentCharacterCount = 12,

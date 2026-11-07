@@ -33,9 +33,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.icon.ForkIcons
 /**
  * Type of information to display in the bottom sheet.
  * Determines the icon and color scheme used.
@@ -83,7 +83,7 @@ fun InfoBottomSheet(
     secondaryActionText: String = "Cancel",
     onSecondaryAction: (() -> Unit)? = null,
 ) {
-    MifosBottomSheet(
+    ForkBottomSheet(
         onDismiss = onDismiss,
         modifier = modifier,
     ) {
@@ -180,7 +180,7 @@ private fun InfoBottomSheetContent(
                     Text(text = secondaryActionText)
                 }
 
-                MifosButton(
+                ForkButton(
                     onClick = {
                         onDismiss()
                         onPrimaryAction()
@@ -192,7 +192,7 @@ private fun InfoBottomSheetContent(
             }
         } else {
             // Single dismiss button
-            MifosButton(
+            ForkButton(
                 onClick = onDismiss,
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -206,25 +206,25 @@ private fun InfoBottomSheetContent(
 private fun getInfoVisuals(infoType: InfoType): Triple<ImageVector, Color, Color> {
     return when (infoType) {
         InfoType.INFO -> Triple(
-            MifosIcons.Info,
+            ForkIcons.Info,
             KptTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
             KptTheme.colorScheme.primary,
         )
 
         InfoType.WARNING -> Triple(
-            MifosIcons.Warning,
+            ForkIcons.Warning,
             KptTheme.colorScheme.tertiaryContainer.copy(alpha = 0.3f),
             KptTheme.colorScheme.tertiary,
         )
 
         InfoType.SUCCESS -> Triple(
-            MifosIcons.CheckCircle,
+            ForkIcons.CheckCircle,
             Color(0xFF4CAF50).copy(alpha = 0.2f),
             Color(0xFF4CAF50),
         )
 
         InfoType.ACTION_REQUIRED -> Triple(
-            MifosIcons.SendRightTilted,
+            ForkIcons.SendRightTilted,
             KptTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
             KptTheme.colorScheme.secondary,
         )

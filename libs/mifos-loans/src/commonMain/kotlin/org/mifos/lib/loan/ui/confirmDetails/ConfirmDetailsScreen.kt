@@ -29,26 +29,26 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.ui.MifosProgressIndicatorOverlay
-import kpt.core.ui.utils.EventsEffect
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_info_confirm_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_status_success
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_title
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.ui.ForkProgressIndicatorOverlay
+import kpt.core.ui.fork.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.ConfirmDetailsCard
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_info_confirm_details
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_status_success
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_title
 /**
  * Entry point for the Confirm Details screen — the final step of the loan-application wizard.
  *
  * Owns the **passcode/biometric auth-gate plumbing**, mirroring `TransferConfirmScreen`:
  *  - Observes [entryStateHandle] for [LOAN_APPLICATION_VERIFICATION_KEY] (written by
- *    `internalMifosPasscodeScreen` on success/failure) and re-dispatches it as
+ *    `internalPasscodeScreen` on success/failure) and re-dispatches it as
  *    [ConfirmDetailsAction.UpdateUserVerificationResult] so the suspended
  *    `handleUserVerification` in [ConfirmDetailsViewModel] resumes.
  *  - Cancellation guard: if the user backs out of the passcode screen without verifying, the
@@ -59,7 +59,7 @@ import org.mifos.lib.loan.component.ConfirmDetailsCard
  *
  * @param navigateBack Callback to return to the previous screen.
  * @param navigateForPasscodeVerification `(verificationKey) -> Unit` — caller binds to
- * `navController::navigateToInternalMifosPasscodeScreen`.
+ * `navController::navigateToInternalPasscodeScreen`.
  * @param onSubmitSuccess Callback invoked once the loan application has been submitted
  * successfully and the user has acknowledged the success dialog.
  * @param entryStateHandle This destination's own `SavedStateHandle`, hoisted from the nav-graph
@@ -138,7 +138,7 @@ internal fun ConfirmDetailsDialogs(
 ) {
     when (dialogState) {
         is ConfirmDetailsState.DialogState.Success -> {
-            MifosBasicDialog(
+            ForkBasicDialog(
                 visibilityState = BasicDialogState.Shown(
                     title = stringResource(Res.string.feature_apply_loan_status_success),
                     message = dialogState.message,
@@ -148,7 +148,7 @@ internal fun ConfirmDetailsDialogs(
         }
 
         is ConfirmDetailsState.DialogState.Error -> {
-            MifosBasicDialog(
+            ForkBasicDialog(
                 visibilityState = BasicDialogState.Shown(message = dialogState.message),
                 onConfirm = { onAction(ConfirmDetailsAction.RetrySubmit) },
                 onDismissRequest = { onAction(ConfirmDetailsAction.DismissDialog) },
@@ -171,10 +171,10 @@ internal fun ConfirmDetailsScreenContent(
     onAction: (ConfirmDetailsAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.feature_apply_loan_info_confirm_details),
                 backPress = { onAction(ConfirmDetailsAction.OnNavigateBack) },
             )
@@ -189,7 +189,7 @@ internal fun ConfirmDetailsScreenContent(
         ) {
             ConfirmDetailsCard(keyValuePairs = state.details)
 
-            MifosButton(
+            ForkButton(
                 modifier = Modifier.fillMaxWidth().height(48.dp),
                 onClick = { onAction(ConfirmDetailsAction.SubmitClicked) },
                 enabled = !state.isSubmitting,
@@ -200,7 +200,7 @@ internal fun ConfirmDetailsScreenContent(
         }
 
         if (state.isSubmitting) {
-            MifosProgressIndicatorOverlay()
+            ForkProgressIndicatorOverlay()
         }
     }
 }

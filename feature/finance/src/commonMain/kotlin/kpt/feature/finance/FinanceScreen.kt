@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kpt.core.ui.MifosScrollableTabRow
+import kpt.core.ui.ForkScrollableTabRow
 import kpt.core.ui.utility.TabContent
 import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
@@ -25,7 +25,7 @@ internal fun FinanceRoute(
     val pagerState = rememberPagerState(pageCount = { tabContents.size })
 
     Column(modifier = modifier.fillMaxSize()) {
-        MifosScrollableTabRow(
+        ForkScrollableTabRow(
             tabContents = tabContents,
             pagerState = pagerState,
         )

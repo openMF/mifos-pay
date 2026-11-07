@@ -18,7 +18,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.util.AttributeKey
 import kpt.core.common.GlobalAuthManager
 import kpt.core.datastore.prefs.ForkPreferencesRepository
-import kpt.core.network.config.InstanceConfigManager
+import kpt.core.network.main.config.InstanceConfigManager
 /**
  * Ktor client plugin adding JSON, tenant and Basic auth headers and flagging 401 responses as unauthorized.
  */

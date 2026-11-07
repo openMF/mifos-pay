@@ -45,9 +45,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.LocalDate
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 /** Screen listing UPI transactions grouped by month, with search. */
 @Composable
@@ -66,7 +66,7 @@ fun UpiTransactionHistoryScreen(
         }
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         containerColor = KptTheme.colorScheme.background,
         topBar = {
@@ -144,7 +144,7 @@ private fun UpiTransactionHistoryTopBar(
                 modifier = Modifier.align(Alignment.CenterStart),
             ) {
                 Icon(
-                    imageVector = MifosIcons.ArrowBack,
+                    imageVector = ForkIcons.ArrowBack,
                     contentDescription = "Back",
                     tint = KptTheme.colorScheme.onSurface,
                 )
@@ -182,7 +182,7 @@ private fun UpiTransactionHistoryTopBar(
                             onClick = onClearSearch,
                         ) {
                             Icon(
-                                imageVector = MifosIcons.Close,
+                                imageVector = ForkIcons.Close,
                                 contentDescription = "Clear search",
                                 tint = KptTheme.colorScheme.onSurfaceVariant,
                             )

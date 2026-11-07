@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.ui.OtpTextField
 import kpt.core.ui.VerifyStepHeader
 import kpt.feature.upi.setup.generated.resources.Res
@@ -124,7 +124,7 @@ private fun OtpScreenContent(
 @Preview
 @Composable
 private fun OtpScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         OtpScreen(
             otpRequestState = OtpRequestState.Sent("+1 •••• ••1234"),
             otpVerifyState = OtpVerifyState.Idle,
@@ -138,7 +138,7 @@ private fun OtpScreenPreview() {
 @Preview
 @Composable
 private fun OtpScreenVerifiedPreview() {
-    MifosTheme {
+    ForkTheme {
         OtpScreen(
             otpRequestState = OtpRequestState.Sent("+1 •••• ••1234"),
             otpVerifyState = OtpVerifyState.Verified,

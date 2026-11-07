@@ -16,7 +16,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import kpt.core.ui.utils.TransitionProviders
+import kpt.core.ui.fork.utils.TransitionProviders
 /** Registers a composable destination for [route] using the slide enter/exit transitions. */
 fun NavGraphBuilder.composableWithSlideTransitions(
     route: String,

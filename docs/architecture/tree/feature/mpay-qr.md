@@ -9,7 +9,7 @@ Screens: `MpayQrScreen`
 
 ViewModels: `MpayQrViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `MpayQrViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/mpay-qr sha=2cff5c941a582f7814ec95dd4fd7b52c286a6f08 -->
+<!-- api-docs:begin module=feature/mpay-qr sha=4a8bd8fb9591e2a384734cdaa70968eff2314c79 -->
 ## API reference
 
-_Generated from `feature/mpay-qr` at tree `2cff5c941a58` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/mpay-qr` at tree `4a8bd8fb9591` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

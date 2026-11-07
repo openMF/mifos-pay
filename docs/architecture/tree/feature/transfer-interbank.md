@@ -23,10 +23,10 @@ ViewModels: `InterbankTransferViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/transfer-interbank sha=b52640c3fe8e998825aabd6a364ac3e6abe16c04 -->
+<!-- api-docs:begin module=feature/transfer-interbank sha=6a1df2f4b873c414cf7ba7f66ef15058fbcd4a7e -->
 ## API reference
 
-_Generated from `feature/transfer-interbank` at tree `b52640c3fe8e` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/transfer-interbank` at tree `6a1df2f4b873` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

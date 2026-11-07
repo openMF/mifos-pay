@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.scan.generated.resources.Res
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_close
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_help
@@ -58,7 +58,7 @@ fun QrScanTopBar(
             modifier = Modifier.size(48.dp),
         ) {
             Icon(
-                imageVector = MifosIcons.Close,
+                imageVector = ForkIcons.Close,
                 contentDescription = closeDescription,
                 tint = Color.White,
                 modifier = Modifier.size(28.dp),
@@ -86,7 +86,7 @@ fun QrScanTopBar(
             modifier = Modifier.size(48.dp),
         ) {
             Icon(
-                imageVector = MifosIcons.Info,
+                imageVector = ForkIcons.Info,
                 contentDescription = helpDescription,
                 tint = Color.White,
                 modifier = Modifier.size(24.dp),

@@ -15,7 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkScaffold
 import org.koin.compose.viewmodel.koinViewModel
 // TODO:: Implement KYC Level 3 screen
 @Composable
@@ -36,7 +36,7 @@ fun KYCLevel3ScreenContent(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = "Review & Submit",
         backPress = navigateBack,
         modifier = modifier,

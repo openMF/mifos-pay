@@ -22,7 +22,7 @@ import kpt.core.model.autopay.AutoPayGlobalSettings
 import kpt.core.model.autopay.AutoPayRules
 import kpt.core.model.autopay.NotificationSettings
 import kpt.core.model.autopay.SecuritySettings
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** View model for AutoPay preferences; loads, edits and saves the global settings. */
 class AutoPayPreferencesViewModel(
     savedStateHandle: SavedStateHandle,

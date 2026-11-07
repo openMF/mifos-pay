@@ -12,6 +12,8 @@ package kpt.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.AutoPayHistoryRepository
@@ -23,9 +25,10 @@ import kpt.core.network.FineractApiManager
 // TODO: Align repository with final API response/request schema once confirmed by backend
 
 /** Default [AutoPayHistoryRepository]. */
+@RepositoryBinding(binds = AutoPayHistoryRepository::class)
 class AutoPayHistoryRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : AutoPayHistoryRepository {
 
     override fun getAutoPayHistory(autoPayId: Long): ScreenStateStream<List<AutoPayHistory>> {

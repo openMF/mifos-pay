@@ -15,7 +15,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import io.ktor.http.encodeURLPathPart
-import kpt.core.data.util.MpayQrCodeProcessor
+import kpt.core.data.fork.util.MpayQrCodeProcessor
 import kpt.core.model.utils.QrCodeData
 import kpt.core.model.utils.QrCodeType
 import kpt.core.ui.composableWithSlideTransitions

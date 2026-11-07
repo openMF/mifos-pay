@@ -52,16 +52,16 @@ import cmp.navigation.generated.resources.tenant_value
 import cmp.navigation.generated.resources.update
 import kpt.core.base.designsystem.KptTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -82,11 +82,11 @@ fun InstanceSelectorScreen(
         }
     }
 
-    MifosBottomSheet(
+    ForkBottomSheet(
         onDismiss = onDismiss,
         modifier = modifier,
     ) {
-        MifosScaffold(
+        ForkScaffold(
             modifier = modifier,
             bottomBar = {
                 Column(
@@ -95,7 +95,7 @@ fun InstanceSelectorScreen(
                         .padding(KptTheme.spacing.md),
                     verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
                 ) {
-                    MifosButton(
+                    ForkButton(
                         onClick = {
                             viewModel.trySendAction(InstanceSelectorAction.UpdateInstances)
                         },
@@ -116,7 +116,7 @@ fun InstanceSelectorScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                     ) {
-                        MifosProgressIndicator()
+                        ForkProgressIndicator()
                     }
                 }
 
@@ -223,7 +223,7 @@ private fun MainInstanceItem(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        MifosCard(
+        ForkCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onMainInstanceClick),
@@ -406,7 +406,7 @@ private fun InterbankServerItem(
         label = "iconTint",
     )
 
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .border(
@@ -438,7 +438,7 @@ private fun InterbankServerItem(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    imageVector = MifosIcons.Bank,
+                    imageVector = ForkIcons.Bank,
                     contentDescription = null,
                     tint = animatedIconTint.value,
                     modifier = Modifier.size(20.dp),
@@ -548,7 +548,7 @@ private fun MainInstanceItemPreview() {
 @Preview
 @Composable
 private fun MainInstanceItemUnselectedPreview() {
-    MifosTheme {
+    ForkTheme {
         MainInstanceItem(
             instance = ServerInstance(
                 endpoint = "venus.mifos.community",
@@ -604,7 +604,7 @@ private fun InterbankServerItemSelectedPreview() {
 @Preview
 @Composable
 private fun InstancesListPreview() {
-    MifosTheme {
+    ForkTheme {
         InstancesList(
             instances = listOf(
                 ServerInstance(

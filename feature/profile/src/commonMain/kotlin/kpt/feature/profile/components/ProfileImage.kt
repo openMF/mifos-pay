@@ -28,7 +28,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.profile.generated.resources.Res
 import kpt.feature.profile.generated.resources.feature_profile_profile_image_description
 import kpt.feature.profile.generated.resources.placeholder
@@ -114,7 +114,7 @@ fun EditableProfileImage(
             colors = IconButtonDefaults.iconButtonColors(KptTheme.colorScheme.surface),
         ) {
             Icon(
-                imageVector = MifosIcons.Edit2,
+                imageVector = ForkIcons.Edit2,
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp),

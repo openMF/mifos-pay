@@ -16,10 +16,10 @@ ViewModels: `AddEditBeneficiaryViewModel`, `BeneficiaryListViewModel`, `DeleteBe
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/beneficiary sha=30e56566ffacf7de1a361b8b29b4ca3825f510a6 -->
+<!-- api-docs:begin module=feature/beneficiary sha=ae79224418b75ef40f864af2872eb839a4e9130e -->
 ## API reference
 
-_Generated from `feature/beneficiary` at tree `30e56566ffac` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/beneficiary` at tree `ae79224418b7` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

@@ -11,14 +11,17 @@ package kpt.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.data.repository.RegistrationRepository
 import kpt.core.model.network.entity.register.RegisterPayload
 import kpt.core.model.network.entity.register.UserVerify
 import kpt.core.network.FineractApiManager
 /** Default [RegistrationRepository] backed by the registration API. */
+@RepositoryBinding(binds = RegistrationRepository::class)
 class RegistrationRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : RegistrationRepository {
     override suspend fun registerUser(registerPayload: RegisterPayload) {
         withContext(ioDispatcher) {

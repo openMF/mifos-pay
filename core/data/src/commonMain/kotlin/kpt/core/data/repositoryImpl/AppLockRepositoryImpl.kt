@@ -10,6 +10,7 @@
 package kpt.core.data.repositoryImpl
 
 import com.russhwolf.settings.Settings
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.data.repository.AppLockRepository
 /** Multiplatform-Settings key for the [APP_LOCK_FLAG] boolean. */
 const val APP_LOCK_FLAG = "org.mifospay.mifos.app_lock_flag"
@@ -20,10 +21,11 @@ const val APP_LOCK_FLAG = "org.mifospay.mifos.app_lock_flag"
  *
  * `isAppLocked()` returns `null` when the key is absent (fresh install or
  * after [deleteLock]); the caller decides how to interpret that.
- * `MifosPayApp` treats `null` the same as "no re-auth needed" via
+ * `ForkAppRoot` treats `null` the same as "no re-auth needed" via
  * `isAppLocked()?.let { ... }` — the absence of a flag means there's no
  * established session to re-gate.
  */
+@RepositoryBinding(binds = AppLockRepository::class)
 class AppLockRepositoryImpl(
     private val settings: Settings,
 ) : AppLockRepository {

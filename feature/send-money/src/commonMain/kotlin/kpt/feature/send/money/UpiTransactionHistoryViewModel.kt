@@ -14,7 +14,7 @@ import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import kpt.core.common.DateHelper
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel for the UPI transaction history screen; supports searching grouped transactions. */
 class UpiTransactionHistoryViewModel() : BaseViewModel<UpiTransactionHistoryState, UpiTransactionHistoryEvent, UpiTransactionHistoryAction>(
     initialState = UpiTransactionHistoryState(),

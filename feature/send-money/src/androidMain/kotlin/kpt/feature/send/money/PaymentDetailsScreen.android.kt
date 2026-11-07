@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.launch
-import kpt.core.ui.utils.ScreenshotContextDetails
-import kpt.core.ui.utils.ShareUtils
+import kpt.core.ui.fork.utils.ScreenshotContextDetails
+import kpt.core.ui.fork.utils.ShareUtils
 /**
  * Android-specific implementation of PaymentDetailsScreen with screenshot functionality.
  *

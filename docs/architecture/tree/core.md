@@ -8,14 +8,14 @@
 | Path | Files |
 |---|---:|
 | `core/model/` | 163 |
-| `core/data/` | 140 |
+| `core/data/` | 141 |
 | `core/network/` | 100 |
 | `core/designsystem/` | 96 |
 | `core/ui/` | 87 |
 | `core/database/` | 84 |
 | `core/common/` | 67 |
 | `core/store/` | 66 |
-| `core/datastore/` | 39 |
+| `core/datastore/` | 38 |
 | `core/firebase/` | 14 |
 | `core/domain/` | 12 |
 | `core/platform/` | 8 |
@@ -25,9 +25,9 @@
 | | |
 |---|---|
 | `core:common` | 58 Kotlin files — [guide](core/common.md) |
-| `core:data` | 125 Kotlin files — [guide](core/data.md) |
+| `core:data` | 126 Kotlin files — [guide](core/data.md) |
 | `core:database` | 70 Kotlin files — [guide](core/database.md) |
-| `core:datastore` | 30 Kotlin files — [guide](core/datastore.md) |
+| `core:datastore` | 29 Kotlin files — [guide](core/datastore.md) |
 | `core:designsystem` | 77 Kotlin files — [guide](core/designsystem.md) |
 | `core:domain` | 2 Kotlin files — [guide](core/domain.md) |
 | `core:firebase` | 6 Kotlin files — [guide](core/firebase.md) |

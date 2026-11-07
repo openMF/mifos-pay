@@ -21,11 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.history.components.TransactionDetail
 import kpt.feature.history.generated.resources.Res
 import kpt.feature.history.generated.resources.feature_history_error
@@ -69,7 +69,7 @@ internal fun TransactionDetailScreenContent(
     modifier: Modifier = Modifier,
     onAction: (TransactionDetailAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         backPress = { onAction(TransactionDetailAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_history_transaction_details),
         actions = {
@@ -79,7 +79,7 @@ internal fun TransactionDetailScreenContent(
                 },
             ) {
                 Icon(
-                    imageVector = MifosIcons.OutlinedShare,
+                    imageVector = ForkIcons.OutlinedShare,
                     contentDescription = stringResource(Res.string.feature_history_share),
                 )
             }
@@ -92,7 +92,7 @@ internal fun TransactionDetailScreenContent(
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
-                is TransactionDetailState.ViewState.Loading -> MifosProgressIndicator()
+                is TransactionDetailState.ViewState.Loading -> ForkProgressIndicator()
 
                 is TransactionDetailState.ViewState.Error -> {
                     EmptyContentScreen(

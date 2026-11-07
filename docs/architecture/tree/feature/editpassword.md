@@ -22,10 +22,10 @@ ViewModels: `EditPasswordViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/editpassword sha=acf17aa6223407bce5f2232ade012cda2e783cf3 -->
+<!-- api-docs:begin module=feature/editpassword sha=c32a7a08cfaf1177a5b906782e3e99cb1285261d -->
 ## API reference
 
-_Generated from `feature/editpassword` at tree `acf17aa62234` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/editpassword` at tree `c32a7a08cfaf` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

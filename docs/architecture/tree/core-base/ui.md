@@ -356,7 +356,7 @@ fun LivecycleEventEffect(
 ```
 Creates a side effect to observe lifecycle events.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/LifecycleEventEffect.kt:24</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/LifecycleEventEffect.kt:24</code></summary>
 
 ```kotlin
  */
@@ -1573,7 +1573,7 @@ typealias EnterTransitionProvider =
 ```
 Function type for providing nullable enter transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination enters the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:23</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt:23</code></summary>
 
 ```kotlin
 import kotlin.jvm.JvmSuppressWildcards
@@ -1592,7 +1592,7 @@ typealias ExitTransitionProvider =
 ```
 Function type for providing nullable exit transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination exits the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:26</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt:26</code></summary>
 
 ```kotlin
     (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)
@@ -1611,7 +1611,7 @@ typealias NonNullEnterTransitionProvider =
 ```
 Function type for providing non-null enter transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination enters the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:29</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt:29</code></summary>
 
 ```kotlin
     (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)
@@ -1630,7 +1630,7 @@ typealias NonNullExitTransitionProvider =
 ```
 Function type for providing non-null exit transitions in navigation. Used with `AnimatedContentTransitionScope` to define how a destination exits the screen.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt:32</code></summary>
 
 ```kotlin
     (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition)
@@ -1649,7 +1649,7 @@ val DEFAULT_STAY_TRANSITION_TIME_MS: Int =
 ```
 The default transition time (in milliseconds) for all "stay"/no-op transitions in the `TransitionProviders`. This should be at least as large as any other transition that might also be happening during a navigation.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:60</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt:60</code></summary>
 
 ```kotlin
  * navigation.
@@ -1708,7 +1708,7 @@ object RootTransitionProviders
 ```
 Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a root `NavHost`, which requires a non-null value.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:92</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt:92</code></summary>
 
 ```kotlin
          */

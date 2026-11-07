@@ -22,10 +22,10 @@ ViewModels: `AddEditSIViewModel`, `SIDetailViewModel`, `StandingInstructionViewM
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/standing-instruction sha=2d823264815f61760beacd541db55388fa9101df -->
+<!-- api-docs:begin module=feature/standing-instruction sha=90835cf8c6c20a9dedd705d7cb47ec9d7c516510 -->
 ## API reference
 
-_Generated from `feature/standing-instruction` at tree `2d823264815f` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/standing-instruction` at tree `90835cf8c6c2` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -74,7 +74,7 @@ private fun SIDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is SIUiState.DialogState.DeleteSI -> MifosBasicDialog(
+        is SIUiState.DialogState.DeleteSI -> ForkBasicDialog(
 ```
 
 </details>

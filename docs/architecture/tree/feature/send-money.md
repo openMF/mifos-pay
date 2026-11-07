@@ -9,17 +9,17 @@ Screens: `BankTransferScreen`, `ContactsPickerScreen`, `PayAnyoneScreen`, `Payee
 
 ViewModels: `BankTransferViewModel`, `PayAnyoneViewModel`, `PayeeDetailsViewModel`, `PaymentChatHistoryViewModel`, `PaymentDetailsViewModel`, `PaymentProcessingViewModel`, `PaymentSuccessViewModel`, `SearchIfscViewModel`, `SendMoneyOptionsViewModel`, `SendMoneyViewModel`, `UpiPinViewModel`, `UpiTransactionHistoryViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 <!-- tree-scaffold:end -->
 ## Significance
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/send-money sha=be78c4d2c380ef2f583ead59e9ee991885c0eb0d -->
+<!-- api-docs:begin module=feature/send-money sha=ba41df64678a13046e0b04eed4732757832b93a9 -->
 ## API reference
 
-_Generated from `feature/send-money` at tree `be78c4d2c380` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/send-money` at tree `ba41df64678a` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -211,7 +211,7 @@ A device contact that can be picked as a payment recipient.
 
 ```kotlin
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Contact Number *",
                     value = state.formData.contactNumber,
                     onValueChange = { viewModel.trySendAction(AddBillerAction.UpdateContactNumber(it)) },
@@ -761,7 +761,7 @@ ViewModel for the Payment Chat History screen Manages payment history state and 
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    MifosScaffold(
+    ForkScaffold(
 ```
 
 </details>

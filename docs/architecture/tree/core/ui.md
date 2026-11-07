@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/ui sha=fe10c2aaf5602cb12041e7a759af4f9442ddbd95 -->
+<!-- api-docs:begin module=core/ui sha=d5c3d7038bf0aa0d0200406b3a24ae0640e654b3 -->
 ## API reference
 
-_Generated from `core/ui` at tree `fe10c2aaf560` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/ui` at tree `d5c3d7038bf0` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/AmountEditText.kt`
@@ -56,7 +56,7 @@ Circular avatar showing the initials of `name`.
                 },
                 leadingContent = {
                     AvatarBox(
-                        icon = MifosIcons.Bank,
+                        icon = ForkIcons.Bank,
                         backgroundColor = KptTheme.colorScheme.secondaryContainer,
                     )
                 },
@@ -75,7 +75,7 @@ Circular avatar showing an `icon`.
                 },
                 leadingContent = {
                     AvatarBox(
-                        icon = MifosIcons.Bank,
+                        icon = ForkIcons.Bank,
                         backgroundColor = KptTheme.colorScheme.secondaryContainer,
                     )
                 },
@@ -98,7 +98,7 @@ Multipreview annotation that represents various device sizes. Add this annotatio
 @DevicePreviews
 @Composable
 fun EmptyContentScreenDrawableImagePreview() {
-    MifosTheme {
+    ForkTheme {
         EmptyContentScreen(
 ```
 
@@ -421,6 +421,204 @@ fun ExpiryDateInputPreview()
 ```
 Preview of `ExpiryDateInput`.
 
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ForkDivider.kt`
+
+```kotlin
+fun ForkDivider(
+```
+Horizontal divider with configurable thickness and color.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:416</code></summary>
+
+```kotlin
+
+                            if (index != filteredLocalList.size - 1) {
+                                ForkDivider(
+                                    color = KptTheme.colorScheme.outlineVariant,
+                                )
+                            }
+                        }
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ForkPasswordField.kt`
+
+```kotlin
+fun ForkPasswordField(
+```
+Password field with a show/hide toggle whose visibility state is owned by the caller.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
+
+```kotlin
+        )
+        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
+        ForkPasswordField(
+            label = stringResource(Res.string.feature_auth_password),
+            value = state.password,
+            onValueChange = {
+                onAction(LoginAction.PasswordChanged(it))
+```
+
+</details>
+
+```kotlin
+fun ForkPasswordField(
+```
+Password field that manages its own show/hide toggle state.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
+
+```kotlin
+        )
+        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
+        ForkPasswordField(
+            label = stringResource(Res.string.feature_auth_password),
+            value = state.password,
+            onValueChange = {
+                onAction(LoginAction.PasswordChanged(it))
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ForkProgressIndicator.kt`
+
+```kotlin
+fun ForkProgressIndicator(
+```
+Full-size Lottie loading animation.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:191</code></summary>
+
+```kotlin
+        ) {
+            when (state) {
+                is AccountState.ViewState.Loading -> ForkProgressIndicator()
+
+                is AccountState.ViewState.Error -> {
+                    EmptyContentScreen(
+                        title = stringResource(Res.string.feature_accounts_error_oops),
+```
+
+</details>
+
+```kotlin
+fun ForkProgressIndicatorMini(
+```
+Small Lottie loading animation for inline use.
+
+<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:928</code></summary>
+
+```kotlin
+
+            if (transactionsLoading) {
+                ForkProgressIndicatorMini()
+            } else {
+                if (transactions != null && transactions.isEmpty()) {
+                    Text(
+                        text = stringResource(Res.string.home_no_transactions_found),
+```
+
+</details>
+
+```kotlin
+fun ForkProgressIndicatorOverlay(
+```
+Lottie loading animation drawn over existing content.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:105</code></summary>
+
+```kotlin
+
+    if (state.dialogState is LoginState.DialogState.Loading) {
+        ForkProgressIndicatorOverlay()
+    }
+}
+
+@Composable
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ForkSearchBar.kt`
+
+```kotlin
+fun ForkSearchBar(
+```
+Search bar with query text, placeholder and optional clear button.
+
+<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:207</code></summary>
+
+```kotlin
+    modifier: Modifier = Modifier,
+) {
+    ForkSearchBar(
+        query = query,
+        placeHolder = stringResource(Res.string.feature_merchants_search),
+        onQueryChange = onQueryChange,
+        onSearch = onSearch,
+```
+
+</details>
+
+```kotlin
+fun SimpleSearchBar(
+```
+Compact search field with query text and placeholder.
+
+<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:154</code></summary>
+
+```kotlin
+                Spacer(Modifier.height(KptTheme.spacing.sm))
+
+                SimpleSearchBar(
+                    query = "",
+                    placeHolder = stringResource(Res.string.feature_select_account_placeholder),
+                    onQueryChange = {},
+                    onClick = {
+```
+
+</details>
+
+```kotlin
+fun PreviewForkSearchBar()
+```
+Preview of `ForkSearchBar`.
+
+```kotlin
+fun PreviewSimpleSearchBar()
+```
+Preview of `SimpleSearchBar`.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ForkSmallChip.kt`
+
+```kotlin
+fun ForkSmallChip(
+```
+Small non-interactive chip showing a `label`.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:501</code></summary>
+
+```kotlin
+@Composable
+private fun StatusChip(label: String, color: Color) {
+    ForkSmallChip(
+        label = label,
+        containerColor = color,
+        contentColor = KptTheme.colorScheme.scrim,
+    )
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/ForkUserImage.kt`
+
+```kotlin
+fun ForkUserImage(
+```
+Circular user picture from `bitmap`, falling back to the initials of `username` or a default icon.
+
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/HeadingTitle.kt`
 
 ```kotlin
@@ -498,204 +696,6 @@ A professional info bottom sheet that displays informational content with approp
 val LocalTimeZone = compositionLocalOf { TimeZone.currentSystemDefault() }
 ```
 TimeZone that can be provided with the TimeZoneMonitor. This way, it's not needed to pass every single composable the time zone to show in UI.
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosDivider.kt`
-
-```kotlin
-fun MifosDivider(
-```
-Horizontal divider with configurable thickness and color.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:416</code></summary>
-
-```kotlin
-
-                            if (index != filteredLocalList.size - 1) {
-                                MifosDivider(
-                                    color = KptTheme.colorScheme.outlineVariant,
-                                )
-                            }
-                        }
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosPasswordField.kt`
-
-```kotlin
-fun MifosPasswordField(
-```
-Password field with a show/hide toggle whose visibility state is owned by the caller.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
-
-```kotlin
-        )
-        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
-        MifosPasswordField(
-            label = stringResource(Res.string.feature_auth_password),
-            value = state.password,
-            onValueChange = {
-                onAction(LoginAction.PasswordChanged(it))
-```
-
-</details>
-
-```kotlin
-fun MifosPasswordField(
-```
-Password field that manages its own show/hide toggle state.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:190</code></summary>
-
-```kotlin
-        )
-        Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
-        MifosPasswordField(
-            label = stringResource(Res.string.feature_auth_password),
-            value = state.password,
-            onValueChange = {
-                onAction(LoginAction.PasswordChanged(it))
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosProgressIndicator.kt`
-
-```kotlin
-fun MifosProgressIndicator(
-```
-Full-size Lottie loading animation.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:191</code></summary>
-
-```kotlin
-        ) {
-            when (state) {
-                is AccountState.ViewState.Loading -> MifosProgressIndicator()
-
-                is AccountState.ViewState.Error -> {
-                    EmptyContentScreen(
-                        title = stringResource(Res.string.feature_accounts_error_oops),
-```
-
-</details>
-
-```kotlin
-fun MifosProgressIndicatorMini(
-```
-Small Lottie loading animation for inline use.
-
-<details><summary>Used in the template — <code>feature/home/src/commonMain/kotlin/kpt/feature/home/fork/HomeScreen.kt:928</code></summary>
-
-```kotlin
-
-            if (transactionsLoading) {
-                MifosProgressIndicatorMini()
-            } else {
-                if (transactions != null && transactions.isEmpty()) {
-                    Text(
-                        text = stringResource(Res.string.home_no_transactions_found),
-```
-
-</details>
-
-```kotlin
-fun MifosProgressIndicatorOverlay(
-```
-Lottie loading animation drawn over existing content.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginScreen.kt:105</code></summary>
-
-```kotlin
-
-    if (state.dialogState is LoginState.DialogState.Loading) {
-        MifosProgressIndicatorOverlay()
-    }
-}
-
-@Composable
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosSearchBar.kt`
-
-```kotlin
-fun MifosSearchBar(
-```
-Search bar with query text, placeholder and optional clear button.
-
-<details><summary>Used in the template — <code>feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt:207</code></summary>
-
-```kotlin
-    modifier: Modifier = Modifier,
-) {
-    MifosSearchBar(
-        query = query,
-        placeHolder = stringResource(Res.string.feature_merchants_search),
-        onQueryChange = onQueryChange,
-        onSearch = onSearch,
-```
-
-</details>
-
-```kotlin
-fun SimpleSearchBar(
-```
-Compact search field with query text and placeholder.
-
-<details><summary>Used in the template — <code>feature/transfer-intrabank/src/commonMain/kotlin/kpt/feature/transfer/intrabank/hub/IntraBankHubScreen.kt:154</code></summary>
-
-```kotlin
-                Spacer(Modifier.height(KptTheme.spacing.sm))
-
-                SimpleSearchBar(
-                    query = "",
-                    placeHolder = stringResource(Res.string.feature_select_account_placeholder),
-                    onQueryChange = {},
-                    onClick = {
-```
-
-</details>
-
-```kotlin
-fun PreviewMifosSearchBar()
-```
-Preview of `MifosSearchBar`.
-
-```kotlin
-fun PreviewSimpleSearchBar()
-```
-Preview of `SimpleSearchBar`.
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosSmallChip.kt`
-
-```kotlin
-fun MifosSmallChip(
-```
-Small non-interactive chip showing a `label`.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:501</code></summary>
-
-```kotlin
-@Composable
-private fun StatusChip(label: String, color: Color) {
-    MifosSmallChip(
-        label = label,
-        containerColor = color,
-        contentColor = KptTheme.colorScheme.scrim,
-    )
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/MifosUserImage.kt`
-
-```kotlin
-fun MifosUserImage(
-```
-Circular user picture from `bitmap`, falling back to the initials of `username` or a default icon.
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt`
 
@@ -959,7 +959,7 @@ Reset the component to the default position, with an animation.
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/ScrollableTabRow.kt`
 
 ```kotlin
-fun MifosScrollableTabRow(
+fun ForkScrollableTabRow(
 ```
 Scrollable tab row linked to a pager, one tab per `TabContent`.
 
@@ -968,7 +968,7 @@ Scrollable tab row linked to a pager, one tab per `TabContent`.
 ```kotlin
 
     Column(modifier = modifier.fillMaxSize()) {
-        MifosScrollableTabRow(
+        ForkScrollableTabRow(
             tabContents = tabContents,
             pagerState = pagerState,
         )
@@ -1110,6 +1110,516 @@ One item in `KptNavigationRail`.
 ```
 
 </details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/AuthenticationUtils.kt`
+
+```kotlin
+object AuthenticationUtils
+```
+Default placeholder identity values used for the signed-in user.
+
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreenViewmodel.kt:75</code></summary>
+
+```kotlin
+            val client = mutableStateFlow.value.client
+            val result = platformAuthenticationProvider.registerUser(
+                userName = client?.id?.run { toString() } ?: AuthenticationUtils.DEFAULT_USER_ID,
+                emailId = client?.emailAddress ?: AuthenticationUtils.DEFAULT_USER_EMAIL,
+                displayName = client?.displayName ?: AuthenticationUtils.DEFAULT_DISPLAY_NAME,
+                title = promptStrings.title,
+                subtitle = promptStrings.subtitle,
+```
+
+</details>
+
+- `const val DEFAULT_USER_ID = "mifosUser"` — Default user id.
+- `const val DEFAULT_USER_EMAIL = "mifospay@mifos.org"` — Default user email address.
+- `const val DEFAULT_DISPLAY_NAME = "Mifos Pay User"` — Default user display name.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/BackgroundEvent.kt`
+
+```kotlin
+interface BackgroundEvent
+```
+Almost all the events in the app involve navigation or toasts. To prevent accidentally navigating to the same view twice, by default, events are ignored if the view is not currently resumed.
+
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:93</code></summary>
+
+```kotlin
+     * @property data Raw scanned value.
+     */
+    data class QrCodeScanned(val data: String) : SendMoneyOptionsEvent, BackgroundEvent
+
+    /**
+     * Navigate to payee details for a scanned QR code.
+     * @property qrCodeData Raw scanned QR value.
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/BaseViewModel.kt`
+
+```kotlin
+abstract class BaseViewModel<S, E, A>(
+```
+A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:52</code></summary>
+
+```kotlin
+    private val repository: SelfServiceRepository,
+    private val json: Json,
+) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
+    initialState = run {
+        /** Client id read from user preferences when the view model is created. */
+        val clientId = userRepository.clientId.value
+```
+
+</details>
+
+- `val stateFlow: StateFlow<S> = mutableStateFlow.asStateFlow()` — A `StateFlow` representing state updates.
+- `val eventFlow: Flow<E> = eventChannel.receiveAsFlow()` — A `Flow` of one-shot events. These may be received and consumed by only a single consumer. Any additional consumers will receive no events.
+- `val actionChannel: SendChannel<A> = internalActionChannel` — A `SendChannel` for sending actions to the ViewModel for processing.
+- `fun trySendAction(action: A)` — Convenience method for sending an action to the `actionChannel`.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/EventsEffect.kt`
+
+```kotlin
+fun <E> EventsEffect(
+```
+Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
+
+```kotlin
+    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel) { event ->
+        when (event) {
+            is AccountEvent.OnAddEditSavingsAccount -> {
+                onAddEditSavingsAccount(event.type)
+            }
+```
+
+</details>
+
+```kotlin
+fun <E> EventsEffect(
+```
+`EventsEffect` over a bare event flow — pass `viewModel.eventFlow` rather than the view model, so a screen does not forward its view model into another composable.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
+
+```kotlin
+    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel) { event ->
+        when (event) {
+            is AccountEvent.OnAddEditSavingsAccount -> {
+                onAddEditSavingsAccount(event.type)
+            }
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/LifecycleEventEffect.kt`
+
+```kotlin
+fun LivecycleEventEffect(
+```
+Creates a side effect to observe lifecycle events.
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/effects/LifecycleEventEffect.kt:24</code></summary>
+
+```kotlin
+ */
+@Composable
+fun LivecycleEventEffect(
+    onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) -> Unit,
+) {
+    val eventHandler = rememberUpdatedState(onEvent)
+    val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/LottieConstants.kt`
+
+```kotlin
+object LottieConstants
+```
+Resource paths of bundled Lottie animations.
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/ForkProgressIndicator.kt:42</code></summary>
+
+```kotlin
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.JsonString(
+            Res.readBytes(LottieConstants.LOADING_ANIMATION).decodeToString(),
+        )
+    }
+    val progress by animateLottieCompositionAsState(composition)
+```
+
+</details>
+
+- `const val LOADING_ANIMATION = "files/loading_animation.json"` — Path of the loading animation JSON file.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/PasswordChecker.kt`
+
+```kotlin
+object PasswordChecker
+```
+Evaluates password strength and produces improvement feedback.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:267</code></summary>
+
+```kotlin
+            it.copy(
+                passwordInput = action.password,
+                passwordFeedback = PasswordChecker.getPasswordFeedback(action.password)
+                    .toPersistentList(),
+            )
+        }
+        // Update password strength:
+```
+
+</details>
+
+- `fun getPasswordStrengthResult(password: String): PasswordStrengthResult` — Computes the `PasswordStrength` of `password` and wraps it in a `PasswordStrengthResult`.
+- `val length = password.length`
+- `val hasUpperCase = password.any { it.isUpperCase() }`
+- `val hasLowerCase = password.any { it.isLowerCase() }`
+- `val hasNumbers = password.any { it.isDigit() }`
+- `val hasSymbols = password.any { !it.isLetterOrDigit() }`
+- `val numTypesPresent =`
+- `val entropyBits = calculateEntropy(password)`
+- `val charPool = 26 + 26 + 10 + 33 // lowercase + uppercase + digits + symbols`
+- `fun getPasswordFeedback(password: String): List<String>` — Returns human-readable hints on how to make `password` stronger.
+- `val feedback = mutableListOf<String>()`
+
+```kotlin
+sealed class PasswordStrengthResult
+```
+Result of a password strength evaluation.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:254</code></summary>
+
+```kotlin
+            }
+
+            is ReceivePasswordStrengthResult -> handlePasswordStrengthResult(action)
+
+            is SignUpAction.SubmitClick -> handleSubmitClick()
+
+            is SignUpAction.LoadCountries -> loadCountriesFromJson()
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/PasswordStrength.kt`
+
+```kotlin
+enum class PasswordStrength
+```
+Password strength from weakest (level 0) to strongest (level 5).
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:289</code></summary>
+
+```kotlin
+            is PasswordStrengthResult.Success -> {
+                val updatedState = when (result.passwordStrength) {
+                    PasswordStrength.LEVEL_0 -> PasswordStrengthState.WEAK_1
+                    PasswordStrength.LEVEL_1 -> PasswordStrengthState.WEAK_2
+                    PasswordStrength.LEVEL_2 -> PasswordStrengthState.WEAK_3
+                    PasswordStrength.LEVEL_3 -> PasswordStrengthState.GOOD
+                    PasswordStrength.LEVEL_4 -> PasswordStrengthState.STRONG
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/PasswordStrengthExtensions.kt`
+
+```kotlin
+fun Int.toPasswordStrengthOrNull(): PasswordStrength? =
+```
+Converts the given `Int` to a `PasswordStrength`. A `null` value is returned if this value is not in the [0, 4] range.
+
+```kotlin
+fun PasswordStrength.toInt(): Int =
+```
+Converts the given `PasswordStrength` to an `Int`.
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/ScreenshotUtils.kt`
+
+```kotlin
+expect object ScreenshotUtils
+```
+Platform-specific utilities for taking screenshots of Compose screens. This expect declaration should be implemented for each platform to handle the specifics of screenshot functionality.
+
+<details><summary>Used in the template — <code>core/ui/src/androidMain/kotlin/kpt/core/ui/fork/utils/ScreenshotUtils.android.kt:33</code></summary>
+
+```kotlin
+ * including the ability to exclude specific UI elements and generate context-aware filenames.
+ */
+actual object ScreenshotUtils {
+
+    /**
+     * Provider function to retrieve the current [Activity].
+     * This must be set before using screenshot functionality.
+```
+
+</details>
+
+- `suspend fun takeScreenshotAndShare(` — Takes a screenshot and immediately shares it using the platform's sharing mechanism. This overload allows passing context-specific details for better file naming.
+
+```kotlin
+data class ScreenshotContextDetails(
+```
+Context details for screenshots to enable better file naming.
+
+<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.android.kt:58</code></summary>
+
+```kotlin
+
+                    val state = viewModel.stateFlow.value
+                    val contextDetails = ScreenshotContextDetails(
+                        screenType = "Payment Details",
+                        amount = state.formattedAmount,
+                        recipientName = state.payeeName,
+                        timestamp = state.transactionDate,
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/ShareUtils.kt`
+
+```kotlin
+expect object ShareUtils
+```
+Platform-specific utilities for sharing content such as text and files. This expect declaration should be implemented for each platform (e.g., Android, iOS) to handle the specifics of sharing functionality.
+
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:310</code></summary>
+
+```kotlin
+    private fun shareQrCode(data: ByteArray) {
+        viewModelScope.launch {
+            ShareUtils.shareFile(
+                file = ShareFileModel(
+                    fileName = "qr_code.png",
+                    bytes = data,
+                    mime = MimeType.IMAGE,
+```
+
+</details>
+
+- `suspend fun shareText(text: String)` — Shares plain text content using the platform's native sharing mechanism.
+- `suspend fun shareFile(file: ShareFileModel)` — Shares a file using the platform's native sharing mechanism. This is a suspend function, allowing for asynchronous operations such as file preparation or permission handling if needed.
+
+```kotlin
+enum class MimeType
+```
+Represents supported MIME types for file sharing.
+
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:314</code></summary>
+
+```kotlin
+                    fileName = "qr_code.png",
+                    bytes = data,
+                    mime = MimeType.IMAGE,
+                ),
+            )
+        }
+    }
+```
+
+</details>
+
+```kotlin
+data class ShareFileModel(
+```
+Model representing a file to be shared.
+
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:311</code></summary>
+
+```kotlin
+        viewModelScope.launch {
+            ShareUtils.shareFile(
+                file = ShareFileModel(
+                    fileName = "qr_code.png",
+                    bytes = data,
+                    mime = MimeType.IMAGE,
+                ),
+```
+
+</details>
+
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt`
+
+```kotlin
+typealias EnterTransitionProvider =
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:30</code></summary>
+
+```kotlin
+ * Used with [AnimatedContentTransitionScope] to define how a destination enters the screen.
+ */
+typealias EnterTransitionProvider =
+    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)
+
+/**
+ * Function type for providing nullable exit transitions in navigation.
+```
+
+</details>
+
+```kotlin
+typealias ExitTransitionProvider =
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:37</code></summary>
+
+```kotlin
+ * Used with [AnimatedContentTransitionScope] to define how a destination exits the screen.
+ */
+typealias ExitTransitionProvider =
+    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)
+
+/**
+ * Function type for providing non-null enter transitions in navigation.
+```
+
+</details>
+
+```kotlin
+typealias NonNullEnterTransitionProvider =
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:44</code></summary>
+
+```kotlin
+ * Used with [AnimatedContentTransitionScope] to define how a destination enters the screen.
+ */
+typealias NonNullEnterTransitionProvider =
+    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition)
+
+/**
+ * Function type for providing non-null exit transitions in navigation.
+```
+
+</details>
+
+```kotlin
+typealias NonNullExitTransitionProvider =
+```
+_No KDoc at source._
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:51</code></summary>
+
+```kotlin
+ * Used with [AnimatedContentTransitionScope] to define how a destination exits the screen.
+ */
+typealias NonNullExitTransitionProvider =
+    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition)
+
+/**
+ * The default transition time (in milliseconds) for all fade transitions in the
+```
+
+</details>
+
+```kotlin
+val DEFAULT_STAY_TRANSITION_TIME_MS: Int =
+```
+The default transition time (in milliseconds) for all "stay"/no-op transitions in the `TransitionProviders`. This should be at least as large as any other transition that might also be happening during a navigation.
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:79</code></summary>
+
+```kotlin
+ * navigation.
+ */
+val DEFAULT_STAY_TRANSITION_TIME_MS: Int =
+    maxOf(
+        DEFAULT_FADE_TRANSITION_TIME_MS,
+        DEFAULT_SLIDE_TRANSITION_TIME_MS,
+        DEFAULT_PUSH_TRANSITION_TIME_MS,
+```
+
+</details>
+
+```kotlin
+val AnimatedContentTransitionScope<NavBackStackEntry>.isSameGraphNavigation: Boolean
+```
+Checks if the parent of the destination before and after the navigation is the same. This is useful to ignore certain enter/exit transitions when navigating between distinct, nested flows.
+
+```kotlin
+object TransitionProviders
+```
+Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a typical composable destination.
+
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:31</code></summary>
+
+```kotlin
+        arguments = arguments,
+        deepLinks = deepLinks,
+        enterTransition = TransitionProviders.Enter.slideUp,
+        exitTransition = TransitionProviders.Exit.stay,
+        popEnterTransition = TransitionProviders.Enter.stay,
+        popExitTransition = TransitionProviders.Exit.slideDown,
+        content = content,
+```
+
+</details>
+
+- `val fadeIn: EnterTransitionProvider =` — Fades the new screen in. Note that this represents a `null` transition when navigating between different nested navigation graphs.
+- `val pushLeft: EnterTransitionProvider =` — Slides the new screen in from the left of the screen.
+- `val pushRight: EnterTransitionProvider =` — Slides the new screen in from the right of the screen.
+- `val slideUp: EnterTransitionProvider =` — Slides the new screen in from the bottom of the screen. Note that this represents a `null` transition when navigating between different nested navigation graphs.
+- `val stay: EnterTransitionProvider =` — A "no-op" transition: this changes nothing about the screen but "lasts" as long as other standard transitions in order to leave the screen in place such that it does not immediately appear while the other screen transitions away.
+- `val fadeOut: ExitTransitionProvider =` — Fades the current screen out. Note that this represents a `null` transition when navigating between different nested navigation graphs.
+- `val pushLeft: ExitTransitionProvider =` — Slides the current screen out to the left of the screen.
+- `val pushRight: ExitTransitionProvider =` — Slides the current screen out to the right of the screen.
+- `val slideDown: ExitTransitionProvider =` — Slides the current screen down to the bottom of the screen. Note that this represents a `null` transition when navigating between different nested navigation graphs.
+- `val stay: ExitTransitionProvider =` — A "no-op" transition: this changes nothing about the screen but "lasts" as long as other standard transitions in order to leave the screen in place such that it does not immediately disappear while the other screen transitions into place.
+
+```kotlin
+object RootTransitionProviders
+```
+Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a root `NavHost`, which requires a non-null value.
+
+<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/nav/NavGraphBuilderExtensions.kt:53</code></summary>
+
+```kotlin
+        typeMap = typeMap,
+        deepLinks = deepLinks,
+        enterTransition = RootTransitionProviders.Kpt.Enter.slideUp(motion),
+        exitTransition = RootTransitionProviders.Kpt.Exit.stay(motion),
+        popEnterTransition = RootTransitionProviders.Kpt.Enter.stay(motion),
+        popExitTransition = RootTransitionProviders.Kpt.Exit.slideDown(motion),
+        sizeTransform = null,
+```
+
+</details>
+
+- `val fadeIn: NonNullEnterTransitionProvider =` — Fades the new screen in.
+- `val none: NonNullEnterTransitionProvider =` — There is no transition for the entering screen.
+- `val pushLeft: NonNullEnterTransitionProvider =` — Slides the new screen in from the left of the screen.
+- `val totalTransitionDurationMs = DEFAULT_PUSH_TRANSITION_TIME_MS`
+- `val pushRight: NonNullEnterTransitionProvider =` — Slides the new screen in from the right of the screen.
+- `val totalTransitionDurationMs = DEFAULT_PUSH_TRANSITION_TIME_MS`
+- `val slideUp: NonNullEnterTransitionProvider =` — Slides the new screen in from the bottom of the screen.
+- `val stay: NonNullEnterTransitionProvider =` — A "no-op" transition: this changes nothing about the screen but "lasts" as long as other standard transitions in order to leave the screen in place such that it does not immediately appear while the other screen transitions away.
+- `val fadeOut: NonNullExitTransitionProvider =` — Fades the current screen out.
+- `val none: NonNullExitTransitionProvider =` — There is no transition for the exiting screen. Unlike the `stay` transition, this will immediately remove the outgoing screen even if there is an ongoing enter transition happening for the new screen.
+- `val pushLeft: NonNullExitTransitionProvider =` — Slides the current screen out to the left of the screen.
+- `val totalTransitionDurationMs = DEFAULT_PUSH_TRANSITION_TIME_MS`
+- `val delayMs = totalTransitionDurationMs / 7`
+- `val slideWithoutDelayMs = totalTransitionDurationMs - delayMs`
+  _…more members; read the file._
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/input/PasswordStrengthIndicator.kt`
 
@@ -1363,13 +1873,13 @@ data class FloatingActionButtonContent(
 ```
 Declarative FAB spec — icon, description and click — so a caller configures the FAB without passing a composable slot.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/MifosScaffold.kt:53</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/fork/component/ForkScaffold.kt:53</code></summary>
 
 ```kotlin
     topBarTitle: String? = null,
     containerColor: Color = Color.Transparent,
     floatingActionButtonContent: FloatingActionButtonContent? = null,
-    pullToRefreshState: MifosPullToRefreshState = rememberMifosPullToRefreshState(),
+    pullToRefreshState: ForkPullToRefreshState = rememberForkPullToRefreshState(),
     snackbarHost: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit = {},
@@ -1511,160 +2021,6 @@ internal fun FinanceRoute(
 
 </details>
 
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/AuthenticationUtils.kt`
-
-```kotlin
-object AuthenticationUtils
-```
-Default placeholder identity values used for the signed-in user.
-
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreenViewmodel.kt:75</code></summary>
-
-```kotlin
-            val client = mutableStateFlow.value.client
-            val result = platformAuthenticationProvider.registerUser(
-                userName = client?.id?.run { toString() } ?: AuthenticationUtils.DEFAULT_USER_ID,
-                emailId = client?.emailAddress ?: AuthenticationUtils.DEFAULT_USER_EMAIL,
-                displayName = client?.displayName ?: AuthenticationUtils.DEFAULT_DISPLAY_NAME,
-                title = promptStrings.title,
-                subtitle = promptStrings.subtitle,
-```
-
-</details>
-
-- `const val DEFAULT_USER_ID = "mifosUser"` — Default user id.
-- `const val DEFAULT_USER_EMAIL = "mifospay@mifos.org"` — Default user email address.
-- `const val DEFAULT_DISPLAY_NAME = "Mifos Pay User"` — Default user display name.
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/BackgroundEvent.kt`
-
-```kotlin
-interface BackgroundEvent
-```
-Almost all the events in the app involve navigation or toasts. To prevent accidentally navigating to the same view twice, by default, events are ignored if the view is not currently resumed.
-
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyOptionsViewModel.kt:93</code></summary>
-
-```kotlin
-     * @property data Raw scanned value.
-     */
-    data class QrCodeScanned(val data: String) : SendMoneyOptionsEvent, BackgroundEvent
-
-    /**
-     * Navigate to payee details for a scanned QR code.
-     * @property qrCodeData Raw scanned QR value.
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/BaseViewModel.kt`
-
-```kotlin
-abstract class BaseViewModel<S, E, A>(
-```
-A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:52</code></summary>
-
-```kotlin
-    private val repository: SelfServiceRepository,
-    private val json: Json,
-) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
-    initialState = run {
-        /** Client id read from user preferences when the view model is created. */
-        val clientId = userRepository.clientId.value
-```
-
-</details>
-
-- `val stateFlow: StateFlow<S> = mutableStateFlow.asStateFlow()` — A `StateFlow` representing state updates.
-- `val eventFlow: Flow<E> = eventChannel.receiveAsFlow()` — A `Flow` of one-shot events. These may be received and consumed by only a single consumer. Any additional consumers will receive no events.
-- `val actionChannel: SendChannel<A> = internalActionChannel` — A `SendChannel` for sending actions to the ViewModel for processing.
-- `fun trySendAction(action: A)` — Convenience method for sending an action to the `actionChannel`.
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/EventsEffect.kt`
-
-```kotlin
-fun <E> EventsEffect(
-```
-Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
-
-```kotlin
-    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
-
-    EventsEffect(viewModel) { event ->
-        when (event) {
-            is AccountEvent.OnAddEditSavingsAccount -> {
-                onAddEditSavingsAccount(event.type)
-            }
-```
-
-</details>
-
-```kotlin
-fun <E> EventsEffect(
-```
-`EventsEffect` over a bare event flow — pass `viewModel.eventFlow` rather than the view model, so a screen does not forward its view model into another composable.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
-
-```kotlin
-    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
-
-    EventsEffect(viewModel) { event ->
-        when (event) {
-            is AccountEvent.OnAddEditSavingsAccount -> {
-                onAddEditSavingsAccount(event.type)
-            }
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/LifecycleEventEffect.kt`
-
-```kotlin
-fun LivecycleEventEffect(
-```
-Creates a side effect to observe lifecycle events.
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/effects/LifecycleEventEffect.kt:24</code></summary>
-
-```kotlin
- */
-@Composable
-fun LivecycleEventEffect(
-    onEvent: (owner: LifecycleOwner, event: Lifecycle.Event) -> Unit,
-) {
-    val eventHandler = rememberUpdatedState(onEvent)
-    val lifecycleOwner = rememberUpdatedState(LocalLifecycleOwner.current)
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/LottieConstants.kt`
-
-```kotlin
-object LottieConstants
-```
-Resource paths of bundled Lottie animations.
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/MifosProgressIndicator.kt:42</code></summary>
-
-```kotlin
-    val composition by rememberLottieComposition {
-        LottieCompositionSpec.JsonString(
-            Res.readBytes(LottieConstants.LOADING_ANIMATION).decodeToString(),
-        )
-    }
-    val progress by animateLottieCompositionAsState(composition)
-```
-
-</details>
-
-- `const val LOADING_ANIMATION = "files/loading_animation.json"` — Path of the loading animation JSON file.
-
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/PasswordChecker.kt`
 
 ```kotlin
@@ -1749,362 +2105,6 @@ Converts the given `Int` to a `PasswordStrength`. A `null` value is returned if 
 
 ```kotlin
 fun PasswordStrength.toInt(): Int = when (this)
-```
-Converts the given `PasswordStrength` to an `Int`.
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/ScreenshotUtils.kt`
-
-```kotlin
-expect object ScreenshotUtils
-```
-Platform-specific utilities for taking screenshots of Compose screens. This expect declaration should be implemented for each platform to handle the specifics of screenshot functionality.
-
-<details><summary>Used in the template — <code>core/ui/src/androidMain/kotlin/kpt/core/ui/utils/ScreenshotUtils.android.kt:34</code></summary>
-
-```kotlin
- * including the ability to exclude specific UI elements and generate context-aware filenames.
- */
-actual object ScreenshotUtils {
-
-    /**
-     * Provider function to retrieve the current [Activity].
-     * This must be set before using screenshot functionality.
-```
-
-</details>
-
-- `suspend fun takeScreenshotAndShare(` — Takes a screenshot and immediately shares it using the platform's sharing mechanism. This overload allows passing context-specific details for better file naming.
-
-```kotlin
-data class ScreenshotContextDetails(
-```
-Context details for screenshots to enable better file naming.
-
-<details><summary>Used in the template — <code>feature/send-money/src/androidMain/kotlin/kpt/feature/send/money/PaymentDetailsScreen.android.kt:58</code></summary>
-
-```kotlin
-
-                    val state = viewModel.stateFlow.value
-                    val contextDetails = ScreenshotContextDetails(
-                        screenType = "Payment Details",
-                        amount = state.formattedAmount,
-                        recipientName = state.payeeName,
-                        timestamp = state.transactionDate,
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/ShareUtils.kt`
-
-```kotlin
-expect object ShareUtils
-```
-Platform-specific utilities for sharing content such as text and files. This expect declaration should be implemented for each platform (e.g., Android, iOS) to handle the specifics of sharing functionality.
-
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:310</code></summary>
-
-```kotlin
-    private fun shareQrCode(data: ByteArray) {
-        viewModelScope.launch {
-            ShareUtils.shareFile(
-                file = ShareFileModel(
-                    fileName = "qr_code.png",
-                    bytes = data,
-                    mime = MimeType.IMAGE,
-```
-
-</details>
-
-- `suspend fun shareText(text: String)` — Shares plain text content using the platform's native sharing mechanism.
-- `suspend fun shareFile(file: ShareFileModel)` — Shares a file using the platform's native sharing mechanism. This is a suspend function, allowing for asynchronous operations such as file preparation or permission handling if needed.
-
-```kotlin
-enum class MimeType
-```
-Represents supported MIME types for file sharing.
-
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:314</code></summary>
-
-```kotlin
-                    fileName = "qr_code.png",
-                    bytes = data,
-                    mime = MimeType.IMAGE,
-                ),
-            )
-        }
-    }
-```
-
-</details>
-
-```kotlin
-data class ShareFileModel(
-```
-Model representing a file to be shared.
-
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/MpayQrViewModel.kt:311</code></summary>
-
-```kotlin
-        viewModelScope.launch {
-            ShareUtils.shareFile(
-                file = ShareFileModel(
-                    fileName = "qr_code.png",
-                    bytes = data,
-                    mime = MimeType.IMAGE,
-                ),
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt`
-
-```kotlin
-typealias EnterTransitionProvider =
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:30</code></summary>
-
-```kotlin
- * Used with [AnimatedContentTransitionScope] to define how a destination enters the screen.
- */
-typealias EnterTransitionProvider =
-    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition?)
-
-/**
- * Function type for providing nullable exit transitions in navigation.
-```
-
-</details>
-
-```kotlin
-typealias ExitTransitionProvider =
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:37</code></summary>
-
-```kotlin
- * Used with [AnimatedContentTransitionScope] to define how a destination exits the screen.
- */
-typealias ExitTransitionProvider =
-    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition?)
-
-/**
- * Function type for providing non-null enter transitions in navigation.
-```
-
-</details>
-
-```kotlin
-typealias NonNullEnterTransitionProvider =
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:44</code></summary>
-
-```kotlin
- * Used with [AnimatedContentTransitionScope] to define how a destination enters the screen.
- */
-typealias NonNullEnterTransitionProvider =
-    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition)
-
-/**
- * Function type for providing non-null exit transitions in navigation.
-```
-
-</details>
-
-```kotlin
-typealias NonNullExitTransitionProvider =
-```
-_No KDoc at source._
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:51</code></summary>
-
-```kotlin
- * Used with [AnimatedContentTransitionScope] to define how a destination exits the screen.
- */
-typealias NonNullExitTransitionProvider =
-    (@JvmSuppressWildcards AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition)
-
-/**
- * The default transition time (in milliseconds) for all fade transitions in the
-```
-
-</details>
-
-```kotlin
-val DEFAULT_STAY_TRANSITION_TIME_MS: Int =
-```
-The default transition time (in milliseconds) for all "stay"/no-op transitions in the `TransitionProviders`. This should be at least as large as any other transition that might also be happening during a navigation.
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/util/Transition.kt:79</code></summary>
-
-```kotlin
- * navigation.
- */
-val DEFAULT_STAY_TRANSITION_TIME_MS: Int =
-    maxOf(
-        DEFAULT_FADE_TRANSITION_TIME_MS,
-        DEFAULT_SLIDE_TRANSITION_TIME_MS,
-        DEFAULT_PUSH_TRANSITION_TIME_MS,
-```
-
-</details>
-
-```kotlin
-val AnimatedContentTransitionScope<NavBackStackEntry>.isSameGraphNavigation: Boolean
-```
-Checks if the parent of the destination before and after the navigation is the same. This is useful to ignore certain enter/exit transitions when navigating between distinct, nested flows.
-
-```kotlin
-object TransitionProviders
-```
-Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a typical composable destination.
-
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/NavGraphBuilderExtensions.kt:31</code></summary>
-
-```kotlin
-        arguments = arguments,
-        deepLinks = deepLinks,
-        enterTransition = TransitionProviders.Enter.slideUp,
-        exitTransition = TransitionProviders.Exit.stay,
-        popEnterTransition = TransitionProviders.Enter.stay,
-        popExitTransition = TransitionProviders.Exit.slideDown,
-        content = content,
-```
-
-</details>
-
-- `val fadeIn: EnterTransitionProvider =` — Fades the new screen in. Note that this represents a `null` transition when navigating between different nested navigation graphs.
-- `val pushLeft: EnterTransitionProvider =` — Slides the new screen in from the left of the screen.
-- `val pushRight: EnterTransitionProvider =` — Slides the new screen in from the right of the screen.
-- `val slideUp: EnterTransitionProvider =` — Slides the new screen in from the bottom of the screen. Note that this represents a `null` transition when navigating between different nested navigation graphs.
-- `val stay: EnterTransitionProvider =` — A "no-op" transition: this changes nothing about the screen but "lasts" as long as other standard transitions in order to leave the screen in place such that it does not immediately appear while the other screen transitions away.
-- `val fadeOut: ExitTransitionProvider =` — Fades the current screen out. Note that this represents a `null` transition when navigating between different nested navigation graphs.
-- `val pushLeft: ExitTransitionProvider =` — Slides the current screen out to the left of the screen.
-- `val pushRight: ExitTransitionProvider =` — Slides the current screen out to the right of the screen.
-- `val slideDown: ExitTransitionProvider =` — Slides the current screen down to the bottom of the screen. Note that this represents a `null` transition when navigating between different nested navigation graphs.
-- `val stay: ExitTransitionProvider =` — A "no-op" transition: this changes nothing about the screen but "lasts" as long as other standard transitions in order to leave the screen in place such that it does not immediately disappear while the other screen transitions into place.
-
-```kotlin
-object RootTransitionProviders
-```
-Contains standard "transition providers" that may be used to specify the `EnterTransition` and `ExitTransition` used when building a root `NavHost`, which requires a non-null value.
-
-<details><summary>Used in the template — <code>core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/nav/NavGraphBuilderExtensions.kt:53</code></summary>
-
-```kotlin
-        typeMap = typeMap,
-        deepLinks = deepLinks,
-        enterTransition = RootTransitionProviders.Kpt.Enter.slideUp(motion),
-        exitTransition = RootTransitionProviders.Kpt.Exit.stay(motion),
-        popEnterTransition = RootTransitionProviders.Kpt.Enter.stay(motion),
-        popExitTransition = RootTransitionProviders.Kpt.Exit.slideDown(motion),
-        sizeTransform = null,
-```
-
-</details>
-
-- `val fadeIn: NonNullEnterTransitionProvider =` — Fades the new screen in.
-- `val none: NonNullEnterTransitionProvider =` — There is no transition for the entering screen.
-- `val pushLeft: NonNullEnterTransitionProvider =` — Slides the new screen in from the left of the screen.
-- `val totalTransitionDurationMs = DEFAULT_PUSH_TRANSITION_TIME_MS`
-- `val pushRight: NonNullEnterTransitionProvider =` — Slides the new screen in from the right of the screen.
-- `val totalTransitionDurationMs = DEFAULT_PUSH_TRANSITION_TIME_MS`
-- `val slideUp: NonNullEnterTransitionProvider =` — Slides the new screen in from the bottom of the screen.
-- `val stay: NonNullEnterTransitionProvider =` — A "no-op" transition: this changes nothing about the screen but "lasts" as long as other standard transitions in order to leave the screen in place such that it does not immediately appear while the other screen transitions away.
-- `val fadeOut: NonNullExitTransitionProvider =` — Fades the current screen out.
-- `val none: NonNullExitTransitionProvider =` — There is no transition for the exiting screen. Unlike the `stay` transition, this will immediately remove the outgoing screen even if there is an ongoing enter transition happening for the new screen.
-- `val pushLeft: NonNullExitTransitionProvider =` — Slides the current screen out to the left of the screen.
-- `val totalTransitionDurationMs = DEFAULT_PUSH_TRANSITION_TIME_MS`
-- `val delayMs = totalTransitionDurationMs / 7`
-- `val slideWithoutDelayMs = totalTransitionDurationMs - delayMs`
-  _…more members; read the file._
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/fork/PasswordChecker.kt`
-
-```kotlin
-object PasswordChecker
-```
-Evaluates password strength and produces improvement feedback.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:267</code></summary>
-
-```kotlin
-            it.copy(
-                passwordInput = action.password,
-                passwordFeedback = PasswordChecker.getPasswordFeedback(action.password)
-                    .toPersistentList(),
-            )
-        }
-        // Update password strength:
-```
-
-</details>
-
-- `fun getPasswordStrengthResult(password: String): PasswordStrengthResult` — Computes the `PasswordStrength` of `password` and wraps it in a `PasswordStrengthResult`.
-- `val length = password.length`
-- `val hasUpperCase = password.any { it.isUpperCase() }`
-- `val hasLowerCase = password.any { it.isLowerCase() }`
-- `val hasNumbers = password.any { it.isDigit() }`
-- `val hasSymbols = password.any { !it.isLetterOrDigit() }`
-- `val numTypesPresent =`
-- `val entropyBits = calculateEntropy(password)`
-- `val charPool = 26 + 26 + 10 + 33 // lowercase + uppercase + digits + symbols`
-- `fun getPasswordFeedback(password: String): List<String>` — Returns human-readable hints on how to make `password` stronger.
-- `val feedback = mutableListOf<String>()`
-
-```kotlin
-sealed class PasswordStrengthResult
-```
-Result of a password strength evaluation.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:254</code></summary>
-
-```kotlin
-            }
-
-            is ReceivePasswordStrengthResult -> handlePasswordStrengthResult(action)
-
-            is SignUpAction.SubmitClick -> handleSubmitClick()
-
-            is SignUpAction.LoadCountries -> loadCountriesFromJson()
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/fork/PasswordStrength.kt`
-
-```kotlin
-enum class PasswordStrength
-```
-Password strength from weakest (level 0) to strongest (level 5).
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:289</code></summary>
-
-```kotlin
-            is PasswordStrengthResult.Success -> {
-                val updatedState = when (result.passwordStrength) {
-                    PasswordStrength.LEVEL_0 -> PasswordStrengthState.WEAK_1
-                    PasswordStrength.LEVEL_1 -> PasswordStrengthState.WEAK_2
-                    PasswordStrength.LEVEL_2 -> PasswordStrengthState.WEAK_3
-                    PasswordStrength.LEVEL_3 -> PasswordStrengthState.GOOD
-                    PasswordStrength.LEVEL_4 -> PasswordStrengthState.STRONG
-```
-
-</details>
-
-### `core/ui/src/commonMain/kotlin/kpt/core/ui/utils/fork/PasswordStrengthExtensions.kt`
-
-```kotlin
-fun Int.toPasswordStrengthOrNull(): PasswordStrength? =
-```
-Converts the given `Int` to a `PasswordStrength`. A `null` value is returned if this value is not in the [0, 4] range.
-
-```kotlin
-fun PasswordStrength.toInt(): Int =
 ```
 Converts the given `PasswordStrength` to an `Int`.
 

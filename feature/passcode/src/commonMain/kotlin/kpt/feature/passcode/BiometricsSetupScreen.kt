@@ -33,10 +33,10 @@ import androidx.navigationevent.NavigationEventInfo
 import androidx.navigationevent.compose.NavigationBackHandler
 import androidx.navigationevent.compose.rememberNavigationEventState
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosDialogBox
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.theme.fork.MifosTheme
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkDialogBox
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.theme.fork.ForkTheme
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.passcode.generated.resources.Res
 import kpt.feature.passcode.generated.resources.feature_passcode_biometric_setup_confirm
 import kpt.feature.passcode.generated.resources.feature_passcode_biometric_setup_headline
@@ -128,7 +128,7 @@ internal fun BiometricSetupContent(
     onSkipBiometricSetup: () -> Unit,
     onDismissErrorDialog: () -> Unit,
 ) {
-    MifosDialogBox(
+    ForkDialogBox(
         title = stringResource(Res.string.feature_passcode_error),
         showDialogState = state.error != null,
         confirmButtonText = stringResource(Res.string.feature_passcode_ok),
@@ -138,7 +138,7 @@ internal fun BiometricSetupContent(
         message = state.error,
     )
 
-    MifosScaffold { paddingValues ->
+    ForkScaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -194,7 +194,7 @@ internal fun BiometricSetupContent(
 @Preview
 @Composable
 private fun BiometricSetupScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         BiometricSetupContent(
             state = BiometricSetupScreenState(),
             onSetupBiometrics = {},

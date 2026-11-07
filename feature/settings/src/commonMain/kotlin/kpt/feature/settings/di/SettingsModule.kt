@@ -17,9 +17,9 @@ import org.koin.dsl.module
  * Koin qualifier for this feature's [SettingsViewModel]. On JS / Wasm Koin keys a binding by the
  * type's simple name, and the template's `kpt.feature.settings.SettingsViewModel` is bound too.
  */
-val MifosSettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
+val SettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
 
 /** Koin module providing the fork settings view model under its qualifier. */
 val SettingsModule = module {
-    viewModelOf(::SettingsViewModel) { qualifier = MifosSettingsViewModelQualifier }
+    viewModelOf(::SettingsViewModel) { qualifier = SettingsViewModelQualifier }
 }

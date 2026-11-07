@@ -9,7 +9,7 @@
  */
 package kpt.feature.kyc
 
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * MVI ViewModel for the KYC Level 3 (Review & Submit) screen.
  *

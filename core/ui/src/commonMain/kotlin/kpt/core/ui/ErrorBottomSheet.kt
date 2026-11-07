@@ -34,9 +34,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.UiError
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.icon.ForkIcons
 /**
  * Type of error to display in the bottom sheet.
  * Determines the icon and color scheme used.
@@ -80,7 +80,7 @@ fun ErrorBottomSheet(
     dismissButtonText: String = "Close",
     retryButtonText: String = "Try Again",
 ) {
-    MifosBottomSheet(
+    ForkBottomSheet(
         onDismiss = onDismiss,
         modifier = modifier,
     ) {
@@ -109,7 +109,7 @@ fun ErrorBottomSheet(
     modifier: Modifier = Modifier,
     dismissButtonText: String = "Close",
 ) {
-    MifosBottomSheet(
+    ForkBottomSheet(
         onDismiss = onDismiss,
         modifier = modifier,
     ) {
@@ -203,7 +203,7 @@ private fun ErrorBottomSheetContent(
                     Text(text = dismissButtonText)
                 }
 
-                MifosButton(
+                ForkButton(
                     onClick = {
                         onDismiss()
                         onRetry()
@@ -214,7 +214,7 @@ private fun ErrorBottomSheetContent(
                 }
             }
         } else {
-            MifosButton(
+            ForkButton(
                 onClick = onDismiss,
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -228,31 +228,31 @@ private fun ErrorBottomSheetContent(
 private fun getErrorVisuals(errorType: ErrorType): Triple<ImageVector, Color, Color> {
     return when (errorType) {
         ErrorType.NETWORK -> Triple(
-            MifosIcons.Warning,
+            ForkIcons.Warning,
             KptTheme.colorScheme.errorContainer.copy(alpha = 0.2f),
             KptTheme.colorScheme.error,
         )
 
         ErrorType.SERVER -> Triple(
-            MifosIcons.Error,
+            ForkIcons.Error,
             KptTheme.colorScheme.errorContainer.copy(alpha = 0.2f),
             KptTheme.colorScheme.error,
         )
 
         ErrorType.CLIENT -> Triple(
-            MifosIcons.Warning,
+            ForkIcons.Warning,
             KptTheme.colorScheme.tertiaryContainer.copy(alpha = 0.3f),
             KptTheme.colorScheme.tertiary,
         )
 
         ErrorType.VALIDATION -> Triple(
-            MifosIcons.Info,
+            ForkIcons.Info,
             KptTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
             KptTheme.colorScheme.primary,
         )
 
         ErrorType.GENERIC -> Triple(
-            MifosIcons.Error,
+            ForkIcons.Error,
             KptTheme.colorScheme.errorContainer.copy(alpha = 0.2f),
             KptTheme.colorScheme.error,
         )

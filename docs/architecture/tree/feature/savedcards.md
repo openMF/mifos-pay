@@ -22,10 +22,10 @@ ViewModels: `AddEditCardViewModel`, `CardDetailViewModel`, `CardsScreenViewModel
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/savedcards sha=b7d0040b0625c9d2f1704cd9d58dfc38f990df01 -->
+<!-- api-docs:begin module=feature/savedcards sha=c201d5e10c8462f47f716e80ff9b765c9a3ae143 -->
 ## API reference
 
-_Generated from `feature/savedcards` at tree `b7d0040b0625` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/savedcards` at tree `c201d5e10c84` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -74,7 +74,7 @@ private fun SavedCardDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is CardState.DialogState.DeleteCard -> MifosBasicDialog(
+        is CardState.DialogState.DeleteCard -> ForkBasicDialog(
 ```
 
 </details>

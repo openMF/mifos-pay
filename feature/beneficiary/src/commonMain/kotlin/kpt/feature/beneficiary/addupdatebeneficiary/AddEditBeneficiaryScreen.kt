@@ -54,19 +54,19 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.office.Office
 import kpt.core.model.utils.Locale
 import kpt.core.model.utils.filterLocales
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.beneficiary.generated.resources.Res
 import kpt.feature.beneficiary.generated.resources.feature_beneficiary_account_no
 import kpt.feature.beneficiary.generated.resources.feature_beneficiary_account_type
@@ -162,7 +162,7 @@ internal fun AddEditBeneficiaryScreenContent(
     modifier: Modifier = Modifier,
     onAction: (AEBAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = stringResource(state.title),
         backPress = { onAction(AEBAction.NavigateBack) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -176,7 +176,7 @@ internal fun AddEditBeneficiaryScreenContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_beneficiary_nickname),
                     value = state.name,
                     onValueChange = {
@@ -186,7 +186,7 @@ internal fun AddEditBeneficiaryScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_beneficiary_account_no),
                     value = state.accountNumber,
                     keyboardOptions = KeyboardOptions(
@@ -199,7 +199,7 @@ internal fun AddEditBeneficiaryScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_beneficiary_transfer_limit),
                     value = state.transferLimit.toString(),
                     onValueChange = {
@@ -230,7 +230,7 @@ internal fun AddEditBeneficiaryScreenContent(
                         localeToggled = !localeToggled
                     },
                 ) {
-                    MifosTextField(
+                    ForkTextField(
                         label = stringResource(Res.string.feature_beneficiary_locale),
                         value = state.locale,
                         onValueChange = {
@@ -284,7 +284,7 @@ internal fun AddEditBeneficiaryScreenContent(
                             )
 
                             if (index != filteredLocalList.size - 1) {
-                                MifosDivider()
+                                ForkDivider()
                             }
                         }
                     }
@@ -300,7 +300,7 @@ internal fun AddEditBeneficiaryScreenContent(
                     }
                 }
 
-                MifosDropdownMenu(
+                BeneficiaryDropdownMenu(
                     label = stringResource(Res.string.feature_beneficiary_office_name),
                     selectedValue = state.officeName,
                     items = filteredOfficeList,
@@ -318,7 +318,7 @@ internal fun AddEditBeneficiaryScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_beneficiary_account_type),
                     value = stringResource(state.accountTypeName),
                     readOnly = true,
@@ -330,7 +330,7 @@ internal fun AddEditBeneficiaryScreenContent(
             }
 
             item {
-                MifosButton(
+                ForkButton(
                     text = {
                         Text(text = stringResource(state.btnText))
                     },
@@ -358,7 +358,7 @@ internal fun AddEditBeneficiaryScreenContent(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Scan,
+                            imageVector = ForkIcons.Scan,
                             contentDescription = null,
                             tint = KptTheme.colorScheme.primary,
                         )
@@ -388,18 +388,18 @@ private fun BeneficiaryDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is AEBState.DialogState.Error.StringMessage -> MifosBasicDialog(
+        is AEBState.DialogState.Error.StringMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is AEBState.DialogState.Loading -> MifosLoadingDialog(
+        is AEBState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
-        is AEBState.DialogState.Error.ResourceMessage -> MifosBasicDialog(
+        is AEBState.DialogState.Error.ResourceMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = stringResource(dialogState.message),
             ),
@@ -412,7 +412,7 @@ private fun BeneficiaryDialogs(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun <T> MifosDropdownMenu(
+internal fun <T> BeneficiaryDropdownMenu(
     label: String,
     selectedValue: String,
     items: List<T>,
@@ -435,7 +435,7 @@ internal fun <T> MifosDropdownMenu(
         },
         modifier = modifier,
     ) {
-        MifosTextField(
+        ForkTextField(
             label = label,
             value = selectedValue,
             onValueChange = {
@@ -485,7 +485,7 @@ internal fun <T> MifosDropdownMenu(
                 )
 
                 if (index != items.size - 1) {
-                    MifosDivider()
+                    ForkDivider()
                 }
             }
         }

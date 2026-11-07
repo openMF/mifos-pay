@@ -32,18 +32,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.account.Account
 import kpt.core.model.network.entity.templates.account.AccountType
 import kpt.core.model.savingsaccount.Currency
 import kpt.core.model.savingsaccount.Status
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.ForkProgressIndicator
 import kpt.feature.transfer.interbank.generated.resources.Res
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_account
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_account_type
@@ -67,10 +67,10 @@ fun SelectAccountScreen(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.feature_send_interbank_select_account),
                 backPress = onBackClick,
             )
@@ -85,7 +85,7 @@ fun SelectAccountScreen(
                         .padding(paddingValues),
                     contentAlignment = Alignment.Center,
                 ) {
-                    MifosProgressIndicator()
+                    ForkProgressIndicator()
                 }
             }
 
@@ -151,7 +151,7 @@ private fun AccountSelectionCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         colors = CardDefaults.cardColors(KptTheme.colorScheme.background),
         shape = KptTheme.shapes.medium,
         modifier = modifier
@@ -209,7 +209,7 @@ private fun AccountSelectionCard(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.Bank,
+                    icon = ForkIcons.Bank,
                     backgroundColor = KptTheme.colorScheme.primaryContainer,
                 )
             },
@@ -224,7 +224,7 @@ private fun AccountSelectionCard(
 @Preview
 @Composable
 fun SelectAccountScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         val mockAccounts = listOf(
             Account(
                 id = 1L,
@@ -318,7 +318,7 @@ fun SelectAccountScreenPreview() {
 @Preview
 @Composable
 fun SelectAccountScreenLoadingPreview() {
-    MifosTheme {
+    ForkTheme {
         SelectAccountScreen(
             accounts = emptyList(),
             isLoading = true,
@@ -333,7 +333,7 @@ fun SelectAccountScreenLoadingPreview() {
 @Preview
 @Composable
 fun SelectAccountScreenErrorPreview() {
-    MifosTheme {
+    ForkTheme {
         SelectAccountScreen(
             accounts = emptyList(),
             isLoading = false,

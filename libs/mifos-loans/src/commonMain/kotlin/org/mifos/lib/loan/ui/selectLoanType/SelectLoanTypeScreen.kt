@@ -23,19 +23,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.ErrorScreenContent
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_type_choose_loan
-import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_type_empty
-import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_type_top_bar_title
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.LoanCard
 import org.mifos.lib.loan.core.model.ProductOptions
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_select_loan_type_choose_loan
+import org.mifos.lib.loan.generated.resources.feature_select_loan_type_empty
+import org.mifos.lib.loan.generated.resources.feature_select_loan_type_top_bar_title
 /**
  * Entry point for the Loan Type Selection screen.
  * Fetches available loan products via the ViewModel and handles navigation to the product details.
@@ -78,13 +78,13 @@ private fun SelectLoanTypeContent(
     onAction: (SelectLoanTypeAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         backPress = { onAction(SelectLoanTypeAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_select_loan_type_top_bar_title),
     ) { paddingValues ->
         when (val viewState = state.viewState) {
-            SelectLoanTypeState.ViewState.Loading -> MifosProgressIndicator()
+            SelectLoanTypeState.ViewState.Loading -> ForkProgressIndicator()
 
             is SelectLoanTypeState.ViewState.Error -> {
                 ErrorScreenContent(

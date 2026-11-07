@@ -13,6 +13,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.InterBankRepository
@@ -24,9 +26,10 @@ import kpt.core.model.interbank.InterBankTransferRequest
 import kpt.core.model.interbank.InterBankTransferResponse
 import kpt.core.network.InterBankApiManager
 /** Default [InterBankRepository] backed by the inter-bank API. */
+@RepositoryBinding(binds = InterBankRepository::class)
 class InterBankRepositoryImpl(
     private val apiManager: InterBankApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : InterBankRepository {
 
     override suspend fun fetchParticipant(

@@ -46,7 +46,7 @@ interface ErrorMessageProvider {
  * val uiError = UiError.from(exception, errorMessageProvider)
  *
  * // In Composable
- * MifosDialogBox(
+ * ForkDialogBox(
  *     showDialogState = error != null,
  *     title = error?.title ?: "",
  *     message = error?.message ?: "",

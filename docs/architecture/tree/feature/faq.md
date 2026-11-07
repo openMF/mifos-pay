@@ -20,10 +20,10 @@ ViewModels: `FAQViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/faq sha=fefbabf176f17f7dc230eeb9056d1e3d776e68ff -->
+<!-- api-docs:begin module=feature/faq sha=dce2f740fe56bb5351d21318de4ac29e4070d21b -->
 ## API reference
 
-_Generated from `feature/faq` at tree `fefbabf176f1` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/faq` at tree `dce2f740fe56` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

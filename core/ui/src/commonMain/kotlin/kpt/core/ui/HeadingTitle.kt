@@ -25,8 +25,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /** Step heading with a verified/unverified status icon next to [text]. */
 @Composable
@@ -55,7 +55,7 @@ fun VerifyStepHeader(
         ) {
             if (isVerified) {
                 Icon(
-                    imageVector = MifosIcons.Check,
+                    imageVector = ForkIcons.Check,
                     contentDescription = null,
                     tint = if (isVerified) KptTheme.colorScheme.onSurface else KptTheme.colorScheme.outline,
                     modifier = Modifier.size(24.dp),
@@ -69,7 +69,7 @@ fun VerifyStepHeader(
 @Preview
 @Composable
 fun VerifyStepHeaderVerifiedPreview() {
-    MifosTheme {
+    ForkTheme {
         VerifyStepHeader(text = "Debit card Details ", isVerified = true)
     }
 }
@@ -78,7 +78,7 @@ fun VerifyStepHeaderVerifiedPreview() {
 @Preview
 @Composable
 fun VerifyStepHeaderUnverifiedPreview() {
-    MifosTheme {
+    ForkTheme {
         VerifyStepHeader(text = "Enter OTP ", isVerified = false)
     }
 }

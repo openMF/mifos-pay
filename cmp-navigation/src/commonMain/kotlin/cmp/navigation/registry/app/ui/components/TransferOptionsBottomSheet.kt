@@ -27,8 +27,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cmp.navigation.generated.resources.upi_and_autopay
 import cmp.navigation.registry.app.TransferOptionsViewModel
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.feature.payments.generated.resources.Res
 import kpt.feature.payments.generated.resources.feature_payments_inter_bank_transfer_description
 import kpt.feature.payments.generated.resources.feature_payments_inter_bank_transfer_title
@@ -52,7 +52,7 @@ fun TransferOptionsBottomSheet(
 ) {
     val state by transferOptionsViewModel.stateFlow.collectAsStateWithLifecycle()
 
-    MifosBottomSheet(
+    ForkBottomSheet(
         onDismiss = onDismiss,
         modifier = modifier,
         content = {
@@ -169,7 +169,7 @@ fun TransferOptionsBottomSheet(
 @Preview
 @Composable
 fun TransferOptionsBottomSheetPreview() {
-    MifosTheme {
+    ForkTheme {
         TransferOptionsBottomSheet(
             onIntraBankTransferClick = {},
             onInterBankTransferClick = {},

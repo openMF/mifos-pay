@@ -48,12 +48,12 @@ import kpt.core.base.store.freshness.FreshnessSignal
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.freshness.FreshnessIndicator
 import kpt.core.base.ui.screen.ScreenContent
-import kpt.core.designsystem.component.MifosAccountCard
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkAccountCard
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.pocket.AccountStatus
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.pocket.generated.resources.Res
 import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_loan_accounts
 import kpt.feature.pocket.generated.resources.feature_pocket_dashboard_manage
@@ -83,7 +83,7 @@ import org.koin.compose.viewmodel.koinViewModel
  *   the generic default empty screen, providing a tailored onboarding experience for pockets.
  *
  * **Component Structure:**
- * - `MifosAccountCard`: Used strictly as a dumb, reusable UI component representing a single account
+ * - `ForkAccountCard`: Used strictly as a dumb, reusable UI component representing a single account
  *   (Loan, Savings, or Share). It relies on the pre-formatted `accountType` and `accountStatus` strings
  *   passed down from the ViewModel.
  * - `PocketDashboardScreen`: Orchestrates the layout by reading the `PocketBuckets` and sequentially
@@ -132,7 +132,7 @@ internal fun PocketDashboardContent(
     val pullRefreshState = rememberPullToRefreshState()
     val isRefreshing = (state as? ScreenState.Content)?.freshnessSignal?.isRefreshing == true
 
-    MifosScaffold(
+    ForkScaffold(
         backPress = { onAction(PocketDashboardAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_pocket_dashboard_title),
         containerColor = KptTheme.colorScheme.background,
@@ -143,7 +143,7 @@ internal fun PocketDashboardContent(
             )
             IconButton(onClick = { onAction(PocketDashboardAction.ManagePocket) }) {
                 Icon(
-                    imageVector = MifosIcons.Edit2,
+                    imageVector = ForkIcons.Edit2,
                     contentDescription = stringResource(Res.string.feature_pocket_dashboard_manage),
                     tint = KptTheme.colorScheme.onSurface,
                 )
@@ -199,7 +199,7 @@ private fun PocketDashboardContent(
             Spacer(modifier = Modifier.height(KptTheme.spacing.md))
             Column(verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md)) {
                 buckets.savingsAccounts.forEach { account ->
-                    MifosAccountCard(
+                    ForkAccountCard(
                         accountId = account.accountId,
                         accountType = account.name
                             ?: stringResource(Res.string.feature_pocket_unknown_account),
@@ -210,7 +210,7 @@ private fun PocketDashboardContent(
                         onAccountClick = {
                             onAction(PocketDashboardAction.NavigateToSavingsDetail(account.accountId))
                         },
-                        icon = MifosIcons.PersonAccounts,
+                        icon = ForkIcons.PersonAccounts,
                     )
                 }
             }
@@ -222,7 +222,7 @@ private fun PocketDashboardContent(
             Spacer(modifier = Modifier.height(KptTheme.spacing.md))
             Column(verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md)) {
                 buckets.loanAccounts.forEach { account ->
-                    MifosAccountCard(
+                    ForkAccountCard(
                         accountId = account.accountId,
                         accountType = account.name
                             ?: stringResource(Res.string.feature_pocket_unknown_account),
@@ -233,7 +233,7 @@ private fun PocketDashboardContent(
                         onAccountClick = {
                             onAction(PocketDashboardAction.NavigateToLoanDetail(account.accountId))
                         },
-                        icon = MifosIcons.CoinMultiple,
+                        icon = ForkIcons.CoinMultiple,
                     )
                 }
             }
@@ -245,7 +245,7 @@ private fun PocketDashboardContent(
             Spacer(modifier = Modifier.height(KptTheme.spacing.md))
             Column(verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md)) {
                 buckets.shareAccounts.forEach { account ->
-                    MifosAccountCard(
+                    ForkAccountCard(
                         accountId = account.accountId,
                         accountType = account.name
                             ?: stringResource(Res.string.feature_pocket_unknown_account),
@@ -256,7 +256,7 @@ private fun PocketDashboardContent(
                         onAccountClick = {
                             onAction(PocketDashboardAction.NavigateToShareDetail(account.accountId))
                         },
-                        icon = MifosIcons.CoinMultiple,
+                        icon = ForkIcons.CoinMultiple,
                     )
                 }
             }
@@ -317,7 +317,7 @@ internal fun PocketDashboardCard(
                 )
             }
 
-            MifosButton(
+            ForkButton(
                 onClick = onManageClick,
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
@@ -381,7 +381,7 @@ internal fun EmptyPocketContent(
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
-                    imageVector = MifosIcons.Pocket,
+                    imageVector = ForkIcons.Pocket,
                     contentDescription = null,
                     tint = KptTheme.colorScheme.primary,
                     modifier = Modifier.size(80.dp),
@@ -410,7 +410,7 @@ internal fun EmptyPocketContent(
 
         Spacer(modifier = Modifier.height(KptTheme.spacing.xl))
 
-        MifosButton(
+        ForkButton(
             onClick = onLinkFirstAccount,
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(

@@ -27,8 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosTextUserImage
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkTextUserImage
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_pay_button
@@ -54,7 +54,7 @@ fun BeneficiaryCard(
                 .padding(KptTheme.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            MifosTextUserImage(
+            ForkTextUserImage(
                 text = getInitials(beneficiary.name),
                 size = 44.dp,
             )
@@ -81,7 +81,7 @@ fun BeneficiaryCard(
 
             Spacer(Modifier.width(KptTheme.spacing.sm))
 
-            MifosOutlinedButton(
+            ForkOutlinedButton(
                 onClick = onPayClick,
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = KptTheme.colorScheme.primary,

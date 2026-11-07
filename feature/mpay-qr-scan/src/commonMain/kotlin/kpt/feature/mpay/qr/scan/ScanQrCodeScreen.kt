@@ -34,7 +34,7 @@ import io.github.vinceglb.filekit.dialogs.FileKitType
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.launch
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.utils.QrCodeData
 import kpt.feature.mpay.qr.scan.components.QrActionButton
 import kpt.feature.mpay.qr.scan.components.QrHelpDialog
@@ -202,13 +202,13 @@ fun ScanQrCodeScreenContent(
                     horizontalArrangement = Arrangement.spacedBy(48.dp),
                 ) {
                     QrActionButton(
-                        icon = MifosIcons.PhotoLibrary,
+                        icon = ForkIcons.PhotoLibrary,
                         label = stringResource(Res.string.feature_qr_upload_qr),
                         onClick = { imagePicker.launch() },
                     )
 
                     QrActionButton(
-                        icon = if (isTorchEnabled) MifosIcons.FlashOn else MifosIcons.FlashOff,
+                        icon = if (isTorchEnabled) ForkIcons.FlashOn else ForkIcons.FlashOff,
                         label = stringResource(Res.string.feature_qr_torch),
                         onClick = onToggleTorch,
                         enabled = isTorchAvailable,

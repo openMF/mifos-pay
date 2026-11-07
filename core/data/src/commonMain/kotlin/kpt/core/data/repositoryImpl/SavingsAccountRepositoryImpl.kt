@@ -14,6 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
@@ -34,23 +37,21 @@ import kpt.core.model.savingsaccount.TransactionsEntity
 import kpt.core.model.savingsaccount.UpdateSavingAccountEntity
 import kpt.core.network.SelfServiceApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.account.AccountDetailKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 /** Default [SavingsAccountRepository] backed by the savings accounts API. */
+@RepositoryBinding(binds = SavingsAccountRepository::class)
 class SavingsAccountRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-1 SINGLE-ROW-PER-KEY wiring — injected by RepositoryModule so
-    // the store-backed getAccountDetailScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without the
-    // store harness continue to compile; getAccountDetail(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val accountDetailStore: Store<AccountDetailKey, SavingAccountDetail>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.AccountDetail) private val accountDetailStore: Store<AccountDetailKey, SavingAccountDetail>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : SavingsAccountRepository {
     override suspend fun getSavingsAccounts(
         limit: Int,

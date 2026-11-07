@@ -45,14 +45,14 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.screen.ScreenContent
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicatorOverlay
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkProgressIndicatorOverlay
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
 import kpt.feature.beneficiary.deletebeneficiary.DeleteBeneficiaryBottomSheet
 import kpt.feature.beneficiary.deletebeneficiary.DeleteBeneficiaryState
@@ -130,7 +130,7 @@ fun BeneficiaryListScreen(
 
         // Show overlay progress indicator over the list when deleting
         if (deleteState.dialogState is DeleteBeneficiaryState.DialogState.Deleting) {
-            MifosProgressIndicatorOverlay()
+            ForkProgressIndicatorOverlay()
         }
     }
 }
@@ -144,7 +144,7 @@ private fun BeneficiaryListScreenContent(
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         floatingActionButtonPosition = FabPosition.EndOverlay,
         snackbarHostState = snackbarHostState,
@@ -162,7 +162,7 @@ private fun BeneficiaryListScreenContent(
                     },
                     icon = {
                         Icon(
-                            imageVector = MifosIcons.Add,
+                            imageVector = ForkIcons.Add,
                             contentDescription = stringResource(Res.string.feature_beneficiary_add),
                         )
                     },
@@ -253,7 +253,7 @@ fun BeneficiaryItem(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.AccountCircle,
+                    icon = ForkIcons.AccountCircle,
                     backgroundColor = KptTheme.colorScheme.tertiaryContainer,
                     contentColor = KptTheme.colorScheme.tertiary,
                 )
@@ -273,7 +273,7 @@ fun BeneficiaryItem(
                         ),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Edit2,
+                            imageVector = ForkIcons.Edit2,
                             contentDescription = stringResource(Res.string.feature_beneficiary_edit_beneficiary),
                         )
                     }
@@ -288,7 +288,7 @@ fun BeneficiaryItem(
                         ),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.OutlinedDelete,
+                            imageVector = ForkIcons.OutlinedDelete,
                             contentDescription = stringResource(Res.string.feature_beneficiary_delete_beneficiary),
                         )
                     }
@@ -305,7 +305,7 @@ fun BeneficiaryItem(
 @Preview
 @Composable
 fun PreviewBeneficiaryListScreen() {
-    MifosTheme {
+    ForkTheme {
         BeneficiaryListScreenContent(
             state = ScreenState.Content(sampleBeneficiaryList),
             onRetry = { },

@@ -15,7 +15,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kpt.core.common.DateHelper
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kotlin.time.ExperimentalTime
 
 /** ViewModel for the payment success screen; builds its state from the navigation arguments. */

@@ -21,7 +21,7 @@ import kpt.core.common.setSerialized
 import kpt.core.data.repository.InvoiceRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.datatables.invoice.Invoice
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Content
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Error
 internal class InvoiceDetailViewModel(

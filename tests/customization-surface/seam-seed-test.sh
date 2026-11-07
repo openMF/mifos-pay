@@ -61,6 +61,27 @@ grep -q 'sync_directory()' "$fnsrc" || { echo "  ❌ sync_directory not found in
 [ ! -e "$F/spotless/schemas/12.json" ] && pass "a Room schema is not seeded into the fork's lineage" \
   || bad "a template schema was seeded (spotless/schemas/12.json)"
 
+# A seam the template ALREADY shipped at the fork's last sync, which the fork never had (the fork is older
+# than the seam). "Absent at the last sync" is false, yet nothing was ever removed — it must be seeded.
+# Before the fix it was "Dropped upstream-added (fork removed it)": mifos-pay never got
+# cmp-shared ForkWorkerDeclarations.kt.
+F2="$WORK/fork2"; mkdir -p "$F2/scripts/white-label"
+cp "$REPO/scripts/customization-surface.sh" "$F2/scripts/"
+printf 'version: 1\nrules:\n  - glob: "shared/ForkWorkers.kt"\n    owner: fork\n  - glob: "**"\n    owner: template\n    default: true\n' > "$F2/customization-surface.yaml"
+printf 'SYNC_DIRS=(\n    "shared"\n)\nSYNC_FILES=(\n)\n' > "$F2/scripts/white-label/sync-dirs.sh"
+# git, run in the second fixture repo with a fixed identity.
+g2() { git -C "$F2" -c user.email=t@t -c user.name=t "$@"; }
+mkdir -p "$F2/shared"; echo base > "$F2/shared/Workers.kt"
+g2 init -q -b fork; g2 add -A; g2 commit -q -m "fork, older than the seam"
+g2 checkout -q --orphan tpl; echo 'fun forkWorkers() = Unit' > "$F2/shared/ForkWorkers.kt"; g2 add -A; g2 commit -q -m "template, seam already shipped"
+PREV2="$(g2 rev-parse HEAD)"; echo upd > "$F2/shared/Workers.kt"; g2 commit -qam "template update"
+g2 checkout -q fork
+( cd "$F2" && SCRIPT_DIR="$F2/scripts/white-label" BASE_BRANCH=fork FORK_STATE=fork PREV_TEMPLATE_SHA="$PREV2" \
+    DRY_RUN=false MIRROR=true bash -c "$(cat "$fnsrc")
+    sync_directory shared tpl" ) >/dev/null 2>&1
+[ -f "$F2/shared/ForkWorkers.kt" ] && pass "seam the fork never had is seeded, even when it predates the last sync" \
+  || bad "seam the fork never had was dropped as 'removed' (shared/ForkWorkers.kt)"
+
 # The R8 rules seam: proguard-rules.pro is template-owned (replaced every sync), so the fork's own keep
 # rules need a fork-owned file the release build actually applies.
 [ "$( (cd "$REPO" && bash scripts/customization-surface.sh resolve cmp-android/fork-proguard-rules.pro) | cut -f2)" = fork ] \

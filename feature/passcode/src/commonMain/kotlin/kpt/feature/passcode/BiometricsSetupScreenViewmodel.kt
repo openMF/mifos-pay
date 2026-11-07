@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.client.Client
-import kpt.core.ui.utils.AuthenticationUtils
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.AuthenticationUtils
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.passcode.generated.resources.Res
 import kpt.feature.passcode.generated.resources.feature_passcode_biometrics_available
 import kpt.feature.passcode.generated.resources.feature_passcode_biometrics_not_set

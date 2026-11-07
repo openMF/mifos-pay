@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kpt.core.data.repository.ThirdPartyTransferRepository
 import kpt.core.model.network.entity.templates.account.AccountOption
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel for choosing a destination account; loads the destination options and filters them by the entered text. */
 class SelectScreenViewModel(
     private val repository: ThirdPartyTransferRepository,

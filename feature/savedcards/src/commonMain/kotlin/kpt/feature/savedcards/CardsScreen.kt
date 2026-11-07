@@ -48,15 +48,15 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.screen.ScreenContent
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.savedcards.SavedCard
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.savedcards.createOrUpdate.CardAddEditType
 import kpt.feature.savedcards.utils.CreditCardUtils.detectCardType
 import kpt.feature.savedcards.utils.CreditCardUtils.maskCreditCardNumber
@@ -120,7 +120,7 @@ private fun SavedCardDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is CardState.DialogState.DeleteCard -> MifosBasicDialog(
+        is CardState.DialogState.DeleteCard -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = stringResource(dialogState.title),
                 message = stringResource(dialogState.message),
@@ -129,14 +129,14 @@ private fun SavedCardDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is CardState.DialogState.Error -> MifosBasicDialog(
+        is CardState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is CardState.DialogState.Loading -> MifosLoadingDialog(
+        is CardState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -152,7 +152,7 @@ internal fun CardsScreen(
     modifier: Modifier = Modifier,
     onAction: (CardAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         snackbarHostState = snackbarHostState,
         floatingActionButtonPosition = FabPosition.EndOverlay,
         modifier = modifier,
@@ -170,7 +170,7 @@ internal fun CardsScreen(
                         onAction(CardAction.AddNewCard)
                     },
                 ) {
-                    Icon(imageVector = MifosIcons.Add, "Add")
+                    Icon(imageVector = ForkIcons.Add, "Add")
                 }
             }
         },
@@ -190,7 +190,7 @@ internal fun CardsScreen(
                     title = "No Saved Cards",
                     subTitle = "No saved cards found, click the button below to add a new card",
                     btnText = "Add New Card",
-                    btnIcon = MifosIcons.Add,
+                    btnIcon = ForkIcons.Add,
                     onClick = {
                         onAction(CardAction.AddNewCard)
                     },
@@ -292,7 +292,7 @@ private fun SavedCardItem(
                         ),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Edit2,
+                            imageVector = ForkIcons.Edit2,
                             contentDescription = "Edit Card",
                         )
                     }
@@ -307,7 +307,7 @@ private fun SavedCardItem(
                         ),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.OutlinedDelete,
+                            imageVector = ForkIcons.OutlinedDelete,
                             contentDescription = "Delete Card",
                         )
                     }

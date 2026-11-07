@@ -46,7 +46,7 @@ import coil3.ImageLoader
 import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.scan.generated.resources.Res
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_drag_drop_hint
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_drop_image_here
@@ -102,7 +102,7 @@ fun QrImportScreen(
 
                 // Header
                 Icon(
-                    imageVector = MifosIcons.QrCode2,
+                    imageVector = ForkIcons.QrCode2,
                     contentDescription = null,
                     tint = primaryColor,
                     modifier = Modifier.size(64.dp),
@@ -201,7 +201,7 @@ fun QrImportScreen(
 
                         isDragging -> {
                             Icon(
-                                imageVector = MifosIcons.PhotoLibrary,
+                                imageVector = ForkIcons.PhotoLibrary,
                                 contentDescription = null,
                                 tint = primaryColor,
                                 modifier = Modifier.size(80.dp),
@@ -220,7 +220,7 @@ fun QrImportScreen(
 
                         else -> {
                             Icon(
-                                imageVector = MifosIcons.PhotoLibrary,
+                                imageVector = ForkIcons.PhotoLibrary,
                                 contentDescription = null,
                                 tint = primaryColor.copy(alpha = if (useDarkTheme) 1f else 0.6f),
                                 modifier = Modifier.size(80.dp),
@@ -252,7 +252,7 @@ fun QrImportScreen(
                                     },
                             ) {
                                 Icon(
-                                    imageVector = MifosIcons.PhotoLibrary,
+                                    imageVector = ForkIcons.PhotoLibrary,
                                     contentDescription = null,
                                     modifier = Modifier.size(20.dp),
                                 )

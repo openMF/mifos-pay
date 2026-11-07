@@ -24,8 +24,8 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.instance.InstancesConfig
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
-import kpt.core.network.config.InstanceConfigLoader
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.network.main.config.InstanceConfigLoader
+import kpt.core.ui.fork.utils.BaseViewModel
 import org.jetbrains.compose.resources.getString
 /** Loads the available server instances and applies the user's main and inter-bank selection to preferences. */
 class InstanceSelectorViewModel(

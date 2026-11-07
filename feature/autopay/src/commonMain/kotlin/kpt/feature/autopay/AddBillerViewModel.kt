@@ -19,13 +19,13 @@ import kpt.core.base.store.submit.SubmitState
 import kpt.core.base.store.submit.submitHandler
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
-import kpt.core.data.util.BillerValidator
+import kpt.core.data.fork.util.BillerValidator
 import kpt.core.datastore.BillerRepository
 import kpt.core.model.autopay.Biller
 import kpt.core.model.autopay.BillerCategory
 import kpt.core.model.autopay.BillerFormData
 import kpt.core.model.autopay.BillerValidationResult
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kotlin.random.Random
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime

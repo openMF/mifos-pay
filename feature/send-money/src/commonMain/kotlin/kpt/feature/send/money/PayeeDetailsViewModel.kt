@@ -14,8 +14,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kpt.core.data.util.StandardUpiQrCodeProcessor
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.data.fork.util.StandardUpiQrCodeProcessor
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * ViewModel for the payee details screen; parses the payee from the navigation arguments
  * and manages amount, note and account selection.

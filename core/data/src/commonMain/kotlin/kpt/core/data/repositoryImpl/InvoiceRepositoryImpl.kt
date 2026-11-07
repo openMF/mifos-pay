@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
@@ -26,23 +29,21 @@ import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.model.datatables.invoice.InvoiceEntity
 import kpt.core.network.FineractApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.invoice.InvoiceKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 /** Default [InvoiceRepository] backed by the invoice API. */
+@RepositoryBinding(binds = InvoiceRepository::class)
 class InvoiceRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-2 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getInvoicesScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without
-    // the store harness continue to compile; getInvoices(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val invoiceStore: Store<InvoiceKey, List<Invoice>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Invoice) private val invoiceStore: Store<InvoiceKey, List<Invoice>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : InvoiceRepository {
     override fun getInvoice(clientId: Long, invoiceId: Long): Flow<ScreenState<Invoice>> {
         return apiManager.invoiceApi

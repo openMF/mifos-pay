@@ -23,7 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.scan.generated.resources.Res
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_help_description
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_help_title
@@ -44,7 +44,7 @@ fun QrHelpDialog(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 Icon(
-                    imageVector = MifosIcons.Warning,
+                    imageVector = ForkIcons.Warning,
                     contentDescription = null,
                     tint = KptTheme.colorScheme.error,
                     modifier = Modifier.size(24.dp),

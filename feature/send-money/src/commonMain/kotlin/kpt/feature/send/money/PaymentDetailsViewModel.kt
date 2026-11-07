@@ -10,7 +10,7 @@
 package kpt.feature.send.money
 
 import kpt.core.common.CurrencyFormatter
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * ViewModel for the Payment Details screen
  * Manages payment details state and provides comprehensive transaction information

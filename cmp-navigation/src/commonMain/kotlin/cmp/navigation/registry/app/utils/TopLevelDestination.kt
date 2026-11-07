@@ -17,7 +17,7 @@ import cmp.navigation.generated.resources.payments
 import cmp.navigation.generated.resources.transaction_history
 import cmp.navigation.generated.resources.wallet_app_name
 import cmp.navigation.generated.resources.wallet_home
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import org.jetbrains.compose.resources.StringResource
 /**
  * Type for the top level destinations in the application. Each of these destinations
@@ -32,26 +32,26 @@ internal enum class TopLevelDestination(
     val titleText: StringResource,
 ) {
     HOME(
-        selectedIcon = MifosIcons.Home,
-        unselectedIcon = MifosIcons.HomeBoarder,
+        selectedIcon = ForkIcons.Home,
+        unselectedIcon = ForkIcons.HomeBoarder,
         iconText = Res.string.wallet_home,
         titleText = Res.string.wallet_app_name,
     ),
     PAYMENTS(
-        selectedIcon = MifosIcons.Payment,
-        unselectedIcon = MifosIcons.Payment,
+        selectedIcon = ForkIcons.Payment,
+        unselectedIcon = ForkIcons.Payment,
         iconText = Res.string.payments,
         titleText = Res.string.payments,
     ),
     FINANCE(
-        selectedIcon = MifosIcons.Finance,
-        unselectedIcon = MifosIcons.FinanceBoarder,
+        selectedIcon = ForkIcons.Finance,
+        unselectedIcon = ForkIcons.FinanceBoarder,
         iconText = Res.string.finance,
         titleText = Res.string.finance,
     ),
     HISTORY(
-        selectedIcon = MifosIcons.History,
-        unselectedIcon = MifosIcons.HistoryBoarder,
+        selectedIcon = ForkIcons.History,
+        unselectedIcon = ForkIcons.HistoryBoarder,
         iconText = Res.string.history,
         titleText = Res.string.transaction_history,
     ),

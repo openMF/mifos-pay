@@ -289,39 +289,13 @@ class RepositoryBindingProcessor(
         }
         if (impl == null || iface == null || ctor == null) return null
 
-        val args = ctor.parameters.mapNotNull { param ->
-            // A defaulted parameter is a TEST SEAM (clock, timeZone), not a graph dependency. Passing
-            // `get()` for it would ask Koin for a type nothing binds and fail at construction.
-            if (param.hasDefault) return@mapNotNull null
-            val name = param.name?.asString() ?: return@mapNotNull null
-            // PRESENT-BUT-UNRESOLVABLE is the dangerous case — see the note in dependency().
-            // A typo'd CONSTANT (`@FromStore(AppStoreIds.Alertz)`) makes KSP hand us null, and
-            // falling through to a bare `get()` silently drops the qualifier: Koin resolves whichever
-            // unqualified Store matches the type, wiring the repository to the WRONG STORE with a
-            // clean build. Measured 2026-09-13 — `alertsStore = get()` and BUILD SUCCESSFUL.
-            val fromStoreAnn = param.annotations
-                .firstOrNull { it.shortName.asString() == "FromStore" }
-            val storeId = fromStoreAnn
-                ?.arguments?.firstOrNull { it.name?.asString() == "id" }
-                ?.value as? String
-            if (fromStoreAnn != null && storeId.isNullOrBlank()) {
-                logger.error(
-                    "data-ksp: @FromStore on parameter '$name' has an id that does not resolve to a " +
-                        "compile-time String. If it names a constant, check the spelling and that the " +
-                        "declaring module is on the compile classpath — falling back to an " +
-                        "unqualified get() would bind the wrong store.",
-                    param,
-                )
-                return@mapNotNull null
-            }
-            val resolve = if (storeId.isNullOrBlank()) {
-                "get()"
-            } else {
-                // Same id -> member rule store-ksp uses, so the two generated files agree by construction.
-                "get($REGISTRY.${registrySymbol(storeId)})"
-            }
-            name to resolve
-        }
+        // The constructor's parameters resolve EXACTLY as a @DataProvider function's do — one rule, in
+        // dependency(): defaulted → skipped (a test seam), @FromStore → the store's registry qualifier
+        // (an unresolvable id is an error, never a silent bare get()), @FromQualifier → named(...),
+        // nullable → getOrNull(). This path used to carry its own copy without the @FromQualifier
+        // branch, so `@FromQualifier("IO") ioDispatcher` was emitted as a bare `get()` and Koin bound
+        // whichever CoroutineDispatcher came first (mifos-pay, 2026-11-07).
+        val args = ctor.parameters.mapNotNull(::dependency)
         return Row(iface, impl, args)
     }
 
@@ -332,7 +306,9 @@ class RepositoryBindingProcessor(
         ) {
             imports += REGISTRY_FQN
         }
-        if (providers.any { p -> p.args.any { it.second.startsWith("get(named(") } }) {
+        if ((rows + providers.map { Row(it.returns, it.fnFqn, it.args) })
+                .any { r -> r.args.any { it.second.startsWith("get(named(") } }
+        ) {
             imports += "org.koin.core.qualifier.named"
         }
         providers.forEach { imports += it.fnFqn }

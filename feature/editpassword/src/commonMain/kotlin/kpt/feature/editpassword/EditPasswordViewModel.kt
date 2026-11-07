@@ -30,10 +30,10 @@ import kpt.core.data.repository.UserRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.ui.DefaultErrorMessageProvider
 import kpt.core.ui.PasswordStrengthState
-import kpt.core.ui.utils.BaseViewModel
-import kpt.core.ui.utils.fork.PasswordChecker
-import kpt.core.ui.utils.fork.PasswordStrength
-import kpt.core.ui.utils.fork.PasswordStrengthResult
+import kpt.core.ui.fork.utils.BaseViewModel
+import kpt.core.ui.fork.utils.PasswordChecker
+import kpt.core.ui.fork.utils.PasswordStrength
+import kpt.core.ui.fork.utils.PasswordStrengthResult
 import kpt.feature.editpassword.EditPasswordAction.Internal.ReceivePasswordStrengthResult
 import kpt.feature.editpassword.EditPasswordDialog.Error
 import kpt.feature.editpassword.generated.resources.Res

@@ -9,6 +9,7 @@
  */
 package kpt.core.data.repositoryImpl
 
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.data.repository.UserVerificationRepository
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -36,6 +37,7 @@ private val VERIFICATION_EXPIRY: Duration = 30.seconds
  * (settings disable-biometrics, intra-bank transfer auth gate) round-trips
  * through navigation in the same process.
  */
+@RepositoryBinding(binds = UserVerificationRepository::class)
 class UserVerificationRepositoryImpl : UserVerificationRepository {
 
     private var mark: TimeSource.Monotonic.ValueTimeMark? = null

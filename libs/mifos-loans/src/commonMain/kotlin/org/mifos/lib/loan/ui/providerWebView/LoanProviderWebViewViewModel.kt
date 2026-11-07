@@ -11,7 +11,7 @@ package org.mifos.lib.loan.ui.providerWebView
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * `ViewModel` for the Loan Provider Website screen — renders the chosen provider's website
  * (see [urlForLoanProvider]) in an embedded web view.

@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_DATA.md`
-> **Measured:** 125 Kotlin files, 9 test files
+> **Measured:** 126 Kotlin files, 9 test files
 
 ## Codegen contracts owned here
 
@@ -25,10 +25,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/data sha=bc808f65a0b03e5396174d0ad00e60588c066960 -->
+<!-- api-docs:begin module=core/data sha=c250ebda7347b9cbbfa5b180368e05291a070ead -->
 ## API reference
 
-_Generated from `core/data` at tree `bc808f65a0b0` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/data` at tree `c250ebda7347` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/di/ForkRepositoryModule.kt`
@@ -68,7 +68,7 @@ val DataModule = module
 ```
 DataModule — the INFRA-ONLY (framework) data aggregator, `owner: template` (E1 / C1).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:140</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:136</code></summary>
 
 ```kotlin
         }
@@ -87,14 +87,14 @@ expect val platformModule: Module
 ```
 Per-target repository bindings supplied by each `actual` — the pieces that cannot be expressed in common code.
 
-### `core/data/src/commonMain/kotlin/kpt/core/data/di/fork/PlatformDependentDataModule.kt`
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/di/PlatformDependentDataModule.kt`
 
 ```kotlin
 interface PlatformDependentDataModule
 ```
 Platform-specific data dependencies (network and time-zone monitors) supplied by each target.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:25</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/fork/di/AndroidPlatformDependentDataModule.kt:24</code></summary>
 
 ```kotlin
     private val dispatcher: CoroutineDispatcher,
@@ -120,14 +120,14 @@ expect val getPlatformDataModule: PlatformDependentDataModule
 ```
 Platform-specific `PlatformDependentDataModule` instance, resolved per target.
 
-### `core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt`
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/di/RepositoryModule.kt`
 
 ```kotlin
 val RepositoryModule = module
 ```
-Koin module wiring every wallet repository interface to its implementation and the shared data-layer dependencies.
+Koin module for the shared data-layer dependencies that are not repositories (the repositories bind themselves through `@RepositoryBinding`).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:137</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:133</code></summary>
 
 ```kotlin
         val store = checkNotNull(selfAccountsStore) {
@@ -140,6 +140,501 @@ Koin module wiring every wallet repository interface to its implementation and t
 ```
 
 </details>
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/AppLockOption.kt`
+
+```kotlin
+enum class AppLockOption
+```
+How the app is locked on launch.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/fork/util/Helpers.kt:22</code></summary>
+
+```kotlin
+
+    /** Converts an [AppLockOption] to the string stored in preferences. */
+    fun authOptionToStringMapperFunction(option: AppLockOption): String {
+        return when (option) {
+            AppLockOption.Passcode -> PASSCODE_LOCK_VALUE
+            AppLockOption.DeviceLock -> DEVICE_AUTHENTICATION_METHOD_VALUE
+            AppLockOption.None -> ""
+```
+
+</details>
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/AutoPayValidator.kt`
+
+```kotlin
+object AutoPayValidator
+```
+Client-side validation of auto-pay payloads before they are submitted.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:153</code></summary>
+
+```kotlin
+    ) {
+        withContext(ioDispatcher) {
+            when (val validationResult = AutoPayValidator.validateAutoPayPayload(payload)) {
+                is AutoPayValidator.ValidationResult.Valid -> Unit
+                is AutoPayValidator.ValidationResult.Invalid -> {
+                    throw IllegalArgumentException(validationResult.errorMessage)
+                }
+```
+
+</details>
+
+- `fun validateAutoPayPayload(payload: AutoPayPayload): ValidationResult` — Validates a new auto-pay payload and returns the first violation, if any.
+- `val startDate = parseDate(payload.validFrom)`
+- `val endDate = parseDate(payload.validTill)`
+- `fun validateAutoPayUpdatePayload(payload: AutoPayUpdatePayload): ValidationResult` — Validates an auto-pay update payload and returns the first violation, if any.
+- `val startDate = parseDate(payload.validFrom!!)`
+- `val endDate = parseDate(payload.validTill!!)`
+- `val validFrequencies = listOf("DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "YEARLY")`
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/BillErrorHandler.kt`
+
+```kotlin
+object BillErrorHandler
+```
+Utility class for handling bill-related errors
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt:160</code></summary>
+
+```kotlin
+        val validationResult = BillValidator.validateBill(bill)
+        if (!validationResult.isValid) {
+            val errorMessage = BillErrorHandler.handleValidationError(validationResult)
+            throw IllegalArgumentException(errorMessage)
+        }
+    }
+```
+
+</details>
+
+- `fun handleNetworkError(throwable: Throwable): String` — Handles network errors and converts them to user-friendly messages
+- `fun handleValidationError(validationResult: kpt.core.model.autopay.BillValidationResult): String` — Handles validation errors and converts them to user-friendly messages
+- `fun createOperationErrorMessage(operation: String, error: String): String` — Creates a user-friendly error message for specific bill operations
+- `fun isRetryableError(throwable: Throwable): Boolean` — Checks if an error is retryable
+- `fun getRetryDelay(throwable: Throwable): Long` — Gets retry delay in milliseconds based on error type
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/BillValidator.kt`
+
+```kotlin
+object BillValidator
+```
+Utility class for validating bill data before submission
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:150</code></summary>
+
+```kotlin
+
+    private fun updateBillName(name: String) {
+        val nameError = BillValidator.validateBillFormData(
+            BillFormData(name = name),
+        ).nameError
+        mutableStateFlow.update {
+            it.copy(
+```
+
+</details>
+
+- `fun validateBill(bill: Bill): BillValidationResult` — Validates a Bill object
+- `val nameError = validateName(bill.name)`
+- `val amountError = validateAmount(bill.amount)`
+- `val dueDateError = validateDueDate(bill.dueDate)`
+- `val recurrencePatternError = validateRecurrencePattern(bill.recurrencePattern)`
+- `val billerError = validateBiller(bill.billerId, bill.billerName)`
+- `val isValid = nameError == null &&`
+- `fun validateBillFormData(formData: BillFormData): BillValidationResult` — Validates BillFormData object
+- `val nameError = validateName(formData.name)`
+- `val amountError = validateAmountString(formData.amount)`
+- `val dueDateError = validateDueDate(formData.dueDate)`
+- `val recurrencePatternError = validateRecurrencePattern(formData.recurrencePattern)`
+- `val billerError = validateBiller(formData.billerId, formData.billerName)`
+- `val autoPayPaymentMethodError = validateAutoPayPaymentMethod(formData.enableAutoPay, formData.autoPayPaymentMethod)`
+  _…more members; read the file._
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/BillerValidator.kt`
+
+```kotlin
+object BillerValidator
+```
+Validator for biller form data with comprehensive validation rules.
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:127</code></summary>
+
+```kotlin
+
+    private fun updateBillerName(name: String) {
+        val nameError = BillerValidator.validateNameField(name)
+        mutableStateFlow.update {
+            it.copy(
+                formData = it.formData.copy(name = name),
+                validationResult = it.validationResult.copy(nameError = nameError),
+```
+
+</details>
+
+- `fun validateBillerForm(formData: BillerFormData): BillerValidationResult` — Validates the complete biller form data and returns validation result.
+- `val nameError = validateName(formData.name)`
+- `val accountNumberError = validateAccountNumber(formData.accountNumber)`
+- `val contactNumberError = validateContactNumber(formData.contactNumber)`
+- `val emailError = validateEmail(formData.email)`
+- `val categoryError = validateCategory(formData.category)`
+- `val addressError = validateAddress(formData.address)`
+- `val isValid = nameError == null &&`
+- `val validationResult = BillerValidationResult(`
+- `fun validateNameField(name: String): String? = validateName(name)` — Validates individual name field for real-time validation.
+- `fun validateAccountNumberField(accountNumber: String): String? = validateAccountNumber(accountNumber)` — Validates individual account number field for real-time validation.
+- `fun validateContactNumberField(contactNumber: String): String? = validateContactNumber(contactNumber)` — Validates individual contact number field for real-time validation.
+- `fun validateEmailField(email: String): String? = validateEmail(email)` — Validates individual email field for real-time validation.
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/Constants.kt`
+
+```kotlin
+object Constants
+```
+Shared string and numeric constants used by the data layer.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:193</code></summary>
+
+```kotlin
+            val result = searchRepository.searchResources(
+                query = phoneNo,
+                resources = Constants.CLIENTS,
+                exactMatch = true,
+            )
+            if (result.isEmpty()) {
+                // TODO:: Call repository request an otp to this phone no.
+```
+
+</details>
+
+- `const val BASIC = "Basic "` — Prefix of the HTTP Basic authorization header value.
+- `const val SAVINGS = "savingsAccounts"` — Resource name for savings accounts.
+- `const val TRANSACTIONS = "transactions"` — Resource name for transactions.
+- `const val WALLET_ACCOUNT_SAVINGS_PRODUCT_ID = 1` — Savings product id of the default wallet account.
+- `const val MIFOS_MERCHANT_SAVINGS_PRODUCT_ID = 165 // 372` — Savings product id used for merchant accounts.
+- `const val MIFOS_CONSUMER_SAVINGS_PRODUCT_ID = 165 // 373` — Savings product id used for consumer accounts.
+- `val NEW_USER_ROLE_IDS: List<Int> = listOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)` — Role ids assigned to newly created users: the mobile-wallet role and the super-user role.
+- `const val ENTITY_TYPE_CLIENTS = "clients"` — Entity type name for clients.
+- `const val FETCH_ACCOUNT_TRANSFER_USECASE = "FetchAccountTransfer"` — Use-case name used when fetching an account transfer.
+- `const val NO_SAVED_CARDS = "No saved cards."` — Message shown when the client has no saved cards.
+- `const val MIFOS_PASSWORD = "mifos:password"` — Default password for new mifos users.
+- `const val ERROR_VERIFYING_USER = "Error verifying user"` — Error message shown when verifying a user fails.
+- `const val ERROR_REGISTERING_USER = "Error registering user"` — Error message shown when registering a user fails.
+- `const val NO_CLIENTS_FOUND = "No clients found"` — Message shown when no clients are found.
+  _…more members; read the file._
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/FineractErrorParser.kt`
+
+```kotlin
+val parseFineractError: ErrorBodyParser = { responseBody, statusCode ->
+```
+Parses the Mifos/Fineract server error response body to extract a user-friendly message. This parser follows the mifos-mobile pattern for extracting error messages from the standard Mifos/Fineract error response format.
+
+<details><summary>Example</summary>
+
+```kotlin
+{
+  "developerMessage": "The resource with id 123 was not found.",
+  "httpStatusCode": "404",
+  "defaultUserMessage": "Account not found",
+  "userMessageGlobalisationCode": "error.msg.account.not.found",
+  "errors": [
+    {
+      "developerMessage": "Account ID is invalid",
+      "defaultUserMessage": "The account does not exist",
+      "parameterName": "accountId"
+    }
+  ]
+}
+```
+
+</details>
+
+```kotlin
+fun extractFineractErrorMessage(responseBody: String, statusCode: Int): String
+```
+Extracts a user-friendly error message from a Mifos/Fineract error response. Priority order: 1. First error's defaultUserMessage (for validation errors) 2. Root level defaultUserMessage 3. Root level developerMessage 4.
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/Helpers.kt`
+
+```kotlin
+object Helpers
+```
+Helpers for persisting `AppLockOption` values as strings.
+
+<details><summary>Used in the template — <code>core-base/crypto/src/wasmJsMain/kotlin/kpt/core/base/crypto/WebSecureCrypto.wasmJs.kt:92</code></summary>
+
+```kotlin
+)""",
+)
+private external fun installHelpers(): KptSecureHelpers
+
+/**
+ * Browser crypto for the WasmJS target. Same WebCrypto surface as the JS actual, kept separate only because the two
+ * targets do not share an interop layer.
+```
+
+</details>
+
+- `fun authOptionToStringMapperFunction(option: AppLockOption): String` — Converts an `AppLockOption` to the string stored in preferences.
+- `fun stringToAuthOptionMapperFunction(option: String): AppLockOption` — Converts a stored string value back to an `AppLockOption`, defaulting to `AppLockOption.None`.
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/MpayQrCodeProcessor.kt`
+
+```kotlin
+object MpayQrCodeProcessor
+```
+MPay QR Code Encoder and Decoder with validation.
+
+<details><summary>Example</summary>
+
+```kotlin
+mpay://pay?qt=0&fsp=mifos-bank-1&ci=123&am=100&cn=John&an=ACC001&ai=456&cu=USD&oi=1&pi=2&ae=EXT123
+```
+
+</details>
+
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayViewModel.kt:76</code></summary>
+
+```kotlin
+
+            try {
+                val qrData = MpayQrCodeProcessor.decodeMpayString(encodedQrData)
+                // Phase-5 Batch-3: processor now consumes the store-backed
+                // `getBeneficiaryListScreen(clientId, scope)` (batch-1 reuse)
+                // and `getOfficesScreen(scope)` (batch-3 new), so it needs the
+                // caller's CoroutineScope for Store5 refresh-trigger wiring.
+```
+
+</details>
+
+- `fun encodeMpayString(qrCodeData: QrCodeData): String` — Encodes MPay payment details into a Base64 encoded string.
+- `val requestPaymentString = when (qrCodeData.type)`
+- `fun decodeMpayString(encodedString: String): QrCodeData` — Decodes a Base64 encoded MPay or UPI payment string. Supports both new mpay:// and legacy upi:// formats for backwards compatibility.
+- `val normalizedInput = encodedString.trim()`
+- `val decodedString = try`
+- `val params = when`
+- `val fspId = params["fsp"]?.takeIf { it.isNotBlank() }`
+- `val accountExternalId = params["ae"]?.takeIf { it.isNotBlank() }`
+- `val phoneNumber = params["pn"]?.takeIf { it.isNotBlank() }`
+- `val clientId = params["ci"]?.toLongOrNull() ?: 0L`
+- `val accountId = params["ai"]?.toLongOrNull() ?: 0L`
+- `val type = params["qt"]?.toIntOrNull()?.let { QrCodeType.fromOrdinal(it) }`
+- `val hasInternalIds = clientId > 0 && accountId > 0`
+- `val hasAccountExternalId = accountExternalId != null`
+  _…more members; read the file._
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/NetworkMonitor.kt`
+
+```kotlin
+interface NetworkMonitor
+```
+Utility for reporting app connectivity status
+
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/fork/di/AndroidPlatformDependentDataModule.kt:25</code></summary>
+
+```kotlin
+    private val scope: CoroutineScope,
+) : PlatformDependentDataModule {
+    override val networkMonitor: NetworkMonitor by lazy {
+        ConnectivityManagerNetworkMonitor(context, dispatcher)
+    }
+
+    override val timeZoneMonitor: TimeZoneMonitor by lazy {
+```
+
+</details>
+
+- `val isOnline: Flow<Boolean>` — Emits true while the device has network connectivity.
+
+```kotlin
+val ForkNetworkMonitorQualifier = named("kpt.core.data.fork.util.NetworkMonitor")
+```
+Koin qualifier for this `NetworkMonitor`.
+
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/fork/di/AndroidPlatformModule.kt:29</code></summary>
+
+```kotlin
+    // `NetworkMonitorProvider.install()` (cmp-network-monitor 3.6.0+, which carries the
+    // AndroidNetworkMonitor cold-start seed fix) — no per-platform override needed here.
+    single<NetworkMonitor>(ForkNetworkMonitorQualifier) {
+        ConnectivityManagerNetworkMonitor(androidContext(), get(named(ForkDispatchers.IO.name)))
+    }
+
+    single<TimeZoneMonitor>(ForkTimeZoneMonitorQualifier) {
+```
+
+</details>
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/QrTransferRouter.kt`
+
+```kotlin
+class QrTransferRouter(
+```
+Routes QR code scans to appropriate transfer flow based on: 1. FSP ID comparison (same bank vs different bank) 2.
+
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrViewModel.kt:36</code></summary>
+
+```kotlin
+ */
+class ScanQrViewModel(
+    private val qrTransferRouter: QrTransferRouter,
+) : BaseViewModel<ScanQrState, ScanQrEvent, ScanQrAction>(
+    initialState = ScanQrState,
+) {
+```
+
+</details>
+
+```kotlin
+sealed interface QrRouteResult
+```
+Result of QR code routing decision.
+
+<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrViewModel.kt:139</code></summary>
+
+```kotlin
+            // to avoid StateFlow conflation issues)
+            when (routeResult) {
+                is QrRouteResult.IntraBank -> {
+                    Logger.d { "QR Route -> Intra-bank transfer, emitting event..." }
+                    sendEvent(ScanQrEvent.OnNavigateToIntraBankTransfer(routeResult.qrData))
+                    Logger.d { "QR Route -> Event emitted: OnNavigateToIntraBankTransfer" }
+                }
+```
+
+</details>
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/ScreenStateBridge.kt`
+
+```kotlin
+fun <T> KptScreenState<T>.toForkScreenState(): ForkScreenState<T> = when (this)
+```
+Bridge extension: converts a single `kpt.core.base.store.screen.ScreenState<T>` (emitted by Store5 `asScreenStream(...)`) into the fork's `kpt.core.common.ScreenState<T>`.
+
+```kotlin
+fun <T> Flow<KptScreenState<T>>.toForkScreenStateFlow(): Flow<ForkScreenState<T>> =
+```
+Flow-level convenience wrapper — every Store5 impl calls `store.asScreenStream(...).state.toForkScreenStateFlow()` to satisfy the fork repository return type.
+
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+
+```kotlin
+    val scope = rememberCoroutineScope()
+
+    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
+    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
+
+    EventsEffect(viewModel) { event ->
+        when (event) {
+```
+
+</details>
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/StandardUpiQrCodeProcessor.kt`
+
+```kotlin
+object StandardUpiQrCodeProcessor
+```
+Standard UPI QR Code Processor Handles parsing of standard UPI QR codes according to UPI specification
+
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsViewModel.kt:34</code></summary>
+
+```kotlin
+        if (safeQrCodeDataString.isNotEmpty()) {
+            val qrCodeDataString = safeQrCodeDataString.urlDecode()
+            val isUpiCode = StandardUpiQrCodeProcessor.isValidUpiQrCode(qrCodeDataString)
+
+            val qrCodeData = if (isUpiCode) {
+                StandardUpiQrCodeProcessor.parseUpiQrCode(qrCodeDataString)
+            } else {
+```
+
+</details>
+
+- `fun isValidUpiQrCode(qrData: String): Boolean` — Checks if the given string is a valid UPI QR code
+- `fun parseUpiQrCode(qrData: String): StandardUpiQrData` — Parses a standard UPI QR code string
+- `val paramsString = qrData.substringAfter("upi://").substringAfter("UPI://")`
+- `val parts = paramsString.split("?", limit = 2)`
+- `val params = if (parts.size > 1) parseParams(parts[1]) else emptyMap()`
+- `val payeeVpa = params["pa"] ?: run`
+- `val payeeName = params["pn"] ?: "Unknown"`
+- `val vpaParts = payeeVpa.split("@", limit = 2)`
+- `val actualVpa = if (vpaParts.size == 2) payeeVpa else payeeVpa`
+- `val keyValue = param.split("=", limit = 2)`
+- `fun toPaymentQrData(standardData: StandardUpiQrData): PaymentQrData`
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/TimeZoneMonitor.kt`
+
+```kotlin
+interface TimeZoneMonitor
+```
+Utility for reporting current timezone the device has set. It always emits at least once with default setting and then for each TZ change.
+
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/PlatformDependentDataModule.android.kt:27</code></summary>
+
+```kotlin
+    includes(CommonModule)
+
+    singleOf(::TimeZoneMonitorImpl) bind TimeZoneMonitor::class
+}
+```
+
+</details>
+
+- `val currentTimeZone: Flow<TimeZone>` — Emits the device's current time zone, then each change.
+
+```kotlin
+val ForkTimeZoneMonitorQualifier = named("kpt.core.data.fork.util.TimeZoneMonitor")
+```
+Koin qualifier for this `TimeZoneMonitor`.
+
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/fork/di/AndroidPlatformModule.kt:33</code></summary>
+
+```kotlin
+    }
+
+    single<TimeZoneMonitor>(ForkTimeZoneMonitorQualifier) {
+        TimeZoneBroadcastMonitor(
+            context = androidContext(),
+            appScope = get(named("ApplicationScope")),
+            ioDispatcher = get(named(ForkDispatchers.IO.name)),
+```
+
+</details>
+
+### `core/data/src/commonMain/kotlin/kpt/core/data/fork/util/UpiQrCodeProcessor.kt`
+
+```kotlin
+object UpiQrCodeProcessor
+```
+UPI QR Code Encoder and Decoder with validation
+
+<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyViewModel.kt:190</code></summary>
+
+```kotlin
+            }
+
+            val paymentString = UpiQrCodeProcessor.encodeUpiString(state.paymentQrData)
+
+            sendEvent(SendMoneyEvent.NavigateToTransferScreen(paymentString))
+        }
+    }
+```
+
+</details>
+
+- `fun encodeUpiString(paymentQrData: PaymentQrData): String` — Encodes UPI payment details into a Base64 encoded string
+- `val requestPaymentString = buildString`
+- `fun decodeUpiString(encodedString: String): PaymentQrData` — Decodes a Base64 encoded UPI payment string
+- `val decodedString = encodedString.decodeBase64String()`
+- `val params = parseUpiString(decodedString)`
+- `val requestQrData = PaymentQrData(`
+- `val amountValue = data.amount.toDoubleOrNull()`
+- `val (key, value) = it.split("=")`
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/mapper/AccountMapper.kt`
 
@@ -267,7 +762,7 @@ val NEW_USER_ROLE_IDS: ArrayList<Int> = arrayListOf(MOBILE_WALLET_ROLE_ID, SUPER
 ```
 Role ids assigned to newly created users: the mobile-wallet role and the super-user role.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/util/Constants.kt:35</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/fork/util/Constants.kt:35</code></summary>
 
 ```kotlin
 
@@ -353,14 +848,14 @@ interface AppLockRepository
 ```
 App-wide lock flag, persisted across process restarts.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/MifosPasscodeViewModel.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/PasscodeViewModel.kt:51</code></summary>
 
 ```kotlin
-class MifosPasscodeViewModel(
+class PasscodeViewModel(
     private val passcodeManager: PasscodeManager,
     private val appLockRepository: AppLockRepository,
-) : BaseViewModel<MifosPasscodeState, MifosPasscodeEvent, MifosPasscodeAction>(
-    initialState = MifosPasscodeState(),
+) : BaseViewModel<PasscodeState, PasscodeEvent, PasscodeAction>(
+    initialState = PasscodeState(),
 ) {
 ```
 
@@ -472,16 +967,16 @@ interface AutoPayRepository
 ```
 Repository for managing auto-pay (scheduled recurring payment) schedules.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:233</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:32</code></summary>
 
 ```kotlin
-    single<TwoFactorAuthRepository> { TwoFactorAuthRepositoryImpl(get(), get(ioDispatcher)) }
-    single<UserRepository> { UserRepositoryImpl(get(), get(ioDispatcher)) }
-    single<AutoPayRepository> { AutoPayRepositoryImpl(get(), get(ioDispatcher)) }
-    single<OfficeRepository> {
-        OfficeRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
+import kpt.core.network.FineractApiManager
+/** Default [AutoPayRepository]. */
+@RepositoryBinding(binds = AutoPayRepository::class)
+class AutoPayRepositoryImpl(
+    private val apiManager: FineractApiManager,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : AutoPayRepository {
 ```
 
 </details>
@@ -504,7 +999,7 @@ data class AutoPayStatistics(
 ```
 Aggregate figures for a client's auto-pay schedules.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:127</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:130</code></summary>
 
 ```kotlin
     }
@@ -525,16 +1020,16 @@ interface BeneficiaryRepository
 ```
 Repository for the beneficiaries a client can transfer to.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:121</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BeneficiaryRepositoryImpl.kt:27</code></summary>
 
 ```kotlin
-        AuthenticationRepositoryImpl(get(), get(ioDispatcher))
-    }
-    single<BeneficiaryRepository> { BeneficiaryRepositoryImpl(get(), get(ioDispatcher)) }
-    single<ClientRepository> {
-        ClientRepositoryImpl(
-            apiManager = get(),
-            fineractApiManager = get(),
+import kpt.core.network.SelfServiceApiManager
+/** Default [BeneficiaryRepository] backed by the beneficiary API. */
+@RepositoryBinding(binds = BeneficiaryRepository::class)
+class BeneficiaryRepositoryImpl(
+    private val apiManager: SelfServiceApiManager,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : BeneficiaryRepository {
 ```
 
 </details>
@@ -901,16 +1396,16 @@ interface RegistrationRepository
 ```
 Repository for user registration and verification.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:173</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RegistrationRepositoryImpl.kt:21</code></summary>
 
 ```kotlin
-        )
-    }
-    single<RegistrationRepository> { RegistrationRepositoryImpl(get(), get(ioDispatcher)) }
-    single<RunReportRepository> { RunReportRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SavedCardRepository> {
-        SavedCardRepositoryImpl(
-            apiManager = get(),
+import kpt.core.network.FineractApiManager
+/** Default [RegistrationRepository] backed by the registration API. */
+@RepositoryBinding(binds = RegistrationRepository::class)
+class RegistrationRepositoryImpl(
+    private val apiManager: FineractApiManager,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : RegistrationRepository {
 ```
 
 </details>
@@ -925,16 +1420,16 @@ interface RunReportRepository
 ```
 Repository for running Fineract reports.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:174</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RunReportRepositoryImpl.kt:24</code></summary>
 
 ```kotlin
-    }
-    single<RegistrationRepository> { RegistrationRepositoryImpl(get(), get(ioDispatcher)) }
-    single<RunReportRepository> { RunReportRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SavedCardRepository> {
-        SavedCardRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
+import kpt.core.network.FineractApiManager
+/** Default [RunReportRepository] backed by the run-report API. */
+@RepositoryBinding(binds = RunReportRepository::class)
+class RunReportRepositoryImpl(
+    private val apiManager: FineractApiManager,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : RunReportRepository {
 ```
 
 </details>
@@ -1199,40 +1694,12 @@ class AccountRepositoryImpl(
 ```
 Default `AccountRepository` backed by the network data sources.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:98</code></summary>
-
-```kotlin
-    single<AssetRepository> { AssetRepositoryImpl() }
-    single<AccountRepository> {
-        AccountRepositoryImpl(
-            apiManager = get(),
-            selfManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-3 LEDGER store wiring (GOAL D13). Named-qualifier
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AppLockRepositoryImpl.kt`
 
 ```kotlin
 class AppLockRepositoryImpl(
 ```
 `AppLockRepository` implementation backed by `com.russhwolf.settings.Settings` (single boolean entry under `APP_LOCK_FLAG`).
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:271</code></summary>
-
-```kotlin
-    singleOf(::MifosPasscodeAdapterImpl).bind<PasscodeStorageAdapter>()
-    singleOf(::BiometricsSetupAdapterImpl).bind<BiometricStorageAdapter>()
-    singleOf(::AppLockRepositoryImpl).bind<AppLockRepository>()
-    singleOf(::UserVerificationRepositoryImpl).bind<UserVerificationRepository>()
-
-    // QR Transfer Router for smart intra/inter-bank routing
-    single { QrTransferRouter(userPreferencesRepository = get()) }
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AssetRepositoryImpl.kt`
 
@@ -1241,40 +1708,12 @@ class AssetRepositoryImpl : AssetRepository
 ```
 Default `AssetRepository`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:96</code></summary>
-
-```kotlin
-    single<Json> { Json { ignoreUnknownKeys = true } }
-
-    single<AssetRepository> { AssetRepositoryImpl() }
-    single<AccountRepository> {
-        AccountRepositoryImpl(
-            apiManager = get(),
-            selfManager = get(),
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AuthenticationRepositoryImpl.kt`
 
 ```kotlin
 class AuthenticationRepositoryImpl(
 ```
 Default `AuthenticationRepository` backed by the authentication API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:119</code></summary>
-
-```kotlin
-    }
-    single<AuthenticationRepository> {
-        AuthenticationRepositoryImpl(get(), get(ioDispatcher))
-    }
-    single<BeneficiaryRepository> { BeneficiaryRepositoryImpl(get(), get(ioDispatcher)) }
-    single<ClientRepository> {
-        ClientRepositoryImpl(
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayHistoryRepositoryImpl.kt`
 
@@ -1283,40 +1722,12 @@ class AutoPayHistoryRepositoryImpl(
 ```
 Default `AutoPayHistoryRepository`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:276</code></summary>
-
-```kotlin
-    // QR Transfer Router for smart intra/inter-bank routing
-    single { QrTransferRouter(userPreferencesRepository = get()) }
-    single<AutoPayHistoryRepository> { AutoPayHistoryRepositoryImpl(get(), get(ioDispatcher)) }
-
-    // NOTE: `core/data/BillerRepository` (this line) is the NETWORK-based
-    // Fineract biller interface. The binding is REGISTERED but currently
-    // has NO CONSUMERS in the app — feature ViewModels resolve the
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt`
 
 ```kotlin
 class AutoPayRepositoryImpl(
 ```
 Default `AutoPayRepository`.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:233</code></summary>
-
-```kotlin
-    single<TwoFactorAuthRepository> { TwoFactorAuthRepositoryImpl(get(), get(ioDispatcher)) }
-    single<UserRepository> { UserRepositoryImpl(get(), get(ioDispatcher)) }
-    single<AutoPayRepository> { AutoPayRepositoryImpl(get(), get(ioDispatcher)) }
-    single<OfficeRepository> {
-        OfficeRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BeneficiaryRepositoryImpl.kt`
 
@@ -1325,19 +1736,17 @@ class BeneficiaryRepositoryImpl(
 ```
 Default `BeneficiaryRepository` backed by the beneficiary API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:121</code></summary>
+### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt`
 
 ```kotlin
-        AuthenticationRepositoryImpl(get(), get(ioDispatcher))
-    }
-    single<BeneficiaryRepository> { BeneficiaryRepositoryImpl(get(), get(ioDispatcher)) }
-    single<ClientRepository> {
-        ClientRepositoryImpl(
-            apiManager = get(),
-            fineractApiManager = get(),
+fun provideNetworkBillerRepository(
 ```
+The network-backed bill and biller repositories, bound under their fully qualified names. Both share a simple name with the offline `kpt.core.datastore` interfaces the screens use (`BillOfflineRepositoryImpl`, `BillerOfflineRepositoryImpl`).
 
-</details>
+```kotlin
+fun provideNetworkBillRepository(
+```
+The network-backed `BillRepository`; see `provideNetworkBillerRepository` for why it is qualified.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillOfflineRepositoryImpl.kt`
 
@@ -1354,20 +1763,6 @@ single<BillRepository> { BillOfflineRepositoryImpl(dao = get(), ioDispatcher = g
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:300</code></summary>
-
-```kotlin
-    // the same commit to avoid a double-registration on `BillRepository`.
-    single<kpt.core.datastore.BillRepository> {
-        BillOfflineRepositoryImpl(dao = get(), ioDispatcher = get(ioDispatcher))
-    }
-
-    // Phase-5 Batch-4 OFFLINE_LOCAL_ONLY Biller store binding (GOAL D12).
-    // Replaces the multiplatform-settings impl that was previously bound in
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt`
 
 ```kotlin
@@ -1375,16 +1770,12 @@ class BillRepositoryImpl(
 ```
 Network-based implementation of BillRepository. TODO: This implementation uses placeholder API endpoints.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/BillRepositoryImpl.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:38</code></summary>
 
 ```kotlin
- * (e.g., UserRepositoryImpl, BeneficiaryRepositoryImpl) with proper API integration.
- */
-class BillRepositoryImpl(
-    private val billDataSource: BillDataSource,
-) : BillRepository {
-
-    override fun getAllBills(): Flow<List<Bill>> {
+    apiManager: FineractApiManager,
+    @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
+): BillRepository = BillRepositoryImpl(apiManager, ioDispatcher)
 ```
 
 </details>
@@ -1404,20 +1795,6 @@ single<BillerRepository> { BillerOfflineRepositoryImpl(dao = get(), ioDispatcher
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:310</code></summary>
-
-```kotlin
-    // `BillOfflineRepositoryImpl` cutover above.
-    single<kpt.core.datastore.BillerRepository> {
-        BillerOfflineRepositoryImpl(dao = get(), ioDispatcher = get(ioDispatcher))
-    }
-
-    includes(platformModule)
-    single<PlatformDependentDataModule> { getPlatformDataModule }
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillerRepositoryImpl.kt`
 
 ```kotlin
@@ -1425,16 +1802,16 @@ class BillerRepositoryImpl(
 ```
 Network-based implementation of BillerRepository. TODO: This implementation uses placeholder API endpoints.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:292</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:31</code></summary>
 
 ```kotlin
-    // kpt.core.datastore.BillerRepository below — unqualified, one replaces the other.
-    single<BillerRepository>(named("kpt.core.data.repository.BillerRepository")) {
-        BillerRepositoryImpl(get(), get(ioDispatcher))
-    }
+    apiManager: FineractApiManager,
+    @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
+): BillerRepository = BillerRepositoryImpl(apiManager, ioDispatcher)
 
-    // Phase-4 Batch-A OFFLINE_LOCAL_ONLY Bill store binding (GOAL D12).
-    // Replaces the multiplatform-settings impl that was previously bound in
+/** The network-backed [BillRepository]; see [provideNetworkBillerRepository] for why it is qualified. */
+@DataProvider(qualifier = "kpt.core.data.repository.BillRepository")
+fun provideNetworkBillRepository(
 ```
 
 </details>
@@ -1446,40 +1823,12 @@ class BiometricsSetupAdapterImpl(
 ```
 `BiometricStorageAdapter` implementation backed by `com.russhwolf.settings.Settings`. Two-key layout: a boolean "registered" flag plus the registration blob string.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:270</code></summary>
-
-```kotlin
-    // token). See KDoc on the bound types for the contracts.
-    singleOf(::MifosPasscodeAdapterImpl).bind<PasscodeStorageAdapter>()
-    singleOf(::BiometricsSetupAdapterImpl).bind<BiometricStorageAdapter>()
-    singleOf(::AppLockRepositoryImpl).bind<AppLockRepository>()
-    singleOf(::UserVerificationRepositoryImpl).bind<UserVerificationRepository>()
-
-    // QR Transfer Router for smart intra/inter-bank routing
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt`
 
 ```kotlin
 class ClientRepositoryImpl(
 ```
 Default `ClientRepository` backed by the client API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:123</code></summary>
-
-```kotlin
-    single<BeneficiaryRepository> { BeneficiaryRepositoryImpl(get(), get(ioDispatcher)) }
-    single<ClientRepository> {
-        ClientRepositoryImpl(
-            apiManager = get(),
-            fineractApiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-2 SINGLE-ROW-PER-KEY store wiring (GOAL D13). Named-qualifier
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/DocumentRepositoryImpl.kt`
 
@@ -1488,19 +1837,12 @@ class DocumentRepositoryImpl(
 ```
 Default `DocumentRepository` backed by the document API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:135</code></summary>
+### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ForkPasscodeAdapterImpl.kt`
 
 ```kotlin
-        )
-    }
-    single<DocumentRepository> { DocumentRepositoryImpl(get(), get(ioDispatcher)) }
-    single<InvoiceRepository> {
-        InvoiceRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
+class ForkPasscodeAdapterImpl(
 ```
-
-</details>
+`PasscodeStorageAdapter` implementation backed by `com.russhwolf.settings.Settings`. Single-key layout — just the passcode itself.
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt`
 
@@ -1509,40 +1851,12 @@ class InterBankRepositoryImpl(
 ```
 Default `InterBankRepository` backed by the inter-bank API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:148</code></summary>
-
-```kotlin
-        )
-    }
-    single<InterBankRepository> { InterBankRepositoryImpl(get(), get(ioDispatcher)) }
-    single<KycLevelRepository> { KycLevelRepositoryImpl(get(), get(ioDispatcher)) }
-    single<NotificationRepository> {
-        NotificationRepositoryImpl(
-            apiManager = get(),
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InvoiceRepositoryImpl.kt`
 
 ```kotlin
 class InvoiceRepositoryImpl(
 ```
 Default `InvoiceRepository` backed by the invoice API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:137</code></summary>
-
-```kotlin
-    single<DocumentRepository> { DocumentRepositoryImpl(get(), get(ioDispatcher)) }
-    single<InvoiceRepository> {
-        InvoiceRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-2 LEDGER store wiring (GOAL D13). Named-qualifier from
-            // AppStoreRegistry.Invoice; NetworkMonitor + FetchedAtRepository
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/KycLevelRepositoryImpl.kt`
 
@@ -1551,60 +1865,12 @@ class KycLevelRepositoryImpl(
 ```
 Default `KycLevelRepository` backed by the KYC level 1 API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:149</code></summary>
-
-```kotlin
-    }
-    single<InterBankRepository> { InterBankRepositoryImpl(get(), get(ioDispatcher)) }
-    single<KycLevelRepository> { KycLevelRepositoryImpl(get(), get(ioDispatcher)) }
-    single<NotificationRepository> {
-        NotificationRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/LocalAssetRepositoryImpl.kt`
 
 ```kotlin
 class LocalAssetRepositoryImpl(
 ```
 Default `LocalAssetRepository` providing locales and currencies.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:318</code></summary>
-
-```kotlin
-    single<TimeZoneMonitor>(MifosTimeZoneMonitorQualifier) { getPlatformDataModule.timeZoneMonitor }
-    single<LocalAssetRepository> {
-        LocalAssetRepositoryImpl(
-            ioDispatcher = get(qualifier = ioDispatcher),
-            unconfinedDispatcher = get(unconfined),
-            networkJson = get(),
-        )
-```
-
-</details>
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/MifosPasscodeAdapterImpl.kt`
-
-```kotlin
-class MifosPasscodeAdapterImpl(
-```
-`PasscodeStorageAdapter` implementation backed by `com.russhwolf.settings.Settings`. Single-key layout — just the passcode itself.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:269</code></summary>
-
-```kotlin
-    // (the two adapters) plus the in-app re-auth machinery (lock + verification
-    // token). See KDoc on the bound types for the contracts.
-    singleOf(::MifosPasscodeAdapterImpl).bind<PasscodeStorageAdapter>()
-    singleOf(::BiometricsSetupAdapterImpl).bind<BiometricStorageAdapter>()
-    singleOf(::AppLockRepositoryImpl).bind<AppLockRepository>()
-    singleOf(::UserVerificationRepositoryImpl).bind<UserVerificationRepository>()
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/NotificationRepositoryImpl.kt`
 
@@ -1613,40 +1879,12 @@ class NotificationRepositoryImpl(
 ```
 Default `NotificationRepository` backed by the notification API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:151</code></summary>
-
-```kotlin
-    single<KycLevelRepository> { KycLevelRepositoryImpl(get(), get(ioDispatcher)) }
-    single<NotificationRepository> {
-        NotificationRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-2 LEDGER store wiring (GOAL D13). Named-qualifier from
-            // AppStoreRegistry.Notification; NetworkMonitor + FetchedAtRepository
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/OfficeRepositoryImpl.kt`
 
 ```kotlin
 class OfficeRepositoryImpl(
 ```
 Default `OfficeRepository` backed by the office API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:235</code></summary>
-
-```kotlin
-    single<AutoPayRepository> { AutoPayRepositoryImpl(get(), get(ioDispatcher)) }
-    single<OfficeRepository> {
-        OfficeRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-3 LEDGER store wiring (GOAL D13). Named-qualifier
-            // from AppStoreRegistry.Offices; NetworkMonitor + FetchedAtRepository
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt`
 
@@ -1655,16 +1893,16 @@ class PocketRepositoryImp(
 ```
 Default `PocketRepository` backed by the pocket and client APIs.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:247</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonTest/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryTest.kt:123</code></summary>
 
 ```kotlin
-    }
-    single<PocketRepository> {
-        PocketRepositoryImp(
-            dataManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-2 LEDGER store wiring (GOAL D13). Named-qualifier from
-            // AppStoreRegistry.Pocket; NetworkMonitor + FetchedAtRepository bound
+        pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
+        linkableAccountsStore: Store<LinkableAccountKey, List<LinkableAccount>>? = null,
+    ) = PocketRepositoryImp(
+        dataManager = fakeSelfServiceApiManager,
+        ioDispatcher = Dispatchers.Default,
+        pocketStore = pocketStore,
+        linkableAccountsStore = linkableAccountsStore,
 ```
 
 </details>
@@ -1676,40 +1914,12 @@ class RecentPayeeRepositoryImpl(
 ```
 Implementation of `RecentPayeeRepository` that fetches recent payees from transaction history and caches the DERIVED result in Room via the Store5 `recentPayee` offline store (Phase-5 Batch-4, GOAL D12/D13 hybrid).
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:163</code></summary>
-
-```kotlin
-    }
-    single<RecentPayeeRepository> {
-        RecentPayeeRepositoryImpl(
-            selfServiceApiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-4 LOCAL-DERIVED store wiring (GOAL D12/D13
-            // hybrid). The DAO is bound by StoreModule
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RegistrationRepositoryImpl.kt`
 
 ```kotlin
 class RegistrationRepositoryImpl(
 ```
 Default `RegistrationRepository` backed by the registration API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:173</code></summary>
-
-```kotlin
-        )
-    }
-    single<RegistrationRepository> { RegistrationRepositoryImpl(get(), get(ioDispatcher)) }
-    single<RunReportRepository> { RunReportRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SavedCardRepository> {
-        SavedCardRepositoryImpl(
-            apiManager = get(),
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RunReportRepositoryImpl.kt`
 
@@ -1718,40 +1928,12 @@ class RunReportRepositoryImpl(
 ```
 Default `RunReportRepository` backed by the run-report API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:174</code></summary>
-
-```kotlin
-    }
-    single<RegistrationRepository> { RegistrationRepositoryImpl(get(), get(ioDispatcher)) }
-    single<RunReportRepository> { RunReportRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SavedCardRepository> {
-        SavedCardRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavedCardRepositoryImpl.kt`
 
 ```kotlin
 class SavedCardRepositoryImpl(
 ```
 Default `SavedCardRepository` backed by the saved-card API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:176</code></summary>
-
-```kotlin
-    single<RunReportRepository> { RunReportRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SavedCardRepository> {
-        SavedCardRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-1 LEDGER store wiring (GOAL D13). Named-qualifier from
-            // AppStoreRegistry.SavedCards; NetworkMonitor + FetchedAtRepository
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavingsAccountRepositoryImpl.kt`
 
@@ -1760,40 +1942,12 @@ class SavingsAccountRepositoryImpl(
 ```
 Default `SavingsAccountRepository` backed by the savings accounts API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:188</code></summary>
-
-```kotlin
-    }
-    single<SavingsAccountRepository> {
-        SavingsAccountRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-1 SINGLE-ROW-PER-KEY store wiring (GOAL D13). Named-qualifier from
-            // AppStoreRegistry.AccountDetail; NetworkMonitor + FetchedAtRepository
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SearchRepositoryImpl.kt`
 
 ```kotlin
 class SearchRepositoryImpl(
 ```
 Default `SearchRepository` backed by the search API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:199</code></summary>
-
-```kotlin
-        )
-    }
-    single<SearchRepository> { SearchRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SelfServiceRepository> {
-        SelfServiceRepositoryImpl(
-            apiManager = get(),
-            dispatcher = get(ioDispatcher),
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt`
 
@@ -1802,40 +1956,12 @@ class SelfServiceRepositoryImpl(
 ```
 Default `SelfServiceRepository` backed by the self-service API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:201</code></summary>
-
-```kotlin
-    single<SearchRepository> { SearchRepositoryImpl(get(), get(ioDispatcher)) }
-    single<SelfServiceRepository> {
-        SelfServiceRepositoryImpl(
-            apiManager = get(),
-            dispatcher = get(ioDispatcher),
-            // Phase-4 Batch-A LEDGER store wiring (GOAL D13). Named-qualifier from
-            // AppStoreRegistry.History; NetworkMonitor + FetchedAtRepository bound by
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt`
 
 ```kotlin
 class StandingInstructionRepositoryImpl(
 ```
 Default `StandingInstructionRepository` backed by the standing-instruction API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:217</code></summary>
-
-```kotlin
-    }
-    single<StandingInstructionRepository> {
-        StandingInstructionRepositoryImpl(
-            apiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            // Phase-5 Batch-3 LEDGER store wiring (GOAL D13). Named-qualifier
-            // from AppStoreRegistry.StandingInstruction; NetworkMonitor +
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ThirdPartyTransferRepositoryImpl.kt`
 
@@ -1844,40 +1970,12 @@ class ThirdPartyTransferRepositoryImpl(
 ```
 Default `ThirdPartyTransferRepository` backed by the third-party transfer API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:229</code></summary>
-
-```kotlin
-    }
-    single<ThirdPartyTransferRepository> {
-        ThirdPartyTransferRepositoryImpl(get(), get(ioDispatcher))
-    }
-    single<TwoFactorAuthRepository> { TwoFactorAuthRepositoryImpl(get(), get(ioDispatcher)) }
-    single<UserRepository> { UserRepositoryImpl(get(), get(ioDispatcher)) }
-    single<AutoPayRepository> { AutoPayRepositoryImpl(get(), get(ioDispatcher)) }
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/TwoFactorAuthRepositoryImpl.kt`
 
 ```kotlin
 class TwoFactorAuthRepositoryImpl(
 ```
 Default `TwoFactorAuthRepository` backed by the two-factor API.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:231</code></summary>
-
-```kotlin
-        ThirdPartyTransferRepositoryImpl(get(), get(ioDispatcher))
-    }
-    single<TwoFactorAuthRepository> { TwoFactorAuthRepositoryImpl(get(), get(ioDispatcher)) }
-    single<UserRepository> { UserRepositoryImpl(get(), get(ioDispatcher)) }
-    single<AutoPayRepository> { AutoPayRepositoryImpl(get(), get(ioDispatcher)) }
-    single<OfficeRepository> {
-        OfficeRepositoryImpl(
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt`
 
@@ -1886,40 +1984,12 @@ class UserRepositoryImpl(
 ```
 Default `UserRepository` backed by the user API.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:232</code></summary>
-
-```kotlin
-    }
-    single<TwoFactorAuthRepository> { TwoFactorAuthRepositoryImpl(get(), get(ioDispatcher)) }
-    single<UserRepository> { UserRepositoryImpl(get(), get(ioDispatcher)) }
-    single<AutoPayRepository> { AutoPayRepositoryImpl(get(), get(ioDispatcher)) }
-    single<OfficeRepository> {
-        OfficeRepositoryImpl(
-            apiManager = get(),
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserVerificationRepositoryImpl.kt`
 
 ```kotlin
 class UserVerificationRepositoryImpl : UserVerificationRepository
 ```
 `UserVerificationRepository` implementation backed by `TimeSource.Monotonic`, held in-process for the lifetime of this singleton. A wall-clock-based implementation (e.g.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:272</code></summary>
-
-```kotlin
-    singleOf(::BiometricsSetupAdapterImpl).bind<BiometricStorageAdapter>()
-    singleOf(::AppLockRepositoryImpl).bind<AppLockRepository>()
-    singleOf(::UserVerificationRepositoryImpl).bind<UserVerificationRepository>()
-
-    // QR Transfer Router for smart intra/inter-bank routing
-    single { QrTransferRouter(userPreferencesRepository = get()) }
-    single<AutoPayHistoryRepository> { AutoPayHistoryRepositoryImpl(get(), get(ioDispatcher)) }
-```
-
-</details>
 
 ### `core/data/src/commonMain/kotlin/kpt/core/data/user/AuthTokenBridge.kt`
 
@@ -2065,399 +2135,6 @@ Default `UserLogoutManager`: clears every Store cache and draft row, then emits 
 
 </details>
 
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/AppLockOption.kt`
-
-```kotlin
-enum class AppLockOption
-```
-How the app is locked on launch.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/util/Helpers.kt:22</code></summary>
-
-```kotlin
-
-    /** Converts an [AppLockOption] to the string stored in preferences. */
-    fun authOptionToStringMapperFunction(option: AppLockOption): String {
-        return when (option) {
-            AppLockOption.MifosPasscode -> MIFOS_PASSCODE_VALUE
-            AppLockOption.DeviceLock -> DEVICE_AUTHENTICATION_METHOD_VALUE
-            AppLockOption.None -> ""
-```
-
-</details>
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/AutoPayValidator.kt`
-
-```kotlin
-object AutoPayValidator
-```
-Client-side validation of auto-pay payloads before they are submitted.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AutoPayRepositoryImpl.kt:150</code></summary>
-
-```kotlin
-    ) {
-        withContext(ioDispatcher) {
-            when (val validationResult = AutoPayValidator.validateAutoPayPayload(payload)) {
-                is AutoPayValidator.ValidationResult.Valid -> Unit
-                is AutoPayValidator.ValidationResult.Invalid -> {
-                    throw IllegalArgumentException(validationResult.errorMessage)
-                }
-```
-
-</details>
-
-- `fun validateAutoPayPayload(payload: AutoPayPayload): ValidationResult` — Validates a new auto-pay payload and returns the first violation, if any.
-- `val startDate = parseDate(payload.validFrom)`
-- `val endDate = parseDate(payload.validTill)`
-- `fun validateAutoPayUpdatePayload(payload: AutoPayUpdatePayload): ValidationResult` — Validates an auto-pay update payload and returns the first violation, if any.
-- `val startDate = parseDate(payload.validFrom!!)`
-- `val endDate = parseDate(payload.validTill!!)`
-- `val validFrequencies = listOf("DAILY", "WEEKLY", "MONTHLY", "QUARTERLY", "YEARLY")`
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/BillErrorHandler.kt`
-
-```kotlin
-object BillErrorHandler
-```
-Utility class for handling bill-related errors
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt:160</code></summary>
-
-```kotlin
-        val validationResult = BillValidator.validateBill(bill)
-        if (!validationResult.isValid) {
-            val errorMessage = BillErrorHandler.handleValidationError(validationResult)
-            throw IllegalArgumentException(errorMessage)
-        }
-    }
-```
-
-</details>
-
-- `fun handleNetworkError(throwable: Throwable): String` — Handles network errors and converts them to user-friendly messages
-- `fun handleValidationError(validationResult: kpt.core.model.autopay.BillValidationResult): String` — Handles validation errors and converts them to user-friendly messages
-- `fun createOperationErrorMessage(operation: String, error: String): String` — Creates a user-friendly error message for specific bill operations
-- `fun isRetryableError(throwable: Throwable): Boolean` — Checks if an error is retryable
-- `fun getRetryDelay(throwable: Throwable): Long` — Gets retry delay in milliseconds based on error type
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/BillValidator.kt`
-
-```kotlin
-object BillValidator
-```
-Utility class for validating bill data before submission
-
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillViewModel.kt:150</code></summary>
-
-```kotlin
-
-    private fun updateBillName(name: String) {
-        val nameError = BillValidator.validateBillFormData(
-            BillFormData(name = name),
-        ).nameError
-        mutableStateFlow.update {
-            it.copy(
-```
-
-</details>
-
-- `fun validateBill(bill: Bill): BillValidationResult` — Validates a Bill object
-- `val nameError = validateName(bill.name)`
-- `val amountError = validateAmount(bill.amount)`
-- `val dueDateError = validateDueDate(bill.dueDate)`
-- `val recurrencePatternError = validateRecurrencePattern(bill.recurrencePattern)`
-- `val billerError = validateBiller(bill.billerId, bill.billerName)`
-- `val isValid = nameError == null &&`
-- `fun validateBillFormData(formData: BillFormData): BillValidationResult` — Validates BillFormData object
-- `val nameError = validateName(formData.name)`
-- `val amountError = validateAmountString(formData.amount)`
-- `val dueDateError = validateDueDate(formData.dueDate)`
-- `val recurrencePatternError = validateRecurrencePattern(formData.recurrencePattern)`
-- `val billerError = validateBiller(formData.billerId, formData.billerName)`
-- `val autoPayPaymentMethodError = validateAutoPayPaymentMethod(formData.enableAutoPay, formData.autoPayPaymentMethod)`
-  _…more members; read the file._
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/BillerValidator.kt`
-
-```kotlin
-object BillerValidator
-```
-Validator for biller form data with comprehensive validation rules.
-
-<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/AddBillerViewModel.kt:127</code></summary>
-
-```kotlin
-
-    private fun updateBillerName(name: String) {
-        val nameError = BillerValidator.validateNameField(name)
-        mutableStateFlow.update {
-            it.copy(
-                formData = it.formData.copy(name = name),
-                validationResult = it.validationResult.copy(nameError = nameError),
-```
-
-</details>
-
-- `fun validateBillerForm(formData: BillerFormData): BillerValidationResult` — Validates the complete biller form data and returns validation result.
-- `val nameError = validateName(formData.name)`
-- `val accountNumberError = validateAccountNumber(formData.accountNumber)`
-- `val contactNumberError = validateContactNumber(formData.contactNumber)`
-- `val emailError = validateEmail(formData.email)`
-- `val categoryError = validateCategory(formData.category)`
-- `val addressError = validateAddress(formData.address)`
-- `val isValid = nameError == null &&`
-- `val validationResult = BillerValidationResult(`
-- `fun validateNameField(name: String): String? = validateName(name)` — Validates individual name field for real-time validation.
-- `fun validateAccountNumberField(accountNumber: String): String? = validateAccountNumber(accountNumber)` — Validates individual account number field for real-time validation.
-- `fun validateContactNumberField(contactNumber: String): String? = validateContactNumber(contactNumber)` — Validates individual contact number field for real-time validation.
-- `fun validateEmailField(email: String): String? = validateEmail(email)` — Validates individual email field for real-time validation.
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/Constants.kt`
-
-```kotlin
-object Constants
-```
-Shared string and numeric constants used by the data layer.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/mobileVerify/MobileVerificationViewModel.kt:193</code></summary>
-
-```kotlin
-            val result = searchRepository.searchResources(
-                query = phoneNo,
-                resources = Constants.CLIENTS,
-                exactMatch = true,
-            )
-            if (result.isEmpty()) {
-                // TODO:: Call repository request an otp to this phone no.
-```
-
-</details>
-
-- `const val BASIC = "Basic "` — Prefix of the HTTP Basic authorization header value.
-- `const val SAVINGS = "savingsAccounts"` — Resource name for savings accounts.
-- `const val TRANSACTIONS = "transactions"` — Resource name for transactions.
-- `const val WALLET_ACCOUNT_SAVINGS_PRODUCT_ID = 1` — Savings product id of the default wallet account.
-- `const val MIFOS_MERCHANT_SAVINGS_PRODUCT_ID = 165 // 372` — Savings product id used for merchant accounts.
-- `const val MIFOS_CONSUMER_SAVINGS_PRODUCT_ID = 165 // 373` — Savings product id used for consumer accounts.
-- `val NEW_USER_ROLE_IDS: List<Int> = listOf(MOBILE_WALLET_ROLE_ID, SUPER_USER_ROLE_ID)` — Role ids assigned to newly created users: the mobile-wallet role and the super-user role.
-- `const val ENTITY_TYPE_CLIENTS = "clients"` — Entity type name for clients.
-- `const val FETCH_ACCOUNT_TRANSFER_USECASE = "FetchAccountTransfer"` — Use-case name used when fetching an account transfer.
-- `const val NO_SAVED_CARDS = "No saved cards."` — Message shown when the client has no saved cards.
-- `const val MIFOS_PASSWORD = "mifos:password"` — Default password for new mifos users.
-- `const val ERROR_VERIFYING_USER = "Error verifying user"` — Error message shown when verifying a user fails.
-- `const val ERROR_REGISTERING_USER = "Error registering user"` — Error message shown when registering a user fails.
-- `const val NO_CLIENTS_FOUND = "No clients found"` — Message shown when no clients are found.
-  _…more members; read the file._
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/Helpers.kt`
-
-```kotlin
-object Helpers
-```
-Helpers for persisting `AppLockOption` values as strings.
-
-<details><summary>Used in the template — <code>core-base/crypto/src/wasmJsMain/kotlin/kpt/core/base/crypto/WebSecureCrypto.wasmJs.kt:92</code></summary>
-
-```kotlin
-)""",
-)
-private external fun installHelpers(): KptSecureHelpers
-
-/**
- * Browser crypto for the WasmJS target. Same WebCrypto surface as the JS actual, kept separate only because the two
- * targets do not share an interop layer.
-```
-
-</details>
-
-- `fun authOptionToStringMapperFunction(option: AppLockOption): String` — Converts an `AppLockOption` to the string stored in preferences.
-- `fun stringToAuthOptionMapperFunction(option: String): AppLockOption` — Converts a stored string value back to an `AppLockOption`, defaulting to `AppLockOption.None`.
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/MifosErrorParser.kt`
-
-```kotlin
-val parseMifosError: ErrorBodyParser = { responseBody, statusCode ->
-```
-Parses the Mifos/Fineract server error response body to extract a user-friendly message. This parser follows the mifos-mobile pattern for extracting error messages from the standard Mifos/Fineract error response format.
-
-<details><summary>Example</summary>
-
-```kotlin
-{
-  "developerMessage": "The resource with id 123 was not found.",
-  "httpStatusCode": "404",
-  "defaultUserMessage": "Account not found",
-  "userMessageGlobalisationCode": "error.msg.account.not.found",
-  "errors": [
-    {
-      "developerMessage": "Account ID is invalid",
-      "defaultUserMessage": "The account does not exist",
-      "parameterName": "accountId"
-    }
-  ]
-}
-```
-
-</details>
-
-```kotlin
-fun extractMifosErrorMessage(responseBody: String, statusCode: Int): String
-```
-Extracts a user-friendly error message from a Mifos/Fineract error response. Priority order: 1. First error's defaultUserMessage (for validation errors) 2. Root level defaultUserMessage 3. Root level developerMessage 4.
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/MpayQrCodeProcessor.kt`
-
-```kotlin
-object MpayQrCodeProcessor
-```
-MPay QR Code Encoder and Decoder with validation.
-
-<details><summary>Example</summary>
-
-```kotlin
-mpay://pay?qt=0&fsp=mifos-bank-1&ci=123&am=100&cn=John&an=ACC001&ai=456&cu=USD&oi=1&pi=2&ae=EXT123
-```
-
-</details>
-
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonMain/kotlin/kpt/feature/fastmpay/FastMpayViewModel.kt:76</code></summary>
-
-```kotlin
-
-            try {
-                val qrData = MpayQrCodeProcessor.decodeMpayString(encodedQrData)
-                // Phase-5 Batch-3: processor now consumes the store-backed
-                // `getBeneficiaryListScreen(clientId, scope)` (batch-1 reuse)
-                // and `getOfficesScreen(scope)` (batch-3 new), so it needs the
-                // caller's CoroutineScope for Store5 refresh-trigger wiring.
-```
-
-</details>
-
-- `fun encodeMpayString(qrCodeData: QrCodeData): String` — Encodes MPay payment details into a Base64 encoded string.
-- `val requestPaymentString = when (qrCodeData.type)`
-- `fun decodeMpayString(encodedString: String): QrCodeData` — Decodes a Base64 encoded MPay or UPI payment string. Supports both new mpay:// and legacy upi:// formats for backwards compatibility.
-- `val normalizedInput = encodedString.trim()`
-- `val decodedString = try`
-- `val params = when`
-- `val fspId = params["fsp"]?.takeIf { it.isNotBlank() }`
-- `val accountExternalId = params["ae"]?.takeIf { it.isNotBlank() }`
-- `val phoneNumber = params["pn"]?.takeIf { it.isNotBlank() }`
-- `val clientId = params["ci"]?.toLongOrNull() ?: 0L`
-- `val accountId = params["ai"]?.toLongOrNull() ?: 0L`
-- `val type = params["qt"]?.toIntOrNull()?.let { QrCodeType.fromOrdinal(it) }`
-- `val hasInternalIds = clientId > 0 && accountId > 0`
-- `val hasAccountExternalId = accountExternalId != null`
-  _…more members; read the file._
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/NetworkMonitor.kt`
-
-```kotlin
-interface NetworkMonitor
-```
-Utility for reporting app connectivity status
-
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:26</code></summary>
-
-```kotlin
-    private val scope: CoroutineScope,
-) : PlatformDependentDataModule {
-    override val networkMonitor: NetworkMonitor by lazy {
-        ConnectivityManagerNetworkMonitor(context, dispatcher)
-    }
-
-    override val timeZoneMonitor: TimeZoneMonitor by lazy {
-```
-
-</details>
-
-- `val isOnline: Flow<Boolean>` — Emits true while the device has network connectivity.
-
-```kotlin
-val MifosNetworkMonitorQualifier = named("kpt.core.data.util.NetworkMonitor")
-```
-Koin qualifier for this `NetworkMonitor`.
-
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/fork/AndroidPlatformModule.kt:30</code></summary>
-
-```kotlin
-    // `NetworkMonitorProvider.install()` (cmp-network-monitor 3.6.0+, which carries the
-    // AndroidNetworkMonitor cold-start seed fix) — no per-platform override needed here.
-    single<NetworkMonitor>(MifosNetworkMonitorQualifier) {
-        ConnectivityManagerNetworkMonitor(androidContext(), get(named(MifosDispatchers.IO.name)))
-    }
-
-    single<TimeZoneMonitor>(MifosTimeZoneMonitorQualifier) {
-```
-
-</details>
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/QrTransferRouter.kt`
-
-```kotlin
-class QrTransferRouter(
-```
-Routes QR code scans to appropriate transfer flow based on: 1. FSP ID comparison (same bank vs different bank) 2.
-
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrViewModel.kt:36</code></summary>
-
-```kotlin
- */
-class ScanQrViewModel(
-    private val qrTransferRouter: QrTransferRouter,
-) : BaseViewModel<ScanQrState, ScanQrEvent, ScanQrAction>(
-    initialState = ScanQrState,
-) {
-```
-
-</details>
-
-```kotlin
-sealed interface QrRouteResult
-```
-Result of QR code routing decision.
-
-<details><summary>Used in the template — <code>feature/mpay-qr-scan/src/commonMain/kotlin/kpt/feature/mpay/qr/scan/ScanQrViewModel.kt:139</code></summary>
-
-```kotlin
-            // to avoid StateFlow conflation issues)
-            when (routeResult) {
-                is QrRouteResult.IntraBank -> {
-                    Logger.d { "QR Route -> Intra-bank transfer, emitting event..." }
-                    sendEvent(ScanQrEvent.OnNavigateToIntraBankTransfer(routeResult.qrData))
-                    Logger.d { "QR Route -> Event emitted: OnNavigateToIntraBankTransfer" }
-                }
-```
-
-</details>
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/ScreenStateBridge.kt`
-
-```kotlin
-fun <T> KptScreenState<T>.toForkScreenState(): ForkScreenState<T> = when (this)
-```
-Bridge extension: converts a single `kpt.core.base.store.screen.ScreenState<T>` (emitted by Store5 `asScreenStream(...)`) into the fork's `kpt.core.common.ScreenState<T>`.
-
-```kotlin
-fun <T> Flow<KptScreenState<T>>.toForkScreenStateFlow(): Flow<ForkScreenState<T>> =
-```
-Flow-level convenience wrapper — every Store5 impl calls `store.asScreenStream(...).state.toForkScreenStateFlow()` to satisfy the fork repository return type.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
-
-```kotlin
-    val scope = rememberCoroutineScope()
-
-    val state by viewModel.stateFlow.collectAsStateWithLifecycle()
-    val accountState by viewModel.accountState.collectAsStateWithLifecycle()
-
-    EventsEffect(viewModel) { event ->
-        when (event) {
-```
-
-</details>
-
 ### `core/data/src/commonMain/kotlin/kpt/core/data/util/SharedFlowExtensions.kt`
 
 ```kotlin
@@ -2465,111 +2142,7 @@ fun <T> bufferedMutableSharedFlow(replay: Int = 0): MutableSharedFlow<T> = Mutab
 ```
 Creates a `MutableSharedFlow` with a buffer of `Int.MAX_VALUE` and the given `replay` count.
 
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/StandardUpiQrCodeProcessor.kt`
-
-```kotlin
-object StandardUpiQrCodeProcessor
-```
-Standard UPI QR Code Processor Handles parsing of standard UPI QR codes according to UPI specification
-
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/PayeeDetailsViewModel.kt:34</code></summary>
-
-```kotlin
-        if (safeQrCodeDataString.isNotEmpty()) {
-            val qrCodeDataString = safeQrCodeDataString.urlDecode()
-            val isUpiCode = StandardUpiQrCodeProcessor.isValidUpiQrCode(qrCodeDataString)
-
-            val qrCodeData = if (isUpiCode) {
-                StandardUpiQrCodeProcessor.parseUpiQrCode(qrCodeDataString)
-            } else {
-```
-
-</details>
-
-- `fun isValidUpiQrCode(qrData: String): Boolean` — Checks if the given string is a valid UPI QR code
-- `fun parseUpiQrCode(qrData: String): StandardUpiQrData` — Parses a standard UPI QR code string
-- `val paramsString = qrData.substringAfter("upi://").substringAfter("UPI://")`
-- `val parts = paramsString.split("?", limit = 2)`
-- `val params = if (parts.size > 1) parseParams(parts[1]) else emptyMap()`
-- `val payeeVpa = params["pa"] ?: run`
-- `val payeeName = params["pn"] ?: "Unknown"`
-- `val vpaParts = payeeVpa.split("@", limit = 2)`
-- `val actualVpa = if (vpaParts.size == 2) payeeVpa else payeeVpa`
-- `val keyValue = param.split("=", limit = 2)`
-- `fun toPaymentQrData(standardData: StandardUpiQrData): PaymentQrData`
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/TimeZoneMonitor.kt`
-
-```kotlin
-interface TimeZoneMonitor
-```
-Utility for reporting current timezone the device has set. It always emits at least once with default setting and then for each TZ change.
-
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:30</code></summary>
-
-```kotlin
-    }
-
-    override val timeZoneMonitor: TimeZoneMonitor by lazy {
-        TimeZoneBroadcastMonitor(context, scope, dispatcher)
-    }
-}
-```
-
-</details>
-
-- `val currentTimeZone: Flow<TimeZone>` — Emits the device's current time zone, then each change.
-
-```kotlin
-val MifosTimeZoneMonitorQualifier = named("kpt.core.data.util.TimeZoneMonitor")
-```
-Koin qualifier for this `TimeZoneMonitor`.
-
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/fork/AndroidPlatformModule.kt:34</code></summary>
-
-```kotlin
-    }
-
-    single<TimeZoneMonitor>(MifosTimeZoneMonitorQualifier) {
-        TimeZoneBroadcastMonitor(
-            context = androidContext(),
-            appScope = get(named("ApplicationScope")),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
-```
-
-</details>
-
-### `core/data/src/commonMain/kotlin/kpt/core/data/util/UpiQrCodeProcessor.kt`
-
-```kotlin
-object UpiQrCodeProcessor
-```
-UPI QR Code Encoder and Decoder with validation
-
-<details><summary>Used in the template — <code>feature/send-money/src/commonMain/kotlin/kpt/feature/send/money/SendMoneyViewModel.kt:190</code></summary>
-
-```kotlin
-            }
-
-            val paymentString = UpiQrCodeProcessor.encodeUpiString(state.paymentQrData)
-
-            sendEvent(SendMoneyEvent.NavigateToTransferScreen(paymentString))
-        }
-    }
-```
-
-</details>
-
-- `fun encodeUpiString(paymentQrData: PaymentQrData): String` — Encodes UPI payment details into a Base64 encoded string
-- `val requestPaymentString = buildString`
-- `fun decodeUpiString(encodedString: String): PaymentQrData` — Decodes a Base64 encoded UPI payment string
-- `val decodedString = encodedString.decodeBase64String()`
-- `val params = parseUpiString(decodedString)`
-- `val requestQrData = PaymentQrData(`
-- `val amountValue = data.amount.toDoubleOrNull()`
-- `val (key, value) = it.split("=")`
-
 ---
 
-_90 type(s), 320 function(s)/property(ies); 356 carry KDoc at source; 6 authored example(s); 93 live call site(s)._
+_90 type(s), 322 function(s)/property(ies); 358 carry KDoc at source; 6 authored example(s); 62 live call site(s)._
 <!-- api-docs:end -->

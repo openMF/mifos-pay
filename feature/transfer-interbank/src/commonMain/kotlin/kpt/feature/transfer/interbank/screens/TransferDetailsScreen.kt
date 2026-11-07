@@ -38,12 +38,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.account.Account
 import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.model.savingsaccount.Currency
@@ -80,10 +80,10 @@ fun TransferDetailsScreen(
     onEditRecipient: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.feature_send_interbank_transfer_details),
                 backPress = onBackClick,
             )
@@ -95,7 +95,7 @@ fun TransferDetailsScreen(
                     .padding(KptTheme.spacing.md),
                 contentAlignment = Alignment.Center,
             ) {
-                MifosButton(
+                ForkButton(
                     onClick = onContinueClick,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = amount.isNotEmpty() &&
@@ -204,7 +204,7 @@ fun TransferDetailsScreen(
                         fontWeight = FontWeight.SemiBold,
                         color = KptTheme.colorScheme.onSurfaceVariant,
                     )
-                    MifosCard(
+                    ForkCard(
                         colors = CardDefaults.cardColors(KptTheme.colorScheme.background),
                         shape = KptTheme.shapes.medium,
                         modifier = Modifier
@@ -249,7 +249,7 @@ fun TransferDetailsScreen(
                         fontWeight = FontWeight.SemiBold,
                         color = KptTheme.colorScheme.onSurfaceVariant,
                     )
-                    MifosTextField(
+                    ForkTextField(
                         label = "",
                         value = description,
                         onValueChange = onDescriptionChanged,
@@ -276,7 +276,7 @@ private fun AccountDetailCard(
     showVerified: Boolean = false,
     onEditClick: () -> Unit = {},
 ) {
-    MifosCard(
+    ForkCard(
         colors = CardDefaults.cardColors(KptTheme.colorScheme.background),
         shape = KptTheme.shapes.medium,
         modifier = modifier.fillMaxWidth(),
@@ -337,7 +337,7 @@ private fun RecipientDetailCard(
     modifier: Modifier = Modifier,
     onEditClick: () -> Unit = {},
 ) {
-    MifosCard(
+    ForkCard(
         colors = CardDefaults.cardColors(KptTheme.colorScheme.background),
         shape = KptTheme.shapes.medium,
         modifier = modifier.fillMaxWidth(),
@@ -406,7 +406,7 @@ private fun RecipientDetailCard(
 @Preview
 @Composable
 fun TransferDetailsScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         val mockFromAccount = Account(
             name = "WALLET",
             number = "00000002",
@@ -477,7 +477,7 @@ fun TransferDetailsScreenPreview() {
 @Preview
 @Composable
 fun TransferDetailsScreenEmptyPreview() {
-    MifosTheme {
+    ForkTheme {
         val mockFromAccount = Account(
             name = "WALLET",
             number = "00000002",

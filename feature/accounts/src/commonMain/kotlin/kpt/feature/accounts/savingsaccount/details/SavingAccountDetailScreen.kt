@@ -52,17 +52,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.SavingAccountDetail
 import kpt.core.model.savingsaccount.Status
 import kpt.core.model.savingsaccount.Summary
 import kpt.core.model.savingsaccount.toAccount
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkProgressIndicator
 import kpt.core.ui.TransactionHistoryCard
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.accounts.SavingAccountStatus
 import kpt.feature.accounts.color
 import kpt.feature.accounts.generated.resources.Res
@@ -127,7 +127,7 @@ internal fun SavingAccountDetailScreen(
     modifier: Modifier = Modifier,
     onAction: (SADAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         backPress = {
             onAction(SADAction.NavigateBack)
         },
@@ -142,7 +142,7 @@ internal fun SavingAccountDetailScreen(
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
-                is SADState.ViewState.Loading -> MifosProgressIndicator()
+                is SADState.ViewState.Loading -> ForkProgressIndicator()
 
                 is SADState.ViewState.Error -> {
                     EmptyContentScreen(
@@ -239,7 +239,7 @@ private fun SavingAccountSummaryCard(
                 modifier = Modifier.padding(KptTheme.spacing.sm),
             )
 
-            MifosDivider()
+            ForkDivider()
 
             RowBlock {
                 Text(text = stringResource(Res.string.feature_accounts_detail_account_balance))
@@ -254,7 +254,7 @@ private fun SavingAccountSummaryCard(
                 )
             }
 
-            MifosDivider()
+            ForkDivider()
 
             RowBlock {
                 Text(text = stringResource(Res.string.feature_accounts_detail_total_deposits))
@@ -269,7 +269,7 @@ private fun SavingAccountSummaryCard(
                 )
             }
 
-            MifosDivider()
+            ForkDivider()
 
             RowBlock {
                 Text(text = stringResource(Res.string.feature_accounts_detail_total_withdrawals))
@@ -284,7 +284,7 @@ private fun SavingAccountSummaryCard(
                 )
             }
 
-            MifosDivider()
+            ForkDivider()
 
             RowBlock {
                 Text(text = stringResource(Res.string.feature_accounts_detail_available_balance))
@@ -299,7 +299,7 @@ private fun SavingAccountSummaryCard(
                 )
             }
 
-            MifosDivider()
+            ForkDivider()
 
             RowBlock {
                 Text(text = stringResource(Res.string.feature_accounts_detail_total_interest_posted))
@@ -314,7 +314,7 @@ private fun SavingAccountSummaryCard(
                 )
             }
 
-            MifosDivider()
+            ForkDivider()
 
             RowBlock {
                 Text(text = stringResource(Res.string.feature_accounts_detail_total_overdraft))
@@ -329,7 +329,7 @@ private fun SavingAccountSummaryCard(
                 )
             }
 
-            MifosDivider()
+            ForkDivider()
 
             RowBlock {
                 Text(text = stringResource(Res.string.feature_accounts_detail_interest_not_posted))

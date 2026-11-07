@@ -127,6 +127,7 @@ class PocketRepositoryTest {
         linkableAccountsStore = linkableAccountsStore,
         storeNetworkMonitor = FakeNetworkMonitor,
         fetchedAtRepository = FakeFetchedAtRepository,
+        pocketDao = null,
     )
 
     /** Creates a detailed account fixture with stable values for stream assertions. */

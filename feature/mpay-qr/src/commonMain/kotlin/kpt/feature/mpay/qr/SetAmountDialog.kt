@@ -31,11 +31,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosCustomDialog
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.utils.fork.onClick
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkCustomDialog
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.utils.onClick
 import kpt.core.model.utils.CurrencyCode
 import kpt.core.ui.AvatarBox
 import kpt.feature.mpay.qr.generated.resources.Res
@@ -53,7 +53,7 @@ internal fun SetAmountDialog(
     modifier: Modifier = Modifier,
     onAction: (MpayQrAction) -> Unit,
 ) {
-    MifosCustomDialog(
+    ForkCustomDialog(
         onDismiss = {
             onAction(MpayQrAction.DismissDialog)
         },
@@ -97,7 +97,7 @@ internal fun SetAmountDialog(
                             style = KptTheme.typography.bodyMedium,
                         )
 
-                        MifosTextField(
+                        ForkTextField(
                             value = amount,
                             label = stringResource(Res.string.feature_request_money_set_amount),
                             onValueChange = {
@@ -116,7 +116,7 @@ internal fun SetAmountDialog(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.End,
                     ) {
-                        MifosOutlinedButton(
+                        ForkOutlinedButton(
                             onClick = {
                                 onAction(MpayQrAction.DismissDialog)
                             },
@@ -126,7 +126,7 @@ internal fun SetAmountDialog(
 
                         Spacer(modifier = Modifier.width(4.dp))
 
-                        MifosButton(
+                        ForkButton(
                             onClick = {
                                 if (amountValidator == null && amount.isNotBlank()) {
                                     onAction(MpayQrAction.ConfirmSetAmount)

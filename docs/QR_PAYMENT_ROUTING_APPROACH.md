@@ -304,7 +304,7 @@ fun routeQrScan(qrData: QrCodeData): RouteResult {
 | `QrTransferRouter.kt` | **NEW** - Routing logic | HIGH |
 | `MpayQrViewModel.kt` | Include `fspId` in QR | HIGH |
 | `ScanQrViewModel.kt` | Use `QrTransferRouter` | HIGH |
-| `MifosNavHost.kt` | Update navigation callbacks | MEDIUM |
+| `ForkNavHost.kt` | Update navigation callbacks | MEDIUM |
 | `BeneficiaryRepository.kt` | Add lookup methods | MEDIUM |
 | `DataModule.kt` | Add DI binding | LOW |
 

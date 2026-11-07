@@ -13,6 +13,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenState
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.BeneficiaryRepository
@@ -22,9 +24,10 @@ import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.network.entity.templates.beneficiary.BeneficiaryTemplate
 import kpt.core.network.SelfServiceApiManager
 /** Default [BeneficiaryRepository] backed by the beneficiary API. */
+@RepositoryBinding(binds = BeneficiaryRepository::class)
 class BeneficiaryRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : BeneficiaryRepository {
     override suspend fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>> {
         return apiManager.beneficiaryApi.beneficiaryList()

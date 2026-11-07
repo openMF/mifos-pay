@@ -32,8 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.icon.ForkIcons
 /** Dialog shown when a contact is not on the app, letting the user pick a channel to send an invite. */
 @Composable
 fun ContactNotFoundDialog(
@@ -88,7 +88,7 @@ fun ContactNotFoundDialog(
                 }
             },
             confirmButton = {
-                MifosButton(
+                ForkButton(
                     onClick = onSetAsDefaultClick,
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(
@@ -171,8 +171,8 @@ private fun SharingOptionItem(
             leadingContent = {
                 Icon(
                     imageVector = when (option) {
-                        SharingOption.WHATSAPP -> MifosIcons.Share
-                        SharingOption.SMS -> MifosIcons.Share
+                        SharingOption.WHATSAPP -> ForkIcons.Share
+                        SharingOption.SMS -> ForkIcons.Share
                     },
                     contentDescription = title,
                     modifier = Modifier.size(24.dp),
@@ -196,9 +196,9 @@ private fun SharingOptionItem(
                 ) {
                     Icon(
                         imageVector = if (isSelected) {
-                            MifosIcons.RadioButtonChecked
+                            ForkIcons.RadioButtonChecked
                         } else {
-                            MifosIcons.RadioButtonUnchecked
+                            ForkIcons.RadioButtonUnchecked
                         },
                         contentDescription = if (isSelected) "Selected" else "Not selected",
                         modifier = Modifier.size(20.dp),

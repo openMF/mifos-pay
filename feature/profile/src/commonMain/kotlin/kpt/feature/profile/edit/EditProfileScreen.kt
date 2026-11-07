@@ -31,14 +31,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.profile.components.EditableProfileImage
 import kpt.feature.profile.generated.resources.Res
 import kpt.feature.profile.generated.resources.feature_profile_edit_profile
@@ -99,7 +99,7 @@ private fun EditProfileScreenContent(
     onAction: (EditProfileAction) -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = stringResource(Res.string.feature_profile_edit_profile),
         backPress = {
             onAction(EditProfileAction.NavigateBack)
@@ -125,7 +125,7 @@ private fun EditProfileScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     value = state.firstNameInput,
                     onValueChange = {
                         onAction(EditProfileAction.FirstNameInputChange(it))
@@ -135,7 +135,7 @@ private fun EditProfileScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     value = state.lastNameInput,
                     onValueChange = {
                         onAction(EditProfileAction.LastNameInputChange(it))
@@ -145,7 +145,7 @@ private fun EditProfileScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     value = state.emailInput,
                     onValueChange = {
                         onAction(EditProfileAction.EmailInputChange(it))
@@ -155,7 +155,7 @@ private fun EditProfileScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     value = state.externalIdInput,
                     onValueChange = {
                         onAction(EditProfileAction.ExternalIdInputChange(it))
@@ -165,7 +165,7 @@ private fun EditProfileScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     value = state.phoneNumberInput,
                     onValueChange = {
                         onAction(EditProfileAction.PhoneNumberInputChange(it))
@@ -177,7 +177,7 @@ private fun EditProfileScreenContent(
             item {
                 Spacer(modifier.height(16.dp))
 
-                MifosButton(
+                ForkButton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(54.dp),
@@ -206,7 +206,7 @@ private fun EditProfileDialogs(
                 is EditProfileState.DialogState.Error.StringMessage -> dialogState.message
                 is EditProfileState.DialogState.Error.ResourceMessage -> stringResource(dialogState.message)
             }
-            MifosBasicDialog(
+            ForkBasicDialog(
                 visibilityState = BasicDialogState.Shown(
                     message = message,
                 ),
@@ -214,7 +214,7 @@ private fun EditProfileDialogs(
             )
         }
 
-        is EditProfileState.DialogState.Loading -> MifosLoadingDialog(
+        is EditProfileState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 

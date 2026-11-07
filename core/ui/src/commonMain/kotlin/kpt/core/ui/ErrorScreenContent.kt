@@ -28,8 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.ui.generated.resources.Res
 import kpt.core.ui.generated.resources.core_ui_error_occurred
 import kpt.core.ui.generated.resources.core_ui_retry
@@ -75,7 +75,7 @@ fun ErrorScreenContent(
             style = KptTheme.typography.bodyMedium,
         )
 
-        MifosButton(
+        ForkButton(
             modifier = Modifier
                 .width(150.dp)
                 .padding(top = KptTheme.spacing.md),
@@ -90,7 +90,7 @@ fun ErrorScreenContent(
 @DevicePreviews
 @Composable
 fun ErrorContentScreenDrawableImagePreview() {
-    MifosTheme {
+    ForkTheme {
         ErrorScreenContent(
             modifier = Modifier,
             title = "Error Occurred!",

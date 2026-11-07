@@ -25,13 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.data.util.Constants.WALLET_ACCOUNT_SAVINGS_PRODUCT_ID
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopAppBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.data.fork.util.Constants.WALLET_ACCOUNT_SAVINGS_PRODUCT_ID
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopAppBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.feature.auth.generated.resources.Res
 import kpt.feature.auth.generated.resources.feature_auth_create_an_account
 import kpt.feature.auth.generated.resources.feature_auth_or
@@ -60,19 +60,19 @@ private fun SignupMethodScreenContent(
     navigateToSignupScreen: (savingsProductId: Int) -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopAppBar(
+            ForkTopAppBar(
                 title = "Choose Account Type",
-                navigationIcon = MifosIcons.Back,
+                navigationIcon = ForkIcons.Back,
                 onNavigationIconClick = onDismissSignUp,
                 navigationIconContentDescription = "Back",
                 scrollBehavior = scrollBehavior,
             )
         },
     ) {
-        MifosGradientBackground {
+        ForkGradientBackground {
             SignupMethodScreenContent(
                 modifier = Modifier.padding(it),
                 onSignUpAsMerchant = {
@@ -102,7 +102,7 @@ private fun SignupMethodScreenContent(
             text = stringResource(Res.string.feature_auth_create_an_account),
         )
 
-        MifosOutlinedButton(
+        ForkOutlinedButton(
             modifier = Modifier.padding(top = KptTheme.spacing.xl),
             onClick = onSignUpAsMerchant,
             border = BorderStroke(
@@ -143,7 +143,7 @@ private fun SignupMethodScreenContent(
             )
         }
 
-        MifosOutlinedButton(
+        ForkOutlinedButton(
             modifier = Modifier.padding(horizontal = KptTheme.spacing.lg),
             onClick = onSignupAsCustomer,
             border = BorderStroke(
@@ -163,7 +163,7 @@ private fun SignupMethodScreenContent(
 @Preview
 @Composable
 private fun SignupMethodContentScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         SignupMethodScreenContent(
             onSignUpAsMerchant = {},
             onSignupAsCustomer = {},

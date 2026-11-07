@@ -22,10 +22,10 @@ ViewModels: `NotificationViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/notification sha=a928888719beea26335003e0dcb6c0a2ccda69d4 -->
+<!-- api-docs:begin module=feature/notification sha=0daa415fc9c8866b7f9a8986dc90d19d8eba4199 -->
 ## API reference
 
-_Generated from `feature/notification` at tree `a928888719be` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/notification` at tree `0daa415fc9c8` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

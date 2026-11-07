@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.Currency
 import kpt.core.model.savingsaccount.Status
@@ -133,14 +133,14 @@ private fun AccountPickerItem(
         ) {
             if (hasExternalId) {
                 Icon(
-                    imageVector = MifosIcons.Check,
+                    imageVector = ForkIcons.Check,
                     contentDescription = stringResource(Res.string.feature_mpay_qr_has_external_id),
                     modifier = Modifier.size(KptTheme.spacing.md),
                     tint = KptTheme.colorScheme.primary,
                 )
             } else {
                 Icon(
-                    imageVector = MifosIcons.Info,
+                    imageVector = ForkIcons.Info,
                     contentDescription = stringResource(Res.string.feature_mpay_qr_no_external_id),
                     modifier = Modifier.size(KptTheme.spacing.md),
                     tint = KptTheme.colorScheme.error,

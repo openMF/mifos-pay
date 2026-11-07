@@ -56,19 +56,19 @@ import androidx.compose.ui.window.PopupProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.LoadingDialogState
 import kpt.core.model.utils.Locale
 import kpt.core.model.utils.filterLocales
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.accounts.generated.resources.Res
 import kpt.feature.accounts.generated.resources.feature_accounts_add_allow_overdraft
 import kpt.feature.accounts.generated.resources.feature_accounts_add_client_name
@@ -134,20 +134,20 @@ private fun SavingAccountDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is AESState.DialogState.Error.StringMessage -> MifosBasicDialog(
+        is AESState.DialogState.Error.StringMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is AESState.DialogState.Error.ResourceMessage -> MifosBasicDialog(
+        is AESState.DialogState.Error.ResourceMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = stringResource(dialogState.message),
             ),
             onDismissRequest = onDismissRequest,
         )
-        is AESState.DialogState.Loading -> MifosLoadingDialog(
+        is AESState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
         null -> Unit
@@ -162,7 +162,7 @@ internal fun AddEditSavingAccountScreenContent(
     modifier: Modifier = Modifier,
     onAction: (AESAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = stringResource(state.title),
         backPress = { onAction(AESAction.NavigateBack) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -175,7 +175,7 @@ internal fun AddEditSavingAccountScreenContent(
             contentAlignment = Alignment.Center,
         ) {
             when (state.viewState) {
-                is AESState.ViewState.Loading -> MifosProgressIndicator()
+                is AESState.ViewState.Loading -> ForkProgressIndicator()
 
                 is AESState.ViewState.Error -> {
                     EmptyContentScreen(
@@ -225,7 +225,7 @@ internal fun AddEditSavingAccountScreenContent(
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         item("Client Name") {
-            MifosTextField(
+            ForkTextField(
                 value = state.template.clientName,
                 label = stringResource(Res.string.feature_accounts_add_client_name),
                 onValueChange = {},
@@ -246,7 +246,7 @@ internal fun AddEditSavingAccountScreenContent(
                     productToggled = !productToggled
                 },
             ) {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_accounts_add_saving_product),
                     value = productName,
                     showClearIcon = false,
@@ -310,7 +310,7 @@ internal fun AddEditSavingAccountScreenContent(
 
         if (!isInEditMode) {
             item("External Id") {
-                MifosTextField(
+                ForkTextField(
                     value = state.externalId,
                     label = stringResource(Res.string.feature_accounts_add_external_id),
                     onValueChange = {
@@ -329,7 +329,7 @@ internal fun AddEditSavingAccountScreenContent(
                     horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    MifosTextField(
+                    ForkTextField(
                         label = stringResource(Res.string.feature_accounts_add_submitted_date),
                         value = state.submittedOnDate,
                         onValueChange = {},
@@ -338,7 +338,7 @@ internal fun AddEditSavingAccountScreenContent(
                         modifier = Modifier.weight(1.5f),
                     )
 
-                    MifosTextField(
+                    ForkTextField(
                         label = stringResource(Res.string.feature_accounts_add_date_format),
                         value = state.dateFormat,
                         onValueChange = {},
@@ -359,7 +359,7 @@ internal fun AddEditSavingAccountScreenContent(
                         localeToggled = !localeToggled
                     },
                 ) {
-                    MifosTextField(
+                    ForkTextField(
                         label = stringResource(Res.string.feature_accounts_add_locale),
                         value = state.locale,
                         onValueChange = {
@@ -413,7 +413,7 @@ internal fun AddEditSavingAccountScreenContent(
                             )
 
                             if (index != filteredLocalList.size - 1) {
-                                MifosDivider(
+                                ForkDivider(
                                     color = KptTheme.colorScheme.outlineVariant,
                                 )
                             }
@@ -423,7 +423,7 @@ internal fun AddEditSavingAccountScreenContent(
             }
 
             item("Nominal Annual Interest Rate") {
-                MifosTextField(
+                ForkTextField(
                     value = state.nominalAnnualInterestRate.toString(),
                     label = stringResource(Res.string.feature_accounts_add_nominal_annual),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -449,7 +449,7 @@ internal fun AddEditSavingAccountScreenContent(
 
             if (state.allowOverdraft) {
                 item("Overdraft Limit") {
-                    MifosTextField(
+                    ForkTextField(
                         label = stringResource(Res.string.feature_accounts_add_overdraft_limit),
                         value = state.overdraftLimit,
                         onValueChange = {
@@ -476,7 +476,7 @@ internal fun AddEditSavingAccountScreenContent(
 
             if (state.enforceMinRequiredBalance) {
                 item("Required Balance") {
-                    MifosTextField(
+                    ForkTextField(
                         label = stringResource(Res.string.feature_accounts_add_opening_balance),
                         value = state.minRequiredOpeningBalance.toString(),
                         onValueChange = {
@@ -514,7 +514,7 @@ internal fun AddEditSavingAccountScreenContent(
         }
 
         item("CreateOrUpdateSavingAccount") {
-            MifosButton(
+            ForkButton(
                 text = {
                     Text(
                         text = btnText,

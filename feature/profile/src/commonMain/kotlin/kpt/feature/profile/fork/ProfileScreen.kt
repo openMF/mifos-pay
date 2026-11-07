@@ -30,15 +30,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.screen.ScreenContent
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.client.Client
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.profile.ProfileAction
 import kpt.feature.profile.ProfileEvent
 import kpt.feature.profile.ProfileState
@@ -99,7 +99,7 @@ internal fun ProfileScreenContent(
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.feature_profile),
         backPress = {
@@ -148,7 +148,7 @@ private fun ProfileScreenContent(
             modifier = Modifier.fillMaxWidth(),
         )
 
-        MifosButton(
+        ForkButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(54.dp),
@@ -162,14 +162,14 @@ private fun ProfileScreenContent(
             },
             leadingIcon = {
                 Icon(
-                    imageVector = MifosIcons.QrCode,
+                    imageVector = ForkIcons.QrCode,
                     contentDescription = stringResource(Res.string.feature_profile_personal_qr_code),
                 )
             },
         )
 
 //        TODO uncomment this after migrating to self api to link savings account
-//        MifosButton(
+//        ForkButton(
 //            modifier = Modifier
 //                .fillMaxWidth()
 //                .height(55.dp),
@@ -182,7 +182,7 @@ private fun ProfileScreenContent(
 //                onAction(ProfileAction.NavigateToLinkBankAccount)
 //            },
 //            leadingIcon = {
-//                Icon(imageVector = MifosIcons.AttachMoney, contentDescription = "")
+//                Icon(imageVector = ForkIcons.AttachMoney, contentDescription = "")
 //            },
 //        )
 
@@ -196,14 +196,14 @@ private fun ProfileDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is ProfileState.DialogState.Error -> MifosBasicDialog(
+        is ProfileState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = stringResource(dialogState.message),
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is ProfileState.DialogState.Loading -> MifosLoadingDialog(
+        is ProfileState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 

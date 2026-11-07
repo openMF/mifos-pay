@@ -21,8 +21,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.theme.fork.MifosTheme
-import kpt.core.ui.MifosProgressIndicatorOverlay
+import kpt.core.designsystem.theme.fork.ForkTheme
+import kpt.core.ui.ForkProgressIndicatorOverlay
 import kpt.core.ui.VerifyStepHeader
 import kpt.feature.upi.setup.viewmodel.DebitCardUiState
 import kpt.feature.upi.setup.viewmodel.DebitCardViewModel
@@ -96,7 +96,7 @@ internal fun DebitCardScreenWithHeaderAndContent(
                             is DebitCardUiState.Initials -> {
                             }
 
-                            is DebitCardUiState.Verifying -> MifosProgressIndicatorOverlay()
+                            is DebitCardUiState.Verifying -> ForkProgressIndicatorOverlay()
 
                             is DebitCardUiState.Verified -> {
                                 onDebitCardVerified()
@@ -116,7 +116,7 @@ internal fun DebitCardScreenWithHeaderAndContent(
 @Preview
 @Composable
 private fun DebitCardScreenInitialsPreview() {
-    MifosTheme {
+    ForkTheme {
         DebitCardScreenWithHeaderAndContent(
             debitCardUiState = DebitCardUiState.Initials,
             onDebitCardVerified = {},
@@ -129,7 +129,7 @@ private fun DebitCardScreenInitialsPreview() {
 @Preview
 @Composable
 private fun DebitCardScreenLoadingPreview() {
-    MifosTheme {
+    ForkTheme {
         DebitCardScreenWithHeaderAndContent(
             debitCardUiState = DebitCardUiState.Verifying,
             onDebitCardVerified = {},
@@ -142,7 +142,7 @@ private fun DebitCardScreenLoadingPreview() {
 @Preview
 @Composable
 private fun DebitCardScreenVerificationFailedPreview() {
-    MifosTheme {
+    ForkTheme {
         DebitCardScreenWithHeaderAndContent(
             debitCardUiState = DebitCardUiState.VerificationFailed("Error Message"),
             onDebitCardVerified = {},

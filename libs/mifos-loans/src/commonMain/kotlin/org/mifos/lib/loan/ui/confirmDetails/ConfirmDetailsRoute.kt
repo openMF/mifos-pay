@@ -79,7 +79,7 @@ fun NavController.navigateToConfirmDetails(
  *
  * @param navigateBack Callback to return to the previous screen.
  * @param navigateForPasscodeVerification `(verificationKey) -> Unit` — bind to
- * `navController::navigateToInternalMifosPasscodeScreen`. The screen forwards
+ * `navController::navigateToInternalPasscodeScreen`. The screen forwards
  * [LOAN_APPLICATION_VERIFICATION_KEY] so the passcode-screen success/failure callbacks write the
  * boolean result back to this destination's saved-state-handle.
  * @param onSubmitSuccess Callback invoked once the loan application has been submitted

@@ -13,8 +13,8 @@ import kpt.core.datastore.model.ClientPreferences
 import kpt.core.datastore.model.RolePreferences
 import kpt.core.datastore.model.UserInfoPreferences
 import kpt.core.model.client.Client
-import kpt.core.model.user.RoleInfo
-import kpt.core.model.user.UserInfo
+import kpt.core.model.fork.user.RoleInfo
+import kpt.core.model.fork.user.UserInfo
 /** Maps stored [ClientPreferences] to the domain [Client]. */
 fun ClientPreferences.toClientInfo(): Client {
     return Client(

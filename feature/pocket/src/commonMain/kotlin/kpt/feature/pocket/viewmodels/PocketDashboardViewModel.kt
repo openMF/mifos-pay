@@ -22,7 +22,7 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.enums.AccountType
 import kpt.core.model.pocket.AccountStatus
 import kpt.core.model.pocket.DetailedPocketAccount
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * Manages the UI state for the Pocket Dashboard.
  *

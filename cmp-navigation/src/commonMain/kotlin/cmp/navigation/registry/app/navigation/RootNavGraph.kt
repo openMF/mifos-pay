@@ -20,13 +20,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import cmp.navigation.registry.app.instance.InstanceSelectorScreen
-import cmp.navigation.registry.app.ui.MifosApp
-import kpt.core.data.util.NetworkMonitor
-import kpt.core.data.util.TimeZoneMonitor
+import cmp.navigation.registry.app.ui.ForkApp
+import kpt.core.data.fork.util.NetworkMonitor
+import kpt.core.data.fork.util.TimeZoneMonitor
 import kpt.feature.passcode.biometricSetupScreen
 import kpt.feature.passcode.navigateToBiometricSetupScreen
-import kpt.feature.passcode.reAuthMifosPasscodeScreen
-import kpt.feature.passcode.rootMifosPasscodeScreen
+import kpt.feature.passcode.reAuthPasscodeScreen
+import kpt.feature.passcode.rootPasscodeScreen
 import org.mifos.authenticator.biometrics.platformAuthenticationProvider
 import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenticatorStatus
 
@@ -36,8 +36,8 @@ import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenti
  *
  * Destinations registered here:
  *  - `loginNavGraph` — username/password entry; on success calls into
- *    `navigateToRootMifosPasscodeScreen`.
- *  - `rootMifosPasscodeScreen` — first-time passcode creation **and** post-
+ *    `navigateToRootPasscodeScreen`.
+ *  - `rootPasscodeScreen` — first-time passcode creation **and** post-
  *    login passcode unlock (same screen, behaviour driven by whether the
  *    library finds a stored passcode). On `Created`, routes to either the
  *    biometric setup screen (if hardware is available) or directly to
@@ -45,11 +45,11 @@ import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenti
  *    [onClickLogout].
  *  - `biometricSetupScreen` — first-time biometric enrolment; both the
  *    "enrol" and "skip" branches land on `:main`.
- *  - `reAuthMifosPasscodeScreen` — pushed on top by `MifosPayApp` when the
+ *  - `reAuthPasscodeScreen` — pushed on top by `ForkAppRoot` when the
  *    user backgrounds the app for >15 s; pops back to the prior destination
  *    on `Verified`.
- *  - `MifosNavGraph.MAIN_GRAPH` — the authenticated content host
- *    ([cmp.navigation.registry.app.ui.MifosApp]).
+ *  - `ForkNavGraph.MAIN_GRAPH` — the authenticated content host
+ *    ([cmp.navigation.registry.app.ui.ForkApp]).
  *
  * Biometric availability — [PlatformAuthenticatorStatus.BIOMETRICS_SET] in
  * the provider's `authenticatorStatus` flow — is read once and used to gate
@@ -59,9 +59,9 @@ import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenti
  * @param networkMonitor Forwarded down to `:main` for offline banner.
  * @param timeZoneMonitor Forwarded down to `:main`.
  * @param navHostController Hoisted by the caller so background re-auth
- *        navigation in `MifosPayApp` can target the same controller.
+ *        navigation in `ForkAppRoot` can target the same controller.
  * @param startDestination Resolved by the caller from session state — see
- *        `MifosPayApp.navDestination`.
+ *        `ForkAppRoot.navDestination`.
  * @param onClickLogout Invoked from the passcode "Forgot" path and the global
  *        logout button in `:main`. Should clear session state and return the
  *        user to [LOGIN_GRAPH].
@@ -87,7 +87,7 @@ internal fun RootNavGraph(
     NavHost(
         navController = navHostController,
         startDestination = startDestination,
-        route = MifosNavGraph.ROOT_GRAPH,
+        route = ForkNavGraph.ROOT_GRAPH,
         modifier = modifier,
     ) {
         loginNavGraph(
@@ -95,7 +95,7 @@ internal fun RootNavGraph(
             onShowInstanceSelector = { showInstanceSelector = true },
         )
 
-        rootMifosPasscodeScreen(
+        rootPasscodeScreen(
             navigateToLogin = {
                 onClickLogout()
             },
@@ -124,7 +124,7 @@ internal fun RootNavGraph(
             },
         )
 
-        reAuthMifosPasscodeScreen(
+        reAuthPasscodeScreen(
             navigateToLogin = {
                 navHostController.popBackStack()
                 onClickLogout()
@@ -132,8 +132,8 @@ internal fun RootNavGraph(
             onAuthenticationSuccess = { navHostController.popBackStack() },
         )
 
-        composable(MifosNavGraph.MAIN_GRAPH) {
-            MifosApp(
+        composable(ForkNavGraph.MAIN_GRAPH) {
+            ForkApp(
                 networkMonitor = networkMonitor,
                 timeZoneMonitor = timeZoneMonitor,
                 handleAppLocale = handleAppLocale,

@@ -30,9 +30,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.payments.generated.resources.Res
 import kpt.feature.payments.generated.resources.baseline_content_copy
 import kpt.feature.payments.generated.resources.feature_payments_mobile_number
@@ -119,7 +119,7 @@ private fun RequestScreenContent(
                     colors = IconButtonDefaults.filledIconButtonColors(),
                 ) {
                     Icon(
-                        imageVector = MifosIcons.QrCode,
+                        imageVector = ForkIcons.QrCode,
                         contentDescription = stringResource(Res.string.feature_payments_show_code),
                     )
                 }
@@ -165,7 +165,7 @@ private fun RequestScreenContent(
 @Preview
 @Composable
 private fun RequestScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         RequestScreenContent(
             state = TransferState(
                 mobileNo = "iisque",

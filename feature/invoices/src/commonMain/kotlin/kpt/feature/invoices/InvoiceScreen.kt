@@ -25,10 +25,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.screen.ScreenContent
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.invoices.generated.resources.Res
 import kpt.feature.invoices.generated.resources.feature_invoices_error_no_invoices_found
 import kpt.feature.invoices.generated.resources.feature_invoices_error_oops
@@ -68,7 +68,7 @@ private fun InvoiceScreen(
     onAction: (InvoiceAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
     ) { paddingValues ->
         // Template idiom: `ScreenContent` (core-base/ui) owns every render branch —

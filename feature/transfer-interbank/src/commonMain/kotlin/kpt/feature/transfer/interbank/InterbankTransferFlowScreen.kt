@@ -18,9 +18,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosDialogBox
-import kpt.core.designsystem.theme.fork.MifosTheme
-import kpt.core.ui.MifosProgressIndicatorOverlay
+import kpt.core.designsystem.fork.component.ForkDialogBox
+import kpt.core.designsystem.theme.fork.ForkTheme
+import kpt.core.ui.ForkProgressIndicatorOverlay
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.core.ui.generated.resources.core_ui_add_to_pocket_message
 import kpt.core.ui.generated.resources.core_ui_add_to_pocket_title
 import kpt.core.ui.generated.resources.core_ui_error
@@ -28,7 +29,6 @@ import kpt.core.ui.generated.resources.core_ui_no
 import kpt.core.ui.generated.resources.core_ui_ok
 import kpt.core.ui.generated.resources.core_ui_success
 import kpt.core.ui.generated.resources.core_ui_yes
-import kpt.core.ui.utils.EventsEffect
 import kpt.feature.transfer.interbank.screens.PreviewTransferScreen
 import kpt.feature.transfer.interbank.screens.SearchRecipientScreen
 import kpt.feature.transfer.interbank.screens.SelectAccountScreen
@@ -223,7 +223,7 @@ fun InterbankTransferFlowScreen(
     }
     when (val dialogState = state.dialogState) {
         is InterbankTransferState.DialogState.AddToPocketConfirmation -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { viewModel.trySendAction(InterbankTransferAction.ConfirmAddToPocket(false)) },
                 title = stringResource(UiRes.string.core_ui_add_to_pocket_title),
@@ -234,7 +234,7 @@ fun InterbankTransferFlowScreen(
             )
         }
         is InterbankTransferState.DialogState.ErrorResource -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { viewModel.trySendAction(InterbankTransferAction.DismissDialog) },
                 title = stringResource(UiRes.string.core_ui_error),
@@ -244,7 +244,7 @@ fun InterbankTransferFlowScreen(
             )
         }
         is InterbankTransferState.DialogState.Success -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { viewModel.trySendAction(InterbankTransferAction.DismissDialog) },
                 title = stringResource(UiRes.string.core_ui_success),
@@ -254,7 +254,7 @@ fun InterbankTransferFlowScreen(
             )
         }
         is InterbankTransferState.DialogState.Loading -> {
-            MifosProgressIndicatorOverlay()
+            ForkProgressIndicatorOverlay()
         }
         null -> Unit
     }
@@ -264,7 +264,7 @@ fun InterbankTransferFlowScreen(
 @Preview
 @Composable
 fun InterbankTransferFlowScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         InterbankTransferFlowScreen(
             onBackClick = {},
             onTransferSuccess = {},

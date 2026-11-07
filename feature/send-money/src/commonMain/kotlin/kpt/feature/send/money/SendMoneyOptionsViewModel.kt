@@ -12,9 +12,9 @@ package kpt.feature.send.money
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kpt.core.data.util.StandardUpiQrCodeProcessor
-import kpt.core.ui.utils.BackgroundEvent
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.data.fork.util.StandardUpiQrCodeProcessor
+import kpt.core.ui.fork.utils.BackgroundEvent
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * ViewModel for the send-money options screen; maps option taps and QR scans to navigation events.
  * @property scanner QR scanner used by the scan option.

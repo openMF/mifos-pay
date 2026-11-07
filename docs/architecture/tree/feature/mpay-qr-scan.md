@@ -9,7 +9,7 @@ Screens: `QrImportScreen`, `ScanQrCodeScreen`
 
 ViewModels: `ScanQrViewModel`
 
-**Consumes:** `core/store/util`
+**Consumes:** `core/store/fork`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `ScanQrViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/mpay-qr-scan sha=a4921e75fb5d8c8dc3b99cd005a6147feb15c806 -->
+<!-- api-docs:begin module=feature/mpay-qr-scan sha=c928db830c012a6591cf6c739a78b6d1361aa41a -->
 ## API reference
 
-_Generated from `feature/mpay-qr-scan` at tree `a4921e75fb5d` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/mpay-qr-scan` at tree `c928db830c01` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -244,7 +244,7 @@ Icon-over-label action button used on the scanner screen.
                     horizontalArrangement = Arrangement.spacedBy(48.dp),
                 ) {
                     QrActionButton(
-                        icon = MifosIcons.PhotoLibrary,
+                        icon = ForkIcons.PhotoLibrary,
                         label = stringResource(Res.string.feature_qr_upload_qr),
                         onClick = { imagePicker.launch() },
                     )

@@ -40,15 +40,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.kyc.generated.resources.Res
 import kpt.feature.kyc.generated.resources.feature_kyc_address_line_1
 import kpt.feature.kyc.generated.resources.feature_kyc_address_line_2
@@ -109,7 +109,7 @@ private fun KYCLevel1ScreenContent(
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = state.title,
         backPress = {
@@ -125,7 +125,7 @@ private fun KYCLevel1ScreenContent(
             verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_kyc_first_name),
                     value = state.firstNameInput,
                     onValueChange = {
@@ -135,7 +135,7 @@ private fun KYCLevel1ScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_kyc_last_name),
                     value = state.lastNameInput,
                     onValueChange = {
@@ -145,7 +145,7 @@ private fun KYCLevel1ScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_kyc_phone_number),
                     value = state.mobileNoInput,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -156,7 +156,7 @@ private fun KYCLevel1ScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_kyc_address_line_1),
                     value = state.addressLine1Input,
                     onValueChange = {
@@ -166,7 +166,7 @@ private fun KYCLevel1ScreenContent(
             }
 
             item {
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_kyc_address_line_2),
                     value = state.addressLine2Input,
                     onValueChange = {
@@ -213,7 +213,7 @@ private fun KYCLevel1ScreenContent(
                     )
                 }
 
-                MifosTextField(
+                ForkTextField(
                     label = stringResource(Res.string.feature_kyc_select_dob),
                     value = state.dobInput,
                     readOnly = true,
@@ -229,7 +229,7 @@ private fun KYCLevel1ScreenContent(
                             ),
                         ) {
                             Icon(
-                                imageVector = MifosIcons.CalenderMonth,
+                                imageVector = ForkIcons.CalenderMonth,
                                 contentDescription = "Choose Date",
                             )
                         }
@@ -239,7 +239,7 @@ private fun KYCLevel1ScreenContent(
             }
 
             item {
-                MifosButton(
+                ForkButton(
                     onClick = {
                         onAction(KycLevel1Action.SubmitClicked)
                     },
@@ -258,14 +258,14 @@ private fun KycLevel1Dialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is KycLevel1State.DialogState.Error -> MifosBasicDialog(
+        is KycLevel1State.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is KycLevel1State.DialogState.Loading -> MifosLoadingDialog(
+        is KycLevel1State.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 

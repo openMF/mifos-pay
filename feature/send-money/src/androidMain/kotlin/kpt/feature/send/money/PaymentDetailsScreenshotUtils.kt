@@ -17,10 +17,10 @@ import androidx.core.view.drawToBitmap
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kpt.core.ui.utils.MimeType
-import kpt.core.ui.utils.ScreenshotContextDetails
-import kpt.core.ui.utils.ShareFileModel
-import kpt.core.ui.utils.ShareUtils
+import kpt.core.ui.fork.utils.MimeType
+import kpt.core.ui.fork.utils.ScreenshotContextDetails
+import kpt.core.ui.fork.utils.ShareFileModel
+import kpt.core.ui.fork.utils.ShareUtils
 import java.io.ByteArrayOutputStream
 
 // TODO Capture the whole content of this page

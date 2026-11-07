@@ -29,7 +29,7 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.account.Account
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.beneficiary.Beneficiary
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.accounts.AccountAction.Internal.DeleteBeneficiary
 import kpt.feature.accounts.AccountEvent.OnAddEditSavingsAccount
 import kpt.feature.accounts.generated.resources.Res

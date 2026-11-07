@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.browser.document
 import kotlinx.coroutines.await
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.scan.generated.resources.Res
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_access_denied
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_denied_message
@@ -252,7 +252,7 @@ fun WebCameraScanner(
                         modifier = Modifier.fillMaxWidth(0.8f),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.PhotoLibrary,
+                            imageVector = ForkIcons.PhotoLibrary,
                             contentDescription = null,
                             modifier = Modifier.size(20.dp),
                         )
@@ -266,7 +266,7 @@ fun WebCameraScanner(
 
             is WebCameraScannerState.PermissionDenied -> {
                 CameraErrorContent(
-                    icon = MifosIcons.Warning,
+                    icon = ForkIcons.Warning,
                     title = stringResource(Res.string.feature_qr_camera_access_denied),
                     message = stringResource(Res.string.feature_qr_camera_denied_message),
                     primaryAction = stringResource(Res.string.feature_qr_select_from_gallery),
@@ -276,7 +276,7 @@ fun WebCameraScanner(
 
             is WebCameraScannerState.Error -> {
                 CameraErrorContent(
-                    icon = MifosIcons.Error,
+                    icon = ForkIcons.Error,
                     title = stringResource(Res.string.feature_qr_camera_error),
                     message = (scannerState as WebCameraScannerState.Error).message,
                     primaryAction = stringResource(Res.string.feature_qr_select_from_gallery),
@@ -339,7 +339,7 @@ private fun CameraErrorContent(
             modifier = Modifier.fillMaxWidth(0.7f),
         ) {
             Icon(
-                imageVector = MifosIcons.PhotoLibrary,
+                imageVector = ForkIcons.PhotoLibrary,
                 contentDescription = null,
                 modifier = Modifier.size(20.dp),
             )

@@ -11,8 +11,8 @@
 | `cmp-ios/` | 49 | [`cmp-ios/`](tree/cmp-ios.md) |
 | `cmp-desktop/` | 12 | [`cmp-desktop/`](tree/cmp-desktop.md) |
 | `cmp-web/` | 22 | [`cmp-web/`](tree/cmp-web.md) |
-| `cmp-shared/` | 8 | [`cmp-shared/`](tree/cmp-shared.md) |
-| `cmp-navigation/` | 78 | [`cmp-navigation/`](tree/cmp-navigation.md) |
+| `cmp-shared/` | 9 | [`cmp-shared/`](tree/cmp-shared.md) |
+| `cmp-navigation/` | 79 | [`cmp-navigation/`](tree/cmp-navigation.md) |
 
 ## Features
 

@@ -20,7 +20,7 @@ kotlin {
             implementation(projects.core.store)
             implementation(projects.core.ui)
             // Fork addition: kpt.feature.home.{HomeScreen,HomeViewModel} (the fork's
-            // pre-existing Home screen, mounted wholesale via cmp-shared's MifosNavHost) read
+            // pre-existing Home screen, mounted wholesale via cmp-shared's ForkNavHost) read
             // the kpt.core.designsystem.{component,icon}.* design system surface.
             // kpt.core.datastore.UserPreferencesRepository comes transitively via
             // core/data's api(core.datastore) re-export.

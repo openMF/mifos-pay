@@ -43,11 +43,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.feature.transfer.interbank.generated.resources.Res
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_amount_transferred
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_attempted_amount
@@ -86,7 +86,7 @@ fun TransferSuccessScreen(
     val clipboardManager = LocalClipboardManager.current
     var copied by remember { mutableStateOf(false) }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         bottomBar = {
             Column(
@@ -95,7 +95,7 @@ fun TransferSuccessScreen(
                     .padding(KptTheme.spacing.md),
                 verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             ) {
-                MifosButton(
+                ForkButton(
                     onClick = onBackToHome,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
@@ -143,7 +143,7 @@ fun TransferSuccessScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Check,
+                        imageVector = ForkIcons.Check,
                         contentDescription = stringResource(Res.string.feature_send_interbank_success),
                         modifier = Modifier.size(56.dp),
                         tint = successGreen,
@@ -174,7 +174,7 @@ fun TransferSuccessScreen(
 
             // Transaction Reference
             item {
-                MifosCard(
+                ForkCard(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
                         containerColor = KptTheme.colorScheme.surface,
@@ -212,7 +212,7 @@ fun TransferSuccessScreen(
                                 modifier = Modifier.size(24.dp),
                             ) {
                                 Icon(
-                                    imageVector = MifosIcons.Copy,
+                                    imageVector = ForkIcons.Copy,
                                     contentDescription = "Copy transaction reference",
                                     modifier = Modifier.size(20.dp),
                                     tint = KptTheme.colorScheme.primary,
@@ -356,7 +356,7 @@ fun TransferFailedScreen(
     onBackToHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         bottomBar = {
             Column(
@@ -365,14 +365,14 @@ fun TransferFailedScreen(
                     .padding(KptTheme.spacing.md),
                 verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             ) {
-                MifosButton(
+                ForkButton(
                     onClick = onRetry,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(stringResource(Res.string.feature_send_interbank_edit_transfer))
                 }
 
-                MifosButton(
+                ForkButton(
                     onClick = onBackToHome,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
@@ -402,7 +402,7 @@ fun TransferFailedScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Error,
+                        imageVector = ForkIcons.Error,
                         contentDescription = stringResource(Res.string.feature_send_interbank_failed),
                         modifier = Modifier.size(56.dp),
                         tint = KptTheme.colorScheme.error,
@@ -449,7 +449,7 @@ fun TransferFailedScreen(
                         verticalAlignment = Alignment.Top,
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Error,
+                            imageVector = ForkIcons.Error,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp),
                             tint = KptTheme.colorScheme.error,
@@ -670,7 +670,7 @@ fun TransferFailedScreen(
 @Preview
 @Composable
 fun TransferSuccessScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         TransferSuccessScreen(
             recipientName = "Pedro Barreto",
             amount = "1.00",
@@ -690,7 +690,7 @@ fun TransferSuccessScreenPreview() {
 @Preview
 @Composable
 fun TransferFailedScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         TransferFailedScreen(
             errorMessage = "Your available balance is not enough to complete this transfer. Please update the amount and try again.",
             errorTitle = "Insufficient Balance",

@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.generated.resources.Res
 import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_download_qr
 import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_share_qr
@@ -45,13 +45,13 @@ internal fun QrActionButtons(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
     ) {
-        MifosOutlinedButton(
+        ForkOutlinedButton(
             onClick = onShareClick,
             modifier = Modifier.weight(1f),
             shape = KptTheme.shapes.medium,
         ) {
             Icon(
-                imageVector = MifosIcons.Share,
+                imageVector = ForkIcons.Share,
                 contentDescription = null,
                 modifier = Modifier.size(KptTheme.spacing.md),
             )
@@ -64,13 +64,13 @@ internal fun QrActionButtons(
             )
         }
 
-        MifosOutlinedButton(
+        ForkOutlinedButton(
             onClick = onDownloadClick,
             modifier = Modifier.weight(1f),
             shape = KptTheme.shapes.medium,
         ) {
             Icon(
-                imageVector = MifosIcons.Download,
+                imageVector = ForkIcons.Download,
                 contentDescription = null,
                 modifier = Modifier.size(KptTheme.spacing.md),
             )

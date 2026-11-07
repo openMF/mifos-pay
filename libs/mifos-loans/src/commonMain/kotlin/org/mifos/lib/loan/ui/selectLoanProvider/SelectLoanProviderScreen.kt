@@ -23,14 +23,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.ui.utils.EventsEffect
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_provider_choose_provider
-import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_provider_top_bar_title
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.ui.fork.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_select_loan_provider_choose_provider
+import org.mifos.lib.loan.generated.resources.feature_select_loan_provider_top_bar_title
 /**
  * Entry point for the Select Loan Provider screen — the new first step of the loan-application
  * wizard, shown when the user taps "Apply for Loan".
@@ -84,7 +84,7 @@ private fun SelectLoanProviderContent(
     onAction: (SelectLoanProviderAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         backPress = { onAction(SelectLoanProviderAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_select_loan_provider_top_bar_title),
@@ -129,7 +129,7 @@ private fun LoanProviderCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier,
         shape = KptTheme.shapes.medium,
         elevation = KptTheme.elevation.level2,

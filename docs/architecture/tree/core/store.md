@@ -208,7 +208,7 @@ object WalletStoreTtl
 ```
 Freshness windows for mifos-pay's wallet stores.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:153</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:149</code></summary>
 
 ```kotlin
             isEmpty = { it.isEmpty() },
@@ -243,14 +243,14 @@ data class AccountDetailKey(val accountId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `accountDetail` store — one savings-account detail record per key.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavingsAccountRepositoryImpl.kt:51</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavingsAccountRepositoryImpl.kt:52</code></summary>
 
 ```kotlin
-    // store harness continue to compile; getAccountDetail(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val accountDetailStore: Store<AccountDetailKey, SavingAccountDetail>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.AccountDetail) private val accountDetailStore: Store<AccountDetailKey, SavingAccountDetail>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : SavingsAccountRepository {
     override suspend fun getSavingsAccounts(
 ```
@@ -278,12 +278,12 @@ data class BeneficiaryKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `beneficiary` store — one page of beneficiaries per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:79</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:75</code></summary>
 
 ```kotlin
-    // the store harness continue to compile; getBeneficiaryList() — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val beneficiaryStore: Store<BeneficiaryKey, List<Beneficiary>>? = null,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Beneficiary) private val beneficiaryStore: Store<BeneficiaryKey, List<Beneficiary>>?,
 ) : SelfServiceRepository {
     override suspend fun loginSelf(payload: AuthenticationPayload): User {
         return withContext(dispatcher) {
@@ -313,14 +313,14 @@ data class ClientDetailKey(val clientId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `clientDetail` store — one client-info record per key.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt:52</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/ClientRepositoryImpl.kt:53</code></summary>
 
 ```kotlin
-    // store harness continue to compile; getClientInfo(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val clientDetailStore: Store<ClientDetailKey, Client>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.ClientDetail) private val clientDetailStore: Store<ClientDetailKey, Client>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : ClientRepository {
     override suspend fun getClients(): Flow<ScreenState<Page<Client>>> {
 ```
@@ -351,13 +351,13 @@ Store5 key for the LEDGER `history` store — one page of transactions per savin
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:71</code></summary>
 
 ```kotlin
-    // to construct them; getTransactions(...) — the legacy asScreenStateFlow path — is
-    // unaffected. See RepositoryModule.kt for the production wiring.
-    private val historyStore: Store<TransactionKey, List<Transaction>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
-    // Phase-5 Batch-1 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getBeneficiaryListScreen(...) can consume Store5 via
+    @FromQualifier("IO") private val dispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.History) private val historyStore: Store<TransactionKey, List<Transaction>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Beneficiary) private val beneficiaryStore: Store<BeneficiaryKey, List<Beneficiary>>?,
 ```
 
 </details>
@@ -369,14 +369,14 @@ data class InvoiceKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `invoices` store — one page of invoices per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InvoiceRepositoryImpl.kt:43</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InvoiceRepositoryImpl.kt:44</code></summary>
 
 ```kotlin
-    // the store harness continue to compile; getInvoices(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val invoiceStore: Store<InvoiceKey, List<Invoice>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Invoice) private val invoiceStore: Store<InvoiceKey, List<Invoice>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : InvoiceRepository {
     override fun getInvoice(clientId: Long, invoiceId: Long): Flow<ScreenState<Invoice>> {
 ```
@@ -397,16 +397,16 @@ data class LinkableAccountKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `linkableAccounts` store — one page of accounts eligible to link into the client's pocket, per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:47</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:52</code></summary>
 
 ```kotlin
-    private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
-    private val linkableAccountsStore: Store<
-        LinkableAccountKey,
-        List<LinkableAccount>,
-        >? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromStore(AppStoreIds.Pocket) private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>?,
+    @FromStore(AppStoreIds.LinkableAccounts)
+    private val linkableAccountsStore: Store<LinkableAccountKey, List<LinkableAccount>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    private val pocketDao: PocketDao?,
+) : PocketRepository {
 ```
 
 </details>
@@ -425,14 +425,14 @@ data class NotificationKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `notifications` store — one page of notifications per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/NotificationRepositoryImpl.kt:41</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/NotificationRepositoryImpl.kt:42</code></summary>
 
 ```kotlin
-    // the store harness continue to compile; fetchNotifications() — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val notificationStore: Store<NotificationKey, List<Notification>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Notification) private val notificationStore: Store<NotificationKey, List<Notification>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : NotificationRepository {
     override fun fetchNotifications(): Flow<ScreenState<List<Notification>>> {
 ```
@@ -460,14 +460,14 @@ data object OfficesKey
 ```
 Store5 key for the LEDGER `offices` store — the WHOLE Fineract office list.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/OfficeRepositoryImpl.kt:38</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/OfficeRepositoryImpl.kt:40</code></summary>
 
 ```kotlin
-    // Nullable-default so existing unit tests without the store harness continue
-    // to compile; getOffices() — the legacy asScreenStateFlow path — is unaffected.
-    private val officesStore: Store<OfficesKey, List<Office>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Offices) private val officesStore: Store<OfficesKey, List<Office>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : OfficeRepository {
     override fun getOffices(): ScreenStateStream<List<Office>> {
 ```
@@ -481,16 +481,16 @@ data class PocketKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `pockets` store — one page of linked pocket accounts per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:45</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:50</code></summary>
 
 ```kotlin
     private val dataManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
-    private val linkableAccountsStore: Store<
-        LinkableAccountKey,
-        List<LinkableAccount>,
-        >? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    @FromStore(AppStoreIds.Pocket) private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>?,
+    @FromStore(AppStoreIds.LinkableAccounts)
+    private val linkableAccountsStore: Store<LinkableAccountKey, List<LinkableAccount>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ```
 
 </details>
@@ -537,14 +537,14 @@ data class SavedCardKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `savedCards` store — one page of saved payment cards per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavedCardRepositoryImpl.kt:43</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SavedCardRepositoryImpl.kt:44</code></summary>
 
 ```kotlin
-    // the store harness continue to compile; getSavedCards(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val savedCardStore: Store<SavedCardKey, List<SavedCard>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SavedCards) private val savedCardStore: Store<SavedCardKey, List<SavedCard>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : SavedCardRepository {
     override fun getSavedCards(clientId: Long): Flow<ScreenState<List<SavedCard>>> {
 ```
@@ -565,16 +565,16 @@ data class SelfAccountsKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `selfAccounts` store — one page of the authenticated user's own accounts per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:58</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:59</code></summary>
 
 ```kotlin
-    // store harness continue to compile; getSelfAccounts(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
-    // transfer-detail Store5 vertical (GOAL D13) — makes the transaction-detail
-    // drill-down offline-first. Nullable-default so existing unit tests without the
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.TransferDetail) private val transferDetailStore: Store<TransferDetailKey, TransferDetail>?,
 ```
 
 </details>
@@ -593,14 +593,14 @@ data class StandingInstructionKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `standingInstruction` store — one page of standing instructions per client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt:45</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/StandingInstructionRepositoryImpl.kt:47</code></summary>
 
 ```kotlin
-    // store harness continue to compile; getAllStandingInstructions(...) — the
-    // legacy asScreenStateFlow path — is unaffected.
-    private val standingInstructionStore: Store<StandingInstructionKey, List<StandingInstruction>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.StandingInstruction)
+    private val standingInstructionStore: Store<StandingInstructionKey, List<StandingInstruction>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : StandingInstructionRepository {
     override fun getStandingInstructionTemplate(
 ```
@@ -621,16 +621,15 @@ data class TransferDetailKey(val transferId: Long)
 ```
 Store5 key for the SINGLE-ROW-PER-KEY `transferDetail` store — one account-transfer detail record per key. Mirrors `AccountDetailKey`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:65</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:63</code></summary>
 
 ```kotlin
-    // store harness continue to compile; the legacy getAccountTransfer(...) —
-    // asScreenStateFlow shim over the raw Ktorfit flow — is unaffected.
-    private val transferDetailStore: Store<TransferDetailKey, TransferDetail>? = null,
-    // Existing wallet_transactions LEDGER DAO (populated by provideHistoryStore) —
-    // injected so getTransaction(...) can read the cached row offline-first before
-    // hitting the network. Nullable-default for the same test-harness reason.
-    private val transactionDao: TransactionDao? = null,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.TransferDetail) private val transferDetailStore: Store<TransferDetailKey, TransferDetail>?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    private val transactionDao: TransactionDao?,
+) : AccountRepository {
 ```
 
 </details>

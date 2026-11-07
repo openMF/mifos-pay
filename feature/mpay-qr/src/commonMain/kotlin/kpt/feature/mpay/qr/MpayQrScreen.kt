@@ -49,14 +49,15 @@ import io.github.alexzhirkevich.qrose.rememberQrCodePainter
 import io.github.alexzhirkevich.qrose.toByteArray
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosDialogBox
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkDialogBox
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.client.Client
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.MifosProgressIndicatorOverlay
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.ForkProgressIndicatorOverlay
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.core.ui.generated.resources.core_ui_add_to_pocket_message
 import kpt.core.ui.generated.resources.core_ui_add_to_pocket_title
 import kpt.core.ui.generated.resources.core_ui_error
@@ -64,7 +65,6 @@ import kpt.core.ui.generated.resources.core_ui_no
 import kpt.core.ui.generated.resources.core_ui_ok
 import kpt.core.ui.generated.resources.core_ui_success
 import kpt.core.ui.generated.resources.core_ui_yes
-import kpt.core.ui.utils.EventsEffect
 import kpt.feature.mpay.qr.components.AccountIdSection
 import kpt.feature.mpay.qr.components.AccountPickerBottomSheet
 import kpt.feature.mpay.qr.components.AccountSelectorCard
@@ -143,10 +143,10 @@ private fun MpayQrDialogs(
     when (dialogState) {
         is MpayQrState.DialogState.ShowSetAmountDialog -> showAmountDialog.invoke()
 
-        is MpayQrState.DialogState.Loading -> MifosProgressIndicatorOverlay()
+        is MpayQrState.DialogState.Loading -> ForkProgressIndicatorOverlay()
 
         is MpayQrState.DialogState.AddToPocketConfirmation -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { onAction(MpayQrAction.ConfirmAddToPocket(false)) },
                 title = stringResource(UiRes.string.core_ui_add_to_pocket_title),
@@ -158,7 +158,7 @@ private fun MpayQrDialogs(
         }
 
         is MpayQrState.DialogState.Error -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { onAction(MpayQrAction.DismissDialog) },
                 title = stringResource(UiRes.string.core_ui_error),
@@ -168,7 +168,7 @@ private fun MpayQrDialogs(
             )
         }
         is MpayQrState.DialogState.Success -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { onAction(MpayQrAction.DismissDialog) },
                 title = stringResource(UiRes.string.core_ui_success),
@@ -189,7 +189,7 @@ internal fun MpayQrScreen(
     modifier: Modifier = Modifier,
     onAction: (MpayQrAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.feature_mpay_qr_receive_money),
         backPress = {
@@ -215,7 +215,7 @@ internal fun MpayQrScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        MifosProgressIndicator()
+                        ForkProgressIndicator()
                     }
                 }
 
@@ -368,7 +368,7 @@ private fun MpayQrScreenContent(
 
         // Set Amount button
         item {
-            MifosButton(
+            ForkButton(
                 onClick = {
                     onAction(MpayQrAction.ShowSetAmountDialog)
                 },
@@ -456,7 +456,7 @@ private fun MpayQrErrorContent(
         }
 
         item {
-            MifosOutlinedButton(
+            ForkOutlinedButton(
                 onClick = onNavigateBack,
                 modifier = Modifier
                     .fillMaxWidth()

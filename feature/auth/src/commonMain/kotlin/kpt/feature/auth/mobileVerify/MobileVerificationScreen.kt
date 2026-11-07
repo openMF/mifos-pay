@@ -28,18 +28,18 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopAppBar
-import kpt.core.designsystem.component.NavigationIcon
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopAppBar
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.component.NavigationIcon
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.auth.generated.resources.Res
 import kpt.feature.auth.generated.resources.feature_auth_enter_mobile_number
 import kpt.feature.auth.generated.resources.feature_auth_enter_mobile_number_description
@@ -104,15 +104,15 @@ private fun MobileVerificationScreen(
         stringResource(Res.string.feature_auth_enter_otp)
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier.fillMaxSize(),
         snackbarHostState = snackbarHostState,
         topBar = {
-            MifosTopAppBar(
+            ForkTopAppBar(
                 title = title,
                 scrollBehavior = scrollBehavior,
                 navigationIcon = NavigationIcon(
-                    navigationIcon = MifosIcons.Back,
+                    navigationIcon = ForkIcons.Back,
                     navigationIconContentDescription = "Go Back",
                     onNavigationIconClick = {
                         onEvent(MobileVerificationAction.CloseButtonClick)
@@ -161,7 +161,7 @@ fun PhoneNoVerifyContent(
             .padding(horizontal = KptTheme.spacing.md),
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
-        MifosOutlinedTextField(
+        ForkOutlinedTextField(
             modifier = modifier,
             value = state.phoneNo,
             label = stringResource(Res.string.feature_auth_phone_number),
@@ -175,7 +175,7 @@ fun PhoneNoVerifyContent(
             style = KptTheme.typography.bodySmall,
         )
 
-        MifosButton(
+        ForkButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = KptTheme.spacing.xl, vertical = KptTheme.spacing.md),
@@ -213,7 +213,7 @@ fun OtpVerifyContent(
             .padding(horizontal = KptTheme.spacing.md),
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
-        MifosOutlinedTextField(
+        ForkOutlinedTextField(
             modifier = modifier,
             value = state.otp,
             label = stringResource(Res.string.feature_auth_enter_otp),
@@ -227,7 +227,7 @@ fun OtpVerifyContent(
             style = KptTheme.typography.bodySmall,
         )
 
-        MifosButton(
+        ForkButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = KptTheme.spacing.xl, vertical = KptTheme.spacing.md),
@@ -251,14 +251,14 @@ private fun MobileVerificationDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is MobileVerificationState.DialogState.Error -> MifosBasicDialog(
+        is MobileVerificationState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is MobileVerificationState.DialogState.Loading -> MifosLoadingDialog(
+        is MobileVerificationState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -269,7 +269,7 @@ private fun MobileVerificationDialogs(
 @Preview
 @Composable
 private fun MobileVerificationScreenVerifyPhonePreview() {
-    MifosTheme {
+    ForkTheme {
         MobileVerificationScreen(
             uiState = MobileVerificationState.VerifyPhoneState(),
             onEvent = {},
@@ -280,7 +280,7 @@ private fun MobileVerificationScreenVerifyPhonePreview() {
 @Preview
 @Composable
 private fun MobileVerificationScreenVerifyOtpPreview() {
-    MifosTheme {
+    ForkTheme {
         MobileVerificationScreen(
             uiState = MobileVerificationState.VerifyOtpState(phoneNo = ""),
             onEvent = {},

@@ -32,19 +32,19 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.component.LoadingDialogState
 import kpt.core.model.autopay.BillerCategory
 import kpt.core.ui.DropdownBox
 import kpt.core.ui.DropdownBoxItem
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 /** Screen with a form for adding a new biller (payee) for bill payments. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,9 +71,9 @@ fun AddBillerScreen(
         }
     }
 
-    MifosScaffold(
+    ForkScaffold(
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = "Add New Biller",
                 backPress = onNavigateBack,
             )
@@ -96,7 +96,7 @@ fun AddBillerScreen(
                     modifier = Modifier.padding(bottom = 8.dp),
                 )
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Biller Name *",
                     value = state.formData.name,
                     onValueChange = { viewModel.trySendAction(AddBillerAction.UpdateBillerName(it)) },
@@ -108,7 +108,7 @@ fun AddBillerScreen(
                     ),
                 )
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Account Number *",
                     value = state.formData.accountNumber,
                     onValueChange = { viewModel.trySendAction(AddBillerAction.UpdateAccountNumber(it)) },
@@ -121,7 +121,7 @@ fun AddBillerScreen(
                     ),
                 )
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Contact Number *",
                     value = state.formData.contactNumber,
                     onValueChange = { viewModel.trySendAction(AddBillerAction.UpdateContactNumber(it)) },
@@ -134,7 +134,7 @@ fun AddBillerScreen(
                     ),
                 )
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Email (Optional)",
                     value = state.formData.email,
                     onValueChange = { viewModel.trySendAction(AddBillerAction.UpdateEmail(it)) },
@@ -166,7 +166,7 @@ fun AddBillerScreen(
                     }
                 }
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Address (Optional)",
                     value = state.formData.address,
                     onValueChange = { viewModel.trySendAction(AddBillerAction.UpdateAddress(it)) },
@@ -183,12 +183,12 @@ fun AddBillerScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                MifosOutlinedButton(
+                ForkOutlinedButton(
                     text = { Text("Cancel") },
                     onClick = onNavigateBack,
                     modifier = Modifier.weight(1f),
                 )
-                MifosButton(
+                ForkButton(
                     text = { Text("Save Biller") },
                     onClick = { viewModel.trySendAction(AddBillerAction.SaveBiller) },
                     modifier = Modifier.weight(1f),
@@ -199,13 +199,13 @@ fun AddBillerScreen(
     }
 
     if (state.isLoading) {
-        MifosLoadingDialog(
+        ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
     }
 
     state.error?.let { error ->
-        MifosBasicDialog(
+        ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = "Error",
                 message = error,

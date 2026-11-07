@@ -9,7 +9,7 @@ Screens: `KYCDescriptionScreen`, `KYCLevel1Screen`, `KYCLevel2Screen`, `KYCLevel
 
 ViewModels: `KYCDescriptionViewModel`, `KYCLevel1ViewModel`, `KYCLevel2ViewModel`, `KYCLevel3ViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `KYCDescriptionViewModel`, `KYCLevel1ViewModel`, `KYCLevel2ViewModel
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/kyc sha=46d0223c85d457837c9f97330b6d50ee8580e0f5 -->
+<!-- api-docs:begin module=feature/kyc sha=fc6b2e71c626632d4fc929df7caf67b4b9ae840b -->
 ## API reference
 
-_Generated from `feature/kyc` at tree `46d0223c85d4` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/kyc` at tree `fc6b2e71c626` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

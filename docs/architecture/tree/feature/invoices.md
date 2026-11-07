@@ -22,10 +22,10 @@ ViewModels: `InvoiceDetailViewModel`, `InvoicesViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/invoices sha=46135e63699e5e9d65a65686611b4c3f9b99e9aa -->
+<!-- api-docs:begin module=feature/invoices sha=ee4c799da7becebbbe0ae7859d0b8269e55120c8 -->
 ## API reference
 
-_Generated from `feature/invoices` at tree `46135e63699e` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/invoices` at tree `ee4c799da7be` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -79,7 +79,7 @@ User actions on the invoices screen.
     onAction: (InvoiceAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
 ```
 

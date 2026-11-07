@@ -41,9 +41,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.KptTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.transfer.intrabank.confirm.TransferResult
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_payment_success
@@ -73,10 +73,10 @@ internal fun TransferSuccessScreen(
         navigateBack()
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         bottomBar = {
-            MifosButton(
+            ForkButton(
                 onClick = navigateBack,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -107,7 +107,7 @@ internal fun TransferSuccessScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Check,
+                        imageVector = ForkIcons.Check,
                         contentDescription = stringResource(Res.string.feature_make_transfer_success),
                         modifier = Modifier.size(56.dp),
                         tint = KptTheme.colorScheme.primary,
@@ -184,7 +184,7 @@ internal fun TransferSuccessScreen(
                                     modifier = Modifier.size(24.dp),
                                 ) {
                                     Icon(
-                                        imageVector = MifosIcons.Copy,
+                                        imageVector = ForkIcons.Copy,
                                         contentDescription = stringResource(
                                             Res.string.feature_transfer_copy,
                                         ),

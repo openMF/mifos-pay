@@ -18,10 +18,10 @@ Screens: `FinanceScreen`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/finance sha=bf4890395da49bed84081d46e488a8d711dbbcf1 -->
+<!-- api-docs:begin module=feature/finance sha=36fad9d662cbb58cd74f6596ced2b4d71a1ff084 -->
 ## API reference
 
-_Generated from `feature/finance` at tree `bf4890395da4` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/finance` at tree `36fad9d662cb` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

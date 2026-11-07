@@ -49,11 +49,11 @@ fun KptTheme(
         else -> if (darkTheme) darkScheme else lightScheme
     }.toKptColorScheme()
 
-    val mifosTypography = Typography().toKptTypography(fontFamily)
+    val forkTypography = Typography().toKptTypography(fontFamily)
 
     val themeProvider = KptThemeProviderImpl(
         colors = colorScheme,
-        typography = mifosTypography,
+        typography = forkTypography,
     )
 
     val screenStateDefaults = appScreenStateDefaults()

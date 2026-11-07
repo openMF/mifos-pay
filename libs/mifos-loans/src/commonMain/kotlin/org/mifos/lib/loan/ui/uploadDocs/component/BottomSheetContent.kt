@@ -51,21 +51,21 @@ import io.github.vinceglb.filekit.dialogs.compose.util.encodeToByteArray
 import kotlinx.coroutines.launch
 import kpt.core.base.common.toBase64DataUri
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.attach
-import mifos_pay.libs.mifos_loans.generated.resources.capture
-import mifos_pay.libs.mifos_loans.generated.resources.reset
-import mifos_pay.libs.mifos_loans.generated.resources.save_and_submit
-import mifos_pay.libs.mifos_loans.generated.resources.sign
-import mifos_pay.libs.mifos_loans.generated.resources.sign_here
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.mifos.lib.loan.component.SignatureUploadType
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.attach
+import org.mifos.lib.loan.generated.resources.capture
+import org.mifos.lib.loan.generated.resources.reset
+import org.mifos.lib.loan.generated.resources.save_and_submit
+import org.mifos.lib.loan.generated.resources.sign
+import org.mifos.lib.loan.generated.resources.sign_here
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsAction
 /**
  * Orchestrates the bottom sheet UI, transitioning between the document upload method selection
@@ -108,7 +108,7 @@ internal fun BottomSheetContent(
                 Row {
                     BottomSheetIconContainer(
                         text = Res.string.sign,
-                        icon = MifosIcons.Edit,
+                        icon = ForkIcons.Edit,
                         onClick = {
                             onAction(UploadDocsAction.UploadSignature(SignatureUploadType.SIGN))
                         },
@@ -116,7 +116,7 @@ internal fun BottomSheetContent(
 
                     BottomSheetIconContainer(
                         text = Res.string.capture,
-                        icon = MifosIcons.Camera,
+                        icon = ForkIcons.Camera,
                         onClick = {
                             onAction(UploadDocsAction.UploadSignature(SignatureUploadType.CAPTURE))
                         },
@@ -124,7 +124,7 @@ internal fun BottomSheetContent(
 
                     BottomSheetIconContainer(
                         text = Res.string.attach,
-                        icon = MifosIcons.PhotoLibrary,
+                        icon = ForkIcons.PhotoLibrary,
                         onClick = {
                             onAction(UploadDocsAction.UploadSignature(SignatureUploadType.GALLERY))
                         },
@@ -191,10 +191,10 @@ private fun SignatureContent(
     modifier: Modifier = Modifier,
     onAction: (UploadDocsAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.sign_here),
                 backPress = {
                     onAction(UploadDocsAction.DismissDialog)
@@ -222,7 +222,7 @@ private fun SignatureContent(
                 ),
                 modifier = Modifier.weight(1f),
             ) {
-                MifosCard(
+                ForkCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .border(
@@ -259,7 +259,7 @@ private fun SignatureContent(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
-                    MifosButton(
+                    ForkButton(
                         modifier = Modifier.weight(0.4f),
                         shape = KptTheme.shapes.medium,
                         onClick = signatureState::clear,
@@ -271,7 +271,7 @@ private fun SignatureContent(
                     }
 
                     val scope = rememberCoroutineScope()
-                    MifosButton(
+                    ForkButton(
                         modifier = Modifier.weight(0.4f),
                         shape = KptTheme.shapes.medium,
                         onClick = {

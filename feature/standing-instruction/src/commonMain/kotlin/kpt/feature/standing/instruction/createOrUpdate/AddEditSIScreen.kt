@@ -53,14 +53,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.account.Account
 import kpt.core.model.utils.Locale
 import kpt.core.model.utils.filterLocales
@@ -69,9 +69,9 @@ import kpt.core.ui.DropdownBox
 import kpt.core.ui.DropdownBoxItem
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.ExposedDropdownBox
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.standing.instruction.generated.resources.Res
 import kpt.feature.standing.instruction.generated.resources.feature_standing_instruction_error_oops
 import org.jetbrains.compose.resources.getString
@@ -127,14 +127,14 @@ private fun AddEditSIDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is AddEditSIState.DialogState.Error -> MifosBasicDialog(
+        is AddEditSIState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is AddEditSIState.DialogState.Loading -> MifosLoadingDialog(
+        is AddEditSIState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -153,7 +153,7 @@ internal fun AddEditSIScreen(
     modifier: Modifier = Modifier,
     onAction: (AddEditSIAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = state.title,
         modifier = modifier,
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -168,7 +168,7 @@ internal fun AddEditSIScreen(
             contentAlignment = Alignment.Center,
         ) {
             when (state.viewState) {
-                is AddEditSIState.ViewState.Loading -> MifosProgressIndicator()
+                is AddEditSIState.ViewState.Loading -> ForkProgressIndicator()
 
                 is AddEditSIState.ViewState.Error -> {
                     EmptyContentScreen(
@@ -224,7 +224,7 @@ private fun AddEditSIScreenContent(
                             Text(text = "Currently Fixed Instruction & Periodic Recurrence are supported.")
                         },
                         leadingContent = {
-                            AvatarBox(icon = MifosIcons.Info)
+                            AvatarBox(icon = ForkIcons.Info)
                         },
                         colors = ListItemDefaults.colors(
                             containerColor = Color.Transparent,
@@ -236,7 +236,7 @@ private fun AddEditSIScreenContent(
             item(key = "FromClient&FromOffice") {
                 RowBlock {
                     state.template.fromClient?.let {
-                        MifosTextField(
+                        ForkTextField(
                             value = it.displayName,
                             label = "From Client",
                             onValueChange = {},
@@ -246,7 +246,7 @@ private fun AddEditSIScreenContent(
                         )
                     }
 
-                    MifosTextField(
+                    ForkTextField(
                         value = state.fromOfficeName ?: "",
                         label = "From Office",
                         onValueChange = {},
@@ -259,7 +259,7 @@ private fun AddEditSIScreenContent(
 
             item(key = "FromAccountType") {
                 state.fromAccountType?.let {
-                    MifosTextField(
+                    ForkTextField(
                         value = it,
                         label = "From Account Type",
                         onValueChange = {},
@@ -292,7 +292,7 @@ private fun AddEditSIScreenContent(
                         )
 
                         if (state.template.fromAccountOptions?.let { index < it.size - 1 } == true) {
-                            MifosDivider()
+                            ForkDivider()
                         }
                     }
                 }
@@ -300,7 +300,7 @@ private fun AddEditSIScreenContent(
 
             item(key = "ToOffice&ToAccountType") {
                 RowBlock {
-                    MifosTextField(
+                    ForkTextField(
                         value = state.toOfficeName ?: "",
                         label = "To Office",
                         onValueChange = {},
@@ -310,7 +310,7 @@ private fun AddEditSIScreenContent(
                     )
 
                     state.toAccountType?.let {
-                        MifosTextField(
+                        ForkTextField(
                             value = it,
                             label = "To Account Type",
                             onValueChange = {},
@@ -344,7 +344,7 @@ private fun AddEditSIScreenContent(
                         )
 
                         if (index < state.toClientOptions.size - 1) {
-                            MifosDivider()
+                            ForkDivider()
                         }
                     }
 
@@ -385,7 +385,7 @@ private fun AddEditSIScreenContent(
                         )
 
                         if (index < toAccounts.size - 1) {
-                            MifosDivider()
+                            ForkDivider()
                         }
                     }
 
@@ -401,7 +401,7 @@ private fun AddEditSIScreenContent(
             }
 
             item(key = "Name") {
-                MifosTextField(
+                ForkTextField(
                     label = "Name",
                     value = state.payload.name,
                     onValueChange = {
@@ -411,7 +411,7 @@ private fun AddEditSIScreenContent(
             }
 
             item(key = "Amount") {
-                MifosTextField(
+                ForkTextField(
                     label = "Amount",
                     value = state.payload.amount,
                     keyboardOptions = KeyboardOptions(
@@ -445,7 +445,7 @@ private fun AddEditSIScreenContent(
                         )
 
                         if (state.template.transferTypeOptions?.let { index < it.size - 1 } == true) {
-                            MifosDivider()
+                            ForkDivider()
                         }
                     }
                 }
@@ -473,7 +473,7 @@ private fun AddEditSIScreenContent(
                         )
 
                         if (state.template.instructionTypeOptions?.let { index < it.size - 1 } == true) {
-                            MifosDivider()
+                            ForkDivider()
                         }
                     }
                 }
@@ -502,7 +502,7 @@ private fun AddEditSIScreenContent(
                     )
 
                     if (state.template.priorityOptions?.let { index < it.size - 1 } == true) {
-                        MifosDivider()
+                        ForkDivider()
                     }
                 }
             }
@@ -530,7 +530,7 @@ private fun AddEditSIScreenContent(
                     )
 
                     if (state.template.statusOptions?.let { index < it.size - 1 } == true) {
-                        MifosDivider()
+                        ForkDivider()
                     }
                 }
             }
@@ -559,7 +559,7 @@ private fun AddEditSIScreenContent(
                         )
 
                         if (state.template.recurrenceTypeOptions?.let { index < it.size - 1 } == true) {
-                            MifosDivider()
+                            ForkDivider()
                         }
                     }
                 }
@@ -588,14 +588,14 @@ private fun AddEditSIScreenContent(
                             )
 
                             if (state.template.recurrenceFrequencyOptions?.let { index < it.size - 1 } == true) {
-                                MifosDivider()
+                                ForkDivider()
                             }
                         }
                     }
                 }
 
                 item(key = "Recurrence Interval") {
-                    MifosTextField(
+                    ForkTextField(
                         label = "Recurrence Interval",
                         value = state.payload.recurrenceInterval,
                         keyboardOptions = KeyboardOptions(
@@ -641,7 +641,7 @@ private fun AddEditSIScreenContent(
                     )
 
                     if (index != filteredLocalList.size - 1) {
-                        MifosDivider()
+                        ForkDivider()
                     }
                 }
             }
@@ -694,7 +694,7 @@ private fun AddEditSIScreenContent(
                 )
             }
 
-            MifosTextField(
+            ForkTextField(
                 label = "Valid From",
                 value = state.payload.validFrom,
                 readOnly = true,
@@ -706,7 +706,7 @@ private fun AddEditSIScreenContent(
                         },
                     ) {
                         Icon(
-                            imageVector = MifosIcons.CalenderMonth,
+                            imageVector = ForkIcons.CalenderMonth,
                             contentDescription = "Choose Date",
                         )
                     }
@@ -762,7 +762,7 @@ private fun AddEditSIScreenContent(
                 )
             }
 
-            MifosTextField(
+            ForkTextField(
                 label = "Valid Until",
                 value = state.payload.validTill,
                 readOnly = true,
@@ -774,7 +774,7 @@ private fun AddEditSIScreenContent(
                         },
                     ) {
                         Icon(
-                            imageVector = MifosIcons.CalenderMonth,
+                            imageVector = ForkIcons.CalenderMonth,
                             contentDescription = "Choose Date",
                         )
                     }
@@ -827,7 +827,7 @@ private fun AddEditSIScreenContent(
                     )
                 }
 
-                MifosTextField(
+                ForkTextField(
                     label = "Recurrence On Month Day",
                     value = state.payload.recurrenceOnMonthDay,
                     readOnly = true,
@@ -839,7 +839,7 @@ private fun AddEditSIScreenContent(
                             },
                         ) {
                             Icon(
-                                imageVector = MifosIcons.CalenderMonth,
+                                imageVector = ForkIcons.CalenderMonth,
                                 contentDescription = "Choose Date",
                             )
                         }
@@ -850,7 +850,7 @@ private fun AddEditSIScreenContent(
         }
 
         item(key = "SubmitBtn") {
-            MifosButton(
+            ForkButton(
                 onClick = {
                     onAction(AddEditSIAction.SubmitClicked)
                 },

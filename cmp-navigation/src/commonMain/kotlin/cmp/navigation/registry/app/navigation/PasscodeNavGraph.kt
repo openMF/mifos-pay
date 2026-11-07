@@ -15,7 +15,7 @@ import androidx.navigation.navOptions
 
 // internal fun NavGraphBuilder.passcodeNavGraph(navController: NavController) {
 //    navigation(
-//        route = MifosNavGraph.PASSCODE_GRAPH,
+//        route = ForkNavGraph.PASSCODE_GRAPH,
 //        startDestination = PASSCODE_SCREEN,
 //    ) {
 //        passcodeRoute(
@@ -55,5 +55,5 @@ fun NavController.navigateToMainGraph() {
         restoreState = false
     }
 
-    navigate(MifosNavGraph.MAIN_GRAPH, options)
+    navigate(ForkNavGraph.MAIN_GRAPH, options)
 }

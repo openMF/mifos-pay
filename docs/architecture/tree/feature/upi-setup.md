@@ -20,10 +20,10 @@ Screens: `DebitCardScreen`, `OtpScreen`, `SetUpUPiPinScreen`, `UpiPinScreen`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/upi-setup sha=7652d08dd7170714f7883bd19d3600dee0a6b8d0 -->
+<!-- api-docs:begin module=feature/upi-setup sha=386a328cbf183cf8faf3133efb004c7baab077d2 -->
 ## API reference
 
-_Generated from `feature/upi-setup` at tree `7652d08dd717` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/upi-setup` at tree `386a328cbf18` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

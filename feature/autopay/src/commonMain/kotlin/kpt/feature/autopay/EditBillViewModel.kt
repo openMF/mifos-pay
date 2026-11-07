@@ -20,7 +20,7 @@ import kpt.core.base.store.submit.SubmitState
 import kpt.core.base.store.submit.submitHandler
 import kpt.core.common.DateHelper
 import kpt.core.common.getSerialized
-import kpt.core.data.util.BillValidator
+import kpt.core.data.fork.util.BillValidator
 import kpt.core.datastore.BillRepository
 import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillFormData
@@ -28,7 +28,7 @@ import kpt.core.model.autopay.BillValidationResult
 import kpt.core.model.autopay.Biller
 import kpt.core.model.autopay.NextPaymentDate
 import kpt.core.model.autopay.RecurrencePattern
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

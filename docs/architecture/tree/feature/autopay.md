@@ -9,7 +9,7 @@ Screens: `AddBillScreen`, `AddBillerScreen`, `AutoPayHistoryScreen`, `AutoPaySch
 
 ViewModels: `AddBillViewModel`, `AddBillerViewModel`, `AutoPayHistoryViewModel`, `AutoPayScheduleDetailsViewModel`, `AutoPayScheduleManagementViewModel`, `AutoPaySettingsViewModel`, `AutoPayViewModel`, `BillListViewModel`, `BillerListViewModel`, `EditBillViewModel`, `EditBillerViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `AddBillViewModel`, `AddBillerViewModel`, `AutoPayHistoryViewModel`,
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/autopay sha=4fde3bcae7d7823e0e7db19a20a37b7de0ee171e -->
+<!-- api-docs:begin module=feature/autopay sha=c40615fba6dad20f03c1aad48fff8a85855895f9 -->
 ## API reference
 
-_Generated from `feature/autopay` at tree `4fde3bcae7d7` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/autopay` at tree `c40615fba6da` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -112,7 +112,7 @@ User actions handled by the add-bill view model.
         viewModel.trySendAction(AddBillAction.RefreshBillers)
     }
 
-    MifosScaffold(
+    ForkScaffold(
         topBar = {
 ```
 
@@ -381,7 +381,7 @@ View model for the AutoPay schedule details screen; loads a schedule and handles
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    MifosScaffold(
+    ForkScaffold(
 ```
 
 </details>
@@ -466,7 +466,7 @@ View model for AutoPay schedule management; loads bills with AutoPay and handles
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val pullRefreshState = rememberMifosPullToRefreshState(
+    val pullRefreshState = rememberForkPullToRefreshState(
 ```
 
 </details>
@@ -687,7 +687,7 @@ View model for the AutoPay dashboard; loads schedules and upcoming payments and 
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val pullRefreshState = rememberMifosPullToRefreshState(
+    val pullRefreshState = rememberForkPullToRefreshState(
 ```
 
 </details>
@@ -819,7 +819,7 @@ User actions handled by the AutoPay dashboard view model.
         onRefresh = { viewModel.trySendAction(AutoPayAction.RefreshDashboard) },
     )
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
 ```
 
@@ -862,7 +862,7 @@ View model for the bill list; loads bills and handles deletion.
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val pullRefreshState = rememberMifosPullToRefreshState(
+    val pullRefreshState = rememberForkPullToRefreshState(
 ```
 
 </details>
@@ -905,7 +905,7 @@ User actions handled by the bill list view model.
     )
 
     Box(modifier = modifier.fillMaxSize()) {
-        MifosScaffold(
+        ForkScaffold(
 ```
 
 </details>

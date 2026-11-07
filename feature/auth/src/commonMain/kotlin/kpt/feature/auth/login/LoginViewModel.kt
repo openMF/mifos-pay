@@ -21,9 +21,9 @@ import kpt.core.base.store.submit.submitHandler
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.domain.LoginUseCase
-import kpt.core.model.user.UserInfo
-import kpt.core.network.config.InstanceConfigManager
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.model.fork.user.UserInfo
+import kpt.core.network.main.config.InstanceConfigManager
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.auth.generated.resources.Res
 import kpt.feature.auth.generated.resources.feature_auth_error_login_failed
 import org.jetbrains.compose.resources.StringResource
@@ -60,7 +60,7 @@ class LoginViewModel(
 
                     is SubmitState.Submitted -> {
                         mutableStateFlow.update { it.copy(dialogState = null) }
-                        sendEvent(LoginEvent.NavigateToMifosPasscodeScreen)
+                        sendEvent(LoginEvent.NavigateToPasscode)
                         submitLogin.reset()
                     }
 
@@ -197,7 +197,7 @@ sealed class LoginEvent {
     data object NavigateToSignup : LoginEvent()
 
     /** Navigate to the passcode screen after a successful login. */
-    data object NavigateToMifosPasscodeScreen : LoginEvent()
+    data object NavigateToPasscode : LoginEvent()
 
     /**
      * Show a toast.

@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosCard
+import kpt.core.designsystem.fork.component.ForkCard
 import kpt.core.designsystem.theme.styleMedium16sp
 import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
 import kpt.feature.merchants.generated.resources.Res
@@ -40,7 +40,7 @@ internal fun MerchantsItem(
     onMerchantLongPressed: (String?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier.combinedClickable(
             onClick = onMerchantClicked,
             onLongClick = {

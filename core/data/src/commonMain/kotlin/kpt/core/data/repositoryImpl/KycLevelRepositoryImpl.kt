@@ -13,15 +13,18 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.KycLevelRepository
 import kpt.core.model.kyc.KYCLevel1Details
 import kpt.core.network.FineractApiManager
 /** Default [KycLevelRepository] backed by the KYC level 1 API. */
+@RepositoryBinding(binds = KycLevelRepository::class)
 class KycLevelRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : KycLevelRepository {
     override fun fetchKYCLevel1Details(
         clientId: Long,

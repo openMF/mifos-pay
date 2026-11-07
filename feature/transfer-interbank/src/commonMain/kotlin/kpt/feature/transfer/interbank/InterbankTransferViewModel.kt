@@ -38,10 +38,10 @@ import kpt.core.model.interbank.TransactionType
 import kpt.core.model.pocket.AccountStatus
 import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.PocketAccount
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.core.ui.generated.resources.core_ui_error_msg_generic
 import kpt.core.ui.generated.resources.core_ui_pocket_add_failed
 import kpt.core.ui.generated.resources.core_ui_pocket_added_successfully
-import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.transfer.interbank.generated.resources.Res
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_amount_greater_than_zero
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_error_enter_amount

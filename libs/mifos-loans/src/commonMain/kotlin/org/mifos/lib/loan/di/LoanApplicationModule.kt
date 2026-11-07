@@ -9,8 +9,8 @@
  */
 package org.mifos.lib.loan.di
 
-import kpt.core.common.MifosDispatchers
-import kpt.core.data.util.MifosNetworkMonitorQualifier
+import kpt.core.common.ForkDispatchers
+import kpt.core.data.fork.util.ForkNetworkMonitorQualifier
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.qualifier.named
@@ -43,7 +43,7 @@ val LoanApplicationModule = module {
     // activation — swap any of the four entries below for a distinct adapter once one exists.
     single<DummyLoanProvider> { DummyLoanProvider() }
     single<FineractLoanProvider> {
-        FineractLoanProvider(get(), get(named(MifosDispatchers.IO.name)))
+        FineractLoanProvider(get(), get(named(ForkDispatchers.IO.name)))
     }
     single<LoanProviderRegistry> {
         val dummy = get<DummyLoanProvider>()
@@ -70,7 +70,7 @@ val LoanApplicationModule = module {
             loansRepository = get(),
             selfServiceRepository = get(),
             userPreferencesRepository = get(),
-            networkMonitor = get(MifosNetworkMonitorQualifier),
+            networkMonitor = get(ForkNetworkMonitorQualifier),
         )
     }
     viewModelOf(::UploadDocsViewModel)

@@ -79,7 +79,7 @@ fun NavController.navigateToTransferConfirm(
  * `INTRA_BANK_TRANSFER_VERIFICATION_KEY` round-trip channel works.
  *
  * @param navigateForPasscodeVerification `(verificationKey) -> Unit` —
- *        bind to `navController::navigateToInternalMifosPasscodeScreen`.
+ *        bind to `navController::navigateToInternalPasscodeScreen`.
  *        The screen forwards `INTRA_BANK_TRANSFER_VERIFICATION_KEY` so the
  *        passcode-screen success/failure callbacks write the boolean back to
  *        this destination's saved-state-handle.

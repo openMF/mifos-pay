@@ -32,10 +32,10 @@ import kpt.core.data.repository.ClientRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.domain.LoginUseCase
 import kpt.core.model.client.Client
+import kpt.core.model.fork.user.UserInfo
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
-import kpt.core.model.user.UserInfo
-import kpt.core.network.config.InstanceConfigManager
+import kpt.core.network.main.config.InstanceConfigManager
 import kpt.feature.auth.generated.resources.Res
 import kpt.feature.auth.generated.resources.feature_auth_error_login_failed
 import kotlin.test.AfterTest
@@ -232,8 +232,8 @@ class LoginViewModelTest {
         }
 
         viewModel.eventFlow.test {
-            // Expect NavigateToMifosPasscodeScreen after successful login
-            assertTrue(awaitItem() is LoginEvent.NavigateToMifosPasscodeScreen)
+            // Expect NavigateToPasscode after successful login
+            assertTrue(awaitItem() is LoginEvent.NavigateToPasscode)
         }
     }
 

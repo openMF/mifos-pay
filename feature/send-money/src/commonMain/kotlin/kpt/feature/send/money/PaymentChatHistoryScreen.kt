@@ -53,8 +53,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.AvatarBox
 import org.koin.compose.viewmodel.koinViewModel
 // TODO make the topbar back button consistent with other screens
@@ -69,7 +69,7 @@ fun PaymentChatHistoryScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             UserProfileTopBar(
@@ -125,7 +125,7 @@ private fun UserProfileTopBar(
             modifier = Modifier.size(40.dp),
         ) {
             Icon(
-                imageVector = MifosIcons.Back,
+                imageVector = ForkIcons.Back,
                 contentDescription = "Back",
                 tint = KptTheme.colorScheme.onSurface,
                 modifier = Modifier.size(24.dp),
@@ -292,7 +292,7 @@ private fun PaymentCard(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     Icon(
-                        imageVector = MifosIcons.CheckCircle,
+                        imageVector = ForkIcons.CheckCircle,
                         contentDescription = "Paid",
                         tint = Color(0xFF4CAF50),
                         modifier = Modifier.size(16.dp),
@@ -306,7 +306,7 @@ private fun PaymentCard(
                 }
 
                 Icon(
-                    imageVector = MifosIcons.ChevronRight,
+                    imageVector = ForkIcons.ChevronRight,
                     contentDescription = "View Details",
                     tint = KptTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(20.dp),
@@ -422,7 +422,7 @@ private fun MessageInput(
                 ),
         ) {
             Icon(
-                imageVector = MifosIcons.Send,
+                imageVector = ForkIcons.Send,
                 contentDescription = "Send Message",
                 tint = KptTheme.colorScheme.onPrimary,
                 modifier = Modifier.size(20.dp),

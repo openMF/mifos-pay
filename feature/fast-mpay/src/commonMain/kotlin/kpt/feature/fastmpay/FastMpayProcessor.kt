@@ -13,9 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
 import kpt.core.common.ScreenState
+import kpt.core.data.fork.util.toForkScreenStateFlow
 import kpt.core.data.repository.OfficeRepository
 import kpt.core.data.repository.SelfServiceRepository
-import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.utils.QrCodeData

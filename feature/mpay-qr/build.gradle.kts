@@ -24,7 +24,7 @@ kotlin {
             implementation(libs.qrose)
 
             // Fork addition: MpayQrScreen/MpayQrViewModel read kpt.core.common
-            // (MifosDispatchers/getSerialized/ScreenState). kpt.core.model.* /
+            // (ForkDispatchers/getSerialized/ScreenState). kpt.core.model.* /
             // kpt.core.datastore.UserPreferencesRepository come transitively via
             // core/data's api(core.model)/api(core.datastore) re-export.
             implementation(projects.core.common)

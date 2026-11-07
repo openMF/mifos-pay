@@ -35,9 +35,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.ui.AvatarBox
 import kpt.feature.payments.generated.resources.Res
 import kpt.feature.payments.generated.resources.feature_payments_inter_bank_transfer_description
@@ -91,7 +91,7 @@ fun SelectTransferTypeScreen(
         TransferTypeCard(
             title = stringResource(Res.string.feature_payments_intra_bank_transfer_title),
             description = stringResource(Res.string.feature_payments_intra_bank_transfer_description),
-            icon = MifosIcons.Transfer,
+            icon = ForkIcons.Transfer,
             onClick = onIntraBankTransferClick,
         )
 
@@ -99,7 +99,7 @@ fun SelectTransferTypeScreen(
         TransferTypeCard(
             title = stringResource(Res.string.feature_payments_inter_bank_transfer_title),
             description = stringResource(Res.string.feature_payments_inter_bank_transfer_description),
-            icon = MifosIcons.Bank,
+            icon = ForkIcons.Bank,
             onClick = onInterBankTransferClick,
         )
 
@@ -116,7 +116,7 @@ private fun TransferTypeCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
@@ -175,7 +175,7 @@ private fun TransferTypeCard(
 
             // Arrow Icon
             Icon(
-                imageVector = MifosIcons.ArrowRight,
+                imageVector = ForkIcons.ArrowRight,
                 contentDescription = "Navigate to $title",
                 modifier = Modifier
                     .padding(end = KptTheme.spacing.sm)
@@ -190,7 +190,7 @@ private fun TransferTypeCard(
 @Preview
 @Composable
 fun SelectTransferTypeScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         SelectTransferTypeScreen(
             onIntraBankTransferClick = {},
             onInterBankTransferClick = {},

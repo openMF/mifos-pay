@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.generated.resources.Res
 import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_inter_bank_unavailable
 import org.jetbrains.compose.resources.stringResource
@@ -61,7 +61,7 @@ internal fun InterBankPlaceholder(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
-                imageVector = MifosIcons.Info,
+                imageVector = ForkIcons.Info,
                 contentDescription = null,
                 modifier = Modifier.size(48.dp),
                 tint = KptTheme.colorScheme.onSurfaceVariant,

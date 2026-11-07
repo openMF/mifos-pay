@@ -855,7 +855,7 @@ enum class SlideDirection
 ```
 Direction a `KptSlideTransition` enters from.
 
-<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/utils/Transition.kt:274</code></summary>
+<details><summary>Used in the template — <code>core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/Transition.kt:274</code></summary>
 
 ```kotlin
         val slideUp: NonNullEnterTransitionProvider = {
@@ -1001,7 +1001,7 @@ Mixed into components that respond to a tap. `interactionSource` is exposed so a
 
 ```kotlin
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier.combinedClickable(
             onClick = onMerchantClicked,
             onLongClick = {
@@ -1120,7 +1120,7 @@ interface Animatable
 ```
 Mixed into components with a tunable transition. See `theme/Motion.kt` for the shared durations; overriding per component is what makes an app's motion feel inconsistent.
 
-<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/component/LoadingWheel.kt:62</code></summary>
+<details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/fork/component/LoadingWheel.kt:62</code></summary>
 
 ```kotlin
     // Specifies the float animation for slowly drawing out the lines on entering
@@ -1215,11 +1215,11 @@ The Material 3 type scale — display through label, each in three sizes.
 ```kotlin
     }.toKptColorScheme()
 
-    val mifosTypography = Typography().toKptTypography(fontFamily)
+    val forkTypography = Typography().toKptTypography(fontFamily)
 
     val themeProvider = KptThemeProviderImpl(
         colors = colorScheme,
-        typography = mifosTypography,
+        typography = forkTypography,
 ```
 
 </details>
@@ -1847,11 +1847,11 @@ Default `KptThemeProvider`, composing the five default scales into one design la
 <details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/KptTheme.kt:54</code></summary>
 
 ```kotlin
-    val mifosTypography = Typography().toKptTypography(fontFamily)
+    val forkTypography = Typography().toKptTypography(fontFamily)
 
     val themeProvider = KptThemeProviderImpl(
         colors = colorScheme,
-        typography = mifosTypography,
+        typography = forkTypography,
     )
 ```
 

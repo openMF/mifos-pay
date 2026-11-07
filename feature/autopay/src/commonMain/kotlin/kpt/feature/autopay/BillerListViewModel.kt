@@ -21,7 +21,7 @@ import kpt.core.base.store.submit.submitHandler
 import kpt.core.common.getSerialized
 import kpt.core.datastore.BillerRepository
 import kpt.core.model.autopay.Biller
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** View model for the biller list; loads, searches and deletes billers. */
 class BillerListViewModel(
     savedStateHandle: SavedStateHandle,

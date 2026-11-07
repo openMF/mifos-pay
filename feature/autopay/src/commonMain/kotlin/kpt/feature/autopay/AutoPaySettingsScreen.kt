@@ -35,10 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 /** Screen for editing AutoPay preferences: global, notification and security settings and rules. */
 @Composable
@@ -60,7 +60,7 @@ fun AutoPayPreferencesScreen(
         }
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = "AutoPay Settings",
         backPress = onNavigateBack,
@@ -114,7 +114,7 @@ fun AutoPayPreferencesScreen(
                 if (state.hasUnsavedChanges) {
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    MifosButton(
+                    ForkButton(
                         onClick = { viewModel.trySendAction(AutoPayPreferencesAction.SaveSettings) },
                         enabled = !state.isSaving,
                         modifier = Modifier.fillMaxWidth(),
@@ -147,7 +147,7 @@ private fun GeneralSettingsSection(
         SettingRow(
             title = "AutoPay Enabled",
             description = "Enable or disable AutoPay functionality globally",
-            icon = MifosIcons.Power,
+            icon = ForkIcons.Power,
             checked = settings.isAutoPayEnabled,
             onCheckedChange = onToggleAutoPay,
         )
@@ -167,7 +167,7 @@ private fun NotificationSettingsSection(
         SettingRow(
             title = "Payment Confirmations",
             description = "Receive notifications when payments are processed",
-            icon = MifosIcons.OutlinedNotifications,
+            icon = ForkIcons.OutlinedNotifications,
             checked = settings.paymentConfirmations,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(paymentConfirmations = enabled))
@@ -177,7 +177,7 @@ private fun NotificationSettingsSection(
         SettingRow(
             title = "Failed Payment Alerts",
             description = "Get notified when payments fail",
-            icon = MifosIcons.Warning,
+            icon = ForkIcons.Warning,
             checked = settings.failedPaymentAlerts,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(failedPaymentAlerts = enabled))
@@ -187,7 +187,7 @@ private fun NotificationSettingsSection(
         SettingRow(
             title = "Schedule Reminders",
             description = "Receive reminders before scheduled payments",
-            icon = MifosIcons.Schedule,
+            icon = ForkIcons.Schedule,
             checked = settings.scheduleReminders,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(scheduleReminders = enabled))
@@ -197,7 +197,7 @@ private fun NotificationSettingsSection(
         SettingRow(
             title = "Email Notifications",
             description = "Receive notifications via email",
-            icon = MifosIcons.Email,
+            icon = ForkIcons.Email,
             checked = settings.emailNotifications,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(emailNotifications = enabled))
@@ -207,7 +207,7 @@ private fun NotificationSettingsSection(
         SettingRow(
             title = "Push Notifications",
             description = "Receive push notifications on your device",
-            icon = MifosIcons.OutlinedNotifications,
+            icon = ForkIcons.OutlinedNotifications,
             checked = settings.pushNotifications,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(pushNotifications = enabled))
@@ -229,7 +229,7 @@ private fun SecuritySettingsSection(
         SettingRow(
             title = "Two-Factor Authentication",
             description = "Require 2FA for AutoPay changes",
-            icon = MifosIcons.Security,
+            icon = ForkIcons.Security,
             checked = settings.requireTwoFactorAuth,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(requireTwoFactorAuth = enabled))
@@ -239,7 +239,7 @@ private fun SecuritySettingsSection(
         SettingRow(
             title = "Large Payment Confirmation",
             description = "Require confirmation for payments above threshold",
-            icon = MifosIcons.AttachMoney,
+            icon = ForkIcons.AttachMoney,
             checked = settings.requireConfirmationForLargePayments,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(requireConfirmationForLargePayments = enabled))
@@ -249,7 +249,7 @@ private fun SecuritySettingsSection(
         SettingRow(
             title = "Multiple Payments Per Day",
             description = "Allow multiple AutoPay transactions per day",
-            icon = MifosIcons.Repeat,
+            icon = ForkIcons.Repeat,
             checked = settings.allowMultiplePaymentsPerDay,
             onCheckedChange = { enabled ->
                 onSettingsChanged(settings.copy(allowMultiplePaymentsPerDay = enabled))
@@ -271,7 +271,7 @@ private fun AutoPayRulesSection(
         SettingRow(
             title = "Auto-Approve Payments",
             description = "Automatically approve payments without manual confirmation",
-            icon = MifosIcons.CheckCircle,
+            icon = ForkIcons.CheckCircle,
             checked = rules.autoApprovePayments,
             onCheckedChange = { enabled ->
                 onRulesChanged(rules.copy(autoApprovePayments = enabled))
@@ -281,7 +281,7 @@ private fun AutoPayRulesSection(
         SettingRow(
             title = "Skip Payments on Holidays",
             description = "Skip AutoPay on bank holidays",
-            icon = MifosIcons.CalenderMonth,
+            icon = ForkIcons.CalenderMonth,
             checked = rules.skipPaymentsOnHolidays,
             onCheckedChange = { enabled ->
                 onRulesChanged(rules.copy(skipPaymentsOnHolidays = enabled))
@@ -291,7 +291,7 @@ private fun AutoPayRulesSection(
         SettingRow(
             title = "Retry Failed Payments",
             description = "Automatically retry failed payment attempts",
-            icon = MifosIcons.Refresh,
+            icon = ForkIcons.Refresh,
             checked = rules.retryFailedPayments,
             onCheckedChange = { enabled ->
                 onRulesChanged(rules.copy(retryFailedPayments = enabled))

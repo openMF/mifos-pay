@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.database.wallet.bill.BillDao
 import kpt.core.database.wallet.bill.toDomain
 import kpt.core.database.wallet.bill.toEntity
@@ -71,9 +73,10 @@ import kotlin.time.ExperimentalTime
  * same commit to avoid a double-registration.
  */
 @OptIn(ExperimentalTime::class)
+@RepositoryBinding(binds = BillRepository::class)
 class BillOfflineRepositoryImpl(
     private val dao: BillDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : BillRepository {
 
     override fun getAllBills(): Flow<List<Bill>> {

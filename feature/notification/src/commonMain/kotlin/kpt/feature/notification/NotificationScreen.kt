@@ -30,8 +30,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.screen.ScreenContent
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.notification.Notification
 import kpt.core.ui.EmptyContentScreen
 import kpt.feature.notification.generated.resources.Res
@@ -65,7 +65,7 @@ internal fun NotificationScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = stringResource(Res.string.feature_notification_notifications),
         backPress = navigateBack,
         modifier = modifier,
@@ -142,7 +142,7 @@ private fun NotificationListItem(
 @Preview
 @Composable
 private fun NotificationScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         NotificationScreen(
             state = ScreenState.Content(sampleNotificationList),
             onRetry = {},

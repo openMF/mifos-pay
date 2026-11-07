@@ -43,9 +43,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.faq.generated.resources.Res
 import kpt.feature.faq.generated.resources.feature_faq
 import org.jetbrains.compose.resources.stringResource
@@ -80,7 +80,7 @@ private fun FaqScreen(
     onAction: (FaqAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.feature_faq),
         backPress = {
@@ -152,7 +152,7 @@ private fun FaqItemScreen(
                 )
 
                 Icon(
-                    imageVector = MifosIcons.KeyboardArrowDown,
+                    imageVector = ForkIcons.KeyboardArrowDown,
                     contentDescription = "drop down",
                     modifier = Modifier
                         .scale(1f, if (isExpanded) -1f else 1f),

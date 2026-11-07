@@ -35,7 +35,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.client.Client
 import kpt.feature.mpay.qr.generated.resources.Res
@@ -126,7 +126,7 @@ internal fun AccountSelectorCard(
                         horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Bank,
+                            imageVector = ForkIcons.Bank,
                             contentDescription = null,
                             modifier = Modifier.size(KptTheme.spacing.md - KptTheme.spacing.xs),
                             tint = KptTheme.colorScheme.onSurfaceVariant,
@@ -151,7 +151,7 @@ internal fun AccountSelectorCard(
             // Dropdown indicator when multiple accounts available
             if (hasMultipleAccounts) {
                 Icon(
-                    imageVector = MifosIcons.KeyboardArrowDown,
+                    imageVector = ForkIcons.KeyboardArrowDown,
                     contentDescription = "Select account",
                     modifier = Modifier.size(KptTheme.spacing.lg),
                     tint = KptTheme.colorScheme.onSurfaceVariant,
@@ -184,7 +184,7 @@ private fun PrimaryBadge(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
         ) {
             Icon(
-                imageVector = MifosIcons.Check,
+                imageVector = ForkIcons.Check,
                 contentDescription = null,
                 modifier = Modifier.size(KptTheme.spacing.md - KptTheme.spacing.xs),
                 tint = KptTheme.colorScheme.onPrimary,

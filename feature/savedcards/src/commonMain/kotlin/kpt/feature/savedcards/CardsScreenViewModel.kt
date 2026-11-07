@@ -27,7 +27,7 @@ import kpt.core.common.setSerialized
 import kpt.core.data.repository.SavedCardRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.savedcards.SavedCard
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.savedcards.createOrUpdate.CardAddEditType
 import kpt.feature.savedcards.generated.resources.Res
 import kpt.feature.savedcards.generated.resources.feature_savedcards_card_deleted_successfully

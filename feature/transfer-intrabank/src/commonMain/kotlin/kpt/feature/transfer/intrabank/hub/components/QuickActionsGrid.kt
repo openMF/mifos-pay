@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_add_payee
 import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_history
@@ -65,25 +65,25 @@ fun QuickActionsGrid(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             QuickActionItem(
-                icon = MifosIcons.Add,
+                icon = ForkIcons.Add,
                 label = stringResource(Res.string.feature_send_money_add_payee),
                 onClick = onAddPayeeClick,
                 modifier = Modifier.weight(1f),
             )
             QuickActionItem(
-                icon = MifosIcons.History,
+                icon = ForkIcons.History,
                 label = stringResource(Res.string.feature_send_money_history),
                 onClick = onHistoryClick,
                 modifier = Modifier.weight(1f),
             )
             QuickActionItem(
-                icon = MifosIcons.Scan,
+                icon = ForkIcons.Scan,
                 label = stringResource(Res.string.feature_send_money_scan_qr),
                 onClick = onScanQrClick,
                 modifier = Modifier.weight(1f),
             )
             QuickActionItem(
-                icon = MifosIcons.Transfer,
+                icon = ForkIcons.Transfer,
                 label = stringResource(Res.string.feature_send_money_request),
                 onClick = onRequestMoneyClick,
                 modifier = Modifier.weight(1f),

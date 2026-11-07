@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosCard
+import kpt.core.designsystem.fork.component.ForkCard
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 /**
@@ -35,7 +35,7 @@ fun ConfirmDetailsCard(
     keyValuePairs: Map<StringResource, String>,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .border(

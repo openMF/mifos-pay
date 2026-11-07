@@ -65,11 +65,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_amount_below_minimum
 import kpt.feature.send.money.generated.resources.feature_send_money_amount_exceeds_limit
@@ -102,11 +102,11 @@ fun PayeeDetailsScreen(
         }
     }
 
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = stringResource(Res.string.feature_send_money_payee_details_title),
                     backPress = {
                         viewModel.trySendAction(PayeeDetailsAction.NavigateBack)
@@ -260,7 +260,7 @@ private fun PayeeProfileSection(
                         )
                     } else {
                         Icon(
-                            imageVector = MifosIcons.Person,
+                            imageVector = ForkIcons.Person,
                             contentDescription = stringResource(Res.string.feature_send_money_payee_profile),
                             modifier = Modifier.size(40.dp),
                             tint = KptTheme.colorScheme.onPrimaryContainer,
@@ -268,7 +268,7 @@ private fun PayeeProfileSection(
                     }
                 } else {
                     Icon(
-                        imageVector = MifosIcons.Person,
+                        imageVector = ForkIcons.Person,
                         contentDescription = "Payee Profile",
                         modifier = Modifier.size(40.dp),
                         tint = KptTheme.colorScheme.onPrimaryContainer,
@@ -430,7 +430,7 @@ private fun ExpandableAmountInput(
             horizontalArrangement = Arrangement.Center,
         ) {
             Icon(
-                imageVector = MifosIcons.CurrencyRupee,
+                imageVector = ForkIcons.CurrencyRupee,
                 contentDescription = stringResource(Res.string.feature_send_money_rupee_icon),
                 tint = KptTheme.colorScheme.onSurface,
             )
@@ -617,8 +617,8 @@ private fun ProceedButton(
         } else {
             Icon(
                 imageVector = when {
-                    showCheckMark -> MifosIcons.CheckRounded
-                    else -> MifosIcons.ArrowForward
+                    showCheckMark -> ForkIcons.CheckRounded
+                    else -> ForkIcons.ArrowForward
                 },
                 contentDescription = when {
                     showCheckMark -> "Proceed"

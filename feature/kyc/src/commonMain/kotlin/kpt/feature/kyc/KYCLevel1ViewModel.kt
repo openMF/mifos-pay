@@ -25,7 +25,7 @@ import kpt.core.common.setSerialized
 import kpt.core.data.repository.KycLevelRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.kyc.KYCLevel1Details
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.kyc.KycLevel1State.DialogState.Error
 import kpt.feature.kyc.generated.resources.Res
 import kpt.feature.kyc.generated.resources.feature_kyc_successkyc1

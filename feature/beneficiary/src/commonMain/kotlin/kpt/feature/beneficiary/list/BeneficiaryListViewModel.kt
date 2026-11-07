@@ -19,7 +19,7 @@ import kpt.core.base.store.screen.ScreenState
 import kpt.core.data.repository.SelfServiceRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.beneficiary.Beneficiary
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
 import org.jetbrains.compose.resources.StringResource
 /** ViewModel that loads the client's beneficiaries and handles add, edit and refresh actions. */

@@ -34,11 +34,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicatorOverlay
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkProgressIndicatorOverlay
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.kyc.generated.resources.Res
 import kpt.feature.kyc.generated.resources.feature_kyc_check
 import kpt.feature.kyc.generated.resources.feature_kyc_complete_kyc
@@ -85,7 +85,7 @@ private fun KYCDescriptionScreen(
         contentAlignment = Alignment.Center,
     ) {
         when (kUiState) {
-            KYCDescriptionUiState.Loading -> MifosProgressIndicatorOverlay()
+            KYCDescriptionUiState.Loading -> ForkProgressIndicatorOverlay()
 
             is KYCDescriptionUiState.Error -> {
                 EmptyContentScreen(
@@ -187,7 +187,7 @@ private fun KYCLevelCard(
                 trailingContent = {
                     if (completed) {
                         Icon(
-                            imageVector = MifosIcons.OutlinedDoneAll,
+                            imageVector = ForkIcons.OutlinedDoneAll,
                             contentDescription = stringResource(Res.string.feature_kyc_check),
                         )
                     }

@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kpt.core.data.util.MpayQrCodeProcessor
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.data.fork.util.MpayQrCodeProcessor
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.fastmpay.model.QrProcessResult
 import kpt.feature.fastmpay.navigation.QR_DATA_ARG
 import kotlin.coroutines.cancellation.CancellationException

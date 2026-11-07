@@ -45,8 +45,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /**
  * AmountEditText - Generic amount input component with validation
@@ -222,7 +222,7 @@ fun AmountEditText(
                 modifier = Modifier.padding(top = 8.dp),
             ) {
                 Icon(
-                    imageVector = MifosIcons.CheckCircle,
+                    imageVector = ForkIcons.CheckCircle,
                     contentDescription = null,
                     tint = balanceTextStyle.color,
                     modifier = Modifier.size(16.dp),
@@ -287,7 +287,7 @@ private fun formatAmount(input: String): String {
 @Preview
 @Composable
 private fun AmountEditTextPreview() {
-    MifosTheme {
+    ForkTheme {
         var amount by remember { mutableStateOf("1234.50") }
         var errorMsg by remember { mutableStateOf<String?>(null) }
         var isError by remember { mutableStateOf(false) }
@@ -319,7 +319,7 @@ private fun AmountEditTextPreview() {
 @Preview
 @Composable
 private fun AmountEditTextEmptyPreview() {
-    MifosTheme {
+    ForkTheme {
         var amount by remember { mutableStateOf("") }
         var errorMsg by remember { mutableStateOf<String?>(null) }
         var isError by remember { mutableStateOf(false) }
@@ -351,7 +351,7 @@ private fun AmountEditTextEmptyPreview() {
 @Preview
 @Composable
 private fun AmountEditTextErrorPreview() {
-    MifosTheme {
+    ForkTheme {
         var amount by remember { mutableStateOf("6000.00") }
         var errorMsg by remember { mutableStateOf("Amount exceeds available balance") }
         var isError by remember { mutableStateOf(true) }

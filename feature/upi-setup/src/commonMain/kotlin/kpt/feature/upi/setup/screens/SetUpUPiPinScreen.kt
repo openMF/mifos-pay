@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.common.Constants
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.bank.BankAccountDetails
 import kpt.feature.upi.setup.generated.resources.Res
 import kpt.feature.upi.setup.generated.resources.feature_upi_setup_back
@@ -96,7 +96,7 @@ internal fun SetupUpiPinScreen(
                         onClick = onBackPress,
                     ) {
                         Icon(
-                            MifosIcons.ArrowBack,
+                            ForkIcons.ArrowBack,
                             contentDescription = stringResource(Res.string.feature_upi_setup_back),
                         )
                     }

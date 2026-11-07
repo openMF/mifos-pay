@@ -65,7 +65,7 @@ sealed interface ScreenState<out T> {
     /**
      * Error occurred with no usable cached data.
      * @param error The underlying throwable (typically a [HttpStatusException],
-     *   [NetworkException], or fork-mapped exception from [MifosErrorMapper]).
+     *   [NetworkException], or fork-mapped exception from [ForkScreenStateErrorMapper]).
      * @param isNetworkError set to `true` when the underlying cause is an
      *   [IOException] or [NetworkException] that has been surfaced as
      *   [Error] rather than [NoNetwork] (e.g. a request that reached the

@@ -48,18 +48,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.KptTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.designsystem.theme.toRoundedCornerShape
 import kpt.core.model.network.entity.templates.account.AccountOption
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.ForkProgressIndicator
 import kpt.core.ui.SimpleSearchBar
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_select_account_placeholder
 import kpt.feature.transfer.intrabank.generated.resources.feature_select_payment_title
@@ -127,11 +127,11 @@ private fun SelectAccountScreen(
     modifier: Modifier = Modifier,
     onAction: (SelectScreenAction) -> Unit,
 ) {
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = stringResource(Res.string.feature_select_payment_title),
                     backPress = {
                         onAction(SelectScreenAction.NavigateBack)
@@ -177,7 +177,7 @@ private fun SelectAccountContent(
             )
         }
         SelectScreenState.State.Loading -> {
-            MifosProgressIndicator()
+            ForkProgressIndicator()
         }
         SelectScreenState.State.NoAccounts -> {
             EmptyContentScreen(
@@ -258,7 +258,7 @@ private fun AccountCard(
         },
         leadingContent = {
             AvatarBox(
-                icon = MifosIcons.Bank,
+                icon = ForkIcons.Bank,
                 backgroundColor = KptTheme.colorScheme.tertiary,
             )
         },
@@ -270,7 +270,7 @@ private fun AccountCard(
                 visible = selected(account),
             ) {
                 Icon(
-                    imageVector = MifosIcons.Check,
+                    imageVector = ForkIcons.Check,
                     contentDescription = stringResource(Res.string.feature_send_money_selected),
                 )
             }
@@ -329,7 +329,7 @@ private fun SendMoneyBottomBar(
                 }
             }
 
-            MifosButton(
+            ForkButton(
                 onClick = onClickProceed,
                 enabled = showDetails,
                 modifier = Modifier.fillMaxWidth(),
@@ -375,7 +375,7 @@ private fun SelectedAccountCard(
                     Text(text = account.accountNo ?: "")
                 },
                 leadingContent = {
-                    AvatarBox(icon = MifosIcons.Bank)
+                    AvatarBox(icon = ForkIcons.Bank)
                 },
                 trailingContent = {
                     Row(

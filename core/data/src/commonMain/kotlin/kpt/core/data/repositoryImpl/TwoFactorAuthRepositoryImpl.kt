@@ -11,6 +11,8 @@ package kpt.core.data.repositoryImpl
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.TwoFactorAuthRepository
@@ -18,9 +20,10 @@ import kpt.core.model.network.twofactor.AccessToken
 import kpt.core.model.network.twofactor.DeliveryMethod
 import kpt.core.network.FineractApiManager
 /** Default [TwoFactorAuthRepository] backed by the two-factor API. */
+@RepositoryBinding(binds = TwoFactorAuthRepository::class)
 class TwoFactorAuthRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : TwoFactorAuthRepository {
     override suspend fun deliveryMethods(): ScreenStateStream<List<DeliveryMethod>> {
         return apiManager.twoFactorAuthApi.deliveryMethods()

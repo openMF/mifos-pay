@@ -9,7 +9,7 @@
  */
 package kpt.core.domain.di
 
-import kpt.core.common.MifosDispatchers
+import kpt.core.common.ForkDispatchers
 import kpt.core.domain.LoginUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -20,7 +20,7 @@ val DomainModule = module {
             repository = get(),
             clientRepository = get(),
             userPreferencesRepository = get(),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
+            ioDispatcher = get(named(ForkDispatchers.IO.name)),
         )
     }
 }

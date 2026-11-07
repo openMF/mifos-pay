@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.datastore.prefs.ForkPreferencesRepository
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel holding the client details used to send and request money. */
 class TransferViewModel(
     private val repository: ForkPreferencesRepository,

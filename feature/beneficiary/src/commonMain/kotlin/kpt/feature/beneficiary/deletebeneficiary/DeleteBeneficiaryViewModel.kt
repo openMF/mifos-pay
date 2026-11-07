@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.update
 import kpt.core.base.store.submit.SubmitState
 import kpt.core.base.store.submit.submitHandler
 import kpt.core.data.repository.SelfServiceRepository
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * ViewModel for handling beneficiary deletion.
  *

@@ -31,7 +31,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.window.PopupProperties
-import kpt.core.designsystem.component.MifosTextField
+import kpt.core.designsystem.fork.component.ForkTextField
 /**
  * Prefer to use when text field is not read only
  */
@@ -57,7 +57,7 @@ fun DropdownBox(
         onExpandedChange = onExpandChange,
         modifier = modifier,
     ) {
-        MifosTextField(
+        ForkTextField(
             label = label,
             value = value,
             showClearIcon = showClearIcon,
@@ -118,7 +118,7 @@ fun ExposedDropdownBox(
         onExpandedChange = onExpandChange,
         modifier = modifier,
     ) {
-        MifosTextField(
+        ForkTextField(
             label = label,
             value = value,
             showClearIcon = showClearIcon,

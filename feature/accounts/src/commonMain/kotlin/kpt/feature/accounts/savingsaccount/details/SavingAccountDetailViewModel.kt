@@ -15,10 +15,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.serialization.Serializable
 import kpt.core.common.ScreenState
 import kpt.core.common.getSerialized
+import kpt.core.data.fork.util.toForkScreenStateFlow
 import kpt.core.data.repository.SavingsAccountRepository
-import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.model.savingsaccount.SavingAccountDetail
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.accounts.savingsaccount.details.SADState.ViewState.Error
 internal class SavingAccountDetailViewModel(
     savedStateHandle: SavedStateHandle,

@@ -2,7 +2,7 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_DATASTORE.md`
-> **Measured:** 30 Kotlin files, 2 test files
+> **Measured:** 29 Kotlin files, 2 test files
 
 ## Principal types
 
@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/datastore sha=1b83a0910bbb7c0620f7328c869a2dbcc30742c0 -->
+<!-- api-docs:begin module=core/datastore sha=6bee378d64be97cc991a41e1be13fbeb0127c5a4 -->
 ## API reference
 
-_Generated from `core/datastore` at tree `1b83a0910bbb` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/datastore` at tree `6bee378d64be` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/AutoPayPreferencesDataSource.kt`
@@ -82,15 +82,15 @@ class AutoPayPreferencesRepositoryImpl(
 ```
 `AutoPayPreferencesRepository` that delegates to `AutoPayPreferencesDataSource` and emits flows on the IO dispatcher.
 
-<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/PreferenceModule.kt:56</code></summary>
+<details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/fork/di/PreferenceModule.kt:56</code></summary>
 
 ```kotlin
 
     single<AutoPayPreferencesRepository> {
         AutoPayPreferencesRepositoryImpl(
             autoPayPreferencesDataSource = get(),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
-            unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
+            ioDispatcher = get(named(ForkDispatchers.IO.name)),
+            unconfinedDispatcher = get(named(ForkDispatchers.Unconfined.name)),
         )
 ```
 
@@ -153,15 +153,12 @@ class BillRepositoryImpl(
 ```
 TODO: This implementation currently uses local storage (Multiplatform Settings) for bill data.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillRepositoryImpl.kt:44</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:38</code></summary>
 
 ```kotlin
- * models according to the actual API contract.
- */
-class BillRepositoryImpl(
-    private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-) : BillRepository {
+    apiManager: FineractApiManager,
+    @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
+): BillRepository = BillRepositoryImpl(apiManager, ioDispatcher)
 ```
 
 </details>
@@ -224,16 +221,16 @@ class BillerRepositoryImpl(
 ```
 TODO: This implementation currently uses local storage (Multiplatform Settings) for biller data.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/fork/RepositoryModule.kt:292</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:31</code></summary>
 
 ```kotlin
-    // kpt.core.datastore.BillerRepository below — unqualified, one replaces the other.
-    single<BillerRepository>(named("kpt.core.data.repository.BillerRepository")) {
-        BillerRepositoryImpl(get(), get(ioDispatcher))
-    }
+    apiManager: FineractApiManager,
+    @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
+): BillerRepository = BillerRepositoryImpl(apiManager, ioDispatcher)
 
-    // Phase-4 Batch-A OFFLINE_LOCAL_ONLY Bill store binding (GOAL D12).
-    // Replaces the multiplatform-settings impl that was previously bound in
+/** The network-backed [BillRepository]; see [provideNetworkBillerRepository] for why it is qualified. */
+@DataProvider(qualifier = "kpt.core.data.repository.BillRepository")
+fun provideNetworkBillRepository(
 ```
 
 </details>
@@ -283,8 +280,8 @@ Settings-backed store of the user session: user and client info, token, default 
             secureSettings = get<Settings>(named("secure")),
             dispatcher = get<DispatcherManager>(),
             preferenceManager = get<UserPreferencesDataSource>(),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
-            unconfinedDispatcher = get(named(MifosDispatchers.Unconfined.name)),
+            ioDispatcher = get(named(ForkDispatchers.IO.name)),
+            unconfinedDispatcher = get(named(ForkDispatchers.Unconfined.name)),
         )
     }
 ```
@@ -377,7 +374,7 @@ val ForkDatastoreModule = module
 ```
 THE FORK'S datastore DI seam. Empty on the neutral template — this is yours to fill. `DatastoreModule` beside it is `owner: template` and FULL-COPIES on a sync, so a binding added there is replaced on the next adopt.
 
-### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/di/PreferenceModule.kt`
+### `core/datastore/src/commonMain/kotlin/kpt/core/datastore/fork/di/PreferenceModule.kt`
 
 ```kotlin
 val PreferencesModule = module
@@ -455,7 +452,7 @@ Persisted snapshot of the logged-in client's profile.
 <details><summary>Used in the template — <code>core/datastore/src/commonMain/kotlin/kpt/core/datastore/PreferencesMapper.kt:19</code></summary>
 
 ```kotlin
-import kpt.core.model.user.UserInfo
+import kpt.core.model.fork.user.UserInfo
 /** Maps stored [ClientPreferences] to the domain [Client]. */
 fun ClientPreferences.toClientInfo(): Client {
     return Client(

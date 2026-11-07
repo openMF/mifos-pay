@@ -20,7 +20,7 @@ import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.data.repository.StandingInstructionRepository
 import kpt.core.model.standinginstruction.StandingInstruction
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 internal class SIDetailViewModel(
     repository: StandingInstructionRepository,
     savedStateHandle: SavedStateHandle,

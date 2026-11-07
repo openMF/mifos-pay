@@ -21,16 +21,16 @@ const val LOGIN_ROUTE = "login_route"
 /**
  * Registers the login destination.
  *
- * @param navigateToMifosPasscodeScreen Fired by `LoginViewModel` on
+ * @param navigateToPasscode Fired by `LoginViewModel` on
  *        successful authentication. Caller should bind this to
- *        `navController::navigateToRootMifosPasscodeScreen` (the post-login
+ *        `navController::navigateToRootPasscodeScreen` (the post-login
  *        passcode-create-or-unlock screen). The token has just been
  *        persisted by `LoginUseCase` at this point, so the passcode screen
  *        and any subsequent self-service API calls will see it.
  */
 fun NavGraphBuilder.loginScreen(
     onNavigateBack: () -> Unit,
-    navigateToMifosPasscodeScreen: () -> Unit,
+    navigateToPasscode: () -> Unit,
     onNavigateToSignupScreen: () -> Unit,
     onShowInstanceSelector: () -> Unit,
 ) {
@@ -45,7 +45,7 @@ fun NavGraphBuilder.loginScreen(
     ) {
         LoginScreen(
             onNavigateBack = onNavigateBack,
-            navigateToMifosPasscodeScreen = navigateToMifosPasscodeScreen,
+            navigateToPasscode = navigateToPasscode,
             navigateToSignupScreen = onNavigateToSignupScreen,
             onShowInstanceSelector = onShowInstanceSelector,
         )

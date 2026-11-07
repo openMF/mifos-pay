@@ -14,10 +14,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kpt.core.common.ScreenState
+import kpt.core.data.fork.util.toForkScreenStateFlow
 import kpt.core.data.repository.AccountRepository
-import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.model.savingsaccount.TransferDetail
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.receipt.generated.resources.Res
 import kpt.feature.receipt.generated.resources.feature_receipt_not_found
 import org.jetbrains.compose.resources.StringResource

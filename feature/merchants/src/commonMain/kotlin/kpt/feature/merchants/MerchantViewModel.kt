@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 // STUB VERDICT (Phase-5 Batch-4, 2026-08-01):
 // -----------------------------------------------------------------------------
 // The `merchants` feature has NO backend endpoint today. Neither

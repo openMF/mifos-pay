@@ -37,14 +37,14 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
 import kpt.core.common.DateHelper
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
-import kpt.core.ui.utils.ShareUtils
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
+import kpt.core.ui.fork.utils.ShareUtils
 import kpt.feature.receipt.generated.resources.Res
 import kpt.feature.receipt.generated.resources.feature_receipt_credited_by
 import kpt.feature.receipt.generated.resources.feature_receipt_paid_to
@@ -93,14 +93,14 @@ internal fun ReceiptScreen(
     modifier: Modifier = Modifier,
     onShareClick: () -> Unit = {},
 ) {
-    MifosScaffold(
+    ForkScaffold(
         backPress = onBackClick,
         topBarTitle = stringResource(Res.string.feature_receipt_receipt),
         actions = {
             if (uiState is ReceiptUiState.Success) {
                 IconButton(onClick = onShareClick) {
                     Icon(
-                        imageVector = MifosIcons.OutlinedShare,
+                        imageVector = ForkIcons.OutlinedShare,
                         contentDescription = stringResource(Res.string.feature_receipt_share_receipt),
                     )
                 }
@@ -113,7 +113,7 @@ internal fun ReceiptScreen(
                 .padding(it),
         ) {
             when (uiState) {
-                is ReceiptUiState.Loading -> MifosProgressIndicator()
+                is ReceiptUiState.Loading -> ForkProgressIndicator()
 
                 is ReceiptUiState.Error -> {
                     EmptyContentScreen(

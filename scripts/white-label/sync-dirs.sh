@@ -956,8 +956,9 @@ sync_directory() {
                     if git cat-file -e "${FORK_STATE}:${conv_f}" 2>/dev/null; then
                         git checkout "$FORK_STATE" -- "$conv_f" 2>/dev/null \
                             && print_step "Preserved fork's ${BOLD}$conv_f${NC} (convention)"
-                    elif [ -n "${PREV_TEMPLATE_SHA:-}" ] \
-                         && ! git cat-file -e "${PREV_TEMPLATE_SHA}:${conv_f}" 2>/dev/null \
+                    elif { { [ -n "${PREV_TEMPLATE_SHA:-}" ] \
+                             && ! git cat-file -e "${PREV_TEMPLATE_SHA}:${conv_f}" 2>/dev/null; } \
+                           || [ -z "$(git log -1 --format=%h "$FORK_STATE" -- "$conv_f" 2>/dev/null)" ]; } \
                          && case "$conv_f" in */schemas/*|*/demo/*|*/demo) false ;; *) true ;; esac \
                          && ! fork_deleted_dir "$conv_f" \
                          && { owner_of "$conv_f"; [ "$OWNER" = fork ]; }; then
@@ -967,6 +968,10 @@ sync_directory() {
                         # template-owned code calls such seams (AndroidApp.onCreate → onForkCreate in
                         # cmp/android/app/fork/), so dropping one breaks the fork's build, as dropping
                         # spotless/license-header.txt once stripped the license header from ~2,500 files.
+                        # The same holds when the fork's history never held the file at all: a fork older
+                        # than the seam never received it, whatever the template had at the last sync
+                        # (mifos-pay synced after ForkWorkerDeclarations.kt shipped, was told it "removed"
+                        # it, and never had one). Only a file the fork once had and then deleted is a removal.
                         # Not seeded: a file in a package the fork deleted (fork_deleted_dir), a Room
                         # schema (the fork's own lineage) or demo code.
                         print_step "Seeded new fork-owned ${BOLD}$conv_f${NC} from the template"

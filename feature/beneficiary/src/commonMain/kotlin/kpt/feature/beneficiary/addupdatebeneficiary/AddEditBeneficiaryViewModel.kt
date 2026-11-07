@@ -35,7 +35,7 @@ import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.office.Office
 import kpt.core.model.utils.QrCodeData
 import kpt.core.model.utils.QrCodeType
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.beneficiary.addupdatebeneficiary.AEBState.DialogState.Error
 import kpt.feature.beneficiary.generated.resources.Res
 import kpt.feature.beneficiary.generated.resources.feature_beneficiary_account_type_other
@@ -184,7 +184,7 @@ internal class AddEditBeneficiaryViewModel(
                     }
 
                     is SubmitState.Failed -> {
-                        val message = extractMifosErrorMessage(submitState.error)
+                        val message = extractFineractErrorMessage(submitState.error)
                         mutableStateFlow.update {
                             it.copy(dialogState = Error.StringMessage(message))
                         }
@@ -412,15 +412,15 @@ internal class AddEditBeneficiaryViewModel(
     }
 
     /**
-     * Extract readable error message from MifosError JSON structure.
+     * Extract readable error message from FineractError JSON structure.
      *
      * Server errors come as JSON: {"defaultUserMessage":"...", ...}
      * This extracts the user-friendly message instead of showing raw JSON.
      */
-    private fun extractMifosErrorMessage(exception: Throwable): String {
+    private fun extractFineractErrorMessage(exception: Throwable): String {
         val rawMessage = exception.message ?: return "Unknown error"
 
-        // Try to parse MifosError JSON structure
+        // Try to parse FineractError JSON structure
         return try {
             // Pattern: {"defaultUserMessage":"...", ...}
             val regex = """"defaultUserMessage"\s*:\s*"([^"]+)"""".toRegex()

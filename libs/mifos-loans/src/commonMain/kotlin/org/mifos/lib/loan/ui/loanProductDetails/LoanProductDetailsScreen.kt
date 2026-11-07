@@ -24,43 +24,43 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
 import kpt.core.ui.ErrorScreenContent
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_title
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_amendments_and_termination
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_apply_loan
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_continue_legal_compliance
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_default
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_documentation
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_get_loan
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_insurance
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_interest_rate
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_interest_rate_in_numbers
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_jurisdiction
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_repayment
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_sanction_and_disbursement
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_security_and_collateral
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_terms_and_conditions
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_up_to
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_amendments_and_termination_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_continue_legal_compliance_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_default_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_documentation_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_insurance_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_interest_rate_description
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_jurisdiction_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_repayment_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_sanction_and_disbursement_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_personal_loan_security_and_collateral_details
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.ApplyLoanBottomBar
 import org.mifos.lib.loan.component.LoanCard
 import org.mifos.lib.loan.component.TermsAndConditionItem
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_title
+import org.mifos.lib.loan.generated.resources.feature_loan_amendments_and_termination
+import org.mifos.lib.loan.generated.resources.feature_loan_apply_loan
+import org.mifos.lib.loan.generated.resources.feature_loan_continue_legal_compliance
+import org.mifos.lib.loan.generated.resources.feature_loan_default
+import org.mifos.lib.loan.generated.resources.feature_loan_documentation
+import org.mifos.lib.loan.generated.resources.feature_loan_get_loan
+import org.mifos.lib.loan.generated.resources.feature_loan_insurance
+import org.mifos.lib.loan.generated.resources.feature_loan_interest_rate
+import org.mifos.lib.loan.generated.resources.feature_loan_interest_rate_in_numbers
+import org.mifos.lib.loan.generated.resources.feature_loan_jurisdiction
+import org.mifos.lib.loan.generated.resources.feature_loan_repayment
+import org.mifos.lib.loan.generated.resources.feature_loan_sanction_and_disbursement
+import org.mifos.lib.loan.generated.resources.feature_loan_security_and_collateral
+import org.mifos.lib.loan.generated.resources.feature_loan_terms_and_conditions
+import org.mifos.lib.loan.generated.resources.feature_loan_up_to
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_amendments_and_termination_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_continue_legal_compliance_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_default_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_documentation_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_insurance_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_interest_rate_description
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_jurisdiction_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_repayment_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_sanction_and_disbursement_details
+import org.mifos.lib.loan.generated.resources.feature_personal_loan_security_and_collateral_details
 /**
  * Entry point for the Loan Product Details screen.
  *
@@ -109,10 +109,10 @@ private fun LoanProductDetailsContent(
         stringResource(Res.string.feature_apply_loan_title)
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = topBarTitle,
                 backPress = { onAction(LoanProductDetailsAction.NavigateBack) },
             )
@@ -129,7 +129,7 @@ private fun LoanProductDetailsContent(
         },
     ) { paddingValues ->
         when (viewState) {
-            LoanProductDetailsState.ViewState.Loading -> MifosProgressIndicator()
+            LoanProductDetailsState.ViewState.Loading -> ForkProgressIndicator()
 
             is LoanProductDetailsState.ViewState.Error -> {
                 ErrorScreenContent(

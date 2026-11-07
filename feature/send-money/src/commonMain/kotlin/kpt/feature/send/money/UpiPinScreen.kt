@@ -49,9 +49,9 @@ import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.serialization.Serializable
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 /**
@@ -82,7 +82,7 @@ fun UpiPinScreen(
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
     val isDropdownExpanded = rememberSaveable { mutableStateOf(false) }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier.fillMaxSize(),
     ) { paddingValues ->
         Box(
@@ -463,9 +463,9 @@ private fun PayeeTransactionDetails(
                     ) {
                         Icon(
                             imageVector = if (isDropdownExpanded.value) {
-                                MifosIcons.DropUp
+                                ForkIcons.DropUp
                             } else {
-                                MifosIcons.DropDown
+                                ForkIcons.DropDown
                             },
                             contentDescription = if (isDropdownExpanded.value) {
                                 "Hide transaction details"
@@ -516,7 +516,7 @@ private fun getExpectedPinForBank(bankName: String?): String {
 @Preview
 @Composable
 private fun UpiPinScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         UpiPinScreen(
             onBackClick = { },
             onUpiPinEntered = { payeeName, amount, pin, isUpiCode ->

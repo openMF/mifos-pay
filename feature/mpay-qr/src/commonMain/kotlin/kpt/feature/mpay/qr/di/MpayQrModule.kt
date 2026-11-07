@@ -9,7 +9,7 @@
  */
 package kpt.feature.mpay.qr.di
 
-import kpt.core.common.MifosDispatchers
+import kpt.core.common.ForkDispatchers
 import kpt.feature.mpay.qr.MpayQrViewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -22,7 +22,7 @@ val MpayQrModule = module {
             accountRepository = get(),
             pocketRepository = get(),
             savedStateHandle = get(),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
+            ioDispatcher = get(named(ForkDispatchers.IO.name)),
         )
     }
 }

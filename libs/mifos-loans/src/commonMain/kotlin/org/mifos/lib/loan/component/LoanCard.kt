@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosCard
+import kpt.core.designsystem.fork.component.ForkCard
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 /**
@@ -46,7 +46,7 @@ fun LoanCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .then(
@@ -114,7 +114,7 @@ fun LoanCardCustom(
     contentColor: Color = Color.White,
     onClick: (() -> Unit)? = null,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .then(

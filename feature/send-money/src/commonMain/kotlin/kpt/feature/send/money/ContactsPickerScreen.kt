@@ -42,11 +42,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.AvatarBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /** Composable that requests contacts permission on platforms that need it. */
@@ -99,11 +99,11 @@ fun ContactsPickerScreen(
         }
     }
 
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = "Select Contact",
                     backPress = onBackClick,
                 )
@@ -117,7 +117,7 @@ fun ContactsPickerScreen(
             ) {
                 Spacer(modifier = Modifier.height(KptTheme.spacing.md))
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
                     label = "",
@@ -130,7 +130,7 @@ fun ContactsPickerScreen(
                     },
                     leadingIcon = {
                         Icon(
-                            imageVector = MifosIcons.Search,
+                            imageVector = ForkIcons.Search,
                             contentDescription = "Search",
                             modifier = Modifier.size(20.dp),
                             tint = KptTheme.colorScheme.onSurface.copy(alpha = 0.6f),
@@ -242,7 +242,7 @@ private fun ContactItem(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.Person,
+                    icon = ForkIcons.Person,
                     backgroundColor = KptTheme.colorScheme.primaryContainer,
                     contentColor = KptTheme.colorScheme.onPrimaryContainer,
                 )

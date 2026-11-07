@@ -21,7 +21,7 @@ import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillStatus
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

@@ -40,7 +40,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.ui.VerifyStepHeader
 import kpt.feature.upi.setup.generated.resources.Res
 import kpt.feature.upi.setup.generated.resources.feature_upi_setup_enter_upi_pin
@@ -230,7 +230,7 @@ private fun UpiPinCharView(
 @Preview
 @Composable
 private fun UpiScreenPreview() {
-    MifosTheme(darkTheme = true) {
+    ForkTheme(darkTheme = true) {
         UpiPinScreen({}, verificationStatus = false, contentVisibility = true)
     }
 }

@@ -42,10 +42,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.rememberMifosPullToRefreshState
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.rememberForkPullToRefreshState
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 /** AutoPay dashboard screen showing active schedules and upcoming payments, with entry points to related screens. */
 @Composable
@@ -65,13 +65,13 @@ fun AutoPayScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val pullRefreshState = rememberMifosPullToRefreshState(
+    val pullRefreshState = rememberForkPullToRefreshState(
         isEnabled = true,
         isRefreshing = state.isLoading,
         onRefresh = { viewModel.trySendAction(AutoPayAction.RefreshDashboard) },
     )
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = if (showTopBar) "AutoPay Dashboard" else null,
         backPress = onNavigateBack,
@@ -167,7 +167,7 @@ private fun AutoPayDashboardContent(
                 EmptyStateCard(
                     title = "No Active Schedules",
                     description = "You don't have any active AutoPay schedules. Create one to get started!",
-                    icon = MifosIcons.Payment,
+                    icon = ForkIcons.Payment,
                 )
             }
         } else {
@@ -193,7 +193,7 @@ private fun AutoPayDashboardContent(
                 EmptyStateCard(
                     title = "No Upcoming Payments",
                     description = "No payments are scheduled for the near future.",
-                    icon = MifosIcons.CalenderMonth,
+                    icon = ForkIcons.CalenderMonth,
                 )
             }
         } else {
@@ -230,13 +230,13 @@ private fun DashboardHeader(
                 DashboardStat(
                     label = "Active Schedules",
                     value = totalActiveSchedules.toString(),
-                    icon = MifosIcons.Payment,
+                    icon = ForkIcons.Payment,
                 )
 
                 DashboardStat(
                     label = "Upcoming Payments",
                     value = totalUpcomingPayments.toString(),
-                    icon = MifosIcons.CalenderMonth,
+                    icon = ForkIcons.CalenderMonth,
                 )
             }
         }
@@ -313,28 +313,28 @@ private fun QuickActionsSection(
             ) {
                 SquareActionButton(
                     text = "Add Bill",
-                    icon = MifosIcons.Receipt,
+                    icon = ForkIcons.Receipt,
                     onClick = onAddBill,
                     modifier = Modifier.weight(1f),
                 )
 
                 SquareActionButton(
                     text = "Manage Bills",
-                    icon = MifosIcons.List,
+                    icon = ForkIcons.List,
                     onClick = onManageBills,
                     modifier = Modifier.weight(1f),
                 )
 
                 SquareActionButton(
                     text = "Add Biller",
-                    icon = MifosIcons.PersonAdd,
+                    icon = ForkIcons.PersonAdd,
                     onClick = onAddBiller,
                     modifier = Modifier.weight(1f),
                 )
 
                 SquareActionButton(
                     text = "Manage Billers",
-                    icon = MifosIcons.Person,
+                    icon = ForkIcons.Person,
                     onClick = onManageBillers,
                     modifier = Modifier.weight(1f),
                 )
@@ -348,21 +348,21 @@ private fun QuickActionsSection(
             ) {
                 SquareActionButton(
                     text = "AutoPay Settings",
-                    icon = MifosIcons.Settings,
+                    icon = ForkIcons.Settings,
                     onClick = onAutoPaySettings,
                     modifier = Modifier.weight(1f),
                 )
 
                 SquareActionButton(
                     text = "Manage Schedules",
-                    icon = MifosIcons.Schedule,
+                    icon = ForkIcons.Schedule,
                     onClick = onScheduleManagement,
                     modifier = Modifier.weight(1f),
                 )
 
                 SquareActionButton(
                     text = "View History",
-                    icon = MifosIcons.History,
+                    icon = ForkIcons.History,
                     onClick = onViewHistory,
                     modifier = Modifier.weight(1f),
                 )

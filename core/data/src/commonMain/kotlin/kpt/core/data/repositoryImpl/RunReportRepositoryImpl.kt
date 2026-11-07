@@ -12,6 +12,8 @@ package kpt.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.mapper.toModel
@@ -19,9 +21,10 @@ import kpt.core.data.repository.RunReportRepository
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.network.FineractApiManager
 /** Default [RunReportRepository] backed by the run-report API. */
+@RepositoryBinding(binds = RunReportRepository::class)
 class RunReportRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : RunReportRepository {
     override suspend fun getTransactionReceipt(
         outputType: String,

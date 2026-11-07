@@ -47,22 +47,22 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.Status
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.MifosSmallChip
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.ForkSmallChip
 import kpt.core.ui.RevealDirection
 import kpt.core.ui.RevealSwipe
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.core.ui.rememberRevealState
-import kpt.core.ui.utils.EventsEffect
 import kpt.feature.accounts.generated.resources.Res
 import kpt.feature.accounts.generated.resources.baseline_check
 import kpt.feature.accounts.generated.resources.baseline_unchecked
@@ -158,7 +158,7 @@ internal fun AccountsScreenContent(
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
         floatingActionButtonPosition = FabPosition.EndOverlay,
@@ -174,7 +174,7 @@ internal fun AccountsScreenContent(
                     },
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Add,
+                        imageVector = ForkIcons.Add,
                         stringResource(Res.string.feature_accounts_add),
                     )
                 }
@@ -188,7 +188,7 @@ internal fun AccountsScreenContent(
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
-                is AccountState.ViewState.Loading -> MifosProgressIndicator()
+                is AccountState.ViewState.Loading -> ForkProgressIndicator()
 
                 is AccountState.ViewState.Error -> {
                     EmptyContentScreen(
@@ -332,7 +332,7 @@ private fun AccountItem(
                         onClick = { onClickEditAccount(account.id) },
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Edit2,
+                            imageVector = ForkIcons.Edit2,
                             contentDescription = stringResource(Res.string.feature_accounts_edit),
                         )
                     }
@@ -342,7 +342,7 @@ private fun AccountItem(
                     onClick = { onClickViewAccount(account.id) },
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Info,
+                        imageVector = ForkIcons.Info,
                         contentDescription = stringResource(Res.string.feature_accounts_info),
                     )
                 }
@@ -371,7 +371,7 @@ private fun AccountItem(
                 },
                 leadingContent = {
                     AvatarBox(
-                        icon = MifosIcons.Bank,
+                        icon = ForkIcons.Bank,
                         backgroundColor = KptTheme.colorScheme.secondaryContainer,
                     )
                 },
@@ -434,7 +434,7 @@ private fun ApplyForLoanCard(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.CreditCard,
+                    icon = ForkIcons.CreditCard,
                     backgroundColor = KptTheme.colorScheme.tertiaryContainer,
                 )
             },
@@ -451,7 +451,7 @@ private fun AccountDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> MifosBasicDialog(
+        is AccountState.DialogState.DeleteBeneficiary -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = stringResource(dialogState.title),
                 message = stringResource(dialogState.message),
@@ -460,14 +460,14 @@ private fun AccountDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is AccountState.DialogState.Error -> MifosBasicDialog(
+        is AccountState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is AccountState.DialogState.Loading -> MifosLoadingDialog(
+        is AccountState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -498,7 +498,7 @@ private fun SavingAccountStatusCard(
 
 @Composable
 private fun StatusChip(label: String, color: Color) {
-    MifosSmallChip(
+    ForkSmallChip(
         label = label,
         containerColor = color,
         contentColor = KptTheme.colorScheme.scrim,

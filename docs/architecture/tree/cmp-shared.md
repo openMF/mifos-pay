@@ -1,20 +1,20 @@
 # `cmp-shared/`
 
 > **Kind:** Kotlin Multiplatform module  
-> **Measured:** 8 tracked files — 5× `.kt`, 2× `.md`, 1× `.kts`
+> **Measured:** 9 tracked files — 6× `.kt`, 2× `.md`, 1× `.kts`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
-| `cmp-shared/src/` | 5 |
+| `cmp-shared/src/` | 6 |
 | (files at the root) | 3 |
 
 ## Modules
 
 | | |
 |---|---|
-| `cmp-shared:src` | 5 Kotlin files |
+| `cmp-shared:src` | 6 Kotlin files |
 
 ## Docs in the tree
 

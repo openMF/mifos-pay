@@ -26,7 +26,7 @@ import kpt.core.data.repository.SavedCardRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.savedcards.CardPayload
 import kpt.core.model.savedcards.SavedCard
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.savedcards.createOrUpdate.AECardAction.Internal.HandleCardResult
 import kpt.feature.savedcards.generated.resources.Res
 import kpt.feature.savedcards.generated.resources.feature_savedcards_card_added_successfully

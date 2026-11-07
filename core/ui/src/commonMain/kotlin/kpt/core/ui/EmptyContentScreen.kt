@@ -33,9 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.ui.generated.resources.Res
 import kpt.core.ui.generated.resources.artwork
 import kpt.core.ui.generated.resources.core_ui_money_in
@@ -144,7 +144,7 @@ fun EmptyContentScreen(
 
             Spacer(modifier = Modifier.height(KptTheme.spacing.xxl))
 
-            MifosButton(
+            ForkButton(
                 text = {
                     Text(text = btnText)
                 },
@@ -217,7 +217,7 @@ fun EmptyContentScreen(
     btnText: String,
     btnIcon: ImageVector,
     modifier: Modifier = Modifier,
-    icon: ImageVector = MifosIcons.Info,
+    icon: ImageVector = ForkIcons.Info,
     iconTint: Color = KptTheme.colorScheme.primary,
     onClick: () -> Unit,
 ) {
@@ -243,7 +243,7 @@ fun EmptyContentScreen(
 @DevicePreviews
 @Composable
 fun EmptyContentScreenDrawableImagePreview() {
-    MifosTheme {
+    ForkTheme {
         EmptyContentScreen(
             title = "No data found",
             subTitle = "Please check you connection or try again",
@@ -258,7 +258,7 @@ fun EmptyContentScreenDrawableImagePreview() {
 @DevicePreviews
 @Composable
 fun EmptyContentScreenImageVectorPreview() {
-    MifosTheme {
+    ForkTheme {
         EmptyContentScreen(
             title = "No data found",
             subTitle = "Please check you connection or try again",

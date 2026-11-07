@@ -39,12 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.model.savedcards.SavedCard
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.savedcards.components.CreditCard
 import kpt.feature.savedcards.generated.resources.Res
 import kpt.feature.savedcards.generated.resources.feature_savedcards_error_oops
@@ -82,7 +82,7 @@ internal fun CardDetailScreen(
     modifier: Modifier = Modifier,
     onAction: (CardDetailAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = "Card Details",
         backPress = {
             onAction(CardDetailAction.NavigateBack)
@@ -96,7 +96,7 @@ internal fun CardDetailScreen(
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
-                is ViewState.Loading -> MifosProgressIndicator()
+                is ViewState.Loading -> ForkProgressIndicator()
 
                 is ViewState.Error -> {
                     EmptyContentScreen(
@@ -193,17 +193,17 @@ private fun CardDetail(
                 label = "Card Holder",
                 text = savedCard.fullName,
             )
-            MifosDivider(color = KptTheme.colorScheme.outlineVariant)
+            ForkDivider(color = KptTheme.colorScheme.outlineVariant)
             CreditCardLabelAndText(
                 label = "Card Number",
                 text = savedCard.cardNumber.maskCreditCardNumber(),
             )
-            MifosDivider(color = KptTheme.colorScheme.outlineVariant)
+            ForkDivider(color = KptTheme.colorScheme.outlineVariant)
             CreditCardLabelAndText(
                 label = "Expiry Date",
                 text = savedCard.formattedExpiryDate,
             )
-            MifosDivider(color = KptTheme.colorScheme.outlineVariant)
+            ForkDivider(color = KptTheme.colorScheme.outlineVariant)
             CreditCardLabelAndText(
                 label = "CVV",
                 text = savedCard.maskedCvv,

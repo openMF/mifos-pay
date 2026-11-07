@@ -54,13 +54,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_account_number
 import kpt.feature.send.money.generated.resources.feature_send_money_account_number_error
@@ -115,11 +115,11 @@ fun BankTransferScreen(
         }
     }
 
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = stringResource(Res.string.feature_send_money_bank_transfer),
                     backPress = {
                         viewModel.trySendAction(BankTransferAction.NavigateBack)
@@ -249,7 +249,7 @@ private fun BankTransferToOthersContent(
         Box(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            MifosTextField(
+            ForkTextField(
                 value = state.getDisplayAccountNumber(state.accountNumber, state.isAccountNumberMasked),
                 onValueChange = { newValue ->
                     if (!state.isAccountNumberMasked) {
@@ -286,7 +286,7 @@ private fun BankTransferToOthersContent(
             }
         }
 
-        MifosTextField(
+        ForkTextField(
             value = state.ifscCode,
             onValueChange = onIfscCodeChange,
             label = stringResource(Res.string.feature_send_money_ifsc_code),
@@ -329,7 +329,7 @@ private fun BankTransferToOthersContent(
                     )
                 }
             } else {
-                MifosButton(
+                ForkButton(
                     text = { Text(stringResource(Res.string.feature_send_money_continue)) },
                     onClick = onContinueClick,
                     enabled = state.isFormValid,
@@ -340,7 +340,7 @@ private fun BankTransferToOthersContent(
             Box(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                MifosTextField(
+                ForkTextField(
                     value = state.getDisplayAccountNumber(state.reenterAccountNumber, state.isReenterAccountNumberMasked),
                     onValueChange = { newValue ->
                         if (!state.isReenterAccountNumberMasked) {
@@ -377,7 +377,7 @@ private fun BankTransferToOthersContent(
                 }
             }
 
-            MifosTextField(
+            ForkTextField(
                 value = state.receiversName,
                 onValueChange = onReceiversNameChange,
                 label = stringResource(Res.string.feature_send_money_receivers_name),
@@ -393,7 +393,7 @@ private fun BankTransferToOthersContent(
                 },
             )
 
-            MifosButton(
+            ForkButton(
                 text = { Text(stringResource(Res.string.feature_send_money_confirm)) },
                 onClick = onProceedWithTransferClick,
                 enabled = state.isAdditionalFieldsValid,
@@ -564,7 +564,7 @@ private fun BankTransferToSelfContent(
             )
         }
 
-        MifosButton(
+        ForkButton(
             text = { Text(stringResource(Res.string.feature_send_money_continue)) },
             onClick = {
                 viewModel.trySendAction(BankTransferAction.ContinueSelfTransfer)
@@ -607,7 +607,7 @@ private fun BankAccountSelectionSection(
             )
 
             Icon(
-                imageVector = MifosIcons.KeyboardArrowDown,
+                imageVector = ForkIcons.KeyboardArrowDown,
                 contentDescription = "Expand",
                 tint = KptTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.size(20.dp),
@@ -679,7 +679,7 @@ private fun BankAccountSelectionButton(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Bank,
+                        imageVector = ForkIcons.Bank,
                         contentDescription = "Bank Logo",
                         tint = KptTheme.colorScheme.onPrimaryContainer,
                         modifier = Modifier.size(24.dp),
@@ -708,7 +708,7 @@ private fun BankAccountSelectionButton(
 
             if (selectedBankAccount != null) {
                 Icon(
-                    imageVector = MifosIcons.Check,
+                    imageVector = ForkIcons.Check,
                     contentDescription = "Selected",
                     tint = KptTheme.colorScheme.primary,
                     modifier = Modifier.size(20.dp),
@@ -776,7 +776,7 @@ private fun BankAccountSelectionItem(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    imageVector = MifosIcons.Bank,
+                    imageVector = ForkIcons.Bank,
                     contentDescription = "Bank Logo",
                     tint = if (isSelected) KptTheme.colorScheme.onPrimary else KptTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.size(24.dp),
@@ -808,7 +808,7 @@ private fun BankAccountSelectionItem(
             }
 
             Icon(
-                imageVector = if (isSelected) MifosIcons.Check else MifosIcons.RadioButtonUnchecked,
+                imageVector = if (isSelected) ForkIcons.Check else ForkIcons.RadioButtonUnchecked,
                 contentDescription = if (isSelected) "Selected" else "Not selected",
                 tint = if (isSelected) KptTheme.colorScheme.primary else KptTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.size(20.dp),
@@ -838,7 +838,7 @@ private fun BankAccountAddItem(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             Icon(
-                imageVector = MifosIcons.Bank,
+                imageVector = ForkIcons.Bank,
                 contentDescription = "Add Bank Account",
                 tint = KptTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp),

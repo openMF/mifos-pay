@@ -52,19 +52,19 @@ import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.screen.ScreenContent
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.designsystem.theme.toRoundedCornerShape
 import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.RevealDirection
 import kpt.core.ui.RevealSwipe
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.core.ui.rememberRevealState
-import kpt.core.ui.utils.EventsEffect
 import kpt.feature.standing.instruction.components.FrequencyChip
 import kpt.feature.standing.instruction.createOrUpdate.SIAddEditType
 import org.jetbrains.compose.resources.getString
@@ -118,7 +118,7 @@ private fun SIDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is SIUiState.DialogState.DeleteSI -> MifosBasicDialog(
+        is SIUiState.DialogState.DeleteSI -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = stringResource(dialogState.title),
                 message = stringResource(dialogState.message),
@@ -127,14 +127,14 @@ private fun SIDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is SIUiState.DialogState.Error -> MifosBasicDialog(
+        is SIUiState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is SIUiState.DialogState.Loading -> MifosLoadingDialog(
+        is SIUiState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -150,7 +150,7 @@ internal fun StandingInstructionScreen(
     onRetry: () -> Unit,
     onAction: (SIAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         snackbarHostState = snackbarHostState,
         floatingActionButtonPosition = FabPosition.EndOverlay,
         modifier = modifier,
@@ -160,7 +160,7 @@ internal fun StandingInstructionScreen(
                     onAction(SIAction.AddNewSI)
                 },
             ) {
-                Icon(imageVector = MifosIcons.Add, "Add")
+                Icon(imageVector = ForkIcons.Add, "Add")
             }
         },
     ) { padding ->
@@ -179,7 +179,7 @@ internal fun StandingInstructionScreen(
                     title = "No Standing Instructions",
                     subTitle = "No standing instructions found for this client.",
                     btnText = "Add New SI",
-                    btnIcon = MifosIcons.Add,
+                    btnIcon = ForkIcons.Add,
                     onClick = {
                         onAction(SIAction.AddNewSI)
                     },
@@ -272,7 +272,7 @@ private fun SIItem(
                     },
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Edit2,
+                        imageVector = ForkIcons.Edit2,
                         contentDescription = "Edit",
                     )
                 }
@@ -281,7 +281,7 @@ private fun SIItem(
                     onClick = { item.id?.let { onClickDelete(it) } },
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Delete,
+                        imageVector = ForkIcons.Delete,
                         contentDescription = "Delete",
                     )
                 }

@@ -24,8 +24,8 @@ import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.data.repository.KycLevelRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel exposing the client's current KYC level and routing level selection events. */
 class KYCDescriptionViewModel(
     private val repository: ForkPreferencesRepository,
@@ -136,13 +136,13 @@ enum class KycLevel(
     val icon: ImageVector,
 ) {
     /** Level 1: basic details. */
-    KYC_LEVEL_1(level = 1, title = "Basic Details", icon = MifosIcons.Person),
+    KYC_LEVEL_1(level = 1, title = "Basic Details", icon = ForkIcons.Person),
 
     /** Level 2: document upload. */
-    KYC_LEVEL_2(level = 2, title = "Upload Documents", icon = MifosIcons.Badge),
+    KYC_LEVEL_2(level = 2, title = "Upload Documents", icon = ForkIcons.Badge),
 
     /** Level 3: review and submit. */
-    KYC_LEVEL_3(level = 3, title = "Review & Submit", icon = MifosIcons.DataInfo),
+    KYC_LEVEL_3(level = 3, title = "Review & Submit", icon = ForkIcons.DataInfo),
 }
 
 /** One-off navigation events emitted by the KYC description screen. */

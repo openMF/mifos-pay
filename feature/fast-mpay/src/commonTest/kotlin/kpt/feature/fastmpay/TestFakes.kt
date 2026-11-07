@@ -34,6 +34,8 @@ import kpt.core.model.beneficiary.BeneficiaryPayload
 import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
 import kpt.core.model.client.Client
 import kpt.core.model.client.UpdatedClient
+import kpt.core.model.fork.user.Language
+import kpt.core.model.fork.user.UserInfo
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
 import kpt.core.model.network.entity.Page
@@ -41,8 +43,6 @@ import kpt.core.model.network.entity.authentication.AuthenticationPayload
 import kpt.core.model.network.entity.user.User
 import kpt.core.model.office.Office
 import kpt.core.model.savingsaccount.Transaction
-import kpt.core.model.user.Language
-import kpt.core.model.user.UserInfo
 import kpt.core.base.store.screen.ScreenState as StoreScreenState
 
 /**

@@ -18,7 +18,7 @@ kotlin {
             implementation(projects.coreBase.ui)
             implementation(projects.coreBase.datastore)
             // Fork addition: BiometricsSetupScreen reads
-            // kpt.core.designsystem.{component,theme}.* (MifosDialogBox/MifosScaffold/MifosTheme).
+            // kpt.core.designsystem.{component,theme}.* (ForkDialogBox/ForkScaffold/ForkTheme).
             // kpt.core.model.client.Client and kpt.core.datastore.UserPreferencesRepository
             // come transitively via core/data's api(core.model)/api(core.datastore) re-export.
             implementation(projects.core.designsystem)
@@ -28,10 +28,10 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            // BiometricsSetupScreen + MifosPasscode use NavigationBackHandler +
+            // BiometricsSetupScreen + AppPasscodeScreen use NavigationBackHandler +
             // rememberNavigationEventState from AndroidX's KMP back-handling API.
             implementation(libs.androidx.navigationevent.compose)
-            // Fork addition: BiometricErrorMessages/MifosPasscodeViewModel/MifosPasscode/
+            // Fork addition: BiometricErrorMessages/PasscodeViewModel/AppPasscodeScreen/
             // BiometricsSetupScreenViewmodel wrap the mifos-authenticator biometrics + passcode
             // libraries (platformAuthenticator, PasscodeManager, PasscodeScreen et al.).
             implementation(libs.mifos.authenticator.biometrics)

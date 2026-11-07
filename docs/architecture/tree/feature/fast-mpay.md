@@ -9,17 +9,17 @@ Screens: `FastMpayScreen`
 
 ViewModels: `FastMpayViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 <!-- tree-scaffold:end -->
 ## Significance
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/fast-mpay sha=dcf910afab5c99f1dd47f7507b4e1a8dc98f2846 -->
+<!-- api-docs:begin module=feature/fast-mpay sha=a55ed2bb24433e0c6394c46d0f3098cfca0941ae -->
 ## API reference
 
-_Generated from `feature/fast-mpay` at tree `dcf910afab5c` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/fast-mpay` at tree `a55ed2bb2443` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

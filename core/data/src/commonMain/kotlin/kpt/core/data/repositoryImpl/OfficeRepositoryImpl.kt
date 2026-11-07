@@ -12,6 +12,9 @@ package kpt.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flowOn
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
@@ -22,22 +25,21 @@ import kpt.core.data.repository.OfficeRepository
 import kpt.core.model.office.Office
 import kpt.core.network.SelfServiceApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.office.OfficesKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 /** Default [OfficeRepository] backed by the office API. */
+@RepositoryBinding(binds = OfficeRepository::class)
 class OfficeRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getOfficesScreen(...) can consume Store5 via asScreenStream(...).
-    // Nullable-default so existing unit tests without the store harness continue
-    // to compile; getOffices() — the legacy asScreenStateFlow path — is unaffected.
-    private val officesStore: Store<OfficesKey, List<Office>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Offices) private val officesStore: Store<OfficesKey, List<Office>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : OfficeRepository {
     override fun getOffices(): ScreenStateStream<List<Office>> {
         return apiManager.officeApi.getOffices()

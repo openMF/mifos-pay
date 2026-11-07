@@ -17,13 +17,13 @@ import org.koin.dsl.module
  * top-level [cmp.navigation.registry.app.di.KoinModules] aggregator.
  *
  * Note: the `PasscodeManager` singleton itself is registered in
- * [cmp.navigation.registry.app.di.KoinModules.MifosPasscodeModule] (cmp-shared)
+ * [cmp.navigation.registry.app.di.KoinModules.ForkPasscodeModule] (cmp-shared)
  * because it depends on `PasscodeStorageAdapter`, which lives in
- * `:core:data`'s [kpt.core.data.di.fork.RepositoryModule]. Keeping the
+ * `:core:data`'s [kpt.core.data.fork.di.RepositoryModule]. Keeping the
  * VM bindings here and the manager binding in cmp-shared avoids a circular
  * module dependency.
  */
-val MifosAuthenticatorModule = module {
+val AuthenticatorModule = module {
     viewModelOf(::BiometricSetupScreenViewmodel)
-    viewModelOf(::MifosPasscodeViewModel)
+    viewModelOf(::PasscodeViewModel)
 }

@@ -12,7 +12,7 @@ package kpt.feature.merchants
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.flow.StateFlow
 import kpt.core.model.savingsaccount.Transaction
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel of the merchant transfer screen; currently a stub with no backend or actions. */
 class MerchantTransferViewModel(
     private val savedStateHandle: SavedStateHandle,

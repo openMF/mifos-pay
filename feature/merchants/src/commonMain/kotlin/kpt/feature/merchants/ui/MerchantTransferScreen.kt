@@ -45,17 +45,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.savingsaccount.Currency
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.ForkProgressIndicator
 import kpt.feature.merchants.MerchantTransferUiState
 import kpt.feature.merchants.MerchantTransferViewModel
 import kpt.feature.merchants.generated.resources.Res
@@ -108,7 +108,7 @@ internal fun MerchantTransferScreen(
     var showBottomSheet by remember { mutableStateOf(true) }
     var amount by rememberSaveable { mutableStateOf("") }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.feature_merchants_merchant_transaction),
         backPress = onBackPressed,
@@ -120,7 +120,7 @@ internal fun MerchantTransferScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 when (uiState) {
-                    is MerchantTransferUiState.Loading -> MifosProgressIndicator()
+                    is MerchantTransferUiState.Loading -> ForkProgressIndicator()
 
                     is MerchantTransferUiState.Error -> {
                         EmptyContentScreen(
@@ -187,7 +187,7 @@ private fun MerchantBottomSheet(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosBottomSheet(
+    ForkBottomSheet(
         content = {
             Column(
                 modifier =
@@ -213,7 +213,7 @@ private fun MerchantBottomSheet(
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     value = amount,
                     label = stringResource(Res.string.feature_merchants_amount),
                     onValueChange = onAmountChange,
@@ -221,7 +221,7 @@ private fun MerchantBottomSheet(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 )
                 Spacer(modifier = Modifier.height(24.dp))
-                MifosButton(
+                ForkButton(
                     onClick = {
                         checkBalanceAvailability(
                             merchantName,
@@ -307,7 +307,7 @@ private fun SpecificTransactionItem(
                 accountNo = transaction.accountNo,
                 modifier = Modifier.weight(1f),
             )
-            Icon(imageVector = MifosIcons.SendRightTilted, contentDescription = null)
+            Icon(imageVector = ForkIcons.SendRightTilted, contentDescription = null)
             SpecificTransactionAccountInfo(
                 amount = transaction.amount.toString(),
                 accountNo = transaction.accountNo,
@@ -383,7 +383,7 @@ private fun SpecificTransactionAccountInfo(
         },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon(imageVector = MifosIcons.AccountCircle, contentDescription = null)
+        Icon(imageVector = ForkIcons.AccountCircle, contentDescription = null)
         Text(
             text = accountNo,
             style = KptTheme.typography.titleSmall,
@@ -413,7 +413,7 @@ private fun Preview(
     @PreviewParameter(MerchantTransferUiStateProvider::class)
     uiState: MerchantTransferUiState,
 ) {
-    MifosTheme {
+    ForkTheme {
         MerchantTransferScreen(
             uiState = uiState,
             merchantName = "New User",
@@ -427,7 +427,7 @@ private fun Preview(
 @Preview
 @Composable
 private fun TransactionItemPreview() {
-    MifosTheme {
+    ForkTheme {
         SpecificTransactionItem(
             transaction = Transaction(
                 accountId = 2447,
@@ -457,7 +457,7 @@ private fun TransactionItemPreview() {
 @Preview
 @Composable
 private fun MerchantBottomSheetPreview() {
-    MifosTheme {
+    ForkTheme {
         MerchantBottomSheet(
             merchantName = "Naman Dwivedi 2",
             merchantVPA = "naman.dwivedi2@mifos",
@@ -472,7 +472,7 @@ private fun MerchantBottomSheetPreview() {
 @Preview
 @Composable
 private fun MerchantInitialAvatarPreview() {
-    MifosTheme {
+    ForkTheme {
         MerchantInitialAvatar("Naman")
     }
 }

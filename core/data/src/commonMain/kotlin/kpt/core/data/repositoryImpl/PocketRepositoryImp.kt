@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
@@ -31,6 +34,7 @@ import kpt.core.model.pocket.LinkableAccount
 import kpt.core.model.pocket.PocketAccount
 import kpt.core.network.SelfServiceApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.linkableaccount.LinkableAccountKey
 import kpt.core.store.wallet.pocket.PocketKey
@@ -39,17 +43,16 @@ import kotlin.time.Clock
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 /** Default [PocketRepository] backed by the pocket and client APIs. */
+@RepositoryBinding(binds = PocketRepository::class)
 class PocketRepositoryImp(
     private val dataManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>? = null,
-    private val linkableAccountsStore: Store<
-        LinkableAccountKey,
-        List<LinkableAccount>,
-        >? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
-    private val pocketDao: PocketDao? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    @FromStore(AppStoreIds.Pocket) private val pocketStore: Store<PocketKey, List<DetailedPocketAccount>>?,
+    @FromStore(AppStoreIds.LinkableAccounts)
+    private val linkableAccountsStore: Store<LinkableAccountKey, List<LinkableAccount>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    private val pocketDao: PocketDao?,
 ) : PocketRepository {
 
     /**

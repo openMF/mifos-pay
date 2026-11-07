@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kpt.core.common.ScreenState
 import kpt.core.data.repository.TwoFactorAuthRepository
 import kpt.core.model.bank.BankAccountDetails
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * Real OTP request/verify — reads through [TwoFactorAuthRepository] (a real Fineract
  * self-service two-factor-auth endpoint, previously bound in DI but never actually consumed

@@ -10,7 +10,7 @@
 package kpt.feature.faq
 
 import kotlinx.coroutines.flow.update
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.faq.generated.resources.Res
 import kpt.feature.faq.generated.resources.feature_faq_answer1
 import kpt.feature.faq.generated.resources.feature_faq_answer2

@@ -9,7 +9,7 @@ Screens: `LoginScreen`, `MobileVerificationScreen`, `SignupMethodScreen`, `Signu
 
 ViewModels: `LoginViewModel`, `MobileVerificationViewModel`, `SignupViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `LoginViewModel`, `MobileVerificationViewModel`, `SignupViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/auth sha=40c0cbb9ac560d4634623dd09a23c26bcc3e8dde -->
+<!-- api-docs:begin module=feature/auth sha=2feada44ddbfa780cc73a2e80a0259cbe887446f -->
 ## API reference
 
-_Generated from `feature/auth` at tree `40c0cbb9ac56` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/auth` at tree `2feada44ddbf` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -71,7 +71,7 @@ UI state of the login screen.
     )
 
     if (state.dialogState is LoginState.DialogState.Loading) {
-        MifosProgressIndicatorOverlay()
+        ForkProgressIndicatorOverlay()
     }
 }
 ```
@@ -90,7 +90,7 @@ One-off events emitted by the login view model.
         when (event) {
             is LoginEvent.NavigateBack -> onNavigateBack.invoke()
             is LoginEvent.NavigateToSignup -> navigateToSignupScreen.invoke()
-            is LoginEvent.NavigateToMifosPasscodeScreen -> navigateToMifosPasscodeScreen()
+            is LoginEvent.NavigateToPasscode -> navigateToPasscode()
             is LoginEvent.ShowToast -> {
                 scope.launch {
 ```

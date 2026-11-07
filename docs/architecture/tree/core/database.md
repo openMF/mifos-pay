@@ -24,10 +24,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/database sha=98ba481a4d782a7a57752280dfae66169adeb614 -->
+<!-- api-docs:begin module=core/database sha=eed7a57ce1f9633f37f0a4fe7de80def4b01e478 -->
 ## API reference
 
-_Generated from `core/database` at tree `98ba481a4d78` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/database` at tree `eed7a57ce1f9` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/database/src/commonMain/kotlin/kpt/core/database/config/DatabaseConfig.kt`
@@ -245,13 +245,13 @@ interface BillDao
 ```
 Data-access object for the `wallet_autopay_bills` OFFLINE_LOCAL_ONLY table (GOAL D12). All reads are reactive `Flow`s; all writes are `suspend` one-shots.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillOfflineRepositoryImpl.kt:75</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillOfflineRepositoryImpl.kt:78</code></summary>
 
 ```kotlin
-@OptIn(ExperimentalTime::class)
+@RepositoryBinding(binds = BillRepository::class)
 class BillOfflineRepositoryImpl(
     private val dao: BillDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : BillRepository {
 
     override fun getAllBills(): Flow<List<Bill>> {
@@ -309,13 +309,13 @@ interface BillerDao
 ```
 Data-access object for the `wallet_autopay_billers` OFFLINE_LOCAL_ONLY table (GOAL D12) — mirrors the shape of [`BillDao`]`kpt.core.database.wallet.bill.BillDao`. All reads are reactive `Flow`s; all writes are `suspend` one-shots.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillerOfflineRepositoryImpl.kt:92</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillerOfflineRepositoryImpl.kt:95</code></summary>
 
 ```kotlin
-@OptIn(ExperimentalTime::class)
+@RepositoryBinding(binds = BillerRepository::class)
 class BillerOfflineRepositoryImpl(
     private val dao: BillerDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : BillerRepository {
 
     override fun getAllBillers(): Flow<List<Biller>> {
@@ -673,12 +673,12 @@ interface PocketDao
 ```
 Data-access object for the `wallet_pockets` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per client — `observeByClient`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:52</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:55</code></summary>
 
 ```kotlin
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
-    private val pocketDao: PocketDao? = null,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    private val pocketDao: PocketDao?,
 ) : PocketRepository {
 
     /**
@@ -751,9 +751,9 @@ Data-access object for the `wallet_recent_payees` LOCAL-DERIVED table (GOAL D12 
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/RecentPayeeRepositoryImpl.kt:68</code></summary>
 
 ```kotlin
-    // construct it. Production DI in `RepositoryModule` wires this
-    // unconditionally.
-    private val recentPayeeDao: RecentPayeeDao? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    private val recentPayeeDao: RecentPayeeDao?,
 ) : RecentPayeeRepository {
 
     // Phase-5 Batch-4 store-backed read — GOAL D12/D13 (Room SoT + background
@@ -988,12 +988,12 @@ interface TransactionDao
 ```
 Data-access object for the `wallet_transactions` LEDGER table. ## Access pattern (GOAL D13 — the LEDGER archetype) - **Reads** are reactive `Flow`s per account — `observeByAccount`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:69</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:65</code></summary>
 
 ```kotlin
-    // injected so getTransaction(...) can read the cached row offline-first before
-    // hitting the network. Nullable-default for the same test-harness reason.
-    private val transactionDao: TransactionDao? = null,
+    @FromStore(AppStoreIds.TransferDetail) private val transferDetailStore: Store<TransferDetailKey, TransferDetail>?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    private val transactionDao: TransactionDao?,
 ) : AccountRepository {
 
     // Offline-first single-transaction read — prefers the cached `wallet_transactions`

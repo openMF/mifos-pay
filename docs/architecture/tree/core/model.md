@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/model sha=8dea7c87c7baa33f44abe7ba3bdf0cf1bdc10e21 -->
+<!-- api-docs:begin module=core/model sha=47f33fb8d19ac3b2925b3523accb5aed71a401f6 -->
 ## API reference
 
-_Generated from `core/model` at tree `8dea7c87c7ba` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/model` at tree `47f33fb8d19a` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/account/Account.kt`
@@ -335,16 +335,16 @@ data class AutoPayPayload(
 ```
 Request body for creating an auto-pay schedule.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:50</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/fork/util/AutoPayValidator.kt:39</code></summary>
 
 ```kotlin
-     */
-    suspend fun createAutoPaySchedule(
-        payload: AutoPayPayload,
-    )
 
-    /**
-     * Update an existing AutoPay schedule. Throws on failure.
+    /** Validates a new auto-pay payload and returns the first violation, if any. */
+    fun validateAutoPayPayload(payload: AutoPayPayload): ValidationResult {
+        return when {
+            payload.name.isBlank() -> ValidationResult.Invalid("Schedule name is required")
+            payload.name.length < 3 -> ValidationResult.Invalid("Schedule name must be at least 3 characters")
+            payload.name.length > 100 -> ValidationResult.Invalid("Schedule name must be less than 100 characters")
 ```
 
 </details>
@@ -354,16 +354,16 @@ data class AutoPayUpdatePayload(
 ```
 Request body for updating an auto-pay schedule; only non-null fields are changed.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repository/AutoPayRepository.kt:58</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/fork/util/AutoPayValidator.kt:83</code></summary>
 
 ```kotlin
-    suspend fun updateAutoPaySchedule(
-        autoPayId: Long,
-        payload: AutoPayUpdatePayload,
-    )
 
-    /**
-     * Delete an AutoPay schedule. Throws on failure.
+    /** Validates an auto-pay update payload and returns the first violation, if any. */
+    fun validateAutoPayUpdatePayload(payload: AutoPayUpdatePayload): ValidationResult {
+        return when {
+            payload.name?.let { it.isBlank() } == true -> ValidationResult.Invalid("Schedule name cannot be empty")
+            payload.name?.let { it.length < 3 } == true -> ValidationResult.Invalid("Schedule name must be at least 3 characters")
+            payload.name?.let { it.length > 100 } == true -> ValidationResult.Invalid("Schedule name must be less than 100 characters")
 ```
 
 </details>
@@ -416,7 +416,7 @@ A bill the user tracks, optionally recurring and optionally paid automatically t
 
 ```kotlin
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = "Add New Bill",
                 backPress = onNavigateBack,
             )
@@ -611,7 +611,7 @@ A bank listed for selection when linking an external bank account.
 ```kotlin
                 leadingContent = {
                     AvatarBox(
-                        icon = MifosIcons.Bank,
+                        icon = ForkIcons.Bank,
                         backgroundColor = KptTheme.colorScheme.secondaryContainer,
                     )
                 },
@@ -983,6 +983,137 @@ Kind of account in Fineract, with its display label.
 
 </details>
 
+### `core/model/src/commonMain/kotlin/kpt/core/model/fork/user/Language.kt`
+
+```kotlin
+data class Language(
+```
+A language the user can choose in the app.
+
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:251</code></summary>
+
+```kotlin
+    override val selectedInterbankInstance: StateFlow<InterbankServer?> = MutableStateFlow(null)
+    override val accountExternalIds: StateFlow<Map<Long, String>> = MutableStateFlow(emptyMap())
+    override val language: StateFlow<Language> = MutableStateFlow(Language.DEFAULT)
+
+    override suspend fun updateToken(token: String) {}
+    override suspend fun updateUserInfo(user: UserInfo) {}
+    override suspend fun setLanguage(language: Language) {}
+```
+
+</details>
+
+```kotlin
+fun LanguageConfig.toLanguage(): Language
+```
+Converts this `LanguageConfig` into a `Language`.
+
+### `core/model/src/commonMain/kotlin/kpt/core/model/fork/user/LanguageConfig.kt`
+
+```kotlin
+enum class LanguageConfig(
+```
+Represents the languages supported by the app.
+
+<details><summary>Used in the template — <code>feature/onboarding/src/commonTest/kotlin/kpt/feature/onboarding/ui/OnboardingViewModelTest.kt:71</code></summary>
+
+```kotlin
+        override val authToken: String? get() = unused()
+        override val passcode: String get() = unused()
+        override val observeLanguage: Flow<LanguageConfig> get() = unused()
+        override val observeDarkThemeConfig: Flow<DarkThemeConfig> get() = unused()
+        override val observeDynamicColorPreference: Flow<Boolean> get() = unused()
+        override val observeScreenCapturePreference: Flow<Boolean> get() = unused()
+        override val observeAnalyticsConsent: Flow<Boolean> get() = unused()
+```
+
+</details>
+
+### `core/model/src/commonMain/kotlin/kpt/core/model/fork/user/NewUser.kt`
+
+```kotlin
+class NewUser(
+```
+Details required to register a new user.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:462</code></summary>
+
+```kotlin
+
+        // 2. Create the user account.
+        val newUser = NewUser(
+            state.userNameInput,
+            state.firstNameInput,
+            state.lastNameInput,
+            state.emailInput,
+```
+
+</details>
+
+### `core/model/src/commonMain/kotlin/kpt/core/model/fork/user/RoleInfo.kt`
+
+```kotlin
+data class RoleInfo(
+```
+A role assigned to a user.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/UserMapper.kt:49</code></summary>
+
+```kotlin
+    officeId = officeId,
+    officeName = officeName,
+    roles = roles.map { it.toRoleInfo() },
+    permissions = permissions,
+    clients = clients,
+    shouldRenewPassword = shouldRenewPassword,
+    isTwoFactorAuthenticationRequired = isTwoFactorAuthenticationRequired,
+```
+
+</details>
+
+### `core/model/src/commonMain/kotlin/kpt/core/model/fork/user/UserData.kt`
+
+```kotlin
+data class UserData(
+```
+Locally stored data about the signed-in wallet user.
+
+<details><summary>Used in the template — <code>feature/onboarding/src/commonTest/kotlin/kpt/feature/onboarding/ui/OnboardingViewModelTest.kt:67</code></summary>
+
+```kotlin
+        }
+
+        override val userData: StateFlow<UserData> get() = unused()
+        override fun userDataStream(scope: CoroutineScope): ScreenDataStream<UserData> = unused()
+        override val authToken: String? get() = unused()
+        override val passcode: String get() = unused()
+        override val observeLanguage: Flow<LanguageConfig> get() = unused()
+```
+
+</details>
+
+### `core/model/src/commonMain/kotlin/kpt/core/model/fork/user/UserInfo.kt`
+
+```kotlin
+data class UserInfo(
+```
+Authenticated user details returned at login.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:49</code></summary>
+
+```kotlin
+    // Submitting/Submitted/Failed lifecycle; we observe it below to drive this screen's
+    // existing loading/error dialog + passcode navigation, so the Screen is unchanged.
+    private val submitLogin = viewModelScope.submitHandler<UserInfo>()
+
+    init {
+        submitLogin.state
+            .onEach { submitState ->
+```
+
+</details>
+
 ### `core/model/src/commonMain/kotlin/kpt/core/model/instance/InstancesConfig.kt`
 
 ```kotlin
@@ -990,7 +1121,7 @@ data class InstancesConfig(
 ```
 Configured list of selectable server instances.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/InstanceConfigLoader.kt:18</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceConfigLoader.kt:18</code></summary>
 
 ```kotlin
 interface InstanceConfigLoader {
@@ -1053,7 +1184,7 @@ data class InterBankParticipantRequest(
 ```
 Request to register or look up a party as an interbank participant.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:36</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:39</code></summary>
 
 ```kotlin
         currencyCode: String,
@@ -1093,7 +1224,7 @@ data class InterBankPartyInfoRequest(
 ```
 Request for the details of a party in another bank.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:49</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:52</code></summary>
 
 ```kotlin
         ownerFspId: String,
@@ -1175,7 +1306,7 @@ An amount of money with its currency.
 
 ```kotlin
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Amount *",
                     value = state.formData.amount,
                     onValueChange = { viewModel.trySendAction(AddBillAction.UpdateAmount(it)) },
@@ -1416,7 +1547,7 @@ data class UserEntity(
 ```
 Persisted representation of an authenticated Fineract user.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:64</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:67</code></summary>
 
 ```kotlin
         withContext(ioDispatcher) {
@@ -1812,10 +1943,10 @@ Dates and actors for each stage of a loan (submit, approve, disburse, close).
 
 </details>
 
-### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/MifosError.kt`
+### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/FineractError.kt`
 
 ```kotlin
-data class MifosError(
+data class FineractError(
 ```
 Represents the standard error response format from Mifos/Fineract server.
 
@@ -1840,33 +1971,33 @@ Represents the standard error response format from Mifos/Fineract server.
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:129</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/fork/util/FineractErrorParser.kt:51</code></summary>
 
 ```kotlin
-            .getAccounts(clientId, Constants.SAVINGS)
-            .map { it.toAccount() }
-            .asScreenStateFlow(errorBodyParser = parseMifosError, isEmpty = { it.isEmpty() })
-            .flowOn(dispatcher)
-    }
+ * @return A user-friendly error message extracted from the response
+ */
+val parseFineractError: ErrorBodyParser = { responseBody, statusCode ->
+    extractFineractErrorMessage(responseBody, statusCode)
+}
 
-    // Network-only aggregation lifted into ScreenState via `asScreenStateFlow`
+/**
 ```
 
 </details>
 
-### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/MifosErrorDetail.kt`
+### `core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/FineractErrorDetail.kt`
 
 ```kotlin
-data class MifosErrorDetail(
+data class FineractErrorDetail(
 ```
 Represents a specific error detail in the Mifos/Fineract error response. This is typically used for validation errors where multiple fields may have issues.
 
-<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/MifosError.kt:47</code></summary>
+<details><summary>Used in the template — <code>core/model/src/commonMain/kotlin/kpt/core/model/network/entity/mifoserror/FineractError.kt:47</code></summary>
 
 ```kotlin
     val defaultUserMessage: String? = null,
     val userMessageGlobalisationCode: String? = null,
-    val errors: List<MifosErrorDetail> = emptyList(),
+    val errors: List<FineractErrorDetail> = emptyList(),
 ) {
     /**
      * Returns the most appropriate user-facing error message.
@@ -1988,7 +2119,7 @@ data class PocketLinkRequest(
 ```
 Request body for linking accounts to a pocket.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:138</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:141</code></summary>
 
 ```kotlin
             try {
@@ -2026,7 +2157,7 @@ data class PocketDelinkRequest(
 ```
 Request body for removing accounts from a pocket by mapping id.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:191</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryImp.kt:194</code></summary>
 
 ```kotlin
                 val serverIds = accountsToDelink.filter { it.id > 0 }.map { it.id }
@@ -2424,7 +2555,7 @@ data class UpdateUserEntityPassword(
 ```
 Request body for changing a user's password.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:64</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/UserRepositoryImpl.kt:67</code></summary>
 
 ```kotlin
         withContext(ioDispatcher) {
@@ -3426,32 +3557,6 @@ The user's dark-mode preference: follow the system, or force light/dark. `osValu
 
 </details>
 
-### `core/model/src/commonMain/kotlin/kpt/core/model/user/Language.kt`
-
-```kotlin
-data class Language(
-```
-A language the user can choose in the app.
-
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:251</code></summary>
-
-```kotlin
-    override val selectedInterbankInstance: StateFlow<InterbankServer?> = MutableStateFlow(null)
-    override val accountExternalIds: StateFlow<Map<Long, String>> = MutableStateFlow(emptyMap())
-    override val language: StateFlow<Language> = MutableStateFlow(Language.DEFAULT)
-
-    override suspend fun updateToken(token: String) {}
-    override suspend fun updateUserInfo(user: UserInfo) {}
-    override suspend fun setLanguage(language: Language) {}
-```
-
-</details>
-
-```kotlin
-fun LanguageConfig.toLanguage(): Language
-```
-Converts this `LanguageConfig` into a `Language`.
-
 ### `core/model/src/commonMain/kotlin/kpt/core/model/user/LanguageConfig.kt`
 
 ```kotlin
@@ -3469,48 +3574,6 @@ Every language the app can be switched to, in the user's OWN language. GENERATED
         override val observeDynamicColorPreference: Flow<Boolean> get() = unused()
         override val observeScreenCapturePreference: Flow<Boolean> get() = unused()
         override val observeAnalyticsConsent: Flow<Boolean> get() = unused()
-```
-
-</details>
-
-### `core/model/src/commonMain/kotlin/kpt/core/model/user/NewUser.kt`
-
-```kotlin
-class NewUser(
-```
-Details required to register a new user.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/signup/SignupViewModel.kt:462</code></summary>
-
-```kotlin
-
-        // 2. Create the user account.
-        val newUser = NewUser(
-            state.userNameInput,
-            state.firstNameInput,
-            state.lastNameInput,
-            state.emailInput,
-```
-
-</details>
-
-### `core/model/src/commonMain/kotlin/kpt/core/model/user/RoleInfo.kt`
-
-```kotlin
-data class RoleInfo(
-```
-A role assigned to a user.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/mapper/UserMapper.kt:49</code></summary>
-
-```kotlin
-    officeId = officeId,
-    officeName = officeName,
-    roles = roles.map { it.toRoleInfo() },
-    permissions = permissions,
-    clients = clients,
-    shouldRenewPassword = shouldRenewPassword,
-    isTwoFactorAuthenticationRequired = isTwoFactorAuthenticationRequired,
 ```
 
 </details>
@@ -3549,69 +3612,6 @@ How the user unlocks the app — passcode or biometric.
 data class UserData(
 ```
 Everything the app persists about the current user — theme, language, onboarding progress and the lock state.
-
-<details><summary>Used in the template — <code>feature/onboarding/src/commonTest/kotlin/kpt/feature/onboarding/ui/OnboardingViewModelTest.kt:67</code></summary>
-
-```kotlin
-        }
-
-        override val userData: StateFlow<UserData> get() = unused()
-        override fun userDataStream(scope: CoroutineScope): ScreenDataStream<UserData> = unused()
-        override val authToken: String? get() = unused()
-        override val passcode: String get() = unused()
-        override val observeLanguage: Flow<LanguageConfig> get() = unused()
-```
-
-</details>
-
-### `core/model/src/commonMain/kotlin/kpt/core/model/user/UserInfo.kt`
-
-```kotlin
-data class UserInfo(
-```
-Authenticated user details returned at login.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:49</code></summary>
-
-```kotlin
-    // Submitting/Submitted/Failed lifecycle; we observe it below to drive this screen's
-    // existing loading/error dialog + passcode navigation, so the Screen is unchanged.
-    private val submitLogin = viewModelScope.submitHandler<UserInfo>()
-
-    init {
-        submitLogin.state
-            .onEach { submitState ->
-```
-
-</details>
-
-### `core/model/src/commonMain/kotlin/kpt/core/model/user/fork/LanguageConfig.kt`
-
-```kotlin
-enum class LanguageConfig(
-```
-Represents the languages supported by the app.
-
-<details><summary>Used in the template — <code>feature/onboarding/src/commonTest/kotlin/kpt/feature/onboarding/ui/OnboardingViewModelTest.kt:71</code></summary>
-
-```kotlin
-        override val authToken: String? get() = unused()
-        override val passcode: String get() = unused()
-        override val observeLanguage: Flow<LanguageConfig> get() = unused()
-        override val observeDarkThemeConfig: Flow<DarkThemeConfig> get() = unused()
-        override val observeDynamicColorPreference: Flow<Boolean> get() = unused()
-        override val observeScreenCapturePreference: Flow<Boolean> get() = unused()
-        override val observeAnalyticsConsent: Flow<Boolean> get() = unused()
-```
-
-</details>
-
-### `core/model/src/commonMain/kotlin/kpt/core/model/user/fork/UserData.kt`
-
-```kotlin
-data class UserData(
-```
-Locally stored data about the signed-in wallet user.
 
 <details><summary>Used in the template — <code>feature/onboarding/src/commonTest/kotlin/kpt/feature/onboarding/ui/OnboardingViewModelTest.kt:67</code></summary>
 
@@ -3683,7 +3683,7 @@ A currency with the country that uses it and its symbol.
     modifier: Modifier = Modifier,
     onAction: (MpayQrAction) -> Unit,
 ) {
-    MifosCustomDialog(
+    ForkCustomDialog(
 ```
 
 </details>
@@ -3799,7 +3799,7 @@ data class StandardUpiQrData(
 ```
 Data class representing standard UPI QR code data Based on UPI QR code specification
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/util/StandardUpiQrCodeProcessor.kt:35</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/fork/util/StandardUpiQrCodeProcessor.kt:35</code></summary>
 
 ```kotlin
      * @throws IllegalArgumentException if the QR code is invalid

@@ -27,10 +27,10 @@ import kpt.core.base.store.submit.SubmitState
 import kpt.core.base.store.submit.submitHandler
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
+import kpt.core.data.fork.util.Constants
 import kpt.core.data.repository.DocumentRepository
-import kpt.core.data.util.Constants
 import kpt.core.datastore.prefs.ForkPreferencesRepository
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.kyc.KycLevel2State.DialogState.Error
 import kpt.feature.kyc.generated.resources.Res
 import kpt.feature.kyc.generated.resources.feature_kyc_successkyc2

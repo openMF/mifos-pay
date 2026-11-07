@@ -24,12 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.utils.fork.onClick
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_title
-import mifos_pay.libs.mifos_loans.generated.resources.feature_loan_product_details_terms
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.utils.onClick
 import org.jetbrains.compose.resources.stringResource
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_title
+import org.mifos.lib.loan.generated.resources.feature_loan_product_details_terms
 /**
  * A bottom bar for the loan application screen, featuring a terms agreement
  * checkbox and a submission button.
@@ -73,7 +73,7 @@ fun ApplyLoanBottomBar(
             )
         }
 
-        MifosButton(
+        ForkButton(
             modifier = Modifier.fillMaxWidth().height(48.dp),
             onClick = onApplyClick,
             enabled = isEnabled,

@@ -31,16 +31,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.passcode.rememberBiometricErrorMessages
 import kpt.feature.passcode.rememberBiometricPromptStrings
-import kpt.feature.settings.di.MifosSettingsViewModelQualifier
+import kpt.feature.settings.di.SettingsViewModelQualifier
 import kpt.feature.settings.generated.resources.Res
 import kpt.feature.settings.generated.resources.feature_settings_change_language_text
 import kpt.feature.settings.generated.resources.feature_settings_change_passcode
@@ -80,7 +80,7 @@ import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenti
  *    no round-trip channel needed).
  *
  * @param navigateToPasscodeScreen `(verificationKey?) -> Unit` — caller
- *        binds this to `navController::navigateToInternalMifosPasscodeScreen`.
+ *        binds this to `navController::navigateToInternalPasscodeScreen`.
  *        The verification-key is written/read on the **previous** back-stack
  *        entry's saved-state-handle, which is this screen's [entryStateHandle].
  * @param entryStateHandle The settings destination's own
@@ -99,7 +99,7 @@ internal fun SettingsScreenRoute(
     navigateToProfile: () -> Unit,
     entryStateHandle: SavedStateHandle,
     modifier: Modifier = Modifier,
-    viewmodel: SettingsViewModel = koinViewModel(qualifier = MifosSettingsViewModelQualifier),
+    viewmodel: SettingsViewModel = koinViewModel(qualifier = SettingsViewModelQualifier),
 ) {
     val state by viewmodel.stateFlow.collectAsStateWithLifecycle()
     val authProvider = platformAuthenticationProvider.current
@@ -164,7 +164,7 @@ private fun SettingsScreenContent(
     val biometricErrorMessages = rememberBiometricErrorMessages()
     val biometricPromptStrings = rememberBiometricPromptStrings()
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.feature_settings_settings),
         backPress = {
@@ -181,7 +181,7 @@ private fun SettingsScreenContent(
         ) {
 //            SettingsCardItem(
 //                title = stringResource(Res.string.feature_settings_notification_settings),
-//                icon = MifosIcons.OutlinedNotifications,
+//                icon = ForkIcons.OutlinedNotifications,
 //                onClick = {
 //                    onAction(SettingsAction.NavigateToNotificationSettings)
 //                },
@@ -189,7 +189,7 @@ private fun SettingsScreenContent(
 
             SettingsCardItem(
                 title = stringResource(Res.string.feature_settings_faq),
-                icon = MifosIcons.OutlinedInfo,
+                icon = ForkIcons.OutlinedInfo,
                 onClick = {
                     onAction(SettingsAction.NavigateToFaqScreen)
                 },
@@ -197,7 +197,7 @@ private fun SettingsScreenContent(
 
             SettingsCardItem(
                 title = stringResource(Res.string.feature_settings_profile),
-                icon = MifosIcons.Profile,
+                icon = ForkIcons.Profile,
                 onClick = {
                     onAction(SettingsAction.NavigateToProfile)
                 },
@@ -221,7 +221,7 @@ private fun SettingsScreenContent(
 
             SettingsCardItem(
                 title = stringResource(Res.string.feature_settings_change_language_text),
-                icon = MifosIcons.Language,
+                icon = ForkIcons.Language,
                 onClick = {
                     onAction(SettingsAction.ShowLanguageSelection)
                 },
@@ -234,7 +234,7 @@ private fun SettingsScreenContent(
                     } else {
                         stringResource(Res.string.feature_settings_enable_biometrics)
                     },
-                    icon = MifosIcons.Fingerprint,
+                    icon = ForkIcons.Fingerprint,
                     onClick = {
                         if (authenticatorStatus.contains(PlatformAuthenticatorStatus.BIOMETRICS_SET)) {
                             onAction(
@@ -262,7 +262,7 @@ private fun SettingsScreenContent(
 
             SettingsCardItem(
                 title = stringResource(Res.string.feature_settings_disable_account),
-                icon = MifosIcons.OutlinedLock,
+                icon = ForkIcons.OutlinedLock,
                 color = KptTheme.colorScheme.error,
                 onClick = {
                     onAction(SettingsAction.DisableAccount)
@@ -292,7 +292,7 @@ private fun SettingsCardItem(
         },
         trailingContent = {
             Icon(
-                imageVector = MifosIcons.ChevronRight,
+                imageVector = ForkIcons.ChevronRight,
                 contentDescription = null,
             )
         },
@@ -312,18 +312,18 @@ private fun SettingsDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is DialogState.Error -> MifosBasicDialog(
+        is DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is DialogState.Loading -> MifosLoadingDialog(
+        is DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
-        is DialogState.DisableAccount -> MifosBasicDialog(
+        is DialogState.DisableAccount -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = stringResource(dialogState.title),
                 message = stringResource(dialogState.message),
@@ -332,7 +332,7 @@ private fun SettingsDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is DialogState.Logout -> MifosBasicDialog(
+        is DialogState.Logout -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = stringResource(dialogState.title),
                 message = stringResource(dialogState.message),

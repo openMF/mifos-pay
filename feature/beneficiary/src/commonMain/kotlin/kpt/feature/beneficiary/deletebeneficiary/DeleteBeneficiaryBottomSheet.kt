@@ -31,9 +31,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.beneficiary.generated.resources.Res
 import kpt.feature.beneficiary.generated.resources.feature_beneficiary_cancel
 import kpt.feature.beneficiary.generated.resources.feature_beneficiary_delete
@@ -59,7 +59,7 @@ fun DeleteBeneficiaryBottomSheet(
 ) {
     when (dialogState) {
         is DeleteBeneficiaryState.DialogState.Confirmation -> {
-            MifosBottomSheet(
+            ForkBottomSheet(
                 onDismiss = onDismiss,
             ) {
                 DeleteConfirmationContent(
@@ -76,7 +76,7 @@ fun DeleteBeneficiaryBottomSheet(
         }
 
         is DeleteBeneficiaryState.DialogState.Error -> {
-            MifosBottomSheet(
+            ForkBottomSheet(
                 onDismiss = onDismiss,
             ) {
                 DeleteErrorContent(
@@ -114,7 +114,7 @@ private fun DeleteConfirmationContent(
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                imageVector = MifosIcons.OutlinedDelete,
+                imageVector = ForkIcons.OutlinedDelete,
                 contentDescription = null,
                 modifier = Modifier.size(36.dp),
                 tint = KptTheme.colorScheme.error,
@@ -159,7 +159,7 @@ private fun DeleteConfirmationContent(
                 Text(text = stringResource(Res.string.feature_beneficiary_cancel))
             }
 
-            MifosButton(
+            ForkButton(
                 onClick = onConfirm,
                 modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.buttonColors(
@@ -196,7 +196,7 @@ private fun DeleteErrorContent(
             contentAlignment = Alignment.Center,
         ) {
             Icon(
-                imageVector = MifosIcons.Warning,
+                imageVector = ForkIcons.Warning,
                 contentDescription = null,
                 modifier = Modifier.size(36.dp),
                 tint = KptTheme.colorScheme.error,
@@ -224,7 +224,7 @@ private fun DeleteErrorContent(
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        MifosButton(
+        ForkButton(
             onClick = onDismiss,
             modifier = Modifier.fillMaxWidth(),
         ) {

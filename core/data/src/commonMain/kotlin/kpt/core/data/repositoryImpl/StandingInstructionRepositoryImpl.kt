@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
@@ -28,23 +31,22 @@ import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.model.standinginstruction.StandingInstructionPayload
 import kpt.core.network.FineractApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.standinginstruction.StandingInstructionKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 /** Default [StandingInstructionRepository] backed by the standing-instruction API. */
+@RepositoryBinding(binds = StandingInstructionRepository::class)
 class StandingInstructionRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getAllStandingInstructionsScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without the
-    // store harness continue to compile; getAllStandingInstructions(...) — the
-    // legacy asScreenStateFlow path — is unaffected.
-    private val standingInstructionStore: Store<StandingInstructionKey, List<StandingInstruction>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.StandingInstruction)
+    private val standingInstructionStore: Store<StandingInstructionKey, List<StandingInstruction>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : StandingInstructionRepository {
     override fun getStandingInstructionTemplate(
         fromOfficeId: Long,

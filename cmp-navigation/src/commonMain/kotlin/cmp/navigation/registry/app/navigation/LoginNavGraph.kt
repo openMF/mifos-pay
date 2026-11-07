@@ -20,18 +20,18 @@ import kpt.feature.auth.navigation.navigateToSignup
 import kpt.feature.auth.navigation.signupScreen
 import kpt.feature.auth.socialSignup.navigateToSignupMethod
 import kpt.feature.auth.socialSignup.signupMethodScreen
-import kpt.feature.passcode.navigateToRootMifosPasscodeScreen
+import kpt.feature.passcode.navigateToRootPasscodeScreen
 internal fun NavGraphBuilder.loginNavGraph(
     navController: NavController,
     onShowInstanceSelector: () -> Unit,
 ) {
     navigation(
-        route = MifosNavGraph.LOGIN_GRAPH,
+        route = ForkNavGraph.LOGIN_GRAPH,
         startDestination = LOGIN_ROUTE,
     ) {
         loginScreen(
             onNavigateBack = navController::popBackStack,
-            navigateToMifosPasscodeScreen = navController::navigateToRootMifosPasscodeScreen,
+            navigateToPasscode = navController::navigateToRootPasscodeScreen,
             onNavigateToSignupScreen = navController::navigateToSignupMethod,
             onShowInstanceSelector = onShowInstanceSelector,
         )

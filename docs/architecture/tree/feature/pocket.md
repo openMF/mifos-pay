@@ -22,10 +22,10 @@ ViewModels: `ManagePocketViewModel`, `PocketDashboardViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/pocket sha=9cccb725bc8fe326f2ab5bbd95b0717308faf8fb -->
+<!-- api-docs:begin module=feature/pocket sha=c5007dabd10016005d4610e6f16b3f2ab60189e7 -->
 ## API reference
 
-_Generated from `feature/pocket` at tree `9cccb725bc8f` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/pocket` at tree `c5007dabd100` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

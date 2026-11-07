@@ -45,12 +45,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.autopay.Biller
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 /** Screen listing saved billers with search, add, edit and delete actions. */
 @Composable
@@ -74,9 +74,9 @@ fun BillerListScreen(
         }
     }
 
-    MifosScaffold(
+    ForkScaffold(
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = "My Billers",
                 backPress = onNavigateBack,
                 actions = {
@@ -84,7 +84,7 @@ fun BillerListScreen(
                         onClick = { showSearchBar = !showSearchBar },
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Search,
+                            imageVector = ForkIcons.Search,
                             contentDescription = "Search billers",
                         )
                     }
@@ -127,7 +127,7 @@ fun BillerListScreen(
                     EmptyStateCard(
                         title = "No Billers Found",
                         description = "You don't have any billers yet. Add your first biller to get started!",
-                        icon = MifosIcons.Person,
+                        icon = ForkIcons.Person,
                         onAddBiller = { viewModel.trySendAction(BillerListAction.AddNewBiller) },
                     )
                 } else {
@@ -160,13 +160,13 @@ fun BillerListScreen(
                         modifier = Modifier.padding(bottom = 16.dp),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Add,
+                            imageVector = ForkIcons.Add,
                             contentDescription = "Add biller",
                         )
                     }
                 }
 
-                MifosButton(
+                ForkButton(
                     text = { Text("Back to AutoPay") },
                     onClick = onNavigateBack,
                     modifier = Modifier.fillMaxWidth(),
@@ -228,7 +228,7 @@ private fun EmptyStateCard(
                 onClick = onAddBiller,
             ) {
                 Icon(
-                    imageVector = MifosIcons.Add,
+                    imageVector = ForkIcons.Add,
                     contentDescription = null,
                     modifier = Modifier.size(20.dp),
                 )
@@ -318,7 +318,7 @@ private fun BillerCard(
                     onClick = { showMenu = true },
                 ) {
                     Icon(
-                        imageVector = MifosIcons.MoreVert,
+                        imageVector = ForkIcons.MoreVert,
                         contentDescription = "More options",
                     )
                 }
@@ -331,7 +331,7 @@ private fun BillerCard(
                         text = { Text("Edit") },
                         leadingIcon = {
                             Icon(
-                                imageVector = MifosIcons.Edit,
+                                imageVector = ForkIcons.Edit,
                                 contentDescription = null,
                             )
                         },
@@ -344,7 +344,7 @@ private fun BillerCard(
                         text = { Text("Delete") },
                         leadingIcon = {
                             Icon(
-                                imageVector = MifosIcons.Delete,
+                                imageVector = ForkIcons.Delete,
                                 contentDescription = null,
                             )
                         },

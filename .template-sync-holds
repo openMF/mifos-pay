@@ -4,7 +4,6 @@
 cmp-ios/iosApp.xcodeproj/xcshareddata/xcschemes/cmp-ios.xcscheme	queued upstream: travels with .run/cmp-ios.run.xml
 build-logic/convention/src/main/kotlin/org/convention/Detekt.kt	queued upstream: detekt baseline seam (held = template 90ff6da6 + the fork baseline line)
 config/detekt/baseline.xml	queued upstream: travels with the detekt baseline seam
-cmp-ios/iosApp/GoogleService-Info.plist	queued upstream: iOS Firebase config has no fork-owned home in the contract
 cmp-navigation/src/commonMain/kotlin/cmp/navigation/ComposeApp.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
 cmp-navigation/src/commonMain/kotlin/cmp/navigation/AppViewModel.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
 cmp-navigation/src/commonMain/kotlin/cmp/navigation/security/AppLockGate.kt	queued upstream: fork app-shell security gates have no seam (held = 3-way of template 90ff6da6 + fork)
@@ -97,3 +96,4 @@ docs/QR_PAYMENT_ROUTING_APPROACH.md	queued upstream: fork-authored / per-fork-de
 docs/readmes/Android.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
 docs/readmes/Linux.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
 docs/readmes/Windows.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
+secrets/LAYOUT.yaml	queued upstream: per-app vault aliases must carry the project prefix (RULE-SECRETS-NAMING-CONVENTION-001), so a fork cannot share the template copy; the contract needs a fork-owned (or app-profile-derived) LAYOUT

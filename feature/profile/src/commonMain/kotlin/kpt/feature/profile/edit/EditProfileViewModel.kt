@@ -31,7 +31,7 @@ import kpt.core.common.utils.isValidEmail
 import kpt.core.data.repository.ClientRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.client.UpdatedClient
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.profile.edit.EditProfileAction.Internal.HandleLoadClientImageResult
 import kpt.feature.profile.edit.EditProfileAction.Internal.LoadClientImage
 import kpt.feature.profile.edit.EditProfileState.DialogState.Error

@@ -19,14 +19,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.common.ScreenState
+import kpt.core.data.fork.util.toForkScreenStateFlow
 import kpt.core.data.repository.AccountRepository
 import kpt.core.data.repository.SelfServiceRepository
-import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionType
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.history.components.HistoryHtmlTemplate
 import kpt.feature.history.generated.resources.Res
 import kpt.feature.history.generated.resources.feature_history_error

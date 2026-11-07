@@ -9,7 +9,7 @@ Screens: `HomeScreen`
 
 ViewModels: `HomeViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -28,10 +28,10 @@ It is also a **fork seam**. `HomeDashboard` is public rather than internal becau
 package so `--clean` removes it together with that default. A fork replaces the body without touching
 the shell.
 
-<!-- api-docs:begin module=feature/home sha=93cd3f09484a41faa4b57dbfe2dc0458b4ddbec0 -->
+<!-- api-docs:begin module=feature/home sha=3ae2391c2daa88fe44482ef61b1e0ba752ccd9aa -->
 ## API reference
 
-_Generated from `feature/home` at tree `93cd3f09484a` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/home` at tree `3ae2391c2daa` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -72,7 +72,7 @@ ViewModel for the home screen: client accounts, recent transactions, filters and
 
 ```kotlin
 /** Koin module providing the home feature [HomeViewModel]. */
-val MifosHomeModule = module {
+val ForkHomeModule = module {
     viewModelOf(::HomeViewModel)
 }
 ```
@@ -151,7 +151,7 @@ The backbone home module — `kpt.feature.home.HomeScreen` carries zero demo imp
 ### `feature/home/src/commonMain/kotlin/kpt/feature/home/di/fork/HomeModule.kt`
 
 ```kotlin
-val MifosHomeModule = module
+val ForkHomeModule = module
 ```
 Koin module providing the home feature `HomeViewModel`.
 

@@ -40,6 +40,8 @@ import kpt.core.model.account.AccountTransferPayload
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.client.Client
 import kpt.core.model.client.UpdatedClient
+import kpt.core.model.fork.user.Language
+import kpt.core.model.fork.user.UserInfo
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
 import kpt.core.model.pocket.DetailedPocketAccount
@@ -48,8 +50,6 @@ import kpt.core.model.pocket.PocketAccount
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransferDetail
 import kpt.core.model.search.AccountResult
-import kpt.core.model.user.Language
-import kpt.core.model.user.UserInfo
 import kpt.core.model.utils.CurrencyCode
 import kpt.core.model.utils.Locale
 import kpt.core.model.utils.QrCodeType

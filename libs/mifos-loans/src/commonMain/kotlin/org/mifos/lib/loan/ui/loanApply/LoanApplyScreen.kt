@@ -27,30 +27,30 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.ui.DropdownBoxItem
 import kpt.core.ui.ErrorScreenContent
 import kpt.core.ui.ExposedDropdownBox
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_button_continue
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_hint_applicant_name
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_hint_disbursement_date
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_hint_loan_product
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_hint_principal_amount
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_hint_purpose
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_applicant_name
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_disbursement_date
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_loan_product
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_principal_amount
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_purpose
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_section_fill_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_select_loan_type_network_issue
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_button_continue
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_hint_applicant_name
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_hint_disbursement_date
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_hint_loan_product
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_hint_principal_amount
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_hint_purpose
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_applicant_name
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_disbursement_date
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_loan_product
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_principal_amount
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_purpose
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_section_fill_details
+import org.mifos.lib.loan.generated.resources.feature_select_loan_type_network_issue
 /**
  * Entry point for the Loan Application form.
  *
@@ -111,13 +111,13 @@ private fun LoanApplyContent(
     onAction: (LoanApplyAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         backPress = { onAction(LoanApplyAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_apply_loan_section_fill_details),
     ) { paddingValues ->
         when (val viewState = state.viewState) {
-            LoanApplyState.ViewState.Loading -> MifosProgressIndicator()
+            LoanApplyState.ViewState.Loading -> ForkProgressIndicator()
 
             is LoanApplyState.ViewState.Error -> {
                 ErrorScreenContent(
@@ -141,7 +141,7 @@ private fun LoanApplyContent(
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
-                    MifosOutlinedTextField(
+                    ForkOutlinedTextField(
                         value = state.applicantName,
                         label = stringResource(Res.string.feature_apply_loan_label_applicant_name),
                         onValueChange = {},
@@ -154,7 +154,7 @@ private fun LoanApplyContent(
                         },
                     )
 
-                    MifosOutlinedTextField(
+                    ForkOutlinedTextField(
                         value = state.disbursementDate,
                         label = stringResource(Res.string.feature_apply_loan_label_disbursement_date),
                         onValueChange = {},
@@ -167,7 +167,7 @@ private fun LoanApplyContent(
                         },
                     )
 
-                    MifosOutlinedTextField(
+                    ForkOutlinedTextField(
                         value = state.loanProductName,
                         label = stringResource(Res.string.feature_apply_loan_label_loan_product),
                         onValueChange = {},
@@ -182,7 +182,7 @@ private fun LoanApplyContent(
 
                     LoanPurposeDropdown(state = state, onAction = onAction)
 
-                    MifosOutlinedTextField(
+                    ForkOutlinedTextField(
                         value = state.principalAmount,
                         label = stringResource(Res.string.feature_apply_loan_label_principal_amount),
                         onValueChange = { onAction(LoanApplyAction.PrincipalAmountChanged(it)) },
@@ -199,7 +199,7 @@ private fun LoanApplyContent(
                         ),
                     )
 
-                    MifosButton(
+                    ForkButton(
                         modifier = Modifier.fillMaxWidth(),
                         enabled = state.isSubmitEnabled,
                         onClick = { onAction(LoanApplyAction.SubmitClicked) },

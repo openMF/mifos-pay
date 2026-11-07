@@ -20,10 +20,10 @@ ViewModels: `TransferViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/payments sha=a255c07276ccd7b6defa97d384a04f86e99e8539 -->
+<!-- api-docs:begin module=feature/payments sha=bd744476a27886ad9f90ef7259956b1852855518 -->
 ## API reference
 
-_Generated from `feature/payments` at tree `a255c07276cc` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/payments` at tree `bd744476a278` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

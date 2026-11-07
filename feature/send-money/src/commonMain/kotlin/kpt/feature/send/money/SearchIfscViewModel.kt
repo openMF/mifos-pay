@@ -10,7 +10,7 @@
 package kpt.feature.send.money
 
 import kotlinx.coroutines.flow.update
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 // TODO replace dummy data with actual data or call API
 /** ViewModel for the IFSC search screen; filters banks and branches and emits the chosen IFSC code. */
 class SearchIfscViewModel : BaseViewModel<SearchIfscState, SearchIfscEvent, SearchIfscAction>(

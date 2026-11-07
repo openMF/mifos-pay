@@ -22,7 +22,7 @@ import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
 import kpt.core.datastore.BillRepository
 import kpt.core.model.autopay.Bill
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** View model for the bill list; loads bills and handles deletion. */
 class BillListViewModel(
     savedStateHandle: SavedStateHandle,

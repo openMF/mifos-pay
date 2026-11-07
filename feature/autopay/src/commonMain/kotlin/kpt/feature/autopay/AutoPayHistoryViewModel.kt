@@ -27,7 +27,7 @@ import kpt.core.data.repository.AutoPayHistoryStatistics
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.PaymentStatus
 import kpt.core.model.network.entity.Page
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * ViewModel for AutoPay history screen.
  *

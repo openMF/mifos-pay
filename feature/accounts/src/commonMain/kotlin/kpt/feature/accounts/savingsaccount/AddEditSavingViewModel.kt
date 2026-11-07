@@ -30,7 +30,7 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.savingsaccount.CreateNewSavingEntity
 import kpt.core.model.savingsaccount.SavingAccountTemplate
 import kpt.core.model.savingsaccount.UpdateSavingAccountEntity
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.accounts.generated.resources.Res
 import kpt.feature.accounts.generated.resources.feature_accounts_error_account_id_required
 import kpt.feature.accounts.generated.resources.feature_accounts_error_client_id_required

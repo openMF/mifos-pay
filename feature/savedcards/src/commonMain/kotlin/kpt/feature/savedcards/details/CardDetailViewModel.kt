@@ -25,7 +25,7 @@ import kpt.core.common.setSerialized
 import kpt.core.data.repository.SavedCardRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.savedcards.SavedCard
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 internal class CardDetailViewModel(
     repository: SavedCardRepository,
     userRepository: ForkPreferencesRepository,

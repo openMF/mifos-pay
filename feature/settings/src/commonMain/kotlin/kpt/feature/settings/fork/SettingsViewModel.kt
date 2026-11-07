@@ -21,10 +21,10 @@ import kpt.core.data.repository.SavingsAccountRepository
 import kpt.core.data.repository.UserVerificationRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.client.Client
-import kpt.core.model.user.Language
-import kpt.core.model.user.fork.LanguageConfig
-import kpt.core.model.user.toLanguage
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.model.fork.user.Language
+import kpt.core.model.fork.user.LanguageConfig
+import kpt.core.model.fork.user.toLanguage
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.passcode.BiometricErrorMessages
 import kpt.feature.passcode.BiometricPromptStrings
 import kpt.feature.settings.generated.resources.Res
@@ -40,7 +40,7 @@ import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenti
 import org.mifos.authenticator.biometrics.platformAuthenticator.RegistrationResult
 import org.mifos.authenticator.passcode.PasscodeManager
 /**
- * `SavedStateHandle` key written by `internalMifosPasscodeScreen` and read by
+ * `SavedStateHandle` key written by `internalPasscodeScreen` and read by
  * [SettingsScreen]'s `LaunchedEffect` for the disable-biometrics
  * passcode-verification round trip.
  *

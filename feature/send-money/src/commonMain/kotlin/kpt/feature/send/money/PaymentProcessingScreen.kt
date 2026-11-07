@@ -26,11 +26,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosLoadingWheel
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkLoadingWheel
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_paid_to
 import kpt.feature.send.money.generated.resources.feature_send_money_paying_securely
@@ -59,8 +59,8 @@ fun PaymentProcessingScreen(
         }
     }
 
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
         ) { paddingValues ->
             Box(
@@ -89,13 +89,13 @@ private fun PaymentProcessingContent(
         verticalArrangement = Arrangement.Center,
     ) {
         if (state.isProcessing) {
-            MifosLoadingWheel(
+            ForkLoadingWheel(
                 contentDesc = "Processing Payment",
                 modifier = Modifier.size(120.dp),
             )
         } else {
             Icon(
-                imageVector = MifosIcons.CheckCircle,
+                imageVector = ForkIcons.CheckCircle,
                 contentDescription = "Payment Complete",
                 modifier = Modifier.size(120.dp),
                 tint = KptTheme.colorScheme.primary,

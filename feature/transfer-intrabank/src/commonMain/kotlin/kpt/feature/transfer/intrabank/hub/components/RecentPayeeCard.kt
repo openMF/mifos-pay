@@ -27,8 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosTextUserImage
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkTextUserImage
 import kpt.core.model.account.RecentPayee
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_pay_button
@@ -54,7 +54,7 @@ fun RecentPayeeCard(
                 .padding(KptTheme.spacing.md),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            MifosTextUserImage(
+            ForkTextUserImage(
                 text = payee.initials,
                 size = 44.dp,
             )
@@ -97,7 +97,7 @@ fun RecentPayeeCard(
 
             Spacer(Modifier.width(KptTheme.spacing.sm))
 
-            MifosOutlinedButton(
+            ForkOutlinedButton(
                 onClick = onPayClick,
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = KptTheme.colorScheme.primary,

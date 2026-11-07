@@ -81,15 +81,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.scrollbar.DraggableScrollbar
-import kpt.core.designsystem.component.scrollbar.rememberDraggableScroller
-import kpt.core.designsystem.component.scrollbar.scrollbarState
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.component.scrollbar.DraggableScrollbar
+import kpt.core.designsystem.fork.component.scrollbar.rememberDraggableScroller
+import kpt.core.designsystem.fork.component.scrollbar.scrollbarState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.Currency
 import kpt.core.model.savingsaccount.Status
@@ -97,13 +97,13 @@ import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.ErrorScreenContent
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.MifosProgressIndicatorMini
-import kpt.core.ui.MifosSmallChip
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.ForkProgressIndicatorMini
+import kpt.core.ui.ForkSmallChip
 import kpt.core.ui.TransactionFilterBottomSheet
 import kpt.core.ui.TransactionItem
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.home.HomeAction
 import kpt.feature.home.HomeEvent
 import kpt.feature.home.HomeState
@@ -225,7 +225,7 @@ fun HomeScreenContent(
     modifier: Modifier = Modifier,
     isRefreshing: Boolean = false,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
     ) {
@@ -239,7 +239,7 @@ fun HomeScreenContent(
             contentAlignment = Alignment.Center,
         ) {
             when (viewState) {
-                is ViewState.Loading -> MifosProgressIndicator()
+                is ViewState.Loading -> ForkProgressIndicator()
 
                 is ViewState.Content -> {
                     HomeScreenContent(
@@ -347,7 +347,7 @@ private fun HomeScreenContent(
             }
 
             item {
-                MifosSendMoneyFreeCard()
+                SendMoneyFreeCard()
             }
 
             item {
@@ -498,7 +498,7 @@ private fun AccountCard(
                     targetState = account.id == defaultAccountId,
                 ) {
                     if (it) {
-                        MifosSmallChip(
+                        ForkSmallChip(
                             label = "Default",
                             containerColor = KptTheme.colorScheme.primary,
                         )
@@ -582,7 +582,7 @@ fun CardDropdownBox(
             ),
         ) {
             Icon(
-                imageVector = MifosIcons.MoreVert,
+                imageVector = ForkIcons.MoreVert,
                 contentDescription = stringResource(Res.string.feature_home_view_more),
             )
         }
@@ -665,7 +665,7 @@ private fun PayRequestScreen(
             leadingIcon = {
                 Icon(
                     modifier = Modifier.size(26.dp),
-                    imageVector = MifosIcons.Schedule,
+                    imageVector = ForkIcons.Schedule,
                     contentDescription = stringResource(Res.string.feature_home_autopay),
                 )
             },
@@ -698,7 +698,7 @@ private fun PocketNavigationCard(
             horizontalArrangement = Arrangement.Start,
         ) {
             Icon(
-                imageVector = MifosIcons.Pocket,
+                imageVector = ForkIcons.Pocket,
                 contentDescription = null,
                 tint = KptTheme.colorScheme.primary,
                 modifier = Modifier
@@ -727,7 +727,7 @@ private fun PocketNavigationCard(
 
 @Composable
 @Preview
-private fun MifosSendMoneyFreeCard(
+private fun SendMoneyFreeCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -805,14 +805,14 @@ private fun HomeScreenDialog(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is HomeState.DialogState.Error -> MifosBasicDialog(
+        is HomeState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is HomeState.DialogState.Loading -> MifosLoadingDialog(
+        is HomeState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -857,7 +857,7 @@ private fun HomeTransactionHistoryCard(
                         )
                         Spacer(Modifier.width(KptTheme.spacing.xs))
                         Icon(
-                            imageVector = MifosIcons.OpenInNew,
+                            imageVector = ForkIcons.OpenInNew,
                             contentDescription = null,
                             modifier = Modifier.size(16.dp).clickable {
                                 onAction(HomeAction.OnClickSeeAllTransactions)
@@ -889,7 +889,7 @@ private fun HomeTransactionHistoryCard(
                         modifier = Modifier.matchParentSize(),
                     ) {
                         Icon(
-                            imageVector = MifosIcons.Filter,
+                            imageVector = ForkIcons.Filter,
                             contentDescription = null,
                             tint = KptTheme.colorScheme.onSurface,
                         )
@@ -918,14 +918,14 @@ private fun HomeTransactionHistoryCard(
                 )
 
                 if (i != transactions.size - 1) {
-                    MifosDivider(
+                    ForkDivider(
                         modifier = Modifier.padding(horizontal = KptTheme.spacing.sm),
                     )
                 }
             }
 
             if (transactionsLoading) {
-                MifosProgressIndicatorMini()
+                ForkProgressIndicatorMini()
             } else {
                 if (transactions != null && transactions.isEmpty()) {
                     Text(

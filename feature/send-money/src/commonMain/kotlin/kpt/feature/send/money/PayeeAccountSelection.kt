@@ -39,8 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_add_bank_account
 import kpt.feature.send.money.generated.resources.feature_send_money_add_bank_account_desc
@@ -78,7 +78,7 @@ internal fun AccountSelectionBottomSheet(
         ),
     )
 
-    MifosBottomSheet(
+    ForkBottomSheet(
         onDismiss = onDismiss,
         modifier = modifier,
     ) {
@@ -189,7 +189,7 @@ internal fun AccountItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MifosIcons.Bank,
+                imageVector = ForkIcons.Bank,
                 contentDescription = stringResource(Res.string.feature_send_money_bank_icon),
                 modifier = Modifier.size(32.dp),
                 tint = KptTheme.colorScheme.primary,
@@ -232,7 +232,7 @@ internal fun AccountItem(
 
             if (isSelected) {
                 Icon(
-                    imageVector = MifosIcons.CheckCircle,
+                    imageVector = ForkIcons.CheckCircle,
                     contentDescription = stringResource(Res.string.feature_send_money_selected),
                     modifier = Modifier.size(24.dp),
                     tint = KptTheme.colorScheme.primary,
@@ -264,7 +264,7 @@ internal fun SelectedAccountSection(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MifosIcons.Bank,
+                imageVector = ForkIcons.Bank,
                 contentDescription = stringResource(Res.string.feature_send_money_bank_icon),
                 modifier = Modifier.size(32.dp),
                 tint = KptTheme.colorScheme.primary,
@@ -305,7 +305,7 @@ internal fun SelectedAccountSection(
             }
 
             Icon(
-                imageVector = MifosIcons.KeyboardArrowDown,
+                imageVector = ForkIcons.KeyboardArrowDown,
                 contentDescription = stringResource(Res.string.feature_send_money_change_account),
                 modifier = Modifier.size(24.dp),
                 tint = KptTheme.colorScheme.onSurfaceVariant,
@@ -333,7 +333,7 @@ internal fun AddBankAccountItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MifosIcons.Add,
+                imageVector = ForkIcons.Add,
                 contentDescription = stringResource(Res.string.feature_send_money_add_bank_account_desc),
                 modifier = Modifier.size(24.dp),
                 tint = KptTheme.colorScheme.primary,

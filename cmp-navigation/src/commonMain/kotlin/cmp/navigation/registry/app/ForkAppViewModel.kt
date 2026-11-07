@@ -18,11 +18,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kpt.core.data.repository.AppLockRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
-import kpt.core.model.user.UserInfo
+import kpt.core.model.fork.user.UserInfo
 import org.mifos.authenticator.passcode.PasscodeManager
 import org.mifos.authenticator.passcode.PasscodeStorageAdapter
 /**
- * Root ViewModel scoped to [cmp.navigation.registry.app.MifosPayApp].
+ * Root ViewModel scoped to [cmp.navigation.registry.app.ForkAppRoot].
  *
  * Aggregates the three pieces of state the app shell needs to make session
  * decisions:
@@ -62,7 +62,7 @@ class ForkAppViewModel(
 
     /**
      * `true` iff no non-blank passcode is currently saved by the
-     * [PasscodeStorageAdapter]. Used by `MifosPayApp` to detect the
+     * [PasscodeStorageAdapter]. Used by `ForkAppRoot` to detect the
      * "authenticated but no passcode yet" half-state and force a logout.
      */
     fun isPasscodeNotCreated(): Boolean {
@@ -92,7 +92,7 @@ class ForkAppViewModel(
      *
      * @return `true` if the app is currently locked, `false` if explicitly
      *         unlocked, or `null` if no lock flag has been written yet
-     *         (fresh install / post-logout). The `MifosPayApp` re-auth gate
+     *         (fresh install / post-logout). The `ForkAppRoot` re-auth gate
      *         treats `null` as "no session to gate" — see the gate's
      *         `isAppLocked()?.let { ... }` use site.
      */

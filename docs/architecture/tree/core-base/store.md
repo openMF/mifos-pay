@@ -271,7 +271,7 @@ internal fun ManagePocketContent(
     linkedFreshness: FreshnessSignal,
     onAction: (ManagePocketAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         backPress = { onAction(ManagePocketAction.NavigateBack) },
 ```
 
@@ -406,16 +406,16 @@ interface FetchedAtRepository
 ```
 Persists "when was this Store's data last successfully fetched from network", keyed by `storeKey`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:60</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:61</code></summary>
 
 ```kotlin
-    private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
-    // transfer-detail Store5 vertical (GOAL D13) — makes the transaction-detail
-    // drill-down offline-first. Nullable-default so existing unit tests without the
-    // store harness continue to compile; the legacy getAccountTransfer(...) —
-    // asScreenStateFlow shim over the raw Ktorfit flow — is unaffected.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.TransferDetail) private val transferDetailStore: Store<TransferDetailKey, TransferDetail>?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    private val transactionDao: TransactionDao?,
 ```
 
 </details>
@@ -1087,7 +1087,7 @@ sealed interface FetchPolicy
 ```
 Controls whether a screen stream reads from cache, hits the network, or both. Pass to `ScreenDataStream.asScreenStream`, `LoadOnceStream.asLoadOnceStream`, or `PagingScreenStream` to override that entry point's default.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:152</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:148</code></summary>
 
 ```kotlin
             scope = scope,

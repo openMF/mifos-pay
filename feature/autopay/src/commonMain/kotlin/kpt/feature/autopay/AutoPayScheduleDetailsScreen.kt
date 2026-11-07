@@ -37,9 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 /** Screen showing the details of one AutoPay schedule, with pause, resume, edit and cancel actions. */
 @Composable
@@ -50,7 +50,7 @@ fun AutoPayScheduleDetailsScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = "Schedule Details",
         backPress = onNavigateBack,
@@ -74,7 +74,7 @@ fun AutoPayScheduleDetailsScreen(
                 verticalArrangement = Arrangement.Center,
             ) {
                 Icon(
-                    imageVector = MifosIcons.Info,
+                    imageVector = ForkIcons.Info,
                     contentDescription = null,
                     modifier = Modifier.size(64.dp),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -225,25 +225,25 @@ private fun ScheduleInfoCard(
             InfoRow(
                 label = "Recipient",
                 value = schedule.recipientName,
-                icon = MifosIcons.Person,
+                icon = ForkIcons.Person,
             )
 
             InfoRow(
                 label = "Account Number",
                 value = schedule.accountNumber,
-                icon = MifosIcons.Bank,
+                icon = ForkIcons.Bank,
             )
 
             InfoRow(
                 label = "Frequency",
                 value = schedule.frequency,
-                icon = MifosIcons.CalenderMonth,
+                icon = ForkIcons.CalenderMonth,
             )
 
             InfoRow(
                 label = "Next Payment",
                 value = schedule.nextPaymentDate,
-                icon = MifosIcons.CalenderMonth,
+                icon = ForkIcons.CalenderMonth,
             )
         }
     }
@@ -275,13 +275,13 @@ private fun PaymentDetailsCard(
             InfoRow(
                 label = "Amount",
                 value = CurrencyFormatter.format(schedule.amount, schedule.currency, 2),
-                icon = MifosIcons.AttachMoney,
+                icon = ForkIcons.AttachMoney,
             )
 
             InfoRow(
                 label = "Status",
                 value = schedule.status.name,
-                icon = MifosIcons.Info,
+                icon = ForkIcons.Info,
             )
         }
     }
@@ -319,14 +319,14 @@ private fun ScheduleActionsCard(
             ) {
                 ActionButton(
                     text = if (schedule.status == AutoPayStatus.ACTIVE) "Pause" else "Resume",
-                    icon = if (schedule.status == AutoPayStatus.ACTIVE) MifosIcons.FlashOff else MifosIcons.FlashOn,
+                    icon = if (schedule.status == AutoPayStatus.ACTIVE) ForkIcons.FlashOff else ForkIcons.FlashOn,
                     onClick = onPauseResume,
                     modifier = Modifier.weight(1f),
                 )
 
                 ActionButton(
                     text = "Edit",
-                    icon = MifosIcons.Edit,
+                    icon = ForkIcons.Edit,
                     onClick = onEdit,
                     modifier = Modifier.weight(1f),
                 )
@@ -336,7 +336,7 @@ private fun ScheduleActionsCard(
 
             ActionButton(
                 text = "Cancel Schedule",
-                icon = MifosIcons.Delete,
+                icon = ForkIcons.Delete,
                 onClick = onCancel,
                 modifier = Modifier.fillMaxWidth(),
             )

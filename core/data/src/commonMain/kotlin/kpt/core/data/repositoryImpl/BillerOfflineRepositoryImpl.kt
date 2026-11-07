@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.database.wallet.biller.BillerDao
 import kpt.core.database.wallet.biller.toDomain
 import kpt.core.database.wallet.biller.toEntity
@@ -88,9 +90,10 @@ import kotlin.time.ExperimentalTime
  * cold-start on every target.
  */
 @OptIn(ExperimentalTime::class)
+@RepositoryBinding(binds = BillerRepository::class)
 class BillerOfflineRepositoryImpl(
     private val dao: BillerDao,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : BillerRepository {
 
     override fun getAllBillers(): Flow<List<Biller>> {

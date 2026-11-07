@@ -36,11 +36,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_banking_name
 import kpt.feature.send.money.generated.resources.feature_send_money_done
@@ -80,7 +80,7 @@ internal fun PaymentSuccessScreenDefault(
         }
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         containerColor = KptTheme.colorScheme.background,
     ) { paddingValues ->
@@ -155,7 +155,7 @@ private fun PaymentSuccessHeader(
         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
         Icon(
-            imageVector = MifosIcons.CheckCircle,
+            imageVector = ForkIcons.CheckCircle,
             contentDescription = stringResource(Res.string.feature_send_money_payment_success),
             modifier = Modifier.size(100.dp),
             tint = Color(0xFF4CAF50),
@@ -284,7 +284,7 @@ private fun ActionButtons(
             .padding(horizontal = KptTheme.spacing.lg),
         horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
     ) {
-        MifosOutlinedButton(
+        ForkOutlinedButton(
             onClick = onShareScreenshot,
             modifier = Modifier
                 .weight(2f),
@@ -297,14 +297,14 @@ private fun ActionButtons(
             },
             leadingIcon = {
                 Icon(
-                    imageVector = MifosIcons.Share,
+                    imageVector = ForkIcons.Share,
                     contentDescription = null,
                     modifier = Modifier.size(20.dp),
                 )
             },
         )
 
-        MifosButton(
+        ForkButton(
             onClick = onDone,
             modifier = Modifier
                 .weight(1f),

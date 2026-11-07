@@ -19,15 +19,18 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
+import kpt.core.data.fork.util.SAMPLE_CURRENCY
+import kpt.core.data.fork.util.SAMPLE_LOCALE
 import kpt.core.data.repository.LocalAssetRepository
-import kpt.core.data.util.SAMPLE_CURRENCY
-import kpt.core.data.util.SAMPLE_LOCALE
 import kpt.core.model.utils.CurrencyCode
 import kpt.core.model.utils.Locale
 /** Default [LocalAssetRepository] providing locales and currencies. */
+@RepositoryBinding(binds = LocalAssetRepository::class)
 class LocalAssetRepositoryImpl(
-    private val ioDispatcher: CoroutineDispatcher,
-    unconfinedDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("Unconfined") unconfinedDispatcher: CoroutineDispatcher,
     private val networkJson: Json,
 ) : LocalAssetRepository {
     private val coroutineScope = CoroutineScope(unconfinedDispatcher)

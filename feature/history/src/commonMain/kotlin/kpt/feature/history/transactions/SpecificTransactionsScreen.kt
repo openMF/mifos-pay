@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.ui.ErrorScreenContent
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.history.generated.resources.Res
 import kpt.feature.history.generated.resources.feature_history_account_number_alter
 import kpt.feature.history.generated.resources.feature_history_amount
@@ -82,7 +82,7 @@ internal fun SpecificTransactionsScreenContent(
     onAction: (STAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.feature_history_specific_transactions_history),
         backPress = {
@@ -97,7 +97,7 @@ internal fun SpecificTransactionsScreenContent(
         ) {
             when (state) {
                 is STState.ViewState.Loading -> {
-                    MifosProgressIndicator()
+                    ForkProgressIndicator()
                 }
 
                 is STState.ViewState.Error -> {
@@ -205,7 +205,7 @@ private fun TransferTransactionDetails(
         // sub-plans/RECEIPT_DATA_SOURCE.md). Only shown when a transferId exists —
         // regular (non-transfer) transactions have no receipt to view.
         transaction.transferId?.let { transferId ->
-            MifosButton(
+            ForkButton(
                 onClick = { onAction(STAction.ViewTransaction(transferId)) },
                 modifier = Modifier
                     .fillMaxWidth()

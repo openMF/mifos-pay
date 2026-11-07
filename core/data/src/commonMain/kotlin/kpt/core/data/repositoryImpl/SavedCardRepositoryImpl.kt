@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
@@ -26,23 +29,21 @@ import kpt.core.model.savedcards.CardPayload
 import kpt.core.model.savedcards.SavedCard
 import kpt.core.network.FineractApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.savedcards.SavedCardKey
 import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 /** Default [SavedCardRepository] backed by the saved-card API. */
+@RepositoryBinding(binds = SavedCardRepository::class)
 class SavedCardRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-1 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getSavedCardsScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without
-    // the store harness continue to compile; getSavedCards(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val savedCardStore: Store<SavedCardKey, List<SavedCard>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SavedCards) private val savedCardStore: Store<SavedCardKey, List<SavedCard>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
 ) : SavedCardRepository {
     override fun getSavedCards(clientId: Long): Flow<ScreenState<List<SavedCard>>> {
         return apiManager.savedCardApi

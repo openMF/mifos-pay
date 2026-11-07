@@ -29,7 +29,7 @@ fun NavController.navigateToSettings(navOptions: NavOptions? = null) {
  * (`DISABLE_BIOMETRICS_VERIFICATION_KEY`) works.
  *
  * @param navigateToPasscodeScreen `(verificationKey?) -> Unit` — bind to
- *        `navController::navigateToInternalMifosPasscodeScreen`. A non-null
+ *        `navController::navigateToInternalPasscodeScreen`. A non-null
  *        key triggers the round-trip flow (disable biometrics); null means
  *        no channel needed (change passcode).
  */

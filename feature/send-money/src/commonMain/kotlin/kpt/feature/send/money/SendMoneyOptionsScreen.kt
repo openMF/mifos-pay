@@ -42,11 +42,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_autopay
 import kpt.feature.send.money.generated.resources.feature_send_money_bank_transfer
@@ -103,11 +103,11 @@ fun SendMoneyOptionsScreen(
             }
         }
     }
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = stringResource(Res.string.feature_send_money_title),
                     backPress = {
                         viewModel.trySendAction(SendMoneyOptionsAction.NavigateBack)
@@ -213,28 +213,28 @@ private fun SendMoneyOptionsRow(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             SendMoneyOptionButton(
-                icon = MifosIcons.Scan,
+                icon = ForkIcons.Scan,
                 label = stringResource(Res.string.feature_send_money_scan_qr_code),
                 onClick = onScanQrClick,
                 modifier = Modifier.weight(1f),
             )
 
             SendMoneyOptionButton(
-                icon = MifosIcons.Person,
+                icon = ForkIcons.Person,
                 label = stringResource(Res.string.feature_send_money_pay_anyone),
                 onClick = onPayAnyoneClick,
                 modifier = Modifier.weight(1f),
             )
 
             SendMoneyOptionButton(
-                icon = MifosIcons.Bank,
+                icon = ForkIcons.Bank,
                 label = stringResource(Res.string.feature_send_money_bank_transfer),
                 onClick = onBankTransferClick,
                 modifier = Modifier.weight(1f),
             )
 
             SendMoneyOptionButton(
-                icon = MifosIcons.Payment,
+                icon = ForkIcons.Payment,
                 label = stringResource(Res.string.feature_send_money_fineract_payments),
                 onClick = onFineractPaymentsClick,
                 modifier = Modifier.weight(1f),
@@ -246,7 +246,7 @@ private fun SendMoneyOptionsRow(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
             SendMoneyOptionButton(
-                icon = MifosIcons.CalenderMonth,
+                icon = ForkIcons.CalenderMonth,
                 label = stringResource(Res.string.feature_send_money_autopay),
                 onClick = onAutoPayClick,
                 modifier = Modifier.weight(1f),
@@ -509,7 +509,7 @@ private fun TransactionHistorySection(
                     color = KptTheme.colorScheme.primary,
                 )
                 Icon(
-                    imageVector = MifosIcons.ChevronRight,
+                    imageVector = ForkIcons.ChevronRight,
                     contentDescription = "See All",
                     modifier = Modifier.size(16.dp),
                     tint = KptTheme.colorScheme.primary,
@@ -644,7 +644,7 @@ private fun PersonItem(
             ) {
                 if (isMoreButton) {
                     Icon(
-                        imageVector = MifosIcons.Add,
+                        imageVector = ForkIcons.Add,
                         contentDescription = name,
                         modifier = Modifier.size(24.dp),
                         tint = KptTheme.colorScheme.onSecondaryContainer,

@@ -12,20 +12,23 @@ package kpt.core.data.repositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.mapper.toEntity
 import kpt.core.data.repository.UserRepository
+import kpt.core.model.fork.user.NewUser
 import kpt.core.model.network.CommonResponse
 import kpt.core.model.network.GenericResponse
 import kpt.core.model.network.entity.UserWithRole
 import kpt.core.model.network.entity.user.UpdateUserEntityPassword
-import kpt.core.model.user.NewUser
 import kpt.core.network.SelfServiceApiManager
 /** Default [UserRepository] backed by the user API. */
+@RepositoryBinding(binds = UserRepository::class)
 class UserRepositoryImpl(
     private val selfServiceApiManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : UserRepository {
     override suspend fun getUsers(): ScreenStateStream<List<UserWithRole>> {
         return selfServiceApiManager.userApi.users()

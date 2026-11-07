@@ -31,12 +31,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.Constants
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.model.datatables.invoice.Invoice
 import kpt.core.ui.ErrorScreenContent
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Content
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Error
 import kpt.feature.invoices.details.InvoiceDetailState.ViewState.Loading
@@ -80,7 +80,7 @@ internal fun InvoiceDetailScreen(
     modifier: Modifier = Modifier,
     onAction: (InvoiceDetailAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = stringResource(Res.string.feature_invoices_invoice_details),
         backPress = { onAction(InvoiceDetailAction.NavigateBack) },
         modifier = modifier,
@@ -92,7 +92,7 @@ internal fun InvoiceDetailScreen(
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
-                is Loading -> MifosProgressIndicator()
+                is Loading -> ForkProgressIndicator()
 
                 is Error -> {
                     ErrorScreenContent(
@@ -229,7 +229,7 @@ private inline fun RowBlock(
         }
 
         if (showDivider) {
-            MifosDivider()
+            ForkDivider()
         }
     }
 }

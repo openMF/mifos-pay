@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.Serializable
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel for the UPI PIN screen; builds its state from the navigation arguments. */
 class UpiPinViewModel(
     savedStateHandle: SavedStateHandle,

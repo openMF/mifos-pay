@@ -22,18 +22,18 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import cmp.navigation.registry.app.UserState.Authenticated
-import cmp.navigation.registry.app.navigation.MifosNavGraph.LOGIN_GRAPH
+import cmp.navigation.registry.app.navigation.ForkNavGraph.LOGIN_GRAPH
 import cmp.navigation.registry.app.navigation.RootNavGraph
 import co.touchlab.kermit.Logger
 import kpt.core.common.GlobalAuthManager
-import kpt.core.data.util.MifosNetworkMonitorQualifier
-import kpt.core.data.util.MifosTimeZoneMonitorQualifier
-import kpt.core.data.util.NetworkMonitor
-import kpt.core.data.util.TimeZoneMonitor
-import kpt.core.designsystem.component.MifosDialogBox
-import kpt.core.designsystem.theme.fork.MifosTheme
-import kpt.feature.passcode.ROOT_MIFOS_PASSCODE_ROUTE
-import kpt.feature.passcode.navigateToReAuthMifosPasscodeScreen
+import kpt.core.data.fork.util.ForkNetworkMonitorQualifier
+import kpt.core.data.fork.util.ForkTimeZoneMonitorQualifier
+import kpt.core.data.fork.util.NetworkMonitor
+import kpt.core.data.fork.util.TimeZoneMonitor
+import kpt.core.designsystem.fork.component.ForkDialogBox
+import kpt.core.designsystem.theme.fork.ForkTheme
+import kpt.feature.passcode.ROOT_PASSCODE_ROUTE
+import kpt.feature.passcode.navigateToReAuthPasscodeScreen
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.authenticator.biometrics.BiometricStorageAdapter
@@ -69,8 +69,8 @@ fun ForkAppRoot(
     handleAppLocale: (locale: String?) -> Unit,
     onSplashScreenRemoved: () -> Unit,
     modifier: Modifier = Modifier,
-    networkMonitor: NetworkMonitor = koinInject(MifosNetworkMonitorQualifier),
-    timeZoneMonitor: TimeZoneMonitor = koinInject(MifosTimeZoneMonitorQualifier),
+    networkMonitor: NetworkMonitor = koinInject(ForkNetworkMonitorQualifier),
+    timeZoneMonitor: TimeZoneMonitor = koinInject(ForkTimeZoneMonitorQualifier),
 ) {
     LaunchedEffect(Unit) { onSplashScreenRemoved() }
     val biometricStorageAdapter: BiometricStorageAdapter = koinInject()
@@ -106,7 +106,7 @@ fun ForkAppRoot(
  *  - **Start-destination resolution** — derives `navDestination` from
  *    [ForkAppViewModel.userState]: [UserState.UnAuthenticated] →
  *    [LOGIN_GRAPH]; [UserState.Authenticated] with `userData.authenticated`
- *    true → [ROOT_MIFOS_PASSCODE_ROUTE], else [LOGIN_GRAPH]. This only
+ *    true → [ROOT_PASSCODE_ROUTE], else [LOGIN_GRAPH]. This only
  *    seeds the NavHost on first composition; subsequent state changes don't
  *    re-target the start destination.
  *
@@ -149,7 +149,7 @@ private fun ForkAppContent(
     }
 
     if (showErrorDialog.value) {
-        MifosDialogBox(
+        ForkDialogBox(
             title = "Unauthorized User",
             showDialogState = showErrorDialog.value,
             confirmButtonText = "Ok",
@@ -173,10 +173,10 @@ private fun ForkAppContent(
     ReAuthOnResume(
         isAppLocked = viewModel::isAppLocked,
         passcodeManager = passcodeManager,
-        onReAuthRequired = { navController.navigateToReAuthMifosPasscodeScreen() },
+        onReAuthRequired = { navController.navigateToReAuthPasscodeScreen() },
     )
 
-    MifosTheme {
+    ForkTheme {
         RootNavGraph(
             networkMonitor = networkMonitor,
             timeZoneMonitor = timeZoneMonitor,
@@ -202,7 +202,7 @@ private fun ForkAppContent(
  */
 internal fun startDestination(userState: UserState, isPasscodeNotCreated: Boolean): String =
     if (userState is Authenticated && userState.userData.authenticated && !isPasscodeNotCreated) {
-        ROOT_MIFOS_PASSCODE_ROUTE
+        ROOT_PASSCODE_ROUTE
     } else {
         LOGIN_GRAPH
     }

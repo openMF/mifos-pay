@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** View model for the AutoPay schedule details screen; loads a schedule and handles pause, resume and cancel. */
 class AutoPayScheduleDetailsViewModel(
     savedStateHandle: SavedStateHandle,

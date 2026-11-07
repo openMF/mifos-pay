@@ -24,7 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.generated.resources.Res
 import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_account_ids
 import kpt.feature.mpay.qr.generated.resources.feature_mpay_qr_account_number
@@ -116,7 +116,7 @@ private fun AccountIdRow(
 
             IconButton(onClick = onCopy) {
                 Icon(
-                    imageVector = MifosIcons.Copy,
+                    imageVector = ForkIcons.Copy,
                     contentDescription = stringResource(Res.string.feature_mpay_qr_copy),
                     tint = KptTheme.colorScheme.primary,
                 )

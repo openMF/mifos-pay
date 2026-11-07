@@ -10,10 +10,10 @@
 package kpt.core.data.repository
 
 import kpt.core.common.ScreenStateStream
+import kpt.core.model.fork.user.NewUser
 import kpt.core.model.network.CommonResponse
 import kpt.core.model.network.GenericResponse
 import kpt.core.model.network.entity.UserWithRole
-import kpt.core.model.user.NewUser
 /** Repository for users and their roles. */
 interface UserRepository {
     // Phase-3 cutover — Flow-shaped surfaces on ScreenState.

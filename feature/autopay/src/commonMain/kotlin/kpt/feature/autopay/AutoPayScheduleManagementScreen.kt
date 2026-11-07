@@ -48,13 +48,13 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.rememberMifosPullToRefreshState
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.rememberForkPullToRefreshState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillStatus
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.ExperimentalTime
 
@@ -70,7 +70,7 @@ fun AutoPayScheduleManagementScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val pullRefreshState = rememberMifosPullToRefreshState(
+    val pullRefreshState = rememberForkPullToRefreshState(
         isEnabled = true,
         isRefreshing = state.isLoading,
         onRefresh = { viewModel.trySendAction(AutoPayScheduleManagementAction.RefreshSchedules) },
@@ -87,7 +87,7 @@ fun AutoPayScheduleManagementScreen(
         }
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = "AutoPay Schedules",
         backPress = onNavigateBack,
@@ -151,13 +151,13 @@ fun AutoPayScheduleManagementScreen(
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                MifosButton(
+                ForkButton(
                     text = { Text("Add Bill") },
                     onClick = { viewModel.trySendAction(AutoPayScheduleManagementAction.AddNewBill) },
                     modifier = Modifier.weight(1f),
                 )
 
-                MifosButton(
+                ForkButton(
                     text = { Text("All Bills") },
                     onClick = { viewModel.trySendAction(AutoPayScheduleManagementAction.ViewAllBills) },
                     modifier = Modifier.weight(1f),
@@ -191,13 +191,13 @@ private fun ScheduleManagementHeader(
                 ScheduleStatItem(
                     label = "Total Schedules",
                     value = totalSchedules.toString(),
-                    icon = MifosIcons.List,
+                    icon = ForkIcons.List,
                 )
 
                 ScheduleStatItem(
                     label = "Active Schedules",
                     value = activeSchedules.toString(),
-                    icon = MifosIcons.CheckCircle,
+                    icon = ForkIcons.CheckCircle,
                 )
             }
         }
@@ -295,7 +295,7 @@ private fun AutoPayScheduleCard(
                             onClick = { showMenu = true },
                         ) {
                             Icon(
-                                imageVector = MifosIcons.MoreVert,
+                                imageVector = ForkIcons.MoreVert,
                                 contentDescription = "More options",
                             )
                         }
@@ -308,7 +308,7 @@ private fun AutoPayScheduleCard(
                                 text = { Text("Edit") },
                                 leadingIcon = {
                                     Icon(
-                                        imageVector = MifosIcons.Edit,
+                                        imageVector = ForkIcons.Edit,
                                         contentDescription = null,
                                     )
                                 },
@@ -321,7 +321,7 @@ private fun AutoPayScheduleCard(
                                 text = { Text("Delete") },
                                 leadingIcon = {
                                     Icon(
-                                        imageVector = MifosIcons.Delete,
+                                        imageVector = ForkIcons.Delete,
                                         contentDescription = null,
                                     )
                                 },
@@ -439,7 +439,7 @@ private fun EmptySchedulesCard(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
-                imageVector = MifosIcons.Payment,
+                imageVector = ForkIcons.Payment,
                 contentDescription = null,
                 modifier = Modifier.size(48.dp),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -472,7 +472,7 @@ private fun EmptySchedulesCard(
                     onClick = onAddBill,
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Add,
+                        imageVector = ForkIcons.Add,
                         contentDescription = null,
                         modifier = Modifier.size(20.dp),
                     )
@@ -484,7 +484,7 @@ private fun EmptySchedulesCard(
                     onClick = onViewAllBills,
                 ) {
                     Icon(
-                        imageVector = MifosIcons.List,
+                        imageVector = ForkIcons.List,
                         contentDescription = null,
                         modifier = Modifier.size(20.dp),
                     )

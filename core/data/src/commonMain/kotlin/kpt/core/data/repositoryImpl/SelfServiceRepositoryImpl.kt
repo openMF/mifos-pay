@@ -24,6 +24,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
@@ -31,14 +34,14 @@ import kpt.core.base.store.screen.asScreenStream
 import kpt.core.common.DateHelper
 import kpt.core.common.ScreenState
 import kpt.core.common.asScreenStateFlow
+import kpt.core.data.fork.util.Constants
+import kpt.core.data.fork.util.parseFineractError
+import kpt.core.data.fork.util.toForkScreenStateFlow
 import kpt.core.data.mapper.toAccount
 import kpt.core.data.mapper.toModel
 import kpt.core.data.mapper.toModelAccountType
 import kpt.core.data.mapper.toTransactionList
 import kpt.core.data.repository.SelfServiceRepository
-import kpt.core.data.util.Constants
-import kpt.core.data.util.parseMifosError
-import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.model.account.Account
 import kpt.core.model.account.AccountContent
 import kpt.core.model.beneficiary.Beneficiary
@@ -51,6 +54,7 @@ import kpt.core.model.network.entity.user.User
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.network.SelfServiceApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.beneficiary.BeneficiaryKey
 import kpt.core.store.wallet.history.TransactionKey
@@ -59,24 +63,16 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 /** Default [SelfServiceRepository] backed by the self-service API. */
 @OptIn(ExperimentalCoroutinesApi::class)
+@RepositoryBinding(binds = SelfServiceRepository::class)
 class SelfServiceRepositoryImpl(
     private val apiManager: SelfServiceApiManager,
-    private val dispatcher: CoroutineDispatcher,
-    // Phase-4 Batch-A LEDGER wiring — injected by RepositoryModule so the store-backed
-    // getTransactionsScreen(...) can consume Store5 via asScreenStream(...). The three
-    // fields below are OPTIONAL nullable references so unit tests that build a
-    // SelfServiceRepositoryImpl without the store harness (existing tests) don't have
-    // to construct them; getTransactions(...) — the legacy asScreenStateFlow path — is
-    // unaffected. See RepositoryModule.kt for the production wiring.
-    private val historyStore: Store<TransactionKey, List<Transaction>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
-    // Phase-5 Batch-1 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getBeneficiaryListScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without
-    // the store harness continue to compile; getBeneficiaryList() — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val beneficiaryStore: Store<BeneficiaryKey, List<Beneficiary>>? = null,
+    @FromQualifier("IO") private val dispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.History) private val historyStore: Store<TransactionKey, List<Transaction>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Beneficiary) private val beneficiaryStore: Store<BeneficiaryKey, List<Beneficiary>>?,
 ) : SelfServiceRepository {
     override suspend fun loginSelf(payload: AuthenticationPayload): User {
         return withContext(dispatcher) {
@@ -126,7 +122,7 @@ class SelfServiceRepositoryImpl(
         return apiManager.clientsApi
             .getAccounts(clientId, Constants.SAVINGS)
             .map { it.toAccount() }
-            .asScreenStateFlow(errorBodyParser = parseMifosError, isEmpty = { it.isEmpty() })
+            .asScreenStateFlow(errorBodyParser = parseFineractError, isEmpty = { it.isEmpty() })
             .flowOn(dispatcher)
     }
 

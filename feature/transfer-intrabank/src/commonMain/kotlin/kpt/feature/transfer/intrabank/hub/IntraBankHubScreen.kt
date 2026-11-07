@@ -32,13 +32,13 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.KptMaterialTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
 import kpt.core.model.account.RecentPayee
 import kpt.core.model.beneficiary.Beneficiary
-import kpt.core.ui.MifosProgressIndicatorMini
+import kpt.core.ui.ForkProgressIndicatorMini
 import kpt.core.ui.SimpleSearchBar
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_select_account_placeholder
 import kpt.feature.transfer.intrabank.generated.resources.feature_send_money_see_all
@@ -127,11 +127,11 @@ private fun IntraBankHubScreenContent(
     showTopBar: Boolean = true,
     onAction: (IntraBankHubAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
             if (showTopBar) {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = stringResource(Res.string.feature_send_money_send),
                     backPress = {
                         onAction(IntraBankHubAction.NavigateBack)
@@ -189,7 +189,7 @@ private fun IntraBankHubScreenContent(
                                     modifier = Modifier.fillMaxWidth().padding(KptTheme.spacing.lg),
                                     contentAlignment = Alignment.Center,
                                 ) {
-                                    MifosProgressIndicatorMini()
+                                    ForkProgressIndicatorMini()
                                 }
                             }
                         }
@@ -237,7 +237,7 @@ private fun IntraBankHubScreenContent(
                                     modifier = Modifier.fillMaxWidth().padding(KptTheme.spacing.lg),
                                     contentAlignment = Alignment.Center,
                                 ) {
-                                    MifosProgressIndicatorMini()
+                                    ForkProgressIndicatorMini()
                                 }
                             }
                         }

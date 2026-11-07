@@ -37,12 +37,12 @@ import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.PocketAccount
 import kpt.core.model.savingsaccount.SavingAccountEntity
 import kpt.core.ui.DefaultErrorMessageProvider
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.core.ui.generated.resources.core_ui_error_msg_generic
 import kpt.core.ui.generated.resources.core_ui_error_no_network
 import kpt.core.ui.generated.resources.core_ui_error_session_expired
 import kpt.core.ui.generated.resources.core_ui_pocket_add_failed
 import kpt.core.ui.generated.resources.core_ui_pocket_added_successfully
-import kpt.core.ui.utils.BaseViewModel
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_empty_amount
 import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_error_empty_description
@@ -57,7 +57,7 @@ import org.jetbrains.compose.resources.getString
 import kpt.core.ui.generated.resources.Res as CoreUiRes
 
 /**
- * `SavedStateHandle` key written by `internalMifosPasscodeScreen` and read by
+ * `SavedStateHandle` key written by `internalPasscodeScreen` and read by
  * [TransferConfirmScreen] for the intra-bank transfer auth-gate round trip
  * (MW-390).
  *
@@ -74,7 +74,7 @@ const val INTRA_BANK_TRANSFER_VERIFICATION_KEY = "intra-banking_transfer_verific
  *  1. On [TransferConfirmAction.InitiateTransfer], runs validation; if it
  *     passes, calls `handleUserVerification` which emits
  *     [TransferConfirmEvent.NavigateForPasscodeVerification]. The screen
- *     responds by navigating to `internalMifosPasscodeScreen` with
+ *     responds by navigating to `internalPasscodeScreen` with
  *     [INTRA_BANK_TRANSFER_VERIFICATION_KEY].
  *  2. The screen observes its own saved-state-handle for the round-trip
  *     boolean and re-dispatches it as
@@ -663,7 +663,7 @@ internal sealed interface TransferConfirmEvent {
     data object OnNavigateBack : TransferConfirmEvent
 
     /**
-     * Tells the screen to push `internalMifosPasscodeScreen` with
+     * Tells the screen to push `internalPasscodeScreen` with
      * [INTRA_BANK_TRANSFER_VERIFICATION_KEY]. The screen is responsible for
      * observing its own saved-state-handle for the round-trip boolean and
      * dispatching it back as

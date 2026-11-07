@@ -38,7 +38,7 @@ import kpt.core.model.standinginstruction.SITemplate
 import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.model.standinginstruction.StandingInstructionPayload
 import kpt.core.model.standinginstruction.toSIUploadPayload
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.standing.instruction.createOrUpdate.AddEditSIAction.Internal.HandleTemplateResult
 import kpt.feature.standing.instruction.createOrUpdate.AddEditSIAction.Internal.LoadClientAccount
 import kpt.feature.standing.instruction.createOrUpdate.AddEditSIState.DialogState.Error

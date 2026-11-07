@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.serialization.json.Json
-import kpt.core.data.util.MpayQrCodeProcessor
-import kpt.core.data.util.QrRouteResult
-import kpt.core.data.util.QrTransferRouter
+import kpt.core.data.fork.util.MpayQrCodeProcessor
+import kpt.core.data.fork.util.QrRouteResult
+import kpt.core.data.fork.util.QrTransferRouter
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.utils.QrCodeData
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * ViewModel for QR code scanning screen.
  *

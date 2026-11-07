@@ -38,13 +38,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosProgressIndicator
+import kpt.core.ui.ForkProgressIndicator
 import kpt.core.ui.TransactionFilterBottomSheet
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.history.components.TransactionList
 import kpt.feature.history.generated.resources.Res
 import kpt.feature.history.generated.resources.feature_history_empty
@@ -99,12 +99,12 @@ internal fun HistoryScreenContent(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (HistoryAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier.fillMaxSize(),
         snackbarHostState = snackbarHostState,
     ) { paddingValues ->
         when (state.viewState) {
-            is HistoryState.ViewState.Loading -> MifosProgressIndicator()
+            is HistoryState.ViewState.Loading -> ForkProgressIndicator()
 
             is HistoryState.ViewState.Error -> {
                 EmptyContentScreen(
@@ -233,7 +233,7 @@ private fun HistoryScreenHeader(
                 modifier = Modifier.matchParentSize(),
             ) {
                 Icon(
-                    imageVector = MifosIcons.Filter,
+                    imageVector = ForkIcons.Filter,
                     contentDescription = stringResource(Res.string.feature_history_filter_content_desc),
                     tint = KptTheme.colorScheme.onSurface,
                 )
@@ -262,7 +262,7 @@ private fun HistoryScreenHeader(
                 )
             } else {
                 Icon(
-                    imageVector = MifosIcons.Download,
+                    imageVector = ForkIcons.Download,
                     contentDescription = "Export PDF",
                 )
             }

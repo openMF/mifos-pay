@@ -13,10 +13,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.update
 import kpt.core.common.ScreenState
+import kpt.core.data.fork.util.toForkScreenStateFlow
 import kpt.core.data.repository.AccountRepository
-import kpt.core.data.util.toForkScreenStateFlow
 import kpt.core.model.savingsaccount.TransferDetail
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.history.detail.TransactionDetailState.ViewState.Content
 import kpt.feature.history.detail.TransactionDetailState.ViewState.Error
 import kpt.feature.history.generated.resources.Res

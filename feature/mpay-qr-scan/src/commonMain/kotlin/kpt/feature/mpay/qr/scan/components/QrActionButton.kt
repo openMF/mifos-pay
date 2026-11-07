@@ -79,7 +79,7 @@ private fun QrActionButtonEnabledPreview() {
         contentAlignment = Alignment.Center,
     ) {
         QrActionButton(
-            icon = kpt.core.designsystem.icon.MifosIcons.FlashOn,
+            icon = kpt.core.designsystem.fork.icon.ForkIcons.FlashOn,
             label = "Torch",
             onClick = {},
             enabled = true,
@@ -95,7 +95,7 @@ private fun QrActionButtonDisabledPreview() {
         contentAlignment = Alignment.Center,
     ) {
         QrActionButton(
-            icon = kpt.core.designsystem.icon.MifosIcons.FlashOff,
+            icon = kpt.core.designsystem.fork.icon.ForkIcons.FlashOff,
             label = "Torch",
             onClick = {},
             enabled = false,

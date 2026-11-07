@@ -35,12 +35,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
 import kpt.core.common.DateHelper
-import kpt.core.designsystem.component.MifosScaffold
+import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.model.standinginstruction.StandingInstruction
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.standing.instruction.components.FrequencyChip
 import kpt.feature.standing.instruction.components.InstructionTypeChip
 import kpt.feature.standing.instruction.components.PriorityChip
@@ -77,7 +77,7 @@ internal fun SIDetailsScreen(
     modifier: Modifier = Modifier,
     onAction: (SIDAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = "Instruction Details",
         modifier = modifier,
         backPress = {
@@ -91,7 +91,7 @@ internal fun SIDetailsScreen(
             contentAlignment = Alignment.Center,
         ) {
             when (state.viewState) {
-                is ViewState.Loading -> MifosProgressIndicator()
+                is ViewState.Loading -> ForkProgressIndicator()
 
                 is ViewState.Error -> {
                     EmptyContentScreen(
@@ -427,7 +427,7 @@ private inline fun RowBlock(
         }
 
         if (showDivider) {
-            MifosDivider()
+            ForkDivider()
         }
     }
 }

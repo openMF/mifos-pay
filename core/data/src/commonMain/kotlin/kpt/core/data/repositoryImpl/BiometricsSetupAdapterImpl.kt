@@ -10,6 +10,7 @@
 package kpt.core.data.repositoryImpl
 
 import com.russhwolf.settings.Settings
+import kpt.core.base.data.annotation.RepositoryBinding
 import org.mifos.authenticator.biometrics.BiometricStorageAdapter
 
 /** Multiplatform-Settings key for the registration blob (string). */
@@ -33,6 +34,7 @@ const val BIOMETRIC_REGISTERED_KEY = "org.mifospay.mifos.biometric_registered"
  * directly; use the provider's `registerUser()`, `onAuthenticatorClick()`,
  * and `unregister()` methods, which drive this adapter internally.
  */
+@RepositoryBinding(binds = BiometricStorageAdapter::class)
 class BiometricsSetupAdapterImpl(
     private val settings: Settings,
 ) : BiometricStorageAdapter {

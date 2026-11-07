@@ -28,10 +28,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MfLoadingWheel
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.rememberMifosPullToRefreshState
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.MfLoadingWheel
+import kpt.core.designsystem.fork.component.rememberForkPullToRefreshState
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.savingsaccount.Currency
 import kpt.core.model.savingsaccount.DepositType
 import kpt.core.model.savingsaccount.InterestPeriod
@@ -41,7 +41,7 @@ import kpt.core.model.savingsaccount.SubStatus
 import kpt.core.model.savingsaccount.Summary
 import kpt.core.model.savingsaccount.Timeline
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosSearchBar
+import kpt.core.ui.ForkSearchBar
 import kpt.feature.merchants.MerchantUiState
 import kpt.feature.merchants.MerchantViewModel
 import kpt.feature.merchants.generated.resources.Res
@@ -85,12 +85,12 @@ internal fun MerchantScreen(
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val pullRefreshState = rememberMifosPullToRefreshState(
+    val pullRefreshState = rememberForkPullToRefreshState(
         isRefreshing = isRefreshing,
         onRefresh = onRefresh,
     )
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier.fillMaxSize(),
         pullToRefreshState = pullRefreshState,
     ) {
@@ -204,7 +204,7 @@ private fun SearchBarScreen(
     onClearQuery: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosSearchBar(
+    ForkSearchBar(
         query = query,
         placeHolder = stringResource(Res.string.feature_merchants_search),
         onQueryChange = onQueryChange,
@@ -217,7 +217,7 @@ private fun SearchBarScreen(
 @Preview
 @Composable
 private fun MerchantLoadingPreview() {
-    MifosTheme {
+    ForkTheme {
         MerchantScreen(
             merchantUiState = MerchantUiState.Loading,
             merchantListUiState = MerchantUiState.ShowMerchants(sampleMerchantList),
@@ -232,7 +232,7 @@ private fun MerchantLoadingPreview() {
 @Preview
 @Composable
 private fun MerchantListPreview() {
-    MifosTheme {
+    ForkTheme {
         MerchantScreen(
             merchantUiState = MerchantUiState.ShowMerchants(sampleMerchantList),
             merchantListUiState = MerchantUiState.ShowMerchants(sampleMerchantList),
@@ -247,7 +247,7 @@ private fun MerchantListPreview() {
 @Preview
 @Composable
 private fun MerchantErrorPreview() {
-    MifosTheme {
+    ForkTheme {
         MerchantScreen(
             merchantUiState = MerchantUiState.Error("Error Screen"),
             merchantListUiState = MerchantUiState.ShowMerchants(sampleMerchantList),
@@ -262,7 +262,7 @@ private fun MerchantErrorPreview() {
 @Preview
 @Composable
 private fun MerchantEmptyPreview() {
-    MifosTheme {
+    ForkTheme {
         MerchantScreen(
             merchantUiState = MerchantUiState.Empty,
             merchantListUiState = MerchantUiState.ShowMerchants(sampleMerchantList),

@@ -37,16 +37,16 @@ import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.ui.detectMultiTapGesture
 import kpt.core.common.PlatformBuildConfig
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.designsystem.theme.styleNormal18sp
-import kpt.core.ui.MifosPasswordField
-import kpt.core.ui.MifosProgressIndicatorOverlay
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkPasswordField
+import kpt.core.ui.ForkProgressIndicatorOverlay
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.auth.generated.resources.Res
 import kpt.feature.auth.generated.resources.feature_auth_connected_to
 import kpt.feature.auth.generated.resources.feature_auth_login
@@ -60,7 +60,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 internal fun LoginScreen(
     onNavigateBack: () -> Unit,
-    navigateToMifosPasscodeScreen: () -> Unit,
+    navigateToPasscode: () -> Unit,
     navigateToSignupScreen: () -> Unit,
     onShowInstanceSelector: () -> Unit,
     modifier: Modifier = Modifier,
@@ -75,7 +75,7 @@ internal fun LoginScreen(
         when (event) {
             is LoginEvent.NavigateBack -> onNavigateBack.invoke()
             is LoginEvent.NavigateToSignup -> navigateToSignupScreen.invoke()
-            is LoginEvent.NavigateToMifosPasscodeScreen -> navigateToMifosPasscodeScreen()
+            is LoginEvent.NavigateToPasscode -> navigateToPasscode()
             is LoginEvent.ShowToast -> {
                 scope.launch {
                     snackbarHostState.showSnackbar(event.message)
@@ -102,7 +102,7 @@ internal fun LoginScreen(
     )
 
     if (state.dialogState is LoginState.DialogState.Loading) {
-        MifosProgressIndicatorOverlay()
+        ForkProgressIndicatorOverlay()
     }
 }
 
@@ -114,7 +114,7 @@ private fun LoginScreen(
     onAction: (LoginAction) -> Unit,
     onShowInstanceSelector: () -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         snackbarHostState = snackbarHostState,
         modifier = modifier.fillMaxSize(),
         containerColor = KptTheme.colorScheme.background,
@@ -136,7 +136,7 @@ private fun LoginDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is LoginState.DialogState.Error -> MifosBasicDialog(
+        is LoginState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = stringResource(dialogState.message),
             ),
@@ -178,7 +178,7 @@ private fun LoginScreenContent(
             style = styleNormal18sp,
         )
         Spacer(modifier = Modifier.padding(top = KptTheme.spacing.xl))
-        MifosOutlinedTextField(
+        ForkOutlinedTextField(
             label = stringResource(Res.string.feature_auth_username),
             value = state.username,
             onValueChange = {
@@ -187,7 +187,7 @@ private fun LoginScreenContent(
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.padding(horizontal = KptTheme.spacing.md))
-        MifosPasswordField(
+        ForkPasswordField(
             label = stringResource(Res.string.feature_auth_password),
             value = state.password,
             onValueChange = {
@@ -200,7 +200,7 @@ private fun LoginScreenContent(
             },
         )
         val isLoginButtonEnabled = state.username.isNotEmpty() && state.password.isNotEmpty()
-        MifosButton(
+        ForkButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = KptTheme.spacing.md),
@@ -284,7 +284,7 @@ private fun ServerInstanceInfo(
 @Preview
 @Composable
 private fun LoginScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         LoginScreen(
             state = LoginState(dialogState = null),
             snackbarHostState = remember { SnackbarHostState() },

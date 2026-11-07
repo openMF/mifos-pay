@@ -33,18 +33,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.ui.utils.EventsEffect
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_section_fill_details
-import mifos_pay.libs.mifos_loans.generated.resources.feature_button_next
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.ui.fork.utils.EventsEffect
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.mifos.lib.loan.component.UploadDocumentsSection
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_section_fill_details
+import org.mifos.lib.loan.generated.resources.feature_button_next
 import org.mifos.lib.loan.ui.uploadDocs.component.BottomSheetContent
 /**
  * Entry point for the Document Upload screen.
@@ -126,7 +126,7 @@ internal fun UploadDocsDialogs(
 ) {
     when (dialogState) {
         is UploadDocumentDialog.Error -> {
-            MifosBasicDialog(
+            ForkBasicDialog(
                 visibilityState = BasicDialogState.Shown(
                     message = stringResource(dialogState.error),
                 ),
@@ -197,10 +197,10 @@ internal fun UploadDocsScreenContent(
     modifier: Modifier = Modifier,
     onAction: (UploadDocsAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.feature_apply_loan_section_fill_details),
                 backPress = { onAction(UploadDocsAction.OnNavigateBack) },
             )
@@ -219,7 +219,7 @@ internal fun UploadDocsScreenContent(
                 onAction = onAction,
             )
 
-            MifosButton(
+            ForkButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),

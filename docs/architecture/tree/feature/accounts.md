@@ -9,7 +9,7 @@ Screens: `AccountsScreen`, `AddEditSavingAccountScreen`, `SavingAccountDetailScr
 
 ViewModels: `AccountViewModel`, `AddEditSavingViewModel`, `SavingAccountDetailViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `AccountViewModel`, `AddEditSavingViewModel`, `SavingAccountDetailVi
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/accounts sha=4411403c7af0fb165641ad2a62b8ec298558a7f4 -->
+<!-- api-docs:begin module=feature/accounts sha=5b9766c77f1f015cc662ee2dadd8bb4474a97273 -->
 ## API reference
 
-_Generated from `feature/accounts` at tree `4411403c7af0` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/accounts` at tree `5b9766c77f1f` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

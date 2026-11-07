@@ -82,7 +82,7 @@ fun TransactionHistoryCard(
                 )
 
                 if (i != transactions.size - 1) {
-                    MifosDivider(
+                    ForkDivider(
                         modifier = Modifier.padding(horizontal = KptTheme.spacing.sm),
                     )
                 }

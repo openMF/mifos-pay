@@ -38,8 +38,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.PaymentStatus
 import org.koin.compose.viewmodel.koinViewModel
@@ -52,7 +52,7 @@ fun AutoPayHistoryScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = "AutoPay History",
         backPress = onNavigateBack,
@@ -82,7 +82,7 @@ fun AutoPayHistoryScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Icon(
-                                imageVector = MifosIcons.Error,
+                                imageVector = ForkIcons.Error,
                                 contentDescription = null,
                                 modifier = Modifier.size(48.dp),
                                 tint = MaterialTheme.colorScheme.error,
@@ -105,7 +105,7 @@ fun AutoPayHistoryScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Icon(
-                                imageVector = MifosIcons.History,
+                                imageVector = ForkIcons.History,
                                 contentDescription = null,
                                 modifier = Modifier.size(48.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -153,13 +153,13 @@ private fun HistoryItemCard(
     }
 
     val statusIcon = when (currentStatus) {
-        PaymentStatus.COMPLETED -> MifosIcons.CheckCircle
-        PaymentStatus.FAILED -> MifosIcons.Error
-        PaymentStatus.PROCESSING -> MifosIcons.Schedule
-        PaymentStatus.PENDING -> MifosIcons.Schedule
-        PaymentStatus.UPCOMING -> MifosIcons.Schedule
-        PaymentStatus.CANCELLED -> MifosIcons.Cancel
-        null -> MifosIcons.History
+        PaymentStatus.COMPLETED -> ForkIcons.CheckCircle
+        PaymentStatus.FAILED -> ForkIcons.Error
+        PaymentStatus.PROCESSING -> ForkIcons.Schedule
+        PaymentStatus.PENDING -> ForkIcons.Schedule
+        PaymentStatus.UPCOMING -> ForkIcons.Schedule
+        PaymentStatus.CANCELLED -> ForkIcons.Cancel
+        null -> ForkIcons.History
     }
 
     Card(

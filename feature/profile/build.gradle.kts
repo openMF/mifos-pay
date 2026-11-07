@@ -23,7 +23,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
 
             // Fork addition: ProfileScreen/EditProfileViewModel etc. read org.mifospay.core.{common,
-            // data,designsystem,ui}.* (ScreenState, ClientRepository, MifosScaffold/MifosIcons,
+            // data,designsystem,ui}.* (ScreenState, ClientRepository, ForkScaffold/ForkIcons,
             // BaseViewModel) and kpt.core.base.{store,ui}.* (SubmitState/submitHandler, ScreenContent).
             implementation(projects.core.common)
             implementation(projects.core.data)

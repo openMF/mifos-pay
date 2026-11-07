@@ -14,7 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kpt.core.common.DefaultStringProvider
-import kpt.core.common.MifosDispatchers
+import kpt.core.common.ForkDispatchers
 import kpt.core.common.StringProvider
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -30,8 +30,8 @@ val stringProviderModule = module {
  */
 val DispatchersModule = module {
     includes(ioDispatcherModule)
-    single<CoroutineDispatcher>(named(MifosDispatchers.Default.name)) { Dispatchers.Default }
-    single<CoroutineDispatcher>(named(MifosDispatchers.Unconfined.name)) { Dispatchers.Unconfined }
+    single<CoroutineDispatcher>(named(ForkDispatchers.Default.name)) { Dispatchers.Default }
+    single<CoroutineDispatcher>(named(ForkDispatchers.Unconfined.name)) { Dispatchers.Unconfined }
     single<CoroutineScope>(named("ApplicationScope")) {
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
     }

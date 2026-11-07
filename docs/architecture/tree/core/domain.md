@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/domain sha=2469cbf0313b241d1784d3397e3484a858cda40b -->
+<!-- api-docs:begin module=core/domain sha=48bcdeb58255d0ecc670b49eac0a6375fac232a7 -->
 ## API reference
 
-_Generated from `core/domain` at tree `2469cbf0313b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/domain` at tree `48bcdeb58255` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/domain/src/commonMain/kotlin/kpt/core/domain/LoginUseCase.kt`

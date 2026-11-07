@@ -51,22 +51,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.utils.fork.onClick
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.fork.utils.onClick
 import kpt.core.model.autopay.RecurrencePattern
 import kpt.core.ui.DropdownBox
 import kpt.core.ui.DropdownBoxItem
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -97,9 +97,9 @@ fun AddBillScreen(
         viewModel.trySendAction(AddBillAction.RefreshBillers)
     }
 
-    MifosScaffold(
+    ForkScaffold(
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = "Add New Bill",
                 backPress = onNavigateBack,
             )
@@ -122,7 +122,7 @@ fun AddBillScreen(
                     modifier = Modifier.padding(bottom = 8.dp),
                 )
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Bill Name *",
                     value = state.formData.name,
                     onValueChange = { viewModel.trySendAction(AddBillAction.UpdateBillName(it)) },
@@ -161,7 +161,7 @@ fun AddBillScreen(
                     )
                 }
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Amount *",
                     value = state.formData.amount,
                     onValueChange = { viewModel.trySendAction(AddBillAction.UpdateAmount(it)) },
@@ -177,7 +177,7 @@ fun AddBillScreen(
                 Box(
                     modifier = Modifier.onClick { showDatePicker = true },
                 ) {
-                    MifosTextField(
+                    ForkTextField(
                         label = "Due Date *",
                         value = if (state.formData.dueDate > 0L) {
                             formatDateForDisplay(state.formData.dueDate)
@@ -199,7 +199,7 @@ fun AddBillScreen(
                                 ),
                             ) {
                                 Icon(
-                                    imageVector = MifosIcons.CalenderMonth,
+                                    imageVector = ForkIcons.CalenderMonth,
                                     contentDescription = "Choose Date",
                                 )
                             }
@@ -227,7 +227,7 @@ fun AddBillScreen(
                     }
                 }
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Description (Optional)",
                     value = state.formData.description,
                     onValueChange = { viewModel.trySendAction(AddBillAction.UpdateDescription(it)) },
@@ -296,12 +296,12 @@ fun AddBillScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                MifosOutlinedButton(
+                ForkOutlinedButton(
                     text = { Text("Cancel") },
                     onClick = onNavigateBack,
                     modifier = Modifier.weight(1f),
                 )
-                MifosButton(
+                ForkButton(
                     text = { Text("Save Bill") },
                     onClick = { viewModel.trySendAction(AddBillAction.SaveBill) },
                     modifier = Modifier.weight(1f),
@@ -354,13 +354,13 @@ fun AddBillScreen(
     }
 
     if (state.isLoading) {
-        MifosLoadingDialog(
+        ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
     }
 
     state.error?.let { error ->
-        MifosBasicDialog(
+        ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 title = "Error",
                 message = error,
@@ -442,7 +442,7 @@ private fun AutoPaySection(
                     }
                 }
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Source Account *",
                     value = sourceAccount,
                     onValueChange = onSourceAccountChanged,
@@ -454,7 +454,7 @@ private fun AutoPaySection(
                     ),
                 )
 
-                MifosOutlinedTextField(
+                ForkOutlinedTextField(
                     label = "Maximum Amount Limit (Optional)",
                     value = maxAmount,
                     onValueChange = onMaxAmountChanged,

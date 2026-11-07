@@ -112,7 +112,7 @@ internal fun QrCodeCard(
                     modifier = Modifier.size(QrCodeSize),
                 )
 
-                MifosLogoOverlay()
+                LogoOverlay()
             }
 
             Text(
@@ -160,7 +160,7 @@ private fun QrTypeBadge(
 }
 
 @Composable
-private fun MifosLogoOverlay(
+private fun LogoOverlay(
     modifier: Modifier = Modifier,
 ) {
     // Use QR background color for logo to match QR code background

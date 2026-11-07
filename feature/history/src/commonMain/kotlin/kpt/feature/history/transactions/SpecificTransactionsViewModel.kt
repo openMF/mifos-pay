@@ -15,7 +15,7 @@ import kpt.core.common.ScreenState
 import kpt.core.data.repository.AccountRepository
 import kpt.core.model.savingsaccount.Transaction
 import kpt.core.model.savingsaccount.TransferDetail
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.history.transactions.STState.ViewState.Content
 import kpt.feature.history.transactions.STState.ViewState.Error
 internal class SpecificTransactionsViewModel(

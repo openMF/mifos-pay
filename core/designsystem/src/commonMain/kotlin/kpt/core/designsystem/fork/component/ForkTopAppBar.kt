@@ -1,0 +1,283 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.core.designsystem.fork.component
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MediumTopAppBar
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.style.TextOverflow
+import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.fork.utils.mirrorIfRtl
+import kpt.core.designsystem.theme.fork.ForkTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
+/** Center-aligned top app bar with a title and a navigation icon. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ForkTopAppBar(
+    title: String,
+    scrollBehavior: TopAppBarScrollBehavior,
+    navigationIcon: ImageVector,
+    navigationIconContentDescription: String,
+    onNavigationIconClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = { },
+) {
+    ForkTopAppBar(
+        title = title,
+        scrollBehavior = scrollBehavior,
+        navigationIcon = NavigationIcon(
+            navigationIcon = navigationIcon,
+            navigationIconContentDescription = navigationIconContentDescription,
+            onNavigationIconClick = onNavigationIconClick,
+        ),
+        modifier = modifier,
+        actions = actions,
+    )
+}
+
+/** Center-aligned top app bar with a title and optional [NavigationIcon] and action icons. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Suppress("LongMethod")
+@Composable
+fun ForkTopAppBar(
+    title: String,
+    scrollBehavior: TopAppBarScrollBehavior,
+    navigationIcon: NavigationIcon?,
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
+) {
+    var titleTextHasOverflow by remember {
+        mutableStateOf(false)
+    }
+
+    val navigationIconContent: @Composable () -> Unit = remember(navigationIcon) {
+        {
+            navigationIcon?.let {
+                IconButton(
+                    onClick = it.onNavigationIconClick,
+                    modifier = Modifier.testTag("CloseButton"),
+                ) {
+                    Icon(
+                        modifier = Modifier.mirrorIfRtl(),
+                        imageVector = it.navigationIcon,
+                        contentDescription = it.navigationIconContentDescription,
+                    )
+                }
+            }
+        }
+    }
+
+    val topAppBarColors = TopAppBarDefaults.largeTopAppBarColors(
+        containerColor = KptTheme.colorScheme.surface,
+        scrolledContainerColor = KptTheme.colorScheme.surfaceContainer,
+        navigationIconContentColor = KptTheme.colorScheme.onSurface,
+        titleContentColor = KptTheme.colorScheme.onSurface,
+        actionIconContentColor = KptTheme.colorScheme.onSurfaceVariant,
+    )
+
+    if (titleTextHasOverflow) {
+        MediumTopAppBar(
+            colors = topAppBarColors,
+            scrollBehavior = scrollBehavior,
+            navigationIcon = navigationIconContent,
+            title = {
+                // The height of the component is controlled and will only allow for 1 extra row,
+                // making adding any arguments for softWrap and minLines superfluous.
+                Text(
+                    text = title,
+                    style = KptTheme.typography.titleLarge,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.testTag("PageTitleLabel"),
+                )
+            },
+            modifier = modifier.testTag("HeaderBarComponent"),
+            actions = actions,
+        )
+    } else {
+        TopAppBar(
+            colors = topAppBarColors,
+            scrollBehavior = scrollBehavior,
+            navigationIcon = navigationIconContent,
+            title = {
+                Text(
+                    text = title,
+                    style = KptTheme.typography.titleLarge,
+                    maxLines = 1,
+                    softWrap = false,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.testTag("PageTitleLabel"),
+                    onTextLayout = {
+                        titleTextHasOverflow = it.hasVisualOverflow
+                    },
+                )
+            },
+            modifier = modifier.testTag("HeaderBarComponent"),
+            actions = actions,
+        )
+    }
+}
+
+/** Top app bar with a title and subtitle, an optional [NavigationIcon] and action icons. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Suppress("LongMethod")
+@Composable
+fun ForkTopAppBar(
+    title: String,
+    subtitle: String,
+    scrollBehavior: TopAppBarScrollBehavior,
+    navigationIcon: ImageVector,
+    navigationIconContentDescription: String,
+    onNavigationIconClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
+) {
+    val navigationIconContent: @Composable () -> Unit = remember(navigationIcon) {
+        {
+            IconButton(
+                onClick = onNavigationIconClick,
+                modifier = Modifier.testTag("CloseButton"),
+            ) {
+                Icon(
+                    modifier = Modifier.mirrorIfRtl(),
+                    imageVector = navigationIcon,
+                    contentDescription = navigationIconContentDescription,
+                )
+            }
+        }
+    }
+
+    val topAppBarColors = TopAppBarDefaults.largeTopAppBarColors(
+        containerColor = KptTheme.colorScheme.surface,
+        scrolledContainerColor = KptTheme.colorScheme.surfaceContainer,
+        navigationIconContentColor = KptTheme.colorScheme.onSurface,
+        titleContentColor = KptTheme.colorScheme.onSurface,
+        actionIconContentColor = KptTheme.colorScheme.onSurfaceVariant,
+    )
+
+    LargeTopAppBar(
+        colors = topAppBarColors,
+        scrollBehavior = scrollBehavior,
+        navigationIcon = navigationIconContent,
+        title = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
+            ) {
+                // The height of the component is controlled and will only allow for 1 extra row,
+                // making adding any arguments for softWrap and minLines superfluous.
+                Text(
+                    text = title,
+                    style = KptTheme.typography.titleLarge,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.testTag("PageTitleLabel"),
+                )
+
+                Text(
+                    text = subtitle,
+                    style = KptTheme.typography.bodyMedium,
+                    modifier = Modifier.testTag("PageTitleSubTitle"),
+                )
+            }
+        },
+        modifier = modifier.testTag("HeaderBarComponent"),
+        actions = actions,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun MifosTopAppBar_preview() {
+    ForkTheme {
+        ForkTopAppBar(
+            title = "Title",
+            scrollBehavior = TopAppBarDefaults
+                .exitUntilCollapsedScrollBehavior(
+                    rememberTopAppBarState(),
+                ),
+            navigationIcon = NavigationIcon(
+                navigationIcon = ForkIcons.Back,
+                navigationIconContentDescription = "Back",
+                onNavigationIconClick = { },
+            ),
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun MifosTopAppBarOverflow_preview() {
+    ForkTheme {
+        ForkTopAppBar(
+            title = "Title that is too long for the top line",
+            scrollBehavior = TopAppBarDefaults
+                .exitUntilCollapsedScrollBehavior(
+                    rememberTopAppBarState(),
+                ),
+            navigationIcon = NavigationIcon(
+                navigationIcon = ForkIcons.Close,
+                navigationIconContentDescription = "Close",
+                onNavigationIconClick = { },
+            ),
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun MifosTopAppBarOverflowCutoff_preview() {
+    ForkTheme {
+        ForkTopAppBar(
+            title = "Title that is too long for the top line and the bottom line",
+            scrollBehavior = TopAppBarDefaults
+                .exitUntilCollapsedScrollBehavior(
+                    rememberTopAppBarState(),
+                ),
+            navigationIcon = NavigationIcon(
+                navigationIcon = ForkIcons.Close,
+                navigationIconContentDescription = "Close",
+                onNavigationIconClick = { },
+            ),
+        )
+    }
+}
+
+/**
+ * Navigation icon configuration for a top app bar.
+ *
+ * @property navigationIcon Icon to display.
+ * @property navigationIconContentDescription Accessibility description of the icon.
+ * @property onNavigationIconClick Invoked when the icon is clicked.
+ */
+data class NavigationIcon(
+    val navigationIcon: ImageVector,
+    val navigationIconContentDescription: String,
+    val onNavigationIconClick: () -> Unit,
+)

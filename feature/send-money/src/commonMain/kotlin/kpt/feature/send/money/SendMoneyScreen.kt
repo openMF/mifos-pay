@@ -51,23 +51,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.utils.maskString
-import kpt.core.designsystem.component.BasicDialogState.Shown
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosLoadingWheel
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState.Shown
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkLoadingWheel
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.designsystem.theme.toRoundedCornerShape
 import kpt.core.model.search.AccountResult
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_amount
 import kpt.feature.send.money.generated.resources.feature_send_money_bottom_bar
@@ -146,14 +146,14 @@ private fun SendMoneyScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onAction: (SendMoneyAction) -> Unit,
 ) {
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
                 AnimatedVisibility(
                     visible = showTopBar,
                 ) {
-                    MifosTopBar(
+                    ForkTopBar(
                         topBarTitle = stringResource(Res.string.feature_send_money_send),
                         backPress = {
                             onAction(SendMoneyAction.NavigateBack)
@@ -165,7 +165,7 @@ private fun SendMoneyScreen(
                                 },
                             ) {
                                 Icon(
-                                    imageVector = MifosIcons.Scan,
+                                    imageVector = ForkIcons.Scan,
                                     contentDescription = stringResource(Res.string.feature_send_money_scan_qr),
                                 )
                             }
@@ -257,7 +257,7 @@ private fun SendMoneyBottomBar(
                 }
             }
 
-            MifosButton(
+            ForkButton(
                 onClick = onClickProceed,
                 enabled = showDetails,
                 modifier = Modifier.fillMaxWidth(),
@@ -303,7 +303,7 @@ private fun SelectedAccountCard(
                     Text(text = maskString(account.entityAccountNo))
                 },
                 leadingContent = {
-                    AvatarBox(icon = MifosIcons.Bank)
+                    AvatarBox(icon = ForkIcons.Bank)
                 },
                 trailingContent = {
                     Row(
@@ -323,7 +323,7 @@ private fun SelectedAccountCard(
                             onClick = onDeselect,
                         ) {
                             Icon(
-                                imageVector = MifosIcons.Close,
+                                imageVector = ForkIcons.Close,
                                 contentDescription = stringResource(Res.string.feature_send_money_close),
                             )
                         }
@@ -381,7 +381,7 @@ private fun SendMoneyCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
         ) {
-            MifosTextField(
+            ForkTextField(
                 label = stringResource(Res.string.feature_send_money_amount),
                 value = state.amount,
                 isError = !state.amountIsValid,
@@ -393,7 +393,7 @@ private fun SendMoneyCard(
                 },
             )
 
-            MifosTextField(
+            ForkTextField(
                 label = stringResource(Res.string.feature_send_money_vpa_mobile_account_number),
                 value = state.accountNumber,
                 onValueChange = remember(onAction) {
@@ -416,7 +416,7 @@ private fun LazyListScope.accountListContent(
                     modifier = Modifier.fillParentMaxWidth(),
                     contentAlignment = Alignment.Center,
                 ) {
-                    MifosLoadingWheel(contentDesc = stringResource(Res.string.feature_send_money_loading))
+                    ForkLoadingWheel(contentDesc = stringResource(Res.string.feature_send_money_loading))
                 }
             }
         }
@@ -456,7 +456,7 @@ private fun LazyListScope.accountListContent(
                 )
 
                 if (i < state.data.lastIndex) {
-                    MifosDivider()
+                    ForkDivider()
                 }
             }
         }
@@ -481,7 +481,7 @@ private fun AccountCard(
         },
         leadingContent = {
             AvatarBox(
-                icon = MifosIcons.Bank,
+                icon = ForkIcons.Bank,
                 backgroundColor = KptTheme.colorScheme.tertiary,
             )
         },
@@ -493,7 +493,7 @@ private fun AccountCard(
                 visible = selected(account),
             ) {
                 Icon(
-                    imageVector = MifosIcons.Check,
+                    imageVector = ForkIcons.Check,
                     contentDescription = stringResource(Res.string.feature_send_money_selected),
                 )
             }
@@ -512,14 +512,14 @@ private fun SendMoneyDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is SendMoneyState.DialogState.Error.ResourceMessage -> MifosBasicDialog(
+        is SendMoneyState.DialogState.Error.ResourceMessage -> ForkBasicDialog(
             visibilityState = Shown(
                 message = stringResource(dialogState.message),
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is SendMoneyState.DialogState.Error.GenericResourceMessage -> MifosBasicDialog(
+        is SendMoneyState.DialogState.Error.GenericResourceMessage -> ForkBasicDialog(
             visibilityState = Shown(
                 message = stringResource(
                     dialogState.message,
@@ -529,7 +529,7 @@ private fun SendMoneyDialogs(
             onDismissRequest = onDismissRequest,
         )
 
-        is SendMoneyState.DialogState.Loading -> MifosLoadingDialog(
+        is SendMoneyState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 

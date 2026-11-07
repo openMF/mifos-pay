@@ -66,19 +66,19 @@ import kpt.core.base.store.freshness.FreshnessSignal
 import kpt.core.base.store.screen.ScreenState
 import kpt.core.base.ui.freshness.FreshnessIndicator
 import kpt.core.base.ui.screen.ScreenContent
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosAlertDialog
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTabPager
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkAlertDialog
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTabPager
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.enums.AccountType
 import kpt.core.model.pocket.LinkableAccount
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.pocket.generated.resources.Res
 import kpt.feature.pocket.generated.resources.feature_pocket_action_cancel
 import kpt.feature.pocket.generated.resources.feature_pocket_action_link
@@ -167,7 +167,7 @@ internal fun ManagePocketContent(
     linkedFreshness: FreshnessSignal,
     onAction: (ManagePocketAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         backPress = { onAction(ManagePocketAction.NavigateBack) },
         topBarTitle = stringResource(Res.string.feature_pocket_manage_title),
         containerColor = KptTheme.colorScheme.background,
@@ -292,7 +292,7 @@ private fun ManagePocketDialogs(
 ) {
     when (val dialogState = state.dialogState) {
         ManagePocketDialogState.LinkAccounts -> {
-            MifosBottomSheet(
+            ForkBottomSheet(
                 onDismiss = { onAction(ManagePocketAction.DismissDialog) },
             ) {
                 LinkAccountsSheet(
@@ -305,7 +305,7 @@ private fun ManagePocketDialogs(
         }
 
         is ManagePocketDialogState.DelinkConfirmation -> {
-            MifosBottomSheet(
+            ForkBottomSheet(
                 onDismiss = { onAction(ManagePocketAction.DismissDialog) },
             ) {
                 RemoveLinkedAccountSheet(
@@ -320,10 +320,10 @@ private fun ManagePocketDialogs(
         }
 
         is ManagePocketDialogState.Error -> {
-            MifosAlertDialog(
+            ForkAlertDialog(
                 title = stringResource(Res.string.feature_pocket_dialog_error_title),
                 message = stringResource(dialogState.message),
-                icon = MifosIcons.Error,
+                icon = ForkIcons.Error,
                 confirmText = stringResource(Res.string.feature_pocket_action_ok),
                 dismissText = stringResource(Res.string.feature_pocket_action_cancel),
                 onConfirm = { onAction(ManagePocketAction.DismissDialog) },
@@ -332,7 +332,7 @@ private fun ManagePocketDialogs(
         }
 
         ManagePocketDialogState.Loading -> {
-            MifosLoadingDialog(visibilityState = LoadingDialogState.Shown)
+            ForkLoadingDialog(visibilityState = LoadingDialogState.Shown)
         }
 
         null -> Unit
@@ -370,7 +370,7 @@ private fun LinkMoreAccountsCard(
                 overflow = TextOverflow.Ellipsis,
             )
 
-            MifosButton(
+            ForkButton(
                 onClick = onLinkClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = KptTheme.colorScheme.primary,
@@ -409,7 +409,7 @@ private fun LinkedPocketAccountCard(
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Delete,
+                        imageVector = ForkIcons.Delete,
                         contentDescription = stringResource(Res.string.feature_pocket_action_remove),
                         tint = KptTheme.colorScheme.error,
                         modifier = Modifier.size(KptTheme.spacing.lg),
@@ -534,7 +534,7 @@ internal fun LinkAccountsSheet(
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            MifosTabPager(
+            ForkTabPager(
                 modifier = Modifier.fillMaxSize(),
                 pagerState = pagerState,
                 currentPage = selectedTabIndex,
@@ -548,7 +548,7 @@ internal fun LinkAccountsSheet(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        MifosProgressIndicator()
+                        ForkProgressIndicator()
                     }
                 } else {
                     val accounts = allAccounts.filter { it.accountType == tabs[page] }
@@ -565,7 +565,7 @@ internal fun LinkAccountsSheet(
                                 color = KptTheme.colorScheme.error,
                             )
                             Spacer(modifier = Modifier.height(KptTheme.spacing.sm))
-                            MifosButton(
+                            ForkButton(
                                 onClick = { onAction(ManagePocketAction.RetryAvailable) },
                             ) {
                                 Text(stringResource(Res.string.feature_pocket_empty_action))
@@ -684,7 +684,7 @@ private fun LinkSelectedAccountsButton(
     state: ManagePocketState,
     onAction: (ManagePocketAction) -> Unit,
 ) {
-    MifosButton(
+    ForkButton(
         onClick = {
             onAction(ManagePocketAction.LinkSelectedAccounts)
         },
@@ -769,9 +769,9 @@ private fun PocketAccountIcon(
 
 private fun AccountType.toIcon(): ImageVector =
     when (this) {
-        AccountType.SAVINGS -> MifosIcons.PersonAccounts
-        AccountType.LOAN -> MifosIcons.CoinMultiple
-        AccountType.SHARE -> MifosIcons.CoinMultiple
+        AccountType.SAVINGS -> ForkIcons.PersonAccounts
+        AccountType.LOAN -> ForkIcons.CoinMultiple
+        AccountType.SHARE -> ForkIcons.CoinMultiple
     }
 
 @Composable
@@ -789,7 +789,7 @@ private fun ManagePocketSearchTextField(
         value = value,
         leadingIcon = {
             Icon(
-                imageVector = MifosIcons.Search,
+                imageVector = ForkIcons.Search,
                 contentDescription = null,
             )
         },
@@ -805,7 +805,7 @@ private fun ManagePocketSearchTextField(
             AnimatedVisibility(visible = value.text.isNotEmpty()) {
                 IconButton(onClick = onSearchDismiss) {
                     Icon(
-                        imageVector = MifosIcons.Close,
+                        imageVector = ForkIcons.Close,
                         contentDescription = stringResource(Res.string.feature_pocket_close),
                     )
                 }
@@ -849,7 +849,7 @@ internal fun RemoveLinkedAccountSheet(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
         ) {
             Icon(
-                imageVector = MifosIcons.Warning,
+                imageVector = ForkIcons.Warning,
                 contentDescription = null,
                 tint = KptTheme.colorScheme.error,
             )
@@ -912,7 +912,7 @@ internal fun RemoveLinkedAccountSheet(
             horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            MifosButton(
+            ForkButton(
                 onClick = onCancelClick,
                 modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.buttonColors(
@@ -927,7 +927,7 @@ internal fun RemoveLinkedAccountSheet(
                 },
             )
 
-            MifosButton(
+            ForkButton(
                 onClick = onRemoveClick,
                 modifier = Modifier.weight(1f),
                 colors = ButtonDefaults.buttonColors(
@@ -948,7 +948,7 @@ internal fun RemoveLinkedAccountSheet(
 @Preview
 @Composable
 private fun ManagePocketContentPreview() {
-    MifosTheme {
+    ForkTheme {
         ManagePocketContent(
             linkedUiState = ScreenState.Content(emptyList()),
             linkedFreshness = FreshnessSignal.initial(),
@@ -968,7 +968,7 @@ internal data class ManagePocketAccount(
 @Preview
 @Composable
 private fun LinkAccountsSheetContentPreview() {
-    MifosTheme {
+    ForkTheme {
         LinkAccountsSheet(
             state = ManagePocketState(),
             availableUiState = ScreenState.Content(emptyList()),
@@ -981,7 +981,7 @@ private fun LinkAccountsSheetContentPreview() {
 @Preview
 @Composable
 private fun RemoveLinkedAccountSheetContentPreview() {
-    MifosTheme {
+    ForkTheme {
         RemoveLinkedAccountSheet(
             accountName = "Emergency Fund",
             accountNumber = "1004859238",

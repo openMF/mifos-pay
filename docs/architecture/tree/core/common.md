@@ -8,7 +8,7 @@
 
 ## Principal types
 
-`ApplicationScope`, `CommonFileUtils`, `Constants`, `CurrencyFormatter`, `DateAsStringSerializer`, `DateHelper`, `DebugUtil`, `DefaultStringProvider`, `DialogManager`, `DialogMessage`, `Dispatcher`, `ErrorMessageProvider`, `FileUtils`, `GlobalAuthManager`  …and 18 more
+`ApplicationScope`, `CommonFileUtils`, `Constants`, `CurrencyFormatter`, `DateAsStringSerializer`, `DateHelper`, `DebugUtil`, `DefaultStringProvider`, `DialogManager`, `DialogMessage`, `Dispatcher`, `ErrorMessageProvider`, `FileUtils`, `ForkDispatchers`  …and 18 more
 
 <!-- scaffold:end -->
 
@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/common sha=eb28d4fd81966f4e512aa356e168f1d2a2a3dfbe -->
+<!-- api-docs:begin module=core/common sha=1c4e60c0f43012025c4b9188fd2063889e8793bc -->
 ## API reference
 
-_Generated from `core/common` at tree `eb28d4fd8196` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/common` at tree `1c4e60c0f430` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/Constants.kt`
@@ -209,7 +209,7 @@ typealias ErrorBodyParser = suspend (responseBody: String, statusCode: Int) -> S
 ```
 Function type for parsing an error response body into a user-friendly message. Repositories provide custom parsing logic (e.g.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:98</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ForkScreenStateErrorMapper.kt:98</code></summary>
 
 ```kotlin
     suspend fun <T> mapErrorBody(
@@ -268,7 +268,7 @@ A data class representing a user-facing error with title, message, and retry cap
 val uiError = UiError.from(exception, errorMessageProvider)
 
 // In Composable
-MifosDialogBox(
+ForkDialogBox(
     showDialogState = error != null,
     title = error?.title ?: "",
     message = error?.message ?: "",
@@ -380,6 +380,99 @@ actual fun createPlatformFileUtils(): FileUtils = CommonFileUtils()
 
 </details>
 
+### `core/common/src/commonMain/kotlin/kpt/core/common/ForkDispatchers.kt`
+
+```kotlin
+annotation class Dispatcher(val forkDispatcher: ForkDispatchers)
+```
+Koin qualifier selecting a coroutine dispatcher by `ForkDispatchers` type.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:52</code></summary>
+
+```kotlin
+@OptIn(ExperimentalCoroutinesApi::class)
+class LoginViewModelTest {
+    private val testDispatcher: CoroutineDispatcher = StandardTestDispatcher()
+
+    // `LoginUseCase` is a final class (the `@OpenForMokkery` all-open plugin is not
+    // wired in this module), so it cannot be `mock()`ed. Build a REAL use-case over
+    // mocked collaborators and stub the underlying repository calls instead.
+```
+
+</details>
+
+```kotlin
+enum class ForkDispatchers
+```
+Kinds of coroutine dispatchers the app injects.
+
+<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/di/MpayQrModule.kt:25</code></summary>
+
+```kotlin
+            pocketRepository = get(),
+            savedStateHandle = get(),
+            ioDispatcher = get(named(ForkDispatchers.IO.name)),
+        )
+    }
+}
+```
+
+</details>
+
+```kotlin
+annotation class ApplicationScope
+```
+Koin qualifier for the application-wide `kotlinx.coroutines.CoroutineScope`.
+
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:35</code></summary>
+
+```kotlin
+    single<CoroutineDispatcher>(named(ForkDispatchers.Default.name)) { Dispatchers.Default }
+    single<CoroutineDispatcher>(named(ForkDispatchers.Unconfined.name)) { Dispatchers.Unconfined }
+    single<CoroutineScope>(named("ApplicationScope")) {
+        CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    }
+}
+```
+
+</details>
+
+### `core/common/src/commonMain/kotlin/kpt/core/common/ForkScreenStateErrorMapper.kt`
+
+```kotlin
+object ForkScreenStateErrorMapper
+```
+Central mapper — Throwable / feature error handlers → `ScreenState.Error` / `ScreenState.NoNetwork` / `ScreenState.Unauthenticated`.
+
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ScreenStateFlow.kt:39</code></summary>
+
+```kotlin
+    }
+        .onStart { emit(ScreenState.Loading) }
+        .catch { e -> emit(ForkScreenStateErrorMapper.mapError(e)) }
+
+/**
+ * Body-parsing overload — routes ktor 4xx/5xx exceptions through
+ * [ForkScreenStateErrorMapper.mapErrorBody] so the server's Mifos-error JSON is
+```
+
+</details>
+
+- `fun <T> mapError(` — Blocking (non-suspending) mapper — use when no response body is available or the caller has already parsed a user-facing message.
+- `val status = throwable.response.status.value`
+- `suspend fun <T> mapErrorBody(` — Suspending mapper — parses the ktor response body via `errorBodyParser` to extract a user-facing message when possible.
+- `val status = throwable.response.status.value`
+- `val body = readBodyOrEmpty(throwable)`
+- `val parsed = errorBodyParser(body, status)`
+- `val status = throwable.response.status.value`
+- `val body = readBodyOrEmpty(throwable)`
+- `val parsed = errorBodyParser(body, status)`
+
+```kotlin
+fun <T> Throwable.toScreenState(userMessage: String? = null): ScreenState<T> =
+```
+Convert a raw `Throwable` to a `ScreenState` via `ForkScreenStateErrorMapper`.
+
 ### `core/common/src/commonMain/kotlin/kpt/core/common/FormatDate.kt`
 
 ```kotlin
@@ -435,99 +528,6 @@ Process-wide holder of the 'session unauthorized' signal raised when the server 
 - `val isUnauthorized = MutableStateFlow(false)` — Emits true once a request was rejected as unauthorized, so the app can force a re-login.
 - `fun markUnauthorized()` — Flags the session as unauthorized.
 - `fun reset()` — Clears the unauthorized flag, typically after a fresh login.
-
-### `core/common/src/commonMain/kotlin/kpt/core/common/MifosDispatchers.kt`
-
-```kotlin
-annotation class Dispatcher(val mifosDispatcher: MifosDispatchers)
-```
-Koin qualifier selecting a coroutine dispatcher by `MifosDispatchers` type.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonTest/kotlin/kpt/feature/auth/login/LoginViewModelTest.kt:52</code></summary>
-
-```kotlin
-@OptIn(ExperimentalCoroutinesApi::class)
-class LoginViewModelTest {
-    private val testDispatcher: CoroutineDispatcher = StandardTestDispatcher()
-
-    // `LoginUseCase` is a final class (the `@OpenForMokkery` all-open plugin is not
-    // wired in this module), so it cannot be `mock()`ed. Build a REAL use-case over
-    // mocked collaborators and stub the underlying repository calls instead.
-```
-
-</details>
-
-```kotlin
-enum class MifosDispatchers
-```
-Kinds of coroutine dispatchers the app injects.
-
-<details><summary>Used in the template — <code>feature/mpay-qr/src/commonMain/kotlin/kpt/feature/mpay/qr/di/MpayQrModule.kt:25</code></summary>
-
-```kotlin
-            pocketRepository = get(),
-            savedStateHandle = get(),
-            ioDispatcher = get(named(MifosDispatchers.IO.name)),
-        )
-    }
-}
-```
-
-</details>
-
-```kotlin
-annotation class ApplicationScope
-```
-Koin qualifier for the application-wide `kotlinx.coroutines.CoroutineScope`.
-
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/di/DispatchersModule.kt:35</code></summary>
-
-```kotlin
-    single<CoroutineDispatcher>(named(MifosDispatchers.Default.name)) { Dispatchers.Default }
-    single<CoroutineDispatcher>(named(MifosDispatchers.Unconfined.name)) { Dispatchers.Unconfined }
-    single<CoroutineScope>(named("ApplicationScope")) {
-        CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    }
-}
-```
-
-</details>
-
-### `core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt`
-
-```kotlin
-object MifosErrorMapper
-```
-Central mapper — Throwable / feature error handlers → `ScreenState.Error` / `ScreenState.NoNetwork` / `ScreenState.Unauthenticated`.
-
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ScreenStateFlow.kt:39</code></summary>
-
-```kotlin
-    }
-        .onStart { emit(ScreenState.Loading) }
-        .catch { e -> emit(MifosErrorMapper.mapError(e)) }
-
-/**
- * Body-parsing overload — routes ktor 4xx/5xx exceptions through
- * [MifosErrorMapper.mapErrorBody] so the server's Mifos-error JSON is
-```
-
-</details>
-
-- `fun <T> mapError(` — Blocking (non-suspending) mapper — use when no response body is available or the caller has already parsed a user-facing message.
-- `val status = throwable.response.status.value`
-- `suspend fun <T> mapErrorBody(` — Suspending mapper — parses the ktor response body via `errorBodyParser` to extract a user-facing message when possible.
-- `val status = throwable.response.status.value`
-- `val body = readBodyOrEmpty(throwable)`
-- `val parsed = errorBodyParser(body, status)`
-- `val status = throwable.response.status.value`
-- `val body = readBodyOrEmpty(throwable)`
-- `val parsed = errorBodyParser(body, status)`
-
-```kotlin
-fun <T> Throwable.toScreenState(userMessage: String? = null): ScreenState<T> =
-```
-Convert a raw `Throwable` to a `ScreenState` via `MifosErrorMapper`.
 
 ### `core/common/src/commonMain/kotlin/kpt/core/common/Parcelize.kt`
 
@@ -727,12 +727,12 @@ interface AssetRepository {
 ```kotlin
 fun <T> Flow<T>.asScreenStateFlow(
 ```
-Convert a `Flow<T>` (typically the raw Ktorfit API flow) into a `Flow<ScreenState<T>>`, emitting `ScreenState` variants and routing terminal errors through `MifosErrorMapper`.
+Convert a `Flow<T>` (typically the raw Ktorfit API flow) into a `Flow<ScreenState<T>>`, emitting `ScreenState` variants and routing terminal errors through `ForkScreenStateErrorMapper`.
 
 ```kotlin
 fun <T> Flow<T>.asScreenStateFlow(
 ```
-Body-parsing overload — routes ktor 4xx/5xx exceptions through `MifosErrorMapper.mapErrorBody` so the server's Mifos-error JSON is lifted into `HttpStatusException.userMessage`.
+Body-parsing overload — routes ktor 4xx/5xx exceptions through `ForkScreenStateErrorMapper.mapErrorBody` so the server's Mifos-error JSON is lifted into `HttpStatusException.userMessage`.
 
 ```kotlin
 fun <T, R> Flow<ScreenState<T>>.mapContent(transform: (T) -> R): Flow<ScreenState<R>> =
@@ -1001,7 +1001,7 @@ allOpen {
 <details><summary>Used in the template — <code>core/domain/src/commonMain/kotlin/kpt/core/domain/LoginUseCase.kt:20</code></summary>
 
 ```kotlin
-import kpt.core.model.user.UserInfo
+import kpt.core.model.fork.user.UserInfo
 /** Logs a user in: authenticates, stores the session token and loads the client and user info into preferences. */
 @OpenForMokkery
 class LoginUseCase(

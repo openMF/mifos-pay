@@ -12,11 +12,11 @@ package cmp.navigation.registry.app
 import cmp.navigation.registry.app.instance.InstanceSelectorViewModel
 import kpt.core.common.di.DispatchersModule
 import kpt.core.common.di.stringProviderModule
-import kpt.core.data.di.fork.RepositoryModule
-import kpt.core.datastore.di.PreferencesModule
+import kpt.core.data.fork.di.RepositoryModule
+import kpt.core.datastore.fork.di.PreferencesModule
 import kpt.core.domain.di.DomainModule
-import kpt.core.network.di.LocalModule
-import kpt.core.network.di.fork.NetworkModule
+import kpt.core.network.main.di.LocalModule
+import kpt.core.network.main.di.NetworkModule
 import kpt.feature.accounts.di.AccountsModule
 import kpt.feature.auth.di.AuthModule
 import kpt.feature.autopay.di.AutoPayModule
@@ -25,14 +25,14 @@ import kpt.feature.editpassword.di.EditPasswordModule
 import kpt.feature.faq.di.FaqModule
 import kpt.feature.fastmpay.di.FastMpayModule
 import kpt.feature.history.di.HistoryModule
-import kpt.feature.home.di.fork.MifosHomeModule
+import kpt.feature.home.di.fork.ForkHomeModule
 import kpt.feature.invoices.di.InvoicesModule
 import kpt.feature.kyc.di.KYCModule
 import kpt.feature.merchants.di.MerchantsModule
 import kpt.feature.mpay.qr.di.MpayQrModule
 import kpt.feature.mpay.qr.scan.di.MpayQrScanModule
 import kpt.feature.notification.di.NotificationModule
-import kpt.feature.passcode.MifosAuthenticatorModule
+import kpt.feature.passcode.AuthenticatorModule
 import kpt.feature.payments.di.PaymentsModule
 import kpt.feature.pocket.di.PocketModule
 import kpt.feature.profile.di.ProfileModule
@@ -55,13 +55,13 @@ import org.mifos.lib.loan.di.LoanApplicationModule
  *
  * The passcode/biometrics surface is wired across three of the included
  * modules:
- *  - [RepositoryModule] (in `:core:data`) binds `MifosPasscodeAdapterImpl` to
+ *  - [RepositoryModule] (in `:core:data`) binds `ForkPasscodeAdapterImpl` to
  *    `PasscodeStorageAdapter` and `BiometricsSetupAdapterImpl` to
  *    `BiometricStorageAdapter` (the two storage contracts the libraries
  *    require).
- *  - `MifosAuthenticatorModule` (in `:feature:passcode`) registers
- *    `MifosPasscodeViewModel` and `BiometricSetupScreenViewmodel`.
- *  - [MifosPasscodeModule] below constructs the singleton `PasscodeManager`
+ *  - `AuthenticatorModule` (in `:feature:passcode`) registers
+ *    `PasscodeViewModel` and `BiometricSetupScreenViewmodel`.
+ *  - [ForkPasscodeModule] below constructs the singleton `PasscodeManager`
  *    that the library exposes; it must be a `single` so the same instance is
  *    shared by every passcode screen and the logout call site.
  */
@@ -86,12 +86,12 @@ object ForkAppModules {
     // Visibility widened to `internal` so the NEW app shell's initKoin
     // (`cmp.shared.utils.initKoin`, `cmp-shared/utils/KoinExt.kt`) can splice
     // this list onto `cmp.navigation.di.KoinModules.allModules` at start-up.
-    // The new shell wholesale-bridges the fork's `MifosApp` (which composes
+    // The new shell wholesale-bridges the fork's `ForkApp` (which composes
     // ~60 fork feature screens with `koinViewModel()`-resolved fork VMs); the
     // template shell's Koin graph carries the fork core/network/data/domain/
     // passcode modules already (see `cmp-navigation/.../KoinModules.kt`
     // `forkCommonModule`, `forkNetworkModule`, `forkDataModule`,
-    // `forkDomainModule`, `forkFeatureModule`, `MifosPasscodeModule`,
+    // `forkDomainModule`, `forkFeatureModule`, `ForkPasscodeModule`,
     // `PreferencesModule`), but NOT this featureModules aggregate nor the
     // shared VMs — those get spliced in by `KoinExt.initKoin`.
     internal val sharedModule = module {
@@ -102,7 +102,7 @@ object ForkAppModules {
     internal val featureModules = module {
         includes(
             AuthModule,
-            MifosHomeModule,
+            ForkHomeModule,
             SettingsModule,
             FaqModule,
             EditPasswordModule,
@@ -124,7 +124,7 @@ object ForkAppModules {
             FastMpayModule,
             MerchantsModule,
             UpiSetupModule,
-            MifosAuthenticatorModule,
+            AuthenticatorModule,
             AutoPayModule,
             SendMoneyModule,
             LoanApplicationModule,
@@ -142,7 +142,7 @@ object ForkAppModules {
      * it once in its `init` block to seed the initial step
      * (`Enter` if a passcode exists, `Create` otherwise).
      */
-    private val MifosPasscodeModule = module {
+    private val ForkPasscodeModule = module {
         single { PasscodeManager(get()) }
     }
 
@@ -155,6 +155,6 @@ object ForkAppModules {
         networkModules,
         featureModules,
         sharedModule,
-        MifosPasscodeModule,
+        ForkPasscodeModule,
     )
 }

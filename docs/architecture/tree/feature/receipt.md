@@ -9,7 +9,7 @@ Screens: `ReceiptScreen`
 
 ViewModels: `ReceiptViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `ReceiptViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/receipt sha=70a1142085cc67aeca3b3b8f104face0cf886aa4 -->
+<!-- api-docs:begin module=feature/receipt sha=727587b709e8ac85d37f14b6c7309fe853d6b46c -->
 ## API reference
 
-_Generated from `feature/receipt` at tree `70a1142085cc` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/receipt` at tree `727587b709e8` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

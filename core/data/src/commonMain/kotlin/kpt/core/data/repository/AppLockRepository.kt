@@ -12,13 +12,13 @@ package kpt.core.data.repository
 /**
  * App-wide lock flag, persisted across process restarts.
  *
- * Set/cleared by [kpt.feature.passcode.MifosPasscodeViewModel]:
+ * Set/cleared by [kpt.feature.passcode.PasscodeViewModel]:
  *  - locked on `OnStart` if the passcode screen is in `Enter` step,
  *  - unlocked on `PasscodeResult.Verified` (passcode or biometric success),
  *  - deleted on `PasscodeResult.Forgotten` / logout.
  *
  * Read by `ForkAppViewModel.isAppLocked()` (nullable `Boolean?`) for the
- * 15-second background-resume re-auth gate in `MifosPayApp`. `null` means
+ * 15-second background-resume re-auth gate in `ForkAppRoot`. `null` means
  * "no flag written yet" — fresh install or post-logout — and is treated
  * as "no session to gate".
  */

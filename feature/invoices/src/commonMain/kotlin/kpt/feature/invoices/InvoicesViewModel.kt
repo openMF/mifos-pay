@@ -22,7 +22,7 @@ import kpt.core.common.setSerialized
 import kpt.core.data.repository.InvoiceRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.datatables.invoice.Invoice
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel that loads the current client's invoices and emits navigation to invoice detail. */
 class InvoicesViewModel(
     invoiceRepository: InvoiceRepository,

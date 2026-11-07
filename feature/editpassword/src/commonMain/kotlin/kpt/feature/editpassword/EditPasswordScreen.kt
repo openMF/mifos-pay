@@ -32,15 +32,15 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.ui.MifosPasswordField
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.ui.ForkPasswordField
 import kpt.core.ui.PasswordStrengthIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.editpassword.generated.resources.Res
 import kpt.feature.editpassword.generated.resources.feature_editpassword_change_password
 import kpt.feature.editpassword.generated.resources.feature_editpassword_confirm_new_password
@@ -99,7 +99,7 @@ internal fun EditPasswordScreenContent(
     onAction: (EditPasswordAction) -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBarTitle = stringResource(Res.string.feature_editpassword_change_password),
         snackbarHost = {
@@ -119,7 +119,7 @@ internal fun EditPasswordScreenContent(
         ) {
             var showPassword by rememberSaveable { mutableStateOf(false) }
 
-            MifosPasswordField(
+            ForkPasswordField(
                 value = state.currentPasswordInput,
                 label = stringResource(Res.string.feature_editpassword_old_password),
                 modifier = Modifier.fillMaxWidth(),
@@ -130,7 +130,7 @@ internal fun EditPasswordScreenContent(
                 showPasswordChange = { showPassword = !showPassword },
             )
 
-            MifosPasswordField(
+            ForkPasswordField(
                 value = state.newPasswordInput,
                 label = stringResource(Res.string.feature_editpassword_new_password),
                 modifier = Modifier.fillMaxWidth(),
@@ -145,7 +145,7 @@ internal fun EditPasswordScreenContent(
                 state = state.passwordStrengthState,
                 currentCharacterCount = state.newPasswordInput.length,
             )
-            MifosPasswordField(
+            ForkPasswordField(
                 value = state.confirmPasswordInput,
                 label = stringResource(Res.string.feature_editpassword_confirm_new_password),
                 modifier = Modifier.fillMaxWidth(),
@@ -156,7 +156,7 @@ internal fun EditPasswordScreenContent(
                 showPasswordChange = { showPassword = !showPassword },
             )
 
-            MifosButton(
+            ForkButton(
                 modifier = Modifier
                     .fillMaxWidth(),
                 enabled = true,
@@ -185,7 +185,7 @@ private fun EditPasswordDialogs(
             } else {
                 stringResource(dialogState.message)
             }
-            MifosBasicDialog(
+            ForkBasicDialog(
                 visibilityState = BasicDialogState.Shown(
                     message = message,
                 ),
@@ -193,11 +193,11 @@ private fun EditPasswordDialogs(
             )
         }
 
-        is EditPasswordDialog.Loading -> MifosLoadingDialog(
+        is EditPasswordDialog.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
-        is EditPasswordDialog.ApiError -> MifosBasicDialog(
+        is EditPasswordDialog.ApiError -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message.message,
             ),

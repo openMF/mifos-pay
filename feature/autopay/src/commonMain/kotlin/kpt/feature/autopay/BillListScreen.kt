@@ -46,13 +46,13 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.rememberMifosPullToRefreshState
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.rememberForkPullToRefreshState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.autopay.Bill
 import kpt.core.model.autopay.BillStatus
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.fork.utils.EventsEffect
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.ExperimentalTime
 /** Screen listing the user's bills with add, edit and delete actions. */
@@ -67,14 +67,14 @@ fun BillListScreen(
 ) {
     val state by viewModel.stateFlow.collectAsStateWithLifecycle()
 
-    val pullRefreshState = rememberMifosPullToRefreshState(
+    val pullRefreshState = rememberForkPullToRefreshState(
         isEnabled = true,
         isRefreshing = state.isLoading,
         onRefresh = { viewModel.trySendAction(BillListAction.RefreshBills) },
     )
 
     Box(modifier = modifier.fillMaxSize()) {
-        MifosScaffold(
+        ForkScaffold(
             topBarTitle = "Bill List",
             backPress = onNavigateBack,
             pullToRefreshState = pullRefreshState,
@@ -102,7 +102,7 @@ fun BillListScreen(
                             EmptyStateCard(
                                 title = "No Bills Found",
                                 description = "You don't have any bills yet. Add your first bill to get started!",
-                                icon = MifosIcons.Receipt,
+                                icon = ForkIcons.Receipt,
                                 onAddBill = onNavigateToAddBill,
                             )
                         }
@@ -119,7 +119,7 @@ fun BillListScreen(
             }
         }
 
-        MifosButton(
+        ForkButton(
             text = { Text("Back to AutoPay") },
             onClick = onNavigateToAutopay,
             modifier = Modifier
@@ -196,7 +196,7 @@ private fun BillCard(
                         onClick = { showMenu = true },
                     ) {
                         Icon(
-                            imageVector = MifosIcons.MoreVert,
+                            imageVector = ForkIcons.MoreVert,
                             contentDescription = "More options",
                         )
                     }
@@ -209,7 +209,7 @@ private fun BillCard(
                             text = { Text("Edit") },
                             leadingIcon = {
                                 Icon(
-                                    imageVector = MifosIcons.Edit,
+                                    imageVector = ForkIcons.Edit,
                                     contentDescription = null,
                                 )
                             },
@@ -222,7 +222,7 @@ private fun BillCard(
                             text = { Text("Delete") },
                             leadingIcon = {
                                 Icon(
-                                    imageVector = MifosIcons.Delete,
+                                    imageVector = ForkIcons.Delete,
                                     contentDescription = null,
                                 )
                             },
@@ -324,7 +324,7 @@ private fun AutoPayChip(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MifosIcons.Payment,
+                imageVector = ForkIcons.Payment,
                 contentDescription = null,
                 modifier = Modifier.size(12.dp),
                 tint = MaterialTheme.colorScheme.onSecondary,
@@ -391,7 +391,7 @@ private fun EmptyStateCard(
                 onClick = onAddBill,
             ) {
                 Icon(
-                    imageVector = MifosIcons.Add,
+                    imageVector = ForkIcons.Add,
                     contentDescription = null,
                     modifier = Modifier.size(20.dp),
                 )

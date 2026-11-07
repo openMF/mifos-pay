@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import kpt.core.ui.MifosScrollableTabRow
+import kpt.core.ui.ForkScrollableTabRow
 import kpt.core.ui.utility.TabContent
 import org.jetbrains.compose.ui.tooling.preview.Preview
 /** Route-level composable of the payments screen, hosting the given [tabContents]. */
@@ -49,7 +49,7 @@ private fun PaymentScreenContent(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        MifosScrollableTabRow(
+        ForkScrollableTabRow(
             tabContents = tabContents,
             pagerState = pagerState,
         )

@@ -19,12 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosTab
+import kpt.core.designsystem.fork.component.ForkTab
 import kpt.core.ui.utility.TabContent
 /** Scrollable tab row linked to a pager, one tab per [TabContent]. */
 @Suppress("MultipleEmitters")
 @Composable
-fun MifosScrollableTabRow(
+fun ForkScrollableTabRow(
     tabContents: List<TabContent>,
     pagerState: PagerState,
     modifier: Modifier = Modifier,
@@ -44,7 +44,7 @@ fun MifosScrollableTabRow(
         divider = {},
     ) {
         tabContents.forEachIndexed { index, currentTab ->
-            MifosTab(
+            ForkTab(
                 text = currentTab.tabName,
                 selected = pagerState.currentPage == index,
                 selectedColor = selectedContentColor,

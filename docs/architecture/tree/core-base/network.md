@@ -239,7 +239,7 @@ val stagingClient = httpClient {
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:102</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:99</code></summary>
 
 ```kotlin
                             socketTimeoutMillis = 30_000
@@ -294,7 +294,7 @@ val client = httpClient(
 
 </details>
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:90</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:87</code></summary>
 
 ```kotlin
                             baseUrl = "https://placeholder.local/",
@@ -617,7 +617,7 @@ enum class NetworkError
 ```
 Represents standardized error types for remote or network operations. This enum is typically used with the `NetworkResult.Error` variant to describe what kind of failure occurred.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:56</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ForkScreenStateErrorMapper.kt:56</code></summary>
 
 ```kotlin
                 ScreenState.Unauthenticated

@@ -29,10 +29,10 @@ import kpt.core.datastore.model.UserInfoPreferences
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.client.Client
 import kpt.core.model.client.UpdatedClient
+import kpt.core.model.fork.user.Language
+import kpt.core.model.fork.user.UserInfo
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
-import kpt.core.model.user.Language
-import kpt.core.model.user.UserInfo
 private const val USER_INFO_KEY = "userInfo"
 private const val CLIENT_INFO_KEY = "clientInfo"
 private const val SELECTED_INSTANCE_KEY = "selectedInstance"

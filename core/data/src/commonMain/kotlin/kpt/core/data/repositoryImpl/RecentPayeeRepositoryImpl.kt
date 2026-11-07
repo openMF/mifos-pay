@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenState
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.RecentPayeeRepository
@@ -58,14 +60,12 @@ import kotlin.time.ExperimentalTime
  * `wallet_recent_payees` cache.
  */
 @OptIn(ExperimentalTime::class)
+@RepositoryBinding(binds = RecentPayeeRepository::class)
 class RecentPayeeRepositoryImpl(
     private val selfServiceApiManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-4 store wiring. Nullable-default so unit tests that build
-    // a RecentPayeeRepositoryImpl without the store harness don't have to
-    // construct it. Production DI in `RepositoryModule` wires this
-    // unconditionally.
-    private val recentPayeeDao: RecentPayeeDao? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    private val recentPayeeDao: RecentPayeeDao?,
 ) : RecentPayeeRepository {
 
     // Phase-5 Batch-4 store-backed read — GOAL D12/D13 (Room SoT + background

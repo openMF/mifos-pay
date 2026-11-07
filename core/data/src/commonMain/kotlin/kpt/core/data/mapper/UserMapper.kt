@@ -9,12 +9,12 @@
  */
 package kpt.core.data.mapper
 
+import kpt.core.model.fork.user.NewUser
+import kpt.core.model.fork.user.RoleInfo
+import kpt.core.model.fork.user.UserInfo
 import kpt.core.model.network.entity.Role
 import kpt.core.model.network.entity.user.NewUserEntity
 import kpt.core.model.network.entity.user.User
-import kpt.core.model.user.NewUser
-import kpt.core.model.user.RoleInfo
-import kpt.core.model.user.UserInfo
 private const val OFFICE_ID = 1
 private const val MOBILE_WALLET_ROLE_ID = 2
 private const val SUPER_USER_ROLE_ID = 1

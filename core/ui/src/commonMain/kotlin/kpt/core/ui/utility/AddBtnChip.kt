@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 /** Chip with text and an add button, used to prompt adding a card. */
 @Composable
 fun AddCardChip(
@@ -44,7 +44,7 @@ fun AddCardChip(
         },
         leadingIcon = {
             Icon(
-                imageVector = MifosIcons.Add,
+                imageVector = ForkIcons.Add,
                 contentDescription = btnText,
                 modifier = Modifier.size(16.dp),
                 tint = KptTheme.colorScheme.onPrimary,

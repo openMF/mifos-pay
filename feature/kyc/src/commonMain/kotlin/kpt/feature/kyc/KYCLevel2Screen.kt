@@ -41,17 +41,17 @@ import coil3.compose.SubcomposeAsyncImageContent
 import coil3.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.AvatarBox
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.kyc.generated.resources.Res
 import kpt.feature.kyc.generated.resources.feature_kyc_file_name
 import kpt.feature.kyc.generated.resources.feature_kyc_submit
@@ -106,7 +106,7 @@ internal fun KYCLevel2ScreenContent(
     modifier: Modifier = Modifier,
     onAction: (KycLevel2Action) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = "Upload Documents",
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = modifier,
@@ -146,7 +146,7 @@ private fun KYCLevel2ScreenContent(
             },
         )
 
-        MifosTextField(
+        ForkTextField(
             value = state.name,
             label = stringResource(Res.string.feature_kyc_file_name),
             onValueChange = {
@@ -157,7 +157,7 @@ private fun KYCLevel2ScreenContent(
             },
         )
 
-        MifosTextField(
+        ForkTextField(
             value = state.description,
             label = "Description",
             onValueChange = {
@@ -168,7 +168,7 @@ private fun KYCLevel2ScreenContent(
             },
         )
 
-        MifosButton(
+        ForkButton(
             onClick = {
                 onAction(KycLevel2Action.SubmitClicked)
             },
@@ -226,7 +226,7 @@ private fun DocumentPicker(
                 when (painterState) {
                     is AsyncImagePainter.State.Empty -> {
                         AvatarBox(
-                            icon = MifosIcons.Add,
+                            icon = ForkIcons.Add,
                             size = 120,
                             contentColor = KptTheme.colorScheme.secondary,
                         )
@@ -234,13 +234,13 @@ private fun DocumentPicker(
 
                     is AsyncImagePainter.State.Error -> {
                         AvatarBox(
-                            icon = MifosIcons.Add,
+                            icon = ForkIcons.Add,
                             size = 120,
                             contentColor = KptTheme.colorScheme.secondary,
                         )
                     }
 
-                    is AsyncImagePainter.State.Loading -> MifosProgressIndicator()
+                    is AsyncImagePainter.State.Loading -> ForkProgressIndicator()
 
                     is AsyncImagePainter.State.Success -> {
                         SubcomposeAsyncImageContent(
@@ -259,14 +259,14 @@ private fun KycLevel2Dialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is KycLevel2State.DialogState.Error -> MifosBasicDialog(
+        is KycLevel2State.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is KycLevel2State.DialogState.Loading -> MifosLoadingDialog(
+        is KycLevel2State.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 

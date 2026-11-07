@@ -41,14 +41,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosGradientBackground
-import kpt.core.designsystem.component.MifosOutlinedButton
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkGradientBackground
+import kpt.core.designsystem.fork.component.ForkOutlinedButton
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.send.money.generated.resources.Res
 import kpt.feature.send.money.generated.resources.feature_send_money_bank_branch
 import kpt.feature.send.money.generated.resources.feature_send_money_bank_name
@@ -92,11 +92,11 @@ fun SearchIfscScreen(
         bankFocusRequester.requestFocus()
     }
 
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
             topBar = {
-                MifosTopBar(
+                ForkTopBar(
                     topBarTitle = stringResource(Res.string.feature_send_money_search_ifsc),
                     backPress = {
                         viewModel.trySendAction(SearchIfscAction.NavigateBack)
@@ -116,7 +116,7 @@ fun SearchIfscScreen(
                         .padding(horizontal = KptTheme.spacing.lg),
                     verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                 ) {
-                    MifosTextField(
+                    ForkTextField(
                         value = selectedBank?.name ?: state.bankName,
                         onValueChange = { bankName ->
                             if (selectedBank == null) {
@@ -138,7 +138,7 @@ fun SearchIfscScreen(
                         leadingIcon = selectedBank?.let {
                             {
                                 Icon(
-                                    imageVector = MifosIcons.Bank,
+                                    imageVector = ForkIcons.Bank,
                                     contentDescription = "Bank Logo",
                                     tint = KptTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -154,7 +154,7 @@ fun SearchIfscScreen(
                     )
 
                     if (selectedBank != null) {
-                        MifosTextField(
+                        ForkTextField(
                             value = selectedBranch?.name ?: state.bankBranch,
                             onValueChange = { bankBranch ->
                                 if (selectedBranch == null) {
@@ -247,7 +247,7 @@ fun SearchIfscScreen(
                             .padding(bottom = KptTheme.spacing.lg),
                         verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
                     ) {
-                        MifosOutlinedButton(
+                        ForkOutlinedButton(
                             text = { Text(stringResource(Res.string.feature_send_money_cancel)) },
                             onClick = {
                                 viewModel.trySendAction(SearchIfscAction.NavigateBack)
@@ -255,7 +255,7 @@ fun SearchIfscScreen(
                             modifier = Modifier.fillMaxWidth(),
                         )
 
-                        MifosButton(
+                        ForkButton(
                             text = { Text(stringResource(Res.string.feature_send_money_continue)) },
                             onClick = {
                                 val ifscCode = IfscCode(
@@ -331,7 +331,7 @@ private fun BankListItem(
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    imageVector = MifosIcons.Bank,
+                    imageVector = ForkIcons.Bank,
                     contentDescription = "Bank Logo",
                     tint = KptTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.size(24.dp),

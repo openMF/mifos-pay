@@ -9,7 +9,7 @@
  */
 package kpt.core.network.main.utils
 
-import kpt.core.network.config.InstanceConfigManager
+import kpt.core.network.main.config.InstanceConfigManager
 /** Exposes the base URLs and tenant id of the active server instance from [InstanceConfigManager]. */
 class BaseURL(
     private val configManager: InstanceConfigManager,

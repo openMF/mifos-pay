@@ -9,9 +9,9 @@
  */
 package cmp.navigation.registry.app
 
-import cmp.navigation.registry.app.navigation.MifosNavGraph.LOGIN_GRAPH
-import kpt.core.model.user.UserInfo
-import kpt.feature.passcode.ROOT_MIFOS_PASSCODE_ROUTE
+import cmp.navigation.registry.app.navigation.ForkNavGraph.LOGIN_GRAPH
+import kpt.core.model.fork.user.UserInfo
+import kpt.feature.passcode.ROOT_PASSCODE_ROUTE
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -34,7 +34,7 @@ class StartDestinationTest {
 
     @Test
     fun signedInWithPasscodeStartsAtPasscode() =
-        assertEquals(ROOT_MIFOS_PASSCODE_ROUTE, startDestination(user(true), isPasscodeNotCreated = false))
+        assertEquals(ROOT_PASSCODE_ROUTE, startDestination(user(true), isPasscodeNotCreated = false))
 
     @Test
     fun signedInWithoutPasscodeStartsAtLogin() =

@@ -49,8 +49,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheet
-import kpt.core.designsystem.component.MifosButton
+import kpt.core.designsystem.fork.component.ForkBottomSheet
+import kpt.core.designsystem.fork.component.ForkButton
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.TransactionType
 import kpt.core.ui.generated.resources.Res
@@ -79,7 +79,7 @@ fun TransactionFilterBottomSheet(
     onApplyFilters: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    MifosBottomSheet(
+    ForkBottomSheet(
         modifier = modifier,
         onDismiss = onDismiss,
     ) {
@@ -125,7 +125,7 @@ fun TransactionFilterBottomSheet(
 
             Spacer(Modifier.height(KptTheme.spacing.lg))
 
-            MifosButton(
+            ForkButton(
                 onClick = onApplyFilters,
                 text = { Text(text = stringResource(Res.string.core_ui_filter_apply)) },
                 modifier = Modifier.fillMaxWidth(),

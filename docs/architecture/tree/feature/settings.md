@@ -31,10 +31,10 @@ The **sync-and-drafts** screen makes the offline write queue visible, which is t
 `UserEditableSettings` is deliberately narrower than `UserData`, so a settings screen cannot write a
 session or lock field it has no business touching.
 
-<!-- api-docs:begin module=feature/settings sha=1bb3558ab4a02e5c8f1f37b438d5a909c9a18ebd -->
+<!-- api-docs:begin module=feature/settings sha=93ba4a5ec17efdcee0a7b9d257b974e8e646a411 -->
 ## API reference
 
-_Generated from `feature/settings` at tree `1bb3558ab4a0` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/settings` at tree `93ba4a5ec17e` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -167,7 +167,7 @@ Koin module providing the template settings and sync-and-drafts view models.
 
 /** Koin module providing the fork settings view model under its qualifier. */
 val SettingsModule = module {
-    viewModelOf(::SettingsViewModel) { qualifier = MifosSettingsViewModelQualifier }
+    viewModelOf(::SettingsViewModel) { qualifier = SettingsViewModelQualifier }
 }
 ```
 
@@ -369,7 +369,7 @@ Append-only test-tag registry for the settings feature. Consumed by Compose UI t
 ### `feature/settings/src/commonMain/kotlin/kpt/feature/settings/di/SettingsModule.kt`
 
 ```kotlin
-val MifosSettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
+val SettingsViewModelQualifier = named("kpt.feature.settings.fork.SettingsViewModel")
 ```
 Koin qualifier for this feature's `SettingsViewModel`. On JS / Wasm Koin keys a binding by the type's simple name, and the template's `kpt.feature.settings.SettingsViewModel` is bound too.
 
@@ -378,7 +378,7 @@ Koin qualifier for this feature's `SettingsViewModel`. On JS / Wasm Koin keys a 
 ```kotlin
     entryStateHandle: SavedStateHandle,
     modifier: Modifier = Modifier,
-    viewmodel: SettingsViewModel = koinViewModel(qualifier = MifosSettingsViewModelQualifier),
+    viewmodel: SettingsViewModel = koinViewModel(qualifier = SettingsViewModelQualifier),
 ) {
     val state by viewmodel.stateFlow.collectAsStateWithLifecycle()
     val authProvider = platformAuthenticationProvider.current

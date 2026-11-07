@@ -22,10 +22,10 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/network sha=18352c1784602780ab713f77aca62938c17364c7 -->
+<!-- api-docs:begin module=core/network sha=602b5c8bb23e6e74eeb5a988140fcd2aa4844b6c -->
 ## API reference
 
-_Generated from `core/network` at tree `18352c178460` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/network` at tree `602b5c8bb23e` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/network/src/commonMain/kotlin/kpt/core/network/FineractApiManager.kt`
@@ -35,16 +35,16 @@ class FineractApiManager(
 ```
 Entry point for the Fineract API services; exposes each service created by `KtorfitClient`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:50</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:55</code></summary>
 
 ```kotlin
-/** Default [AccountRepository] backed by the network data sources. */
+@RepositoryBinding(binds = AccountRepository::class)
 class AccountRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val selfManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getSelfAccountsScreen(...) can consume Store5 via
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
 ```
 
 </details>
@@ -56,13 +56,13 @@ class InterBankApiManager(
 ```
 Entry point for the inter-bank API service created by `KtorfitClient`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:28</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/InterBankRepositoryImpl.kt:31</code></summary>
 
 ```kotlin
-/** Default [InterBankRepository] backed by the inter-bank API. */
+@RepositoryBinding(binds = InterBankRepository::class)
 class InterBankRepositoryImpl(
     private val apiManager: InterBankApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : InterBankRepository {
 
     override suspend fun fetchParticipant(
@@ -77,7 +77,7 @@ class KtorfitClient(
 ```
 Creates and caches the Ktorfit-generated Fineract service implementations from a single `Ktorfit` instance.
 
-<details><summary>Used in the template — <code>core/data/src/commonTest/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryTest.kt:155</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonTest/kotlin/kpt/core/data/repositoryImpl/PocketRepositoryTest.kt:156</code></summary>
 
 ```kotlin
  */
@@ -123,16 +123,16 @@ class SelfServiceApiManager(
 ```
 Entry point for the Fineract self-service API services created by `KtorfitClient`.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:51</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:56</code></summary>
 
 ```kotlin
 class AccountRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val selfManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getSelfAccountsScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without the
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
 ```
 
 </details>
@@ -144,7 +144,7 @@ class SupabaseApiManager(
 ```
 API manager for Supabase services. Similar to FineractApiManager but for Supabase-based APIs.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/SupabaseInstanceConfigLoader.kt:28</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/SupabaseInstanceConfigLoader.kt:28</code></summary>
 
 ```kotlin
  */
@@ -213,51 +213,6 @@ Project-level catalogue of named API endpoints for runtime base-URL switching (s
 - `val LWMSWHOXVVOAGZKQXIYD: UrlType = UrlType("LWMSWHOXVVOAGZKQXIYD")` — `lwmswhoxvvoagzkqxiyd` — Supabase access point.
 - `val all: List<UrlType> = listOf(` — Every declared endpoint type, in app-profile order.
 
-### `core/network/src/commonMain/kotlin/kpt/core/network/config/InstanceConfigLoader.kt`
-
-```kotlin
-interface InstanceConfigLoader
-```
-Loads the list of available server instances.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/config/SupabaseInstanceConfigLoader.kt:31</code></summary>
-
-```kotlin
-    private val ioDispatcher: CoroutineDispatcher,
-    private val json: Json,
-) : InstanceConfigLoader {
-
-    override suspend fun fetchInstancesConfig(): InstancesConfig {
-        if (!supabaseApiManager.isConfigured) {
-            return loadFallbackConfig()
-```
-
-</details>
-
-- `suspend fun fetchInstancesConfig(): InstancesConfig` — Fetches the server instances configuration once.
-- `fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>` — Streams the server instances configuration wrapped in a `ScreenState`.
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/config/InstanceConfigManager.kt`
-
-```kotlin
-class InstanceConfigManager(
-```
-Provides the active Fineract server instance and interbank server, and resolves the API base URLs.
-
-<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:33</code></summary>
-
-```kotlin
-class LoginViewModel(
-    private val loginUseCase: LoginUseCase,
-    private val instanceConfigManager: InstanceConfigManager,
-    savedStateHandle: SavedStateHandle,
-) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
-    initialState = savedStateHandle.getSerialized(KEY_STATE)
-        ?: LoginState(dialogState = null),
-```
-
-</details>
-
 ### `core/network/src/commonMain/kotlin/kpt/core/network/config/KptNetworkHeaders.kt`
 
 ```kotlin
@@ -291,27 +246,6 @@ object KptNetworkHeaders : DefaultHeaderProvider {
     // Every declared endpoint's Koin binding, GENERATED from app-profile#network.access_points into
     // the sibling [GeneratedApiBindings] (same package — no import, so this file keeps its zero-demo
     // -imports property and stays blind-copyable on a template sync). It lives HERE rather than in the
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/config/SupabaseInstanceConfigLoader.kt`
-
-```kotlin
-class SupabaseInstanceConfigLoader(
-```
-Instance config loader that fetches configuration from Supabase. Uses SupabaseApiManager for API interactions.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:64</code></summary>
-
-```kotlin
-
-    single<InstanceConfigLoader> {
-        SupabaseInstanceConfigLoader(
-            supabaseApiManager = get(),
-            ioDispatcher = get(ioDispatcher),
-            json = get(),
-        )
 ```
 
 </details>
@@ -350,99 +284,12 @@ includes(kmpSupabaseAuthNetwork(authConfig) { get<SupabaseClientFactory>().requi
 
 </details>
 
-### `core/network/src/commonMain/kotlin/kpt/core/network/di/LocalModule.kt`
-
-```kotlin
-val LocalModule = module
-```
-Koin module providing the local asset manager and data source.
-
 ### `core/network/src/commonMain/kotlin/kpt/core/network/di/NetworkModule.kt`
 
 ```kotlin
 val NetworkModule = module
 ```
 Koin module for `core/network` — the Ktorfit API bindings over the shared client.
-
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/RepositoryModule.kt:39</code></summary>
-
-```kotlin
- */
-val DataModule = module {
-    includes(platformModule, CommonModule, DatabaseModule, DatastoreModule, NetworkModule)
-
-    // Every repository's Koin binding, GENERATED from `@RepositoryBinding` on the implementation.
-    // Emitted into this same package, so this file needs no import and keeps its zero-demo-reference
-    // property — which is what lets a template sync blind-copy it. A stripped fork simply generates
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/di/Qualifier.kt`
-
-```kotlin
-val SelfClient = named("SelfClient")
-```
-Koin qualifier for the HTTP client targeting the self-service API.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:79</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = SelfClient) {
-        val preferencesRepository = get<ForkPreferencesRepository>()
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-```
-
-</details>
-
-```kotlin
-val BaseClient = named("BaseClient")
-```
-Koin qualifier for the HTTP client targeting the base Fineract API.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:117</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = BaseClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-```
-
-</details>
-
-```kotlin
-val InterBankClient = named("InterBankClient")
-```
-Koin qualifier for the HTTP client targeting the inter-bank API.
-
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:158</code></summary>
-
-```kotlin
-    }
-
-    single<KtorfitClient>(qualifier = InterBankClient) {
-        val configManager = get<InstanceConfigManager>()
-        KtorfitClient(
-            Ktorfit.Builder()
-                .httpClient(
-```
-
-</details>
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt`
-
-```kotlin
-val NetworkModule = module
-```
-Koin module providing the HTTP clients, Ktorfit instances, API managers and service wiring of the network layer.
 
 <details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/RepositoryModule.kt:39</code></summary>
 
@@ -526,6 +373,166 @@ data class RemoteDemoAccountDto(val role: String, val username: String, val pass
 ```
 A PUBLISHED demo sign-in of a public demo instance — public by design, not a credential to protect.
 
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceConfigLoader.kt`
+
+```kotlin
+interface InstanceConfigLoader
+```
+Loads the list of available server instances.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/config/SupabaseInstanceConfigLoader.kt:31</code></summary>
+
+```kotlin
+    private val ioDispatcher: CoroutineDispatcher,
+    private val json: Json,
+) : InstanceConfigLoader {
+
+    override suspend fun fetchInstancesConfig(): InstancesConfig {
+        if (!supabaseApiManager.isConfigured) {
+            return loadFallbackConfig()
+```
+
+</details>
+
+- `suspend fun fetchInstancesConfig(): InstancesConfig` — Fetches the server instances configuration once.
+- `fun observeInstancesConfig(): Flow<ScreenState<InstancesConfig>>` — Streams the server instances configuration wrapped in a `ScreenState`.
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/InstanceConfigManager.kt`
+
+```kotlin
+class InstanceConfigManager(
+```
+Provides the active Fineract server instance and interbank server, and resolves the API base URLs.
+
+<details><summary>Used in the template — <code>feature/auth/src/commonMain/kotlin/kpt/feature/auth/login/LoginViewModel.kt:33</code></summary>
+
+```kotlin
+class LoginViewModel(
+    private val loginUseCase: LoginUseCase,
+    private val instanceConfigManager: InstanceConfigManager,
+    savedStateHandle: SavedStateHandle,
+) : BaseViewModel<LoginState, LoginEvent, LoginAction>(
+    initialState = savedStateHandle.getSerialized(KEY_STATE)
+        ?: LoginState(dialogState = null),
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/config/SupabaseInstanceConfigLoader.kt`
+
+```kotlin
+class SupabaseInstanceConfigLoader(
+```
+Instance config loader that fetches configuration from Supabase. Uses SupabaseApiManager for API interactions.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:61</code></summary>
+
+```kotlin
+
+    single<InstanceConfigLoader> {
+        SupabaseInstanceConfigLoader(
+            supabaseApiManager = get(),
+            ioDispatcher = get(ioDispatcher),
+            json = get(),
+        )
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/di/LocalModule.kt`
+
+```kotlin
+val LocalModule = module
+```
+Koin module providing the local asset manager and data source.
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt`
+
+```kotlin
+val NetworkModule = module
+```
+Koin module providing the HTTP clients, Ktorfit instances, API managers and service wiring of the network layer.
+
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/di/RepositoryModule.kt:39</code></summary>
+
+```kotlin
+ */
+val DataModule = module {
+    includes(platformModule, CommonModule, DatabaseModule, DatastoreModule, NetworkModule)
+
+    // Every repository's Koin binding, GENERATED from `@RepositoryBinding` on the implementation.
+    // Emitted into this same package, so this file needs no import and keeps its zero-demo-reference
+    // property — which is what lets a template sync blind-copy it. A stripped fork simply generates
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/di/Qualifier.kt`
+
+```kotlin
+val SelfClient = named("SelfClient")
+```
+Koin qualifier for the HTTP client targeting the self-service API.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:76</code></summary>
+
+```kotlin
+    }
+
+    single<KtorfitClient>(qualifier = SelfClient) {
+        val preferencesRepository = get<ForkPreferencesRepository>()
+        val configManager = get<InstanceConfigManager>()
+        KtorfitClient(
+            Ktorfit.Builder()
+```
+
+</details>
+
+```kotlin
+val BaseClient = named("BaseClient")
+```
+Koin qualifier for the HTTP client targeting the base Fineract API.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:114</code></summary>
+
+```kotlin
+    }
+
+    single<KtorfitClient>(qualifier = BaseClient) {
+        val configManager = get<InstanceConfigManager>()
+        KtorfitClient(
+            Ktorfit.Builder()
+                .httpClient(
+```
+
+</details>
+
+```kotlin
+val InterBankClient = named("InterBankClient")
+```
+Koin qualifier for the HTTP client targeting the inter-bank API.
+
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:155</code></summary>
+
+```kotlin
+    }
+
+    single<KtorfitClient>(qualifier = InterBankClient) {
+        val configManager = get<InstanceConfigManager>()
+        KtorfitClient(
+            Ktorfit.Builder()
+                .httpClient(
+```
+
+</details>
+
+### `core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/ForkLocalAssetDataSource.kt`
+
+```kotlin
+class ForkLocalAssetDataSource(
+```
+Default `LocalAssetDataSource`; currently returns empty lists.
+
 ### `core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/LocalAssetDataSource.kt`
 
 ```kotlin
@@ -533,7 +540,7 @@ interface LocalAssetDataSource
 ```
 Source of static reference data (countries, states, banks, cities) bundled with the app.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/MifosLocalAssetDataSource.kt:21</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/ForkLocalAssetDataSource.kt:21</code></summary>
 
 ```kotlin
     private val ioDispatcher: CoroutineDispatcher,
@@ -558,13 +565,6 @@ Source of static reference data (countries, states, banks, cities) bundled with 
 fun interface LocalAssetManager
 ```
 Reads bundled asset files by name.
-
-### `core/network/src/commonMain/kotlin/kpt/core/network/main/localAssets/MifosLocalAssetDataSource.kt`
-
-```kotlin
-class MifosLocalAssetDataSource(
-```
-Default `LocalAssetDataSource`; currently returns empty lists.
 
 ### `core/network/src/commonMain/kotlin/kpt/core/network/main/services/AccountTransfersService.kt`
 
@@ -1292,7 +1292,7 @@ class BaseURL(
 ```
 Exposes the base URLs and tenant id of the active server instance from `InstanceConfigManager`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:76</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:73</code></summary>
 
 ```kotlin
 
@@ -1313,7 +1313,7 @@ public class FlowConverterFactory : Converter.Factory
 ```
 Factory that enables the use of Flow<T> as return type
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:112</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:109</code></summary>
 
 ```kotlin
                     },
@@ -1333,7 +1333,7 @@ class KtorInterceptor(
 ```
 Ktor client plugin adding JSON, tenant and Basic auth headers and flagging 401 responses as unauthorized.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:106</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:103</code></summary>
 
 ```kotlin
                             urlType = MultiUrlConfigProvider.UrlType.SELF_SERVICE
@@ -1383,7 +1383,7 @@ class DynamicBaseUrlPlugin private constructor(
 ```
 Ktor plugin that dynamically sets the base URL for each request based on a `DynamicUrlConfigProvider` or `MultiUrlConfigProvider`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:102</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:99</code></summary>
 
 ```kotlin
                             socketTimeoutMillis = 30_000
@@ -1421,7 +1421,7 @@ class DynamicLoggableHosts(
 ```
 A dynamic list that provides loggable hosts from a `DynamicUrlConfigProvider`.
 
-<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/di/fork/NetworkModule.kt:90</code></summary>
+<details><summary>Used in the template — <code>core/network/src/commonMain/kotlin/kpt/core/network/main/di/NetworkModule.kt:87</code></summary>
 
 ```kotlin
                             baseUrl = "https://placeholder.local/",
@@ -1507,7 +1507,7 @@ enum class NetworkError
 ```
 Represents standardized error types for remote or network operations. This enum is typically used with the `NetworkResult.Error` variant to describe what kind of failure occurred.
 
-<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/MifosErrorMapper.kt:56</code></summary>
+<details><summary>Used in the template — <code>core/common/src/commonMain/kotlin/kpt/core/common/ForkScreenStateErrorMapper.kt:56</code></summary>
 
 ```kotlin
                 ScreenState.Unauthenticated

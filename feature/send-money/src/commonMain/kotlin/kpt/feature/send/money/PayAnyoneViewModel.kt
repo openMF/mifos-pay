@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kpt.core.common.getSerialized
 import kpt.core.common.setSerialized
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 /** ViewModel for the pay-anyone screen; handles input, contact search and invite sharing. */
 class PayAnyoneViewModel(
     savedStateHandle: SavedStateHandle,

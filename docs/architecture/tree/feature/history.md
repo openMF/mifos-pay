@@ -9,7 +9,7 @@ Screens: `HistoryScreen`, `SpecificTransactionsScreen`, `TransactionDetailScreen
 
 ViewModels: `HistoryViewModel`, `SpecificTransactionsViewModel`, `TransactionDetailViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `HistoryViewModel`, `SpecificTransactionsViewModel`, `TransactionDet
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/history sha=a77c4a1695952b91b019cef74b1dd6203ec0c10b -->
+<!-- api-docs:begin module=feature/history sha=c4ceede8ac259956cdb6b52bb6565928aaadd6d1 -->
 ## API reference
 
-_Generated from `feature/history` at tree `a77c4a169595` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/history` at tree `c4ceede8ac25` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -125,7 +125,7 @@ User actions handled by `HistoryViewModel`.
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onAction: (HistoryAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier.fillMaxSize(),
         snackbarHostState = snackbarHostState,
 ```

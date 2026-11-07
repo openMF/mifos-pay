@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.feature.mpay.qr.scan.generated.resources.Res
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_permission_description
 import kpt.feature.mpay.qr.scan.generated.resources.feature_qr_camera_permission_title
@@ -61,7 +61,7 @@ fun QrPermissionDenied(
         verticalArrangement = Arrangement.Center,
     ) {
         Icon(
-            imageVector = MifosIcons.Camera,
+            imageVector = ForkIcons.Camera,
             contentDescription = null,
             tint = primaryColor,
             modifier = Modifier.size(80.dp),
@@ -99,7 +99,7 @@ fun QrPermissionDenied(
                 .height(52.dp),
         ) {
             Icon(
-                imageVector = MifosIcons.SettingsOutlined,
+                imageVector = ForkIcons.SettingsOutlined,
                 contentDescription = null,
                 modifier = Modifier.size(20.dp),
             )
@@ -123,7 +123,7 @@ fun QrPermissionDenied(
                 .height(52.dp),
         ) {
             Icon(
-                imageVector = MifosIcons.PhotoLibrary,
+                imageVector = ForkIcons.PhotoLibrary,
                 contentDescription = null,
                 modifier = Modifier.size(20.dp),
             )

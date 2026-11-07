@@ -33,10 +33,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kpt.core.model.user.Language
-import kpt.core.model.user.fork.LanguageConfig
-import kpt.core.model.user.toLanguage
-import kpt.feature.settings.di.MifosSettingsViewModelQualifier
+import kpt.core.model.fork.user.Language
+import kpt.core.model.fork.user.LanguageConfig
+import kpt.core.model.fork.user.toLanguage
+import kpt.feature.settings.di.SettingsViewModelQualifier
 import kpt.feature.settings.fork.SettingsState
 import kpt.feature.settings.fork.SettingsViewModel
 import kpt.feature.settings.generated.resources.Res
@@ -48,7 +48,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun LanguageDialog(
     onDismiss: () -> Unit,
-    viewModel: SettingsViewModel = koinViewModel(qualifier = MifosSettingsViewModelQualifier),
+    viewModel: SettingsViewModel = koinViewModel(qualifier = SettingsViewModelQualifier),
 ) {
     val settingsUiState by viewModel.stateFlow.collectAsStateWithLifecycle()
     LanguageDialogContent(

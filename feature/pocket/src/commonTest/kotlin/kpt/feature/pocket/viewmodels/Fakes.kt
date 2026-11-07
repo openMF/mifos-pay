@@ -31,13 +31,13 @@ import kpt.core.datastore.prefs.UserPreferencesRepositoryImpl
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.client.Client
 import kpt.core.model.client.UpdatedClient
+import kpt.core.model.fork.user.UserInfo
 import kpt.core.model.instance.InterbankServer
 import kpt.core.model.instance.ServerInstance
 import kpt.core.model.payload.PocketLinkPayload
 import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.LinkableAccount
 import kpt.core.model.pocket.PocketAccount
-import kpt.core.model.user.UserInfo
 import org.jetbrains.compose.resources.StringResource
 /** Small fixture-only state wrapper used to feed deterministic values into Store5-shaped streams. */
 sealed interface DataState<out T> {
@@ -59,10 +59,10 @@ class FakeUserPreferencesRepository : ForkPreferencesRepository, UserPreferences
     private val _selectedInstance = MutableStateFlow<ServerInstance?>(null)
     override val selectedInstance: StateFlow<ServerInstance?> = _selectedInstance
 
-    private val _language = MutableStateFlow(kpt.core.model.user.Language.DEFAULT)
-    override val language: StateFlow<kpt.core.model.user.Language> = _language
+    private val _language = MutableStateFlow(kpt.core.model.fork.user.Language.DEFAULT)
+    override val language: StateFlow<kpt.core.model.fork.user.Language> = _language
 
-    override suspend fun setLanguage(language: kpt.core.model.user.Language) {
+    override suspend fun setLanguage(language: kpt.core.model.fork.user.Language) {
         _language.value = language
     }
 

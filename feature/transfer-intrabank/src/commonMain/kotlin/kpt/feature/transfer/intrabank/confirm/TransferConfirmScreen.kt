@@ -65,19 +65,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import kpt.core.base.designsystem.KptTheme
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosBottomSheetScaffold
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosDialogBox
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkBottomSheetScaffold
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkDialogBox
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.network.entity.templates.account.AccountOption
 import kpt.core.ui.AvatarBox
 import kpt.core.ui.EmptyContentScreen
 import kpt.core.ui.ErrorBottomSheet
 import kpt.core.ui.ErrorType
-import kpt.core.ui.MifosProgressIndicator
-import kpt.core.ui.MifosProgressIndicatorOverlay
+import kpt.core.ui.ForkProgressIndicator
+import kpt.core.ui.ForkProgressIndicatorOverlay
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.core.ui.generated.resources.core_ui_add_to_pocket_message
 import kpt.core.ui.generated.resources.core_ui_add_to_pocket_title
 import kpt.core.ui.generated.resources.core_ui_error
@@ -85,7 +86,6 @@ import kpt.core.ui.generated.resources.core_ui_no
 import kpt.core.ui.generated.resources.core_ui_ok
 import kpt.core.ui.generated.resources.core_ui_success
 import kpt.core.ui.generated.resources.core_ui_yes
-import kpt.core.ui.utils.EventsEffect
 import kpt.feature.transfer.intrabank.generated.resources.Res
 import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_amount
 import kpt.feature.transfer.intrabank.generated.resources.feature_make_transfer_amount_error
@@ -111,7 +111,7 @@ import kpt.core.ui.generated.resources.Res as UiRes
  * auth-gate plumbing** for MW-390:
  *
  *  - Observes [entryStateHandle] for [INTRA_BANK_TRANSFER_VERIFICATION_KEY]
- *    (written by `internalMifosPasscodeScreen` on success/failure) and
+ *    (written by `internalPasscodeScreen` on success/failure) and
  *    re-dispatches as [TransferConfirmAction.UpdateUserVerificationResult]
  *    so the suspended `handleUserVerification` in
  *    [TransferConfirmViewModel] resumes.
@@ -123,10 +123,10 @@ import kpt.core.ui.generated.resources.Res as UiRes
  *  - Routes [TransferConfirmEvent.NavigateForPasscodeVerification] to
  *    [navigateForPasscodeVerification] with
  *    [INTRA_BANK_TRANSFER_VERIFICATION_KEY] — caller binds this to
- *    `navController::navigateToInternalMifosPasscodeScreen`.
+ *    `navController::navigateToInternalPasscodeScreen`.
  *
  * @param navigateForPasscodeVerification `(verificationKey) -> Unit` —
- *        caller binds to `navController::navigateToInternalMifosPasscodeScreen`.
+ *        caller binds to `navController::navigateToInternalPasscodeScreen`.
  *        The verificationKey passed in is the same constant the screen
  *        observes on its saved-state-handle, so the round trip closes.
  * @param entryStateHandle The transfer-confirm destination's own
@@ -212,7 +212,7 @@ private fun TransferConfirmDialogs(
 ) {
     when (dialogState) {
         is TransferConfirmState.DialogState.AddToPocketConfirmation -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { onAction(TransferConfirmAction.ConfirmAddToPocket(false)) },
                 title = stringResource(UiRes.string.core_ui_add_to_pocket_title),
@@ -223,7 +223,7 @@ private fun TransferConfirmDialogs(
             )
         }
         is TransferConfirmState.DialogState.Error.ResourceMessage -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { onAction(TransferConfirmAction.DismissDialog) },
                 title = stringResource(UiRes.string.core_ui_error),
@@ -233,7 +233,7 @@ private fun TransferConfirmDialogs(
             )
         }
         is TransferConfirmState.DialogState.Success -> {
-            MifosDialogBox(
+            ForkDialogBox(
                 showDialogState = true,
                 onDismiss = { onAction(TransferConfirmAction.DismissDialog) },
                 title = stringResource(UiRes.string.core_ui_success),
@@ -270,7 +270,7 @@ private fun TransferConfirmDialogs(
         }
 
         TransferConfirmState.DialogState.Loading -> {
-            MifosProgressIndicatorOverlay()
+            ForkProgressIndicatorOverlay()
         }
 
         null -> Unit
@@ -285,9 +285,9 @@ internal fun TransferConfirmScreen(
     lazyListState: LazyListState = rememberLazyListState(),
     onAction: (TransferConfirmAction) -> Unit,
 ) {
-    MifosBottomSheetScaffold(
+    ForkBottomSheetScaffold(
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.feature_make_transfer_review_title),
                 backPress = {
                     onAction(TransferConfirmAction.NavigateBack)
@@ -320,7 +320,7 @@ internal fun TransferConfirmScreen(
                 )
             }
             TransferConfirmState.State.Loading -> {
-                MifosProgressIndicator()
+                ForkProgressIndicator()
             }
             TransferConfirmState.State.NoAccounts -> {
                 EmptyContentScreen(
@@ -368,7 +368,7 @@ internal fun TransferConfirmScreen(
                     }
 
                     item {
-                        MifosTextField(
+                        ForkTextField(
                             label = stringResource(Res.string.feature_make_transfer_description_label),
                             value = state.description,
                             isError = !state.descriptionIsValid,
@@ -383,7 +383,7 @@ internal fun TransferConfirmScreen(
                     }
 
                     item {
-                        MifosButton(
+                        ForkButton(
                             onClick = { onAction(TransferConfirmAction.InitiateTransfer) },
                             modifier = Modifier.fillMaxWidth(),
                             enabled = state.amountIsValid && state.descriptionIsValid && !state.isProcessing,
@@ -403,7 +403,7 @@ internal fun TransferConfirmScreen(
 
                 // Show overlay when processing
                 if (state.isProcessing) {
-                    MifosProgressIndicatorOverlay()
+                    ForkProgressIndicatorOverlay()
                 }
             }
         }
@@ -460,19 +460,19 @@ private fun FromAccountCard(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.Bank,
+                    icon = ForkIcons.Bank,
                     backgroundColor = KptTheme.colorScheme.surfaceContainerHigh,
                 )
             },
             trailingContent = {
                 if (isOpened) {
                     Icon(
-                        imageVector = MifosIcons.KeyboardArrowUp,
+                        imageVector = ForkIcons.KeyboardArrowUp,
                         contentDescription = stringResource(Res.string.feature_make_transfer_check_icon_description),
                     )
                 } else {
                     Icon(
-                        imageVector = MifosIcons.KeyboardArrowDown,
+                        imageVector = ForkIcons.KeyboardArrowDown,
                         contentDescription = stringResource(Res.string.feature_make_transfer_check_icon_description),
                     )
                 }
@@ -558,7 +558,7 @@ private fun EnterAmountCard(
                     horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
                 ) {
                     Icon(
-                        imageVector = MifosIcons.Info,
+                        imageVector = ForkIcons.Info,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.error,
                     )
@@ -648,7 +648,7 @@ private fun AccountItem(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.Bank,
+                    icon = ForkIcons.Bank,
                     backgroundColor = KptTheme.colorScheme.surfaceContainerHigh,
                 )
             },
@@ -659,9 +659,9 @@ private fun AccountItem(
                 ) { isSelected ->
                     Icon(
                         imageVector = if (isSelected) {
-                            MifosIcons.RadioButtonChecked
+                            ForkIcons.RadioButtonChecked
                         } else {
-                            MifosIcons.RadioButtonUnchecked
+                            ForkIcons.RadioButtonUnchecked
                         },
                         contentDescription = stringResource(
                             Res.string.feature_make_transfer_check_icon_description,
@@ -719,13 +719,13 @@ fun ClientCard(
             },
             leadingContent = {
                 AvatarBox(
-                    icon = MifosIcons.Bank,
+                    icon = ForkIcons.Bank,
                     backgroundColor = KptTheme.colorScheme.surfaceContainerHigh,
                 )
             },
             trailingContent = {
                 Icon(
-                    imageVector = MifosIcons.Edit,
+                    imageVector = ForkIcons.Edit,
                     contentDescription = stringResource(
                         Res.string.feature_make_transfer_check_icon_description,
                     ),

@@ -38,15 +38,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.common.CurrencyFormatter
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosCard
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.model.interbank.InterBankPartyInfoResponse
 import kpt.core.ui.AvatarBox
-import kpt.core.ui.MifosProgressIndicatorOverlay
+import kpt.core.ui.ForkProgressIndicatorOverlay
 import kpt.feature.transfer.interbank.generated.resources.Res
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_acknowledgement_section
 import kpt.feature.transfer.interbank.generated.resources.feature_send_interbank_amount
@@ -84,10 +84,10 @@ fun PreviewTransferScreen(
     modifier: Modifier = Modifier,
 ) {
     var disclaimerAccepted by remember { mutableStateOf(false) }
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier,
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = stringResource(Res.string.feature_send_interbank_preview_transfer),
                 backPress = onBackClick,
             )
@@ -99,7 +99,7 @@ fun PreviewTransferScreen(
                     .padding(KptTheme.spacing.md),
                 verticalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             ) {
-                MifosButton(
+                ForkButton(
                     onClick = onConfirmClick,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isProcessing && disclaimerAccepted,
@@ -107,7 +107,7 @@ fun PreviewTransferScreen(
                     Text(stringResource(Res.string.feature_send_interbank_confirm_pay))
                 }
 
-                MifosButton(
+                ForkButton(
                     onClick = onEditClick,
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isProcessing,
@@ -144,7 +144,7 @@ fun PreviewTransferScreen(
                         accountType = fromAccountType,
                         balance = fromAccountBalance,
                         currencyCode = currencyCode,
-                        icon = MifosIcons.Bank,
+                        icon = ForkIcons.Bank,
                     )
                 }
             }
@@ -165,7 +165,7 @@ fun PreviewTransferScreen(
                         name = "${recipientInfo?.firstName ?: ""} ${recipientInfo?.lastName ?: ""}".trim(),
                         accountNo = recipientInfo?.partyId ?: "N/A",
                         accountType = recipientInfo?.destinationFspId ?: "",
-                        icon = MifosIcons.Person,
+                        icon = ForkIcons.Person,
                         isVerified = recipientInfo?.executionStatus == true,
                     )
                 }
@@ -234,7 +234,7 @@ fun PreviewTransferScreen(
                         fontWeight = FontWeight.SemiBold,
                         color = KptTheme.colorScheme.onSurfaceVariant,
                     )
-                    MifosCard(
+                    ForkCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(
                             containerColor = KptTheme.colorScheme.surface,
@@ -253,7 +253,7 @@ fun PreviewTransferScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Icon(
-                                    imageVector = MifosIcons.CalenderMonth,
+                                    imageVector = ForkIcons.CalenderMonth,
                                     contentDescription = null,
                                     modifier = Modifier.size(20.dp),
                                     tint = KptTheme.colorScheme.primary,
@@ -292,7 +292,7 @@ fun PreviewTransferScreen(
                             color = KptTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    MifosCard(
+                    ForkCard(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(
                             containerColor = KptTheme.colorScheme.surface,
@@ -333,7 +333,7 @@ fun PreviewTransferScreen(
         }
 
         if (isProcessing) {
-            MifosProgressIndicatorOverlay()
+            ForkProgressIndicatorOverlay()
         }
     }
 }
@@ -500,7 +500,7 @@ private fun DisclaimerCheckboxCard(
 @Preview
 @Composable
 fun PreviewTransferScreenPreview() {
-    MifosTheme {
+    ForkTheme {
         val mockRecipient = InterBankPartyInfoResponse(
             sourceFspId = "mifos-bank-1",
             destinationFspId = "blackbank-test",
@@ -535,7 +535,7 @@ fun PreviewTransferScreenPreview() {
 @Preview
 @Composable
 fun PreviewTransferScreenProcessingPreview() {
-    MifosTheme {
+    ForkTheme {
         val mockRecipient = InterBankPartyInfoResponse(
             sourceFspId = "mifos-bank-1",
             destinationFspId = "blackbank-test",

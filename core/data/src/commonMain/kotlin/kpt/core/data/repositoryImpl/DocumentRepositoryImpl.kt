@@ -17,15 +17,18 @@ import io.ktor.http.content.PartData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
 import kpt.core.data.repository.DocumentRepository
 import kpt.core.model.network.entity.noncore.Document
 import kpt.core.network.FineractApiManager
 /** Default [DocumentRepository] backed by the document API. */
+@RepositoryBinding(binds = DocumentRepository::class)
 class DocumentRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : DocumentRepository {
     override suspend fun getDocuments(
         entityType: String,

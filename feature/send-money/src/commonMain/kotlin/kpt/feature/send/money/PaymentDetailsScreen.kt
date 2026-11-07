@@ -50,9 +50,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTopBar
-import kpt.core.designsystem.icon.MifosIcons
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTopBar
+import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.ui.AvatarBox
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -90,10 +90,10 @@ internal fun PaymentDetailsScreenDefault(
         isButtonVisible = scrollState.value <= 100
     }
 
-    MifosScaffold(
+    ForkScaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            MifosTopBar(
+            ForkTopBar(
                 topBarTitle = "Payment Details",
                 backPress = onBackClick,
             )
@@ -353,7 +353,7 @@ private fun StatusSection(
                 horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
             ) {
                 Icon(
-                    imageVector = MifosIcons.CheckCircle,
+                    imageVector = ForkIcons.CheckCircle,
                     contentDescription = "Payment Successful",
                     modifier = Modifier.size(24.dp),
                     tint = Color(0xFF4CAF50),
@@ -371,7 +371,7 @@ private fun StatusSection(
                 horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.xs),
             ) {
                 Icon(
-                    imageVector = MifosIcons.Info,
+                    imageVector = ForkIcons.Info,
                     contentDescription = "Payment Failed",
                     modifier = Modifier.size(48.dp),
                     tint = KptTheme.colorScheme.error,
@@ -432,7 +432,7 @@ private fun TransactionMetadataSection(
                 horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.sm),
             ) {
                 Icon(
-                    imageVector = MifosIcons.Bank,
+                    imageVector = ForkIcons.Bank,
                     contentDescription = "Bank",
                     modifier = Modifier.size(24.dp),
                     tint = KptTheme.colorScheme.onSurfaceVariant,
@@ -457,7 +457,7 @@ private fun TransactionMetadataSection(
             }
 
             Icon(
-                imageVector = if (isExpanded) MifosIcons.ExpandLess else MifosIcons.ExpandMore,
+                imageVector = if (isExpanded) ForkIcons.ExpandLess else ForkIcons.ExpandMore,
                 contentDescription = if (isExpanded) "Collapse" else "Expand",
                 tint = KptTheme.colorScheme.onSurfaceVariant,
             )
@@ -568,14 +568,14 @@ private fun TimelineStep(
             ) {
                 if (isCompleted && !isError) {
                     Icon(
-                        imageVector = MifosIcons.Check,
+                        imageVector = ForkIcons.Check,
                         contentDescription = "Completed",
                         modifier = Modifier.size(12.dp),
                         tint = Color.White,
                     )
                 } else if (isError) {
                     Icon(
-                        imageVector = MifosIcons.Info,
+                        imageVector = ForkIcons.Info,
                         contentDescription = "Error",
                         modifier = Modifier.size(12.dp),
                         tint = Color.White,

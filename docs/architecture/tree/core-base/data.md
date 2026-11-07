@@ -47,16 +47,16 @@ internal class LoanRepositoryImpl(
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/user/impl/UserDataRepositoryImpl.kt:37</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:53</code></summary>
 
 ```kotlin
- * setting change behind every other for no benefit.
- */
-@RepositoryBinding(binds = UserDataRepository::class)
-class UserDataRepositoryImpl(
-    private val preferencesRepository: UserPreferencesRepository,
-    @FromStore(AppStoreIds.UserData) private val userDataStore: Store<Unit, UserData>,
-) : UserDataRepository {
+// TODO use self api for account operations later
+/** Default [AccountRepository] backed by the network data sources. */
+@RepositoryBinding(binds = AccountRepository::class)
+class AccountRepositoryImpl(
+    private val apiManager: FineractApiManager,
+    private val selfManager: SelfServiceApiManager,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ```
 
 </details>
@@ -66,15 +66,16 @@ annotation class FromStore(val id: String)
 ```
 Resolves this parameter from the store registry rather than by bare type.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/user/impl/UserDataRepositoryImpl.kt:40</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:59</code></summary>
 
 ```kotlin
-class UserDataRepositoryImpl(
-    private val preferencesRepository: UserPreferencesRepository,
-    @FromStore(AppStoreIds.UserData) private val userDataStore: Store<Unit, UserData>,
-) : UserDataRepository {
-    override val userData: StateFlow<UserData>
-        get() = preferencesRepository.userData
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.TransferDetail) private val transferDetailStore: Store<TransferDetailKey, TransferDetail>?,
 ```
 
 </details>
@@ -94,16 +95,16 @@ fun provideLoanOutbox(dao: DraftDao): SubmitOutbox<Loan> =
 
 </details>
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/user/AuthTokenBridge.kt:32</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/BillDataProviders.kt:27</code></summary>
 
 ```kotlin
- * `accessPointId` — the parameter exists precisely so that is a substitution, not a rewrite.
+ * consumers yet; they wait for Fineract's bill-management endpoints.
  */
-@DataProvider
-fun provideAuthTokenSource(preferences: UserPreferencesRepository): AuthTokenSource =
-    AuthTokenSource { _: String -> preferences.observeAuthToken }
-
-/**
+@DataProvider(qualifier = "kpt.core.data.repository.BillerRepository")
+fun provideNetworkBillerRepository(
+    apiManager: FineractApiManager,
+    @FromQualifier("IO") ioDispatcher: CoroutineDispatcher,
+): BillerRepository = BillerRepositoryImpl(apiManager, ioDispatcher)
 ```
 
 </details>
@@ -113,6 +114,20 @@ annotation class FromQualifier(val name: String)
 ```
 Resolves this parameter from a NAMED qualifier rather than by bare type. The counterpart to `FromStore` for bindings the data layer itself qualifies — chiefly a `SubmitOutbox<T>`, whose erased type is shared by every outbox in the graph.
 
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/AccountRepositoryImpl.kt:57</code></summary>
+
+```kotlin
+    private val apiManager: FineractApiManager,
+    private val selfManager: SelfServiceApiManager,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+```
+
+</details>
+
 ### `core-base/data/src/commonMain/kotlin/kpt/core/base/data/infra/NetworkMonitor.kt`
 
 ```kotlin
@@ -120,7 +135,7 @@ typealias NetworkMonitor = io.github.mobilebytelabs.kmptoolkit.networkmonitor.Ne
 ```
 Backward-compatible typealias — existing consumers keep their import. Delegates to cmp-network-monitor's full-featured NetworkMonitor interface.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:26</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/fork/di/AndroidPlatformDependentDataModule.kt:25</code></summary>
 
 ```kotlin
     private val scope: CoroutineScope,
@@ -241,14 +256,12 @@ interface TimeZoneMonitor
 ```
 Utility for reporting current timezone the device has set. It always emits at least once with default setting and then for each TZ change.
 
-<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/AndroidPlatformDependentDataModule.kt:30</code></summary>
+<details><summary>Used in the template — <code>core/data/src/androidMain/kotlin/kpt/core/data/di/PlatformDependentDataModule.android.kt:27</code></summary>
 
 ```kotlin
-    }
+    includes(CommonModule)
 
-    override val timeZoneMonitor: TimeZoneMonitor by lazy {
-        TimeZoneBroadcastMonitor(context, scope, dispatcher)
-    }
+    singleOf(::TimeZoneMonitorImpl) bind TimeZoneMonitor::class
 }
 ```
 
@@ -265,5 +278,5 @@ Singleton NetworkMonitor backed by cmp-network-monitor. Auto-initializes on firs
 
 ---
 
-_12 type(s), 15 function(s)/property(ies); 27 carry KDoc at source; 2 authored example(s); 8 live call site(s)._
+_12 type(s), 15 function(s)/property(ies); 27 carry KDoc at source; 2 authored example(s); 9 live call site(s)._
 <!-- api-docs:end -->

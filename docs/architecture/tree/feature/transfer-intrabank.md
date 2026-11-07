@@ -9,7 +9,7 @@ Screens: `IntraBankHubScreen`, `SelectPayeeScreen`, `TransferConfirmScreen`, `Tr
 
 ViewModels: `IntraBankHubViewModel`, `SelectScreenViewModel`, `TransferConfirmViewModel`
 
-**Consumes:** `core/store/repository`, `core/store/util`
+**Consumes:** `core/store/fork`, `core/store/repository`
 
 ### Docs in the tree
 
@@ -22,10 +22,10 @@ ViewModels: `IntraBankHubViewModel`, `SelectScreenViewModel`, `TransferConfirmVi
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/transfer-intrabank sha=296404f8e24b74809e629150818596f5e20f7b0a -->
+<!-- api-docs:begin module=feature/transfer-intrabank sha=ebe505c8eec60d924a6e7f54ffefeeb416325651 -->
 ## API reference
 
-_Generated from `feature/transfer-intrabank` at tree `296404f8e24b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/transfer-intrabank` at tree `ebe505c8eec6` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -447,7 +447,7 @@ private fun SelectAccountScreen(
     modifier: Modifier = Modifier,
     onAction: (SelectScreenAction) -> Unit,
 ) {
-    MifosGradientBackground {
+    ForkGradientBackground {
 ```
 
 </details>
@@ -483,8 +483,8 @@ Actions handled by `SelectScreenViewModel`.
     modifier: Modifier = Modifier,
     onAction: (SelectScreenAction) -> Unit,
 ) {
-    MifosGradientBackground {
-        MifosScaffold(
+    ForkGradientBackground {
+        ForkScaffold(
             modifier = modifier,
 ```
 

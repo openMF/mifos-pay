@@ -34,7 +34,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.theme.fork.MifosTheme
+import kpt.core.designsystem.theme.fork.ForkTheme
 import kpt.core.ui.ExpiryDateInput
 import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
@@ -139,7 +139,7 @@ private fun formatCardNumber(text: AnnotatedString): TransformedText {
 @Preview
 @Composable
 private fun DebitCardScreenContentsPreview() {
-    MifosTheme {
+    ForkTheme {
         DebitCardScreenContent(
             onDone = { _, _, _ -> },
         )

@@ -18,16 +18,19 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.base.store.screen.asScreenStream
 import kpt.core.common.ScreenState
 import kpt.core.common.asScreenStateFlow
+import kpt.core.data.fork.util.Constants
 import kpt.core.data.mapper.toAccount
 import kpt.core.data.mapper.toModel
 import kpt.core.data.repository.AccountRepository
-import kpt.core.data.util.Constants
 import kpt.core.database.wallet.transaction.TransactionDao
 import kpt.core.database.wallet.transaction.toDomain
 import kpt.core.model.account.Account
@@ -38,6 +41,7 @@ import kpt.core.model.search.AccountResult
 import kpt.core.network.FineractApiManager
 import kpt.core.network.SelfServiceApiManager
 import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
 import kpt.core.store.wallet.WalletStoreTtl
 import kpt.core.store.wallet.selfaccounts.SelfAccountsKey
 import kpt.core.store.wallet.transferdetail.TransferDetailKey
@@ -46,27 +50,19 @@ import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
 
 // TODO use self api for account operations later
 /** Default [AccountRepository] backed by the network data sources. */
+@RepositoryBinding(binds = AccountRepository::class)
 class AccountRepositoryImpl(
     private val apiManager: FineractApiManager,
     private val selfManager: SelfServiceApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
-    // Phase-5 Batch-3 LEDGER wiring — injected by RepositoryModule so the
-    // store-backed getSelfAccountsScreen(...) can consume Store5 via
-    // asScreenStream(...). Nullable-default so existing unit tests without the
-    // store harness continue to compile; getSelfAccounts(...) — the legacy
-    // asScreenStateFlow path — is unaffected.
-    private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>? = null,
-    private val storeNetworkMonitor: StoreNetworkMonitor? = null,
-    private val fetchedAtRepository: FetchedAtRepository? = null,
-    // transfer-detail Store5 vertical (GOAL D13) — makes the transaction-detail
-    // drill-down offline-first. Nullable-default so existing unit tests without the
-    // store harness continue to compile; the legacy getAccountTransfer(...) —
-    // asScreenStateFlow shim over the raw Ktorfit flow — is unaffected.
-    private val transferDetailStore: Store<TransferDetailKey, TransferDetail>? = null,
-    // Existing wallet_transactions LEDGER DAO (populated by provideHistoryStore) —
-    // injected so getTransaction(...) can read the cached row offline-first before
-    // hitting the network. Nullable-default for the same test-harness reason.
-    private val transactionDao: TransactionDao? = null,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.SelfAccounts) private val selfAccountsStore: Store<SelfAccountsKey, List<Account>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.TransferDetail) private val transferDetailStore: Store<TransferDetailKey, TransferDetail>?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    private val transactionDao: TransactionDao?,
 ) : AccountRepository {
 
     // Offline-first single-transaction read — prefers the cached `wallet_transactions`

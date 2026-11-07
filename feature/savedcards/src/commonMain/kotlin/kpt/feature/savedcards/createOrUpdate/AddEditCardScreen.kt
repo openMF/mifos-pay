@@ -47,17 +47,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.component.BasicDialogState
-import kpt.core.designsystem.component.LoadingDialogState
-import kpt.core.designsystem.component.MifosBasicDialog
-import kpt.core.designsystem.component.MifosButton
-import kpt.core.designsystem.component.MifosLoadingDialog
-import kpt.core.designsystem.component.MifosOutlinedTextField
-import kpt.core.designsystem.component.MifosScaffold
-import kpt.core.designsystem.component.MifosTextField
-import kpt.core.ui.MifosDivider
-import kpt.core.ui.MifosPasswordField
-import kpt.core.ui.utils.EventsEffect
+import kpt.core.designsystem.fork.component.BasicDialogState
+import kpt.core.designsystem.fork.component.ForkBasicDialog
+import kpt.core.designsystem.fork.component.ForkButton
+import kpt.core.designsystem.fork.component.ForkLoadingDialog
+import kpt.core.designsystem.fork.component.ForkOutlinedTextField
+import kpt.core.designsystem.fork.component.ForkScaffold
+import kpt.core.designsystem.fork.component.ForkTextField
+import kpt.core.designsystem.fork.component.LoadingDialogState
+import kpt.core.ui.ForkDivider
+import kpt.core.ui.ForkPasswordField
+import kpt.core.ui.fork.utils.EventsEffect
 import kpt.feature.savedcards.components.CreditCard
 import kpt.feature.savedcards.components.getCardNumberTransformation
 import kpt.feature.savedcards.generated.resources.Res
@@ -111,14 +111,14 @@ private fun AddEditCardDialogs(
     onDismissRequest: () -> Unit,
 ) {
     when (dialogState) {
-        is AECardState.DialogState.Error -> MifosBasicDialog(
+        is AECardState.DialogState.Error -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
                 message = dialogState.message,
             ),
             onDismissRequest = onDismissRequest,
         )
 
-        is AECardState.DialogState.Loading -> MifosLoadingDialog(
+        is AECardState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
 
@@ -133,7 +133,7 @@ private fun AddEditCardScreenContent(
     modifier: Modifier = Modifier,
     onAction: (AECardAction) -> Unit,
 ) {
-    MifosScaffold(
+    ForkScaffold(
         topBarTitle = state.title,
         backPress = { onAction(AECardAction.NavigateBack) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -174,7 +174,7 @@ private fun AddEditCardScreenContent(
         }
 
         item {
-            MifosDivider()
+            ForkDivider()
         }
 
         item {
@@ -188,7 +188,7 @@ private fun AddEditCardScreenContent(
         }
 
         item {
-            MifosOutlinedTextField(
+            ForkOutlinedTextField(
                 value = state.firstName,
                 label = stringResource(Res.string.feature_savedcards_first_name),
                 onValueChange = { onAction(AECardAction.FirstNameChanged(it)) },
@@ -200,7 +200,7 @@ private fun AddEditCardScreenContent(
         }
 
         item {
-            MifosTextField(
+            ForkTextField(
                 value = state.lastName,
                 label = stringResource(Res.string.feature_savedcards_last_name),
                 onValueChange = { onAction(AECardAction.LastNameChanged(it)) },
@@ -214,7 +214,7 @@ private fun AddEditCardScreenContent(
         item {
             var isFocused by remember { mutableStateOf(false) }
 
-            MifosTextField(
+            ForkTextField(
                 value = state.cardNumber,
                 label = stringResource(Res.string.feature_savedcards_card_number),
                 visualTransformation = getCardNumberTransformation(
@@ -243,7 +243,7 @@ private fun AddEditCardScreenContent(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(KptTheme.spacing.md),
             ) {
-                MifosTextField(
+                ForkTextField(
                     value = state.expiryDateFormatted,
                     label = stringResource(Res.string.feature_savedcards_expiry_date),
                     modifier = Modifier.weight(1.5f),
@@ -255,7 +255,7 @@ private fun AddEditCardScreenContent(
                     },
                 )
 
-                MifosPasswordField(
+                ForkPasswordField(
                     value = state.cvv,
                     label = "CVV",
                     modifier = Modifier.weight(1.5f),
@@ -276,7 +276,7 @@ private fun AddEditCardScreenContent(
         }
 
         item {
-            MifosButton(
+            ForkButton(
                 text = {
                     Text(text = state.buttonText)
                 },

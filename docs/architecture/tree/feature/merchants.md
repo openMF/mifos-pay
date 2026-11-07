@@ -20,10 +20,10 @@ ViewModels: `MerchantTransferViewModel`, `MerchantViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/merchants sha=16d505f85fc77ebe3564c33833e39991bdd03fa5 -->
+<!-- api-docs:begin module=feature/merchants sha=01a3edfa70f0b191a261a9ad0facf2d6d6d00de7 -->
 ## API reference
 
-_Generated from `feature/merchants` at tree `16d505f85fc7` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/merchants` at tree `01a3edfa70f0` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

@@ -13,11 +13,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
 import kpt.core.common.ScreenStateStream
 import kpt.core.common.asScreenStateFlow
+import kpt.core.data.fork.util.AutoPayValidator
 import kpt.core.data.repository.AutoPayRepository
 import kpt.core.data.repository.AutoPayStatistics
-import kpt.core.data.util.AutoPayValidator
 import kpt.core.model.autopay.AutoPay
 import kpt.core.model.autopay.AutoPayHistory
 import kpt.core.model.autopay.AutoPayPayload
@@ -27,9 +29,10 @@ import kpt.core.model.autopay.UpcomingPayment
 import kpt.core.model.network.entity.Page
 import kpt.core.network.FineractApiManager
 /** Default [AutoPayRepository]. */
+@RepositoryBinding(binds = AutoPayRepository::class)
 class AutoPayRepositoryImpl(
     private val apiManager: FineractApiManager,
-    private val ioDispatcher: CoroutineDispatcher,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
 ) : AutoPayRepository {
 
     override fun getAutoPayTemplate(

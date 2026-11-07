@@ -29,7 +29,7 @@ import kpt.core.model.enums.AccountType
 import kpt.core.model.pocket.DetailedPocketAccount
 import kpt.core.model.pocket.LinkableAccount
 import kpt.core.model.pocket.PocketAccount
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.pocket.generated.resources.Res
 import kpt.feature.pocket.generated.resources.feature_pocket_error_delink_account
 import kpt.feature.pocket.generated.resources.feature_pocket_error_link_accounts

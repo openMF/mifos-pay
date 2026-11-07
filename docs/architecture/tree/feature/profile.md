@@ -25,10 +25,10 @@ only the app's display name, yet it is a real domain model rather than a raw `St
 replaces the *fetcher*, not the screen. Swapping in a signed-in user means widening the model and
 returning it from the store, with the ViewModel and composable untouched.
 
-<!-- api-docs:begin module=feature/profile sha=bd42c8d051f984742f2727d1cdbe315805f71feb -->
+<!-- api-docs:begin module=feature/profile sha=4c99741a73887f2334e3088ad825ec4eb96d3232 -->
 ## API reference
 
-_Generated from `feature/profile` at tree `bd42c8d051f9` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/profile` at tree `4c99741a7388` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

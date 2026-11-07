@@ -18,7 +18,7 @@ import kpt.core.base.store.screen.ScreenState
 import kpt.core.data.repository.ClientRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.client.Client
-import kpt.core.ui.utils.BaseViewModel
+import kpt.core.ui.fork.utils.BaseViewModel
 import org.jetbrains.compose.resources.StringResource
 import kpt.core.common.ScreenState as CommonScreenState
 internal class ProfileViewModel(
