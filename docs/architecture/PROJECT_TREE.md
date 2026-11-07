@@ -78,6 +78,6 @@ oversight. A directory missing from a map reads the same as one nobody looked at
 | `.run/` | 5 | IDE run configurations |
 | `META-INF/` | 1 | one service-registration file |
 | `config/` | 2 | the detekt config — documented where detekt is configured |
-| `docs/` | 220 | this documentation tree |
+| `docs/` | 218 | this documentation tree |
 | `kotlin-js-store/` | 2 | generated yarn.lock for Kotlin/JS |
 | `spotless/` | 1 | the license-header template applied by Spotless |

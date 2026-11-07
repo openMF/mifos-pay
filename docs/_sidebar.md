@@ -43,7 +43,6 @@
   - [tools/](/architecture/tree/tools.md)
 
 - **`core-base/` API reference**
-  - [core-base/analytics](/architecture/tree/core-base/analytics.md)
   - [core-base/common](/architecture/tree/core-base/common.md)
   - [core-base/crypto](/architecture/tree/core-base/crypto.md)
   - [core-base/data](/architecture/tree/core-base/data.md)
@@ -61,7 +60,6 @@
   - [core-base/ui](/architecture/tree/core-base/ui.md)
 
 - **`core/` API reference**
-  - [core/analytics](/architecture/tree/core/analytics.md)
   - [core/common](/architecture/tree/core/common.md)
   - [core/data](/architecture/tree/core/data.md)
   - [core/database](/architecture/tree/core/database.md)

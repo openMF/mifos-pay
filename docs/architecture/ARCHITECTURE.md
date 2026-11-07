@@ -50,7 +50,6 @@ One guide per module, named 1:1 with its training-corpus surface.
 
 **`core-base/`** — framework-shared primitives; generators consume, never write
 
-- [`core-base/analytics`](tree/core-base/analytics.md)
 - [`core-base/common`](tree/core-base/common.md)
 - [`core-base/crypto`](tree/core-base/crypto.md)
 - [`core-base/data`](tree/core-base/data.md)
@@ -67,7 +66,6 @@ One guide per module, named 1:1 with its training-corpus surface.
 
 **`core/`** — fork-owned implementation; the codegen target
 
-- [`core/analytics`](tree/core/analytics.md)
 - [`core/common`](tree/core/common.md)
 - [`core/data`](tree/core/data.md)  ·  contracts: `@RepositoryBinding`, `@DataProvider`, `@FromStore`, `@FromQualifier`
 - [`core/database`](tree/core/database.md)  ·  contracts: `@DbEntity`, `@DbDao`, `@DbConverters`

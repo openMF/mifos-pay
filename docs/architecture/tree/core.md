@@ -71,7 +71,6 @@ _Authored beside the code, where the module's own consumers read them._
 
 _Authored in depth, living in this area's own directory._
 
-- [core/analytics](core/analytics.md)
 - [Store Implementation Guide](core/store-implementation.md)
 
 ## Deeper reading

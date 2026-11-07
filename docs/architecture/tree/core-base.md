@@ -78,7 +78,6 @@ _Authored beside the code, where the module's own consumers read them._
 
 _Authored in depth, living in this area's own directory._
 
-- [core-base/analytics](core-base/analytics.md)
 - [NetworkMonitor contract — operator guide](core-base/network-monitor-contract.md)
 - [RetryPolicy + outbox retry-backoff (Phase 05 deferred work)](core-base/retry-policy.md)
 
