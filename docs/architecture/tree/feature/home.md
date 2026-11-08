@@ -103,7 +103,7 @@ sealed interface ViewState
 ```
 Display state of the home screen.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:90</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:76</code></summary>
 
 ```kotlin
         .mapLatest { screenState ->

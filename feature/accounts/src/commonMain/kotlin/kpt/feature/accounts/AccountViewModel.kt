@@ -14,41 +14,27 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kpt.core.base.store.submit.SubmitState
-import kpt.core.base.store.submit.submitHandler
 import kpt.core.common.ScreenState
 import kpt.core.data.repository.SelfServiceRepository
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.account.Account
 import kpt.core.model.account.DefaultAccount
-import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.ui.fork.utils.BaseViewModel
-import kpt.feature.accounts.AccountAction.Internal.DeleteBeneficiary
 import kpt.feature.accounts.AccountEvent.OnAddEditSavingsAccount
 import kpt.feature.accounts.generated.resources.Res
-import kpt.feature.accounts.generated.resources.delete_beneficiary_subtitle
-import kpt.feature.accounts.generated.resources.delete_beneficiary_title
-import kpt.feature.accounts.generated.resources.feature_accounts_beneficiary_deleted
 import kpt.feature.accounts.generated.resources.feature_accounts_default_account_updated
 import kpt.feature.accounts.savingsaccount.SavingsAddEditType
-import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
 import org.jetbrains.compose.resources.StringResource
 /**
- * Loads the user's savings accounts and beneficiaries, and handles default-account, beneficiary and
- * navigation actions.
+ * Loads the user's savings accounts and handles default-account and navigation actions.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class AccountViewModel(
     private val userRepository: ForkPreferencesRepository,
     private val repository: SelfServiceRepository,
-    private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
         /** Client id read from user preferences when the view model is created. */
@@ -93,10 +79,7 @@ class AccountViewModel(
                     // Empty account-list branch → render an empty Content
                     // (screen still shows the FAB + empty-state copy; no
                     // dedicated Empty ViewState variant exists here).
-                    AccountState.ViewState.Content(
-                        accounts = emptyList(),
-                        beneficiaries = emptyList(),
-                    )
+                    AccountState.ViewState.Content(accounts = emptyList())
 
                 is ScreenState.NoNetwork ->
                     AccountState.ViewState.Error("No network connection")
@@ -113,10 +96,7 @@ class AccountViewModel(
                             .thenBy { account -> account.number },
                     )
 
-                    AccountState.ViewState.Content(
-                        accounts = sortedAccounts,
-                        beneficiaries = screenState.data.beneficiaries,
-                    )
+                    AccountState.ViewState.Content(accounts = sortedAccounts)
                 }
             }
         }
@@ -125,44 +105,6 @@ class AccountViewModel(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = AccountState.ViewState.Loading,
         )
-
-    // Template idiom (core-base/store): the beneficiary-delete write goes through a
-    // SubmitHandler instead of a hand-folded DataState result action. The handler owns
-    // the Submitting/Submitted/Failed lifecycle; we observe it here to drive this
-    // screen's existing delete dialog + toast, so the Screen is unchanged.
-    private val submitDeleteBeneficiary = viewModelScope.submitHandler<Unit>()
-
-    init {
-        submitDeleteBeneficiary.state
-            .onEach { submitState ->
-                when (submitState) {
-                    is SubmitState.Submitting -> {
-                        mutableStateFlow.update {
-                            it.copy(dialogState = AccountState.DialogState.Loading)
-                        }
-                    }
-
-                    is SubmitState.Submitted -> {
-                        mutableStateFlow.update { it.copy(dialogState = null) }
-                        sendEvent(
-                            AccountEvent.ShowToast(Res.string.feature_accounts_beneficiary_deleted),
-                        )
-                        submitDeleteBeneficiary.reset()
-                    }
-
-                    is SubmitState.Failed -> {
-                        val message = submitState.error.message.toString()
-                        mutableStateFlow.update {
-                            it.copy(dialogState = AccountState.DialogState.Error(message))
-                        }
-                        submitDeleteBeneficiary.reset()
-                    }
-
-                    SubmitState.Idle -> Unit
-                }
-            }
-            .launchIn(viewModelScope)
-    }
 
     override fun handleAction(action: AccountAction) {
         when (action) {
@@ -178,41 +120,6 @@ class AccountViewModel(
                 sendEvent(AccountEvent.OnNavigateToAccountDetail(action.accountId))
             }
 
-            is AccountAction.AddTPTBeneficiary -> {
-                sendEvent(AccountEvent.OnAddOrEditTPTBeneficiary(BeneficiaryAddEditType.AddItem()))
-            }
-
-            is AccountAction.EditBeneficiary -> {
-                launchIO {
-                    val beneficiary = json.encodeToString<Beneficiary>(action.beneficiary)
-                    sendEvent(
-                        AccountEvent.OnAddOrEditTPTBeneficiary(
-                            BeneficiaryAddEditType.EditItem(beneficiary),
-                        ),
-                    )
-                }
-            }
-
-            is AccountAction.DeleteBeneficiary -> {
-                mutableStateFlow.update {
-                    it.copy(
-                        dialogState = AccountState.DialogState.DeleteBeneficiary(
-                            title = Res.string.delete_beneficiary_title,
-                            message = Res.string.delete_beneficiary_subtitle,
-                            onConfirm = {
-                                trySendAction(DeleteBeneficiary(action.beneficiaryId))
-                            },
-                        ),
-                    )
-                }
-            }
-
-            is AccountAction.DismissDialog -> {
-                mutableStateFlow.update {
-                    it.copy(dialogState = null)
-                }
-            }
-
             is AccountAction.SetDefaultAccount -> handleSetDefaultAccount(action)
 
             is AccountAction.ApplyForLoan -> {
@@ -220,8 +127,6 @@ class AccountViewModel(
                     sendEvent(AccountEvent.OnApplyForLoan(clientId))
                 }
             }
-
-            is DeleteBeneficiary -> handleDeleteBeneficiary(action)
         }
     }
 
@@ -238,15 +143,6 @@ class AccountViewModel(
         mutableStateFlow.update { it.copy(defaultAccountId = action.accountId) }
         sendEvent(AccountEvent.ShowToast(Res.string.feature_accounts_default_account_updated))
     }
-
-    private fun handleDeleteBeneficiary(action: DeleteBeneficiary) {
-        // Submit through the handler — it drives Submitting/Submitted/Failed, observed
-        // in `init`. The repository write returns Unit and throws on failure; the
-        // handler maps that to Submitted/Failed.
-        submitDeleteBeneficiary.submit {
-            repository.deleteBeneficiary(action.beneficiaryId)
-        }
-    }
 }
 
 /**
@@ -254,39 +150,11 @@ class AccountViewModel(
  *
  * @property clientId Id of the signed-in client, or null.
  * @property defaultAccountId Id of the user's default account, or null.
- * @property dialogState Dialog currently displayed, or null.
  */
 data class AccountState(
     val clientId: Long? = null,
     val defaultAccountId: Long? = null,
-    val dialogState: DialogState? = null,
 ) {
-    /** Dialogs the accounts screen can display. */
-    sealed interface DialogState {
-        /** Blocking progress dialog. */
-        data object Loading : DialogState
-
-        /**
-         * Error dialog.
-         *
-         * @property message Error text to display.
-         */
-        data class Error(val message: String) : DialogState
-
-        /**
-         * Confirmation dialog for deleting a beneficiary.
-         *
-         * @property title Dialog title resource.
-         * @property message Dialog message resource.
-         * @property onConfirm Invoked when the user confirms the deletion.
-         */
-        data class DeleteBeneficiary(
-            val title: StringResource,
-            val message: StringResource,
-            val onConfirm: () -> Unit,
-        ) : DialogState
-    }
-
     /** Content states of the accounts screen. */
     sealed interface ViewState {
         /** Whether a floating action button is shown. */
@@ -312,14 +180,12 @@ data class AccountState(
         }
 
         /**
-         * Accounts and beneficiaries loaded.
+         * Accounts loaded.
          *
          * @property accounts The user's savings accounts.
-         * @property beneficiaries The user's third-party transfer beneficiaries.
          */
         data class Content(
             val accounts: List<Account>,
-            val beneficiaries: List<Beneficiary>,
         ) : ViewState {
             override val hasFab: Boolean get() = true
             override val isPullToRefreshEnabled: Boolean get() = true
@@ -344,13 +210,6 @@ sealed interface AccountEvent {
     data class OnNavigateToAccountDetail(val accountId: Long) : AccountEvent
 
     /**
-     * Open the add or edit beneficiary screen.
-     *
-     * @property type Whether to add a new beneficiary or edit an existing one.
-     */
-    data class OnAddOrEditTPTBeneficiary(val type: BeneficiaryAddEditType) : AccountEvent
-
-    /**
      * Open the loan application flow.
      *
      * @property clientId Id of the applying client.
@@ -367,23 +226,6 @@ sealed interface AccountEvent {
 
 /** Actions the accounts screen can send to its view model. */
 sealed interface AccountAction {
-    /** Start adding a third-party transfer beneficiary. */
-    data object AddTPTBeneficiary : AccountAction
-
-    /**
-     * Start editing a beneficiary.
-     *
-     * @property beneficiary The beneficiary to edit.
-     */
-    data class EditBeneficiary(val beneficiary: Beneficiary) : AccountAction
-
-    /**
-     * Ask to delete a beneficiary (shows a confirmation first).
-     *
-     * @property beneficiaryId Id of the beneficiary.
-     */
-    data class DeleteBeneficiary(val beneficiaryId: Long) : AccountAction
-
     /** Start creating a savings account. */
     data object CreateSavingsAccount : AccountAction
 
@@ -411,17 +253,4 @@ sealed interface AccountAction {
 
     /** Start a loan application. */
     data object ApplyForLoan : AccountAction
-
-    /** Dismiss the currently shown dialog. */
-    data object DismissDialog : AccountAction
-
-    /** Actions dispatched by the view model itself. */
-    sealed interface Internal : AccountAction {
-        /**
-         * Perform the confirmed beneficiary deletion.
-         *
-         * @property beneficiaryId Id of the beneficiary.
-         */
-        data class DeleteBeneficiary(val beneficiaryId: Long) : Internal
-    }
 }

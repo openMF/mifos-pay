@@ -1,9 +1,9 @@
 # `feature/savedcards/`
 
 > Part of [`feature/`](../feature.md)  
-> **Measured:** 34 tracked files — 16× `.xml`, 15× `.kt`, 1× `.gitignore`, 1× `.md`, 1× `.kts`
+> **Measured:** 35 tracked files — 16× `.xml`, 16× `.kt`, 1× `.gitignore`, 1× `.md`, 1× `.kts`
 
-**15 Kotlin files** — 3 screen(s), 3 ViewModel(s).
+**16 Kotlin files** — 3 screen(s), 3 ViewModel(s).
 
 Screens: `AddEditCardScreen`, `CardDetailScreen`, `CardsScreen`
 
@@ -22,10 +22,10 @@ ViewModels: `AddEditCardViewModel`, `CardDetailViewModel`, `CardsScreenViewModel
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/savedcards sha=c201d5e10c8462f47f716e80ff9b765c9a3ae143 -->
+<!-- api-docs:begin module=feature/savedcards sha=1d11dd7b473d5d3822898952dba26477edf96321 -->
 ## API reference
 
-_Generated from `feature/savedcards` at tree `c201d5e10c84` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/savedcards` at tree `1d11dd7b473d` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -258,6 +258,13 @@ val SavedCardsModule = module
 ```
 Koin module providing the ViewModels of the saved cards feature.
 
+### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/navigation/SavedCardsGraph.kt`
+
+```kotlin
+fun NavGraphBuilder.savedCardsGraph(navController: NavController)
+```
+The saved-cards feature's destinations: card details and the add/edit form.
+
 ### `feature/savedcards/src/commonMain/kotlin/kpt/feature/savedcards/utils/CreditCardUtils.kt`
 
 ```kotlin
@@ -326,5 +333,5 @@ Palette of colors a user can pick for a saved card.
 
 ---
 
-_11 type(s), 34 function(s)/property(ies); 32 carry KDoc at source; 0 authored example(s); 9 live call site(s)._
+_11 type(s), 35 function(s)/property(ies); 33 carry KDoc at source; 0 authored example(s); 9 live call site(s)._
 <!-- api-docs:end -->

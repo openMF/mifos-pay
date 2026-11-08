@@ -13,6 +13,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.data.repository.AppLockRepository
+import kpt.core.ui.fork.biometrics.BiometricErrorMessages
+import kpt.core.ui.fork.biometrics.BiometricPromptStrings
 import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.passcode.generated.resources.Res
 import kpt.feature.passcode.generated.resources.feature_passcode_user_not_registered_error_message

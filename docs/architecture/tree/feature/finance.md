@@ -18,10 +18,10 @@ Screens: `FinanceScreen`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/finance sha=36fad9d662cbb58cd74f6596ced2b4d71a1ff084 -->
+<!-- api-docs:begin module=feature/finance sha=0c3e5291d1f21f01f1940c0566bf68562bd49a87 -->
 ## API reference
 
-_Generated from `feature/finance` at tree `36fad9d662cb` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/finance` at tree `0c3e5291d1f2` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -46,7 +46,7 @@ Navigates to the finance screen using `navOptions`.
 ```kotlin
 fun NavGraphBuilder.financeScreen(
 ```
-Registers the finance screen in the nav graph, showing the given `tabContents`.
+Registers the finance screen in the nav graph, showing the tabs `tabContents` builds.
 
 ---
 

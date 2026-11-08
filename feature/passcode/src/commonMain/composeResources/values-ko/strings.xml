@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">시도 횟수가 너무 많습니다. 잠시 후 다시 시도해 주세요.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">생체 인식 하드웨어를 일시적으로 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">이 기기에 등록된 생체 인식 정보가 없습니다. 시스템 설정에서 생체 인식을 설정해 주세요.</string>
-    <string name="feature_passcode_biometric_error_timeout">생체 인식 인증 시간이 초과되었습니다. 다시 시도해 주세요.</string>
-    <string name="feature_passcode_biometric_error_no_space">생체 인식 인증을 완료할 저장 공간이 부족합니다.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">생체 인식 등록 데이터가 잘못되었습니다. 앱 설정에서 생체 인식을 다시 활성화해 주세요.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">잘못된 인수로 인해 생체 인식 인증을 시작할 수 없습니다.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">잘못된 인수로 인해 생체 인식 등록을 시작할 수 없습니다.</string>
-    <string name="feature_passcode_biometric_error_unknown">예기치 않은 생체 인식 오류가 발생했습니다. 다시 시도해 주세요.</string>
-    <string name="feature_passcode_biometric_prompt_title">Mifos Pay 잠금 해제</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">계속하려면 본인 확인을 해주세요</string>
-    <string name="feature_passcode_biometric_prompt_description">지문, 얼굴 또는 기기 자격 증명을 사용하세요</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">취소</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">앱 보안 강화</string>

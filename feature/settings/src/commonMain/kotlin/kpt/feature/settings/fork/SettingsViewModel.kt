@@ -24,9 +24,9 @@ import kpt.core.model.client.Client
 import kpt.core.model.fork.user.Language
 import kpt.core.model.fork.user.LanguageConfig
 import kpt.core.model.fork.user.toLanguage
+import kpt.core.ui.fork.biometrics.BiometricErrorMessages
+import kpt.core.ui.fork.biometrics.BiometricPromptStrings
 import kpt.core.ui.fork.utils.BaseViewModel
-import kpt.feature.passcode.BiometricErrorMessages
-import kpt.feature.passcode.BiometricPromptStrings
 import kpt.feature.settings.generated.resources.Res
 import kpt.feature.settings.generated.resources.feature_settings_alert_disable_account
 import kpt.feature.settings.generated.resources.feature_settings_alert_disable_account_desc

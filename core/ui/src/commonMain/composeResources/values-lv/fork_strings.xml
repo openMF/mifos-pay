@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Pārāk daudz mēģinājumu. Lūdzu, uzgaidiet un mēģiniet vēlreiz.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Biometriskā aparatūra ir īslaicīgi nepieejama. Lūdzu, mēģiniet vēlāk.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Šajā ierīcē nav reģistrēta biometrija. Lūdzu, iestatiet biometriju sistēmas iestatījumos.</string>
+    <string name="core_ui_biometric_error_timeout">Biometriskās autentifikācijas laiks beidzās. Lūdzu, mēģiniet vēlreiz.</string>
+    <string name="core_ui_biometric_error_no_space">Nepietiek krātuves biometriskās autentifikācijas pabeigšanai.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Biometriskās reģistrācijas dati nav derīgi. Lūdzu, atkārtoti iespējojiet biometriju lietotnes iestatījumos.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Neizdevās sākt biometrisko autentifikāciju nederīgu argumentu dēļ.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Neizdevās sākt biometrisko reģistrāciju nederīgu argumentu dēļ.</string>
+    <string name="core_ui_biometric_error_unknown">Radās neparedzēta biometriska kļūda. Lūdzu, mēģiniet vēlreiz.</string>
+    <string name="core_ui_biometric_prompt_title">Atbloķēt Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Apstipriniet savu identitāti, lai turpinātu</string>
+    <string name="core_ui_biometric_prompt_description">Izmantojiet pirksta nospiedumu, seju vai ierīces akreditācijas datus</string>
+    <string name="core_ui_biometric_prompt_negative_button">Atcelt</string>
+</resources>

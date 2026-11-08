@@ -1,9 +1,9 @@
 # `feature/autopay/`
 
 > Part of [`feature/`](../feature.md)  
-> **Measured:** 27 tracked files — 25× `.kt`, 1× `.md`, 1× `.kts`
+> **Measured:** 28 tracked files — 26× `.kt`, 1× `.md`, 1× `.kts`
 
-**25 Kotlin files** — 11 screen(s), 11 ViewModel(s).
+**26 Kotlin files** — 11 screen(s), 11 ViewModel(s).
 
 Screens: `AddBillScreen`, `AddBillerScreen`, `AutoPayHistoryScreen`, `AutoPayScheduleDetailsScreen`, `AutoPayScheduleManagementScreen`, `AutoPayScreen`, `AutoPaySettingsScreen`, `BillListScreen`, `BillerListScreen`, `EditBillScreen`, `EditBillerScreen`
 
@@ -22,10 +22,10 @@ ViewModels: `AddBillViewModel`, `AddBillerViewModel`, `AutoPayHistoryViewModel`,
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/autopay sha=c40615fba6dad20f03c1aad48fff8a85855895f9 -->
+<!-- api-docs:begin module=feature/autopay sha=294faf74ea22b793fb4d49733a7b5cee4dbe369e -->
 ## API reference
 
-_Generated from `feature/autopay` at tree `c40615fba6da` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/autopay` at tree `294faf74ea22` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -1170,7 +1170,14 @@ val AutoPayModule = module
 ```
 Koin module that registers the AutoPay feature view models.
 
+### `feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/navigation/AutoPayFeatureGraph.kt`
+
+```kotlin
+fun NavGraphBuilder.autoPayFeatureGraph(navController: NavController)
+```
+The AutoPay feature's destinations.
+
 ---
 
-_49 type(s), 49 function(s)/property(ies); 98 carry KDoc at source; 0 authored example(s); 47 live call site(s)._
+_49 type(s), 50 function(s)/property(ies); 99 carry KDoc at source; 0 authored example(s); 47 live call site(s)._
 <!-- api-docs:end -->

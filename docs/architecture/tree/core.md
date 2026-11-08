@@ -1,17 +1,17 @@
 # `core/`
 
 > **Kind:** Kotlin Multiplatform module group  
-> **Measured:** 860 tracked files — 699× `.kt`, 35× `.md`, 34× `.xml`, 24× `.kts`, 18× `.json`
+> **Measured:** 918 tracked files — 700× `.kt`, 91× `.xml`, 35× `.md`, 24× `.kts`, 18× `.json`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
 | `core/model/` | 163 |
+| `core/ui/` | 145 |
 | `core/data/` | 143 |
 | `core/designsystem/` | 96 |
 | `core/database/` | 87 |
-| `core/ui/` | 87 |
 | `core/network/` | 78 |
 | `core/common/` | 67 |
 | `core/store/` | 67 |
@@ -35,7 +35,7 @@
 | `core:network` | 60 Kotlin files — [guide](core/network.md) |
 | `core:platform` | 2 Kotlin files — [guide](core/platform.md) |
 | `core:store` | 41 Kotlin files — [guide](core/store.md) |
-| `core:ui` | 70 Kotlin files — [guide](core/ui.md) |
+| `core:ui` | 71 Kotlin files — [guide](core/ui.md) |
 
 ## Docs in the tree
 

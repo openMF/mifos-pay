@@ -9,6 +9,7 @@
  */
 package kpt.feature.finance.navigation
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -21,11 +22,11 @@ const val FINANCE_ROUTE = "finance_route"
 /** Navigates to the finance screen using [navOptions]. */
 fun NavController.navigateToFinance(navOptions: NavOptions) = navigate(FINANCE_ROUTE, navOptions)
 
-/** Registers the finance screen in the nav graph, showing the given [tabContents]. */
+/** Registers the finance screen in the nav graph, showing the tabs [tabContents] builds. */
 fun NavGraphBuilder.financeScreen(
-    tabContents: List<TabContent>,
+    tabContents: @Composable () -> List<TabContent>,
 ) {
     composable(route = FINANCE_ROUTE) {
-        FinanceRoute(tabContents = tabContents)
+        FinanceRoute(tabContents = tabContents())
     }
 }

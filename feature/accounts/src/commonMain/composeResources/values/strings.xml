@@ -43,8 +43,6 @@
         is
         registered on MifosPay. \n3. It's sim is on this device.
     </string>
-    <string name="delete_beneficiary_title">Delete Beneficiary</string>
-    <string name="delete_beneficiary_subtitle">Are you sure you want to delete this beneficiary?</string>
 
     <!-- AccountsScreen -->
     <string name="feature_accounts_savings_account">Savings Account</string>
@@ -75,7 +73,6 @@
 
     <!-- Toast messages -->
     <string name="feature_accounts_default_account_updated">Default account updated</string>
-    <string name="feature_accounts_beneficiary_deleted">Beneficiary deleted</string>
     <string name="feature_accounts_beneficiary_added">Beneficiary added</string>
     <string name="feature_accounts_beneficiary_updated">Beneficiary updated</string>
     <string name="feature_accounts_saving_created_successfully">Savings Account Created Successfully</string>

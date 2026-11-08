@@ -15,8 +15,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.data)
-            implementation(projects.coreBase.ui)
-            implementation(projects.coreBase.datastore)
+            implementation(projects.core.datastore)
             // Fork addition: BiometricsSetupScreen reads
             // kpt.core.designsystem.{component,theme}.* (ForkDialogBox/ForkScaffold/ForkTheme).
             // kpt.core.model.client.Client and kpt.core.datastore.UserPreferencesRepository

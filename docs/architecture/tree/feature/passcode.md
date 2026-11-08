@@ -1,9 +1,9 @@
 # `feature/passcode/`
 
 > Part of [`feature/`](../feature.md)  
-> **Measured:** 71 tracked files — 57× `.xml`, 9× `.kt`, 4× `.jpg`, 1× `.kts`
+> **Measured:** 70 tracked files — 57× `.xml`, 8× `.kt`, 4× `.jpg`, 1× `.kts`
 
-**9 Kotlin files** — 2 screen(s), 1 ViewModel(s).
+**8 Kotlin files** — 2 screen(s), 1 ViewModel(s).
 
 Screens: `AppPasscodeScreen`, `BiometricsSetupScreen`
 
@@ -16,10 +16,10 @@ ViewModels: `PasscodeViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/passcode sha=76659cb4b6617402130d4f3931b3ba10c486047e -->
+<!-- api-docs:begin module=feature/passcode sha=5b0fcb45b928505a1f437055b491d17aa448ed21 -->
 ## API reference
 
-_Generated from `feature/passcode` at tree `76659cb4b661` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/passcode` at tree `5b0fcb45b928` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -48,56 +48,6 @@ Mifos Pay-themed wrapper around the library's `PasscodeScreen` that bridges the 
 
 </details>
 
-### `feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricErrorMessages.kt`
-
-```kotlin
-class BiometricErrorMessages(
-```
-Pre-resolved localized strings for each `BiometricError` case, bundled so callers can map errors to strings outside a `@Composable` context — e.g.
-
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:111</code></summary>
-
-```kotlin
-    // them across the viewModelScope.launch boundary via the action constructors
-    // (stringResource() is not callable from inside the suspend launch block).
-    val biometricErrorMessages = rememberBiometricErrorMessages()
-    val biometricPromptStrings = rememberBiometricPromptStrings()
-
-    val navEventState = rememberNavigationEventState(
-        currentInfo = PasscodeCurrentInfo,
-```
-
-</details>
-
-```kotlin
-fun rememberBiometricErrorMessages(): BiometricErrorMessages = BiometricErrorMessages(
-```
-Composable factory for `BiometricErrorMessages` — reads all nine `feature_passcode_biometric_error_*` keys from compose resources at the current locale and bundles them into a single object the ViewModel can carry across `viewModelScope.launch` boundaries.
-
-```kotlin
-data class BiometricPromptStrings(
-```
-Pre-resolved OS-prompt strings passed to `PlatformAuthenticator.registerUser(...)` and `PlatformAuthenticationProvider.onAuthenticatorClick(...)` — the v2.3.0-beta library requires these as caller-supplied parameters.
-
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:112</code></summary>
-
-```kotlin
-    // (stringResource() is not callable from inside the suspend launch block).
-    val biometricErrorMessages = rememberBiometricErrorMessages()
-    val biometricPromptStrings = rememberBiometricPromptStrings()
-
-    val navEventState = rememberNavigationEventState(
-        currentInfo = PasscodeCurrentInfo,
-    )
-```
-
-</details>
-
-```kotlin
-fun rememberBiometricPromptStrings(): BiometricPromptStrings = BiometricPromptStrings(
-```
-Composable factory for `BiometricPromptStrings` — reads the four `feature_passcode_biometric_prompt_*` keys at the current locale.
-
 ### `feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsKey.kt`
 
 ```kotlin
@@ -105,7 +55,7 @@ fun BiometricsKey(
 ```
 Platform-aware biometric unlock button rendered in the `PasscodeScreen`'s `externalAuthButton` slot.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:243</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:245</code></summary>
 
 ```kotlin
         externalAuthButton = if (allowBiometricAuth) {
@@ -159,7 +109,7 @@ class BiometricSetupScreenViewmodel(
 ```
 ViewModel for `BiometricSetupScreen`. Drives the `PlatformAuthenticationProvider.registerUser` call against the platform authenticator.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:77</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:79</code></summary>
 
 ```kotlin
     onBiometricsRegistrationSuccess: () -> Unit,
@@ -178,7 +128,7 @@ data class BiometricSetupScreenState(
 ```
 UI state for `BiometricSetupScreenViewmodel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:126</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:128</code></summary>
 
 ```kotlin
 @Composable
@@ -197,7 +147,7 @@ sealed interface BiometricSetupScreenAction
 ```
 Actions dispatched to `BiometricSetupScreenViewmodel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:107</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:109</code></summary>
 
 ```kotlin
         onSetupBiometrics = {
@@ -216,7 +166,7 @@ sealed interface BiometricSetupScreenEvent
 ```
 One-shot navigation events emitted by `BiometricSetupScreenViewmodel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:98</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreen.kt:100</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -290,7 +240,7 @@ class PasscodeViewModel(
 ```
 ViewModel for `AppPasscodeScreen`. Owns the glue between: - `PasscodeManager` (passcode library) — provides step/state and emits `PasscodeResult`s on creation, verify, change, forget.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:98</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:100</code></summary>
 
 ```kotlin
     allowBackNavigation: Boolean = false,
@@ -313,7 +263,7 @@ sealed interface PasscodeDialogState
 ```
 Dialog variants surfaced by `PasscodeViewModel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:176</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:178</code></summary>
 
 ```kotlin
         onConfirm = {
@@ -332,7 +282,7 @@ sealed interface PasscodeAction
 ```
 Actions dispatched to `PasscodeViewModel`.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:149</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:151</code></summary>
 
 ```kotlin
             when (event) {
@@ -351,7 +301,7 @@ sealed interface PasscodeEvent
 ```
 One-shot events emitted by `PasscodeViewModel` to the screen.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:132</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:134</code></summary>
 
 ```kotlin
         viewModel.eventFlow.collect { event ->
@@ -367,5 +317,5 @@ One-shot events emitted by `PasscodeViewModel` to the screen.
 
 ---
 
-_14 type(s), 14 function(s)/property(ies); 28 carry KDoc at source; 0 authored example(s); 13 live call site(s)._
+_12 type(s), 12 function(s)/property(ies); 24 carry KDoc at source; 0 authored example(s); 11 live call site(s)._
 <!-- api-docs:end -->

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Terlalu banyak percobaan. Silakan tunggu dan coba lagi.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Perangkat keras biometrik untuk sementara tidak tersedia. Silakan coba lagi nanti.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Tidak ada biometrik yang terdaftar di perangkat ini. Silakan siapkan biometrik di pengaturan sistem.</string>
+    <string name="core_ui_biometric_error_timeout">Autentikasi biometrik habis waktu. Silakan coba lagi.</string>
+    <string name="core_ui_biometric_error_no_space">Penyimpanan tidak cukup untuk menyelesaikan autentikasi biometrik.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Data pendaftaran biometrik tidak valid. Silakan aktifkan kembali biometrik dari pengaturan aplikasi.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Tidak dapat memulai autentikasi biometrik karena argumen tidak valid.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Tidak dapat memulai pendaftaran biometrik karena argumen tidak valid.</string>
+    <string name="core_ui_biometric_error_unknown">Terjadi kesalahan biometrik yang tidak terduga. Silakan coba lagi.</string>
+    <string name="core_ui_biometric_prompt_title">Buka kunci Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Verifikasi identitas Anda untuk melanjutkan</string>
+    <string name="core_ui_biometric_prompt_description">Gunakan sidik jari, wajah, atau kredensial perangkat Anda</string>
+    <string name="core_ui_biometric_prompt_negative_button">Batal</string>
+</resources>

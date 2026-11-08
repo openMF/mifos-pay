@@ -22,10 +22,10 @@ ViewModels: `ReceiptViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/receipt sha=727587b709e8ac85d37f14b6c7309fe853d6b46c -->
+<!-- api-docs:begin module=feature/receipt sha=117d20cd53d51bb06740858e3a726752af3ac48a -->
 ## API reference
 
-_Generated from `feature/receipt` at tree `727587b709e8` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/receipt` at tree `117d20cd53d5` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -129,7 +129,12 @@ fun NavController.navigateToReceipt(transferId: Long)
 ```
 Navigates to the receipt screen for the transfer identified by `transferId`.
 
+```kotlin
+fun NavGraphBuilder.receiptGraph(navController: NavController)
+```
+The receipt feature's destinations.
+
 ---
 
-_4 type(s), 3 function(s)/property(ies); 7 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
+_4 type(s), 4 function(s)/property(ies); 8 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
 <!-- api-docs:end -->

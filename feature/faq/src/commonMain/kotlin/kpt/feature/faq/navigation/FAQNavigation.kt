@@ -12,6 +12,7 @@ package kpt.feature.faq.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import kpt.core.base.ui.nav.FeatureDestination
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.faq.FaqScreenRoute
 /** Navigation route of the FAQ screen. */
@@ -31,4 +32,10 @@ fun NavGraphBuilder.faqScreen(
             navigateBack = navigateBack,
         )
     }
+}
+
+/** The FAQ feature's destinations. */
+@FeatureDestination
+fun NavGraphBuilder.faqGraph(navController: NavController) {
+    faqScreen(navigateBack = navController::navigateUp)
 }

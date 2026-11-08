@@ -9,8 +9,8 @@
  */
 package kpt.feature.history.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import kpt.core.ui.composableWithSlideTransitions
@@ -42,6 +42,6 @@ fun NavGraphBuilder.transactionDetailNavigation(
 }
 
 /** Navigates to the detail screen of the transfer with [transferId]. */
-fun NavHostController.navigateToTransactionDetail(transferId: Long) {
+fun NavController.navigateToTransactionDetail(transferId: Long) {
     navigate("$TRANSACTION_DETAIL_ROUTE&$TRANSFER_ID=$transferId")
 }

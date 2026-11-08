@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">बरेच प्रयत्न। कृपया प्रतीक्षा करा आणि पुन्हा प्रयत्न करा।</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">बायोमेट्रिक हार्डवेअर तात्पुरते उपलब्ध नाही। कृपया नंतर पुन्हा प्रयत्न करा।</string>
+    <string name="core_ui_biometric_error_not_enrolled">या डिव्हाइसवर कोणतेही बायोमेट्रिक नोंदणीकृत नाही। कृपया सिस्टम सेटिंग्जमध्ये बायोमेट्रिक्स सेट करा।</string>
+    <string name="core_ui_biometric_error_timeout">बायोमेट्रिक प्रमाणीकरणाची वेळ संपली। कृपया पुन्हा प्रयत्न करा।</string>
+    <string name="core_ui_biometric_error_no_space">बायोमेट्रिक प्रमाणीकरण पूर्ण करण्यासाठी पुरेशी जागा नाही।</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">बायोमेट्रिक नोंदणी डेटा अवैध आहे। कृपया अॅप सेटिंग्जमधून बायोमेट्रिक्स पुन्हा सक्षम करा।</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">अवैध आर्ग्युमेंट्समुळे बायोमेट्रिक प्रमाणीकरण सुरू होऊ शकले नाही।</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">अवैध आर्ग्युमेंट्समुळे बायोमेट्रिक नोंदणी सुरू होऊ शकली नाही।</string>
+    <string name="core_ui_biometric_error_unknown">एक अनपेक्षित बायोमेट्रिक त्रुटी आली। कृपया पुन्हा प्रयत्न करा।</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay अनलॉक करा</string>
+    <string name="core_ui_biometric_prompt_subtitle">सुरू ठेवण्यासाठी तुमची ओळख सत्यापित करा</string>
+    <string name="core_ui_biometric_prompt_description">तुमच्या बोटाचा ठसा, चेहरा, किंवा डिव्हाइस क्रेडेन्शियल वापरा</string>
+    <string name="core_ui_biometric_prompt_negative_button">रद्द करा</string>
+</resources>

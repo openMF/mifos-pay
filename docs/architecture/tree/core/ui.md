@@ -2,13 +2,13 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_UI.md`
-> **Measured:** 70 Kotlin files, 0 test files
+> **Measured:** 71 Kotlin files, 0 test files
 
 **Defines annotations:** `@DevicePreviews`, `@FeatureTab`
 
 ## Principal types
 
-`AuthenticationUtils`, `BackgroundEvent`, `BaseViewModel`, `DevicePreviews`, `DialogState`, `DialogType`, `ErrorMessageProviderImpl`, `ErrorType`, `FeatureTab`, `FloatingActionButtonContent`, `InfoType`, `KptPullToRefreshState`, `LottieConstants`, `MimeType`  …and 17 more
+`AuthenticationUtils`, `BackgroundEvent`, `BaseViewModel`, `BiometricErrorMessages`, `BiometricPromptStrings`, `DevicePreviews`, `DialogState`, `DialogType`, `ErrorMessageProviderImpl`, `ErrorType`, `FeatureTab`, `FloatingActionButtonContent`, `InfoType`, `KptPullToRefreshState`  …and 19 more
 
 <!-- scaffold:end -->
 
@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/ui sha=d5c3d7038bf0aa0d0200406b3a24ae0640e654b3 -->
+<!-- api-docs:begin module=core/ui sha=5119b1dacda958317acb4b489db0d572ed7ee331 -->
 ## API reference
 
-_Generated from `core/ui` at tree `d5c3d7038bf0` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/ui` at tree `5119b1dacda9` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/AmountEditText.kt`
@@ -50,7 +50,7 @@ fun AvatarBox(
 ```
 Circular avatar showing the initials of `name`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:373</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:356</code></summary>
 
 ```kotlin
                 },
@@ -69,7 +69,7 @@ fun AvatarBox(
 ```
 Circular avatar showing an `icon`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:373</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:356</code></summary>
 
 ```kotlin
                 },
@@ -170,7 +170,7 @@ fun EmptyContentScreen(
 ```
 Empty-state screen with title, subtitle and a caller-provided image.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:177</code></summary>
 
 ```kotlin
 
@@ -189,7 +189,7 @@ fun EmptyContentScreen(
 ```
 Empty-state screen with title, subtitle, an image and an action button with icon.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:177</code></summary>
 
 ```kotlin
 
@@ -208,7 +208,7 @@ fun EmptyContentScreen(
 ```
 Empty-state screen with title, subtitle and a drawable-resource image.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:177</code></summary>
 
 ```kotlin
 
@@ -227,7 +227,7 @@ fun EmptyContentScreen(
 ```
 Empty-state screen with title, subtitle and a default artwork drawable.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:177</code></summary>
 
 ```kotlin
 
@@ -246,7 +246,7 @@ fun EmptyContentScreen(
 ```
 Empty-state screen with title, subtitle, an image-vector icon and an action button.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:194</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:177</code></summary>
 
 ```kotlin
 
@@ -489,7 +489,7 @@ fun ForkProgressIndicator(
 ```
 Full-size Lottie loading animation.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:191</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:174</code></summary>
 
 ```kotlin
         ) {
@@ -598,7 +598,7 @@ fun ForkSmallChip(
 ```
 Small non-interactive chip showing a `label`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:501</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:454</code></summary>
 
 ```kotlin
 @Composable
@@ -852,7 +852,7 @@ fun RevealSwipe(
 ```
 Swipeable card that reveals a background action layer behind the foreground content.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:298</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:281</code></summary>
 
 ```kotlin
     )
@@ -890,7 +890,7 @@ enum class RevealDirection
 ```
 Directions in which a `RevealSwipe` can be swiped open.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:295</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:278</code></summary>
 
 ```kotlin
     val state = rememberRevealState(
@@ -933,7 +933,7 @@ data class RevealState(
 ```
 Anchored-draggable state of a `RevealSwipe`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:293</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:276</code></summary>
 
 ```kotlin
     onClickViewAccount: (Long) -> Unit,
@@ -1111,6 +1111,56 @@ One item in `KptNavigationRail`.
 
 </details>
 
+### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/biometrics/BiometricErrorMessages.kt`
+
+```kotlin
+class BiometricErrorMessages(
+```
+Pre-resolved localized strings for each `BiometricError` case, bundled so callers can map errors to strings outside a `@Composable` context — e.g.
+
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:113</code></summary>
+
+```kotlin
+    // them across the viewModelScope.launch boundary via the action constructors
+    // (stringResource() is not callable from inside the suspend launch block).
+    val biometricErrorMessages = rememberBiometricErrorMessages()
+    val biometricPromptStrings = rememberBiometricPromptStrings()
+
+    val navEventState = rememberNavigationEventState(
+        currentInfo = PasscodeCurrentInfo,
+```
+
+</details>
+
+```kotlin
+fun rememberBiometricErrorMessages(): BiometricErrorMessages = BiometricErrorMessages(
+```
+Composable factory for `BiometricErrorMessages` — reads all nine `core_ui_biometric_error_*` keys from compose resources at the current locale and bundles them into a single object the ViewModel can carry across `viewModelScope.launch` boundaries.
+
+```kotlin
+data class BiometricPromptStrings(
+```
+Pre-resolved OS-prompt strings passed to `PlatformAuthenticator.registerUser(...)` and `PlatformAuthenticationProvider.onAuthenticatorClick(...)` — the v2.3.0-beta library requires these as caller-supplied parameters.
+
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/AppPasscodeScreen.kt:114</code></summary>
+
+```kotlin
+    // (stringResource() is not callable from inside the suspend launch block).
+    val biometricErrorMessages = rememberBiometricErrorMessages()
+    val biometricPromptStrings = rememberBiometricPromptStrings()
+
+    val navEventState = rememberNavigationEventState(
+        currentInfo = PasscodeCurrentInfo,
+    )
+```
+
+</details>
+
+```kotlin
+fun rememberBiometricPromptStrings(): BiometricPromptStrings = BiometricPromptStrings(
+```
+Composable factory for `BiometricPromptStrings` — reads the four `core_ui_biometric_prompt_*` keys at the current locale.
+
 ### `core/ui/src/commonMain/kotlin/kpt/core/ui/fork/utils/AuthenticationUtils.kt`
 
 ```kotlin
@@ -1118,7 +1168,7 @@ object AuthenticationUtils
 ```
 Default placeholder identity values used for the signed-in user.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreenViewmodel.kt:75</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/BiometricsSetupScreenViewmodel.kt:77</code></summary>
 
 ```kotlin
             val client = mutableStateFlow.value.client
@@ -1164,11 +1214,11 @@ abstract class BaseViewModel<S, E, A>(
 ```
 A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:52</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:38</code></summary>
 
 ```kotlin
+    private val userRepository: ForkPreferencesRepository,
     private val repository: SelfServiceRepository,
-    private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
         /** Client id read from user preferences when the view model is created. */
@@ -1189,7 +1239,7 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:105</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -1208,7 +1258,7 @@ fun <E> EventsEffect(
 ```
 `EventsEffect` over a bare event flow — pass `viewModel.eventFlow` rather than the view model, so a screen does not forward its view model into another composable.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:105</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -1668,7 +1718,7 @@ fun RevealSwipe(
 ```
 Swipe-to-reveal row: drag aside to expose actions (delete, archive) behind the content. The revealed actions must ALSO be reachable another way — a swipe is invisible to a screen reader and unavailable to keyboard or pointer users.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:298</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:281</code></summary>
 
 ```kotlin
     )
@@ -1706,7 +1756,7 @@ enum class RevealDirection
 ```
 Which side(s) a row may be dragged toward to reveal its actions.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:295</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:278</code></summary>
 
 ```kotlin
     val state = rememberRevealState(
@@ -1749,7 +1799,7 @@ data class RevealState(
 ```
 Current offset and reveal state of one `RevealSwipe` row; hoist it to reset a row programmatically.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:293</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:276</code></summary>
 
 ```kotlin
     onClickViewAccount: (Long) -> Unit,
@@ -1968,16 +2018,16 @@ data class DialogState(
 ```
 State of a confirmation dialog.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:141</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:133</code></summary>
 
 ```kotlin
-                    is SubmitState.Submitting -> {
-                        mutableStateFlow.update {
-                            it.copy(dialogState = AccountState.DialogState.Loading)
-                        }
-                    }
-
-                    is SubmitState.Submitted -> {
+@Composable
+private fun SavingAccountDialogs(
+    dialogState: AESState.DialogState?,
+    onDismissRequest: () -> Unit,
+) {
+    when (dialogState) {
+        is AESState.DialogState.Error.StringMessage -> ForkBasicDialog(
 ```
 
 </details>
@@ -2110,5 +2160,5 @@ Converts the given `PasswordStrength` to an `Int`.
 
 ---
 
-_41 type(s), 160 function(s)/property(ies); 173 carry KDoc at source; 3 authored example(s); 87 live call site(s)._
+_43 type(s), 162 function(s)/property(ies); 177 carry KDoc at source; 3 authored example(s); 89 live call site(s)._
 <!-- api-docs:end -->

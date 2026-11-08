@@ -1,32 +1,32 @@
 # `feature/`
 
 > **Kind:** Kotlin Multiplatform module group  
-> **Measured:** 767 tracked files — 419× `.kt`, 239× `.xml`, 29× `.kts`, 25× `.md`, 24× `.png`
+> **Measured:** 770 tracked files — 422× `.kt`, 239× `.xml`, 29× `.kts`, 25× `.md`, 24× `.png`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
 | `feature/send-money/` | 76 |
-| `feature/passcode/` | 71 |
+| `feature/passcode/` | 70 |
 | `feature/mpay-qr-scan/` | 55 |
 | `feature/settings/` | 51 |
 | `feature/onboarding/` | 41 |
-| `feature/savedcards/` | 34 |
+| `feature/savedcards/` | 35 |
 | `feature/history/` | 31 |
 | `feature/auth/` | 30 |
+| `feature/autopay/` | 28 |
 | `feature/transfer-intrabank/` | 28 |
 | `feature/accounts/` | 27 |
-| `feature/autopay/` | 27 |
 | `feature/mpay-qr/` | 26 |
 | `feature/home/` | 25 |
 | `feature/payments/` | 21 |
 | `feature/profile/` | 21 |
 | `feature/kyc/` | 20 |
 | `feature/pocket/` | 19 |
+| `feature/standing-instruction/` | 19 |
 | `feature/faq/` | 18 |
-| `feature/standing-instruction/` | 18 |
-| `feature/notification/` | 17 |
+| `feature/notification/` | 18 |
 | `feature/upi-setup/` | 16 |
 | `feature/invoices/` | 15 |
 | `feature/merchants/` | 14 |
@@ -44,7 +44,7 @@
 |---|---|
 | `feature:accounts` | 10 Kotlin files — [guide](feature/accounts.md) |
 | `feature:auth` | 15 Kotlin files — [guide](feature/auth.md) |
-| `feature:autopay` | 25 Kotlin files — [guide](feature/autopay.md) |
+| `feature:autopay` | 26 Kotlin files — [guide](feature/autopay.md) |
 | `feature:beneficiary` | 9 Kotlin files — [guide](feature/beneficiary.md) |
 | `feature:editpassword` | 4 Kotlin files — [guide](feature/editpassword.md) |
 | `feature:faq` | 5 Kotlin files — [guide](feature/faq.md) |
@@ -57,14 +57,14 @@
 | `feature:merchants` | 7 Kotlin files — [guide](feature/merchants.md) |
 | `feature:mpay-qr` | 12 Kotlin files — [guide](feature/mpay-qr.md) |
 | `feature:mpay-qr-scan` | 51 Kotlin files — [guide](feature/mpay-qr-scan.md) |
-| `feature:notification` | 4 Kotlin files — [guide](feature/notification.md) |
+| `feature:notification` | 5 Kotlin files — [guide](feature/notification.md) |
 | `feature:onboarding` | 9 Kotlin files — [guide](feature/onboarding.md) |
-| `feature:passcode` | 9 Kotlin files — [guide](feature/passcode.md) |
+| `feature:passcode` | 8 Kotlin files — [guide](feature/passcode.md) |
 | `feature:payments` | 7 Kotlin files — [guide](feature/payments.md) |
 | `feature:pocket` | 14 Kotlin files — [guide](feature/pocket.md) |
 | `feature:profile` | 13 Kotlin files — [guide](feature/profile.md) |
 | `feature:receipt` | 4 Kotlin files — [guide](feature/receipt.md) |
-| `feature:savedcards` | 15 Kotlin files — [guide](feature/savedcards.md) |
+| `feature:savedcards` | 16 Kotlin files — [guide](feature/savedcards.md) |
 | `feature:send-money` | 74 Kotlin files — [guide](feature/send-money.md) |
 
 ## Subsections
@@ -73,7 +73,7 @@
 |---|---:|---|
 | `feature/accounts/` | 27 | [accounts](feature/accounts.md) |
 | `feature/auth/` | 30 | [auth](feature/auth.md) |
-| `feature/autopay/` | 27 | [autopay](feature/autopay.md) |
+| `feature/autopay/` | 28 | [autopay](feature/autopay.md) |
 | `feature/beneficiary/` | 12 | [beneficiary](feature/beneficiary.md) |
 | `feature/editpassword/` | 10 | [editpassword](feature/editpassword.md) |
 | `feature/faq/` | 18 | [faq](feature/faq.md) |
@@ -86,17 +86,17 @@
 | `feature/merchants/` | 14 | [merchants](feature/merchants.md) |
 | `feature/mpay-qr/` | 26 | [mpay-qr](feature/mpay-qr.md) |
 | `feature/mpay-qr-scan/` | 55 | [mpay-qr-scan](feature/mpay-qr-scan.md) |
-| `feature/notification/` | 17 | [notification](feature/notification.md) |
+| `feature/notification/` | 18 | [notification](feature/notification.md) |
 | `feature/onboarding/` | 41 | [onboarding](feature/onboarding.md) |
-| `feature/passcode/` | 71 | [passcode](feature/passcode.md) |
+| `feature/passcode/` | 70 | [passcode](feature/passcode.md) |
 | `feature/payments/` | 21 | [payments](feature/payments.md) |
 | `feature/pocket/` | 19 | [pocket](feature/pocket.md) |
 | `feature/profile/` | 21 | [profile](feature/profile.md) |
 | `feature/receipt/` | 11 | [receipt](feature/receipt.md) |
-| `feature/savedcards/` | 34 | [savedcards](feature/savedcards.md) |
+| `feature/savedcards/` | 35 | [savedcards](feature/savedcards.md) |
 | `feature/send-money/` | 76 | [send-money](feature/send-money.md) |
 | `feature/settings/` | 51 | [settings](feature/settings.md) |
-| `feature/standing-instruction/` | 18 | [standing-instruction](feature/standing-instruction.md) |
+| `feature/standing-instruction/` | 19 | [standing-instruction](feature/standing-instruction.md) |
 | `feature/transfer-interbank/` | 14 | [transfer-interbank](feature/transfer-interbank.md) |
 | `feature/transfer-intrabank/` | 28 | [transfer-intrabank](feature/transfer-intrabank.md) |
 | `feature/upi-setup/` | 16 | [upi-setup](feature/upi-setup.md) |

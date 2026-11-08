@@ -22,10 +22,10 @@ ViewModels: `InvoiceDetailViewModel`, `InvoicesViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/invoices sha=ee4c799da7becebbbe0ae7859d0b8269e55120c8 -->
+<!-- api-docs:begin module=feature/invoices sha=97311be5d41ea67b0ea88acf46faf2e7dfcf7dd5 -->
 ## API reference
 
-_Generated from `feature/invoices` at tree `ee4c799da7be` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/invoices` at tree `97311be5d41e` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -123,7 +123,12 @@ fun NavGraphBuilder.invoiceDetailScreen(
 ```
 Registers the invoice detail destination, which takes the invoice id as a long argument.
 
+```kotlin
+fun NavGraphBuilder.invoicesGraph(navController: NavController)
+```
+The invoices feature's destinations.
+
 ---
 
-_4 type(s), 4 function(s)/property(ies); 8 carry KDoc at source; 0 authored example(s); 3 live call site(s)._
+_4 type(s), 5 function(s)/property(ies); 9 carry KDoc at source; 0 authored example(s); 3 live call site(s)._
 <!-- api-docs:end -->

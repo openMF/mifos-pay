@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Túl sok próbálkozás. Várjon és próbálja újra.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">A biometrikus hardver ideiglenesen nem érhető el. Próbálja meg később.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Ezen az eszközön nincs regisztrált biometria. Állítsa be a biometriát a rendszerbeállításokban.</string>
+    <string name="core_ui_biometric_error_timeout">A biometrikus hitelesítés lejárt. Próbálja újra.</string>
+    <string name="core_ui_biometric_error_no_space">Nincs elég tárhely a biometrikus hitelesítés befejezéséhez.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">A biometrikus regisztrációs adatok érvénytelenek. Engedélyezze újra a biometriát az alkalmazás beállításaiban.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">A biometrikus hitelesítés érvénytelen argumentumok miatt nem indítható.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">A biometrikus regisztráció érvénytelen argumentumok miatt nem indítható.</string>
+    <string name="core_ui_biometric_error_unknown">Váratlan biometrikus hiba történt. Próbálja újra.</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay feloldása</string>
+    <string name="core_ui_biometric_prompt_subtitle">A folytatáshoz igazolja személyazonosságát</string>
+    <string name="core_ui_biometric_prompt_description">Használja ujjlenyomatát, arcát vagy eszközhitelesítőjét</string>
+    <string name="core_ui_biometric_prompt_negative_button">Mégse</string>
+</resources>

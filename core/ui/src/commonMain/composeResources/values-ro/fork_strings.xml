@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Prea multe încercări. Așteptați și încercați din nou.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Hardware-ul biometric este temporar indisponibil. Încercați din nou mai târziu.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Pe acest dispozitiv nu este înregistrată nicio biometrie. Configurați biometria în setările sistemului.</string>
+    <string name="core_ui_biometric_error_timeout">Autentificarea biometrică a expirat. Încercați din nou.</string>
+    <string name="core_ui_biometric_error_no_space">Spațiu de stocare insuficient pentru a finaliza autentificarea biometrică.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Datele de înregistrare biometrică sunt invalide. Reactivați biometria din setările aplicației.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Autentificarea biometrică nu a putut fi pornită din cauza argumentelor invalide.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Înregistrarea biometrică nu a putut fi pornită din cauza argumentelor invalide.</string>
+    <string name="core_ui_biometric_error_unknown">A apărut o eroare biometrică neașteptată. Încercați din nou.</string>
+    <string name="core_ui_biometric_prompt_title">Deblocați Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Verificați-vă identitatea pentru a continua</string>
+    <string name="core_ui_biometric_prompt_description">Folosiți amprenta, fața sau acreditările dispozitivului</string>
+    <string name="core_ui_biometric_prompt_negative_button">Anulați</string>
+</resources>

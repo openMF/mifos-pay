@@ -69,10 +69,10 @@ class CMPFeatureConventionPlugin : Plugin<Project> {
                 add("desktopTestImplementation", libs.findLibrary("composablePreviewScanner-common").get())
                 add("desktopTestImplementation", libs.findLibrary("composablePreviewScanner-jvm").get())
 
+                // core:ui and core:designsystem re-export core-base:ui and core-base:designsystem (`api`);
+                // a feature never depends on core-base directly.
                 add("commonMainImplementation", project(":core:ui"))
-                add("commonMainImplementation", project(":core-base:ui"))
                 add("commonMainImplementation", project(":core:designsystem"))
-                add("commonMainImplementation", project(":core-base:designsystem"))
                 add("commonMainImplementation", project(":core:data"))
                 add("commonMainImplementation", project(":core:firebase"))
 

@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">For mange forsøg. Vent venligst og prøv igen.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Biometrisk hardware er midlertidigt utilgængelig. Prøv venligst igen senere.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Ingen biometri er registreret på denne enhed. Konfigurer venligst biometri i systemindstillingerne.</string>
-    <string name="feature_passcode_biometric_error_timeout">Biometrisk godkendelse udløb. Prøv venligst igen.</string>
-    <string name="feature_passcode_biometric_error_no_space">Ikke nok lagerplads til at fuldføre biometrisk godkendelse.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Biometriske registreringsdata er ugyldige. Genaktiver venligst biometri fra app-indstillingerne.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Kunne ikke starte biometrisk godkendelse på grund af ugyldige argumenter.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Kunne ikke starte biometrisk registrering på grund af ugyldige argumenter.</string>
-    <string name="feature_passcode_biometric_error_unknown">Der opstod en uventet biometrisk fejl. Prøv venligst igen.</string>
-    <string name="feature_passcode_biometric_prompt_title">Lås Mifos Pay op</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Bekræft din identitet for at fortsætte</string>
-    <string name="feature_passcode_biometric_prompt_description">Brug dit fingeraftryk, ansigt eller enhedsoplysninger</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Annuller</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Beskyt din app</string>

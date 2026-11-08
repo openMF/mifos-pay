@@ -20,10 +20,10 @@ ViewModels: `MerchantTransferViewModel`, `MerchantViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/merchants sha=01a3edfa70f0b191a261a9ad0facf2d6d6d00de7 -->
+<!-- api-docs:begin module=feature/merchants sha=ff69521f010048a7cee74d8da1ddd2a7c888cb62 -->
 ## API reference
 
-_Generated from `feature/merchants` at tree `01a3edfa70f0` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/merchants` at tree `ff69521f0100` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -150,6 +150,11 @@ fun NavController.navigateToMerchantTransferScreen(
 ```
 Navigates to the transfer screen for the given merchant name, VPA and account number.
 
+```kotlin
+fun NavGraphBuilder.merchantsGraph(navController: NavController)
+```
+The merchants feature's destinations.
+
 ### `feature/merchants/src/commonMain/kotlin/kpt/feature/merchants/ui/MerchantScreen.kt`
 
 ```kotlin
@@ -164,5 +169,5 @@ Sample merchant list used for previews.
 
 ---
 
-_9 type(s), 5 function(s)/property(ies); 14 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
+_9 type(s), 6 function(s)/property(ies); 15 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
 <!-- api-docs:end -->

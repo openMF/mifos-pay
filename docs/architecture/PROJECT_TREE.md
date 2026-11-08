@@ -18,13 +18,13 @@
 
 | Area | Files | Page |
 |---|---:|---|
-| `feature/` | 767 | [`feature/`](tree/feature.md) |
+| `feature/` | 770 | [`feature/`](tree/feature.md) |
 
 ## Core layers
 
 | Area | Files | Page |
 |---|---:|---|
-| `core/` | 860 | [`core/`](tree/core.md) |
+| `core/` | 918 | [`core/`](tree/core.md) |
 | `core-base/` | 510 | [`core-base/`](tree/core-base.md) |
 
 ## Codegen

@@ -22,10 +22,10 @@ ViewModels: `AccountViewModel`, `AddEditSavingViewModel`, `SavingAccountDetailVi
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/accounts sha=5b9766c77f1f015cc662ee2dadd8bb4474a97273 -->
+<!-- api-docs:begin module=feature/accounts sha=06c6f9a21ff389aa919d399f9e8df9b89db1b28e -->
 ## API reference
 
-_Generated from `feature/accounts` at tree `5b9766c77f1f` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/accounts` at tree `06c6f9a21ff3` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -38,9 +38,9 @@ rather than re-declaring what they already own.
 ```kotlin
 class AccountViewModel(
 ```
-Loads the user's savings accounts and beneficiaries, and handles default-account, beneficiary and navigation actions.
+Loads the user's savings accounts and handles default-account and navigation actions.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:103</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:97</code></summary>
 
 ```kotlin
     onApplyForLoanClick: (Long) -> Unit,
@@ -58,7 +58,7 @@ data class AccountState(
 ```
 UI state of the accounts screen.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:156</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:139</code></summary>
 
 ```kotlin
 internal fun AccountsScreenContent(
@@ -77,7 +77,7 @@ sealed interface AccountEvent
 ```
 One-off events emitted by the accounts screen.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:113</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:107</code></summary>
 
 ```kotlin
     EventsEffect(viewModel) { event ->
@@ -99,13 +99,13 @@ Actions the accounts screen can send to its view model.
 <details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:140</code></summary>
 
 ```kotlin
-        dialogState = state.dialogState,
-        onDismissRequest = remember(viewModel) {
-            { viewModel.trySendAction(AccountAction.DismissDialog) }
-        },
-    )
-
-    AccountsScreenContent(
+    defaultAccountId: Long?,
+    state: AccountState.ViewState,
+    onAction: (AccountAction) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier,
+) {
+    ForkScaffold(
 ```
 
 </details>
@@ -115,7 +115,7 @@ Actions the accounts screen can send to its view model.
 ```kotlin
 fun AccountsScreen(
 ```
-Screen listing the user's savings accounts and beneficiaries with add, edit and detail actions.
+Screen listing the user's savings accounts with add, edit and detail actions.
 
 ```kotlin
 enum class SavingAccountStatus(
@@ -186,7 +186,7 @@ sealed class SavingsAddEditType
 ```
 Whether the savings account form creates a new account or edits an existing one.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:170</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:112</code></summary>
 
 ```kotlin
         when (action) {

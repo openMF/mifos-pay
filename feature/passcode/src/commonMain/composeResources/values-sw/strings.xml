@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Majaribio mengi sana. Tafadhali subiri na ujaribu tena.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Vifaa vya bayometriki kwa muda havipatikani. Tafadhali jaribu tena baadaye.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Hakuna bayometriki iliyosajiliwa kwenye kifaa hiki. Tafadhali sanidi bayometriki katika mipangilio ya mfumo.</string>
-    <string name="feature_passcode_biometric_error_timeout">Muda wa uthibitishaji wa bayometriki umekwisha. Tafadhali jaribu tena.</string>
-    <string name="feature_passcode_biometric_error_no_space">Hakuna nafasi ya kutosha kukamilisha uthibitishaji wa bayometriki.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Data ya usajili wa bayometriki si halali. Tafadhali wezesha tena bayometriki kutoka mipangilio ya programu.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Haikuweza kuanzisha uthibitishaji wa bayometriki kwa sababu ya hoja batili.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Haikuweza kuanzisha usajili wa bayometriki kwa sababu ya hoja batili.</string>
-    <string name="feature_passcode_biometric_error_unknown">Hitilafu ya bayometriki isiyotarajiwa imetokea. Tafadhali jaribu tena.</string>
-    <string name="feature_passcode_biometric_prompt_title">Fungua Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Thibitisha utambulisho wako ili kuendelea</string>
-    <string name="feature_passcode_biometric_prompt_description">Tumia alama ya kidole, uso, au kitambulisho cha kifaa chako</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Ghairi</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Linda Programu yako</string>

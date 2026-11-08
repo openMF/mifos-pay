@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core-base/ui sha=401a8d9b378807f018895a5926c5a38863e1701c -->
+<!-- api-docs:begin module=core-base/ui sha=7c2b5e951e7802d88367a27ad7f037e5fc58b72b -->
 ## API reference
 
-_Generated from `core-base/ui` at tree `401a8d9b3788` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core-base/ui` at tree `7c2b5e951e78` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **framework-shared and read-only to generators** (D9). Everything below is
@@ -177,7 +177,7 @@ IndependentCardLayout(states = cards, onRetry = vm::onRetryCard) { i, content ->
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -196,16 +196,15 @@ fun List<ScreenState<*>>.toDashboardProgressState(): DashboardProgressState =
 ```
 Pure conversion from a list of per-card states to a single `DashboardProgressState`. Exposed so tests + non-Flow call sites can re-use the aggregation contract.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:97</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:82</code></summary>
 
 ```kotlin
+                    // (screen still shows the FAB + empty-state copy; no
                     // dedicated Empty ViewState variant exists here).
-                    AccountState.ViewState.Content(
-                        accounts = emptyList(),
-                        beneficiaries = emptyList(),
-                    )
+                    AccountState.ViewState.Content(accounts = emptyList())
 
                 is ScreenState.NoNetwork ->
+                    AccountState.ViewState.Error("No network connection")
 ```
 
 </details>
@@ -316,7 +315,7 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:105</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -335,7 +334,7 @@ fun <E> EventsEffect(
 ```
 Convenience method for observing event flow from `BaseViewModel`. By default, events will only be consumed when the associated screen is resumed, to avoid bugs like duplicate navigation calls.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:111</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:105</code></summary>
 
 ```kotlin
     val accountState by viewModel.accountState.collectAsStateWithLifecycle()
@@ -531,6 +530,19 @@ Shared-axis-X enter/exit factories, per Material Motion. Use for **forward/back 
 public annotation class FeatureDestination
 ```
 Marks a `NavGraphBuilder` extension as a TOP-LEVEL feature destination — one the app shell registers directly on the authenticated graph.
+
+<details><summary>Used in the template — <code>feature/autopay/src/commonMain/kotlin/kpt/feature/autopay/navigation/AutoPayFeatureGraph.kt:18</code></summary>
+
+```kotlin
+
+/** The AutoPay feature's destinations. */
+@FeatureDestination
+fun NavGraphBuilder.autoPayFeatureGraph(navController: NavController) {
+    autoPayGraph(navController)
+}
+```
+
+</details>
 
 ### `core-base/ui/src/commonMain/kotlin/kpt/core/base/ui/nav/SafeNavController.kt`
 
@@ -1813,11 +1825,11 @@ abstract class BaseViewModel<S, E, A>(
 ```
 A base `ViewModel` that helps enforce the unidirectional data flow pattern and associated responsibilities of a typical ViewModel: - Maintaining and emitting a current state (of type `S`) with the given `initialState`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:52</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:38</code></summary>
 
 ```kotlin
+    private val userRepository: ForkPreferencesRepository,
     private val repository: SelfServiceRepository,
-    private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
         /** Client id read from user preferences when the view model is created. */
@@ -1874,5 +1886,5 @@ abstract class BaseMutationViewModel<T, R>(
 
 ---
 
-_27 type(s), 147 function(s)/property(ies); 169 carry KDoc at source; 32 authored example(s); 52 live call site(s)._
+_27 type(s), 147 function(s)/property(ies); 169 carry KDoc at source; 32 authored example(s); 53 live call site(s)._
 <!-- api-docs:end -->

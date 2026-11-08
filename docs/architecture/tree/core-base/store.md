@@ -1190,7 +1190,7 @@ sealed interface ScreenState<out T>
 ```
 Unified UI state produced by `ScreenDataStream`. Replaces per-ViewModel ScreenUiState + isFromCache + isRefreshing + networkStatus.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:83</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:69</code></summary>
 
 ```kotlin
             } else {
@@ -1211,7 +1211,7 @@ fun <T, R> Flow<ScreenState<T>>.mapContent(
 ```
 Transforms only `ScreenState.Content` data, passing through all other states unchanged.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1230,7 +1230,7 @@ fun <T, S, R> Flow<ScreenState<T>>.combineContent(
 ```
 Combines ScreenState with a local state flow for reactive filter/sort/preferences.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1249,7 +1249,7 @@ fun <T> Flow<ScreenState<T>>.emptyIfContent(
 ```
 Converts Content to Empty when business-level predicate says data is empty. Applied AFTER DecisionEngine (which only handles structural empty from Store).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1278,7 +1278,7 @@ fun <T> Flow<ScreenState<T>>.mapError(
 ```
 Maps Error throwable to a user-facing type.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1496,7 +1496,7 @@ fun <T, R> Flow<StoreData<T>>.mapData(transform: (T) -> R): Flow<StoreData<R>>
 ```
 Maps a Flow of `StoreData` content while preserving all metadata.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1522,7 +1522,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToStoreData(
 ```
 Maps a `StoreReadResponse` flow into `Flow<StoreData<Output>>`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1541,7 +1541,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToStoreDataWithErrors(
 ```
 Like `mapToStoreData` but also emits on errors, carrying the last known data.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1562,7 +1562,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToResult(): Flow<Result<Ou
 ```
 Maps a `StoreReadResponse` flow to `Flow<Result<Output>>`. - `StoreReadResponse.Data` → `Result.success` - `StoreReadResponse.Error` → `Result.failure` - `StoreReadResponse.Loading` and `StoreReadResponse.NoNewData` are filtered out.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -1581,7 +1581,7 @@ fun <Output : Any> Flow<StoreReadResponse<Output>>.mapToData(): Flow<Output>
 ```
 Maps a `StoreReadResponse` flow to `Flow<Output>`, emitting only data values. Loading, error, and no-data responses are silently filtered out. Use `mapToResult` when error handling is needed.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -2096,14 +2096,14 @@ State machine for a single form/action submission lifecycle.
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:139</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingViewModel.kt:104</code></summary>
 
 ```kotlin
             .onEach { submitState ->
                 when (submitState) {
                     is SubmitState.Submitting -> {
                         mutableStateFlow.update {
-                            it.copy(dialogState = AccountState.DialogState.Loading)
+                            it.copy(dialogState = AESState.DialogState.Loading)
                         }
                     }
 ```

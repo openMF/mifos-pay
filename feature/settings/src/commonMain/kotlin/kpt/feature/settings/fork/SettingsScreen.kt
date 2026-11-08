@@ -37,9 +37,9 @@ import kpt.core.designsystem.fork.component.ForkLoadingDialog
 import kpt.core.designsystem.fork.component.ForkScaffold
 import kpt.core.designsystem.fork.component.LoadingDialogState
 import kpt.core.designsystem.fork.icon.ForkIcons
+import kpt.core.ui.fork.biometrics.rememberBiometricErrorMessages
+import kpt.core.ui.fork.biometrics.rememberBiometricPromptStrings
 import kpt.core.ui.fork.utils.EventsEffect
-import kpt.feature.passcode.rememberBiometricErrorMessages
-import kpt.feature.passcode.rememberBiometricPromptStrings
 import kpt.feature.settings.di.SettingsViewModelQualifier
 import kpt.feature.settings.generated.resources.Res
 import kpt.feature.settings.generated.resources.feature_settings_change_language_text

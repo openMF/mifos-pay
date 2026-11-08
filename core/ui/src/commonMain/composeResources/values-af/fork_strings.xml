@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Te veel pogings. Wag asseblief en probeer weer.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Biometriese hardeware is tydelik onbeskikbaar. Probeer asseblief later weer.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Geen biometrika is op hierdie toestel geregistreer nie. Stel asseblief biometrie op in stelselinstellings.</string>
+    <string name="core_ui_biometric_error_timeout">Biometriese verifikasie het uitgetel. Probeer asseblief weer.</string>
+    <string name="core_ui_biometric_error_no_space">Nie genoeg berging om biometriese verifikasie te voltooi nie.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Biometriese registrasiedata is ongeldig. Aktiveer asseblief biometrie weer vanaf toepassingsinstellings.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Kon nie biometriese verifikasie begin nie weens ongeldige argumente.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Kon nie biometriese registrasie begin nie weens ongeldige argumente.</string>
+    <string name="core_ui_biometric_error_unknown">'n Onverwagte biometriese fout het voorgekom. Probeer asseblief weer.</string>
+    <string name="core_ui_biometric_prompt_title">Ontsluit Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Verifieer jou identiteit om voort te gaan</string>
+    <string name="core_ui_biometric_prompt_description">Gebruik jou vingerafdruk, gesig of toestelgeloofsbriewe</string>
+    <string name="core_ui_biometric_prompt_negative_button">Kanselleer</string>
+</resources>

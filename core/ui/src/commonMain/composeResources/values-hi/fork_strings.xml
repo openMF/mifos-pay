@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">बहुत अधिक प्रयास। कृपया प्रतीक्षा करें और पुनः प्रयास करें।</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">बायोमेट्रिक हार्डवेयर अस्थायी रूप से अनुपलब्ध है। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="core_ui_biometric_error_not_enrolled">इस डिवाइस पर कोई बायोमेट्रिक पंजीकृत नहीं है। कृपया सिस्टम सेटिंग्स में बायोमेट्रिक्स सेट करें।</string>
+    <string name="core_ui_biometric_error_timeout">बायोमेट्रिक प्रमाणीकरण का समय समाप्त हो गया। कृपया पुनः प्रयास करें।</string>
+    <string name="core_ui_biometric_error_no_space">बायोमेट्रिक प्रमाणीकरण पूरा करने के लिए पर्याप्त संग्रहण नहीं है।</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">बायोमेट्रिक पंजीकरण डेटा अमान्य है। कृपया ऐप सेटिंग्स से बायोमेट्रिक्स पुनः सक्षम करें।</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">अमान्य तर्कों के कारण बायोमेट्रिक प्रमाणीकरण प्रारंभ नहीं हो सका।</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">अमान्य तर्कों के कारण बायोमेट्रिक पंजीकरण प्रारंभ नहीं हो सका।</string>
+    <string name="core_ui_biometric_error_unknown">एक अप्रत्याशित बायोमेट्रिक त्रुटि हुई। कृपया पुनः प्रयास करें।</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay अनलॉक करें</string>
+    <string name="core_ui_biometric_prompt_subtitle">जारी रखने के लिए अपनी पहचान सत्यापित करें</string>
+    <string name="core_ui_biometric_prompt_description">अपने फिंगरप्रिंट, चेहरे, या डिवाइस क्रेडेंशियल का उपयोग करें</string>
+    <string name="core_ui_biometric_prompt_negative_button">रद्द करें</string>
+</resources>

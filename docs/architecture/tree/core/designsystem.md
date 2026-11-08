@@ -190,7 +190,7 @@ fun StatusChip(text: String, intent: StatusChipIntent, modifier: Modifier = Modi
 ```
 Compact colored pill used to convey state at a glance — bill status, loan stage, rate direction, sync state. Stays one line; no icons (use `UrgencyDot` when you want a leading accent).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:491</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:444</code></summary>
 
 ```kotlin
     ) {
@@ -680,16 +680,16 @@ fun ForkBasicDialog(
 ```
 Dialog that shows an error-style title and message from a `BasicDialogState` with a single dismiss action.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:454</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:137</code></summary>
 
 ```kotlin
 ) {
     when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> ForkBasicDialog(
+        is AESState.DialogState.Error.StringMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
-                title = stringResource(dialogState.title),
-                message = stringResource(dialogState.message),
+                message = dialogState.message,
             ),
+            onDismissRequest = onDismissRequest,
 ```
 
 </details>
@@ -699,16 +699,16 @@ fun ForkBasicDialog(
 ```
 Dialog that shows a title and message from a `BasicDialogState` with confirm and dismiss actions.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:454</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:137</code></summary>
 
 ```kotlin
 ) {
     when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> ForkBasicDialog(
+        is AESState.DialogState.Error.StringMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
-                title = stringResource(dialogState.title),
-                message = stringResource(dialogState.message),
+                message = dialogState.message,
             ),
+            onDismissRequest = onDismissRequest,
 ```
 
 </details>
@@ -718,16 +718,16 @@ sealed class BasicDialogState
 ```
 Models display of a `ForkBasicDialog`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:455</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:138</code></summary>
 
 ```kotlin
     when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> ForkBasicDialog(
+        is AESState.DialogState.Error.StringMessage -> ForkBasicDialog(
             visibilityState = BasicDialogState.Shown(
-                title = stringResource(dialogState.title),
-                message = stringResource(dialogState.message),
+                message = dialogState.message,
             ),
-            onConfirm = dialogState.onConfirm,
+            onDismissRequest = onDismissRequest,
+        )
 ```
 
 </details>
@@ -739,16 +739,16 @@ fun ForkLoadingDialog(
 ```
 Full-screen modal dialog with a loading indicator, driven by `LoadingDialogState`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:470</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:150</code></summary>
 
 ```kotlin
+            onDismissRequest = onDismissRequest,
         )
-
-        is AccountState.DialogState.Loading -> ForkLoadingDialog(
+        is AESState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
-
         null -> Unit
+    }
 ```
 
 </details>
@@ -758,16 +758,16 @@ sealed class LoadingDialogState
 ```
 Models display of a `ForkLoadingDialog`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:471</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/savingsaccount/AddEditSavingAccountScreen.kt:151</code></summary>
 
 ```kotlin
-
-        is AccountState.DialogState.Loading -> ForkLoadingDialog(
+        )
+        is AESState.DialogState.Loading -> ForkLoadingDialog(
             visibilityState = LoadingDialogState.Shown,
         )
-
         null -> Unit
     }
+}
 ```
 
 </details>
@@ -779,7 +779,7 @@ fun ForkScaffold(
 ```
 Scaffold with a standard top bar (title and back button) wrapping the screen `content`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:161</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:144</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -798,7 +798,7 @@ fun ForkScaffold(
 ```
 Scaffold that takes caller-supplied top bar, bottom bar, snackbar and floating action button slots.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:161</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:144</code></summary>
 
 ```kotlin
     modifier: Modifier = Modifier,
@@ -1378,7 +1378,7 @@ object ForkIcons
 ```
 Mifos icons. Material icons are `ImageVector`s, custom icons are drawable resource IDs.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:177</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:160</code></summary>
 
 ```kotlin
                 ) {
@@ -2063,7 +2063,7 @@ fun KptTheme(
 ```
 The main theme composable for the application. This composable uses KptMaterialTheme under the hood to provide seamless integration between KptTheme design tokens and Material3 theming system.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:198</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:181</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),

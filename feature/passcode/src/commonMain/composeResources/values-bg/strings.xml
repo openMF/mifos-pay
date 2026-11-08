@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Твърде много опити. Моля, изчакайте и опитайте отново.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Биометричният хардуер е временно недостъпен. Моля, опитайте по-късно.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">На това устройство няма регистрирана биометрия. Моля, настройте биометрията в системните настройки.</string>
-    <string name="feature_passcode_biometric_error_timeout">Времето за биометрично удостоверяване изтече. Моля, опитайте отново.</string>
-    <string name="feature_passcode_biometric_error_no_space">Недостатъчно място в хранилището за завършване на биометричното удостоверяване.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Данните за биометрична регистрация са невалидни. Моля, активирайте отново биометрията от настройките на приложението.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Биометричното удостоверяване не може да започне поради невалидни аргументи.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Биометричната регистрация не може да започне поради невалидни аргументи.</string>
-    <string name="feature_passcode_biometric_error_unknown">Възникна неочаквана биометрична грешка. Моля, опитайте отново.</string>
-    <string name="feature_passcode_biometric_prompt_title">Отключете Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Потвърдете самоличността си, за да продължите</string>
-    <string name="feature_passcode_biometric_prompt_description">Използвайте отпечатъка си, лицето си или идентификационните данни на устройството</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Отказ</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Защитете приложението си</string>

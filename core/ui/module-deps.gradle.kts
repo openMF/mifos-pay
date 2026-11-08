@@ -27,4 +27,6 @@ dependencies {
     // upstream at 1.7.3, which is what the `compose.materialIconsExtended` accessor resolves.
     // Verified by dependency-graph diff: using composeJB silently moved it 1.7.3 → 1.11.1.
     "commonMainImplementation"(libs.findLibrary("jb-composeMaterialIconsExtended").get())
+    // BiometricError, mapped to copy by fork/biometrics for the passcode and settings features.
+    "commonMainImplementation"(libs.findLibrary("mifos-authenticator-biometrics").get())
 }

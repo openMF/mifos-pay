@@ -22,10 +22,10 @@ ViewModels: `HistoryViewModel`, `SpecificTransactionsViewModel`, `TransactionDet
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/history sha=c4ceede8ac259956cdb6b52bb6565928aaadd6d1 -->
+<!-- api-docs:begin module=feature/history sha=ef5717161d03f697cffbe18466a09b1a490e56e4 -->
 ## API reference
 
-_Generated from `feature/history` at tree `c4ceede8ac25` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/history` at tree `ef5717161d03` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -214,7 +214,7 @@ fun NavGraphBuilder.transactionDetailNavigation(
 Registers the transaction detail screen in the nav graph; `navigateToReceipt` shares a transfer receipt.
 
 ```kotlin
-fun NavHostController.navigateToTransactionDetail(transferId: Long)
+fun NavController.navigateToTransactionDetail(transferId: Long)
 ```
 Navigates to the detail screen of the transfer with `transferId`.
 

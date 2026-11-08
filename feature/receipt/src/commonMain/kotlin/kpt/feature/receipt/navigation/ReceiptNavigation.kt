@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import kpt.core.base.ui.nav.FeatureDestination
 import kpt.core.ui.composableWithSlideTransitions
 import kpt.feature.receipt.ReceiptScreenRoute
 /**
@@ -50,4 +51,10 @@ fun NavGraphBuilder.receiptScreen(
  */
 fun NavController.navigateToReceipt(transferId: Long) {
     this.navigate("$RECEIPT_ROUTE&$RECEIPT_TRANSFER_ID=$transferId")
+}
+
+/** The receipt feature's destinations. */
+@FeatureDestination
+fun NavGraphBuilder.receiptGraph(navController: NavController) {
+    receiptScreen(onBackClick = navController::navigateUp)
 }

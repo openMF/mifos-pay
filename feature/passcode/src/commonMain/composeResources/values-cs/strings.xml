@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Příliš mnoho pokusů. Počkejte a zkuste to znovu.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Biometrický hardware je dočasně nedostupný. Zkuste to později.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Na tomto zařízení není registrovaná žádná biometrie. Nastavte biometrii v systémovém nastavení.</string>
-    <string name="feature_passcode_biometric_error_timeout">Biometrické ověření vypršelo. Zkuste to znovu.</string>
-    <string name="feature_passcode_biometric_error_no_space">Nedostatek úložiště pro dokončení biometrického ověření.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Registrační biometrická data jsou neplatná. Znovu povolte biometrii v nastavení aplikace.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Biometrické ověření nelze spustit kvůli neplatným argumentům.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Biometrickou registraci nelze spustit kvůli neplatným argumentům.</string>
-    <string name="feature_passcode_biometric_error_unknown">Došlo k neočekávané biometrické chybě. Zkuste to znovu.</string>
-    <string name="feature_passcode_biometric_prompt_title">Odemknout Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Ověřte svou identitu pro pokračování</string>
-    <string name="feature_passcode_biometric_prompt_description">Použijte otisk prstu, obličej nebo přihlašovací údaje zařízení</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Zrušit</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Zabezpečte svou aplikaci</string>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">بہت زیادہ کوششیں۔ براہ کرم انتظار کریں اور دوبارہ کوشش کریں۔</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">بایومیٹرک ہارڈ ویئر عارضی طور پر دستیاب نہیں ہے۔ براہ کرم بعد میں دوبارہ کوشش کریں۔</string>
+    <string name="core_ui_biometric_error_not_enrolled">اس آلے پر کوئی بایومیٹرک رجسٹرڈ نہیں ہے۔ براہ کرم سسٹم کی ترتیبات میں بایومیٹرکس سیٹ کریں۔</string>
+    <string name="core_ui_biometric_error_timeout">بایومیٹرک تصدیق کا وقت ختم ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔</string>
+    <string name="core_ui_biometric_error_no_space">بایومیٹرک تصدیق مکمل کرنے کے لیے کافی ذخیرہ نہیں ہے۔</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">بایومیٹرک رجسٹریشن ڈیٹا غلط ہے۔ براہ کرم ایپ کی ترتیبات سے بایومیٹرکس کو دوبارہ فعال کریں۔</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">غلط ان پٹ کی وجہ سے بایومیٹرک تصدیق شروع نہیں ہو سکی۔</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">غلط ان پٹ کی وجہ سے بایومیٹرک رجسٹریشن شروع نہیں ہو سکی۔</string>
+    <string name="core_ui_biometric_error_unknown">ایک غیر متوقع بایومیٹرک خرابی پیش آئی۔ براہ کرم دوبارہ کوشش کریں۔</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay ان لاک کریں</string>
+    <string name="core_ui_biometric_prompt_subtitle">جاری رکھنے کے لیے اپنی شناخت کی تصدیق کریں</string>
+    <string name="core_ui_biometric_prompt_description">اپنی انگلیوں کا نشان، چہرہ، یا آلہ کی سند استعمال کریں</string>
+    <string name="core_ui_biometric_prompt_negative_button">منسوخ کریں</string>
+</resources>

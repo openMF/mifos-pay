@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Masyadong maraming pagsubok. Mangyaring maghintay at subukang muli.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Pansamantalang hindi available ang biometric hardware. Mangyaring subukang muli mamaya.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Walang biometrics na naka-enroll sa device na ito. Mangyaring mag-set up ng biometrics sa system settings.</string>
+    <string name="core_ui_biometric_error_timeout">Nag-time out ang biometric authentication. Mangyaring subukang muli.</string>
+    <string name="core_ui_biometric_error_no_space">Walang sapat na storage para makumpleto ang biometric authentication.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Hindi wasto ang biometric registration data. Mangyaring i-enable muli ang biometrics mula sa app settings.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Hindi nasimulan ang biometric authentication dahil sa hindi wastong arguments.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Hindi nasimulan ang biometric registration dahil sa hindi wastong arguments.</string>
+    <string name="core_ui_biometric_error_unknown">May naganap na hindi inaasahang biometric error. Mangyaring subukang muli.</string>
+    <string name="core_ui_biometric_prompt_title">I-unlock ang Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">I-verify ang iyong pagkakakilanlan upang magpatuloy</string>
+    <string name="core_ui_biometric_prompt_description">Gamitin ang iyong fingerprint, mukha, o device credential</string>
+    <string name="core_ui_biometric_prompt_negative_button">Kanselahin</string>
+</resources>

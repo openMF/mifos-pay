@@ -669,7 +669,7 @@ sealed interface ScreenState<out T>
 ```
 Unified UI state produced by fork repositories (and, once Phase 4 lands, by `Store<Key, Output>.asScreenStream(...)`). Replaces the legacy `DataState` sealed class as the single fork-wide read-side model.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:83</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:69</code></summary>
 
 ```kotlin
             } else {
@@ -736,7 +736,7 @@ fun <T, R> Flow<ScreenState<T>>.mapContent(transform: (T) -> R): Flow<ScreenStat
 ```
 Extension on `Flow<ScreenState<T>>` mirroring the template's `mapContent { data, freshness -> R }` — the freshness slot is dropped because Phase-3 lacks the FreshnessSignal engine. Phase-4 replaces this with the template's two-arg lambda.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -755,7 +755,7 @@ fun <T> Flow<ScreenState<T>>.emptyIfContent(
 ```
 Template-parity `emptyIfContent` — flips `ScreenState.Content` whose data satisfies `predicate` to `ScreenState.Empty`. Applied AFTER the upstream repository has already emitted; use for business-level empty (e.g. `list.isEmpty()`).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()

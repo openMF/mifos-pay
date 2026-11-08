@@ -20,19 +20,6 @@
     <!-- From mobile-wallet v2.3.0-beta migration — biometric prompt + error strings.
          Terminology harmonized with MW-404 above: "huella digital" (not "dactilar"),
          "datos biométricos" as noun phrase (not standalone "biometría"). -->
-    <string name="feature_passcode_biometric_error_lockout">Demasiados intentos. Por favor espera e inténtalo de nuevo.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">El hardware biométrico no está disponible temporalmente. Por favor inténtalo de nuevo más tarde.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">No hay datos biométricos registrados en este dispositivo. Por favor configura los datos biométricos en los ajustes del sistema.</string>
-    <string name="feature_passcode_biometric_error_timeout">Se ha agotado el tiempo de la autenticación biométrica. Por favor inténtalo de nuevo.</string>
-    <string name="feature_passcode_biometric_error_no_space">No hay suficiente almacenamiento para completar la autenticación biométrica.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Los datos de registro biométrico no son válidos. Por favor vuelve a activar los datos biométricos en los ajustes de la app.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">No se pudo iniciar la autenticación biométrica debido a argumentos no válidos.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">No se pudo iniciar el registro biométrico debido a argumentos no válidos.</string>
-    <string name="feature_passcode_biometric_error_unknown">Se produjo un error biométrico inesperado. Por favor inténtalo de nuevo.</string>
-    <string name="feature_passcode_biometric_prompt_title">Desbloquear Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Verifica tu identidad para continuar</string>
-    <string name="feature_passcode_biometric_prompt_description">Usa tu huella digital, rostro o credencial del dispositivo</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Cancelar</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Asegura tu app</string>

@@ -1,9 +1,9 @@
 # `feature/notification/`
 
 > Part of [`feature/`](../feature.md)  
-> **Measured:** 17 tracked files — 10× `.xml`, 4× `.kt`, 1× `.gitignore`, 1× `.md`, 1× `.kts`
+> **Measured:** 18 tracked files — 10× `.xml`, 5× `.kt`, 1× `.gitignore`, 1× `.md`, 1× `.kts`
 
-**4 Kotlin files** — 1 screen(s), 1 ViewModel(s).
+**5 Kotlin files** — 1 screen(s), 1 ViewModel(s).
 
 Screens: `NotificationScreen`
 
@@ -22,10 +22,10 @@ ViewModels: `NotificationViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/notification sha=0daa415fc9c8866b7f9a8986dc90d19d8eba4199 -->
+<!-- api-docs:begin module=feature/notification sha=19fd96ffc414330b179ada0ecbb049b7bdef94c8 -->
 ## API reference
 
-_Generated from `feature/notification` at tree `0daa415fc9c8` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/notification` at tree `19fd96ffc414` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -52,7 +52,14 @@ val NotificationModule = module
 ```
 Koin module providing the `NotificationViewModel`.
 
+### `feature/notification/src/commonMain/kotlin/kpt/feature/notification/navigation/NotificationGraph.kt`
+
+```kotlin
+fun NavGraphBuilder.notificationGraph(navController: NavController)
+```
+The notification feature's destinations.
+
 ---
 
-_0 type(s), 3 function(s)/property(ies); 3 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
+_0 type(s), 4 function(s)/property(ies); 4 carry KDoc at source; 0 authored example(s); 0 live call site(s)._
 <!-- api-docs:end -->

@@ -144,7 +144,7 @@ KptTheme {
 
 </details>
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:198</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:181</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),
@@ -1987,7 +1987,7 @@ object KptTheme
 ```
 Composition-local accessor for the active design language — `KptTheme.colors`, `.typography`, `.shapes`, `.spacing`, `.elevation`. The read side of the theme; `kptTheme` is the write side.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:198</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:181</code></summary>
 
 ```kotlin
                         subTitle = stringResource(Res.string.feature_accounts_unexpected_error_subtitle),

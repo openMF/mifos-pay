@@ -9,6 +9,7 @@
  */
 package kpt.feature.payments
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -20,11 +21,11 @@ const val PAYMENTS_ROUTE = "payments_route"
 /** Navigates to the payments screen. */
 fun NavController.navigateToPayments(navOptions: NavOptions) = navigate(PAYMENTS_ROUTE, navOptions)
 
-/** Registers the payments screen destination, rendering the given [tabContents]. */
+/** Registers the payments screen destination, rendering the tabs [tabContents] builds. */
 fun NavGraphBuilder.paymentsScreen(
-    tabContents: List<TabContent>,
+    tabContents: @Composable () -> List<TabContent>,
 ) {
     composable(route = PAYMENTS_ROUTE) {
-        PaymentsRoute(tabContents = tabContents)
+        PaymentsRoute(tabContents = tabContents())
     }
 }

@@ -560,16 +560,16 @@ interface ForkPreferencesRepository : UserPreferencesRepository
 ```
 The wallet's preferences, extending the framework's `UserPreferencesRepository`.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:49</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:36</code></summary>
 
 ```kotlin
 @OptIn(ExperimentalCoroutinesApi::class)
 class AccountViewModel(
     private val userRepository: ForkPreferencesRepository,
     private val repository: SelfServiceRepository,
-    private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
+        /** Client id read from user preferences when the view model is created. */
 ```
 
 </details>

@@ -14,6 +14,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import kpt.core.base.ui.nav.FeatureDestination
 import kpt.feature.merchants.ui.MerchantTransferScreenRoute
 /** Base navigation route of the merchant transfer screen. */
 const val MERCHANT_TRANSFER_ROUTE = "merchant_transfer_route"
@@ -45,4 +46,13 @@ fun NavController.navigateToMerchantTransferScreen(
     merchantAccountNumber: String,
 ) {
     navigate("$MERCHANT_TRANSFER_ROUTE/$merchantName/$merchantVPA/$merchantAccountNumber")
+}
+
+/** The merchants feature's destinations. */
+@FeatureDestination
+fun NavGraphBuilder.merchantsGraph(navController: NavController) {
+    merchantTransferScreen(
+        proceedWithMakeTransferFlow = { _, _ -> },
+        onBackPressed = navController::navigateUp,
+    )
 }

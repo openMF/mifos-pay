@@ -20,10 +20,10 @@ ViewModels: `TransferViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/payments sha=bd744476a27886ad9f90ef7259956b1852855518 -->
+<!-- api-docs:begin module=feature/payments sha=7b04ece95193cbb66880827c37b0622aac726056 -->
 ## API reference
 
-_Generated from `feature/payments` at tree `bd744476a278` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/payments` at tree `7b04ece95193` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -41,7 +41,7 @@ Navigates to the payments screen.
 ```kotlin
 fun NavGraphBuilder.paymentsScreen(
 ```
-Registers the payments screen destination, rendering the given `tabContents`.
+Registers the payments screen destination, rendering the tabs `tabContents` builds.
 
 ### `feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentsScreen.kt`
 
@@ -50,12 +50,12 @@ fun PaymentsRoute(
 ```
 Route-level composable of the payments screen, hosting the given `tabContents`.
 
-<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentNavigation.kt:28</code></summary>
+<details><summary>Used in the template — <code>feature/payments/src/commonMain/kotlin/kpt/feature/payments/PaymentNavigation.kt:29</code></summary>
 
 ```kotlin
 ) {
     composable(route = PAYMENTS_ROUTE) {
-        PaymentsRoute(tabContents = tabContents)
+        PaymentsRoute(tabContents = tabContents())
     }
 }
 ```

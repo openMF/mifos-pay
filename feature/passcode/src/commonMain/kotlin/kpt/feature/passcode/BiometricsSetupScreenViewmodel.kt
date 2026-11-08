@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.model.client.Client
+import kpt.core.ui.fork.biometrics.BiometricErrorMessages
+import kpt.core.ui.fork.biometrics.BiometricPromptStrings
 import kpt.core.ui.fork.utils.AuthenticationUtils
 import kpt.core.ui.fork.utils.BaseViewModel
 import kpt.feature.passcode.generated.resources.Res

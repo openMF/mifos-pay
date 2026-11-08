@@ -11,8 +11,26 @@ package cmp.navigation.registry
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import cmp.navigation.LocalAppLocaleHandler
 import cmp.navigation.registry.app.ForkAppRoot
+import cmp.navigation.registry.app.navigation.ForkNavGraph
+import cmp.navigation.registry.app.navigation.navigateToMainGraph
+import kpt.feature.auth.navigation.LOGIN_ROUTE
+import kpt.feature.auth.navigation.loginScreen
+import kpt.feature.auth.navigation.mobileVerificationScreen
+import kpt.feature.auth.navigation.navigateToLogin
+import kpt.feature.auth.navigation.navigateToSignup
+import kpt.feature.auth.navigation.signupScreen
+import kpt.feature.auth.socialSignup.navigateToSignupMethod
+import kpt.feature.auth.socialSignup.signupMethodScreen
+import kpt.feature.passcode.biometricSetupScreen
+import kpt.feature.passcode.navigateToBiometricSetupScreen
+import kpt.feature.passcode.navigateToRootPasscodeScreen
+import kpt.feature.passcode.reAuthPasscodeScreen
+import kpt.feature.passcode.rootPasscodeScreen
 
 /**
  * ForkAppShell — the FORK-OWNED seam for the app root, so a fork never edits the template's
@@ -53,4 +71,89 @@ object ForkAppShell {
                 onSplashScreenRemoved = onSplashScreenRemoved,
             )
         }
+
+    /**
+     * The wallet root's signed-out and lock-screen destinations: sign-in, sign-up, the passcode unlock
+     * and first-time setup, biometric setup and the re-auth lock. They come before the signed-in graph,
+     * so `@FeatureDestination` (which registers onto that graph) cannot carry them; the template keeps
+     * onboarding out of it for the same reason. [root] renders the graph that hosts them.
+     *
+     * @param isBiometricsAvailable Routes a new passcode through biometric setup first.
+     * @param onShowInstanceSelector Opens the server-instance picker from the sign-in screen.
+     * @param onLogout Ends the session (the passcode "forgot" path).
+     */
+    internal fun NavGraphBuilder.preAuthDestinations(
+        navController: NavController,
+        isBiometricsAvailable: Boolean,
+        onShowInstanceSelector: () -> Unit,
+        onLogout: () -> Unit,
+    ) {
+        navigation(
+            route = ForkNavGraph.LOGIN_GRAPH,
+            startDestination = LOGIN_ROUTE,
+        ) {
+            loginScreen(
+                onNavigateBack = navController::popBackStack,
+                navigateToPasscode = navController::navigateToRootPasscodeScreen,
+                onNavigateToSignupScreen = navController::navigateToSignupMethod,
+                onShowInstanceSelector = onShowInstanceSelector,
+            )
+
+            signupMethodScreen(
+                onNavigateBack = navController::popBackStack,
+                onNavigateToSignUp = {
+                    navController.navigateToSignup(savingsProductId = it)
+                },
+            )
+
+            signupScreen(
+                onNavigateBack = navController::popBackStack,
+                onNavigateToLogin = navController::navigateToLogin,
+            )
+
+            mobileVerificationScreen(
+                onNavigateBack = navController::popBackStack,
+                onOtpVerificationSuccess = { fullNumber ->
+                    navController.navigateToSignup(mobileNumber = fullNumber)
+                },
+            )
+        }
+
+        rootPasscodeScreen(
+            navigateToLogin = {
+                onLogout()
+            },
+            onAuthenticationSuccess = {
+                navController.popBackStack()
+                navController.navigateToMainGraph()
+            },
+            onPasscodeCreation = {
+                navController.popBackStack()
+                if (isBiometricsAvailable) {
+                    navController.navigateToBiometricSetupScreen()
+                } else {
+                    navController.navigateToMainGraph()
+                }
+            },
+        )
+
+        biometricSetupScreen(
+            onBiometricsRegistrationSuccess = {
+                navController.popBackStack()
+                navController.navigateToMainGraph()
+            },
+            onSkipBiometricSetup = {
+                navController.popBackStack()
+                navController.navigateToMainGraph()
+            },
+        )
+
+        reAuthPasscodeScreen(
+            navigateToLogin = {
+                navController.popBackStack()
+                onLogout()
+            },
+            onAuthenticationSuccess = { navController.popBackStack() },
+        )
+    }
 }

@@ -34,16 +34,16 @@ sealed class BeneficiaryAddEditType
 ```
 Whether the beneficiary form adds a new beneficiary or edits an existing one.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:182</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:66</code></summary>
 
 ```kotlin
-
-            is AccountAction.AddTPTBeneficiary -> {
-                sendEvent(AccountEvent.OnAddOrEditTPTBeneficiary(BeneficiaryAddEditType.AddItem()))
-            }
-
-            is AccountAction.EditBeneficiary -> {
-                launchIO {
+    initialState = savedStateHandle.getSerialized(ADD_EDIT_BENEFICIARY_KEY) ?: run {
+        when (val addEditType = BeneficiaryAddEditArgs(savedStateHandle).addEditType) {
+            is BeneficiaryAddEditType.AddItem -> {
+                // Parse sourceQrData if available (for post-add navigation)
+                val sourceQrData = addEditType.sourceQrData?.let { qrDataJson ->
+                    try {
+                        json.decodeFromString(QrCodeData.serializer(), qrDataJson)
 ```
 
 </details>

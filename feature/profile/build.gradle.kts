@@ -29,8 +29,7 @@ kotlin {
             implementation(projects.core.data)
             implementation(projects.core.designsystem)
             implementation(projects.core.ui)
-            implementation(projects.coreBase.store)
-            implementation(projects.coreBase.ui)
+            implementation(projects.core.store)
 
             // Fork addition: ProfileImage renders the client's avatar via Coil3; EditProfileViewModel
             // picks + reads a new avatar file via FileKit.

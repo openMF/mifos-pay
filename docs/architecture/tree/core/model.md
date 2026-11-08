@@ -29,7 +29,7 @@ data class Account(
 ```
 A wallet account (savings account) shown to the user, with its balance, currency, status and owning office.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:58</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:44</code></summary>
 
 ```kotlin
 
@@ -50,7 +50,7 @@ data class AccountContent(
 ```
 Combined payload of the user's accounts and saved beneficiaries.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:84</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:70</code></summary>
 
 ```kotlin
                 flowOf(
@@ -99,7 +99,7 @@ data class DefaultAccount(
 ```
 The account the user has chosen as their default for payments.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:230</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:135</code></summary>
 
 ```kotlin
     private fun handleSetDefaultAccount(action: AccountAction.SetDefaultAccount) {
@@ -606,7 +606,7 @@ data class Bank(
 ```
 A bank listed for selection when linking an external bank account.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:374</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:357</code></summary>
 
 ```kotlin
                 leadingContent = {
@@ -632,7 +632,7 @@ data class BankAccountDetails(
 ```
 Details of an external bank account linked to the wallet, including UPI settings.
 
-<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/navigation/SetupUpiPinNavigation.kt:59</code></summary>
+<details><summary>Used in the template — <code>feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/navigation/SetupUpiPinNavigation.kt:60</code></summary>
 
 ```kotlin
             type = type,
@@ -653,16 +653,16 @@ data class Beneficiary(
 ```
 A saved payee the user can transfer money to.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:187</code></summary>
+<details><summary>Used in the template — <code>feature/beneficiary/src/commonMain/kotlin/kpt/feature/beneficiary/addupdatebeneficiary/AddEditBeneficiaryViewModel.kt:79</code></summary>
 
 ```kotlin
-            is AccountAction.EditBeneficiary -> {
-                launchIO {
-                    val beneficiary = json.encodeToString<Beneficiary>(action.beneficiary)
-                    sendEvent(
-                        AccountEvent.OnAddOrEditTPTBeneficiary(
-                            BeneficiaryAddEditType.EditItem(beneficiary),
-                        ),
+                    // Pre-filled from QR scan
+                    val beneficiary = json.decodeFromString(
+                        Beneficiary.serializer(),
+                        addEditType.beneficiary,
+                    )
+                    AEBState(
+                        name = beneficiary.name,
 ```
 
 </details>
@@ -715,7 +715,7 @@ data class Client(
 ```
 A bank client (customer) profile as returned by Fineract.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:83</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:69</code></summary>
 
 ```kotlin
             } else {
@@ -1762,7 +1762,7 @@ data class Status(
 ```
 Generic Fineract status enumeration value (id, code and display value).
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:481</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:434</code></summary>
 
 ```kotlin
 @Composable
@@ -2396,10 +2396,10 @@ data class State(
 ```
 A state or province option used in the signup address form.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:53</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:39</code></summary>
 
 ```kotlin
-    private val json: Json,
+    private val repository: SelfServiceRepository,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
         /** Client id read from user preferences when the view model is created. */
@@ -3188,7 +3188,7 @@ data class Status(
 ```
 Savings account status with the individual state flags reported by the server.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:481</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:434</code></summary>
 
 ```kotlin
 @Composable
@@ -3651,10 +3651,10 @@ data class State(
 ```
 A state or province of a country.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:53</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:39</code></summary>
 
 ```kotlin
-    private val json: Json,
+    private val repository: SelfServiceRepository,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
         /** Client id read from user preferences when the view model is created. */

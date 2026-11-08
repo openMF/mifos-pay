@@ -1,9 +1,9 @@
 # `feature/standing-instruction/`
 
 > Part of [`feature/`](../feature.md)  
-> **Measured:** 18 tracked files — 13× `.kt`, 2× `.xml`, 1× `.gitignore`, 1× `.md`, 1× `.kts`
+> **Measured:** 19 tracked files — 14× `.kt`, 2× `.xml`, 1× `.gitignore`, 1× `.md`, 1× `.kts`
 
-**13 Kotlin files** — 3 screen(s), 3 ViewModel(s).
+**14 Kotlin files** — 3 screen(s), 3 ViewModel(s).
 
 Screens: `AddEditSIScreen`, `SIDetailsScreen`, `StandingInstructionScreen`
 
@@ -22,10 +22,10 @@ ViewModels: `AddEditSIViewModel`, `SIDetailViewModel`, `StandingInstructionViewM
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/standing-instruction sha=90835cf8c6c20a9dedd705d7cb47ec9d7c516510 -->
+<!-- api-docs:begin module=feature/standing-instruction sha=de1220fd03df00c170ad979e0e113b3c7082691b -->
 ## API reference
 
-_Generated from `feature/standing-instruction` at tree `90835cf8c6c2` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/standing-instruction` at tree `de1220fd03df` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -281,7 +281,14 @@ val StandingInstructionModule = module
 ```
 Koin module providing the standing instruction view models.
 
+### `feature/standing-instruction/src/commonMain/kotlin/kpt/feature/standing/instruction/navigation/StandingInstructionGraph.kt`
+
+```kotlin
+fun NavGraphBuilder.standingInstructionGraph(navController: NavController)
+```
+The standing-instruction feature's destinations: details and the add/edit form.
+
 ---
 
-_9 type(s), 9 function(s)/property(ies); 18 carry KDoc at source; 0 authored example(s); 10 live call site(s)._
+_9 type(s), 10 function(s)/property(ies); 19 carry KDoc at source; 0 authored example(s); 10 live call site(s)._
 <!-- api-docs:end -->

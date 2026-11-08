@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Слишком много попыток. Подождите и повторите попытку.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Биометрическое оборудование временно недоступно. Попробуйте позже.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">На этом устройстве не зарегистрирована биометрия. Настройте биометрию в системных параметрах.</string>
-    <string name="feature_passcode_biometric_error_timeout">Время биометрической аутентификации истекло. Попробуйте снова.</string>
-    <string name="feature_passcode_biometric_error_no_space">Недостаточно места в хранилище для завершения биометрической аутентификации.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Данные биометрической регистрации недействительны. Повторно включите биометрию в настройках приложения.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Не удалось запустить биометрическую аутентификацию из-за неверных аргументов.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Не удалось запустить биометрическую регистрацию из-за неверных аргументов.</string>
-    <string name="feature_passcode_biometric_error_unknown">Произошла непредвиденная биометрическая ошибка. Попробуйте снова.</string>
-    <string name="feature_passcode_biometric_prompt_title">Разблокировать Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Подтвердите личность, чтобы продолжить</string>
-    <string name="feature_passcode_biometric_prompt_description">Используйте отпечаток пальца, лицо или учётные данные устройства</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Отмена</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Защитите ваше приложение</string>

@@ -520,7 +520,7 @@ fun <T> Flow<KptScreenState<T>>.toForkScreenStateFlow(): Flow<ForkScreenState<T>
 ```
 Flow-level convenience wrapper — every Store5 impl calls `store.asScreenStream(...).state.toForkScreenStateFlow()` to satisfy the fork repository return type.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:108</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountsScreen.kt:102</code></summary>
 
 ```kotlin
     val scope = rememberCoroutineScope()
@@ -848,7 +848,7 @@ interface AppLockRepository
 ```
 App-wide lock flag, persisted across process restarts.
 
-<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/PasscodeViewModel.kt:51</code></summary>
+<details><summary>Used in the template — <code>feature/passcode/src/commonMain/kotlin/kpt/feature/passcode/PasscodeViewModel.kt:53</code></summary>
 
 ```kotlin
 class PasscodeViewModel(
@@ -1527,16 +1527,16 @@ interface SelfServiceRepository
 ```
 Repository over the Fineract self-service API: login, clients, accounts, transactions and beneficiaries.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:50</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:37</code></summary>
 
 ```kotlin
 class AccountViewModel(
     private val userRepository: ForkPreferencesRepository,
     private val repository: SelfServiceRepository,
-    private val json: Json,
 ) : BaseViewModel<AccountState, AccountEvent, AccountAction>(
     initialState = run {
         /** Client id read from user preferences when the view model is created. */
+        val clientId = userRepository.clientId.value
 ```
 
 </details>

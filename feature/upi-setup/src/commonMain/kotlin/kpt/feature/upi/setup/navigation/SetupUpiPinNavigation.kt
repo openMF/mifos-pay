@@ -14,6 +14,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import kpt.core.base.ui.nav.FeatureDestination
 import kpt.core.common.Constants
 import kpt.core.model.bank.BankAccountDetails
 import kpt.feature.upi.setup.screens.SetupUpiPinScreenRoute
@@ -83,4 +84,10 @@ fun NavController.navigateToSetupUpiPin(
         this.launchSingleTop = true
         this.restoreState = true
     }
+}
+
+/** The UPI-setup feature's destinations. */
+@FeatureDestination
+fun NavGraphBuilder.upiSetupGraph(navController: NavController) {
+    setupUpiPinScreen(navigateBack = navController::navigateUp)
 }

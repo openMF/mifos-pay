@@ -47,11 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kpt.core.base.designsystem.theme.KptTheme
-import kpt.core.designsystem.fork.component.BasicDialogState
-import kpt.core.designsystem.fork.component.ForkBasicDialog
-import kpt.core.designsystem.fork.component.ForkLoadingDialog
 import kpt.core.designsystem.fork.component.ForkScaffold
-import kpt.core.designsystem.fork.component.LoadingDialogState
 import kpt.core.designsystem.fork.icon.ForkIcons
 import kpt.core.model.account.Account
 import kpt.core.model.savingsaccount.Status
@@ -86,18 +82,16 @@ import kpt.feature.accounts.generated.resources.feature_accounts_status_transfer
 import kpt.feature.accounts.generated.resources.feature_accounts_status_withdrawn
 import kpt.feature.accounts.generated.resources.feature_accounts_unexpected_error_subtitle
 import kpt.feature.accounts.savingsaccount.SavingsAddEditType
-import kpt.feature.beneficiary.addupdatebeneficiary.BeneficiaryAddEditType
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.koin.compose.viewmodel.koinViewModel
-/** Screen listing the user's savings accounts and beneficiaries with add, edit and detail actions. */
+/** Screen listing the user's savings accounts with add, edit and detail actions. */
 @Composable
 fun AccountsScreen(
     onViewSavingAccountDetails: (Long) -> Unit,
     onAddEditSavingsAccount: (SavingsAddEditType) -> Unit,
-    onAddOrEditBeneficiary: (BeneficiaryAddEditType) -> Unit,
     onApplyForLoanClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AccountViewModel = koinViewModel(),
@@ -118,10 +112,6 @@ fun AccountsScreen(
                 onViewSavingAccountDetails(event.accountId)
             }
 
-            is AccountEvent.OnAddOrEditTPTBeneficiary -> {
-                onAddOrEditBeneficiary(event.type)
-            }
-
             is AccountEvent.OnApplyForLoan -> {
                 onApplyForLoanClick(event.clientId)
             }
@@ -133,13 +123,6 @@ fun AccountsScreen(
             }
         }
     }
-
-    AccountDialogs(
-        dialogState = state.dialogState,
-        onDismissRequest = remember(viewModel) {
-            { viewModel.trySendAction(AccountAction.DismissDialog) }
-        },
-    )
 
     AccountsScreenContent(
         defaultAccountId = state.defaultAccountId,
@@ -442,36 +425,6 @@ private fun ApplyForLoanCard(
                 containerColor = Color.Transparent,
             ),
         )
-    }
-}
-
-@Composable
-private fun AccountDialogs(
-    dialogState: AccountState.DialogState?,
-    onDismissRequest: () -> Unit,
-) {
-    when (dialogState) {
-        is AccountState.DialogState.DeleteBeneficiary -> ForkBasicDialog(
-            visibilityState = BasicDialogState.Shown(
-                title = stringResource(dialogState.title),
-                message = stringResource(dialogState.message),
-            ),
-            onConfirm = dialogState.onConfirm,
-            onDismissRequest = onDismissRequest,
-        )
-
-        is AccountState.DialogState.Error -> ForkBasicDialog(
-            visibilityState = BasicDialogState.Shown(
-                message = dialogState.message,
-            ),
-            onDismissRequest = onDismissRequest,
-        )
-
-        is AccountState.DialogState.Loading -> ForkLoadingDialog(
-            visibilityState = LoadingDialogState.Shown,
-        )
-
-        null -> Unit
     }
 }
 

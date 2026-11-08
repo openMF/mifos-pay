@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">For mange forsøg. Vent venligst og prøv igen.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Biometrisk hardware er midlertidigt utilgængelig. Prøv venligst igen senere.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Ingen biometri er registreret på denne enhed. Konfigurer venligst biometri i systemindstillingerne.</string>
+    <string name="core_ui_biometric_error_timeout">Biometrisk godkendelse udløb. Prøv venligst igen.</string>
+    <string name="core_ui_biometric_error_no_space">Ikke nok lagerplads til at fuldføre biometrisk godkendelse.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Biometriske registreringsdata er ugyldige. Genaktiver venligst biometri fra app-indstillingerne.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Kunne ikke starte biometrisk godkendelse på grund af ugyldige argumenter.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Kunne ikke starte biometrisk registrering på grund af ugyldige argumenter.</string>
+    <string name="core_ui_biometric_error_unknown">Der opstod en uventet biometrisk fejl. Prøv venligst igen.</string>
+    <string name="core_ui_biometric_prompt_title">Lås Mifos Pay op</string>
+    <string name="core_ui_biometric_prompt_subtitle">Bekræft din identitet for at fortsætte</string>
+    <string name="core_ui_biometric_prompt_description">Brug dit fingeraftryk, ansigt eller enhedsoplysninger</string>
+    <string name="core_ui_biometric_prompt_negative_button">Annuller</string>
+</resources>

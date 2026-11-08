@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Çok fazla deneme. Lütfen bekleyin ve tekrar deneyin.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Biyometrik donanım geçici olarak kullanılamıyor. Lütfen daha sonra tekrar deneyin.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Bu cihazda kayıtlı biyometrik yok. Lütfen biyometriği sistem ayarlarında ayarlayın.</string>
-    <string name="feature_passcode_biometric_error_timeout">Biyometrik kimlik doğrulama zaman aşımına uğradı. Lütfen tekrar deneyin.</string>
-    <string name="feature_passcode_biometric_error_no_space">Biyometrik kimlik doğrulamayı tamamlamak için yeterli depolama alanı yok.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Biyometrik kayıt verisi geçersiz. Lütfen uygulama ayarlarından biyometriği yeniden etkinleştirin.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Geçersiz argümanlar nedeniyle biyometrik kimlik doğrulama başlatılamadı.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Geçersiz argümanlar nedeniyle biyometrik kayıt başlatılamadı.</string>
-    <string name="feature_passcode_biometric_error_unknown">Beklenmeyen bir biyometrik hata oluştu. Lütfen tekrar deneyin.</string>
-    <string name="feature_passcode_biometric_prompt_title">Mifos Pay kilidini açın</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Devam etmek için kimliğinizi doğrulayın</string>
-    <string name="feature_passcode_biometric_prompt_description">Parmak izinizi, yüzünüzü veya cihaz kimlik bilgilerinizi kullanın</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">İptal</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Uygulamanızı güvene alın</string>

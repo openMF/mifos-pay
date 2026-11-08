@@ -18,6 +18,10 @@ Mifos Pay is a mobile wallet on Apache Fineract's self-service API, built on the
 - **App root:** `cmp-navigation/.../registry/app/` holds the wallet shell (`ForkAppRoot`: login, passcode,
   re-auth lock, 401 dialog, the four-tab scaffold), rendered through the template's `ForkAppShell.root`.
   Its Koin modules register via `ForkFeatureRegistry`; module dependencies go in `feature-deps.gradle.kts`.
+- **Navigation:** each feature owns its routes. A feature whose screens only open each other declares a
+  `@FeatureDestination` graph in its `navigation/` package; a screen that opens another feature's screen is
+  wired in `ForkFeatureRegistry`, the one place features meet (they never depend on each other). The
+  signed-out graph lives in `ForkAppShell.preAuthDestinations`. `ForkNavHost` only hosts.
 - **Preferences:** `ForkPreferencesRepository` extends the template's `UserPreferencesRepository` with
   the wallet's user, client, token, accounts and server instances.
 - **Network:** the Fineract self-service stack is the `main` access point (`kpt.core.network.main`).

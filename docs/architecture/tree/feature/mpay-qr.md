@@ -22,10 +22,10 @@ ViewModels: `MpayQrViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/mpay-qr sha=4a8bd8fb9591e2a384734cdaa70968eff2314c79 -->
+<!-- api-docs:begin module=feature/mpay-qr sha=3e92bc6503ecfeda1fa7238186b7f8218784e108 -->
 ## API reference
 
-_Generated from `feature/mpay-qr` at tree `4a8bd8fb9591` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/mpay-qr` at tree `3e92bc6503ec` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -150,7 +150,12 @@ fun NavController.navigateToMpayQrScreen(navOptions: NavOptions? = null)
 ```
 Navigates to the Mpay QR screen.
 
+```kotlin
+fun NavGraphBuilder.mpayQrGraph(navController: NavController)
+```
+The Mpay QR feature's destinations.
+
 ---
 
-_5 type(s), 3 function(s)/property(ies); 8 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
+_5 type(s), 4 function(s)/property(ies); 9 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
 <!-- api-docs:end -->

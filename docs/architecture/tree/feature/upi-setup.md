@@ -20,10 +20,10 @@ Screens: `DebitCardScreen`, `OtpScreen`, `SetUpUPiPinScreen`, `UpiPinScreen`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/upi-setup sha=386a328cbf183cf8faf3133efb004c7baab077d2 -->
+<!-- api-docs:begin module=feature/upi-setup sha=041a27e63cb37d2098b04faa524ee6089a05d834 -->
 ## API reference
 
-_Generated from `feature/upi-setup` at tree `386a328cbf18` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/upi-setup` at tree `041a27e63cb3` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -49,6 +49,11 @@ Was a nav-registered-but-blank destination — the composable body called no scr
 fun NavController.navigateToSetupUpiPin(
 ```
 Navigates to the UPI PIN screen for `type` (setup, change or forgot) of the given bank account.
+
+```kotlin
+fun NavGraphBuilder.upiSetupGraph(navController: NavController)
+```
+The UPI-setup feature's destinations.
 
 ### `feature/upi-setup/src/commonMain/kotlin/kpt/feature/upi/setup/screens/SetUpUPiPinScreen.kt`
 
@@ -200,5 +205,5 @@ Actions handled by the UPI setup ViewModel.
 
 ---
 
-_10 type(s), 8 function(s)/property(ies); 18 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
+_10 type(s), 9 function(s)/property(ies); 19 carry KDoc at source; 0 authored example(s); 5 live call site(s)._
 <!-- api-docs:end -->

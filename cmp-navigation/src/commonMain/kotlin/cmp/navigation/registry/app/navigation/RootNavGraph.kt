@@ -19,14 +19,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import cmp.navigation.registry.ForkAppShell.preAuthDestinations
 import cmp.navigation.registry.app.instance.InstanceSelectorScreen
 import cmp.navigation.registry.app.ui.ForkApp
 import kpt.core.data.fork.util.NetworkMonitor
 import kpt.core.data.fork.util.TimeZoneMonitor
-import kpt.feature.passcode.biometricSetupScreen
-import kpt.feature.passcode.navigateToBiometricSetupScreen
-import kpt.feature.passcode.reAuthPasscodeScreen
-import kpt.feature.passcode.rootPasscodeScreen
 import org.mifos.authenticator.biometrics.platformAuthenticationProvider
 import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenticatorStatus
 
@@ -34,8 +31,8 @@ import org.mifos.authenticator.biometrics.platformAuthenticator.PlatformAuthenti
  * Root nav graph composing the three login-perimeter destinations and the
  * authenticated `:main` graph below them.
  *
- * Destinations registered here:
- *  - `loginNavGraph` — username/password entry; on success calls into
+ * Destinations, registered by `ForkAppShell.preAuthDestinations` except `:main`:
+ *  - the login graph — username/password entry; on success calls into
  *    `navigateToRootPasscodeScreen`.
  *  - `rootPasscodeScreen` — first-time passcode creation **and** post-
  *    login passcode unlock (same screen, behaviour driven by whether the
@@ -90,46 +87,11 @@ internal fun RootNavGraph(
         route = ForkNavGraph.ROOT_GRAPH,
         modifier = modifier,
     ) {
-        loginNavGraph(
+        preAuthDestinations(
             navController = navHostController,
+            isBiometricsAvailable = isBiometricsAvailable,
             onShowInstanceSelector = { showInstanceSelector = true },
-        )
-
-        rootPasscodeScreen(
-            navigateToLogin = {
-                onClickLogout()
-            },
-            onAuthenticationSuccess = {
-                navHostController.popBackStack()
-                navHostController.navigateToMainGraph()
-            },
-            onPasscodeCreation = {
-                navHostController.popBackStack()
-                if (isBiometricsAvailable) {
-                    navHostController.navigateToBiometricSetupScreen()
-                } else {
-                    navHostController.navigateToMainGraph()
-                }
-            },
-        )
-
-        biometricSetupScreen(
-            onBiometricsRegistrationSuccess = {
-                navHostController.popBackStack()
-                navHostController.navigateToMainGraph()
-            },
-            onSkipBiometricSetup = {
-                navHostController.popBackStack()
-                navHostController.navigateToMainGraph()
-            },
-        )
-
-        reAuthPasscodeScreen(
-            navigateToLogin = {
-                navHostController.popBackStack()
-                onClickLogout()
-            },
-            onAuthenticationSuccess = { navHostController.popBackStack() },
+            onLogout = onClickLogout,
         )
 
         composable(ForkNavGraph.MAIN_GRAPH) {

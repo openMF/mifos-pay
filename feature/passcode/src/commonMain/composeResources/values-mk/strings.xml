@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Премногу обиди. Почекајте и обидете се повторно.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Биометрискиот хардвер е привремено недостапен. Обидете се подоцна.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">На овој уред не е регистрирана биометрија. Поставете биометрија во системските поставки.</string>
-    <string name="feature_passcode_biometric_error_timeout">Биометриската автентикација истече. Обидете се повторно.</string>
-    <string name="feature_passcode_biometric_error_no_space">Нема доволно простор за завршување на биометриската автентикација.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Податоците за биометриска регистрација не се валидни. Повторно овозможете биометрија во поставките на апликацијата.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Биометриската автентикација не може да започне поради неважечки аргументи.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Биометриската регистрација не може да започне поради неважечки аргументи.</string>
-    <string name="feature_passcode_biometric_error_unknown">Се случи неочекувана биометриска грешка. Обидете се повторно.</string>
-    <string name="feature_passcode_biometric_prompt_title">Отклучете Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Потврдете го вашиот идентитет за да продолжите</string>
-    <string name="feature_passcode_biometric_prompt_description">Користете го вашиот отпечаток, лице или акредитив на уредот</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Откажи</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Заштитете ја Вашата апликација</string>

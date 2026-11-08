@@ -27,7 +27,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
         }
         commonTest.dependencies {
-            implementation(projects.coreBase.store)
+            implementation(projects.core.store)
         }
     }
 }

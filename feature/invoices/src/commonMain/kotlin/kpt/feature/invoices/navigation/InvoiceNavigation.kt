@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import kpt.core.base.ui.nav.FeatureDestination
 import kpt.core.ui.composableWithPushTransitions
 import kpt.feature.invoices.details.InvoiceDetailScreen
 /** Base navigation route of the invoice detail screen. */
@@ -40,4 +41,10 @@ fun NavGraphBuilder.invoiceDetailScreen(
             navigateBack = onNavigateBack,
         )
     }
+}
+
+/** The invoices feature's destinations. */
+@FeatureDestination
+fun NavGraphBuilder.invoicesGraph(navController: NavController) {
+    invoiceDetailScreen(onNavigateBack = navController::navigateUp)
 }

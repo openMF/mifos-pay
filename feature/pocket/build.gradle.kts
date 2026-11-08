@@ -40,11 +40,10 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            // Template idiom: ScreenDataStream + ScreenState (core-base/store) and
-            // ScreenContent (core-base/ui) so the pocket dashboard consumes the
+            // Template idiom: ScreenDataStream + ScreenState (core/store, which re-exports core-base/store) and
+            // ScreenContent (core/ui, which re-exports core-base/ui) so the pocket dashboard consumes the
             // store's pre-decided ScreenState directly instead of a fork fold.
-            implementation(projects.coreBase.store)
-            implementation(projects.coreBase.ui)
+            implementation(projects.core.store)
         }
 
         commonTest.dependencies {

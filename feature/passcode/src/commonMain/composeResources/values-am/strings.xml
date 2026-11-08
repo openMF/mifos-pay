@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">ብዙ ሙከራዎች። እባክዎ ይጠብቁ እና እንደገና ይሞክሩ።</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">የባዮሜትሪክ ሃርድዌር ለጊዜው አይገኝም። እባክዎ በኋላ እንደገና ይሞክሩ።</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">በዚህ መሣሪያ ላይ ምንም ባዮሜትሪክ አልተመዘገበም። እባክዎ በስርዓት ቅንጅቶች ውስጥ ባዮሜትሪክ ያቀናብሩ።</string>
-    <string name="feature_passcode_biometric_error_timeout">የባዮሜትሪክ ማረጋገጫ ጊዜ አልቋል። እባክዎ እንደገና ይሞክሩ።</string>
-    <string name="feature_passcode_biometric_error_no_space">የባዮሜትሪክ ማረጋገጫን ለማጠናቀቅ በቂ ማከማቻ የለም።</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">የባዮሜትሪክ ምዝገባ ውሂብ ልክ ያልሆነ ነው። እባክዎ ከመተግበሪያ ቅንጅቶች ባዮሜትሪክን እንደገና ያንቁ።</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">በልክ ያልሆኑ ግቤቶች ምክንያት የባዮሜትሪክ ማረጋገጫ መጀመር አልተቻለም።</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">በልክ ያልሆኑ ግቤቶች ምክንያት የባዮሜትሪክ ምዝገባ መጀመር አልተቻለም።</string>
-    <string name="feature_passcode_biometric_error_unknown">ያልተጠበቀ የባዮሜትሪክ ስህተት ተከስቷል። እባክዎ እንደገና ይሞክሩ።</string>
-    <string name="feature_passcode_biometric_prompt_title">Mifos Pay ይክፈቱ</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">ለመቀጠል ማንነትዎን ያረጋግጡ</string>
-    <string name="feature_passcode_biometric_prompt_description">የጣት አሻራዎን፣ ፊትዎን ወይም የመሣሪያ ምስክርነቶችን ይጠቀሙ</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">ሰርዝ</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">መተግበሪያዎን ይጠብቁ</string>

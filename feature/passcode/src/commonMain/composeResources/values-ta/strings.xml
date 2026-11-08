@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">அதிக முயற்சிகள். தயவுசெய்து காத்திருந்து மீண்டும் முயற்சிக்கவும்.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">பயோமெட்ரிக் வன்பொருள் தற்காலிகமாக கிடைக்கவில்லை. தயவுசெய்து பிறகு மீண்டும் முயற்சிக்கவும்.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">இந்த சாதனத்தில் எந்த பயோமெட்ரிக்கும் பதிவு செய்யப்படவில்லை. தயவுசெய்து சிஸ்டம் அமைப்புகளில் பயோமெட்ரிக்ஸை அமைக்கவும்.</string>
-    <string name="feature_passcode_biometric_error_timeout">பயோமெட்ரிக் அங்கீகார நேரம் முடிந்தது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.</string>
-    <string name="feature_passcode_biometric_error_no_space">பயோமெட்ரிக் அங்கீகாரத்தை முடிக்க போதுமான சேமிப்பகம் இல்லை.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">பயோமெட்ரிக் பதிவு தரவு செல்லாது. தயவுசெய்து ஆப் அமைப்புகளில் இருந்து பயோமெட்ரிக்ஸை மீண்டும் இயக்கவும்.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">தவறான உள்ளீடுகளால் பயோமெட்ரிக் அங்கீகாரத்தைத் தொடங்க முடியவில்லை.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">தவறான உள்ளீடுகளால் பயோமெட்ரிக் பதிவைத் தொடங்க முடியவில்லை.</string>
-    <string name="feature_passcode_biometric_error_unknown">எதிர்பாராத பயோமெட்ரிக் பிழை ஏற்பட்டது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.</string>
-    <string name="feature_passcode_biometric_prompt_title">Mifos Pay-ஐ திற</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">தொடர உங்கள் அடையாளத்தை சரிபார்க்கவும்</string>
-    <string name="feature_passcode_biometric_prompt_description">உங்கள் கைரேகை, முகம், அல்லது சாதன சான்றிதழைப் பயன்படுத்தவும்</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">ரத்துசெய்</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">உங்கள் பயன்பாட்டைப் பாதுகாக்கவும்</string>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">උත්සාහයන් වැඩි ගණනක්. කරුණාකර රැඳී සිටින්න සහ නැවත උත්සාහ කරන්න.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">ජෛවමිතික දෘඩාංගය තාවකාලිකව නොමැත. කරුණාකර පසුව නැවත උත්සාහ කරන්න.</string>
+    <string name="core_ui_biometric_error_not_enrolled">මෙම උපාංගයේ ජෛවමිතිකයන් ලියාපදිංචි කර නොමැත. කරුණාකර පද්ධති සැකසුම්වල ජෛවමිතික සකසන්න.</string>
+    <string name="core_ui_biometric_error_timeout">ජෛවමිතික සත්‍යාපන කාලය ඉකුත් විය. කරුණාකර නැවත උත්සාහ කරන්න.</string>
+    <string name="core_ui_biometric_error_no_space">ජෛවමිතික සත්‍යාපනය සම්පූර්ණ කිරීමට ප්‍රමාණවත් ආචයනයක් නොමැත.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">ජෛවමිතික ලියාපදිංචි දත්ත අවලංගුයි. කරුණාකර යෙදුම් සැකසුම්වලින් ජෛවමිතික නැවත සක්‍රීය කරන්න.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">අවලංගු තර්ක නිසා ජෛවමිතික සත්‍යාපනය ආරම්භ කළ නොහැකි විය.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">අවලංගු තර්ක නිසා ජෛවමිතික ලියාපදිංචිය ආරම්භ කළ නොහැකි විය.</string>
+    <string name="core_ui_biometric_error_unknown">අනපේක්ෂිත ජෛවමිතික දෝෂයක් සිදු විය. කරුණාකර නැවත උත්සාහ කරන්න.</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay අගුළු හරින්න</string>
+    <string name="core_ui_biometric_prompt_subtitle">ඉදිරියට යාමට ඔබේ අනන්‍යතාව සත්‍යාපනය කරන්න</string>
+    <string name="core_ui_biometric_prompt_description">ඔබේ ඇඟිලි සලකුණ, මුහුණ, හෝ උපාංග අක්තපත්‍රය භාවිත කරන්න</string>
+    <string name="core_ui_biometric_prompt_negative_button">ඉවත් කරන්න</string>
+</resources>
