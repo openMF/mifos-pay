@@ -2,13 +2,13 @@
 
 > **Layer:** core — fork-owned; a codegen target
 > **Corpus surface:** `CORE_MODEL.md`
-> **Measured:** 154 Kotlin files, 2 test files
+> **Measured:** 153 Kotlin files, 2 test files
 
 **Consumes contracts:** `@IgnoredOnParcel`, `@Parcelize`
 
 ## Principal types
 
-`AccessToken`, `Account`, `AccountContent`, `AccountOption`, `AccountOptionsTemplate`, `AccountResult`, `AccountStatus`, `AccountTransferPayload`, `AccountType`, `AccountTypeOption`, `AccountsWithTransactions`, `Address`, `Amount`, `AppOrgLinks`  …and 170 more
+`AccessToken`, `Account`, `AccountOption`, `AccountOptionsTemplate`, `AccountResult`, `AccountStatus`, `AccountTransferPayload`, `AccountType`, `AccountTypeOption`, `AccountsWithTransactions`, `Address`, `Amount`, `AppOrgLinks`, `AppPrivacyConfig`  …and 169 more
 
 <!-- scaffold:end -->
 
@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/model sha=47f33fb8d19ac3b2925b3523accb5aed71a401f6 -->
+<!-- api-docs:begin module=core/model sha=4ecb16fb9f42f08b2dadc7413d3682336f335f9e -->
 ## API reference
 
-_Generated from `core/model` at tree `47f33fb8d19a` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/model` at tree `4ecb16fb9f42` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/account/Account.kt`
@@ -39,27 +39,6 @@ A wallet account (savings account) shown to the user, with its balance, currency
         AccountState(
             clientId = clientId,
             defaultAccountId = defaultAccount,
-```
-
-</details>
-
-### `core/model/src/commonMain/kotlin/kpt/core/model/account/AccountContent.kt`
-
-```kotlin
-data class AccountContent(
-```
-Combined payload of the user's accounts and saved beneficiaries.
-
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:70</code></summary>
-
-```kotlin
-                flowOf(
-                    ScreenState.Error(IllegalStateException("Client ID not available"))
-                        as ScreenState<kpt.core.model.account.AccountContent>,
-                )
-            }
-        }
-        .mapLatest { screenState ->
 ```
 
 </details>
@@ -99,7 +78,7 @@ data class DefaultAccount(
 ```
 The account the user has chosen as their default for payments.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:135</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:126</code></summary>
 
 ```kotlin
     private fun handleSetDefaultAccount(action: AccountAction.SetDefaultAccount) {
@@ -715,13 +694,13 @@ data class Client(
 ```
 A bank client (customer) profile as returned by Fineract.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:69</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:60</code></summary>
 
 ```kotlin
             } else {
                 flowOf(
                     ScreenState.Error(IllegalStateException("Client ID not available"))
-                        as ScreenState<kpt.core.model.account.AccountContent>,
+                        as ScreenState<List<Account>>,
                 )
             }
         }
@@ -826,7 +805,7 @@ data class UpdatedClient(
 ```
 Editable profile fields sent when updating a client.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:257</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:246</code></summary>
 
 ```kotlin
     override suspend fun setLanguage(language: Language) {}
@@ -990,7 +969,7 @@ data class Language(
 ```
 A language the user can choose in the app.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:251</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:240</code></summary>
 
 ```kotlin
     override val selectedInterbankInstance: StateFlow<InterbankServer?> = MutableStateFlow(null)
@@ -1586,7 +1565,7 @@ data class AuthenticationPayload(
 ```
 Request body for authenticating a user against the Fineract self-service API.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:115</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:114</code></summary>
 
 ```kotlin
     }
@@ -3277,7 +3256,7 @@ data class Transaction(
 ```
 A savings account transaction.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:124</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:123</code></summary>
 
 ```kotlin
         flowOf(ScreenState.Empty)
@@ -3812,5 +3791,5 @@ Data class representing standard UPI QR code data Based on UPI QR code specifica
 
 ---
 
-_195 type(s), 15 function(s)/property(ies); 210 carry KDoc at source; 2 authored example(s); 177 live call site(s)._
+_194 type(s), 15 function(s)/property(ies); 209 carry KDoc at source; 2 authored example(s); 176 live call site(s)._
 <!-- api-docs:end -->

@@ -285,7 +285,7 @@ data class BeneficiaryKey(val clientId: Long)
 ```
 Store5 key for the LEDGER `beneficiary` store — one page of beneficiaries per authenticated client.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:83</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:81</code></summary>
 
 ```kotlin
     private val fetchedAtRepository: FetchedAtRepository?,
@@ -355,7 +355,7 @@ data class TransactionKey(val accountId: Long)
 ```
 Store5 key for the LEDGER `history` store — one page of transactions per savings account.
 
-<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:79</code></summary>
+<details><summary>Used in the template — <code>core/data/src/commonMain/kotlin/kpt/core/data/repositoryImpl/SelfServiceRepositoryImpl.kt:77</code></summary>
 
 ```kotlin
     @FromQualifier("IO") private val dispatcher: CoroutineDispatcher,

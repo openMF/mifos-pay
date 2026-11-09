@@ -24,7 +24,7 @@
 
 | Area | Files | Page |
 |---|---:|---|
-| `core/` | 918 | [`core/`](tree/core.md) |
+| `core/` | 917 | [`core/`](tree/core.md) |
 | `core-base/` | 510 | [`core-base/`](tree/core-base.md) |
 
 ## Codegen

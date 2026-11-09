@@ -49,25 +49,16 @@ class AccountViewModel(
         )
     },
 ) {
-    // Phase-5 Batch-4: cut over from the transitional
-    // `getAccountAndBeneficiaryList` (Flow<DataState<T>>) to the store-native
-    // `getAccountAndBeneficiaryListScreen` (Flow<ScreenState<T>>), which folds
-    // the network-account stream + store-backed beneficiary stream through a
-    // manual `combine {}` fold over the FORK's ScreenState (priority ladder:
-    // NoNetwork > Loading > Unauthenticated > Error > Empty > Content). See
-    // `SelfServiceRepositoryImpl.foldAccountAndBeneficiary` for the fold's
-    // implementation; the template's `combineScreenStates` helper cannot be
-    // used verbatim because it is typed against the template's ScreenState.
     /** The signed-in client's accounts, as a screen state. */
     val accountState = mutableStateFlow
         .flatMapLatest { currentState ->
             val clientId = currentState.clientId
             if (clientId != null) {
-                repository.getAccountAndBeneficiaryListScreen(clientId, viewModelScope)
+                repository.getSelfAccounts(clientId)
             } else {
                 flowOf(
                     ScreenState.Error(IllegalStateException("Client ID not available"))
-                        as ScreenState<kpt.core.model.account.AccountContent>,
+                        as ScreenState<List<Account>>,
                 )
             }
         }
@@ -91,7 +82,7 @@ class AccountViewModel(
                     AccountState.ViewState.Error(screenState.error.message.toString())
 
                 is ScreenState.Content -> {
-                    val sortedAccounts = screenState.data.accounts.sortedWith(
+                    val sortedAccounts = screenState.data.sortedWith(
                         compareByDescending<Account> { account -> account.status.active }
                             .thenBy { account -> account.number },
                     )

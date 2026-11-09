@@ -22,10 +22,10 @@ ViewModels: `AccountViewModel`, `AddEditSavingViewModel`, `SavingAccountDetailVi
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/accounts sha=06c6f9a21ff389aa919d399f9e8df9b89db1b28e -->
+<!-- api-docs:begin module=feature/accounts sha=c1ee2acdb4dfe47150f70f7de46d3ea3f38b8ab6 -->
 ## API reference
 
-_Generated from `feature/accounts` at tree `06c6f9a21ff3` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/accounts` at tree `c1ee2acdb4df` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -186,7 +186,7 @@ sealed class SavingsAddEditType
 ```
 Whether the savings account form creates a new account or edits an existing one.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:112</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:103</code></summary>
 
 ```kotlin
         when (action) {

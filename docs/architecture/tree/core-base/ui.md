@@ -196,15 +196,16 @@ fun List<ScreenState<*>>.toDashboardProgressState(): DashboardProgressState =
 ```
 Pure conversion from a list of per-card states to a single `DashboardProgressState`. Exposed so tests + non-Flow call sites can re-use the aggregation contract.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:82</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:61</code></summary>
 
 ```kotlin
-                    // (screen still shows the FAB + empty-state copy; no
-                    // dedicated Empty ViewState variant exists here).
-                    AccountState.ViewState.Content(accounts = emptyList())
-
-                is ScreenState.NoNetwork ->
-                    AccountState.ViewState.Error("No network connection")
+                flowOf(
+                    ScreenState.Error(IllegalStateException("Client ID not available"))
+                        as ScreenState<List<Account>>,
+                )
+            }
+        }
+        .mapLatest { screenState ->
 ```
 
 </details>

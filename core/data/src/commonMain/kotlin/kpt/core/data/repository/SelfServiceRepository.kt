@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
 import kpt.core.base.store.screen.ScreenDataStream
 import kpt.core.common.ScreenState
 import kpt.core.model.account.Account
-import kpt.core.model.account.AccountContent
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.beneficiary.BeneficiaryPayload
 import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
@@ -169,53 +168,6 @@ interface SelfServiceRepository {
         clientId: Long,
         scope: CoroutineScope,
     ): ScreenDataStream<List<Beneficiary>>
-
-    // Dashboard-style aggregation of two upstream streams, lifted into
-    // ScreenState via `asScreenStateFlow`. New callers SHOULD prefer
-    // [getAccountAndBeneficiaryListScreen], the Phase-5 Batch-4 store-native
-    // combinator; this simpler network-only variant is kept for BC.
-    /** Streams the client's accounts together with their beneficiaries. */
-    fun getAccountAndBeneficiaryList(clientId: Long): Flow<ScreenState<AccountContent>>
-
-    /**
-     * Phase-5 Batch-4 **combinator read** for the account+beneficiary
-     * dashboard (GOAL D13 — aggregation variant of the `beneficiary` archetype)
-     * — returns an offline-first `Flow<ScreenState<AccountContent>>` folded
-     * from TWO independent upstream streams:
-     *
-     * 1. The active-accounts network stream (`getSelfAccounts(clientId)` —
-     *    still a raw network flow lifted through `asScreenStateFlow`), and
-     * 2. The store-backed beneficiary stream ([getBeneficiaryListScreen]).
-     *
-     * ### Priority + fold semantics
-     *
-     * The fold mirrors the template's `combineScreenStates` priority ladder —
-     * `NoNetwork > Loading > Unauthenticated > Error > Empty > Content` —
-     * but is written as a manual `combine {}` over the FORK's
-     * [`kpt.core.common.ScreenState`], because the template's
-     * `combineScreenStates` helper in `core-base/store/screen/` is typed
-     * against `kpt.core.base.store.screen.ScreenState` (a distinct type
-     * carrying `FreshnessSignal` on `Content`) and cannot be used verbatim
-     * on fork streams. Both sources must reach `Content` before the fold
-     * emits `Content(AccountContent(...))`.
-     *
-     * ### Write path (GOAL D1)
-     *
-     * This is a READ-only combinator. Downstream writes (create/update/delete
-     * beneficiary + create/update savings-account) continue to flow through
-     * their existing online repositories; the store-backed beneficiary source
-     * re-emits on the next refresh cycle, and the network account stream
-     * emits fresh values on the next subscription. There is no bookkeeper.
-     *
-     * @param clientId Owning client id — passed to both upstream streams so
-     *   the beneficiary source's cache slot is client-scoped.
-     * @param scope Coroutine scope for the beneficiary stream's internal
-     *   helper coroutines (typically `viewModelScope`).
-     */
-    fun getAccountAndBeneficiaryListScreen(
-        clientId: Long,
-        scope: CoroutineScope,
-    ): Flow<ScreenState<AccountContent>>
 
     // Beneficiary writes — plain suspend (throw on error). The success message is
     // now owned by each consumer VM as a feature StringResource.

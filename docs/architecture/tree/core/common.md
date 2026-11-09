@@ -669,13 +669,13 @@ sealed interface ScreenState<out T>
 ```
 Unified UI state produced by fork repositories (and, once Phase 4 lands, by `Store<Key, Output>.asScreenStream(...)`). Replaces the legacy `DataState` sealed class as the single fork-wide read-side model.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:69</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:60</code></summary>
 
 ```kotlin
             } else {
                 flowOf(
                     ScreenState.Error(IllegalStateException("Client ID not available"))
-                        as ScreenState<kpt.core.model.account.AccountContent>,
+                        as ScreenState<List<Account>>,
                 )
             }
         }

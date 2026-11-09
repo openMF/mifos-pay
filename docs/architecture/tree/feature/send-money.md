@@ -1460,7 +1460,7 @@ sealed interface ViewState
 ```
 State of the account search results list.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:76</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:67</code></summary>
 
 ```kotlin
         .mapLatest { screenState ->

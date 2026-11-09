@@ -27,7 +27,6 @@ import kpt.core.datastore.prefs.ForkPreferencesRepository
 import kpt.core.datastore.prefs.UserPreferencesRepository
 import kpt.core.datastore.prefs.UserPreferencesRepositoryImpl
 import kpt.core.model.account.Account
-import kpt.core.model.account.AccountContent
 import kpt.core.model.account.DefaultAccount
 import kpt.core.model.beneficiary.Beneficiary
 import kpt.core.model.beneficiary.BeneficiaryPayload
@@ -185,16 +184,6 @@ internal class FakeSelfServiceRepository : SelfServiceRepository {
             },
         )
     }
-
-    override fun getAccountAndBeneficiaryList(
-        clientId: Long,
-    ): Flow<ScreenState<AccountContent>> =
-        flowOf(ScreenState.Empty)
-
-    override fun getAccountAndBeneficiaryListScreen(
-        clientId: Long,
-        scope: CoroutineScope,
-    ): Flow<ScreenState<AccountContent>> = flowOf(ScreenState.Empty)
 
     override suspend fun createBeneficiary(beneficiaryPayload: BeneficiaryPayload) {}
 

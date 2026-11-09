@@ -1135,7 +1135,7 @@ class ScreenDataStream<T> internal constructor(
 ```
 One screen's read surface: a cold `ScreenState` flow plus the refresh/retry controls that drive it.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:81</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:80</code></summary>
 
 ```kotlin
 
@@ -1154,7 +1154,7 @@ annotation class ExperimentalScreenDataStreamTestingApi
 ```
 Opt-in marker for the testing-only `ScreenDataStream` constructors.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:80</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:79</code></summary>
 
 ```kotlin
     }
@@ -1190,13 +1190,13 @@ sealed interface ScreenState<out T>
 ```
 Unified UI state produced by `ScreenDataStream`. Replaces per-ViewModel ScreenUiState + isFromCache + isRefreshing + networkStatus.
 
-<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:69</code></summary>
+<details><summary>Used in the template — <code>feature/accounts/src/commonMain/kotlin/kpt/feature/accounts/AccountViewModel.kt:60</code></summary>
 
 ```kotlin
             } else {
                 flowOf(
                     ScreenState.Error(IllegalStateException("Client ID not available"))
-                        as ScreenState<kpt.core.model.account.AccountContent>,
+                        as ScreenState<List<Account>>,
                 )
             }
         }

@@ -16,10 +16,10 @@ ViewModels: `FastMpayViewModel`
 
 _Authored below this marker; regeneration never touches it._
 
-<!-- api-docs:begin module=feature/fast-mpay sha=a55ed2bb24433e0c6394c46d0f3098cfca0941ae -->
+<!-- api-docs:begin module=feature/fast-mpay sha=114dd419cde7980d6ccb11134433d1afc143ac17 -->
 ## API reference
 
-_Generated from `feature/fast-mpay` at tree `a55ed2bb2443` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/fast-mpay` at tree `114dd419cde7` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published

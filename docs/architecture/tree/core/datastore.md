@@ -332,7 +332,7 @@ class UserPreferencesRepositoryImpl(
 ```
 Splits user data storage between plain (UI preferences) and secure (credentials/auth state) Settings backends.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:274</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:263</code></summary>
 
 ```kotlin
 
@@ -655,7 +655,7 @@ class UserPreferencesRepositoryImpl(
 ```
 Splits user data storage between plain (UI preferences) and secure (credentials/auth state) Settings backends.
 
-<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:274</code></summary>
+<details><summary>Used in the template — <code>feature/fast-mpay/src/commonTest/kotlin/kpt/feature/fastmpay/TestFakes.kt:263</code></summary>
 
 ```kotlin
 
