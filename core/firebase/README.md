@@ -3,17 +3,17 @@
 ## Fork-customisation seam (start here)
 
 The toolkit ships **without analytics** — every event call becomes a no-op via
-`coreAnalyticsModule` (the `AnalyticsHelper` is bound to `NoOpAnalyticsHelper`).
+`coreFirebaseModule` (the `AnalyticsHelper` is bound to the `cmp-firebase` NoOp helper).
 The fork-customisation seam is a single Koin binding. To wire real analytics,
 override the binding in your app module:
 
 ### 1. No-op (toolkit default — privacy-respecting open-source build)
 
 ```kotlin
-import kpt.core.analytics.di.coreAnalyticsModule
+import kpt.core.firebase.di.coreFirebaseModule
 
 startKoin {
-    modules(coreAnalyticsModule, /* ... */)  // NoOpAnalyticsHelper installed
+    modules(coreFirebaseModule, /* ... */)  // NoOp AnalyticsHelper installed
 }
 ```
 
@@ -26,12 +26,12 @@ val devAnalyticsModule = module {
 startKoin { modules(devAnalyticsModule, /* ... */) }
 ```
 
-### 3. Firebase Analytics (skip `coreAnalyticsModule`, use framework actuals)
+### 3. Firebase Analytics (`core-base/firebase`)
 
 ```kotlin
-import template.core.base.analytics.di.analyticsModule
+import kpt.core.base.firebase.di.firebaseModule
 startKoin {
-    modules(analyticsModule, /* ... */)  // FirebaseAnalyticsHelper via expect/actual
+    modules(firebaseModule, /* ... */)  // Firebase-backed AnalyticsHelper; collection starts off until consent
 }
 ```
 
@@ -52,7 +52,7 @@ class MixpanelAnalyticsHelper(token: String) : AnalyticsHelper {
 val mixpanelModule = module {
     single<AnalyticsHelper> { MixpanelAnalyticsHelper(BuildConfig.MIXPANEL_TOKEN) }
 }
-startKoin { modules(mixpanelModule, /* ... */) }  // Overrides coreAnalyticsModule
+startKoin { modules(mixpanelModule, /* ... */) }  // Overrides coreFirebaseModule
 ```
 
 Koin's last-binding-wins resolution means later modules override earlier
@@ -76,7 +76,7 @@ microfinance applications.
 
 ## Enhanced Features
 
-### 🚀 Base Analytics Enhancements (`core-base:analytics`)
+### 🚀 Base Analytics Enhancements (`cmp-firebase`)
 
 #### Enhanced AnalyticsEvent
 

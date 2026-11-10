@@ -520,6 +520,16 @@ rules:
   - glob: ".github/workflows/cla-check.yml"
     owner: fork
     strategy: repo-files
+  # The repository's own issue and pull-request forms (e.g. a mentoring programme's issue form). The
+  # template ships none, so as template-owned paths a sync deleted them from every fork that had them.
+  - glob: ".github/ISSUE_TEMPLATE/**"
+    owner: fork
+  - glob: ".github/ISSUE_TEMPLATE.md"
+    owner: fork
+  - glob: ".github/PULL_REQUEST_TEMPLATE.md"
+    owner: fork
+  - glob: ".github/pull_request_template.md"
+    owner: fork
   - glob: "gradle/fork.properties"            # derived build-bridge from app-profile/app.yaml (do not hand-edit); gitignored
     owner: fork
   - glob: "local.properties"

@@ -56,7 +56,7 @@ while IFS= read -r hit; do
     f="${hit%%:*}"; rest="${hit#*:}"; ln="${rest%%:*}"; body="${rest#*:}"
     id="$(printf '%s' "$body" | sed -n 's/.*id = "\([A-Za-z0-9_]*\)".*/\1/p')"
     [ -z "$id" ] && continue
-    if printf '%s' "$body" | grep -q 'logout = false'; then lo=false; else lo=true; fi
+    if grep -q 'logout = false' <<<"$body"; then lo=false; else lo=true; fi
     printf '%s\t%s\t%s\t%s\n' "$id" "$lo" "$f" "$ln" >> "$ALL"
 done < <(grep -rn '@StoreProvider(' "$STORE_DIR" --include='*.kt' 2>/dev/null || true)
 

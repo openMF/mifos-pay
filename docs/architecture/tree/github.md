@@ -1,14 +1,15 @@
 # `.github/`
 
 > **Kind:** GitHub Actions  
-> **Measured:** 17 tracked files — 12× `.yml`, 2× `.md`, 2× `.yaml`, 1× `.properties`
+> **Measured:** 20 tracked files — 13× `.yml`, 4× `.md`, 2× `.yaml`, 1× `.properties`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
 | `.github/workflows/` | 14 |
-| (files at the root) | 3 |
+| (files at the root) | 5 |
+| `.github/ISSUE_TEMPLATE/` | 1 |
 
 ## Workflows
 
@@ -43,6 +44,8 @@ _Authored beside the code, where the module's own consumers read them._
 |---|---|
 | `.github/CLAUDE.md` | GitHub Actions - CI/CD Infrastructure |
 | `.github/CONTRIBUTING.md` | Contribute to Mobile Wallet Android Application |
+| `.github/ISSUE_TEMPLATE.md` |  |
+| `.github/PULL_REQUEST_TEMPLATE.md` |  |
 
 ## Guides
 

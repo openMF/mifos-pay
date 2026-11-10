@@ -1,9 +1,9 @@
 # `tests/customization-surface/`
 
 > Part of [`tests/`](../tests.md)  
-> **Measured:** 19 tracked files — 19× `.sh`
+> **Measured:** 20 tracked files — 20× `.sh`
 
-19 tracked files.
+20 tracked files.
 
 <!-- tree-scaffold:end -->
 ## Significance

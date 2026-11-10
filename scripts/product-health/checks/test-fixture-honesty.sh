@@ -36,7 +36,7 @@ ROOT="${1:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)}"
 
 # A match inside a COMMENT is prose about the defect, not the defect — this file's own docs, and
 # the very comments explaining the historical bug, would otherwise fail the check that documents it.
-is_comment() { printf '%s' "$1" | grep -qE '^[[:space:]]*(//|\*|/\*)'; }
+is_comment() { grep -qE '^[[:space:]]*(//|\*|/\*)' <<<"$1"; }
 
 # Markers sit on the line above, but an explanation often wraps across two or three comment lines,
 # so scan a small window rather than exactly one line.
@@ -79,7 +79,7 @@ while IFS= read -r f; do
         is_comment "$body" && continue
         typ="$(printf '%s' "$body" | sed -n 's/.*throw \([A-Za-z0-9_]*\).*/\1/p')"
         [ -z "$typ" ] && continue
-        printf '%s' "$typ" | grep -qiE "$NET_NAMES" && continue          # name delivers — fine
+        grep -qiE "$NET_NAMES" <<<"$typ" && continue          # name delivers — fine
         has_marker "$f" "$ln" 'fixture-ok:' && continue
         fail "TF-1 $rel:$ln throws $typ with a message claiming network failure — categorize() keys Network off the CLASS NAME, so this is Generic and the offline-first branch is never entered. Use an ${typ}-style name containing one of: IOException/Connect/Timeout/UnknownHost/SSLException/Offline/HttpRequestException/Socket"
     done < <(grep -niE "throw [A-Za-z0-9_]+\(\"[^\"]*($NET_WORDS)" "$f" 2>/dev/null || true)

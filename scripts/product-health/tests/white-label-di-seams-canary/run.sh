@@ -32,4 +32,13 @@ cell wls2-stranded    1 "WLS-2 Fork*Module under demo → FAIL" WLS-2
 cell wls3-seam-fenced 1 "WLS-3 seam inside demo fence    → FAIL" WLS-3
 cell wls4-demo-loose  1 "WLS-4 demo module outside fence → FAIL" WLS-4
 cell wls5-template-owned 1 "WLS-5 seam owner:template       → FAIL" WLS-5
+
+# A registry far larger than a pipe buffer, its seam listed first: `grep -q` stops reading at the match,
+# and a writer piped into it under pipefail used to turn that FOUND seam into "not registered" (WLS-3).
+# Built at run time from the green fixture so megabytes of filler never land in the repository.
+BIG="$(mktemp -d)"; trap 'rm -rf "$BIG"' EXIT
+cp -R "$HERE/green" "$BIG/big-registry"
+awk '{print} /^[[:space:]]*Fork[A-Za-z]*Module,/ && !done {for (i = 0; i < 40000; i++) printf "    // filler line %d keeps the registry larger than any pipe buffer\n", i; done = 1}' \
+  "$HERE/green/reg/ForkFeatureRegistry.kt" > "$BIG/big-registry/reg/ForkFeatureRegistry.kt"
+HERE="$BIG" cell big-registry 0 "seam in a large registry         → PASS"
 exit "$rc_ok"

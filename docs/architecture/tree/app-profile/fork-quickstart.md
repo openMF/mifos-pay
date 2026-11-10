@@ -131,7 +131,7 @@ change.
 - **Swap for:** `FirebaseAnalyticsHelper` (already shipped — opt-in by
   changing the Koin binding), Amplitude, Mixpanel, PostHog.
 - **Where:** consumer Koin module. The higher-level `KptAnalyticsTracker`
-  (in `core/analytics/`) consumes whichever `AnalyticsHelper` you bind — no
+  (in `core/firebase/`) consumes whichever `AnalyticsHelper` you bind — no
   call-site changes.
 
 ### 2d. Network config bindings

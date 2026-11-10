@@ -7,7 +7,7 @@ The submodules under `core-base/*` are:
 
 | Module | Purpose |
 |---|---|
-| `analytics` | `AnalyticsHelper` interface + `NoOpAnalyticsHelper` / `StubAnalyticsHelper` / `FirebaseAnalyticsHelper` implementations + per-platform Koin DI wiring. (The higher-level `KptAnalyticsTracker` lives one layer up at `core/analytics/` — see "awaiting promotion" below.) |
+| `firebase` | Production Firebase wiring: binds the `cmp-firebase` Firebase-backed `AnalyticsHelper` + `PerformanceTracker`, collection off until consent. (The app's domain event catalog, `KptAnalyticsTracker`, lives one layer up in `core/firebase/` — see "awaiting promotion" below.) |
 | `common` | Pure-Kotlin utilities (no Compose / no DI) |
 | `database` | Room base helpers and KMP database wiring |
 | `datastore` | Multiplatform DataStore preferences |
@@ -92,8 +92,8 @@ dependency on a fork-customizable type is unwound. They WILL move into
   brand-neutral primitive; the outer one (`core/designsystem/theme/KptTheme.kt`)
   is the fork's entry point that wires `appScreenStateDefaults()` and the
   Material color scheme.
-- **Analytics:** `KptAnalyticsTracker` (`core/analytics/KptAnalyticsTracker.kt`)
-  — the higher-level tracker that consumes `core-base/analytics`'s
+- **Analytics:** `KptAnalyticsTracker` (`core/firebase/.../config/analytics/KptAnalyticsTracker.kt`)
+  — the higher-level tracker that consumes the `cmp-firebase`
   `AnalyticsHelper` interface. Promotion deferred while the event-naming
   contract stabilizes.
 - **Scaffold:** `KptScaffold` (`core/ui/scaffold/`) — pull-to-refresh +

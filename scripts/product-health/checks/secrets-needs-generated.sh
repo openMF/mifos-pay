@@ -28,7 +28,7 @@ fail=0
 warn=0
 if out="$(ruby "$RESOLVER" needs-generate --check --root "$ROOT" 2>&1)"; then
   echo "  ✓ SN-1 $(printf '%s' "$out" | grep '^✓' | sed 's/^✓ secrets-needs: //')"
-  if printf '%s' "$out" | grep -q '^⚠ legacy'; then
+  if grep -q '^⚠ legacy' <<<"$out"; then
     echo "  ⚠ SN-1 targets still hand-authored (v1) — they get none of this drift protection:"
     printf '%s\n' "$out" | grep '^⚠ legacy' | sed 's/^⚠ legacy v1 (hand-authored, not generated): /      /; s/ — migrate.*//'
     warn=1

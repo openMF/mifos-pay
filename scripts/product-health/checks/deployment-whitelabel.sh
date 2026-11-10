@@ -64,7 +64,7 @@ if [ -d "$HEALTH_ROOT/deployment" ]; then
       *.appxmanifest) stripped="$(sed 's/<!--.*-->//g' "$f")" ;;   # strip XML comments
       *)              stripped="$(sed 's/#.*$//' "$f")" ;;          # strip rb/yaml/yml/toml line comments
     esac
-    if printf '%s\n' "$stripped" | grep -qE "$PATTERNS"; then
+    if grep -qE "$PATTERNS" <<<"$stripped"; then
       b2_hits+=("${f#$HEALTH_ROOT/}")
     fi
   done < <(find "$HEALTH_ROOT/deployment" -type f \
@@ -123,7 +123,7 @@ if [ -f "$APP_YAML" ] && [ -f "$MANIFEST" ]; then
   for pk in $target_platforms; do
     look="$pk"
     case "$pk" in macos|windows|ubuntu) look="desktop" ;; esac
-    printf ' %s ' "$manifest_platforms" | grep -q " $look " || b5+=("app.yaml#targets.$pk has no matching platform in DEPLOYMENT_MANIFEST.yaml")
+    grep -q " $look " <<<" $manifest_platforms " || b5+=("app.yaml#targets.$pk has no matching platform in DEPLOYMENT_MANIFEST.yaml")
   done
 fi
 if [ "${#b5[@]}" -ne 0 ]; then

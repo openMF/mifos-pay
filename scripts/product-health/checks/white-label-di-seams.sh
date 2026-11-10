@@ -61,10 +61,13 @@ if [ -f "$REG" ]; then
   # Split the registry at the demo fence: outside = survives --clean, inside = stripped.
   outside=$(awk '/demo:begin/{s=1} /demo:end/{s=0; next} !s' "$REG")
   inside=$(awk  '/demo:begin/{s=1; next} /demo:end/{s=0} s' "$REG")
+  # `grep -q … <<<"$x"`, never `printf "$x" | grep -q`: under pipefail, grep -q exiting on its first match
+  # SIGPIPEs the writer, and a large registry turned a FOUND module into "not registered" (mifos-pay CI).
+  # The writer is killed by the signal, so `{ printf … || :; }` does not help — only dropping the pipe does.
   for f in $(find "$CORE" -path '*/di/Fork*Module.kt' -not -path '*/demo/*' -not -path '*/build/*' 2>/dev/null | sort); do
     n="$(basename "$f" .kt)"
-    if ! printf '%s' "$outside" | grep -qE "^\s*$n,"; then
-      if printf '%s' "$inside" | grep -qE "^\s*$n,"; then
+    if ! grep -qE "^\s*$n," <<<"$outside"; then
+      if grep -qE "^\s*$n," <<<"$inside"; then
         echo "❌ WLS-3 $n is listed INSIDE ForkFeatureRegistry's demo fence — --clean would drop the fork's seam"
       else
         echo "❌ WLS-3 $n is not registered in ForkFeatureRegistry.featureKoinModules at all"
@@ -75,7 +78,7 @@ if [ -f "$REG" ]; then
   for f in $demo_mods; do
     [ -z "$f" ] && continue
     n="$(basename "$f" .kt)"
-    printf '%s' "$outside" | grep -qE "^\s*$n," && {
+    grep -qE "^\s*$n," <<<"$outside" && {
       echo "❌ WLS-4 $n is listed OUTSIDE the demo fence — it survives --clean but its bindings do not"
       fail=1
     }

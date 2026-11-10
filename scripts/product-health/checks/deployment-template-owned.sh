@@ -23,7 +23,7 @@ fail=0
 # Code lines only (a // comment may name a path); each "deployment/…" string literal must be allowed.
 bad="$(grep -nE '"deployment/' "$P" | grep -vE '^[0-9]+:[[:space:]]*(//|\*)' \
         | grep -oE '^[0-9]+:|"deployment/[^"]*"' | awk '/^[0-9]+:$/{n=$0; next} {gsub(/"/,""); print n" "$0}' \
-        | while read -r n path; do printf '%s' "$path" | grep -qE "$ALLOWED" || echo "$n $path"; done)"
+        | while read -r n path; do grep -qE "$ALLOWED" <<<"$path" || echo "$n $path"; done)"
 if [ -n "$bad" ]; then
   echo "  ✗ DT-1 syncForkConfig names template-owned deployment/ paths (render fork values at run time instead —"
   echo "        deployment/_shared/scripts/fork-identity.sh — or move the file into a generated area):"
