@@ -35,6 +35,7 @@ import androidx.navigation.navOptions
 import cmp.navigation.authenticated.AuthenticatedGraphRoute
 import cmp.navigation.authenticated.authenticatedGraph
 import cmp.navigation.authenticated.navigateToAuthenticatedGraph
+import cmp.navigation.registry.ForkAppShell
 import cmp.navigation.registry.ForkDeepLinkRegistry
 import cmp.navigation.splash.SplashRoute
 import cmp.navigation.splash.navigateToSplash
@@ -107,7 +108,8 @@ fun RootNavScreen(
                 // First-run onboarding (feature/onboarding). Only reached when app-profile/app.yaml
                 // sets security.first_run_onboarding: true; a fork with a server-setup screen passes it here.
                 onboardingDestination()
-//            authNavGraph(navController)
+                // A fork's root-graph destinations (sign-in, server setup) — ForkAppShell.rootDestinations.
+                ForkAppShell.rootDestinations(this, navController)
                 authenticatedGraph(navController)
 //            userUnlockDestination()
             }

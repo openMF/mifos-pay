@@ -72,6 +72,9 @@ object ForkAppShell {
             )
         }
 
+    /** The template root's signed-out destinations; empty here because [root] replaces that root. */
+    val rootDestinations: NavGraphBuilder.(NavController) -> Unit = {}
+
     /**
      * The wallet root's signed-out and lock-screen destinations: sign-in, sign-up, the passcode unlock
      * and first-time setup, biometric setup and the re-auth lock. They come before the signed-in graph,
