@@ -36,7 +36,7 @@
 | `core-base:network` | 34 Kotlin files — [guide](core-base/network.md) |
 | `core-base:observability` | 4 Kotlin files — [guide](core-base/observability.md) |
 | `core-base:platform` | 25 Kotlin files — [guide](core-base/platform.md) |
-| `core-base:security` | 43 Kotlin files — [guide](core-base/security.md) |
+| `core-base:security` | 43 Kotlin files — [guide](core-base/security-module.md) |
 | `core-base:store` | 113 Kotlin files — [guide](core-base/store.md) |
 | `core-base:ui` | 80 Kotlin files — [guide](core-base/ui.md) |
 
@@ -80,6 +80,7 @@ _Authored in depth, living in this area's own directory._
 
 - [NetworkMonitor contract — operator guide](core-base/network-monitor-contract.md)
 - [RetryPolicy + outbox retry-backoff (Phase 05 deferred work)](core-base/retry-policy.md)
+- [core-base/security](core-base/security-module.md)
 
 ## Deeper reading
 

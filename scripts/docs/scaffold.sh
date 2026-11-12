@@ -33,6 +33,10 @@ python3 - "$TPL" "$WRITE" "$CORPUS_PATH" <<'PYEOF'
 import io, os, re, sys
 tpl, write, corpus_path = sys.argv[1], sys.argv[2] == "1", sys.argv[3]
 ARCH = os.path.join(tpl, "docs", "architecture")
+# A module named like an org community file gets `<module>-module.md` (reserved-page-names.txt).
+RESERVED = {l.strip().lower() for l in open(os.path.join(tpl, "scripts", "docs", "reserved-page-names.txt"))
+            if l.strip() and not l.startswith("#")}
+def page_stem(m): return m + "-module" if m.lower() in RESERVED else m
 # Empty when no framework is reachable (fork / CI). `corpus_known` gates every claim
 # about whether a surface EXISTS; the surface NAME is derived from the module and is
 # always safe to state.
@@ -123,7 +127,7 @@ for base, m in mods:
     # One hierarchy, so a reader navigating `core/` from the project tree lands on the module
     # guides rather than being sent to a parallel `modules/` directory.
     d = os.path.join(ARCH, "tree", base)
-    path = os.path.join(d, "%s.md" % m)
+    path = os.path.join(d, "%s.md" % page_stem(m))
     f = facts(base, m)
     mp = "%s/%s" % (base, m)
     rows = contract_rows(mp)
@@ -224,7 +228,7 @@ for base in ("core-base", "core"):
     for b, m in group:
         rows = contract_rows("%s/%s" % (b, m))
         tag = "  ·  contracts: " + ", ".join("`@%s`" % r[0] for r in rows) if rows else ""
-        lines.append("- [`%s/%s`](tree/%s/%s.md)%s" % (b, m, b, m, tag))
+        lines.append("- [`%s/%s`](tree/%s/%s.md)%s" % (b, m, b, page_stem(m), tag))
     lines.append("")
 lines += ["### Cross-cutting", "",
           "Concerns that span modules and are anchored by content digest rather than a module tree.", ""]

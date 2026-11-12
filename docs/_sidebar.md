@@ -55,7 +55,7 @@
   - [core-base/observability](/architecture/tree/core-base/observability.md)
   - [core-base/platform](/architecture/tree/core-base/platform.md)
   - [core-base/retry-policy](/architecture/tree/core-base/retry-policy.md)
-  - [core-base/security](/architecture/tree/core-base/security.md)
+  - [core-base/security-module](/architecture/tree/core-base/security-module.md)
   - [core-base/store](/architecture/tree/core-base/store.md)
   - [core-base/ui](/architecture/tree/core-base/ui.md)
 

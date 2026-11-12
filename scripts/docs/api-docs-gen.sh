@@ -405,8 +405,11 @@ emit_module() {  # $1 = layer/module
 # the block is injected between markers and everything outside them is preserved byte-for-byte —
 # the same contract `architecture-docs-scaffold.sh` uses for `<!-- scaffold:end -->`.
 page_for() {  # $1 = layer/module → docs path
-  # Module guides live under the TREE — one hierarchy, not a parallel modules/ directory.
-  printf '%s/docs/architecture/tree/%s/%s.md' "$TMPL" "${1%%/*}" "${1##*/}"
+  # Module guides live under the TREE — one hierarchy, not a parallel modules/ directory. A module
+  # named like an org community file gets `<module>-module.md` (see reserved-page-names.txt).
+  local m="${1##*/}"
+  grep -qxiF "$m" <(grep -v '^#' "$TMPL/scripts/docs/reserved-page-names.txt" 2>/dev/null) && m="$m-module"
+  printf '%s/docs/architecture/tree/%s/%s.md' "$TMPL" "${1%%/*}" "$m"
 }
 
 # Regenerate one module's api-docs block in place.

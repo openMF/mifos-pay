@@ -1,7 +1,7 @@
 # `scripts/product-health/`
 
 > Part of [`scripts/`](../scripts.md)  
-> **Measured:** 438 tracked files — 144× `.kt`, 91× `.sh`, 60× `.md`, 50× `.yaml`, 12× `.gitkeep`
+> **Measured:** 439 tracked files — 144× `.kt`, 92× `.sh`, 60× `.md`, 50× `.yaml`, 12× `.gitkeep`
 
 ### Scripts
 
@@ -27,6 +27,7 @@
 | `migration-ledger.sh` | the Room migration ledger is append-only and internally coherent. |
 | `network-access-points.sh` | app-profile is the ONLY place a network endpoint is declared, |
 | `no-vacuous-assert.sh` | a test that cannot fail is worse than no test. |
+| `org-file-names.sh` | no file below the repository root borrows an org community file's name. |
 | `ownership-naming.sh` | a source file's name prefix says who owns it, and the contract agrees. |
 | `pbxproj-merge.sh` | the Xcode project survives a template sync intact. |
 | `ruby-toolchain-coherence.sh` | ONE Ruby version, declared once, reachable everywhere. |
@@ -36,9 +37,8 @@
 | `self-test-canaries.sh` | runs every product-health canary (tests/*/run.sh) so the RED/GREEN |
 | `shell-portability.sh` | tracked shell scripts must run on the RUNNERS, not just on a Mac. |
 | `store-archetype-coverage.sh` | the 8 Store5 archetypes each keep a real showcase. |
-| `store-fork-seam-wiring.sh` | the template actually CONSULTS its fork seams. |
 
-_…and 61 more._
+_…and 62 more._
 
 <!-- tree-scaffold:end -->
 ## Significance
