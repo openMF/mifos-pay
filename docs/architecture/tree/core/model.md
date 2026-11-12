@@ -16,10 +16,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/model sha=4ecb16fb9f42f08b2dadc7413d3682336f335f9e -->
+<!-- api-docs:begin module=core/model sha=7eb1abeb9499a7081f8364c6abfcac75203a9899 -->
 ## API reference
 
-_Generated from `core/model` at tree `4ecb16fb9f42` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/model` at tree `7eb1abeb9499` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/model/src/commonMain/kotlin/kpt/core/model/account/Account.kt`
@@ -993,7 +993,7 @@ Converts this `LanguageConfig` into a `Language`.
 ```kotlin
 enum class LanguageConfig(
 ```
-Represents the languages supported by the app.
+Every language the app can be switched to, in the user's OWN language. GENERATED from core/registries/LOCALE_REGISTRY.yaml by `core/scripts/language-picker-sync.sh --write` — DO NOT HAND-EDIT.
 
 <details><summary>Used in the template — <code>feature/onboarding/src/commonTest/kotlin/kpt/feature/onboarding/ui/OnboardingViewModelTest.kt:71</code></summary>
 
