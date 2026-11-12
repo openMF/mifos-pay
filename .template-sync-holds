@@ -97,3 +97,4 @@ docs/readmes/Android.md	queued upstream: fork-authored / per-fork-derived docs h
 docs/readmes/Linux.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
 docs/readmes/Windows.md	queued upstream: fork-authored / per-fork-derived docs have no fork home under template-owned docs/**
 secrets/LAYOUT.yaml	queued upstream: per-app vault aliases must carry the project prefix (RULE-SECRETS-NAMING-CONVENTION-001), so a fork cannot share the template copy; the contract needs a fork-owned (or app-profile-derived) LAYOUT
+cmp-web/webpack.config.d/production-no-sourcemap.js	queued: web-production-no-sourcemap
