@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Занадта шмат спроб. Калі ласка, пачакайце і паўтарыце спробу.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Біяметрычнае абсталяванне часова недаступнае. Паспрабуйце пазней.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">На гэтай прыладзе не зарэгістравана ніякай біяметрыі. Калі ласка, наладзьце біяметрыю ў сістэмных параметрах.</string>
-    <string name="feature_passcode_biometric_error_timeout">Час біяметрычнай аўтэнтыфікацыі скончыўся. Паўтарыце спробу.</string>
-    <string name="feature_passcode_biometric_error_no_space">Недастаткова сховішча для завяршэння біяметрычнай аўтэнтыфікацыі.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Дадзеныя рэгістрацыі біяметрыі несапраўдныя. Уключыце біяметрыю ў наладах праграмы зноў.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Не атрымалася запусціць біяметрычную аўтэнтыфікацыю праз несапраўдныя аргументы.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Не атрымалася запусціць біяметрычную рэгістрацыю праз несапраўдныя аргументы.</string>
-    <string name="feature_passcode_biometric_error_unknown">Узнікла нечаканая біяметрычная памылка. Паўтарыце спробу.</string>
-    <string name="feature_passcode_biometric_prompt_title">Разблакаваць Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Пацвердзіце сваю асобу, каб працягнуць</string>
-    <string name="feature_passcode_biometric_prompt_description">Выкарыстоўвайце адбітак пальца, твар або уліковыя дадзеныя прылады</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Адмяніць</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Абараніце сваю праграму</string>

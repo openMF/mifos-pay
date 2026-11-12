@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Pomiń</string>
+    <string name="feature_onboarding_skip_a11y">Przejdź do ustawień prywatności</string>
+    <string name="feature_onboarding_next">Dalej</string>
+    <string name="feature_onboarding_page_of">Strona %1$d z %2$d</string>
+    <string name="feature_onboarding_overview_title">Narzędzia finansowe w jednym miejscu</string>
+    <string name="feature_onboarding_overview_body">Pożyczki, rachunki, stopy procentowe i kalkulatory są obok siebie, więc potrzebna liczba jest zawsze na wyciągnięcie ręki.</string>
+    <string name="feature_onboarding_track_title">Żaden termin płatności nie umknie</string>
+    <string name="feature_onboarding_track_body">Śledzenie pożyczek i rachunków oraz przypomnienie przed każdym terminem płatności.</string>
+    <string name="feature_onboarding_offline_title">Brak zasięgu? Bez problemu</string>
+    <string name="feature_onboarding_offline_body">Zapisane dane zostają na tym urządzeniu i działają offline. Zmiany synchronizują się po powrocie do trybu online.</string>
+    <string name="feature_onboarding_privacy_title">Prosimy o pomoc w ulepszaniu aplikacji</string>
+    <string name="feature_onboarding_privacy_lead">Obie opcje są wyłączone, dopóki użytkownik ich nie włączy. Można zezwolić na obie jednym dotknięciem lub wybrać poniżej — wszystkie funkcje pozostają dostępne.</string>
+    <string name="feature_onboarding_analytics_label">Udostępniaj statystyki użytkowania</string>
+    <string name="feature_onboarding_analytics_body">Które ekrany i funkcje są używane i jak często. Nigdy to, co wpisujesz lub zapisujesz.</string>
+    <string name="feature_onboarding_crash_label">Wysyłaj raporty o awariach</string>
+    <string name="feature_onboarding_crash_body">Gdy aplikacja ulegnie awarii: błąd, wersja aplikacji i model urządzenia, abyśmy mogli to naprawić.</string>
+    <string name="feature_onboarding_no_personal_data">Nic, co wprowadzasz w aplikacji, nigdy nie jest wysyłane.</string>
+    <string name="feature_onboarding_settings_later">To ustawienie można później zmienić w Ustawieniach.</string>
+    <string name="feature_onboarding_connect_server">Skonfiguruj serwer</string>
+    <string name="feature_onboarding_agreement">Korzystanie z naszej usługi oznacza akceptację następujących dokumentów: %1$s i %2$s.</string>
+    <string name="feature_onboarding_terms">Regulamin</string>
+    <string name="feature_onboarding_privacy_policy">Polityka prywatności</string>
+    <string name="feature_onboarding_allow_get_started">Zezwól i rozpocznij</string>
+    <string name="feature_onboarding_continue_without">Kontynuuj bez udostępniania</string>
+    <string name="feature_onboarding_continue_choices">Kontynuuj z moimi wyborami</string>
+    <string name="feature_onboarding_save_failed">Nie udało się zapisać wyborów. Prosimy spróbować ponownie.</string>
+</resources>

@@ -15,6 +15,7 @@ import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_beneficiaries` LEDGER table.
@@ -35,6 +36,7 @@ import kotlinx.coroutines.flow.Flow
  * Alphabetical by [BeneficiaryEntity.name] (case-insensitive) — matches the
  * existing UI's list-view alphabetic sort in `BeneficiaryListScreen`.
  */
+@DbDao
 @Dao
 interface BeneficiaryDao {
 

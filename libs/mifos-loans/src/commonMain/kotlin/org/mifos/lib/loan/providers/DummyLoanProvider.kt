@@ -12,6 +12,7 @@ package org.mifos.lib.loan.providers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kpt.core.common.ScreenState
 import org.mifos.lib.loan.core.LoanProvider
 import org.mifos.lib.loan.core.model.AmortizationType
 import org.mifos.lib.loan.core.model.Currency
@@ -24,8 +25,6 @@ import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.core.model.LoansPayload
 import org.mifos.lib.loan.core.model.Product
 import org.mifos.lib.loan.core.model.ProductOptions
-import org.mifospay.core.common.ScreenState
-
 /**
  * Dummy, no-network implementation of [LoanProvider].
  *

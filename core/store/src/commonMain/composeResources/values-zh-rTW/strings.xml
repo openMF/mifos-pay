@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">這裡還沒有內容</string>
+    <string name="screenstate_empty_message">當您有資料時，會顯示在這裡。</string>
+    <string name="screenstate_error_title">發生錯誤</string>
+    <string name="screenstate_error_retry">重試</string>
+    <string name="screenstate_nonet_title">您已離線</string>
+    <string name="screenstate_nonet_message">重新連線後我們會再試一次。</string>
+    <string name="screenstate_nonet_retry">立即重試</string>
+    <string name="screenstate_captive_title">登入 Wi-Fi</string>
+    <string name="screenstate_captive_message">您的網路需要先登入才能連線。</string>
+    <string name="screenstate_captive_action">開啟登入頁面</string>
+    <string name="error_category_network">無法連線至伺服器。請檢查您的連線。</string>
+    <string name="error_category_auth">您的工作階段已過期，請重新登入。</string>
+    <string name="error_category_ratelimit">請求過於頻繁，請稍候再試。</string>
+    <string name="error_category_server">我們的伺服器暫時異常，請稍後再試。</string>
+    <string name="error_category_timeout_connect">連線逾時。請檢查網路後重試。</string>
+    <string name="error_category_timeout_read">伺服器回應時間過長。請稍後再試。</string>
+    <string name="error_category_quota">已達配額上限。請升級或稍候繼續。</string>
+    <string name="error_category_client">請求失敗。請重試。</string>
+    <string name="error_category_generic">發生錯誤</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">छोड़ें</string>
+    <string name="feature_onboarding_skip_a11y">सीधे गोपनीयता विकल्पों पर जाएँ</string>
+    <string name="feature_onboarding_next">आगे</string>
+    <string name="feature_onboarding_page_of">पृष्ठ %1$d / %2$d</string>
+    <string name="feature_onboarding_overview_title">आपके सभी वित्तीय टूल, एक ही जगह</string>
+    <string name="feature_onboarding_overview_body">ऋण, बिल, दरें और कैलकुलेटर साथ-साथ हैं, ताकि आपको जो आँकड़ा चाहिए वह हमेशा एक टैप दूर हो।</string>
+    <string name="feature_onboarding_track_title">कोई भी नियत तारीख न चूकें</string>
+    <string name="feature_onboarding_track_body">अपने ऋण और बिलों पर नज़र रखें, और हर भुगतान की तारीख से पहले रिमाइंडर पाएँ।</string>
+    <string name="feature_onboarding_offline_title">नेटवर्क नहीं? चलते रहें</string>
+    <string name="feature_onboarding_offline_body">आप जो सहेजते हैं, वह इसी डिवाइस पर रहता है और ऑफ़लाइन भी काम करता है। ऑनलाइन लौटने पर बदलाव सिंक हो जाते हैं।</string>
+    <string name="feature_onboarding_privacy_title">ऐप को बेहतर बनाने में मदद करें</string>
+    <string name="feature_onboarding_privacy_lead">जब तक आप इन्हें चालू नहीं करते, दोनों बंद रहते हैं। एक टैप में दोनों की अनुमति दें या नीचे चुनें — आप फिर भी सभी सुविधाओं का उपयोग कर सकते हैं।</string>
+    <string name="feature_onboarding_analytics_label">उपयोग विश्लेषण साझा करें</string>
+    <string name="feature_onboarding_analytics_body">कौन-सी स्क्रीन और सुविधाएँ उपयोग होती हैं, और कितनी बार। आप जो टाइप करते हैं या सहेजते हैं, वह कभी नहीं।</string>
+    <string name="feature_onboarding_crash_label">क्रैश रिपोर्ट भेजें</string>
+    <string name="feature_onboarding_crash_body">ऐप क्रैश होने पर: त्रुटि, ऐप संस्करण और डिवाइस मॉडल, ताकि हम इसे ठीक कर सकें।</string>
+    <string name="feature_onboarding_no_personal_data">ऐप में आप जो भी दर्ज करते हैं, वह कभी नहीं भेजा जाता।</string>
+    <string name="feature_onboarding_settings_later">आप इसे बाद में सेटिंग्स में बदल सकते हैं।</string>
+    <string name="feature_onboarding_connect_server">अपना सर्वर सेट करें</string>
+    <string name="feature_onboarding_agreement">हमारी सेवा का उपयोग करके आप हमारे %1$s और %2$s स्वीकार करते हैं।</string>
+    <string name="feature_onboarding_terms">नियम और शर्तें</string>
+    <string name="feature_onboarding_privacy_policy">गोपनीयता नीति</string>
+    <string name="feature_onboarding_allow_get_started">अनुमति दें और शुरू करें</string>
+    <string name="feature_onboarding_continue_without">साझा किए बिना जारी रखें</string>
+    <string name="feature_onboarding_continue_choices">मेरे विकल्पों के साथ जारी रखें</string>
+    <string name="feature_onboarding_save_failed">आपके विकल्प सहेजे नहीं जा सके। कृपया फिर से प्रयास करें।</string>
+</resources>

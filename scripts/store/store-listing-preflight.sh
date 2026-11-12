@@ -18,8 +18,11 @@ PLATFORM="${1:-android}"
 LOCALE="${2:-en-US}"
 
 FAIL=0
+# Print a failure — a field that will be rejected at upload.
 err()  { echo "❌ $*"; FAIL=1; }
+# Print a passing field.
 ok()   { echo "✅ $*"; }
+# Print a warning: allowed by the store, but likely not what was intended.
 warn() { echo "⚠️  $*"; }
 
 # Character count of a file's content (trailing newline stripped); 0 when missing.

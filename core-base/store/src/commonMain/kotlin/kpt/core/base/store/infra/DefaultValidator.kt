@@ -59,6 +59,7 @@ class DefaultValidator<Output : Any>(
         return mark.elapsedNow() < ttl
     }
 
+    /** Validator presets. */
     companion object {
 
         /**

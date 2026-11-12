@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Zbyt wiele prób. Poczekaj i spróbuj ponownie.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Sprzęt biometryczny jest tymczasowo niedostępny. Spróbuj ponownie później.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Na tym urządzeniu nie ma zarejestrowanej biometrii. Skonfiguruj biometrię w ustawieniach systemu.</string>
+    <string name="core_ui_biometric_error_timeout">Uwierzytelnianie biometryczne wygasło. Spróbuj ponownie.</string>
+    <string name="core_ui_biometric_error_no_space">Za mało miejsca, aby ukończyć uwierzytelnianie biometryczne.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Dane rejestracji biometrycznej są nieprawidłowe. Włącz ponownie biometrię w ustawieniach aplikacji.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Nie można uruchomić uwierzytelniania biometrycznego z powodu nieprawidłowych argumentów.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Nie można uruchomić rejestracji biometrycznej z powodu nieprawidłowych argumentów.</string>
+    <string name="core_ui_biometric_error_unknown">Wystąpił nieoczekiwany błąd biometryczny. Spróbuj ponownie.</string>
+    <string name="core_ui_biometric_prompt_title">Odblokuj Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Zweryfikuj swoją tożsamość, aby kontynuować</string>
+    <string name="core_ui_biometric_prompt_description">Użyj odcisku palca, twarzy lub poświadczenia urządzenia</string>
+    <string name="core_ui_biometric_prompt_negative_button">Anuluj</string>
+</resources>

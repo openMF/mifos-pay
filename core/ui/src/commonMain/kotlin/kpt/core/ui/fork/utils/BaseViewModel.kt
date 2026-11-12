@@ -1,0 +1,162 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.core.ui.fork.utils
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kpt.core.common.ScreenState
+/**
+ * A base [ViewModel] that helps enforce the unidirectional data flow pattern and associated
+ * responsibilities of a typical ViewModel:
+ *
+ * - Maintaining and emitting a current state (of type [S]) with the given `initialState`.
+ * - Emitting one-shot events as needed (of type [E]). These should be rare and are typically
+ *   reserved for things such as non-state based navigation.
+ * - Receiving actions (of type [A]) that may induce changes in the current state, trigger an
+ *   event emission, or both.
+ */
+abstract class BaseViewModel<S, E, A>(
+    initialState: S,
+) : ViewModel() {
+    protected val mutableStateFlow: MutableStateFlow<S> = MutableStateFlow(initialState)
+    private val eventChannel: Channel<E> = Channel(capacity = Channel.UNLIMITED)
+    private val internalActionChannel: Channel<A> = Channel(capacity = Channel.UNLIMITED)
+
+    /**
+     * A helper that returns the current state of the view model.
+     */
+    protected val state: S get() = mutableStateFlow.value
+
+    /**
+     * A [StateFlow] representing state updates.
+     */
+    val stateFlow: StateFlow<S> = mutableStateFlow.asStateFlow()
+
+    /**
+     * A [Flow] of one-shot events. These may be received and consumed by only a single consumer.
+     * Any additional consumers will receive no events.
+     */
+    val eventFlow: Flow<E> = eventChannel.receiveAsFlow()
+
+    /**
+     * A [SendChannel] for sending actions to the ViewModel for processing.
+     */
+    val actionChannel: SendChannel<A> = internalActionChannel
+
+    init {
+        viewModelScope.launch {
+            internalActionChannel
+                .consumeAsFlow()
+                .collect { action ->
+                    handleAction(action)
+                }
+        }
+    }
+
+    /**
+     * Handles the given [action] in a synchronous manner.
+     *
+     * Any changes to internal state that first require asynchronous work should post a follow-up
+     * action that may be used to then update the state synchronously.
+     */
+    protected abstract fun handleAction(action: A): Unit
+
+    /**
+     * Convenience method for sending an action to the [actionChannel].
+     */
+    fun trySendAction(action: A) {
+        actionChannel.trySend(action)
+    }
+
+    /**
+     * Helper method for sending an internal action.
+     */
+    protected suspend fun sendAction(action: A) {
+        actionChannel.send(action)
+    }
+
+    /**
+     * Helper method for sending an event.
+     */
+    protected fun sendEvent(event: E) {
+        viewModelScope.launch { eventChannel.send(event) }
+    }
+
+    /**
+     * Launches a coroutine on [Dispatchers.Default] for network or database operations.
+     * Use this instead of `viewModelScope.launch` for any I/O-bound work to avoid
+     * blocking the main thread and causing UI freezes.
+     *
+     * Note: Uses Default dispatcher for multiplatform compatibility (IO is not available on JS).
+     *
+     * @param block The suspending block to execute on the background dispatcher.
+     * @return The [Job] representing the coroutine.
+     */
+    protected fun launchIO(block: suspend CoroutineScope.() -> Unit): Job {
+        return viewModelScope.launch(Dispatchers.Default, block = block)
+    }
+
+    // -------------------------------------------------------------------------
+    // ScreenState consumption bridges (Phase-3 cutover, RULE-IDEA-IMPL-*).
+    //
+    // The fork is being cut over from DataState to ScreenState (see
+    // core/common/ScreenState.kt). The two consumption paths below let VMs
+    // consume Flow<ScreenState<T>> either (a) as a hot StateFlow surface
+    // (`collectAsScreen`) or (b) via a side-effect reducer (`observeScreen`).
+    // The legacy DataState APIs above stay usable transitionally — un-migrated
+    // repos and ViewModels compile and run unchanged.
+    // -------------------------------------------------------------------------
+
+    /**
+     * Collect a `Flow<ScreenState<T>>` and route each emission through
+     * [reducer], letting the ViewModel fold the ScreenState into its own
+     * MVI state `S`. Semantic mirror of the template's
+     * `stream.state.onEach { updateState { … } }.launchIn(viewModelScope)`
+     * pattern.
+     *
+     * Use when the ScreenState is one of MANY inputs into the VM state (e.g.
+     * a dashboard combining several stores). For a screen with a SINGLE
+     * ScreenState-typed exposure, prefer [Flow.stateInAsScreen].
+     */
+    protected fun <T> Flow<ScreenState<T>>.observeScreen(
+        reducer: (ScreenState<T>) -> Unit,
+    ): Job = this.onEach { reducer(it) }.launchIn(viewModelScope)
+
+    /**
+     * Materialize a `Flow<ScreenState<T>>` into a hot `StateFlow<ScreenState<T>>`
+     * suitable for direct exposure to Compose via `collectAsStateWithLifecycle`.
+     * Uses `SharingStarted.WhileSubscribed(5000)` — matches the template's
+     * default so upstream refreshes de-dupe across recompositions.
+     */
+    protected fun <T> Flow<ScreenState<T>>.stateInAsScreen(
+        started: SharingStarted = SharingStarted.WhileSubscribed(5_000L),
+        initialValue: ScreenState<T> = ScreenState.Loading,
+    ): StateFlow<ScreenState<T>> = stateIn(
+        scope = viewModelScope,
+        started = started,
+        initialValue = initialValue,
+    )
+}

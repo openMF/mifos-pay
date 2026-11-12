@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Liian monta yritystä. Odota ja yritä uudelleen.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Biometrinen laitteisto on tilapäisesti pois käytöstä. Yritä myöhemmin uudelleen.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Tähän laitteeseen ei ole rekisteröity biometriaa. Määritä biometria järjestelmäasetuksissa.</string>
-    <string name="feature_passcode_biometric_error_timeout">Biometrinen todennus aikakatkaistiin. Yritä uudelleen.</string>
-    <string name="feature_passcode_biometric_error_no_space">Tallennustilaa ei ole riittävästi biometrisen todennuksen suorittamiseen.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Biometriset rekisteröintitiedot eivät kelpaa. Ota biometria uudelleen käyttöön sovellusasetuksissa.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Biometristä todennusta ei voitu käynnistää virheellisten argumenttien vuoksi.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Biometristä rekisteröintiä ei voitu käynnistää virheellisten argumenttien vuoksi.</string>
-    <string name="feature_passcode_biometric_error_unknown">Odottamaton biometrinen virhe tapahtui. Yritä uudelleen.</string>
-    <string name="feature_passcode_biometric_prompt_title">Avaa Mifos Pay -lukitus</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Vahvista henkilöllisyytesi jatkaaksesi</string>
-    <string name="feature_passcode_biometric_prompt_description">Käytä sormenjälkeäsi, kasvojasi tai laitteen tunnistetietoja</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Peruuta</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Suojaa sovelluksesi</string>

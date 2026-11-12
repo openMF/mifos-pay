@@ -1,0 +1,8 @@
+# Canary fixture — the workflow that reads the secrets.
+jobs:
+  release:
+    steps:
+      - run: echo ok
+        env:
+          DEMO_TOKEN: ${{ secrets.DEMO_TOKEN }}
+          DEMO_KEY: ${{ secrets.DEMO_KEY }}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">অনেকবার চেষ্টা হয়েছে। অনুগ্রহ করে অপেক্ষা করুন এবং আবার চেষ্টা করুন।</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">বায়োমেট্রিক হার্ডওয়্যার সাময়িকভাবে অনুপলব্ধ। অনুগ্রহ করে পরে আবার চেষ্টা করুন।</string>
+    <string name="core_ui_biometric_error_not_enrolled">এই ডিভাইসে কোনো বায়োমেট্রিক নথিভুক্ত নেই। অনুগ্রহ করে সিস্টেম সেটিংসে বায়োমেট্রিক্স সেট আপ করুন।</string>
+    <string name="core_ui_biometric_error_timeout">বায়োমেট্রিক প্রমাণীকরণের সময় শেষ। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
+    <string name="core_ui_biometric_error_no_space">বায়োমেট্রিক প্রমাণীকরণ সম্পূর্ণ করার জন্য পর্যাপ্ত স্টোরেজ নেই।</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">বায়োমেট্রিক নিবন্ধন ডেটা অবৈধ। অনুগ্রহ করে অ্যাপ সেটিংস থেকে বায়োমেট্রিক্স পুনরায় সক্ষম করুন।</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">অবৈধ আর্গুমেন্টের কারণে বায়োমেট্রিক প্রমাণীকরণ শুরু করা যায়নি।</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">অবৈধ আর্গুমেন্টের কারণে বায়োমেট্রিক নিবন্ধন শুরু করা যায়নি।</string>
+    <string name="core_ui_biometric_error_unknown">একটি অপ্রত্যাশিত বায়োমেট্রিক ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay আনলক করুন</string>
+    <string name="core_ui_biometric_prompt_subtitle">চালিয়ে যেতে আপনার পরিচয় যাচাই করুন</string>
+    <string name="core_ui_biometric_prompt_description">আপনার আঙুলের ছাপ, মুখ, বা ডিভাইস ক্রেডেনশিয়াল ব্যবহার করুন</string>
+    <string name="core_ui_biometric_prompt_negative_button">বাতিল করুন</string>
+</resources>

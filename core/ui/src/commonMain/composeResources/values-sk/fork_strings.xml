@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Príliš veľa pokusov. Počkajte a skúste znova.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Biometrický hardvér je dočasne nedostupný. Skúste to neskôr.</string>
+    <string name="core_ui_biometric_error_not_enrolled">V tomto zariadení nie je zaregistrovaná žiadna biometria. Nastavte biometriu v nastaveniach systému.</string>
+    <string name="core_ui_biometric_error_timeout">Biometrické overenie vypršalo. Skúste znova.</string>
+    <string name="core_ui_biometric_error_no_space">Nedostatok úložiska na dokončenie biometrického overenia.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Údaje biometrickej registrácie nie sú platné. Znova povoľte biometriu v nastaveniach aplikácie.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Biometrické overenie sa nedalo spustiť kvôli neplatným argumentom.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Biometrická registrácia sa nedala spustiť kvôli neplatným argumentom.</string>
+    <string name="core_ui_biometric_error_unknown">Vyskytla sa neočakávaná biometrická chyba. Skúste znova.</string>
+    <string name="core_ui_biometric_prompt_title">Odomknúť Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Overte svoju identitu pre pokračovanie</string>
+    <string name="core_ui_biometric_prompt_description">Použite odtlačok prsta, tvár alebo prihlasovacie údaje zariadenia</string>
+    <string name="core_ui_biometric_prompt_negative_button">Zrušiť</string>
+</resources>

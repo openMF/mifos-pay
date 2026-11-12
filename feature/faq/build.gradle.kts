@@ -22,3 +22,7 @@ kotlin {
         }
     }
 }
+
+compose.resources {
+    packageOfResClass = "kpt.feature.faq.generated.resources"
+}

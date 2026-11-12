@@ -11,6 +11,11 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the timeline used in the loan application flow.
+ *
+ * @property expectedDisbursementDate Expected disbursement date as year, month and day components.
+ */
 @Serializable
 data class Timeline(
     val expectedDisbursementDate: List<Int>,

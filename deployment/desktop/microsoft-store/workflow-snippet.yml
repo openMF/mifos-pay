@@ -40,4 +40,4 @@ jobs:
           tenant-id:      ${{ secrets.MS_PARTNER_CENTER_TENANT_ID }}
           client-id:      ${{ secrets.MS_PARTNER_CENTER_CLIENT_ID }}
           client-secret:  ${{ secrets.MS_PARTNER_CENTER_CLIENT_SECRET }}
-          config-path:    deployment/desktop/microsoft-store/StoreBroker.config.json
+          config-path:    cmp-desktop/build/ms-store/StoreBroker.config.json   # rendered by script.sh (fork-identity.sh)

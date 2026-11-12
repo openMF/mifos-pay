@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem.component.progress
 
@@ -14,7 +14,19 @@ package kpt.core.base.designsystem.component.progress
  * [ProgressSizeSpec.dpFor] — keeps every project-wide progress indicator on a
  * single set of rhythm-aligned dimensions.
  */
-enum class ProgressSize { Xs, Sm, Md, Lg }
+enum class ProgressSize {
+    /** Inline with body text — a spinner beside a label. */
+    Xs,
+
+    /** Inside a compact control, such as a button that is loading. */
+    Sm,
+
+    /** The default: a card or a section that is loading. */
+    Md,
+
+    /** Full-screen or empty-state loading, where the indicator is the only content. */
+    Lg,
+}
 
 /**
  * Canonical (diameter dp, stroke dp) values for each [ProgressSize]. Internal so

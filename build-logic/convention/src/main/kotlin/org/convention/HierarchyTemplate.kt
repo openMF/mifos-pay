@@ -1,28 +1,11 @@
-/**
- * Kotlin Multiplatform project hierarchy template configuration.
+/*
+ * Copyright 2026 Mifos Initiative
  *
- * This file defines a structured hierarchy for organizing source sets in Kotlin Multiplatform
- * projects. It establishes a logical grouping of platform targets that enables efficient code
- * sharing across platforms with similar characteristics.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * The hierarchy template creates the following logical groupings:
- * - `common`: Base shared code for all platforms
- * - `nonAndroid`: Code shared between JVM, JS, and native platforms, excluding Android
- * - `jsCommon`: Code shared between JavaScript and WebAssembly JavaScript targets
- * - `nonJsCommon`: Code shared between JVM and native platforms, excluding JS platforms
- * - `jvmCommon`: Code shared between Android and JVM targets
- * - `nonJvmCommon`: Code shared between JS and native platforms, excluding JVM platforms
- * - `native`: Code shared across all native platforms
- *   - `apple`: Code shared across Apple platforms (iOS, macOS)
- *     - `ios`: iOS-specific code
- *     - `macos`: macOS-specific code
- * - `nonNative`: Code shared between JS and JVM platforms
- *
- * This template applies to both main and test source sets, establishing a consistent
- * structure throughout the project.
- *
- * Note: This implementation uses experimental Kotlin Gradle plugin APIs and may be subject
- * to change in future Kotlin releases.
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
@@ -32,6 +15,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinHierarchyBuilder
 import org.jetbrains.kotlin.gradle.plugin.KotlinHierarchyTemplate
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 /**
@@ -60,6 +44,15 @@ private val hierarchyTemplate = KotlinHierarchyTemplate {
         groupMobile()
     }
 }
+
+/**
+ * Every Android compilation, whichever plugin made the target. `withAndroidTarget()` matches only the
+ * legacy `androidTarget()`; the AGP 9 `com.android.kotlin.multiplatform.library` target is a different
+ * type, so androidMain sat under no group and an expect in nonJsCommonMain / mobileMain had no actual
+ * on the Android compile (and androidHostTest never saw nonJsCommonTest).
+ */
+private fun KotlinHierarchyBuilder.withAndroid() =
+    withCompilations { it.target.platformType == KotlinPlatformType.androidJvm }
 
 /**
  * Creates a group of non-Android platforms (JVM, JS, and native).
@@ -97,7 +90,7 @@ private fun KotlinHierarchyBuilder.groupNonJsCommon() {
  */
 private fun KotlinHierarchyBuilder.groupJvmCommon() {
     group("jvmCommon") {
-        withAndroidTarget()
+        withAndroid()
         withJvm()
     }
 }
@@ -155,7 +148,7 @@ private fun KotlinHierarchyBuilder.groupNonNative() {
 
 private fun KotlinHierarchyBuilder.groupMobile() {
     group("mobile") {
-        withAndroidTarget()
+        withAndroid()
         withApple()
     }
 }

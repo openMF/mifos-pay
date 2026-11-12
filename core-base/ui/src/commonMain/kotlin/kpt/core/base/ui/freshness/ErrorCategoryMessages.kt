@@ -15,7 +15,7 @@ import kpt.core.base.store.error.ErrorCategory
  * Short (≤ 20 chars) message per [ErrorCategory] variant — used by
  * `FreshnessIndicator` tooltip titles and `RefreshStateChip` labels.
  *
- * Generic-domain copy; forks can override `AppErrorMapper` in `core/store` to
+ * Generic-domain copy; forks can override `KptErrorMapper` in `core/store` to
  * surface app-specific messaging (which itself delegates here for the canonical
  * categorisation).
  */
@@ -33,7 +33,7 @@ fun ErrorCategory.toShortMessage(): String = when (this) {
 
 /**
  * Longer descriptive message per [ErrorCategory] variant — used by
- * `FreshnessIndicator` `RichTooltip` body text. `AppErrorMapper.mapErrorToUserMessage`
+ * `FreshnessIndicator` `RichTooltip` body text. `KptErrorMapper.mapErrorToUserMessage`
  * delegates here so the message catalogue lives in one place.
  */
 fun ErrorCategory.toLongMessage(): String = when (this) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">Burada henüz bir şey yok</string>
+    <string name="screenstate_empty_message">Verileriniz olduğunda burada görünecek.</string>
+    <string name="screenstate_error_title">Bir sorun oluştu</string>
+    <string name="screenstate_error_retry">Tekrar dene</string>
+    <string name="screenstate_nonet_title">Çevrimdışısınız</string>
+    <string name="screenstate_nonet_message">Yeniden bağlandığınızda tekrar deneyeceğiz.</string>
+    <string name="screenstate_nonet_retry">Şimdi tekrar dene</string>
+    <string name="screenstate_captive_title">Wi-Fi'ye giriş yapın</string>
+    <string name="screenstate_captive_message">Ağınız bağlanmadan önce giriş yapmanızı istiyor.</string>
+    <string name="screenstate_captive_action">Giriş sayfasını aç</string>
+    <string name="error_category_network">Sunucuya ulaşılamıyor. Bağlantınızı kontrol edin.</string>
+    <string name="error_category_auth">Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.</string>
+    <string name="error_category_ratelimit">Çok fazla istek. Lütfen bekleyip tekrar deneyin.</string>
+    <string name="error_category_server">Sunucularımızda geçici bir sorun var. Biraz sonra deneyin.</string>
+    <string name="error_category_timeout_connect">Bağlantı zaman aşımına uğradı. Bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="error_category_timeout_read">Sunucu yanıt vermekte çok gecikti. Kısa süre sonra tekrar deneyin.</string>
+    <string name="error_category_quota">Kotanıza ulaştınız. Devam etmek için yükseltin veya bekleyin.</string>
+    <string name="error_category_client">İstek başarısız oldu. Lütfen tekrar deneyin.</string>
+    <string name="error_category_generic">Bir sorun oluştu</string>
+</resources>

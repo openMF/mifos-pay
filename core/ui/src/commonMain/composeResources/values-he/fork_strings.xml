@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">יותר מדי ניסיונות. אנא המתינו ונסו שוב.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">חומרת הזיהוי הביומטרי אינה זמינה זמנית. אנא נסו שוב מאוחר יותר.</string>
+    <string name="core_ui_biometric_error_not_enrolled">לא רשומים מזהים ביומטריים במכשיר זה. אנא הגדירו ביומטריה בהגדרות המערכת.</string>
+    <string name="core_ui_biometric_error_timeout">פג הזמן הקצוב לאימות הביומטרי. אנא נסו שוב.</string>
+    <string name="core_ui_biometric_error_no_space">אין מספיק אחסון להשלמת האימות הביומטרי.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">נתוני הרישום הביומטרי אינם תקפים. אנא הפעילו מחדש את הביומטריה מהגדרות האפליקציה.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">לא ניתן היה להתחיל אימות ביומטרי בשל ארגומנטים לא חוקיים.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">לא ניתן היה להתחיל רישום ביומטרי בשל ארגומנטים לא חוקיים.</string>
+    <string name="core_ui_biometric_error_unknown">אירעה שגיאה ביומטרית בלתי צפויה. אנא נסו שוב.</string>
+    <string name="core_ui_biometric_prompt_title">פתיחת Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">אמתו את זהותכם כדי להמשיך</string>
+    <string name="core_ui_biometric_prompt_description">השתמשו בטביעת האצבע, בפנים או באישור המכשיר שלכם</string>
+    <string name="core_ui_biometric_prompt_negative_button">ביטול</string>
+</resources>

@@ -22,48 +22,86 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import kpt.core.base.designsystem.component.progress.KptProgress
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.base.ui.freshness.humanizeDuration
+import kpt.core.base.ui.generated.resources.Res
+import kpt.core.base.ui.generated.resources.dashboard_freshness_loading
+import kpt.core.base.ui.generated.resources.dashboard_freshness_updated
+import kpt.core.base.ui.generated.resources.dashboard_freshness_updated_refreshing
+import org.jetbrains.compose.resources.stringResource
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 /**
- * Top-of-dashboard progress strip showing "X of Y cards loaded".
+ * Top-of-dashboard **freshness** strip: shows *when* the data was last loaded — "Updated 5m ago" —
+ * NOT a "2 of 4 loaded" count. A load count conveys transient progress; staleness is what the user
+ * needs to trust the numbers, so we surface the age of the stalest card ([DashboardProgressState.oldestFetchedAt]).
  *
- * Hides itself when the dashboard is empty (`total == 0`) or fully loaded
- * (`loaded == total`) — apps don't have to gate the call site themselves.
- *
- * Uses [KptProgress.Linear] for the determinate bar so the rhythm matches the rest
- * of the toolkit's progress UI.
+ *  - Data present → "Updated {humanizeDuration(now − oldestFetchedAt)}", with "· refreshing…" when a
+ *    background refresh is in flight ([DashboardProgressState.isAnyLoading]).
+ *  - No data yet, still loading → an indeterminate bar + "Loading…".
+ *  - Nothing to show (empty dashboard, no loading) → hides itself.
  *
  * @param state Aggregate state from [aggregateDashboardProgress].
- * @param modifier Modifier applied to the wrapping [Column].
+ * @param modifier Modifier applied to the wrapping layout.
+ * @param now Injectable clock read — defaults to [Clock.System]; overridden in tests/previews for
+ *   deterministic age text.
  */
+@OptIn(ExperimentalTime::class)
 @Composable
 fun DashboardProgressBar(
     state: DashboardProgressState,
     modifier: Modifier = Modifier,
+    now: Instant = Clock.System.now(),
 ) {
-    // Hide when there's nothing to show or everything's already loaded.
-    if (state.total == 0 || state.loaded >= state.total) return
-
     val spacing = KptTheme.spacing
-    val progressFraction = state.loaded.toFloat() / state.total.toFloat()
-    val label = "${state.loaded} of ${state.total} loaded"
+    val fetchedAt = state.oldestFetchedAt
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .semantics {
-                contentDescription = label
-                liveRegion = LiveRegionMode.Polite
-            },
-        verticalArrangement = Arrangement.spacedBy(spacing.xs),
-    ) {
-        KptProgress(
-            variant = KptProgress.Linear(progress = progressFraction),
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+    when {
+        // Data has loaded → show its age (staleness), optionally flagged as refreshing.
+        fetchedAt != null -> {
+            val ageText = humanizeDuration(now - fetchedAt)
+            val label = if (state.isAnyLoading) {
+                stringResource(Res.string.dashboard_freshness_updated_refreshing, ageText)
+            } else {
+                stringResource(Res.string.dashboard_freshness_updated, ageText)
+            }
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .semantics {
+                        contentDescription = label
+                        liveRegion = LiveRegionMode.Polite
+                    },
+            )
+        }
+        // Nothing loaded yet but the first fetch is in flight → subtle indeterminate progress.
+        state.isAnyLoading && state.total > 0 -> {
+            val loadingLabel = stringResource(Res.string.dashboard_freshness_loading)
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .semantics {
+                        contentDescription = loadingLabel
+                        liveRegion = LiveRegionMode.Polite
+                    },
+                verticalArrangement = Arrangement.spacedBy(spacing.xs),
+            ) {
+                KptProgress(
+                    variant = KptProgress.Linear(progress = null),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = loadingLabel,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        // Empty dashboard / all-error with no timestamp → nothing to surface.
+        else -> return
     }
 }

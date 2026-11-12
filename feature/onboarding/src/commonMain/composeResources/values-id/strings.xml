@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Lewati</string>
+    <string name="feature_onboarding_skip_a11y">Langsung ke pilihan privasi</string>
+    <string name="feature_onboarding_next">Berikutnya</string>
+    <string name="feature_onboarding_page_of">Halaman %1$d dari %2$d</string>
+    <string name="feature_onboarding_overview_title">Semua alat keuangan Anda, di satu tempat</string>
+    <string name="feature_onboarding_overview_body">Pinjaman, tagihan, suku bunga, dan kalkulator ada berdampingan, jadi angka yang Anda perlukan selalu hanya sekali ketuk.</string>
+    <string name="feature_onboarding_track_title">Jangan lewatkan tanggal jatuh tempo</string>
+    <string name="feature_onboarding_track_body">Pantau pinjaman dan tagihan, dan dapatkan pengingat sebelum setiap pembayaran jatuh tempo.</string>
+    <string name="feature_onboarding_offline_title">Tidak ada sinyal? Tetap lanjut</string>
+    <string name="feature_onboarding_offline_body">Apa yang Anda simpan tetap ada di perangkat ini dan berfungsi secara offline. Perubahan disinkronkan saat Anda kembali online.</string>
+    <string name="feature_onboarding_privacy_title">Bantu tingkatkan aplikasi</string>
+    <string name="feature_onboarding_privacy_lead">Keduanya nonaktif kecuali Anda mengaktifkannya. Izinkan keduanya dengan sekali ketuk, atau pilih di bawah — Anda tetap dapat menggunakan semua fitur.</string>
+    <string name="feature_onboarding_analytics_label">Bagikan analitik penggunaan</string>
+    <string name="feature_onboarding_analytics_body">Layar dan fitur mana yang digunakan, serta seberapa sering. Tidak pernah apa yang Anda ketik atau simpan.</string>
+    <string name="feature_onboarding_crash_label">Kirim laporan kerusakan</string>
+    <string name="feature_onboarding_crash_body">Saat aplikasi mengalami kerusakan: galat, versi aplikasi, dan model perangkat, agar kami dapat memperbaikinya.</string>
+    <string name="feature_onboarding_no_personal_data">Apa pun yang Anda masukkan di aplikasi tidak pernah dikirim.</string>
+    <string name="feature_onboarding_settings_later">Anda dapat mengubahnya nanti di Pengaturan.</string>
+    <string name="feature_onboarding_connect_server">Siapkan server Anda</string>
+    <string name="feature_onboarding_agreement">Dengan menggunakan layanan kami, Anda menyetujui %1$s dan %2$s kami.</string>
+    <string name="feature_onboarding_terms">Syarat &amp; Ketentuan</string>
+    <string name="feature_onboarding_privacy_policy">Kebijakan Privasi</string>
+    <string name="feature_onboarding_allow_get_started">Izinkan dan mulai</string>
+    <string name="feature_onboarding_continue_without">Lanjutkan tanpa berbagi</string>
+    <string name="feature_onboarding_continue_choices">Lanjutkan dengan pilihan saya</string>
+    <string name="feature_onboarding_save_failed">Pilihan Anda tidak dapat disimpan. Silakan coba lagi.</string>
+</resources>

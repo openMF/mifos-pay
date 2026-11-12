@@ -8,6 +8,9 @@
 
 category: Utility  # IARC "reference category" — Utility, Productivity, or Other (non-game)
 
+# The IARC questionnaire answers, question by question.
+# Authored here rather than in the Play console so the rating is reviewable in a diff and
+# reproducible on a re-submission.
 questionnaire:
   violence:
     realistic_violence: false
@@ -40,6 +43,8 @@ questionnaire:
   miscellaneous:
     depicts_illegal_activity: false
 
+# The ratings the answers should produce, per board (ESRB, PEGI, USK, …).
+# A sanity check: if the returned rating differs, an answer was misread.
 expected_ratings:
   esrb: Everyone
   pegi: 3
@@ -49,6 +54,7 @@ expected_ratings:
   giac_iarc_generic: 3+
   playstore_summary: Everyone
 
+# Free-text rationale for an answer a reviewer might question.
 notes: >
   No content triggers any IARC descriptor. Expected outcome across all
   territory-specific systems is the lowest ("Everyone" / "3+" / "G") rating.

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.database.infra.entity
 
@@ -19,6 +19,8 @@ import androidx.room3.PrimaryKey
  */
 @Entity(tableName = "store_bookkeeper")
 data class BookkeeperEntity(
+    /** The store key whose write failed. */
     @PrimaryKey val key: String,
+    /** When that write last failed, epoch millis. */
     val lastFailedSync: Long,
 )

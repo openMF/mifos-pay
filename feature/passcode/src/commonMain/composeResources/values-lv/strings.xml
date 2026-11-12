@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Pārāk daudz mēģinājumu. Lūdzu, uzgaidiet un mēģiniet vēlreiz.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Biometriskā aparatūra ir īslaicīgi nepieejama. Lūdzu, mēģiniet vēlāk.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Šajā ierīcē nav reģistrēta biometrija. Lūdzu, iestatiet biometriju sistēmas iestatījumos.</string>
-    <string name="feature_passcode_biometric_error_timeout">Biometriskās autentifikācijas laiks beidzās. Lūdzu, mēģiniet vēlreiz.</string>
-    <string name="feature_passcode_biometric_error_no_space">Nepietiek krātuves biometriskās autentifikācijas pabeigšanai.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Biometriskās reģistrācijas dati nav derīgi. Lūdzu, atkārtoti iespējojiet biometriju lietotnes iestatījumos.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Neizdevās sākt biometrisko autentifikāciju nederīgu argumentu dēļ.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Neizdevās sākt biometrisko reģistrāciju nederīgu argumentu dēļ.</string>
-    <string name="feature_passcode_biometric_error_unknown">Radās neparedzēta biometriska kļūda. Lūdzu, mēģiniet vēlreiz.</string>
-    <string name="feature_passcode_biometric_prompt_title">Atbloķēt Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Apstipriniet savu identitāti, lai turpinātu</string>
-    <string name="feature_passcode_biometric_prompt_description">Izmantojiet pirksta nospiedumu, seju vai ierīces akreditācijas datus</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Atcelt</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Aizsargājiet savu lietotni</string>

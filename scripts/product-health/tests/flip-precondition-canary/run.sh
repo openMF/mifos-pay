@@ -33,7 +33,15 @@ awk '
 ' "$REAL_YAML" > "$FIX"
 out="$(CS_CONTRACT="$FIX" bash "$CS" require-flip-preconditions 2>&1)"; r=$?
 printf '%s\n' "$out" | sed 's/^/   /'
-if [ "$r" -eq 1 ]; then echo "   ✅ RED exit 1 (guard caught the drift)"; else echo "   ❌ RED exit $r (expected 1 — guard did NOT catch og-images drift)"; rc_ok=1; fi
+# Cite the guard's own message, not just exit 1: this fixture could exit non-zero for an unrelated
+# contract error, and a guard whose scan silently found nothing would look identical.
+if [ "$r" -ne 1 ]; then
+  echo "   ❌ RED exit $r (expected 1 — guard did NOT catch og-images drift)"; rc_ok=1
+elif printf '%s' "$out" | grep -q 'flip-precondition:.*og-images.*owner=fork'; then
+  echo "   ✅ RED exit 1 on the og-images owner drift"
+else
+  echo "   ❌ RED exit 1 but not on og-images drift:"; printf '%s' "$out" | grep '❌' | sed 's/^/        /'; rc_ok=1
+fi
 
 echo ""
 [ "$rc_ok" -eq 0 ] && echo "canary: PASS" || echo "canary: FAIL"

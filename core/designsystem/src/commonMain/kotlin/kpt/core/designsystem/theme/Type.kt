@@ -24,6 +24,7 @@ import kpt.core.designsystem.generated.resources.outfit_semi_bold
 import kpt.core.designsystem.generated.resources.outfit_thin
 import org.jetbrains.compose.resources.Font
 
+/** Outfit font family used by the app typography, with all weights from Thin to Black. */
 val fontFamily: FontFamily
     @Composable get() = FontFamily(
         Font(Res.font.outfit_black, FontWeight.Black),

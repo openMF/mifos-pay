@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem.component
 
@@ -21,11 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
 
+/**
+ * Slides [content] in and out along [direction], using the shared motion durations.
+ */
 @Composable
 fun KptSlideTransition(
     visible: Boolean,
-    direction: SlideDirection = SlideDirection.Left,
     modifier: Modifier = Modifier,
+    direction: SlideDirection = SlideDirection.Left,
     animationSpec: FiniteAnimationSpec<IntOffset> = tween(
         300,
         easing = KptAnimationSpecs.emphasizedEasing,
@@ -51,4 +54,19 @@ fun KptSlideTransition(
     )
 }
 
-enum class SlideDirection { Left, Right, Up, Down }
+/**
+ * Direction a [KptSlideTransition] enters from.
+ */
+enum class SlideDirection {
+    /** Enters from the left edge. Mirrored automatically in an RTL locale. */
+    Left,
+
+    /** Enters from the right edge. Mirrored automatically in an RTL locale. */
+    Right,
+
+    /** Enters from the bottom, rising — the sheet-like arrival. */
+    Up,
+
+    /** Enters from the top, descending. */
+    Down,
+}

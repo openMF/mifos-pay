@@ -14,7 +14,6 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreBase.ui)
             implementation(projects.core.data)
             implementation(compose.ui)
             implementation(compose.foundation)
@@ -27,7 +26,12 @@ kotlin {
         }
 
         commonTest.dependencies {
+            implementation(libs.multiplatform.settings.test)
             implementation(libs.turbine)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "kpt.feature.fastmpay.generated.resources"
 }

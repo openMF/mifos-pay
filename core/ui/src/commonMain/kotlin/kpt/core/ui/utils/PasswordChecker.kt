@@ -5,19 +5,31 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.ui.utils
 
 import kotlin.math.log2
 import kotlin.math.pow
 
+/**
+ * Scores a password against the app's rules and explains what is missing.
+ *
+ * Pure and platform-free, so the same verdict drives the indicator and any validation.
+ */
 object PasswordChecker {
     private const val MIN_PASSWORD_LENGTH = 8
     private const val STRONG_PASSWORD_LENGTH = 12
     private const val MIN_ENTROPY_BITS = 60.0
     private const val MAX_PASSWORD_LENGTH = 128
 
+    /**
+     * Validates then scores a password.
+     *
+     * Returns an error for empty or over-length input rather than a band, because neither has a meaningful strength.
+     *
+     * @param password the candidate.
+     */
     @Suppress("ReturnCount")
     fun getPasswordStrengthResult(password: String): PasswordStrengthResult {
         when {
@@ -34,6 +46,11 @@ object PasswordChecker {
         return PasswordStrengthResult.Success(result)
     }
 
+    /**
+     * Scores a password into a band from character-class variety, length and entropy.
+     *
+     * @param password the candidate.
+     */
     fun getPasswordStrength(password: String): PasswordStrength {
         val length = password.length
         val hasUpperCase = password.any { it.isUpperCase() }
@@ -62,6 +79,12 @@ object PasswordChecker {
         return log2(charPool.toDouble().pow(password.length))
     }
 
+    /**
+     * The unmet requirements, as user-facing sentences — what to fix, not just that it is weak. Empty when the
+     * password satisfies every rule.
+     *
+     * @param password the candidate.
+     */
     fun getPasswordFeedback(password: String): List<String> {
         val feedback = mutableListOf<String>()
 
@@ -88,8 +111,22 @@ object PasswordChecker {
     }
 }
 
+/**
+ * The verdict: a strength band plus the unmet requirements, so the UI can say WHAT to fix rather
+ * than only that it is weak.
+ */
 sealed class PasswordStrengthResult {
+    /**
+     * The password scored.
+     *
+     * @property passwordStrength the band it scored.
+     */
     data class Success(val passwordStrength: PasswordStrength) : PasswordStrengthResult()
 
+    /**
+     * The password could not be scored — empty or over the length limit.
+     *
+     * @property message why it could not be scored.
+     */
     data class Error(val message: String) : PasswordStrengthResult()
 }

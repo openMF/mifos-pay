@@ -26,18 +26,22 @@ print_success() {
     echo -e "${GREEN}✓ $1${NC}"
 }
 
+# Print a red failure line.
 print_error() {
     echo -e "${RED}✗ $1${NC}"
 }
 
+# Print a yellow warning line — the run continues.
 print_warning() {
     echo -e "${YELLOW}⚠ $1${NC}"
 }
 
+# Print a cyan informational line.
 print_info() {
     echo -e "${CYAN}ℹ $1${NC}"
 }
 
+# Print a boxed section header.
 print_section() {
     echo
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -234,28 +238,29 @@ warn "Firebase credentials exist" \
 # ============================================================================
 # 6. Deployment Scripts
 # ============================================================================
-print_section "6. Deployment Scripts"
+print_section "6. Deployment (Fastlane lanes)"
 
-check "deploy_firebase.sh exists" \
-    "[ -f 'scripts/deploy/deploy_firebase.sh' ]"
+# These SIX checks used to assert that scripts/deploy/deploy_{firebase,testflight,appstore}.sh exist and
+# are executable. Those wrappers were deliberately removed — deployment is Fastlane lanes invoked from
+# deployment/ — so the checks had been failing on a correct repository, which is worse than no check:
+# it trains a reader to ignore red output. They now verify the path deployment ACTUALLY takes.
+check "deployment/Fastfile exists" \
+    "[ -f 'deployment/Fastfile' ]"
 
-check "deploy_testflight.sh exists" \
-    "[ -f 'scripts/deploy/deploy_testflight.sh' ]"
+check "iOS lane file exists" \
+    "[ -f 'deployment/ios/firebase/lane.rb' ] || [ -d 'deployment/ios' ]"
 
-check "deploy_appstore.sh exists" \
-    "[ -f 'scripts/deploy/deploy_appstore.sh' ]"
+check "iOS deploy lanes are declared" \
+    "grep -rqE '^[[:space:]]*lane :(deploy_on_firebase|beta)' deployment"
+
+check "Gemfile pins the Fastlane toolchain" \
+    "[ -f 'deployment/Gemfile' ]"
+
+check "the pinned Ruby is declared" \
+    "[ -f 'deployment/.ruby-version' ] || [ -f '.ruby-version' ]"
 
 check "check_ios_version.sh exists" \
     "[ -f 'scripts/ios/check_ios_version.sh' ]"
-
-check "deploy_firebase.sh is executable" \
-    "[ -x 'scripts/deploy/deploy_firebase.sh' ]"
-
-check "deploy_testflight.sh is executable" \
-    "[ -x 'scripts/deploy/deploy_testflight.sh' ]"
-
-check "deploy_appstore.sh is executable" \
-    "[ -x 'scripts/deploy/deploy_appstore.sh' ]"
 
 check "check_ios_version.sh is executable" \
     "[ -x 'scripts/ios/check_ios_version.sh' ]"
@@ -320,8 +325,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     check "Xcode project exists" \
         "[ -d 'cmp-ios/iosApp.xcodeproj' ]"
 
-    check "Xcode workspace exists" \
-        "[ -d 'cmp-ios/iosApp.xcworkspace' ]"
+    # E6 — SwiftPM/XCFramework: there is no generated `.xcworkspace`; the app
+    # opens as a plain `.xcodeproj` and links the Kotlin ComposeApp XCFramework through
+    # the `cmp-ios/Package.swift` binary target.
+    check "SwiftPM package manifest exists" \
+        "[ -f 'cmp-ios/Package.swift' ]"
 else
     print_warning "Skipping Xcode checks (not running on macOS)"
 fi

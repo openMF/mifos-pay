@@ -34,6 +34,9 @@ if [[ ! -f "$CHROME" ]] && [[ ! -x "$CHROME" ]]; then
   exit 1
 fi
 
+# Render HTML $1 to PNG $2 at $3×$4 using headless Chrome.
+# Fixed dimensions because store screenshots must be submitted at exact resolutions —
+# a scaled image is rejected at upload.
 chrome_png() {
   local html="$1" png="$2" w="$3" h="$4"
   "$CHROME" \
@@ -49,6 +52,7 @@ chrome_png() {
     "file://${html}" 2>/dev/null
 }
 
+# Render every .html in $2 to a sibling PNG at $3×$4, labelled $1 in the log.
 render_dir() {
   local label="$1" dir="$2" w="$3" h="$4"
   echo "  [$label  ${w}×${h}]"
@@ -61,6 +65,9 @@ render_dir() {
   done
 }
 
+# Copy the Android screenshot HTML into both iPhone size directories.
+# One set of source HTML, rendered at each store's required resolution — otherwise the
+# same screenshot has to be authored twice and the two drift.
 sync_ios_from_android() {
   local android_dir="$REPO_ROOT/deployment/android/metadata/images/phoneScreenshots"
   local iphone_69="$REPO_ROOT/deployment/ios/appstore/metadata/screenshots/iPhone_6.9/en-GB"
@@ -72,6 +79,7 @@ sync_ios_from_android() {
   done
 }
 
+# Render the Android phone set at the Play Store's 1080×1920.
 do_android() {
   echo "📱  Android phone (1080×1920)…"
   render_dir "phone" \
@@ -79,6 +87,7 @@ do_android() {
     1080 1920
 }
 
+# Sync the HTML from Android, then render both iPhone sizes the App Store requires.
 do_ios() {
   echo "📱  Syncing Android HTML → iOS phone dirs…"
   sync_ios_from_android
@@ -99,6 +108,7 @@ do_ios() {
     2064 2752
 }
 
+# Render the Mac App Store set at 2560×1600.
 do_macos() {
   echo "💻  macOS (2560×1600)…"
   render_dir "macOS" \

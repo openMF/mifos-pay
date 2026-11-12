@@ -38,5 +38,7 @@ package kpt.core.store.wallet.linkableaccount
  * `List<LinkableAccountEntity>` via kotlinx.serialization). This branch's
  * Store5 architecture (Room SoT + CACHE_FIRST_SWR) serves the same read
  * offline-first without reintroducing an in-memory / prefs cache.
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class LinkableAccountKey(val clientId: Long)

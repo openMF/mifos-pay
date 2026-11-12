@@ -25,8 +25,11 @@ import kotlinx.serialization.Serializable
  * reference it without creating a `core/datastore → core/data` cycle.
  * `core/data`'s `Synchronizer.kt` imports it via the existing
  * `core/data → core/datastore` dep.
+ *
+ * @property versions Last-synced version (or epoch-seconds timestamp) per feature name.
  */
 @Serializable
 data class ChangeListVersions(val versions: Map<String, Long> = emptyMap()) {
+    /** Returns a copy with [name] mapped to [version]. */
     fun set(name: String, version: Long): ChangeListVersions = copy(versions = versions + (name to version))
 }

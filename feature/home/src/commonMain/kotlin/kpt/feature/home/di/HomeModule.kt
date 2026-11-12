@@ -14,7 +14,7 @@ import org.koin.dsl.module
 /**
  * The backbone home module — [kpt.feature.home.HomeScreen] carries zero demo imports and takes
  * no ViewModel of its own (the `homeBody` seam is supplied by `cmp-navigation`'s
- * `BackboneRegistry.homeBody`, whose own definitions live wherever that body's real
+ * `ForkBackboneRegistry.homeBody`, whose own definitions live wherever that body's real
  * implementation is installed). Empty on purpose.
  */
 val HomeModule = module {}

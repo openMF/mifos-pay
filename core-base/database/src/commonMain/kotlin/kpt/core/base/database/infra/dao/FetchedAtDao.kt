@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.database.infra.dao
 
@@ -23,9 +23,11 @@ import kpt.core.base.database.infra.entity.FetchedAtEntity
 @Dao
 interface FetchedAtDao {
 
+    /** When [storeKey] was last fetched, epoch millis, or null if never — the input to every freshness decision. */
     @Query("SELECT lastFetchedMillis FROM framework_fetched_at WHERE storeKey = :storeKey")
     suspend fun read(storeKey: String): Long?
 
+    /** Stamps a store key as fetched now. */
     @Upsert
     suspend fun upsert(entity: FetchedAtEntity)
 }

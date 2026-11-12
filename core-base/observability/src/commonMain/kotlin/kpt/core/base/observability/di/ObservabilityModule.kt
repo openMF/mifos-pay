@@ -9,11 +9,11 @@
  */
 package kpt.core.base.observability.di
 
+import kpt.core.base.observability.ConsoleCrashReporter
+import kpt.core.base.observability.CrashReporter
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import kpt.core.base.observability.ConsoleCrashReporter
-import kpt.core.base.observability.CrashReporter
 
 /**
  * Koin module exposing the default [CrashReporter] binding (stdout console).

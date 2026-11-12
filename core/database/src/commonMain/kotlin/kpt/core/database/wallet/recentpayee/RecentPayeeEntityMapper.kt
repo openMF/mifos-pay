@@ -9,8 +9,7 @@
  */
 package kpt.core.database.wallet.recentpayee
 
-import org.mifospay.core.model.account.RecentPayee
-
+import kpt.core.model.account.RecentPayee
 /**
  * Entity ↔ domain mapper for the `wallet_recent_payees` LOCAL-DERIVED table.
  *

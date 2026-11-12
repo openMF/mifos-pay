@@ -96,8 +96,8 @@ echo ""
 echo "════════════════════════════════════════════"
 echo "Summary"
 echo "════════════════════════════════════════════"
-for p in "${PASSED[@]}"; do printf "  ${GREEN}✓${NC} %s\n" "$p"; done
-for f in "${FAILED[@]}"; do printf "  ${RED}✗${NC} %s\n" "$f"; done
+for p in ${PASSED[@]+"${PASSED[@]}"}; do printf "  ${GREEN}✓${NC} %s\n" "$p"; done
+for f in ${FAILED[@]+"${FAILED[@]}"}; do printf "  ${RED}✗${NC} %s\n" "$f"; done
 echo ""
 echo "Passed: ${#PASSED[@]}"
 echo "Failed: ${#FAILED[@]}"

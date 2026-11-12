@@ -11,6 +11,11 @@ package org.mifos.lib.loan.network.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Network response DTO for the loan timeline, as returned by the Fineract loans API.
+ *
+ * @property expectedDisbursementDate Expected disbursement date as year, month and day components.
+ */
 @Serializable
 data class LoanTimelineResponseDto(
     val expectedDisbursementDate: List<Int>,

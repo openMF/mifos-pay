@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Пропустить</string>
+    <string name="feature_onboarding_skip_a11y">Перейти к настройкам конфиденциальности</string>
+    <string name="feature_onboarding_next">Далее</string>
+    <string name="feature_onboarding_page_of">Страница %1$d из %2$d</string>
+    <string name="feature_onboarding_overview_title">Все финансовые инструменты в одном месте</string>
+    <string name="feature_onboarding_overview_body">Займы, счета, ставки и калькуляторы собраны вместе — нужная цифра всегда в одном касании.</string>
+    <string name="feature_onboarding_track_title">Не пропускайте сроки оплаты</string>
+    <string name="feature_onboarding_track_body">Следите за займами и счетами и получайте напоминание перед каждым платежом.</string>
+    <string name="feature_onboarding_offline_title">Нет связи? Продолжайте</string>
+    <string name="feature_onboarding_offline_body">Сохранённые данные остаются на устройстве и доступны без сети. Изменения синхронизируются, когда связь восстановится.</string>
+    <string name="feature_onboarding_privacy_title">Помогите улучшить приложение</string>
+    <string name="feature_onboarding_privacy_lead">Обе функции выключены, пока вы их не включите. Разрешите обе одним нажатием или выберите ниже — все возможности приложения останутся доступны.</string>
+    <string name="feature_onboarding_analytics_label">Передавать статистику использования</string>
+    <string name="feature_onboarding_analytics_body">Какие экраны и функции используются и как часто. Без того, что вы вводите или сохраняете.</string>
+    <string name="feature_onboarding_crash_label">Отправлять отчёты о сбоях</string>
+    <string name="feature_onboarding_crash_body">При сбое приложения: ошибка, версия приложения и модель устройства, чтобы мы могли всё исправить.</string>
+    <string name="feature_onboarding_no_personal_data">Ничего из того, что вы вводите в приложении, никогда не передаётся.</string>
+    <string name="feature_onboarding_settings_later">Вы можете изменить это позже в настройках.</string>
+    <string name="feature_onboarding_connect_server">Настроить сервер</string>
+    <string name="feature_onboarding_agreement">Используя наш сервис, вы принимаете следующие документы: %1$s и %2$s.</string>
+    <string name="feature_onboarding_terms">Условия использования</string>
+    <string name="feature_onboarding_privacy_policy">Политика конфиденциальности</string>
+    <string name="feature_onboarding_allow_get_started">Разрешить и начать</string>
+    <string name="feature_onboarding_continue_without">Продолжить без передачи данных</string>
+    <string name="feature_onboarding_continue_choices">Продолжить с выбранными настройками</string>
+    <string name="feature_onboarding_save_failed">Не удалось сохранить выбранные настройки. Повторите попытку.</string>
+</resources>

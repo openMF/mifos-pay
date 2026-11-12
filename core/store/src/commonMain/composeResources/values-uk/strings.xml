@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">Тут поки нічого немає</string>
+    <string name="screenstate_empty_message">Коли з'являться дані, вони відображатимуться тут.</string>
+    <string name="screenstate_error_title">Щось пішло не так</string>
+    <string name="screenstate_error_retry">Спробувати ще раз</string>
+    <string name="screenstate_nonet_title">Ви офлайн</string>
+    <string name="screenstate_nonet_message">Ми повторимо спробу, коли зʼявиться зʼєднання.</string>
+    <string name="screenstate_nonet_retry">Повторити зараз</string>
+    <string name="screenstate_captive_title">Увійдіть у Wi-Fi</string>
+    <string name="screenstate_captive_message">Ваша мережа вимагає входу перед підключенням.</string>
+    <string name="screenstate_captive_action">Відкрити сторінку входу</string>
+    <string name="error_category_network">Не вдається звʼязатися з сервером. Перевірте підключення.</string>
+    <string name="error_category_auth">Термін сеансу минув. Увійдіть ще раз.</string>
+    <string name="error_category_ratelimit">Забагато запитів. Зачекайте та спробуйте ще раз.</string>
+    <string name="error_category_server">На наших серверах тимчасовий збій. Спробуйте трохи згодом.</string>
+    <string name="error_category_timeout_connect">Час очікування з'єднання вичерпано. Перевірте з'єднання та повторіть спробу.</string>
+    <string name="error_category_timeout_read">Сервер відповідав задовго. Повторіть спробу трохи згодом.</string>
+    <string name="error_category_quota">Квоту вичерпано. Оновіть план або зачекайте.</string>
+    <string name="error_category_client">Не вдалося виконати запит. Повторіть спробу.</string>
+    <string name="error_category_generic">Щось пішло не так</string>
+</resources>

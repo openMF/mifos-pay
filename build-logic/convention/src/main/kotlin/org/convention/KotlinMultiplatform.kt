@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 package org.convention
 
 import org.gradle.api.Project
@@ -29,7 +38,6 @@ internal fun Project.configureKotlinMultiplatform() {
         // emitted bytecode remains compatible for downstream consumers; only the
         // BUILD JVM is set here.
         jvmToolchain(jvmToolchainVersion)
-
 
         jvm("desktop")
         iosSimulatorArm64()
@@ -87,22 +95,46 @@ internal fun Project.configureKotlinMultiplatform() {
     //    aborts with `ReferenceError: window is not defined`), so they're turned off.
     //
     //  • Logic module (no Compose) → runs `jsNodeTest` (fast, and the ESM fix above makes it load).
-    //    Its wasm bundle transitively references skiko (via core:store → core-base/ui → compottie)
-    //    but ships no `skiko.mjs`, so BOTH wasm test tasks fail to resolve it (node and browser);
-    //    `jsBrowserTest` is just a slower duplicate of `jsNodeTest`. Those three are turned off —
-    //    zero real coverage loss (identical commonTest runs on `jsNodeTest` + desktop + ios).
+    //    `jsBrowserTest` is just a slower duplicate of `jsNodeTest`, so it stays off.
+    //    `wasmJsNodeTest` is off ONLY when the module's wasm test bundle actually pulls skiko
+    //    (via core:store → core-base/ui → compottie): skiko ships no `skiko.mjs`, so the bundle
+    //    cannot resolve it under node. Modules that never reach skiko RUN it — measured
+    //    2026-09-17 on :core:database, which executes 10 tests there. A blanket disable cost
+    //    those modules their entire wasm verdict while still reporting BUILD SUCCESSFUL, which
+    //    is indistinguishable from having run and passed.
     //
-    // There is no single config where all four web test tasks pass: Compose-on-node and
-    // logic-wasm-without-skiko are impossible by construction, so the environment MUST be selected.
+    // There is no single config where all four web test tasks pass: Compose-on-node is impossible
+    // by construction, so the environment MUST be selected.
     afterEvaluate {
-        val disabledWebTestTasks = if (pluginManager.hasPlugin("org.jetbrains.compose")) {
+        val isCompose = pluginManager.hasPlugin("org.jetbrains.compose")
+        val disabledWebTestTasks = if (isCompose) {
             setOf("jsNodeTest", "wasmJsNodeTest")
         } else {
-            setOf("jsBrowserTest", "wasmJsBrowserTest", "wasmJsNodeTest")
+            setOf("jsBrowserTest", "wasmJsBrowserTest")
+        }
+        // Resolved lazily through a Provider so the configuration is not resolved at configuration
+        // time and the value stays configuration-cache safe.
+        val wasmPullsSkiko = configurations.named("wasmJsTestRuntimeClasspath").flatMap { cfg ->
+            cfg.incoming.artifacts.resolvedArtifacts.map { artifacts ->
+                artifacts.any { it.id.componentIdentifier.displayName.contains("skiko") }
+            }
         }
         tasks.configureEach {
             if (name in disabledWebTestTasks) {
                 enabled = false
+            }
+            if (!isCompose && name == "wasmJsNodeTest") {
+                // Skip only when skiko is genuinely on the bundle's classpath, and SAY SO — a
+                // silently-disabled test task reports green and reads as passing coverage.
+                onlyIf {
+                    val pulls = wasmPullsSkiko.get()
+                    if (pulls) {
+                        logger.lifecycle(
+                            "[web-tests] $path SKIPPED - wasm test bundle pulls skiko, which ships no skiko.mjs",
+                        )
+                    }
+                    !pulls
+                }
             }
         }
     }

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.nav
 
@@ -16,12 +16,11 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import kotlin.jvm.JvmSuppressWildcards
-import kotlin.reflect.KType
 import kpt.core.base.designsystem.theme.Motion
 import kpt.core.base.designsystem.theme.MotionSnapshot
 import kpt.core.base.ui.util.RootTransitionProviders
-import kpt.core.base.ui.util.TransitionProviders
+import kotlin.jvm.JvmSuppressWildcards
+import kotlin.reflect.KType
 
 /**
  * A wrapper around [NavGraphBuilder.composable] that supplies slide up/down transitions.
@@ -41,6 +40,7 @@ inline fun <reified T : Any> NavGraphBuilder.composableWithSlideTransitions(
     noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
 ) = composableWithSlideTransitions<T>(MotionSnapshot.current, typeMap, deepLinks, content)
 
+/** Registers a destination with slide transitions — a modal-style arrival. */
 inline fun <reified T : Any> NavGraphBuilder.composableWithSlideTransitions(
     motion: Motion,
     typeMap: Map<KType, @JvmSuppressWildcards NavType<*>> = emptyMap(),
@@ -75,6 +75,7 @@ inline fun <reified T : Any> NavGraphBuilder.composableWithStayTransitions(
     noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
 ) = composableWithStayTransitions<T>(MotionSnapshot.current, typeMap, deepLinks, content)
 
+/** Registers a destination that HOLDS while its sibling animates, for a tab swap where only one side should move. */
 inline fun <reified T : Any> NavGraphBuilder.composableWithStayTransitions(
     motion: Motion,
     typeMap: Map<KType, @JvmSuppressWildcards NavType<*>> = emptyMap(),
@@ -117,6 +118,7 @@ inline fun <reified T : Any> NavGraphBuilder.composableWithPushTransitions(
     noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
 ) = composableWithPushTransitions<T>(MotionSnapshot.current, typeMap, deepLinks, content)
 
+/** Registers a destination with push transitions — the default for moving deeper into a flow. */
 inline fun <reified T : Any> NavGraphBuilder.composableWithPushTransitions(
     motion: Motion,
     typeMap: Map<KType, @JvmSuppressWildcards NavType<*>> = emptyMap(),
@@ -152,6 +154,7 @@ inline fun <reified T : Any> NavGraphBuilder.composableWithRootPushTransitions(
     noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
 ) = composableWithRootPushTransitions<T>(MotionSnapshot.current, typeMap, deepLinks, content)
 
+/** Registers a top-level destination with push transitions, for a root of the graph rather than a step inside one. */
 inline fun <reified T : Any> NavGraphBuilder.composableWithRootPushTransitions(
     motion: Motion,
     typeMap: Map<KType, @JvmSuppressWildcards NavType<*>> = emptyMap(),

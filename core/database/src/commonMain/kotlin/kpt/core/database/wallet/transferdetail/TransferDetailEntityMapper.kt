@@ -10,8 +10,7 @@
 package kpt.core.database.wallet.transferdetail
 
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.savingsaccount.TransferDetail
-
+import kpt.core.model.savingsaccount.TransferDetail
 /**
  * Entity ↔ domain mapper for the `wallet_transfer_details` table.
  *

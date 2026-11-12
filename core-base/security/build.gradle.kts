@@ -17,6 +17,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core-base:common"))
+            api(project(":core-base:crypto"))
             implementation(libs.kotlinx.coroutines.core)
             api(libs.koin.core)
             implementation(compose.runtime)

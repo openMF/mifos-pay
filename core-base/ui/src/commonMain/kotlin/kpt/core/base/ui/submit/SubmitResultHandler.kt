@@ -60,8 +60,8 @@ fun <R> SubmitResultHandler(
     LaunchedEffect(state) {
         when (state) {
             is SubmitState.Submitted -> onSubmitted(state.result)
-            is SubmitState.Failed    -> onFailed?.invoke(state.error, state.category)
-            else                     -> Unit
+            is SubmitState.Failed -> onFailed?.invoke(state.error, state.category)
+            else -> Unit
         }
     }
 }

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:Suppress("MatchingDeclarationName")
 
@@ -37,8 +37,16 @@ import kpt.core.base.designsystem.theme.motion
  * each slice to a fraction of the sum.
  */
 data class DonutSlice(
+    /**
+     * Label for the slice, shown in the legend rather than on the arc — arc labels are unreadable below roughly 8% of
+     * the total.
+     */
     val label: String,
+    /**
+     * Slice magnitude in data units. Converted to an arc as a share of the set's total, so values need not sum to 100.
+     */
     val value: Float,
+    /** Slice colour, or null to take the next hue from [ChartTokens.multiSeriesColors]. */
     val color: Color? = null,
 )
 

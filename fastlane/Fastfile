@@ -13,7 +13,7 @@ default_platform(:ios)
 platform :ios do
   desc "Build unsigned debug iOS app for PR checks (no signing, no archive)"
   lane :build_ios do
-    # E6 — SwiftPM/XCFramework (no CocoaPods). Assemble the Kotlin `ComposeApp`
+    # E6 — SwiftPM/XCFramework. Assemble the Kotlin `ComposeApp`
     # XCFramework the app links against; the `[KMP] Embed and Sign ComposeApp
     # XCFramework` Run-Script phase re-assembles + embeds it during the build. A
     # prodDebug PR check maps to the Debug XCFramework slice.
@@ -22,7 +22,7 @@ platform :ios do
     # kmp-product-flavors adoption replaced the single `iosApp` scheme with
     # per-variant schemes (demoDebug / demoRelease / prodDebug / prodRelease).
     # The PR check just needs one debug variant to compile — use prodDebug.
-    # Build from the plain `.xcodeproj` (no CocoaPods `.xcworkspace`).
+    # Build from the plain `.xcodeproj` (there is no generated `.xcworkspace`).
     build_ios_app(
       scheme:            "prodDebug",
       project:           "cmp-ios/iosApp.xcodeproj",

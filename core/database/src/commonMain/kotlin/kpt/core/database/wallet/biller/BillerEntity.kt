@@ -12,10 +12,11 @@ package kpt.core.database.wallet.biller
 import androidx.room3.Entity
 import androidx.room3.Index
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a user-defined biller — the Room mirror of the
- * `org.mifospay.core.model.autopay.Biller` domain model.
+ * `kpt.core.model.autopay.Biller` domain model.
  *
  * Stored in the `wallet_autopay_billers` table. Each row is a locally-authored
  * biller definition; there is NO server counterpart today (GOAL D12 —
@@ -38,7 +39,7 @@ import androidx.room3.PrimaryKey
  * billers without an id are impossible to persist (the repository generates a
  * stable id at write time).
  *
- * The [BillerCategory][org.mifospay.core.model.autopay.BillerCategory] enum
+ * The [BillerCategory][kpt.core.model.autopay.BillerCategory] enum
  * persists as its `name` (TEXT) — mirrors [`BillEntity.status`][kpt.core.database.wallet.bill.BillEntity]'s
  * enum-as-string convention so the schema stays self-documenting without a
  * type-converter class.
@@ -52,7 +53,9 @@ import androidx.room3.PrimaryKey
  * @property address Optional biller address.
  * @property isActive Domain `isActive` flag.
  * @property createdAt / [updatedAt] Epoch-millis timestamps set by the mapper.
+ * @property updatedAt Epoch-millis timestamp of the last update.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_autopay_billers",
     indices = [

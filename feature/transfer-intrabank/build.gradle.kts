@@ -16,7 +16,6 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreBase.ui)
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -25,8 +24,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(projects.core.designsystem)
             implementation(libs.ui.backhandler)
-            // Fork addition: TransferConfirmViewModel etc. read org.mifospay.core.common
-            // (ScreenState/UiError/ErrorMessageProvider/DateHelper). org.mifospay.core.model.network.*
+            // Fork addition: TransferConfirmViewModel etc. read kpt.core.common
+            // (ScreenState/UiError/ErrorMessageProvider/DateHelper). kpt.core.model.network.*
             // (ClientAccountsEntity/TransferPayload/AccountOptionsTemplate/TPTResponse) comes
             // transitively via core/data's api(core.model) re-export — features never depend on
             // core/network directly.
@@ -44,3 +43,7 @@ kotlin {
 // Top-level `dependencies { debugImplementation(compose.uiTooling) }` is not valid on
 // AGP-9 KMP-library modules — dropped. UI tooling is already available in preview via
 // compose.components.uiToolingPreview in commonMain.
+
+compose.resources {
+    packageOfResClass = "kpt.feature.transfer.intrabank.generated.resources"
+}

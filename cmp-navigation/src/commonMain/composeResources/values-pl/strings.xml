@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="app_name">KPT Design</string>
+    <string name="home">Główna</string>
+    <string name="profile">Profil</string>
+    <string name="settings">Ustawienia</string>
+    <string name="not_connected">⚠️ Nie masz połączenia z internetem</string>
+    <string name="screenstate_empty_title">Jeszcze nic tu nie ma</string>
+    <string name="screenstate_empty_message">Gdy pojawią się dane, zobaczysz je tutaj.</string>
+    <string name="screenstate_error_title">Coś poszło nie tak</string>
+    <string name="screenstate_error_retry">Spróbuj ponownie</string>
+    <string name="screenstate_nonet_title">Jesteś offline</string>
+    <string name="screenstate_nonet_message">Spróbujemy ponownie po przywróceniu połączenia.</string>
+    <string name="screenstate_nonet_retry">Spróbuj teraz</string>
+    <string name="screenstate_captive_title">Zaloguj się do Wi-Fi</string>
+    <string name="screenstate_captive_message">Twoja sieć wymaga zalogowania przed połączeniem.</string>
+    <string name="screenstate_captive_action">Otwórz stronę logowania</string>
+    <string name="error_category_network">Nie można połączyć się z serwerem. Sprawdź połączenie.</string>
+    <string name="error_category_auth">Sesja wygasła. Zaloguj się ponownie.</string>
+    <string name="error_category_ratelimit">Zbyt wiele żądań. Poczekaj i spróbuj ponownie.</string>
+    <string name="error_category_server">Nasze serwery mają chwilowy problem. Spróbuj za chwilę.</string>
+    <string name="error_category_generic">Coś poszło nie tak</string>
+</resources>

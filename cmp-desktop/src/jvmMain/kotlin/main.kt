@@ -83,7 +83,7 @@ fun main() {
                         // Trigger recomposition with new locale
                         localeVersion++
                     },
-                    onSplashScreenRemoved = {}
+                    onSplashScreenRemoved = {},
                 )
             }
         }

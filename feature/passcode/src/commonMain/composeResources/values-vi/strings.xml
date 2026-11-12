@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Quá nhiều lần thử. Vui lòng đợi và thử lại.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Phần cứng sinh trắc học tạm thời không khả dụng. Vui lòng thử lại sau.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Chưa có sinh trắc học nào được đăng ký trên thiết bị này. Vui lòng thiết lập sinh trắc học trong cài đặt hệ thống.</string>
-    <string name="feature_passcode_biometric_error_timeout">Xác thực sinh trắc học đã hết thời gian chờ. Vui lòng thử lại.</string>
-    <string name="feature_passcode_biometric_error_no_space">Không đủ dung lượng lưu trữ để hoàn tất xác thực sinh trắc học.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Dữ liệu đăng ký sinh trắc học không hợp lệ. Vui lòng bật lại sinh trắc học từ cài đặt ứng dụng.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Không thể bắt đầu xác thực sinh trắc học do đối số không hợp lệ.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Không thể bắt đầu đăng ký sinh trắc học do đối số không hợp lệ.</string>
-    <string name="feature_passcode_biometric_error_unknown">Đã xảy ra lỗi sinh trắc học không mong muốn. Vui lòng thử lại.</string>
-    <string name="feature_passcode_biometric_prompt_title">Mở khóa Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Xác minh danh tính để tiếp tục</string>
-    <string name="feature_passcode_biometric_prompt_description">Sử dụng vân tay, khuôn mặt, hoặc thông tin xác thực thiết bị của bạn</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Hủy</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Bảo mật ứng dụng của bạn</string>

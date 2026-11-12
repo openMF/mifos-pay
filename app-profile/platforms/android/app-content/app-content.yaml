@@ -11,9 +11,13 @@
 
 privacy_policy_url: https://openmf.github.io/privacy_policy_mifos_mobile.html
 
+# Whether the app shows ads. Play requires the declaration, and an incorrect answer is a
+# policy violation rather than a listing error.
 ads:
   contains_ads: false
 
+# How a reviewer reaches gated content — demo credentials, or a statement that all content
+# is open. Play cannot review what it cannot open.
 app_access:
   all_functionality_available_without_special_access: false
   login_required: true
@@ -29,11 +33,15 @@ app_access:
     instance URL are provided separately (see app.yaml#store.review) — the same account works for
     both iOS and Android.
 
+# IARC content-rating answers. The full questionnaire lives in content-rating.yaml; this is
+# the summary Play stores against the listing.
 content_rating:
   ref: ./content-rating.yaml
   category: Utility
   expected_rating: Everyone
 
+# Declared age bands. Selecting a child band puts the app under Families policy, which adds
+# requirements for ads, data collection and API usage.
 target_audience:
   age_groups: ["18 and over"]
   appeals_to_children: false
@@ -42,6 +50,8 @@ target_audience:
     Mobile banking / digital wallet utility aimed at adults managing their own financial accounts.
     Not designed or marketed for children.
 
+# The Data Safety form: what is collected, whether it is shared, and whether it is encrypted
+# in transit. Must match what the app actually does — Play audits against observed traffic.
 data_safety:
   ref: ./data-safety.csv
   collects_or_shares_data: true
@@ -57,6 +67,8 @@ data_safety:
     "required vs optional" and data-deletion-mechanism answers there are NOT yet verified against
     the actual app implementation — confirm before submitting to Play Console.
 
+# Declarations for regulated categories (finance, health, government, gambling).
+# An undeclared regulated app is removed rather than warned.
 special_categories:
   news_apps_declaration:
     is_news_app: false
@@ -65,6 +77,8 @@ special_categories:
   government_apps:
     is_government_app: false
 
+# Play's financial-features form, required when the app handles loans, payments or
+# investments. The toolkit's demo features are calculators, not regulated products.
 financial_features_declaration:
   is_financial_app_requiring_declaration: true
   notes: >
@@ -74,6 +88,7 @@ financial_features_declaration:
     services sub-category answers (e.g. which regulated activities apply) are NOT yet completed
     here — confirm the exact declaration with the institution's compliance team before submitting.
 
+# Health-app declaration, required when the app handles health or fitness data.
 health_apps:
   is_health_app: false
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  Mac App Store entitlements TEMPLATE. syncForkConfig substitutes {{APPLE_TEAM_ID}} and
-  {{APPLE_APP_IDENTIFIER}} from app-profile (apple.team_id + identity.app_id) into the shipped
-  cmp-desktop/mac-app-store.entitlements — do NOT hand-edit the generated .entitlements file.
+  Mac App Store entitlements. syncForkConfig writes cmp-desktop/mac-app-store.entitlements from
+  cmp-desktop/mac-app-store.entitlements.template, filling in the team id and application identifier
+  from app-profile (apple.team_id + identity.app_id). Edit the .template, never the generated file.
 -->
 <plist version="1.0">
 <dict>

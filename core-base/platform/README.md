@@ -88,50 +88,47 @@ This composable function sets up the platform-specific managers and provides the
 `CompositionLocalProvider`. It's designed to wrap your app's content and make all managers available
 to child composables.
 
-### IntentManager
+### UrlLauncher, ShareManager, IntentManager
+
+Three interfaces, because they are three different outcomes. They were one `IntentManager` until the
+split; that version declared `startActivity`, `createDocumentIntent`,
+`startApplicationDetailsSettingsActivity`, `startDefaultEmailApplication`, `getShareDataFromIntent`
+and a `ShareData` sealed type — **none of which exist in source**, and `launchUri` was implemented
+with `Share.url(...)`, so "launch this URI" raised a share sheet instead of opening the link.
 
 ```kotlin
+// Sends the user to a handler. Not suspending — the call returns once the handler is
+// dispatched, and suspending would imply it waits for the user.
+interface UrlLauncher {
+    fun open(url: String): Boolean
+    fun openInBrowser(url: String): Boolean
+    fun canOpen(url: String): Boolean
+}
+
+// Raises a chooser and hands content to another app. Suspends: the sheet is awaited.
+interface ShareManager {
+    suspend fun shareText(text: String)
+    suspend fun shareUrl(url: String)
+    suspend fun shareFile(fileUri: String, mimeType: MimeType)
+    suspend fun shareFile(fileUri: String, mimeType: MimeType, extraText: String)
+    suspend fun shareImage(title: String, image: ImageBitmap)
+}
+
+// Asks the OS for a screen or a document flow and reports what came back. Returns
+// IntentResult rather than Unit because the user can cancel a system flow.
 interface IntentManager {
-   // Launch a platform-specific intent
-   fun startActivity(intent: Any)
-
-   // Open a URI in an appropriate app
-   fun launchUri(uri: String)
-
-   // Share text with platform sharing mechanism
-   fun shareText(text: String)
-
-   // Share a file with appropriate MIME type
-   fun shareFile(fileUri: String, mimeType: MimeType)
-
-   // Extract shared data from incoming intents
-   fun getShareDataFromIntent(intent: Any): ShareData?
-
-   // Create an intent for document creation
-   fun createDocumentIntent(fileName: String): Any
-
-   // Launch application settings
-   fun startApplicationDetailsSettingsActivity()
-
-   // Open default email application
-   fun startDefaultEmailApplication()
-
-   // Data wrapper for incoming shared content
-   sealed class ShareData {
-      data class TextSend(val subject: String?, val text: String) : ShareData()
-      // Extensible for future share types (images, files, etc.)
-   }
+    suspend fun openAppSettings(): IntentResult
+    suspend fun createDocument(fileName: String, mimeType: String = "*/*"): IntentResult
 }
 ```
 
-The `IntentManager` provides platform-agnostic operations for working with platform-specific intents
-and sharing mechanisms. It handles:
+All three implementations are **commonMain only** — `cmp-open-url`, `cmp-share` and
+`cmp-intent-launcher` carry the per-target `actual`s. The sole platform-split piece is
+`encodeImageAsPng`, which `shareImage` needs and no toolkit module supplies.
 
-- Activity and URI launching
-- Content sharing
-- Settings navigation
-- Document creation
-- Handling incoming shared content
+Each is bound in `platformModule` (`single<UrlLauncher>`, `single<ShareManager>`,
+`single<IntentManager>`) and provided through `LocalUrlLauncher` / `LocalShareManager` /
+`LocalIntentManager`, so a ViewModel can inject one without reaching into composition.
 
 ### AppReviewManager
 
@@ -376,35 +373,35 @@ The non-Android implementations:
 
 ### Manager Implementations
 
+`UrlLauncherImpl`, `ShareManagerImpl` and `IntentManagerImpl` are **commonMain**, one implementation
+each, delegating to the toolkit engines:
+
 ```kotlin
-class IntentManagerImpl : IntentManager {
-    override fun startActivity(intent: Any) {
-        // TODO("Not yet implemented")
-    }
-
-    // Other methods with TODO placeholders
-}
-
-class AppReviewManagerImpl : AppReviewManager {
-    override fun promptForReview() {
-        // Empty implementation
-    }
-
-    override fun promptForCustomReview() {
-        // TODO:: Implement custom review flow
-    }
-}
-
-class AppUpdateManagerImpl : AppUpdateManager {
-    override fun checkForAppUpdate() {
-        // Empty implementation
-    }
-
-    override fun checkForResumeUpdateState() {
-        // Empty implementation
-    }
+class UrlLauncherImpl : UrlLauncher {
+    override fun open(url: String): Boolean = openUrl(url)          // cmp-open-url
+    override fun openInBrowser(url: String): Boolean = openInBrowser(url)
+    override fun canOpen(url: String): Boolean = canOpen(url)
 }
 ```
+
+`AppUpdateManagerImpl` joined them: `cmp-in-app-update` covers 11 targets, so the Play Core impl and
+its empty non-Android twin are gone. It holds no `Activity`, so it is a Koin `single`.
+
+`AppReviewManagerImpl` is the last per-target pair, and its non-Android half is genuinely empty:
+
+```kotlin
+// nonAndroidMain — this is the real file, not an abbreviation
+class AppReviewManagerImpl : AppReviewManager {
+    override fun promptForReview() { }
+    override fun promptForCustomReview() { }
+}
+```
+
+Android works through Play Core; iOS, desktop and web get nothing, and the call site cannot tell.
+That is what a bridge looks like before its capability reaches the toolkit — and it is the only
+reason `LocalManagerProvider` is still `expect`/`actual`, since review is the last manager needing
+an `Activity`.
+
 
 These implementations:
 
@@ -419,11 +416,14 @@ These implementations:
 ```kotlin
 @Composable
 fun DeepLinkHandler(uri: String?) {
-    val intentManager = LocalIntentManager.current
+    // UrlLauncher, not IntentManager: opening a link and sharing one are different acts.
+    // This sample used to call `intentManager.launchUri(it)`, which was implemented with
+    // `Share.url(...)` — so a deep link raised a share sheet instead of opening.
+    val urlLauncher = LocalUrlLauncher.current
 
     LaunchedEffect(uri) {
         uri?.let {
-            intentManager.launchUri(it)
+            urlLauncher.open(it)
         }
     }
 }
@@ -454,26 +454,24 @@ class MyCustomReviewManager(
 }
 ```
 
-### Handling Incoming Shared Content
+### Sharing Content Out
 
 ```kotlin
 @Composable
-fun ShareReceiver(intent: Any) {
-    val intentManager = LocalIntentManager.current
-    val shareData = intentManager.getShareDataFromIntent(intent)
+fun ShareButton(text: String) {
+    val share = LocalShareManager.current
+    val scope = rememberCoroutineScope()
 
-    when (shareData) {
-        is IntentManager.ShareData.TextSend -> {
-            // Handle received text
-            Text("Received: ${shareData.text}")
-        }
-        else -> {
-            // Handle other types or null
-            Text("No sharable content found")
-        }
+    Button(onClick = { scope.launch { share.shareText(text) } }) {
+        Text("Share")
     }
 }
 ```
+
+> Handling content shared **into** the app is not covered by these interfaces. The previous version
+> of this README documented `intentManager.getShareDataFromIntent(intent)` and an
+> `IntentManager.ShareData` sealed type — neither has ever existed in source. Receiving a share is
+> an Android `Intent` concern that belongs in the host Activity, or in a future toolkit engine.
 
 ### Managing App Updates
 
@@ -564,9 +562,12 @@ class MainActivity : ComponentActivity() {
 // Good practice
 @Composable
 fun MyScreen(
-    intentManager: IntentManager = LocalIntentManager.current
+    urlLauncher: UrlLauncher = LocalUrlLauncher.current,
+    share: ShareManager = LocalShareManager.current,
+    intentManager: IntentManager = LocalIntentManager.current,
 ) {
-    // Use intentManager
+    // Take only the capability the screen actually uses — the three are separate
+    // interfaces so a screen that opens links does not also gain the ability to share.
 }
 
 // For testing

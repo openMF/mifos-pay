@@ -2,9 +2,9 @@
 <!--
     Copyright 2024 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
@@ -88,6 +88,24 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
+        </provider>
+
+        <!--
+            worker-kmp initializes WorkManager on-demand (WorkerKmpHost.initialize +
+            androidWorkManagerFactory, wired from cmp-shared initKoin → WorkerKmpAuto.install()).
+            Disable androidx.startup's default WorkManagerInitializer so the two don't both
+            initialize WorkManager — otherwise the first lazy WorkScheduler resolve (e.g. opening
+            Bills → notification gateway) throws IllegalStateException "WorkManager is already
+            initialized". This is the canonical on-demand-initialization recipe.
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                tools:node="remove" />
         </provider>
 
         <!-- Disable collection of AD_ID for all build variants -->

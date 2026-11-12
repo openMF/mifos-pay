@@ -26,8 +26,11 @@ import kpt.core.base.store.screen.ScreenState
  * @param R The submission result type ([Unit] for fire-and-forget operations).
  */
 data class MutationUiState<out T, out R>(
+    /** The read side — what the screen renders. */
     val screen: ScreenState<T> = ScreenState.Loading,
+    /** The write side — idle, in flight, succeeded or failed. */
     val submit: SubmitState<R> = SubmitState.Idle,
+    /** Whether an unsent draft was found for this form, so the screen can offer to resume it. */
     val resume: DraftResumeState<T> = DraftResumeState.None,
 ) {
     /** True when data is loaded and no submission is in-flight. Use to enable the submit button. */

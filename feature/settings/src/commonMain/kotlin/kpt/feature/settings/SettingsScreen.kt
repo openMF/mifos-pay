@@ -51,7 +51,7 @@ import org.jetbrains.compose.resources.stringResource
  *
  * The stateful shell/seam split (WS01 base-feature seam, epic AC7): the dialog state + dev-menu now live
  * in the fork-owned [kpt.feature.settings.demo.SettingsDemoBody] (rendered via `cmp-navigation`'s
- * `BackboneRegistry.settingsBody`), which wires those callbacks to THIS content. A template sync
+ * `ForkBackboneRegistry.settingsBody`), which wires those callbacks to THIS content. A template sync
  * full-copies this content shell while the fork's `settingsBody` seam survives.
  */
 @Composable

@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Liiga palju katseid. Oota ja proovi uuesti.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Biomeetriline riistvara on ajutiselt kättesaamatu. Proovi hiljem uuesti.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Sellesse seadmesse pole biomeetriat registreeritud. Palun seadista biomeetria süsteemi seadetes.</string>
-    <string name="feature_passcode_biometric_error_timeout">Biomeetriline autentimine aegus. Proovi uuesti.</string>
-    <string name="feature_passcode_biometric_error_no_space">Biomeetrilise autentimise lõpetamiseks pole piisavalt salvestusruumi.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Biomeetria registreerimisandmed pole kehtivad. Lülita biomeetria rakenduse seadetes uuesti sisse.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Biomeetrilist autentimist ei saanud käivitada vigaste argumentide tõttu.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Biomeetrilist registreerimist ei saanud käivitada vigaste argumentide tõttu.</string>
-    <string name="feature_passcode_biometric_error_unknown">Tekkis ootamatu biomeetriline viga. Proovi uuesti.</string>
-    <string name="feature_passcode_biometric_prompt_title">Ava Mifos Pay lukk</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Kinnita jätkamiseks oma isik</string>
-    <string name="feature_passcode_biometric_prompt_description">Kasuta oma sõrmejälge, nägu või seadme mandaati</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Tühista</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Kaitse oma rakendust</string>

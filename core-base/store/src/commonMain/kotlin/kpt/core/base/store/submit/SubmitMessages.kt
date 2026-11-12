@@ -32,7 +32,10 @@ package kpt.core.base.store.submit
  * Any field left `null` falls back to the screen-level / theme-level default copy.
  */
 data class SubmitMessages(
+    /** Copy shown while the submission is in flight. Null shows none. */
     val submitting: String? = null,
+    /** Copy shown on success. Null shows none. */
     val submitted: String? = null,
+    /** Copy shown on failure. Null falls back to the mapped error message. */
     val failed: String? = null,
 )

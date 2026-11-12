@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">略過</string>
+    <string name="feature_onboarding_skip_a11y">跳至隱私選項</string>
+    <string name="feature_onboarding_next">下一步</string>
+    <string name="feature_onboarding_page_of">第 %1$d 頁，共 %2$d 頁</string>
+    <string name="feature_onboarding_overview_title">理財工具，盡在一處</string>
+    <string name="feature_onboarding_overview_body">貸款、帳單、利率和計算機集中呈現，所需數字一觸即達。</string>
+    <string name="feature_onboarding_track_title">不再錯過繳款日</string>
+    <string name="feature_onboarding_track_body">隨時掌握貸款和帳單，每筆款項到期前都會收到提醒。</string>
+    <string name="feature_onboarding_offline_title">沒有訊號？照常使用</string>
+    <string name="feature_onboarding_offline_body">您儲存的內容會留在這部裝置上，離線也能使用。恢復連線後會自動同步變更。</string>
+    <string name="feature_onboarding_privacy_title">協助改善應用程式</string>
+    <string name="feature_onboarding_privacy_lead">除非您主動開啟，否則兩項均為關閉狀態。您可以一鍵全部允許，或在下方選擇 — 無論如何都能使用所有功能。</string>
+    <string name="feature_onboarding_analytics_label">分享使用情況分析</string>
+    <string name="feature_onboarding_analytics_body">使用了哪些畫面和功能，以及使用頻率。絕不包含您輸入或儲存的內容。</string>
+    <string name="feature_onboarding_crash_label">傳送當機報告</string>
+    <string name="feature_onboarding_crash_body">應用程式當機時：傳送錯誤資訊、應用程式版本和裝置型號，以便我們修正問題。</string>
+    <string name="feature_onboarding_no_personal_data">您在應用程式中輸入的任何內容都不會被傳送。</string>
+    <string name="feature_onboarding_settings_later">您稍後可以在「設定」中變更此項目。</string>
+    <string name="feature_onboarding_connect_server">設定伺服器</string>
+    <string name="feature_onboarding_agreement">使用我們的服務即表示您接受我們的%1$s及%2$s。</string>
+    <string name="feature_onboarding_terms">條款與細則</string>
+    <string name="feature_onboarding_privacy_policy">隱私權政策</string>
+    <string name="feature_onboarding_allow_get_started">允許並開始使用</string>
+    <string name="feature_onboarding_continue_without">不分享並繼續</string>
+    <string name="feature_onboarding_continue_choices">依我的選擇繼續</string>
+    <string name="feature_onboarding_save_failed">無法儲存您的選擇，請再試一次。</string>
+</resources>

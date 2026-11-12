@@ -291,6 +291,9 @@ platform :mac do
     end
   end
 
+  # Build a throwaway keychain on CI from Match-managed certificates.
+  # macOS certs live in the same Match repo as iOS, so CI needs only MATCH_PASSWORD and the SSH
+  # key — never a .p12 pasted into a repository secret.
   def _setup_mac_signing_keychain_ci(options, mac_bundle_id)
     # macOS certs are managed by Fastlane Match (openMF/ios-provisioning-profile,
     # OpenSSL-encrypted) — exactly like iOS. The tier-3 composite action only
@@ -340,6 +343,9 @@ platform :mac do
     UI.message("🔓 Granted codesign/productsign partition access on #{kc_name}")
   end
 
+  # Fetch Match certificates into a TEMPORARY keychain for a local build.
+  # The login keychain is never touched, which is what stops a failed build from leaving the
+  # developer's default keychain altered.
   def _setup_mac_signing_keychain_local(options, mac_bundle_id, keychain_path: nil, keychain_name: nil, keychain_password: nil)
     cfg        = FastlaneConfig::IosConfig::BUILD_CONFIG
     ssh_key    = File.join(DEPLOYMENT_REPO_ROOT, cfg[:match_ssh_key_path])
@@ -469,6 +475,8 @@ platform :mac do
     end
   end
 
+  # The SHA-1 of every signing identity in the given keychain.
+  # Used to assert the expected identity actually landed, rather than trusting the import's exit code.
   def _list_identity_sha1s(keychain_path)
     sh(
       "security find-identity -v -p basic #{keychain_path.shellescape} 2>/dev/null" \
@@ -533,6 +541,7 @@ platform :mac do
     UI.important("⚠️  No .provisionprofile found — Mac App Store upload will fail without one.")
   end
 
+  # Build the signed .pkg for Mac App Store submission via the Gradle packaging task.
   def build_mac_pkg(mac_bundle_id, options = {})
     repo_root    = DEPLOYMENT_REPO_ROOT
     gradlew      = File.join(repo_root, "gradlew")

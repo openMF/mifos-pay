@@ -180,6 +180,8 @@ platform :mac do
     sha1
   end
 
+  # Codesign the .app with Developer ID, hardened runtime and the entitlements file.
+  # Hardened runtime is a notarisation requirement, so a DMG build cannot skip it.
   def _sign_mac_app_with_developer_id(app_path, identity)
     UI.message("Signing .app with Developer ID + hardened runtime + entitlements...")
     sh(
@@ -210,6 +212,8 @@ platform :mac do
     dmg_path
   end
 
+  # Attach the built DMG to the GitHub release for the current tag.
+  # Falls back to the origin remote when GITHUB_REPOSITORY is unset, so the lane works locally too.
   def _upload_dmg_to_github_release(tag, dmg_path)
     repo = ENV["GITHUB_REPOSITORY"].to_s.strip
     repo = _resolve_origin_repo(DEPLOYMENT_REPO_ROOT) if repo.empty?
@@ -245,6 +249,8 @@ platform :mac do
     UI.message("🏷  Release #{tag} → prerelease=#{prerelease}, latest=#{latest}")
   end
 
+  # The nearest annotated tag, or an empty string outside a tagged checkout.
+  # Empty rather than raising: a DMG can legitimately be built from an untagged commit for testing.
   def _resolve_git_tag(repo_root)
     sh("git -C #{repo_root.shellescape} describe --tags --abbrev=0 2>/dev/null", log: false).strip
   rescue StandardError

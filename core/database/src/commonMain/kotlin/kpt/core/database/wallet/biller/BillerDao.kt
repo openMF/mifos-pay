@@ -14,6 +14,7 @@ import androidx.room3.Insert
 import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_autopay_billers` OFFLINE_LOCAL_ONLY table
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.Flow
  * the pre-migration ordering of `BillerDataSource._billers` (which was insertion
  * order via `addBiller`).
  */
+@DbDao
 @Dao
 interface BillerDao {
 

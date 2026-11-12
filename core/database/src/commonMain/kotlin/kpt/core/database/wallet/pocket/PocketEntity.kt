@@ -12,10 +12,11 @@ package kpt.core.database.wallet.pocket
 import androidx.room3.ColumnInfo
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single linked pocket account — the Room mirror of the
- * `org.mifospay.core.model.pocket.DetailedPocketAccount` domain aggregate
+ * `kpt.core.model.pocket.DetailedPocketAccount` domain aggregate
  * (which wraps `PocketAccount` + derived detail fields).
  *
  * Stored in the `wallet_pockets` table. LEDGER shape — many rows per client,
@@ -57,7 +58,11 @@ import androidx.room3.Index
  * @property status Nullable `AccountStatus.name` — `PENDING`/`APPROVED`/`ACTIVE`/…/`UNKNOWN`.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property currencyDisplaySymbol Nullable currency display symbol.
+ * @property syncStatus Sync state: SYNCED, PENDING_LINK or PENDING_DELINK.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_pockets",
     primaryKeys = ["id", "clientId"],

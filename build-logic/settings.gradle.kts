@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 pluginManagement {
     // OPTIONAL composite-include of the upstream kmp-product-flavors build-logic.
     // Controlled by lib-integrate.properties (kmp-product-flavors.local / .path).
@@ -9,8 +18,10 @@ pluginManagement {
         if (propsFile.exists()) propsFile.inputStream().use { load(it) }
     }
     val flavorLocal = libProps.getProperty("kmp-product-flavors.local", "true") == "true"
-    val flavorPath  = libProps.getProperty("kmp-product-flavors.path",
-        "../../../../mbs/kmp-product-flavors/source/kmp-product-flavors/build-logic")
+    val flavorPath = libProps.getProperty(
+        "kmp-product-flavors.path",
+        "../../../../mbs/kmp-product-flavors/source/kmp-product-flavors/build-logic",
+    )
     val upstreamFlavorPluginBuildLogic = settingsDir.toPath().resolve(flavorPath).normalize().toFile()
     if (flavorLocal && upstreamFlavorPluginBuildLogic.isDirectory) {
         println("⚡ [lib-integrate] kmp-product-flavors → local source ($flavorPath)")

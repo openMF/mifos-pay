@@ -11,6 +11,12 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the tax group used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property name Name.
+ */
 @Serializable
 data class TaxGroup(
     val id: Int? = null,

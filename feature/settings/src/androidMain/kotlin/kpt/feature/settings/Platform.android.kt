@@ -12,10 +12,12 @@ package kpt.feature.settings
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 
+/** Android actual of [getPlatform]. */
 actual fun getPlatform(): Platform {
     return Platform.Android
 }
 
+/** Android actual; dynamic (Material You) color is supported only on Android 12 and above. */
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
 actual fun supportsDynamicTheming(): Boolean {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S

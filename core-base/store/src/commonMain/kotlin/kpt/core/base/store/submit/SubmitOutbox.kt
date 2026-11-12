@@ -10,6 +10,7 @@
 package kpt.core.base.store.submit
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 /**
  * Durable outbox for form payloads that failed to reach the server.
@@ -69,6 +70,13 @@ interface SubmitOutbox<P> {
     /** All entries currently in PENDING status (excludes RETRYING) — used by [OfflineSubmitSyncer]. */
     suspend fun getAllPending(): List<SubmitOutboxEntry<P>>
 
+    /**
+     * Ids of this outbox's PENDING entries, re-emitted on change — lets the syncer send a draft the
+     * moment it becomes pending while online (a Retry tapped in Sync & Drafts), instead of only on
+     * the next reconnect. Default = never emits: such an outbox syncs on reconnects only.
+     */
+    fun observePendingIds(): Flow<Set<Long>> = emptyFlow()
+
     /** Claim this entry for retry — transitions PENDING → RETRYING; prevents concurrent UI double-submit. */
     suspend fun markRetrying(id: Long)
 
@@ -77,6 +85,13 @@ interface SubmitOutbox<P> {
 
     /** Transition the entry identified by [id] to FAILED with an optional [error] message. */
     suspend fun markFailed(id: Long, error: String?)
+
+    /**
+     * Put the entry back to PENDING after a failed attempt that is still within the retry cap, so
+     * the syncer tries it again. Its `attemptCount` (bumped by [markRetrying]) is kept.
+     * Default = [markFailed], the pre-retry behaviour, for implementations with no requeue.
+     */
+    suspend fun requeue(id: Long, error: String?) = markFailed(id, error)
 
     /** Delete all drafts for [formKey] (e.g. on screen close or after successful submit). */
     suspend fun deleteByFormKey(formKey: String)

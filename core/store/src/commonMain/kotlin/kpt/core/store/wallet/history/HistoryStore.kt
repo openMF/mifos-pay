@@ -11,27 +11,29 @@ package kpt.core.store.wallet.history
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
+import kpt.core.common.DateHelper
 import kpt.core.database.wallet.transaction.TransactionDao
 import kpt.core.database.wallet.transaction.toDomain
 import kpt.core.database.wallet.transaction.toEntity
-import org.mifospay.core.common.DateHelper
-import org.mifospay.core.model.savingsaccount.SavingsWithAssociationsEntity
-import org.mifospay.core.model.savingsaccount.Transaction
-import org.mifospay.core.model.savingsaccount.TransactionType
-import org.mifospay.core.model.savingsaccount.TransactionsEntity
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.savingsaccount.SavingsWithAssociationsEntity
+import kpt.core.model.savingsaccount.Transaction
+import kpt.core.model.savingsaccount.TransactionType
+import kpt.core.model.savingsaccount.TransactionsEntity
+import kpt.core.network.main.services.SavingsAccountsService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
-import org.mifospay.core.model.savingsaccount.PaymentType as ModelPaymentType
+import kpt.core.model.savingsaccount.PaymentType as ModelPaymentType
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
-/** Room `@Entity(tableName = …)` for [kpt.core.database.wallet.transaction.TransactionEntity]. Shared with the DAO's writes. */
-private const val TRANSACTIONS_TABLE = "wallet_transactions"
-
-/** `apiManager.savingAccountsListApi.getSavingsWithAssociations(...)` `?associations=` value. */
+/** `selfSavingsAccountsService.getSavingsWithAssociations(...)` `?associations=` value. */
 private const val ASSOC_TRANSACTIONS = "transactions"
 
 /**
@@ -87,10 +89,11 @@ private const val ASSOC_TRANSACTIONS = "transactions"
  * refresh cycle. There is no `Bookkeeper` — this store never queues local
  * writes for retry.
  */
+@StoreProvider(id = "history")
+@CacheKey(fn = "of", key = "wallet_transactions-{accountId}", params = ["accountId:Long"])
 fun provideHistoryStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfSavingsAccountsService: SavingsAccountsService,
     dao: TransactionDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<TransactionKey, List<Transaction>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: TransactionKey ->
         // Delta cursor read — currently informational; the API can't honor `?since=`,
@@ -101,14 +104,14 @@ fun provideHistoryStore(
 
         // Ktorfit returns Flow<SavingsWithAssociationsEntity> for
         // getSavingsWithAssociations — take the first (and only) emission.
-        val response: SavingsWithAssociationsEntity = apiManager.savingAccountsListApi
+        val response: SavingsWithAssociationsEntity = selfSavingsAccountsService
             .getSavingsWithAssociations(key.accountId, ASSOC_TRANSACTIONS)
             .first()
         response.toTransactionList()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: TransactionKey ->
-            daoFlow(TRANSACTIONS_TABLE) { dao.observeByAccount(key.accountId) }
+            run { dao.observeByAccount(key.accountId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: TransactionKey, transactions: List<Transaction> ->
@@ -128,7 +131,7 @@ fun provideHistoryStore(
 // ---------------------------------------------------------------------------
 // Inline mapping helpers — private to this file.
 //
-// Mirrors `org.mifospay.core.data.mapper.TransactionMapper` (which lives in
+// Mirrors `kpt.core.data.mapper.TransactionMapper` (which lives in
 // core/data, out of reach for a `core/store` module). Kept private + minimal so
 // the store body is self-contained and the fetcher lambda doesn't need to
 // reach across module boundaries. If a third consumer wants this mapping, lift

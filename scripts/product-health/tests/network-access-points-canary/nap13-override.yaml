@@ -1,0 +1,31 @@
+network:
+  access_points:
+    - id: main
+      auth: none
+      auth: none
+      type: rest
+      base_url: https://api.example.com/
+      loggable_host: api.example.com
+      headers:
+        - { name: Content-Type, value: application/vnd.api+json }
+    - id: shop
+      auth: none
+      auth: none
+      type: rest
+      base_url: https://shop.example.com/
+      loggable_host: shop.example.com
+      api: com.acme.api.ShopApi
+    - id: sb
+      auth: none
+      auth: none
+      type: supabase
+      base_url: https://sb.supabase.co
+      loggable_host: sb.supabase.co
+      api: com.acme.api.ConfigApi
+      publishable_key_env: SB_PUBLISHABLE_KEY
+    - id: pay-gw
+      auth: none
+      auth: none
+      type: rest
+      base_url: https://pay.example.com/
+      loggable_host: pay.example.com

@@ -11,11 +11,10 @@ package kpt.core.database.wallet.selfaccounts
 
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.account.Account
-import org.mifospay.core.model.savingsaccount.AccountType
-import org.mifospay.core.model.savingsaccount.Currency
-import org.mifospay.core.model.savingsaccount.Status
-
+import kpt.core.model.account.Account
+import kpt.core.model.savingsaccount.AccountType
+import kpt.core.model.savingsaccount.Currency
+import kpt.core.model.savingsaccount.Status
 /**
  * Entity ↔ domain mapper for the `wallet_self_accounts` table.
  *

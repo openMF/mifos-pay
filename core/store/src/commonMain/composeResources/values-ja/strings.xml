@@ -2,9 +2,9 @@
 <!--
     Copyright 2026 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
@@ -23,5 +23,9 @@
     <string name="error_category_auth">セッションの有効期限が切れました。再度サインインしてください。</string>
     <string name="error_category_ratelimit">リクエストが多すぎます。しばらく待ってから再試行してください。</string>
     <string name="error_category_server">サーバーで問題が発生しています。しばらくしてから再試行してください。</string>
+    <string name="error_category_timeout_connect">接続がタイムアウトしました。接続を確認して再試行してください。</string>
+    <string name="error_category_timeout_read">サーバーの応答に時間がかかりすぎました。しばらくしてから再試行してください。</string>
+    <string name="error_category_quota">上限に達しました。続けるにはアップグレードするかお待ちください。</string>
+    <string name="error_category_client">リクエストに失敗しました。再試行してください。</string>
     <string name="error_category_generic">問題が発生しました</string>
 </resources>

@@ -41,7 +41,10 @@ class StoreFactoryArchetypeTest {
         // persisted — the cache lives only as long as the store instance.
         var fetchCount = 0
         val store = StoreFactory.createMemoryStore<String, String>(
-            fetcher = Fetcher.of { key -> fetchCount++; "fetched:$key" },
+            fetcher = Fetcher.of { key ->
+                fetchCount++
+                "fetched:$key"
+            },
         )
 
         store.streamData("k").test {
@@ -54,7 +57,10 @@ class StoreFactoryArchetypeTest {
         // A fresh instance shares no state with the previous one — that IS "no SourceOfTruth".
         var secondFetchCount = 0
         val fresh = StoreFactory.createMemoryStore<String, String>(
-            fetcher = Fetcher.of { key -> secondFetchCount++; "fetched:$key" },
+            fetcher = Fetcher.of { key ->
+                secondFetchCount++
+                "fetched:$key"
+            },
         )
         fresh.streamData("k").test {
             awaitItem()

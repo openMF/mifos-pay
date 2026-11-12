@@ -9,10 +9,13 @@
  */
 package kpt.core.base.security
 
+/** Web (JS/WasmJS) implementation of `BiometricAuthenticator`. */
 actual class BiometricAuthenticator actual constructor() {
 
+    /** `isAvailable` on Web (JS/WasmJS). */
     actual fun isAvailable(): Boolean = false
 
+    /** `authenticate` on Web (JS/WasmJS). */
     actual suspend fun authenticate(reason: String): BiometricResult {
         return BiometricResult.Unavailable
     }

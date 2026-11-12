@@ -1,0 +1,116 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.core.data.repositoryImpl
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
+import kpt.core.base.store.infra.FetchedAtRepository
+import kpt.core.base.store.screen.FetchPolicy
+import kpt.core.base.store.screen.ScreenDataStream
+import kpt.core.base.store.screen.asScreenStream
+import kpt.core.common.ScreenState
+import kpt.core.common.asScreenStateFlow
+import kpt.core.data.repository.InvoiceRepository
+import kpt.core.model.datatables.invoice.Invoice
+import kpt.core.model.datatables.invoice.InvoiceEntity
+import kpt.core.network.main.services.InvoiceService
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
+import kpt.core.store.wallet.WalletStoreTtl
+import kpt.core.store.wallet.invoice.InvoiceKey
+import org.mobilenativefoundation.store.store5.Store
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
+
+/** Default [InvoiceRepository] backed by the invoice API. */
+@RepositoryBinding(binds = InvoiceRepository::class)
+class InvoiceRepositoryImpl(
+    private val invoiceService: InvoiceService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Invoice) private val invoiceStore: Store<InvoiceKey, List<Invoice>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+) : InvoiceRepository {
+    override fun getInvoice(clientId: Long, invoiceId: Long): Flow<ScreenState<Invoice>> {
+        return invoiceService
+            .getInvoice(clientId, invoiceId)
+            .map { it.first() }
+            .asScreenStateFlow()
+            .flowOn(ioDispatcher)
+    }
+
+    override fun getInvoices(clientId: Long): Flow<ScreenState<List<Invoice>>> {
+        return invoiceService
+            .getInvoices(clientId)
+            .asScreenStateFlow(isEmpty = { it.isEmpty() })
+            .flowOn(ioDispatcher)
+    }
+
+    // Phase-5 Batch-2 LEDGER read — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
+    //
+    // See the interface KDoc for the shape contract. Requires the three store-adapter
+    // dependencies (invoiceStore + NetworkMonitor + FetchedAtRepository).
+    // If any is null (test wiring), we IllegalState — production DI in
+    // RepositoryModule wires all three unconditionally.
+    override fun getInvoicesStream(
+        clientId: Long,
+        scope: CoroutineScope,
+    ): ScreenDataStream<List<Invoice>> {
+        val store = checkNotNull(invoiceStore) {
+            "getInvoicesStream requires the `invoice` Store5 wiring. Verify " +
+                "RepositoryModule bound AppStoreRegistry.Invoice and injected it here."
+        }
+        val netMon = checkNotNull(storeNetworkMonitor) {
+            "getInvoicesStream requires kmptoolkit NetworkMonitor. Verify DataModule bound it."
+        }
+        val fetchedAtRepo = checkNotNull(fetchedAtRepository) {
+            "getInvoicesStream requires FetchedAtRepository. Verify DataModule bound it."
+        }
+        return store.asScreenStream(
+            key = InvoiceKey(clientId),
+            networkMonitor = netMon,
+            fetchedAtRepository = fetchedAtRepo,
+            cacheKey = AppCacheKeys.Invoice.of(clientId),
+            scope = scope,
+            isEmpty = { it.isEmpty() },
+            fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
+            ttl = WalletStoreTtl.INVOICE,
+        )
+    }
+
+    override suspend fun createInvoice(clientId: Long, invoice: InvoiceEntity) {
+        withContext(ioDispatcher) {
+            invoiceService.addInvoice(clientId, invoice)
+        }
+    }
+
+    override suspend fun updateInvoice(
+        clientId: Long,
+        invoiceId: Long,
+        invoice: InvoiceEntity,
+    ) {
+        withContext(ioDispatcher) {
+            invoiceService.updateInvoice(clientId, invoiceId, invoice)
+        }
+    }
+
+    override suspend fun deleteInvoice(clientId: Long, invoiceId: Long) {
+        withContext(ioDispatcher) {
+            invoiceService.deleteInvoice(clientId, invoiceId)
+        }
+    }
+}

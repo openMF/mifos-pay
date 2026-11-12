@@ -20,8 +20,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            // Template idiom: SubmitHandler (core-base/store) for one-shot writes.
-            implementation(projects.coreBase.store)
+            // Template idiom: SubmitHandler (core/store, which re-exports core-base/store) for one-shot writes.
+            implementation(projects.core.store)
 
             implementation(libs.filekit.core)
             implementation(libs.coil.kt.compose)
@@ -29,4 +29,8 @@ kotlin {
             implementation(libs.filekit.dialogs.compose)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "kpt.feature.kyc.generated.resources"
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">ลองหลายครั้งเกินไป โปรดรอและลองอีกครั้ง</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">ฮาร์ดแวร์ไบโอเมตริกไม่พร้อมใช้งานชั่วคราว โปรดลองอีกครั้งในภายหลัง</string>
+    <string name="core_ui_biometric_error_not_enrolled">ยังไม่มีการลงทะเบียนไบโอเมตริกบนอุปกรณ์นี้ โปรดตั้งค่าไบโอเมตริกในการตั้งค่าระบบ</string>
+    <string name="core_ui_biometric_error_timeout">การยืนยันตัวตนด้วยไบโอเมตริกหมดเวลา โปรดลองอีกครั้ง</string>
+    <string name="core_ui_biometric_error_no_space">พื้นที่จัดเก็บไม่เพียงพอสำหรับการยืนยันตัวตนด้วยไบโอเมตริก</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">ข้อมูลการลงทะเบียนไบโอเมตริกไม่ถูกต้อง โปรดเปิดใช้งานไบโอเมตริกอีกครั้งจากการตั้งค่าแอป</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">ไม่สามารถเริ่มการยืนยันตัวตนด้วยไบโอเมตริกได้เนื่องจากอาร์กิวเมนต์ไม่ถูกต้อง</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">ไม่สามารถเริ่มการลงทะเบียนไบโอเมตริกได้เนื่องจากอาร์กิวเมนต์ไม่ถูกต้อง</string>
+    <string name="core_ui_biometric_error_unknown">เกิดข้อผิดพลาดไบโอเมตริกที่ไม่คาดคิด โปรดลองอีกครั้ง</string>
+    <string name="core_ui_biometric_prompt_title">ปลดล็อก Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">ยืนยันตัวตนของคุณเพื่อดำเนินการต่อ</string>
+    <string name="core_ui_biometric_prompt_description">ใช้ลายนิ้วมือ ใบหน้า หรือข้อมูลรับรองอุปกรณ์ของคุณ</string>
+    <string name="core_ui_biometric_prompt_negative_button">ยกเลิก</string>
+</resources>

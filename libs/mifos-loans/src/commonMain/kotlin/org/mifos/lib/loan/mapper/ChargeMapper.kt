@@ -14,6 +14,7 @@ import org.mifos.lib.loan.core.model.TaxGroup
 import org.mifos.lib.loan.network.model.ChargeOptionsResponseDto
 import org.mifos.lib.loan.network.model.TaxGroupResponseDto
 
+/** Maps this charge options DTO to the [ChargeOptions] domain model. */
 fun ChargeOptionsResponseDto.toModel(): ChargeOptions =
     ChargeOptions(
         id = id,
@@ -29,6 +30,7 @@ fun ChargeOptionsResponseDto.toModel(): ChargeOptions =
         taxGroup = taxGroup?.toModel(),
     )
 
+/** Maps this tax group DTO to the [TaxGroup] domain model. */
 fun TaxGroupResponseDto.toModel(): TaxGroup =
     TaxGroup(
         id = id,

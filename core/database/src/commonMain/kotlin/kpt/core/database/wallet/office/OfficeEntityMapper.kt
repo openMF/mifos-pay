@@ -13,8 +13,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.office.Office
-
+import kpt.core.model.office.Office
 /**
  * Entity ↔ domain mapper for the `wallet_offices` table.
  *

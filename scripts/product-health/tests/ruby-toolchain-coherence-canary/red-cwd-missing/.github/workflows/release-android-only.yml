@@ -1,0 +1,8 @@
+name: Release · Android Only
+on: { workflow_dispatch: {} }
+jobs:
+  release-android:
+    uses: therajanmaurya/mifos-x-actionhub-publish-android-kmp/.github/workflows/release.yaml@v2.0.12
+    with:
+      android_package_name: cmp-android
+    secrets: inherit

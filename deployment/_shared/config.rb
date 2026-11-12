@@ -34,6 +34,10 @@ module AppProfile
   # Walk up from this file's dir to the first ancestor containing app-profile/.
   def _root
     return @_root if defined?(@_root)
+    # APP_PROFILE_ROOT: an explicit app-profile/ dir — set by `derive.rb --fork <dir>` so a fork that
+    # has no white-label machinery yet can verify its app-profile with the template's resolver.
+    override = ENV["APP_PROFILE_ROOT"]
+    return @_root = override if override && File.directory?(override)
     @_root = nil
     dir = __dir__
     while dir && dir != "/"
@@ -49,6 +53,8 @@ module AppProfile
     @_root
   end
 
+  # Recursively merge hash b over a. A non-hash on either side means b wins outright, which
+  # is what lets a platform YAML override a scalar the shared one set.
   def _deep_merge(a, b)
     return b unless a.is_a?(Hash) && b.is_a?(Hash)
     out = a.dup
@@ -90,11 +96,30 @@ module AppProfile
   MAP = {
     # ── identity / app ──
     "app.id"                             => "identity.app_id",
+    # identity.app_name is authored in app-profile and documented (CLAUDE.md) as flowing to
+    # fork.properties#app.display.name → BuildKonfig.APP_DISPLAY_NAME, but had no MAP entry, so a
+    # properly-DERIVED bridge never carried it: feature/settings + core-base/ui silently fell back
+    # to "App" / "App Toolkit". Only a hand-authored fork.properties ever had the key.
+    "app.display.name"                   => "identity.app_name",
     "app.description"                    => "store.app_description",
+
+    # Per-flavor network endpoints + demo credentials + log tag. app.yaml documents these as flowing
+    # to gradle/fork.properties, and KMPFlavorsConventionPlugin reads them into per-flavor
+    # BuildConfig (BASE_URL / DEMO_USERNAME / DEMO_PASSWORD / LOG_TAG). They were mapped in Kotlin's
+    # APP_PROFILE_MAP but NOT here, so the pure-Ruby derive.rb path (used by CI and doctor's fast
+    # lane) produced a bridge missing them while syncForkConfig's produced one with them — two
+    # writers of one file with different coverage. Paths taken verbatim from the Kotlin map, which
+    # agreed with this one on all 113 shared keys.
+    "network.base.url.demo"              => "network.demo_base_url",
+    "network.base.url.prod"              => "network.prod_base_url",
+    "demo.username"                      => "network.demo_username",
+    "demo.password"                      => "network.demo_password",
+    "log.tag"                            => "network.log_tag",
     # ── org ──
     "org.name"                           => "org.name",
     "org.email"                          => "org.email",
     "org.first.name"                     => "org.first_name",
+    "org.secrets.namespace"              => "org.secrets_namespace",
     "org.last.name"                      => "org.last_name",
     "org.phone"                          => "org.phone",
     "org.copyright"                      => "org.copyright",
@@ -136,6 +161,7 @@ module AppProfile
     "play.testers.closed.googlegroup"    => "android.play_testers.closed_googlegroup",
     # ── apple (shared iOS + macOS) ──
     "apple.team.id"                      => "apple.team_id",
+    "apple.app.store.id"                 => "apple.app_store_id",
     "apple.match.git.url"                => "apple.match.git.url",
     "apple.match.git.branch"             => "apple.match.git.branch",
     "firebase.ios.prod.app.id"           => "apple.firebase.ios_app_id_prod",
@@ -236,6 +262,9 @@ end
 
 DEPLOYMENT_REPO_ROOT = File.expand_path("../..", __dir__).freeze
 
+# Read key's double-quoted value from gradle/libs.versions.toml.
+# The catalog is the build's own source for appId and version, so reading it keeps Fastlane
+# and Gradle from disagreeing about what is being shipped.
 def _toml_value(key)
   toml = File.join(DEPLOYMENT_REPO_ROOT, "gradle", "libs.versions.toml")
   File.readlines(toml).each do |line|
@@ -248,6 +277,8 @@ rescue Errno::ENOENT
   nil
 end
 
+# Read and strip a secret from repo-relative rel_path, or nil when it is absent.
+# nil rather than an exception: a missing secret is normal for a lane that does not need it.
 def _secret_file(rel_path)
   full = File.join(DEPLOYMENT_REPO_ROOT, rel_path)
   File.exist?(full) ? File.read(full).strip : nil
@@ -281,6 +312,7 @@ end
 module ForkIdentity
   module_function
 
+  # Read key from the version catalog. The memoised inner form of _toml_value.
   def _read_toml(key)
     toml = File.join(DEPLOYMENT_REPO_ROOT, "gradle", "libs.versions.toml")
     File.readlines(toml).each do |line|
@@ -314,15 +346,22 @@ module FastlaneConfig
   # parse time. These module_function copies fix that gap.
   module_function
 
+  # Resolve a secret from ENV first, then from file_path.
+  # ENV wins so CI can inject without writing anything to disk.
   def _secret(env_var, file_path = nil)
     ENV[env_var] || (file_path ? _secret_file(file_path) : nil)
   end
 
+  # Read and strip a secret from repo-relative rel_path, or nil when it is absent.
+  # nil rather than an exception: a missing secret is normal for a lane that does not need it.
   def _secret_file(rel_path)
     full = File.join(DEPLOYMENT_REPO_ROOT, rel_path)
     File.exist?(full) ? File.read(full).strip : nil
   end
 
+  # Read a fork property, app-profile first and gradle/fork.properties as the fallback.
+  # That order matters: app-profile is the source of truth and fork.properties is its
+  # generated bridge, so a stale bridge can never win.
   def _fork_prop(key)
     ap = AppProfile.get(key)
     return ap if ap && !ap.to_s.strip.empty?
@@ -358,6 +397,7 @@ module FastlaneConfig
       team_id:        ForkIdentity::IOS_TEAM_ID,
     }.freeze
 
+    # The Android applicationId, from the version catalog via app-profile.
     def self.android_package_name
       ANDROID[:package_name]
     end
@@ -379,8 +419,8 @@ module FastlaneConfig
 
     BUILD_CONFIG = {
       scheme:                        "iosApp",
-      # E6 — the app opens as a plain `.xcodeproj` (SwiftPM/XCFramework); the CocoaPods
-      # `iosApp.xcworkspace` was removed, so `build_app` archives from `project:` below.
+      # E6 — the app opens as a plain `.xcodeproj` (SwiftPM/XCFramework); there is no
+      # generated `.xcworkspace`, so `build_app` archives from `project:` below.
       project_path:                  File.join(DEPLOYMENT_REPO_ROOT, "cmp-ios/iosApp.xcodeproj"),
       app_identifier:                ForkIdentity::APP_ID,
       team_id:                       ForkIdentity::IOS_TEAM_ID,
@@ -432,7 +472,7 @@ module FastlaneConfig
       skip_submission:                   false,
       skip_waiting_for_build_processing: true,
       submit_beta_review:                true,
-      expire_previous_builds:            true,
+      expire_previous_builds:            false, # NEVER auto-expire: a later run that expires the prior build then FAILS to upload a new one leaves the app with zero live builds (all EXPIRED) → no internal/external distribution possible + un-expiry is impossible. Apple keeps builds 90d; testers always get the latest anyway.
       reject_build_waiting_for_review:   true,
       wait_processing_interval:          30,
       wait_processing_timeout_duration:  900,
@@ -449,6 +489,20 @@ module FastlaneConfig
         internal_group:       _nz.call(_c._fork_prop("apple.testers.internal.group")) || "Internal Testers",
         external_group:       _nz.call(_c._fork_prop("apple.testers.external.group")) || _nz.call(_c._fork_prop("apple.tf.groups")) || "External Beta",
         external_public_link: (_nz.call(_c._fork_prop("apple.testers.external.public.link")) || "true").to_s.downcase == "true",
+        # External TestFlight tester roster (emails — PUBLIC identifiers, not secrets). App-profile is the
+        # runtime SoT (apple.testers.external_emails), materialized from _org/company.yaml. Comma-separated
+        # fork.properties `apple.tf.testers` is the fallback when app-profile is absent (older forks).
+        external_emails:      (lambda {
+                                f = File.join(DEPLOYMENT_REPO_ROOT, "app-profile/platforms/apple/apple.yaml")
+                                raw = nil
+                                if File.exist?(f)
+                                  y = (YAML.load_file(f) rescue nil) || {}
+                                  raw = y.dig("apple", "testers", "external_emails")
+                                end
+                                raw ||= _nz.call(_c._fork_prop("apple.tf.testers"))
+                                list = raw.is_a?(Array) ? raw : raw.to_s.split(",")
+                                list.map { |e| e.to_s.strip.downcase }.reject(&:empty?).uniq
+                              }).call,
       },
       play: {
         internal_googlegroup: _nz.call(_c._fork_prop("play.testers.internal.googlegroup")),
@@ -460,7 +514,13 @@ module FastlaneConfig
     }.freeze
 
     APPSTORE_CONFIG = {
-      submit_for_review:                  true,
+      # SUBMIT is done by _shared/scripts/asc-appstore-submit.rb (the reliable direct-API path), NOT by
+      # deliver — deliver's submit_for_review races on reviewSubmission state, chokes on stale empty
+      # drafts (one open reviewSubmission max), and can't surface the Part XX ITA human gate. The
+      # `release` lane builds/uploads/syncs the listing; the deploy runtime runs the submit script after
+      # (RULE-DEPLOY-APPSTORE-AUTOSUBMIT-001). automatic_release stays true → auto-release to production
+      # on Apple approval.
+      submit_for_review:                  false,
       automatic_release:                  true,
       phased_release:                     false,
       skip_app_version_update:            false,
@@ -541,6 +601,8 @@ module FastlaneConfig
       "demo" => "internal",
     }.freeze
 
+    # Map of flavor to Play track, parsed from a CSV secret or fork property.
+    # Falls back to the shipped default when unset, so a fork with one flavor needs no config.
     def self.play_tracks_by_flavor
       csv = FastlaneConfig._secret("PLAY_TRACKS_BY_FLAVOR") ||
             FastlaneConfig._fork_prop("android.play.tracks.by_flavor")
@@ -562,7 +624,13 @@ module FastlaneConfig
     base = {
       serviceCredsFile: ENV["FIREBASE_SERVICE_ACCOUNT_PATH"] ||
                         File.join(DEPLOYMENT_REPO_ROOT, BuildSecrets.for(flavor: flavor).path(:firebase_service_account)),
-      groups: ENV["FIREBASE_GROUPS"] || nil,
+      # Priority: ENV (CI) → fork.properties key (local) → nil. Mirrors the iOS app-id resolution
+      # below (and the TestFlight groups line) so a fork's tester group (gradle/fork.properties
+      # `firebase.groups`) is applied automatically. Without this, `firebase_app_distribution`
+      # silently logs "No testers or groups passed in. Skipping this step." on every local deploy —
+      # the build uploads but reaches ZERO testers — unless FIREBASE_GROUPS is exported per-deploy
+      # (the long-standing "Firebase groups parameter ignored" known issue).
+      groups: ENV["FIREBASE_GROUPS"] || _fork_prop("firebase.groups") || nil,
     }
     case platform
     when :ios
@@ -615,15 +683,25 @@ module FastlaneConfig
 
     # Read storeFile dynamically so forks can rename the keystore without
     # touching config.rb (storeFile key in upload_keystore.properties is canonical).
-    default_jks = "#{ks_dir}/#{props.fetch("storeFile", "upload_keystore.keystore")}"
+    # `fetch` only falls back when the key is ABSENT. secrets/LAYOUT.yaml can emit a `storeFile`
+    # key whose vault alias is unresolvable ("not resolvable from vault → skip"), leaving the key
+    # PRESENT but EMPTY — fetch then returns "" and this collapses to the bare directory:
+    #   Keystore file '.../secrets/live/android/keystores' not found for signing config 'release'
+    # which surfaces only after a full release build. Treat empty as absent (2026-09-04).
+    store_file_name = props["storeFile"].to_s.strip
+    store_file_name = "upload_keystore.keystore" if store_file_name.empty?
+    default_jks = "#{ks_dir}/#{store_file_name}"
+
+    # Resolved once, because the key password falls back to it (see below).
+    store_password = options[:keystore_password] ||
+                     ENV["KEYSTORE_PASSWORD"]    ||
+                     props["storePassword"]      || ""
 
     {
       keystore_path:     options[:keystore_path]     ||
                          ENV["KEYSTORE_PATH"]        ||
                          default_jks,
-      keystore_password: options[:keystore_password] ||
-                         ENV["KEYSTORE_PASSWORD"]    ||
-                         props["storePassword"]      || "",
+      keystore_password: store_password,
       # Honor BOTH env conventions: KEY_ALIAS (CI pre_fastlane_script) AND KEYSTORE_ALIAS
       # (build.gradle.kts + buildAndSignApp / vault materialization). props (upload_keystore.properties)
       # is the file source. The literal "release" is a LAST-RESORT default — it is WRONG for keystores
@@ -633,10 +711,17 @@ module FastlaneConfig
                          ENV["KEY_ALIAS"]            ||
                          ENV["KEYSTORE_ALIAS"]       ||
                          props["keyAlias"]           || "release",
+      # Falls back to the STORE password, never to "". A PKCS12 keystore has no separate
+      # key password — keytool discards `-keypass` at creation — so the store password IS
+      # the key password. Measured with jarsigner against a real PKCS12 keystore: signing
+      # succeeds when the key password is absent or equal to the store password, and FAILS
+      # ("key associated with <alias> not a private key") when it is empty or different.
+      # An empty default is therefore not a graceful degradation, it is one of the two
+      # failure values — and it fails only in CI, after the local build has gone green.
       key_password:      options[:key_password]      ||
                          ENV["KEY_PASSWORD"]         ||
                          ENV["KEYSTORE_ALIAS_PASSWORD"] ||
-                         props["keyPassword"]        || ENV["KEYSTORE_PASSWORD"] || props["storePassword"] || "",
+                         props["keyPassword"]        || store_password,
     }
   end
 end
@@ -725,19 +810,19 @@ def with_ios_preamble(options = {})
     end
   end
 
-  # E6 — SwiftPM/XCFramework, no CocoaPods. The iOS app links the Kotlin `ComposeApp`
+  # E6 — SwiftPM/XCFramework. The iOS app links the Kotlin `ComposeApp`
   # framework as an XCFramework (cmp-ios/Package.swift binary target) that the Xcode
   # `[KMP] Embed and Sign ComposeApp XCFramework` Run-Script build phase assembles +
   # signs + embeds on every archive (cmp-ios/scripts/embed-xcframework.sh). There is no
-  # `Podfile` / `pod install` / `cmp_shared.podspec` step anymore — the per-variant
+  # separate iOS dependency-install step — the per-variant
   # lanes assemble the XCFramework explicitly (see `assemble_ios_xcframework`) before
   # `build_app`, so a cold CI runner produces the framework the archive consumes.
 end
 
-# Assemble the Kotlin `ComposeApp` XCFramework for the given Xcode build type — the
-# SwiftPM/XCFramework replacement for `pod install`. Staging maps to the Release
-# XCFramework slice (mirrors the old cocoapods xcodeConfigurationToNativeBuildType:
-# only *Debug is debuggable). Registered by the `XCFramework("ComposeApp")` DSL in
+# Assemble the Kotlin `ComposeApp` XCFramework for the given Xcode build type.
+# Staging maps to the Release XCFramework slice (only *Debug is debuggable, matching
+# the flavor-aware mapping in cmp-ios/scripts/embed-xcframework.sh).
+# Registered by the `XCFramework("ComposeApp")` DSL in
 # cmp-shared/build.gradle.kts (assembleComposeApp{Debug,Release}XCFramework).
 def assemble_ios_xcframework(build_type = "release")
   xcf_type = build_type.to_s.downcase == "debug" ? "Debug" : "Release"
@@ -775,6 +860,44 @@ def suppress_codesign_keychain_prompt
 end
 
 # Run Fastlane Match to fetch/refresh certificates and provisioning profiles.
+# ── App-extension signing discovery (RULE-IOS-SIGNING-001; added 2026-09-01) ──
+# A fork may ship app extensions (widgets, share, notification-service). EVERY such target
+# needs its OWN provisioning profile — the extension bundle id is a DISTINCT App ID, so a
+# profile for the app alone does NOT cover it. Xcode fails the archive with
+# `"<Ext>" requires a provisioning profile with the <capability> feature` when the extension
+# target is left unsigned — a failure that lands AFTER the full Kotlin/Native link (~40 min).
+#
+# Extension target names are FORK-SPECIFIC (CappyWidgets, FooShareExtension, …) and therefore
+# can NOT be hardcoded here — they are DISCOVERED from the .xcodeproj, and their bundle ids
+# resolved by substituting the `$(APP_BUNDLE_ID)` xcconfig var the template already owns.
+# Returns [{name:, bundle_id:}]; [] (with a warning) if discovery fails — never raises.
+def ios_extension_targets(project_path, app_identifier, configuration = "Release")
+  require "xcodeproj"
+  Xcodeproj::Project.open(project_path).native_targets.select { |t|
+    t.product_type.to_s.include?("app-extension")
+  }.map { |t|
+    cfg = t.build_configurations.find { |c| c.name == configuration } || t.build_configurations.first
+    raw = cfg&.build_settings&.dig("PRODUCT_BUNDLE_IDENTIFIER").to_s
+    bid = raw.gsub("$(APP_BUNDLE_ID)", app_identifier.to_s)
+    bid = "" if bid.include?("$(")            # unresolved var → fall back below
+    bid = "#{app_identifier}.#{t.name.downcase}" if bid.empty?
+    { name: t.name, bundle_id: bid }
+  }
+rescue StandardError => e
+  UI.important("⚠️ app-extension discovery failed (#{e.message}) — signing the app target only")
+  []
+end
+
+# Every bundle id needing a provisioning profile: the app + each app extension.
+def ios_signing_identifiers(app_identifier, configuration = "Release")
+  cfg = FastlaneConfig::IosConfig::BUILD_CONFIG
+  exts = ios_extension_targets(cfg[:project_path], app_identifier, configuration)
+  [app_identifier] + exts.map { |e| e[:bundle_id] }
+end
+
+# Fetch signing certificates and profiles via Fastlane Match over the provisioning repo.
+# Match is the only sanctioned path — a hand-imported certificate is what breaks a
+# keychain, per the no-ad-hoc-keychain rule.
 def fetch_certificates_with_match(options = {})
   cfg = FastlaneConfig::IosConfig::BUILD_CONFIG
   ssh_key = File.join(DEPLOYMENT_REPO_ROOT, cfg[:match_ssh_key_path])
@@ -790,7 +913,9 @@ def fetch_certificates_with_match(options = {})
 
   base = {
     type:                     options[:match_type]       || cfg[:match_type],
-    app_identifier:           options[:app_identifier]   || cfg[:app_identifier],
+    # App + EVERY app-extension bundle id — match's app_identifier accepts an Array. Fetching
+    # only the app leaves the extension profile uninstalled → archive hunts and fails.
+    app_identifier:           ios_signing_identifiers(options[:app_identifier] || cfg[:app_identifier]),
     git_url:                  options[:match_git_url]    || cfg[:match_git_url],
     git_branch:               options[:match_git_branch] || cfg[:match_git_branch],
     git_private_key:          File.exist?(ssh_key) ? ssh_key : nil,
@@ -943,13 +1068,18 @@ def ensure_testflight_store_config(app_identifier:, config: nil, locale: nil)
       # some Spaceship model versions expose no instance #update, so fall back to leaving
       # the existing (still-valid) values in place rather than failing the release.
       begin
-        Spaceship::ConnectAPI.patch_beta_app_localization(localization_id: existing.id, attributes: attrs)
+        # Spaceship's ConnectAPI tunes client exposes the PLURAL client-level methods
+        # (post_beta_app_localizations / patch_beta_app_localizations) — NOT a singular
+        # #patch_beta_app_localization nor a model-level BetaAppLocalization.create (those
+        # raise NoMethodError on spaceship 2.235, which was silently swallowing Test-Information
+        # sync and blocking external beta review with "Beta App Description is missing").
+        Spaceship::ConnectAPI.patch_beta_app_localizations(localization_id: existing.id, attributes: attrs)
         UI.success("🔄 Synced TestFlight Test Information (#{locale}) for #{app_identifier}.")
       rescue NoMethodError, NameError, ArgumentError
         UI.success("✅ TestFlight Test Information already present (#{locale}) for #{app_identifier} — external beta review unblocked.")
       end
     else
-      Spaceship::ConnectAPI::BetaAppLocalization.create(app_id: app.id, attributes: attrs.merge(locale: locale))
+      Spaceship::ConnectAPI.post_beta_app_localizations(app_id: app.id, attributes: attrs.merge(locale: locale))
       UI.success("🆕 Created TestFlight Test Information (#{locale}) for #{app_identifier} — external beta review is now unblocked.")
     end
   rescue => e
@@ -957,6 +1087,34 @@ def ensure_testflight_store_config(app_identifier:, config: nil, locale: nil)
     UI.important("⚠️  Could not sync TestFlight Test Information for #{app_identifier}: " \
                  "#{e.message.to_s.lines.first&.strip}. Internal upload continues; " \
                  "external promotion may need it set on App Store Connect.")
+  end
+
+  # ── 3. Sync the app-level BetaAppReviewDetail (contact info) from config ──
+  # External beta review REQUIRES this SEPARATE app-level object (contact name/email/phone +
+  # demo account) — it is DISTINCT from the BetaAppLocalization synced above. pilot passes
+  # beta_app_review_info only at submit time, so on an expired/failed build the review detail
+  # is never created and external review stays blocked with no obvious cause. Create/patch it
+  # here, independent of any build, so external promotion always has it. The betaAppReviewDetail
+  # resource id EQUALS the app id (1:1), so patch(app_id: app.id) is the create-or-update. Phone
+  # must be non-empty — Apple rejects an empty contact_phone on external submission. Best-effort.
+  begin
+    ri = (config[:beta_app_review_info] || {})
+    brd_attrs = {
+      contactFirstName:    ri[:contact_first_name].to_s,
+      contactLastName:     ri[:contact_last_name].to_s,
+      contactEmail:        ri[:contact_email].to_s,
+      contactPhone:        ri[:contact_phone].to_s,
+      demoAccountRequired: !!ri[:demo_account_required],
+    }
+    unless brd_attrs[:contactEmail].empty? || brd_attrs[:contactPhone].empty?
+      Spaceship::ConnectAPI.patch_beta_app_review_detail(app_id: app.id, attributes: brd_attrs)
+      UI.success("🔄 Synced TestFlight Beta App Review contact info for #{app_identifier} — external beta review unblocked.")
+    else
+      UI.important("⚠️  Skipped Beta App Review contact sync for #{app_identifier}: contact_email/contact_phone empty in TESTFLIGHT_CONFIG[:beta_app_review_info] (org.email / org.phone). External review will reject an empty contact.")
+    end
+  rescue => e
+    UI.important("⚠️  Could not sync Beta App Review contact info for #{app_identifier}: " \
+                 "#{e.message.to_s.lines.first&.strip}. External promotion may need it set on App Store Connect.")
   end
 end
 
@@ -991,7 +1149,16 @@ def sync_testflight_testers(app_identifier:, config: nil)
 
   specs.each do |gs|
     begin
-      grp = (app.get_beta_groups(filter: { name: gs[:name] }) || []).first
+      # App Store Connect scopes beta-group name uniqueness WITHIN a group type, not across the
+      # app: an INTERNAL and an EXTERNAL group may legitimately share one name (verified live —
+      # `sensei-app-testers` exists under both Internal Testing and External Testing on a shipped
+      # fork). So the lookup MUST key on (name, is_internal_group). Filtering by name alone and
+      # taking .first returns whichever type ASC lists first (the internal one), which made the
+      # external spec resolve to the INTERNAL group, skip creation via `grp ||=`, and then log
+      # itself as "external". The external group never existed, and promoteToExternalBeta later
+      # died on Apple's `Cannot add internal group to a build.`
+      grp = (app.get_beta_groups(filter: { name: gs[:name] }) || [])
+              .find { |g| !!g.is_internal_group == !!gs[:internal] }
       grp ||= app.create_beta_group(
         group_name:                gs[:name],
         is_internal_group:         gs[:internal],
@@ -1005,6 +1172,68 @@ def sync_testflight_testers(app_identifier:, config: nil)
       if !gs[:internal] && gs[:public]
         link = (grp.respond_to?(:public_link) && grp.public_link) || nil
         UI.success("🔗 Public TestFlight join link for '#{gs[:name]}': #{link}") if link
+      end
+
+      # Add the org-shared external tester roster (emails) to the EXTERNAL group so named testers
+      # receive an invite, not only public-link self-joiners. Idempotent + best-effort per email —
+      # a tester that already exists (globally or in the group) is a no-op, never an error. Roster
+      # SoT: app-profile apple.testers.external_emails ← _org/company.yaml. Internal group is team-
+      # only (members must be added by Apple-ID in App Store Connect), so we never push emails there.
+      if !gs[:internal]
+        roster = (cfg[:external_emails] || [])
+        unless roster.empty?
+          begin
+            # `Spaceship::ConnectAPI.create_beta_tester` DOES NOT EXIST (verified against fastlane
+            # 2.239.0 — it raises `undefined method 'create_beta_tester'` for every email while the
+            # surrounding rescue downgrades it to a warning, so the lane reports success having added
+            # nobody). `POST /v1/bulkBetaTesterAssignments` is ALSO retired by Apple ("The resource
+            # 'v1/bulkBetaTesterAssignments' does not exist") even though spaceship still ships the
+            # helper — and that message contains "exist", so an /already|exist/ rescue silently
+            # swallows it too. The live endpoint is `POST /v1/betaTesters` with the betaGroups
+            # relationship. A tester that already exists ACCOUNT-WIDE (an org-shared roster is
+            # already on sibling apps) 409s there — look that tester up and attach the EXISTING id.
+            testers = roster.map do |em|
+              fn = em.split("@").first.to_s.gsub(/[^A-Za-z0-9]/, " ").strip[0, 30]
+              fn = "Tester" if fn.empty?
+              # last_name is a required ASC field but carries no product meaning — keep it brand-neutral
+              # (never a fork's initials) so a synced fork doesn't stamp its testers with another org's name.
+              { email: em, firstName: fn, lastName: "Tester" }
+            end
+            testers.each do |t|
+              begin
+                Spaceship::ConnectAPI.post_beta_tester_assignment(
+                  beta_group_ids: [grp.id],
+                  attributes: { email: t[:email], firstName: t[:firstName], lastName: t[:lastName] },
+                )
+              rescue => e
+                existing = (Spaceship::ConnectAPI.get_beta_testers(filter: { email: t[:email] })
+                                                 .to_models.first rescue nil)
+                if existing
+                  grp.add_beta_testers(beta_tester_ids: [existing.id])
+                else
+                  UI.important("   ⚠️  #{t[:email]}: #{e.message.to_s.lines.first&.strip}")
+                end
+              end
+            end
+            # VERIFY, never assume: read the group's membership back and report which roster emails
+            # are actually present. Both broken APIs above reported success while adding nobody.
+            present = begin
+              Spaceship::ConnectAPI.get_beta_testers(filter: { betaGroups: grp.id }, limit: 200)
+                                   .to_models.map { |t| t.email.to_s.downcase }
+            rescue => e
+              UI.important("   ⚠️  could not read back '#{gs[:name]}' membership: #{e.message.to_s.lines.first&.strip}")
+              nil
+            end
+            if present
+              hit  = roster.select { |em| present.include?(em.downcase) }
+              miss = roster - hit
+              UI.success("   ➕ external testers on '#{gs[:name]}': #{hit.size}/#{roster.size} present")
+              UI.important("   ⚠️  NOT on '#{gs[:name]}': #{miss.join(', ')}") unless miss.empty?
+            end
+          rescue => e
+            UI.important("   ⚠️  could not assign external tester roster to '#{gs[:name]}': #{e.message.to_s.lines.first&.strip}")
+          end
+        end
       end
     rescue => e
       UI.important("⚠️  ASC group '#{gs[:name]}' sync hiccuped: #{e.message.to_s.lines.first&.strip}. " \
@@ -1229,8 +1458,8 @@ def build_ios_project(options = {})
   cfg = FastlaneConfig::IosConfig::BUILD_CONFIG
   build_app(
     scheme:           options[:scheme]        || cfg[:scheme],
-    # E6 — archive from the `.xcodeproj` (SwiftPM/XCFramework), NOT a CocoaPods
-    # `.xcworkspace` (removed). The `[KMP] Embed and Sign ComposeApp XCFramework`
+    # E6 — archive from the `.xcodeproj` (SwiftPM/XCFramework), not a generated
+    # `.xcworkspace`. The `[KMP] Embed and Sign ComposeApp XCFramework`
     # Run-Script phase builds + embeds the Kotlin framework during this archive.
     project:          options[:project]       || cfg[:project_path],
     configuration:    options[:configuration] || "Release",
@@ -1330,6 +1559,8 @@ def buildAndSignApp(taskName:, buildType: "Release", **signing_config)
   ENV["KEYSTORE_PATH"]           = keystore_abs
   ENV["KEYSTORE_PASSWORD"]       = signing_config[:keystore_password] || ENV["KEYSTORE_PASSWORD"] || ""
   ENV["KEYSTORE_ALIAS"]          = signing_config[:key_alias]         || ENV["KEYSTORE_ALIAS"] || "release"
+  # Never "" — an empty key password is a measured signing FAILURE, not an unset value.
+  # PKCS12 has no separate key password, so the store password is the correct last resort.
   ENV["KEYSTORE_ALIAS_PASSWORD"] = signing_config[:key_password]      || ENV["KEYSTORE_ALIAS_PASSWORD"] || ENV["KEYSTORE_PASSWORD"]
 
   # -p tells Gradle to use repo root as project dir, overriding whatever cwd

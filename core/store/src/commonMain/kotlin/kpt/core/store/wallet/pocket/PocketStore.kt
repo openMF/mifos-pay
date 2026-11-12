@@ -11,31 +11,35 @@ package kpt.core.store.wallet.pocket
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.pocket.PocketDao
 import kpt.core.database.wallet.pocket.toDomain
 import kpt.core.database.wallet.pocket.toEntity
-import org.mifospay.core.model.enums.AccountType
-import org.mifospay.core.model.network.entity.client.ClientAccountsEntity
-import org.mifospay.core.model.network.entity.loanAccount.LoanStatusResponseDto
-import org.mifospay.core.model.network.entity.pocket.PocketAccountDto
-import org.mifospay.core.model.network.entity.pocket.PocketDelinkRequest
-import org.mifospay.core.model.network.entity.pocket.PocketLinkRequest
-import org.mifospay.core.model.network.entity.pocket.PocketResponseDto
-import org.mifospay.core.model.network.entity.shareAccount.ShareStatusResponseDto
-import org.mifospay.core.model.pocket.AccountStatus
-import org.mifospay.core.model.pocket.DetailedPocketAccount
-import org.mifospay.core.model.pocket.PocketAccount
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.enums.AccountType
+import kpt.core.model.network.entity.client.ClientAccountsEntity
+import kpt.core.model.network.entity.loanAccount.LoanStatusResponseDto
+import kpt.core.model.network.entity.pocket.PocketAccountDto
+import kpt.core.model.network.entity.pocket.PocketDelinkRequest
+import kpt.core.model.network.entity.pocket.PocketLinkRequest
+import kpt.core.model.network.entity.pocket.PocketResponseDto
+import kpt.core.model.network.entity.shareAccount.ShareStatusResponseDto
+import kpt.core.model.pocket.AccountStatus
+import kpt.core.model.pocket.DetailedPocketAccount
+import kpt.core.model.pocket.PocketAccount
+import kpt.core.network.main.services.ClientService
+import kpt.core.network.main.services.PocketService
+import kpt.core.network.main.services.ShareAccountService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
-import org.mifospay.core.model.savingsaccount.Status as SavingsStatus
-
-/** Room `@Entity(tableName = …)` for `PocketEntity`. Shared with the DAO's writes. */
-private const val POCKETS_TABLE = "wallet_pockets"
+import kpt.core.model.savingsaccount.Status as SavingsStatus
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
  * Build the LEDGER read [Store] for detailed pocket accounts
@@ -124,13 +128,17 @@ private const val POCKETS_TABLE = "wallet_pockets"
  * `core/data` depends on `core/store` for the store bindings). The
  * `PocketResponseDto → List<PocketAccount>` mapper and the three status-DTO
  * `→ AccountStatus` mappers are inlined below, mirroring
- * `org.mifospay.core.data.mapper.pocket.PocketAccountMapper`. Keep the two
+ * `kpt.core.data.mapper.pocket.PocketAccountMapper`. Keep the two
  * in lockstep if either grows fields.
  */
+@StoreProvider(id = "pocket")
+@CacheKey(fn = "linked", key = "wallet_pockets_linked-{clientId}", params = ["clientId:Long"])
+@CacheKey(fn = "detailed", key = "wallet_pockets_detailed-{clientId}", params = ["clientId:Long"])
 fun providePocketStore(
-    apiManager: SelfServiceApiManager,
+    pocketService: PocketService,
+    @FromQualifier("selfservice") selfClientService: ClientService,
+    shareAccountService: ShareAccountService,
     dao: PocketDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<PocketKey, List<DetailedPocketAccount>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: PocketKey ->
         try {
@@ -157,7 +165,7 @@ fun providePocketStore(
                         )
                     },
                 )
-                apiManager.pocketApi.linkAccounts(request = request)
+                pocketService.linkAccounts(request = request)
                 pendingLinks.forEach {
                     dao.upsert(it.copy(syncStatus = "SYNCED"))
                 }
@@ -167,7 +175,7 @@ fun providePocketStore(
                 val serverIds = pendingDelinks.filter { it.id > 0 }.map { it.id }
                 if (serverIds.isNotEmpty()) {
                     val request = PocketDelinkRequest(serverIds)
-                    apiManager.pocketApi.delinkAccounts(request = request)
+                    pocketService.delinkAccounts(request = request)
                     pendingDelinks.forEach {
                         dao.deleteById(it.id, key.clientId)
                     }
@@ -179,24 +187,24 @@ fun providePocketStore(
         }
 
         // Step 1 — basic pockets (session-scoped on the server side).
-        val basicPockets: List<PocketAccount> = apiManager.pocketApi
+        val basicPockets: List<PocketAccount> = pocketService
             .getPocketAccounts()
             .toDomainList()
 
         // Step 2 — client accounts (per-client) for balance/product/status
         // resolution. Same suspend call the pre-store `syncPockets` used.
-        val clientAccounts: ClientAccountsEntity = apiManager.clientsApi
+        val clientAccounts: ClientAccountsEntity = selfClientService
             .getClientAccounts(key.clientId)
 
         // Step 3 — enrich each pocket. SHARE pockets fan out an extra
         // getShareAccountDetails call. The addPocketDetails() helper mirrors
         // the pre-store `addAccountDetails` verbatim — try/catch on share
         // fetches, fall back to the client-accounts row on failure.
-        basicPockets.map { pocket -> addPocketDetails(pocket, clientAccounts, apiManager) }
+        basicPockets.map { pocket -> addPocketDetails(pocket, clientAccounts, shareAccountService) }
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: PocketKey ->
-            daoFlow(POCKETS_TABLE) { dao.observeLinkedByClient(key.clientId) }
+            run { dao.observeLinkedByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: PocketKey, pockets: List<DetailedPocketAccount> ->
@@ -218,7 +226,7 @@ fun providePocketStore(
 // ---------------------------------------------------------------------------
 // Inline PocketResponseDto → List<PocketAccount> mapper + the three
 // per-account-type status → AccountStatus mappers. Mirrors
-// `org.mifospay.core.data.mapper.pocket.PocketAccountMapper`. See
+// `kpt.core.data.mapper.pocket.PocketAccountMapper`. See
 // `providePocketStore` ## Inline mappers KDoc for rationale.
 // ---------------------------------------------------------------------------
 
@@ -279,7 +287,7 @@ private fun ShareStatusResponseDto.toAccountStatus(): AccountStatus = when {
 private suspend fun addPocketDetails(
     pocket: PocketAccount,
     clientAccounts: ClientAccountsEntity,
-    apiManager: SelfServiceApiManager,
+    shareAccountService: ShareAccountService,
 ): DetailedPocketAccount = when (pocket.accountType) {
     AccountType.LOAN -> {
         val detail = clientAccounts.loanAccounts.find { it.id == pocket.accountId }
@@ -316,7 +324,7 @@ private suspend fun addPocketDetails(
         var accountStatus: AccountStatus?
 
         try {
-            val shareAccountDetails = apiManager.shareAccountApi
+            val shareAccountDetails = shareAccountService
                 .getShareAccountDetails(pocket.accountId).first()
             productName = shareAccountDetails.productName
             currencyCode = shareAccountDetails.currency?.code

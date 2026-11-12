@@ -4,7 +4,7 @@
 # It DRIVES and VERIFIES every stage of adopting the white-label template — and re-audits ALL stages on
 # every run, so a fork is never silently half-set-up or drifted from the template. app-profile/
 # {app.yaml, platforms/**} is the ONE fork source of truth; everything else is DERIVED. This one command
-# replaces the scattered surface (scripts/white-label/customize.sh + scripts/white-label/firebase.sh + scripts/white-label/keystore.sh +
+# replaces the scattered surface (scripts/white-label/fork-init.sh + scripts/white-label/firebase.sh + scripts/white-label/keystore.sh +
 # setup_ios_complete.sh + scripts/white-label/sync-dirs.sh + syncForkConfig + secrets pull).
 #
 # Stages (each is DRIVEN when incomplete, and VERIFIED every run):
@@ -56,15 +56,20 @@ esac
 
 [ -f "$REPO_ROOT/app-profile/app.yaml" ] || { err "app-profile/app.yaml missing — not a white-label fork of kmp-project-template"; exit 3; }
 
-# ── Ruby runner: prefer the framework toolchain manager (install-once), else the deployment bundle,
-#    else system ruby. Keeps the derive reproducible without assuming a global gem state. ──────────────
+# ── Ruby runner — delegates to the ONE resolver (scripts/ruby-exec.sh). ─────────────────────────
+# This used to inline its own fallback, with two defects that only bite on a machine nobody tests on:
+#   * the framework helper was found by a fixed five-level `../` climb, so it resolved ONLY at
+#     workspaces/{ws}/{proj}/source/{proj}/ and silently missed for a standalone clone — the shape an
+#     OSS fork actually has. ruby-exec.sh searches upward instead.
+#   * `RBENV_VERSION="${RBENV_VERSION:-3.3.6}"` hardcoded the pin, so bumping .ruby-version would
+#     leave this asking for a stale interpreter. ruby-exec.sh reads .ruby-version, the SoT RT-1 guards.
+. "$REPO_ROOT/scripts/ruby-exec.sh"
 run_ruby() {  # run_ruby <abs-script> [args...]
-  local fw="$REPO_ROOT/../../../../../core/scripts/ruby-toolchain-ensure.sh"  # framework, if present
-  if [ -x "$fw" ] && [ -d "$REPO_ROOT/deployment" ]; then
-    RBENV_VERSION="${RBENV_VERSION:-3.3.6}" bash "$fw" "$REPO_ROOT/deployment" -- bundle exec ruby "$@" 2>&1 | grep -avE 'ruby toolchain ready|exec under ruby'
+  if [ -d "$REPO_ROOT/deployment" ]; then
+    ruby_bundle "$REPO_ROOT/deployment" -- exec ruby "$@" 2>&1 | grep -avE 'ruby toolchain ready|exec under ruby'
     return "${PIPESTATUS[0]}"
   fi
-  ( cd "$REPO_ROOT/deployment" 2>/dev/null && bundle exec ruby "$@" ) 2>/dev/null || ruby "$@"
+  ruby_exec "$@"
 }
 
 DERIVE="$REPO_ROOT/scripts/white-label/derive.rb"
@@ -85,8 +90,10 @@ check_fork_props_current() {
   local fp="$REPO_ROOT/gradle/fork.properties"
   [ -f "$fp" ] || { warn "gradle/fork.properties absent — run --apply to derive it"; return 2; }
   local tmp; tmp="$(mktemp)"; run_ruby "$DERIVE" --out "$tmp" >/dev/null 2>&1
-  # compare only key=value lines (ignore the derived header + ordering)
-  if diff <(grep -E '^[a-z].*=' "$fp" | sort) <(grep -E '^[a-z].*=' "$tmp" | sort) >/dev/null 2>&1; then
+  # Every key derive emits must be on disk with the same value (header + ordering ignored). syncForkConfig
+  # also writes keys derive does not own (project.name, windows.msix.*), so a two-way diff called every
+  # freshly fixed fork STALE.
+  if [ -s "$tmp" ] && [ -z "$(comm -13 <(grep -E '^[a-z].*=' "$fp" | sort) <(grep -E '^[a-z].*=' "$tmp" | sort))" ]; then
     ok "fork.properties matches app-profile"; rm -f "$tmp"; return 0
   fi
   warn "fork.properties is STALE vs app-profile — run --fix (or --apply) to re-derive"; rm -f "$tmp"; return 2
@@ -95,13 +102,24 @@ check_fork_props_current() {
 # ── check: template currency (fork vs upstream template + sync-dirs coverage) ─────────────────────────
 check_sync_currency() {
   step "template currency (fork vs upstream kmp-project-template — is a sync overdue?)"
-  local up; up="$(git -C "$REPO_ROOT" remote 2>/dev/null | grep -xE 'upstream')"
-  if [ -z "$up" ]; then warn "no 'upstream' remote — add it to track template currency: git remote add upstream https://github.com/openMF/kmp-project-template.git"; return 2; fi
-  git -C "$REPO_ROOT" fetch -q upstream 2>/dev/null || { warn "could not fetch upstream — skipping currency check"; return 2; }
-  local def; def="$(git -C "$REPO_ROOT" symbolic-ref -q --short refs/remotes/upstream/HEAD 2>/dev/null | sed 's|^upstream/||')"; def="${def:-dev}"
-  local behind; behind="$(git -C "$REPO_ROOT" rev-list --count "HEAD..upstream/$def" 2>/dev/null || echo 0)"
-  if [ "${behind:-0}" -gt 0 ]; then warn "fork is ${behind} commit(s) behind upstream/${def} — run --sync to adopt the latest template"; return 2; fi
-  ok "fork is current with upstream/${def}"
+  # `template` when the fork has it: a fork hosted beside its own canonical repo keeps `upstream` for
+  # that repo, and measuring it answered "current" about the wrong project.
+  local up="" r
+  for r in template upstream; do git -C "$REPO_ROOT" remote 2>/dev/null | grep -qx "$r" && { up="$r"; break; }; done
+  if [ -z "$up" ]; then warn "no 'template' remote — add it to track template currency: git remote add template https://github.com/openMF/kmp-project-template.git"; return 2; fi
+  # No tags: the template's release tags would land in the fork and steer its version calculation.
+  git -C "$REPO_ROOT" fetch -q --no-tags "$up" 2>/dev/null || { warn "could not fetch $up — skipping currency check"; return 2; }
+  local def; def="$(git -C "$REPO_ROOT" symbolic-ref -q --short "refs/remotes/$up/HEAD" 2>/dev/null | sed "s|^$up/||")"; def="${def:-dev}"
+  # A sync copies files, it never merges template commits, so "commits in $up/$def not in HEAD" is
+  # always non-zero. The sync records what it synced from; current means that commit already contains
+  # the template's default branch.
+  local synced; synced="$(sed -n 's/^template_sha=//p' "$REPO_ROOT/.template-version" 2>/dev/null)"
+  [ -n "$synced" ] || { warn "no .template-version — this fork has never been synced; run --sync"; return 2; }
+  if ! git -C "$REPO_ROOT" merge-base --is-ancestor "$up/$def" "$synced" 2>/dev/null; then
+    local behind; behind="$(git -C "$REPO_ROOT" rev-list --count "$synced..$up/$def" 2>/dev/null || echo '?')"
+    warn "last sync (${synced:0:12}) is ${behind} commit(s) behind $up/${def} — run --sync to adopt the latest template"; return 2
+  fi
+  ok "fork is current with $up/${def} (synced from ${synced:0:12})"
   return 0
 }
 

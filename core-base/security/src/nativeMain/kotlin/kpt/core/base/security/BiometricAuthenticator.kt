@@ -16,9 +16,11 @@ import platform.LocalAuthentication.LAPolicyDeviceOwnerAuthenticationWithBiometr
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/** Apple/native implementation of `BiometricAuthenticator`. */
 @OptIn(ExperimentalForeignApi::class)
 actual class BiometricAuthenticator actual constructor() {
 
+    /** `isAvailable` on Apple/native. */
     actual fun isAvailable(): Boolean {
         val context = LAContext()
         return context.canEvaluatePolicy(
@@ -27,6 +29,7 @@ actual class BiometricAuthenticator actual constructor() {
         )
     }
 
+    /** `authenticate` on Apple/native. */
     actual suspend fun authenticate(reason: String): BiometricResult {
         if (!isAvailable()) return BiometricResult.Unavailable
 

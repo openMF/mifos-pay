@@ -2,14 +2,14 @@
 <!--
     Copyright 2026 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <!-- ===== Screen-state default copy (consumed by AppScreenStateDefaults) ===== -->
+    <!-- ===== Screen-state default copy (consumed by KptScreenStateDefaults) ===== -->
     <string name="screenstate_empty_title">Nothing here yet</string>
     <string name="screenstate_empty_message">When you have data, it'll show up here.</string>
     <string name="screenstate_error_title">Something went wrong</string>
@@ -24,5 +24,12 @@
     <string name="error_category_auth">Your session expired. Please sign in again.</string>
     <string name="error_category_ratelimit">Too many requests. Please wait and try again.</string>
     <string name="error_category_server">Our servers are having a moment. Try again in a bit.</string>
+    <!-- Distinct copy per ErrorCategory. These four were previously ENGLISH-ONLY literals inside
+         mapErrorToUserMessage, while the localized path collapsed them onto network/ratelimit copy —
+         so a user who exhausted a quota was told "too many requests" in every locale. -->
+    <string name="error_category_timeout_connect">Connection timed out. Check your connection and try again.</string>
+    <string name="error_category_timeout_read">Server took too long to respond. Please try again shortly.</string>
+    <string name="error_category_quota">You've reached your quota. Upgrade or wait to continue.</string>
+    <string name="error_category_client">Request failed. Please try again.</string>
     <string name="error_category_generic">Something went wrong</string>
 </resources>

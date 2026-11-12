@@ -102,13 +102,19 @@ class ScreenStateMutationExtensionsTest {
     @Test
     fun submitWhenContent_alreadySubmitting_noOp() = runTest {
         val handler = submitHandler<String>()
-        handler.submit { kotlinx.coroutines.delay(10_000); "first" }
+        handler.submit {
+            kotlinx.coroutines.delay(10_000)
+            "first"
+        }
         assertIs<SubmitState.Submitting>(handler.state.value)
 
         var secondCalled = false
         handler.submitWhenContent(
             ScreenState.Content("data"),
-        ) { secondCalled = true; "second" }
+        ) {
+            secondCalled = true
+            "second"
+        }
 
         assertFalse(secondCalled)
         handler.reset()

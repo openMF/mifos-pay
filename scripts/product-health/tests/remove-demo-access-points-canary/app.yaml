@@ -1,0 +1,18 @@
+# Canary fixture — the access-point ownership contract, minimal.
+#   owner: fork      kept
+#   owner: template  KEPT — shipped to every fork
+#   owner: demo      DELETED with its kpt/core/network/<id>/ package
+network:
+  access_points:
+    - id: main
+      owner: fork
+      type: rest
+    - id: projectref
+      owner: template
+      type: supabase
+    - id: coingecko
+      owner: demo
+      type: rest
+    - id: worldbank
+      owner: demo
+      type: rest

@@ -6,6 +6,7 @@
 # No third-party media, no licensed content, no user-generated content.
 
 contains_third_party_content: false
+# Whether the app contains, shows or accesses third-party content, and on what rights basis.
 declaration: >
   This app does not contain, show, or access third-party content that
   requires additional rights or licenses. All UI, copy, and iconography are
@@ -16,8 +17,12 @@ declaration: >
   World Bank, exchange-rate feeds) — this is data, not licensed third-party
   media content.
 
+# Each third-party source and the licence covering it. The toolkit's demo data comes from
+# FRED, World Bank, Frankfurter and CoinGecko, all public APIs.
 third_party_content_sources: []
 
+# Whether users can post content. Declaring yes obliges the app to ship moderation, reporting
+# and blocking — Apple rejects a UGC app without all three.
 user_generated_content:
   allows_ugc: false
   moderation_policy_url: ""

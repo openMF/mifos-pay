@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 package org.convention
 
 import com.android.build.api.artifact.SingleArtifact
@@ -40,7 +49,9 @@ internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtensio
                 javaSources.zip(kotlinSources) { javaDirs, kotlinDirs ->
                     javaDirs + kotlinDirs
                 }
-            } else javaSources ?: kotlinSources
+            } else {
+                javaSources ?: kotlinSources
+            }
 
             if (artifact != null && testSources != null) {
                 tasks.register(
@@ -87,8 +98,9 @@ internal abstract class PrintApkLocationTask : DefaultTask() {
 
         val builtArtifacts = builtArtifactsLoader.get().load(apkFolder.get())
             ?: throw RuntimeException("Cannot load APKs")
-        if (builtArtifacts.elements.size != 1)
+        if (builtArtifacts.elements.size != 1) {
             throw RuntimeException("Expected one APK !")
+        }
         val apk = File(builtArtifacts.elements.single().outputFile).toPath()
         println(apk)
     }

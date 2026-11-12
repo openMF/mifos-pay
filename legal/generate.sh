@@ -59,6 +59,9 @@ fi
 
 mkdir -p "$OUTPUT_DIR"
 
+# Render template $1 to $2, substituting only the variables in LEGAL_VARS.
+# The explicit list matters: a bare `envsubst` would also expand anything else
+# that looks like a shell variable in the legal text.
 render() {
   local template="$1"
   local output="$2"

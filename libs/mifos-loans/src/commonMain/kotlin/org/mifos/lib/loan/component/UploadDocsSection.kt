@@ -24,16 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import kpt.core.base.designsystem.theme.KptTheme
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_upload_docs_bank_account
-import mifos_pay.libs.mifos_loans.generated.resources.feature_upload_docs_collateral
-import mifos_pay.libs.mifos_loans.generated.resources.feature_upload_docs_signature
+import kpt.core.designsystem.fork.component.ForkCard
+import kpt.core.designsystem.fork.icon.ForkIcons
 import org.jetbrains.compose.resources.stringResource
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_upload_docs_bank_account
+import org.mifos.lib.loan.generated.resources.feature_upload_docs_collateral
+import org.mifos.lib.loan.generated.resources.feature_upload_docs_signature
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsAction
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsState
-import org.mifospay.core.designsystem.component.MifosCard
-import org.mifospay.core.designsystem.icon.MifosIcons
-
 /**
  * Renders the document upload section, switching between upload prompts and file summaries based on the current state.
  *
@@ -50,7 +49,7 @@ internal fun UploadDocumentsSection(
     ) {
         if (state.bankStatementFile != null) {
             UploadedFileCard(
-                icon = MifosIcons.Receipt,
+                icon = ForkIcons.Receipt,
                 label = stringResource(Res.string.feature_upload_docs_bank_account),
                 fileName = state.bankStatementFileName ?: "",
                 fileSize = state.bankStatementSize ?: "",
@@ -69,7 +68,7 @@ internal fun UploadDocumentsSection(
 
         if (state.propertyDocumentsFile != null) {
             UploadedFileCard(
-                icon = MifosIcons.DataInfo,
+                icon = ForkIcons.DataInfo,
                 label = stringResource(Res.string.feature_upload_docs_collateral),
                 fileName = state.propertyDocumentFileName ?: "",
                 fileSize = state.propertyDocumentsSize ?: "",
@@ -88,7 +87,7 @@ internal fun UploadDocumentsSection(
 
         if (state.signatureDocumentFile != null) {
             UploadedFileCard(
-                icon = MifosIcons.Edit,
+                icon = ForkIcons.Edit,
                 label = stringResource(Res.string.feature_upload_docs_signature),
                 fileName = state.signatureFileName ?: "",
                 fileSize = state.signatureSize ?: "",
@@ -117,7 +116,7 @@ private fun UploadPromptCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier.fillMaxWidth(),
         shape = KptTheme.shapes.medium,
         onClick = onClick,
@@ -156,7 +155,7 @@ private fun UploadedFileCard(
     onSelectNewClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier.fillMaxWidth(),
         shape = KptTheme.shapes.medium,
         onClick = onSelectNewClick,
@@ -193,7 +192,7 @@ private fun UploadedFileCard(
             }
             IconButton(onClick = onRemoveClick) {
                 Icon(
-                    imageVector = MifosIcons.Delete,
+                    imageVector = ForkIcons.Delete,
                     contentDescription = null,
                 )
             }

@@ -102,16 +102,37 @@ sealed interface MutationPolicy {
  * write or a conflict can never be silently swallowed.
  */
 sealed interface MutationResult<out T> {
-    /** Applied locally. [synced] is false when the network sync was queued (optimistic offline). */
+    /**
+     * Applied locally. [synced] is false when the network sync was queued (optimistic offline).
+     *
+     * @property value the value as it now stands locally.
+     * @property synced false when the mutation is queued rather than accepted by
+     *   the server — the caller must not report it as confirmed.
+     */
     data class Applied<out T>(val value: T, val synced: Boolean) : MutationResult<T>
 
-    /** An [MutationPolicy.OnlineRequired] mutation could not reach the network — nothing was written. */
+    /**
+     * An [MutationPolicy.OnlineRequired] mutation could not reach the network — nothing was written.
+     *
+     * @property reason which precondition refused it.
+     */
     data class Blocked(val reason: BlockReason) : MutationResult<Nothing>
 
-    /** The server record diverged from the optimistic local write; recorded in the conflict inbox. */
+    /**
+     * The server record diverged from the optimistic local write; recorded in the conflict inbox.
+     *
+     * @property conflictId addresses the inbox row, so the conflict can be resolved later.
+     * @property server the server's value, so both sides can be shown to the user.
+     */
     data class Conflicted<out T>(val conflictId: String, val server: T) : MutationResult<T>
 
-    /** The mutation failed permanently. [rolledBack] is true when the optimistic local write was undone. */
+    /**
+     * The mutation failed permanently. [rolledBack] is true when the optimistic local write was undone.
+     *
+     * @property cause the underlying failure.
+     * @property rolledBack whether local state was restored; false means local and
+     *   server have diverged and need reconciling.
+     */
     data class Failed(val cause: Throwable, val rolledBack: Boolean) : MutationResult<Nothing>
 }
 

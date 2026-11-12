@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
@@ -24,9 +33,9 @@ buildscript {
 }
 
 plugins {
-    // SKIE — declared on the root classpath (apply false) so cmp-shared can apply it
-    // for the Swift-enhanced XCFramework export (E6). Replaces the removed Kotlin
-    // CocoaPods plugin (`libs.plugins.kotlinCocoapods`).
+    // SKIE — declared on the root classpath (apply false) so cmp-shared can apply it for the
+    // Swift-enhanced XCFramework export. This build is SwiftPM end to end: no alternative
+    // iOS package manager is wired anywhere, and no catalog alias exists to re-add one.
     alias(libs.plugins.skie) apply false
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -39,6 +48,8 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.spotless) apply false
+    // Formats build-logic/ + the root *.kts — what no module's Spotless can see (see configureSpotless).
+    alias(libs.plugins.spotless.convention)
     alias(libs.plugins.moduleGraph) apply true
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.firebase.perf) apply false
@@ -75,7 +86,6 @@ plugins {
     alias(libs.plugins.kover.convention)
     id("org.convention.fork.sync-config")
 }
-
 
 object DynamicVersion {
     fun setDynamicVersion(file: File, version: String) {
@@ -129,6 +139,24 @@ subprojects {
     // coverage gate without weakening real-test signal.
     tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
         failOnNoDiscoveredTests = false
+
+        // A CI test failure must arrive DIAGNOSABLE. Gradle's default console output prints two
+        // frames and drops the exception message, which turned two real failures on this repo into
+        // `AssertionError at SomeTest.kt:99` and `IllegalArgumentException at Preconditions.kt:26` —
+        // neither of which says what was expected, what arrived, or which library raised it. Both
+        // reproduced only on a loaded CI runner, so the console output was the ONLY evidence
+        // available, and in both cases it was insufficient to diagnose from. One was then
+        // mis-diagnosed twice in a row as a timeout and "fixed" by widening timeouts.
+        //
+        // FULL exception format costs nothing on a green run (no failures, no output) and makes the
+        // red run self-explanatory.
+        testLogging {
+            events("failed")
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            showExceptions = true
+            showCauses = true
+            showStackTraces = true
+        }
     }
 }
 
@@ -141,4 +169,3 @@ moduleGraphAssert {
     configurations += setOf("nativeMainImplementation", "nativeMainApi")
     configurations += setOf("wasmJsMainImplementation", "wasmJsMainApi")
 }
-

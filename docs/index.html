@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>kmp-project-template — architecture &amp; API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Architecture SoT and generated API reference for kmp-project-template." />
+  <!--
+    Docsify renders this docs/ tree with NO build step: the markdown files ARE the site, so the
+    published docs cannot drift from the repository the way a generated-then-committed HTML tree can.
+    That property is the reason for choosing it here — `docs/architecture/modules/**` carries the
+    architecture SoT plus a generated API reference, and both must stay byte-true to source.
+
+    Serve locally:   npx docsify-cli serve docs        (or any static server rooted at docs/)
+    The API blocks are produced by core/scripts/template-api-docs-gen.sh in the FRAMEWORK and are
+    regenerated from template source — never hand-edited. See RULE-TEMPLATE-API-DOCS-CURRENT-001.
+  -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+  <style>
+    :root { --theme-color: #6750a4; }
+    .markdown-section pre > code { font-size: 0.82rem; line-height: 1.5; }
+    .markdown-section h3 > code { font-size: 0.9rem; font-weight: 600; }
+    .app-name-link img { max-width: 140px; }
+    .sidebar-nav li > p { font-weight: 700; margin: 1rem 0 .25rem; opacity: .75; font-size: .8rem;
+                          text-transform: uppercase; letter-spacing: .04em; }
+  </style>
+</head>
+<body>
+  <div id="app">Loading the architecture docs…</div>
+  <script>
+    // Opening this file directly (file://) renders a bare "404 - Not found" with an empty sidebar,
+    // because docsify FETCHES each markdown file and browsers block those requests on file:// for
+    // CORS. Nothing is broken and nothing is missing — it simply needs a server. Say so, rather than
+    // letting the 404 imply the docs failed to build.
+    if (location.protocol === 'file:') {
+      document.getElementById('app').innerHTML =
+        '<div style="max-width:44rem;margin:12vh auto;padding:0 1.5rem;' +
+        'font:16px/1.65 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;color:#2c3e50">' +
+        '<h1 style="font-size:1.5rem;margin:0 0 .75rem">These docs need a local server</h1>' +
+        '<p>Docsify loads each page over <code>fetch()</code>, and browsers block that on ' +
+        '<code>file://</code>. The docs are fine — they just cannot be opened straight off disk.</p>' +
+        '<p style="margin:1.25rem 0 .4rem"><strong>Serve them:</strong></p>' +
+        '<pre style="background:#f6f7f9;padding:.85rem 1rem;border-radius:6px;overflow-x:auto">' +
+        'npx docsify-cli serve docs\n\n# or, with nothing to install:\ncd docs &amp;&amp; python3 -m http.server 8899' +
+        '</pre>' +
+        '<p>Then open <a href="http://localhost:3000">localhost:3000</a> ' +
+        '(or <a href="http://localhost:8899">:8899</a> for the python one).</p>' +
+        '<p style="color:#7a8697;font-size:.9rem;margin-top:2rem">' +
+        'The API reference under <code>architecture/modules/</code> is generated from template source ' +
+        'by <code>core/scripts/template-api-docs-gen.sh</code> and kept current by ' +
+        'G-TEMPLATE-API-DOCS.</p></div>';
+    }
+  </script>
+  <script>
+    window.$docsify = {
+      name: 'kmp-project-template',
+      repo: 'https://github.com/openMF/kmp-project-template',
+      homepage: 'architecture/ARCHITECTURE.md',
+      loadSidebar: '_sidebar.md',
+      // With loadSidebar, docsify probes for a `_sidebar.md` in EVERY ancestor directory of the
+      // current page before falling back to the root one — so browsing a nested module page emitted
+      // a run of harmless 404s (`/architecture/modules/core-base/_sidebar.md`, …). There is one
+      // sidebar and it is generated, so alias every probe onto it: same navigation, clean console.
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md',
+        '/architecture/README.md': '/architecture/ARCHITECTURE.md',
+      },
+      subMaxLevel: 3,
+      maxLevel: 4,
+      auto2top: true,
+      relativePath: true,
+      search: {
+        depth: 4,
+        placeholder: 'Search the API reference…',
+        noData: 'No match.',
+        pathNamespaces: ['/architecture', '/setup', '/deployment', '/release', '/secrets', '/ios'],
+      },
+    };
+  </script>
+  <script>
+    // Load docsify ONLY when it can actually work. A plain `throw` in the guard above does not stop
+    // later <script> tags — docsify loaded anyway and replaced the "needs a server" message with its
+    // own bare 404, which is the confusing outcome the guard exists to prevent. Injecting the tags
+    // conditionally is what actually keeps it off the page on file://.
+    if (location.protocol !== 'file:') {
+      [
+        'https://cdn.jsdelivr.net/npm/docsify@4',
+        'https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js',
+        'https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-kotlin.min.js',
+        'https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js',
+        'https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js',
+        'https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-gradle.min.js',
+      ].forEach(function (src) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.async = false;   // preserve order: docsify must initialise before its plugins
+        document.body.appendChild(s);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -11,8 +11,7 @@ package org.mifos.lib.loan.ui.selectLoanProvider
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
-import org.mifospay.core.ui.utils.BaseViewModel
-
+import kpt.core.ui.fork.utils.BaseViewModel
 /**
  * `ViewModel` for the Select Loan Provider screen — the new first step of the loan-application
  * wizard.
@@ -100,8 +99,16 @@ internal data class SelectLoanProviderState(
  */
 sealed interface SelectLoanProviderEvent {
 
+    /** Navigates back to the previous screen. */
     data object NavigateBack : SelectLoanProviderEvent
 
+    /**
+     * Navigates to the selected provider screen.
+     *
+     * @property clientId Identifier of the client applying for the loan.
+     * @property providerId Identifier of the chosen loan provider.
+     * @property url Provider web page URL to load.
+     */
     data class NavigateToLoanProvider(
         val clientId: Long,
         val providerId: String,

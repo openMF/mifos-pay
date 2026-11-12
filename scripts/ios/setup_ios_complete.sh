@@ -26,6 +26,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 cd "$PROJECT_ROOT"
 
+# The ONE bash reader of gradle/fork.properties (scripts/_shared/fork-props.sh). Replaces an
+# inline `grep | cut -d= | tr` that had neither head -1 nor inline-`#` stripping. Latent, not
+# live: today's bridge has neither, but an inline comment would have made this Team ID
+# `ABCD123456   # PLACEHOLDER — …` and a duplicated key would have concatenated values.
+# shellcheck source=../_shared/fork-props.sh
+. "$PROJECT_ROOT/scripts/_shared/fork-props.sh"
+
 # Print functions
 print_success() {
     echo -e "${GREEN}✓ $1${NC}"
@@ -388,7 +395,9 @@ _upsert_property() {
     local file="$1" key="$2" value="$3"
     if grep -qE "^${key}=" "$file" 2>/dev/null; then
         # Update existing key (macOS-compatible sed)
-        sed -i '' "s|^${key}=.*|${key}=${value}|" "$file"
+        # -i.bak (not BSD's `-i ''`) so this stays portable if it ever runs on Linux CI.
+        sed -i.bak "s|^${key}=.*|${key}=${value}|" "$file"
+        rm -f "$file.bak"
     else
         echo "${key}=${value}" >> "$file"
     fi
@@ -454,20 +463,25 @@ print_info "If this is the first time, Match will create new certificates"
 echo
 
 # Load configuration from the new sources
-TEAM_ID=$(grep -E "^apple\.team\.id=" gradle/fork.properties 2>/dev/null | cut -d= -f2- | tr -d '\n\r')
+FORK_PROPERTIES="$PROJECT_ROOT/gradle/fork.properties"
+TEAM_ID="$(fp_get apple.team.id)"
 export MATCH_PASSWORD
 
 # Install Fastlane
 print_info "Installing Fastlane dependencies..."
-bundle install
+# Bundler through the ONE resolver (scripts/ruby-exec.sh) rather than PATH: without rbenv's shims on
+# PATH a bare `bundle` runs under macOS's system ruby 2.6.10 and dies inside rubygems'
+# activate_bin_path with an error about GEMS, when the interpreter is the actual problem.
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/ruby-exec.sh"
+ruby_bundle "$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/deployment" -- install
 
 # Run Match for adhoc
 print_info "Syncing adhoc certificates..."
-bundle exec fastlane ios sync_certificates match_type:adhoc || print_warning "Match sync encountered issues (this is normal for first run)"
+ruby_bundle "$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/deployment" -- exec fastlane ios sync_certificates match_type:adhoc || print_warning "Match sync encountered issues (this is normal for first run)"
 
 # Run Match for appstore
 print_info "Syncing appstore certificates..."
-bundle exec fastlane ios sync_certificates match_type:appstore || print_warning "Match sync encountered issues (this is normal for first run)"
+ruby_bundle "$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)/deployment" -- exec fastlane ios sync_certificates match_type:appstore || print_warning "Match sync encountered issues (this is normal for first run)"
 
 echo
 
@@ -499,15 +513,25 @@ print_warning "IMPORTANT: Keep these files secure and NEVER commit them to git!"
 print_info "They are already in .gitignore"
 echo
 
-print_info "Next Steps:"
+# Deployment is Fastlane lanes invoked from deployment/ — the scripts/deploy/ wrappers this used to
+# point at were removed. Printing a path that does not exist sends the reader nowhere.
+#
+# Printed in the ruby_bundle form rather than as a bare `bundle exec`: a hand-typed lane is the one
+# path that still breaks in a shell without rbenv shims, dying inside rubygems' activate_bin_path
+# with an error naming gems when the fault is the interpreter. RT-9 in
+# product-health/checks/ruby-toolchain-coherence.sh holds every tracked script to the same form.
+print_info "Next Steps (lanes resolve the pinned interpreter via scripts/ruby-exec.sh):"
+echo "  0. Load the resolver once per shell:"
+echo "     . scripts/ruby-exec.sh"
+echo
 echo "  1. Test deployment to Firebase:"
-echo "     bash scripts/deploy/deploy_firebase.sh"
+echo "     ruby_bundle deployment -- exec fastlane ios deploy_on_firebase"
 echo
 echo "  2. Test deployment to TestFlight:"
-echo "     bash scripts/deploy/deploy_testflight.sh"
+echo "     ruby_bundle deployment -- exec fastlane ios beta"
 echo
 echo "  3. Deploy to App Store (when ready):"
-echo "     bash scripts/deploy/deploy_appstore.sh"
+echo "     ruby_bundle deployment -- exec fastlane ios release"
 echo
 
 print_info "Optional: Setup APN for push notifications"

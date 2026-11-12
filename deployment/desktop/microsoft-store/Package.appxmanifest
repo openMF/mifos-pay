@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Fork identity is TOKENIZED, never hardcoded here (product-health B2) — script.sh substitutes
-     these __TOKEN__ placeholders from gradle/fork.properties (windows.msix.identity.name /
-     .publisher / .publisher.display.name, app.display.name) before packaging. -->
 <Package
     xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
     xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
@@ -9,13 +6,13 @@
     IgnorableNamespaces="uap rescap">
 
   <Identity
-      Name="__WINDOWS_MSIX_IDENTITY_NAME__"
-      Publisher="__WINDOWS_MSIX_IDENTITY_PUBLISHER__"
+      Name="YourOrganization.AppToolkit"
+      Publisher="CN=Your Organization Name"
       Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>__APP_DISPLAY_NAME__</DisplayName>
-    <PublisherDisplayName>__WINDOWS_MSIX_PUBLISHER_DISPLAY_NAME__</PublisherDisplayName>
+    <DisplayName>App Toolkit</DisplayName>
+    <PublisherDisplayName>Your Organization Name</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -28,13 +25,10 @@
   </Resources>
 
   <Applications>
-    <!-- Executable/Id match Compose Desktop's `packageName` (= desktopAppName in libs.versions.toml,
-         see cmp-desktop/build.gradle.kts `windowTitle`) — verify the exact packaged .exe filename
-         against a real Windows package build before this target's first real submission. -->
-    <Application Id="__APP_ID_NO_SPACES__" Executable="__APP_EXECUTABLE__" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="MoneyToolkit" Executable="MoneyToolkit.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-          DisplayName="__APP_DISPLAY_NAME__"
-          Description="__APP_DISPLAY_NAME__"
+          DisplayName="App Toolkit"
+          Description="Money Toolkit"
           BackgroundColor="transparent"
           Square150x150Logo="Assets\Square150x150Logo.png"
           Square44x44Logo="Assets\Square44x44Logo.png" />

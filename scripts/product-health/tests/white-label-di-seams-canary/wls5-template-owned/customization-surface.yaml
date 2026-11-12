@@ -1,0 +1,8 @@
+# canary contract — the seam resolves owner:template, so a sync would blind-copy the
+# template's EMPTY Fork*Module over the fork's filled-in one (WLS-5 RED)
+version: 1
+rules:
+  - glob: "**/demo/**"
+    owner: demo-showcase
+  - glob: "**"
+    owner: template

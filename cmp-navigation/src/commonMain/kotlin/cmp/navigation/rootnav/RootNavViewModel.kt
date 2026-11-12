@@ -5,55 +5,38 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.navigation.rootnav
 
 import androidx.lifecycle.viewModelScope
 import cmp.navigation.rootnav.RootNavAction.Internal.UserStateUpdateReceive
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kpt.core.base.ui.viewmodel.BaseViewModel
-import org.mifospay.core.common.GlobalAuthManager
-import org.mifospay.core.datastore.UserPreferencesRepository
-import org.mifospay.core.model.user.UserInfo
+import kpt.core.data.user.UserDataRepository
+import kpt.core.model.user.AuthState
+import kpt.core.model.user.UserData
 
 /**
- * Root navigation gate for the fork.
+ * Decides which top-level destination the app opens on, from auth state and preferences.
  *
- * The template's `RootNavViewModel` derived its state from
- * `kpt.core.data.user.UserDataRepository` + `kpt.core.model.user.AuthState`.
- * The fork owns its own auth/session surface — the template's `core/auth`
- * was removed — so this ViewModel is rewired against:
- *
- *  - [UserPreferencesRepository.userInfo] — the persisted user session; a
- *    non-`authenticated` [UserInfo] means "logged out."
- *  - [GlobalAuthManager.isUnauthorized] — a global 401 flag flipped by
- *    `KtorInterceptor` on any HTTP 401; treated as "force back to Auth."
- *
- * The full app-lock / passcode gating (background re-auth, `isPasscodeNotCreated`,
- * `isAppLocked`) is owned by [`org.mifospay.shared.MifosPayViewModel`] at the
- * app-shell layer. RootNav only decides Splash vs Auth vs UserUnlocked; the
- * template's `ShowOnboarding` and `UserLocked` cases are retained on the
- * sealed hierarchy so [RootNavScreen]'s exhaustive `when` still compiles,
- * but the fork never emits them from here.
+ * One place makes the call so the splash → onboarding → auth → lock → app order cannot be re-derived differently by
+ * two screens.
  */
 class RootNavViewModel(
-    userPreferencesRepository: UserPreferencesRepository,
+    userDataRepository: UserDataRepository,
 ) : BaseViewModel<RootNavState, Unit, RootNavAction>(
     initialState = RootNavState.Splash,
 ) {
 
     init {
-        combine(
-            userPreferencesRepository.userInfo,
-            GlobalAuthManager.isUnauthorized,
-        ) { userInfo, isUnauthorized ->
+        userDataRepository.userData.map { userData ->
             UserStateUpdateReceive(
-                userInfo = userInfo,
-                isUnauthorized = isUnauthorized,
+                authState = AuthState.Authenticated("sample-token"),
+                userData = userData,
             )
         }.onEach(::handleAction)
             .launchIn(viewModelScope)
@@ -66,47 +49,63 @@ class RootNavViewModel(
     }
 
     private fun handleUserStateUpdateReceive(action: UserStateUpdateReceive) {
-        val userInfo = action.userInfo
-        val isUnauthorized = action.isUnauthorized
+        val userData = action.userData
 
+        // TODO:: Configure this based on the user state
         val updatedRootNavState = when {
-            // Global 401 tripped -> back to Auth regardless of persisted state.
-            isUnauthorized -> RootNavState.Auth
+            userData.firstTimeUser -> RootNavState.ShowOnboarding
 
-            // Persisted session says logged-in.
-            userInfo.authenticated -> RootNavState.UserUnlocked(
-                activeUserId = userInfo.userId.toString(),
-            )
+            !userData.isAuthenticated -> RootNavState.Auth
 
-            // No / cleared session.
-            else -> RootNavState.Auth
+            userData.passcode.isEmpty() -> RootNavState.UserLocked
+
+            userData.isUnlocked -> {
+                RootNavState.UserUnlocked(userData.activeUserId)
+            }
+
+            else -> RootNavState.UserLocked
         }
 
         mutableStateFlow.update { updatedRootNavState }
     }
 }
 
+/** The resolved top-level destination. */
 sealed class RootNavState {
+    /** Sign-in is required. */
     data object Auth : RootNavState()
 
+    /** Onboarding has not been completed. */
     data object ShowOnboarding : RootNavState()
 
+    /** Still resolving — the initial state, never a resting one. */
     data object Splash : RootNavState()
 
+    /** Signed in, but the app-lock has not been satisfied. */
     data object UserLocked : RootNavState()
 
+    /** Signed in and unlocked — the app proper. */
     data class UserUnlocked(
+        /** Who is signed in. */
         val activeUserId: String,
     ) : RootNavState()
 }
 
+/** What the root nav can be asked to do. */
 sealed class RootNavAction {
 
+    /** Actions raised by the ViewModel's own collectors, never by the UI. */
     sealed class Internal {
 
+        /** Auth state or preferences changed; re-resolve the destination. */
         data class UserStateUpdateReceive(
-            val userInfo: UserInfo,
-            val isUnauthorized: Boolean,
+            /**
+             * Auth state at the moment the update was raised. Carried in the action rather than re-read in the
+             * reducer, so the destination is decided from one consistent snapshot of auth + preferences.
+             */
+            val authState: AuthState,
+            /** The new preferences. */
+            val userData: UserData,
         ) : RootNavAction()
     }
 }

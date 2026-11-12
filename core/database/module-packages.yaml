@@ -24,7 +24,7 @@ schema_version: "1.0"
 #              one of those cases.
 #   template:  template-authored FRAMEWORK code. A clean fork KEEPS it and a sync full-copies it, so
 #              the fork keeps receiving fixes. Do not edit these packages in a fork; extend them
-#              through the module's `Project*` seam instead.
+#              through the module's `Fork*` seam instead.
 #   fork:      the fork's OWN packages. Never deleted, never synced over. A fork's package needs NO
 #              row at all — undeclared IS fork — so a row here is self-documenting only.
 #
@@ -53,21 +53,20 @@ module: database
 
 # Deleted by `remove-demo.sh`; the row survives with `status: removed` as the record.
 demo:
-  - { id: alerts,     status: exists }      # alerts table
-  - { id: banking,    status: exists }      # loans + bill reminders
-  - { id: cloudtodo,  status: exists }      # cloud-todo table
-  - { id: crypto,     status: exists }      # coin market / detail
-  - { id: currency,   status: exists }      # exchange rates + rate history
-  - { id: economic,   status: exists }      # interest-rate series
-  - { id: migrations, status: exists }      # the template's own schema-history specs
-  - { id: watchlist,  status: exists }      # watchlist table
+  - { id: alerts,     status: removed }      # alerts table
+  - { id: banking,    status: removed }      # loans + bill reminders
+  - { id: cloudtodo,  status: removed }      # cloud-todo table
+  - { id: crypto,     status: removed }      # coin market / detail
+  - { id: currency,   status: removed }      # exchange rates + rate history
+  - { id: economic,   status: removed }      # interest-rate series
+  - { id: migrations, status: removed }      # the template's own schema-history specs
+  - { id: watchlist,  status: removed }      # watchlist table
 
 # Kept by a clean fork, full-copied by a sync.
 template:
   - { id: config, status: exists }          # DatabaseConfig (generated) + the fork-owned ForkDatabaseConfig
-  - { id: di,     status: exists }          # DatabaseModule + the ProjectDatabaseModule fork seam
+  - { id: di,     status: exists }          # DatabaseModule + the ForkDatabaseModule fork seam
   - { id: infra,  status: exists }          # Room infra support
 
 # THIS FORK's own packages. `/implement` registers here. Empty is normal on the template.
-fork:
-  - { id: wallet, status: exists }        # mifos-pay wallet entities + DAOs (pocket, transfer-detail, …)
+fork: []

@@ -12,6 +12,20 @@ package org.mifos.lib.loan.core.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the loan officer options used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property firstname First name.
+ * @property lastname Last name.
+ * @property displayName Name shown to the user.
+ * @property mobileNo Mobile phone number.
+ * @property officeId Identifier of the office.
+ * @property officeName Name of the office.
+ * @property loanOfficer Loan officer assigned to the loan.
+ * @property active Whether this entry is active.
+ * @property joiningDate Date the staff member joined.
+ */
 @Serializable
 data class LoanOfficerOptions(
 

@@ -83,6 +83,7 @@ platform :ios do
     See openMF/ios-provisioning-profile/cert-renewal.sh for a standalone bash runner
     that also works outside of this Fastlane context (e.g. from ios-provisioning-profile).
   DESC
+  # Renew every certificate and provisioning profile through Match, for all platforms.
   lane :renewAllCerts do |options|
     options = sanitize_options(options)
 
@@ -93,8 +94,10 @@ platform :ios do
     git_ssh_key    = File.exist?(ssh_key) ? ssh_key : nil
     cert_type      = options.fetch(:type, "all").to_s
 
-    # All bundle IDs managed in the Match repo — add new consumer apps here.
-    all_app_ids    = (ENV["APP_IDENTIFIERS"] || "#{ForkIdentity::APP_ID} org.mifospay").split
+    # Bundle IDs to provision in the Match repo. Defaults to THIS fork's own app id —
+    # never a foreign one, or a fork would try to provision an App ID it does not own.
+    # Set APP_IDENTIFIERS (space-separated) to add sibling apps / app-extension ids.
+    all_app_ids    = (ENV["APP_IDENTIFIERS"] || ForkIdentity::APP_ID.to_s).split
     primary_app_id = ENV["PRIMARY_APP_ID"] || ForkIdentity::APP_ID
 
     load_api_key(options)

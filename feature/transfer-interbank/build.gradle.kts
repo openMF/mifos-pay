@@ -22,13 +22,16 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            // Template idiom: SubmitHandler (core-base/store) for the money-movement write.
-            implementation(projects.coreBase.store)
-            implementation(projects.feature.passcode)
+            // Template idiom: SubmitHandler (core/store, which re-exports core-base/store) for the money-movement write.
+            implementation(projects.core.store)
         }
 
         androidMain.dependencies {
             implementation(libs.google.play.services.code.scanner)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "kpt.feature.transfer.interbank.generated.resources"
 }

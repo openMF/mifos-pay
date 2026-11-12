@@ -7,26 +7,13 @@
  *
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
-
-/* =================================================================================
- *  DO NOT EDIT to add consumer-specific flavors. This file is SYNCED from
- *  kmp-project-template into every downstream consumer app via sync-dirs.sh.
- *  Edits here will be overwritten on the next sync.
- *
- *  To add consumer-specific flavors / dimensions / overrides, create:
- *      build-logic/convention/src/main/kotlin/local/LocalFlavors.kt
- *
- *  That local/ directory is excluded from sync-dirs.sh and survives every sync.
- *  See docs/FLAVORS_EXTENSION.md.
- * ================================================================================= */
-
 import com.mobilebytelabs.kmpflavors.KmpFlavorExtension
 import com.mobilebytelabs.kmpflavors.KmpFlavorPlugin
+import org.convention.KptAppProfileProperties
 import org.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.register
 
 /**
@@ -60,12 +47,11 @@ class KMPFlavorsConventionPlugin : Plugin<Project> {
             //     plugin READS them from the fork-owned `gradle/fork.properties` (never synced), so a
             //     fork changes its API base URLs, demo credentials, and log tag WITHOUT editing this
             //     file — the hardcoded values below are the template defaults when a key is absent.
-            val forkProps = java.util.Properties().apply {
-                val f = rootProject.file("gradle/fork.properties")
-                if (f.exists()) f.inputStream().use { load(it) }
-            }
+            // Read through the ONE Gradle-side reader (org.convention.KptAppProfileProperties) instead of a
+            // local Properties().load(). Same keys, same defaults — see that file for why six
+            // independent parsers were the defect class.
             fun forkProp(key: String, default: String): String =
-                forkProps.getProperty(key)?.takeIf { it.isNotBlank() } ?: default
+                KptAppProfileProperties.get(target, key, default)
 
             // 2. Configure the KMP-side flavor contract.
             //    buildConfigPackage comes from gradle/libs.versions.toml ([versions].appId)
@@ -82,14 +68,47 @@ class KMPFlavorsConventionPlugin : Plugin<Project> {
                 // iOS xcconfig generation + variants.json export are provided by the plugin
                 // (kmp-product-flavors 2.8.3+). Identity stays in Config.xcconfig
                 // ($(APP_BUNDLE_ID) / $(TEAM_ID), synced from libs.versions.toml via
-                // syncForkConfig), so the per-variant xcconfigs reference those vars and Pods
-                // settings flow in per-configuration. Replaces the former hand-maintained
-                // GenerateIosFlavorXcconfigsTask + ExportKmpFlavorsManifestTask in build-logic.
+                // syncForkConfig), so the per-variant xcconfigs reference those vars.
+                // Replaces the former hand-maintained GenerateIosFlavorXcconfigsTask +
+                // ExportKmpFlavorsManifestTask in build-logic.
                 iosXcconfigGeneration.set(true)
                 iosManifestExport.set(true)
                 iosBundleIdBaseExpr.set("\$(APP_BUNDLE_ID)")
                 iosDevelopmentTeamExpr.set("\$(TEAM_ID)")
-                iosCocoapodsIntegration.set(true)
+
+                // OFF, and it must stay off. When true the generator appends an optional
+                // `#include? "../Pods/…"` to every generated xcconfig. `#include?` never errors on
+                // a missing file, so dead wiring would survive silently in every fork that
+                // syncs this template. Enforced by G-IOS-SWIFTPM (IOS-7 flag / IOS-6 output).
+                //
+                // The flag emits one optional xcconfig include for brownfield apps that take the
+                // KMP framework via SPM while still using another package manager for OTHER
+                // native SDKs. Not our case — this template is SPM end to end.
+                iosIncludePodsXcconfig.set(false)
+
+                // SwiftPM distribution (kmp-product-flavors 2.9).
+                //
+                // 2.9 flipped `spm.generateManifest` to default TRUE. This convention plugin is
+                // applied to EVERY KMP module and only `cmp-shared` exports an XCFramework, so the
+                // new `requireXcframework` check fired 45 times per build — once per library module
+                // that has an iOS target but publishes klibs rather than a framework. The check is a
+                // good one; it simply does not apply to a library.
+                //
+                // OFF because this repo OWNS its manifest: `cmp-ios/Package.swift` is hand-written,
+                // reviewed and already referenced by the Xcode project. Two manifests in one tree,
+                // with nothing stating which one Xcode resolves, is worse than one we maintain.
+                // Adopting the generated manifest is a real option but an Xcode-side migration
+                // (project references + the embed Run Script), not a flag flip.
+                spm {
+                    generateManifest.set(false)
+                    // Named for the day that flag flips: our aggregator is XCFramework("ComposeApp"),
+                    // not the plugin's "Shared" default, so the resolver would otherwise look for
+                    // `assembleShared{BuildType}XCFramework` and find nothing.
+                    xcframeworkName.set("ComposeApp")
+                    // We ship our own reviewed embed script (flavor-aware, stages the SDK-matching
+                    // slice, referenced by the Xcode Run Script phase).
+                    generateEmbedScript.set(false)
+                }
 
                 flavorDimensions {
                     register("contentType") { priority.set(0) }
@@ -154,5 +173,4 @@ class KMPFlavorsConventionPlugin : Plugin<Project> {
             // registerExportKmpFlavorsManifestTask(), removed in the 2.8.3 adoption.)
         }
     }
-
 }

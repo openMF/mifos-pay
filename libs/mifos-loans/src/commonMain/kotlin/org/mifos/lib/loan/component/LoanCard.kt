@@ -25,10 +25,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.theme.KptTheme
+import kpt.core.designsystem.fork.component.ForkCard
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import org.mifospay.core.designsystem.component.MifosCard
-
 /**
  * A compact loan summary card showing title/amount/interest as plain text on a solid
  * background — no background image, since a generic illustration stretched to fill the
@@ -47,7 +46,7 @@ fun LoanCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .then(
@@ -115,7 +114,7 @@ fun LoanCardCustom(
     contentColor: Color = Color.White,
     onClick: (() -> Unit)? = null,
 ) {
-    MifosCard(
+    ForkCard(
         modifier = modifier
             .fillMaxWidth()
             .then(

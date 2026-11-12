@@ -20,5 +20,7 @@ package kpt.core.store.wallet.selfaccounts
  * therefore keys into a distinct cache slot; the previous client's rows sit
  * dormant in the table (with their `clientId` column) until [StoreCacheManager]
  * clears them on logout.
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class SelfAccountsKey(val clientId: Long)

@@ -31,7 +31,8 @@ class RetryPolicyTest {
             maxAttempts = 5,
             initialDelayMs = 1_000L,
             multiplier = 2.0,
-            jitterFraction = 0.0, // zero jitter so the sequence is deterministic
+            // zero jitter so the sequence is deterministic
+            jitterFraction = 0.0,
             maxDelayMs = 60_000L,
         )
 

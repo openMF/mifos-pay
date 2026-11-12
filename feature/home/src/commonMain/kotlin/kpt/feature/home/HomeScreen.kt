@@ -38,11 +38,11 @@ import org.jetbrains.compose.resources.stringResource
  * settings action. Always present in every fork, and it carries ZERO demo imports.
  *
  * The home body is supplied by the caller as an opaque [homeBody] composable — the fork owns
- * what renders there via `cmp-navigation`'s `BackboneRegistry.homeBody` (default: the demo
+ * what renders there via `cmp-navigation`'s `ForkBackboneRegistry.homeBody` (default: the demo
  * Money-Toolkit dashboard). `customizer --clean` empties that seam, leaving this shell with an
  * empty body for the fork to fill — the top bar and settings entry point survive unchanged.
  * (S5 heal, epic pure-white-label-store5-network T7: the 12 hardcoded demo `navigateToX`
- * callbacks that used to thread through this shell now live in the fork-owned BackboneRegistry.)
+ * callbacks that used to thread through this shell now live in the fork-owned ForkBackboneRegistry.)
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,7 +82,7 @@ internal fun HomeScreen(
         containerColor = MaterialTheme.colorScheme.background,
     ) { paddingValues ->
         Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
-            // Fork-owned home body (default: the demo dashboard) — supplied via BackboneRegistry.homeBody.
+            // Fork-owned home body (default: the demo dashboard) — supplied via ForkBackboneRegistry.homeBody.
             homeBody()
         }
     }

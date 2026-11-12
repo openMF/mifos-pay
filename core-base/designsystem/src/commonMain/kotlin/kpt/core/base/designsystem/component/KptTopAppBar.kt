@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:OptIn(ExperimentalMaterial3Api::class)
 
@@ -42,10 +42,42 @@ import kpt.core.base.designsystem.core.TopAppBarAction
 import kpt.core.base.designsystem.core.TopAppBarVariant
 import kpt.core.base.designsystem.theme.KptTheme
 
+/**
+ * The navigation-icon slot of [KptTopAppBar].
+ *
+ * Extracted so its null-handling does not count against the bar's own complexity, and so the four
+ * Material variants below share one definition rather than four.
+ *
+ * Emits nothing when the configuration declares no icon. The button is present-but-disabled when an
+ * icon is declared without a click handler, so a decorative icon cannot look tappable.
+ */
+@Composable
+private fun NavigationIconSlot(configuration: KptTopAppBarConfiguration) {
+    val icon = configuration.navigationIcon ?: return
+    IconButton(
+        onClick = configuration.onNavigationIonClick ?: {},
+        enabled = configuration.onNavigationIonClick != null,
+    ) {
+        Icon(imageVector = icon, contentDescription = "Navigation")
+    }
+}
+
+/**
+ * Top app bar built from a declarative [KptTopAppBarConfiguration].
+ *
+ * The DSL form — prefer it when a screen's bar is assembled from data or varies by state; the
+ * parameter overloads below are shorthands over this.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KptTopAppBar(configuration: KptTopAppBarConfiguration) {
+fun KptTopAppBar(
+    configuration: KptTopAppBarConfiguration,
+    modifier: Modifier = Modifier,
+) {
+    // The caller's modifier is applied AFTER the configuration's, so a screen holding a config it
+    // did not build can still place the bar without having to copy the config to change layout.
     val finalModifier = configuration.modifier
+        .then(modifier)
         .testTag(configuration.testTag ?: "KptTopAppBar")
         .let { mod ->
             if (configuration.contentDescription != null) {
@@ -74,20 +106,6 @@ fun KptTopAppBar(configuration: KptTopAppBarConfiguration) {
         }
     }
 
-    val navigationIconContent: @Composable () -> Unit = {
-        configuration.navigationIcon?.let { icon ->
-            IconButton(
-                onClick = configuration.onNavigationIonClick ?: {},
-                enabled = configuration.onNavigationIonClick != null,
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "Navigation",
-                )
-            }
-        }
-    }
-
     val actionsContent: @Composable RowScope.() -> Unit = {
         configuration.actions.forEach { action ->
             IconButton(
@@ -103,49 +121,57 @@ fun KptTopAppBar(configuration: KptTopAppBarConfiguration) {
         }
     }
 
+    // Resolved once rather than inside each branch: four copies of the same fallback are four
+    // places for them to drift apart.
+    val windowInsets = configuration.windowInsets ?: TopAppBarDefaults.windowInsets
+    val colors = configuration.colors ?: TopAppBarDefaults.topAppBarColors()
+
     when (configuration.variant) {
         TopAppBarVariant.Small -> TopAppBar(
             title = titleContent,
             modifier = finalModifier,
-            navigationIcon = navigationIconContent,
+            navigationIcon = { NavigationIconSlot(configuration) },
             actions = actionsContent,
-            windowInsets = configuration.windowInsets ?: TopAppBarDefaults.windowInsets,
-            colors = configuration.colors ?: TopAppBarDefaults.topAppBarColors(),
+            windowInsets = windowInsets,
+            colors = colors,
             scrollBehavior = configuration.scrollBehavior,
         )
 
         TopAppBarVariant.CenterAligned -> CenterAlignedTopAppBar(
             title = titleContent,
             modifier = finalModifier,
-            navigationIcon = navigationIconContent,
+            navigationIcon = { NavigationIconSlot(configuration) },
             actions = actionsContent,
-            windowInsets = configuration.windowInsets ?: TopAppBarDefaults.windowInsets,
-            colors = configuration.colors ?: TopAppBarDefaults.topAppBarColors(),
+            windowInsets = windowInsets,
+            colors = colors,
             scrollBehavior = configuration.scrollBehavior,
         )
 
         TopAppBarVariant.Medium -> MediumTopAppBar(
             title = titleContent,
             modifier = finalModifier,
-            navigationIcon = navigationIconContent,
+            navigationIcon = { NavigationIconSlot(configuration) },
             actions = actionsContent,
-            windowInsets = configuration.windowInsets ?: TopAppBarDefaults.windowInsets,
-            colors = configuration.colors ?: TopAppBarDefaults.topAppBarColors(),
+            windowInsets = windowInsets,
+            colors = colors,
             scrollBehavior = configuration.scrollBehavior,
         )
 
         TopAppBarVariant.Large -> LargeTopAppBar(
             title = titleContent,
             modifier = finalModifier,
-            navigationIcon = navigationIconContent,
+            navigationIcon = { NavigationIconSlot(configuration) },
             actions = actionsContent,
-            windowInsets = configuration.windowInsets ?: TopAppBarDefaults.windowInsets,
-            colors = configuration.colors ?: TopAppBarDefaults.topAppBarColors(),
+            windowInsets = windowInsets,
+            colors = colors,
             scrollBehavior = configuration.scrollBehavior,
         )
     }
 }
 
+/**
+ * Title-only bar with no navigation icon — a tab root. [variant] selects the Material 3 size.
+ */
 @Composable
 fun KptTopAppBar(
     title: String,
@@ -161,6 +187,9 @@ fun KptTopAppBar(
     )
 }
 
+/**
+ * Title plus a back affordance, always shown — a pushed detail screen.
+ */
 @Composable
 fun KptTopAppBar(
     title: String,
@@ -182,6 +211,10 @@ fun KptTopAppBar(
     )
 }
 
+/**
+ * Title with a CONDITIONAL back affordance, for a screen reachable both as a tab root and as a
+ * pushed destination.
+ */
 @Composable
 fun KptTopAppBar(
     title: String,
@@ -204,6 +237,10 @@ fun KptTopAppBar(
     )
 }
 
+/**
+ * Two-line bar: title over a subtitle, for a screen whose context needs naming (an account, a date
+ * range) without stealing the title.
+ */
 @Composable
 fun KptTopAppBar(
     title: String,
@@ -225,6 +262,10 @@ fun KptTopAppBar(
     )
 }
 
+/**
+ * Title plus ONE trailing action. For more than one, use the configuration overload rather than
+ * growing the parameter list.
+ */
 @Composable
 fun KptTopAppBar(
     title: String,
@@ -250,6 +291,9 @@ fun KptTopAppBar(
     )
 }
 
+/**
+ * Bar whose title area is a live search field, with the query hoisted to the caller.
+ */
 @Composable
 fun KptSearchAppBar(
     searchQuery: String,
@@ -295,6 +339,9 @@ fun KptSearchAppBar(
     )
 }
 
+/**
+ * Bar carrying a profile avatar as its trailing action.
+ */
 @Composable
 fun KptProfileAppBar(
     title: String,
@@ -321,11 +368,14 @@ fun KptProfileAppBar(
     )
 }
 
+/**
+ * Bar preset for settings screens — back affordance plus the settings title treatment.
+ */
 @Composable
 fun KptSettingsAppBar(
-    title: String = "Settings",
     onNavigationIconClick: () -> Unit,
     modifier: Modifier = Modifier,
+    title: String = "Settings",
     onSearchClick: (() -> Unit)? = null,
     onMoreClick: (() -> Unit)? = null,
 ) {
@@ -350,46 +400,66 @@ fun KptSettingsAppBar(
     )
 }
 
+/**
+ * The shared body of the four variant shorthands below.
+ *
+ * They differ only in [variant], so routing them through one helper is what keeps them
+ * behaviourally identical: [KptMediumTopAppBar] and [KptLargeTopAppBar] previously accepted an
+ * `onNavigationIconClick` and dropped it on the floor, so a back arrow the caller asked for never
+ * appeared on those two sizes while it worked on the other two.
+ */
+@Composable
+private fun KptVariantTopAppBar(
+    title: String,
+    variant: TopAppBarVariant,
+    modifier: Modifier = Modifier,
+    onNavigationIconClick: (() -> Unit)? = null,
+) = KptTopAppBar(
+    KptTopAppBarConfiguration(
+        title = title,
+        modifier = modifier,
+        variant = variant,
+        navigationIcon = onNavigationIconClick?.let { Icons.AutoMirrored.Filled.ArrowBack },
+        onNavigationIonClick = onNavigationIconClick,
+    ),
+)
+
+/**
+ * Shorthand for the Small Material 3 bar — the default height.
+ */
 @Composable
 fun KptSmallTopAppBar(
     title: String,
-    onNavigationIconClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-) {
-    onNavigationIconClick?.let {
-        KptTopAppBar(
-            title = title,
-            onNavigationIconClick = it,
-            modifier = modifier,
-            variant = TopAppBarVariant.Small,
-        )
-    } ?: KptTopAppBar(title, modifier, TopAppBarVariant.Small)
-}
+    onNavigationIconClick: (() -> Unit)? = null,
+) = KptVariantTopAppBar(title, TopAppBarVariant.Small, modifier, onNavigationIconClick)
 
+/**
+ * Shorthand for the centre-aligned bar.
+ */
 @Composable
 fun KptCenterAlignedTopAppBar(
     title: String,
-    onNavigationIconClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-) = onNavigationIconClick?.let {
-    KptTopAppBar(
-        title = title,
-        onNavigationIconClick = it,
-        modifier = modifier,
-        variant = TopAppBarVariant.CenterAligned,
-    )
-} ?: KptTopAppBar(title, modifier, TopAppBarVariant.CenterAligned)
+    onNavigationIconClick: (() -> Unit)? = null,
+) = KptVariantTopAppBar(title, TopAppBarVariant.CenterAligned, modifier, onNavigationIconClick)
 
+/**
+ * Shorthand for the Medium (collapsing) bar.
+ */
 @Composable
 fun KptMediumTopAppBar(
     title: String,
-    onNavigationIconClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-) = KptTopAppBar(title, modifier, TopAppBarVariant.Medium)
+    onNavigationIconClick: (() -> Unit)? = null,
+) = KptVariantTopAppBar(title, TopAppBarVariant.Medium, modifier, onNavigationIconClick)
 
+/**
+ * Shorthand for the Large (collapsing) bar.
+ */
 @Composable
 fun KptLargeTopAppBar(
     title: String,
-    onNavigationIconClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
-) = KptTopAppBar(title, modifier, TopAppBarVariant.Large)
+    onNavigationIconClick: (() -> Unit)? = null,
+) = KptVariantTopAppBar(title, TopAppBarVariant.Large, modifier, onNavigationIconClick)

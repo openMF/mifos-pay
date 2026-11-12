@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Demasiadas tentativas. Aguarde e tente novamente.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">O hardware biométrico está temporariamente indisponível. Tente novamente mais tarde.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Não há biometria registada neste dispositivo. Configure a biometria nas definições do sistema.</string>
-    <string name="feature_passcode_biometric_error_timeout">A autenticação biométrica expirou. Tente novamente.</string>
-    <string name="feature_passcode_biometric_error_no_space">Armazenamento insuficiente para concluir a autenticação biométrica.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Os dados de registo biométrico são inválidos. Reative a biometria nas definições da aplicação.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Não foi possível iniciar a autenticação biométrica devido a argumentos inválidos.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Não foi possível iniciar o registo biométrico devido a argumentos inválidos.</string>
-    <string name="feature_passcode_biometric_error_unknown">Ocorreu um erro biométrico inesperado. Tente novamente.</string>
-    <string name="feature_passcode_biometric_prompt_title">Desbloquear Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Verifique a sua identidade para continuar</string>
-    <string name="feature_passcode_biometric_prompt_description">Use a sua impressão digital, rosto ou credencial do dispositivo</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Cancelar</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Proteja a sua aplicação</string>

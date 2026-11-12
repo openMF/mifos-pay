@@ -11,10 +11,11 @@ package kpt.core.database.wallet.savedcards
 
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single saved payment card — the Room mirror of the
- * `org.mifospay.core.model.savedcards.SavedCard` domain model.
+ * `kpt.core.model.savedcards.SavedCard` domain model.
  *
  * Stored in the `wallet_saved_cards` table. LEDGER shape — many rows per client,
  * page-keyed by [clientId]. The Fineract datatable API
@@ -61,7 +62,10 @@ import androidx.room3.Index
  * @property updatedAtJson JSON encoding of `List<Long>` — Fineract date parts.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property lastName Cardholder last name.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_saved_cards",
     primaryKeys = ["id", "clientId"],

@@ -10,6 +10,7 @@
 import com.android.build.api.instrumentation.InstrumentationScope
 import org.convention.dynamicVersion
 import org.convention.resolveSecretPath
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application.convention)
@@ -22,6 +23,30 @@ plugins {
 
 val appId: String = libs.versions.appId.get()
 val appDisplayName: String = libs.versions.appDisplayName.get()
+
+// Release signing — resolved from vault-materialized secrets, NEVER a committed literal
+// (RULE-NO-SOURCE-SECRET-LITERAL-001, 2026-08-31). `/secrets pull` writes the keystore +
+// passwords into the gitignored secrets/live/android/keystores/; CI may override via KEYSTORE_* env.
+// A hardcoded fallback here is FORBIDDEN even as a "sample": forks swap the sample for the real
+// credential (observed in 4+ apps), and a literal turns every ordinary grep/sed of this file into
+// a secret spill that the output guards cannot catch.
+val ksPropsFile = project.resolveSecretPath("upload_keystore_properties")
+val signingProps = Properties().apply {
+    if (ksPropsFile.exists()) ksPropsFile.inputStream().use { load(it) }
+}
+val ksFile = System.getenv("KEYSTORE_PATH")?.let { file(it) }
+    ?: project.resolveSecretPath("upload_keystore")
+// The two transports use DIFFERENT names, by design: env vars are KEYSTORE_* (CI), while the
+// properties file uses the `name:` fields secrets/LAYOUT.yaml declares (storePassword / keyAlias /
+// keyPassword). In LAYOUT, `source_env:` is only where the VALUE comes from — NOT the key it is
+// written under. (An earlier revision changed these reads to KEYSTORE_* after observing a fork whose
+// properties file had those keys; that fork was simply missing secrets/LAYOUT.yaml, so its file had
+// been written by the manifest/env path instead of the LAYOUT pass. Reverted 2026-09-03.)
+val ksStorePass = System.getenv("KEYSTORE_PASSWORD") ?: signingProps.getProperty("storePassword")
+val ksKeyAlias = System.getenv("KEYSTORE_ALIAS") ?: signingProps.getProperty("keyAlias")
+val ksKeyPass = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: signingProps.getProperty("keyPassword")
+val releaseSigningReady = ksFile.exists() && !ksStorePass.isNullOrBlank() &&
+    !ksKeyAlias.isNullOrBlank() && !ksKeyPass.isNullOrBlank()
 
 android {
     // Namespace is the STABLE code-gen package (BuildConfig / R live here) — deliberately fixed to the
@@ -42,17 +67,19 @@ android {
 
     signingConfigs {
         create("release") {
-            // v2 Play App Signing model — Gradle signs release AABs with the UPLOAD key.
-            // Path resolved by the ONE resolver (build-secrets → secrets/LAYOUT.yaml key `upload_keystore`
-            // → secrets/live/android/keystores/upload_keystore.keystore, sample fallback) — never hardcoded
-            // here. KEYSTORE_PATH env overrides (CI materializes it via /secrets before a deploy).
-            storeFile = System.getenv("KEYSTORE_PATH")?.let { file(it) }
-                ?: project.resolveSecretPath("upload_keystore")
-            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "Wizard@123"
-            keyAlias = System.getenv("KEYSTORE_ALIAS") ?: "kmp-project-template"
-            keyPassword = System.getenv("KEYSTORE_ALIAS_PASSWORD") ?: "Wizard@123"
-            enableV1Signing = true
-            enableV2Signing = true
+            if (releaseSigningReady) {
+                storeFile = ksFile
+                storePassword = ksStorePass
+                keyAlias = ksKeyAlias
+                keyPassword = ksKeyPass
+                enableV1Signing = true
+                enableV2Signing = true
+            } else {
+                logger.warn(
+                    "⚠ release signing not configured — run `/secrets pull` to materialize " +
+                        "secrets/live/android/keystores/ (or set KEYSTORE_* env). Build will be UNSIGNED.",
+                )
+            }
         }
     }
 
@@ -62,14 +89,14 @@ android {
         // Only Android-app-specific settings that the plugin doesn't own live here.
         getByName("staging") {
             isJniDebuggable = false
-            signingConfig = signingConfigs.getByName("release")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = if (releaseSigningReady) signingConfigs.getByName("release") else null
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro", "fork-proguard-rules.pro")
         }
         release {
             isShrinkResources = true
             isJniDebuggable = false
-            signingConfig = signingConfigs.getByName("release")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = if (releaseSigningReady) signingConfigs.getByName("release") else null
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro", "fork-proguard-rules.pro")
         }
     }
 
@@ -133,9 +160,6 @@ dependencies {
 
     implementation(libs.kermit.koin)
 
-    implementation(libs.app.update.ktx)
-    implementation(libs.app.update)
-
     implementation(libs.coil.kt)
 
     implementation(libs.filekit.core)
@@ -161,6 +185,12 @@ dependencyGuard {
         tree = true
     }
 }
+
+// ── Fork-owned seam (white-label, mirrors core/<mod>/module-deps.gradle.kts) ────────────────────
+// A fork's own Android-app dependencies, manifest placeholders and BuildConfig fields go in
+// `cmp-android/module-deps.gradle.kts` — a file a template sync never touches. String configuration
+// names (`"implementation"(...)`) there: type-safe `libs.` accessors are not generated for script plugins.
+project.file("module-deps.gradle.kts").takeIf { it.exists() }?.let { apply(from = it) }
 
 baselineProfile {
     // Don't build on every iteration of a full assemble.

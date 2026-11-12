@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.designsystem.utils
 
@@ -20,6 +20,12 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 
+/**
+ * Tints digits and symbols differently from letters in a text field — used for passwords and codes,
+ * where character class is hard to read at a glance.
+ *
+ * Presentation only: it never alters the field's value.
+ */
 @Composable
 fun nonLetterColorVisualTransformation(): VisualTransformation {
     val digitColor = MaterialTheme.colorScheme.primary

@@ -20,7 +20,7 @@
     <string name="feature_kyc_level">Level</string>
     <string name="feature_kyc_completion">Completed</string>
     <string name="feature_kyc_check">Checked</string>
-    <string name="feature_kyc_error_kyc_details">Couldn\'t fetch KYC details. Please try again.</string>
+    <string name="feature_kyc_error_kyc_details">Couldn't fetch KYC details. Please try again.</string>
     <string name="feature_kyc_submitting">Submitting</string>
     <string name="feature_kyc_error_adding_KYC_Level_1_details">Error adding KYC Level 1 details.</string>
     <string name="feature_kyc_error_adding_KYC_Level_2_details">Error adding KYC Level 2 details.</string>

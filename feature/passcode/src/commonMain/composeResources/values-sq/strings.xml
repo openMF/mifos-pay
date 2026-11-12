@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">Shumë përpjekje. Prisni dhe provoni përsëri.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Hardueri biometrik është përkohësisht i padisponueshëm. Provoni më vonë.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">Në këtë pajisje nuk është regjistruar asnjë biometri. Konfiguroni biometrinë në cilësimet e sistemit.</string>
-    <string name="feature_passcode_biometric_error_timeout">Vërtetimi biometrik skadoi. Provoni përsëri.</string>
-    <string name="feature_passcode_biometric_error_no_space">Hapësira e ruajtjes është e pamjaftueshme për të përfunduar vërtetimin biometrik.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Të dhënat e regjistrimit biometrik janë të pavlefshme. Riaktivizoni biometrinë nga cilësimet e aplikacionit.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Vërtetimi biometrik nuk mund të niset për shkak të argumenteve të pavlefshme.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Regjistrimi biometrik nuk mund të niset për shkak të argumenteve të pavlefshme.</string>
-    <string name="feature_passcode_biometric_error_unknown">Ndodhi një gabim biometrik i papritur. Provoni përsëri.</string>
-    <string name="feature_passcode_biometric_prompt_title">Zhbllokoni Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Verifikoni identitetin tuaj për të vazhduar</string>
-    <string name="feature_passcode_biometric_prompt_description">Përdorni gjurmën e gishtit, fytyrën ose kredencialet e pajisjes</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Anulo</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">Sigurojeni aplikacionin tuaj</string>

@@ -12,6 +12,20 @@ package org.mifos.lib.loan.core.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the interest recalculation data used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property loanId Identifier of the loan.
+ * @property interestRecalculationCompoundingType Interest recalculation compounding type.
+ * @property rescheduleStrategyType Reschedule strategy type.
+ * @property calendarData Calendar data.
+ * @property recalculationRestFrequencyType Recalculation rest frequency type.
+ * @property recalculationRestFrequencyInterval Interval between recalculation rest periods.
+ * @property recalculationCompoundingFrequencyType Recalculation compounding frequency type.
+ * @property compoundingToBePostedAsTransaction Whether compounded interest is posted as a transaction.
+ * @property allowCompoundingOnEod Whether compounding is allowed on end-of-day events.
+ */
 @Serializable
 data class InterestRecalculationData(
     val id: Int? = null,

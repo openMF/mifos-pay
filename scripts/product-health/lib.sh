@@ -6,21 +6,16 @@
 # fp_get() so there is exactly one parser and one SoT — a check never re-implements the
 # read. Sourced by project-health.sh and each checks/*.sh; never executed directly.
 
-# health_resolve_sot <repo_root> — echo the path to the project SoT, or return 1.
-# Honors a caller-provided $FORK_PROPERTIES (lets a test point at a fixture).
-health_resolve_sot() {
-  local root="$1"
-  if [ -n "${FORK_PROPERTIES:-}" ] && [ -f "$FORK_PROPERTIES" ]; then echo "$FORK_PROPERTIES"; return 0; fi
-  if [ -f "$root/gradle/fork.properties" ]; then echo "$root/gradle/fork.properties"; return 0; fi
-  if [ -f "$root/gradle/fork.properties.template" ]; then echo "$root/gradle/fork.properties.template"; return 0; fi
-  return 1
-}
+# fp_file + fp_get now live in scripts/_shared/fork-props.sh — the ONE bash reader, promoted out of
+# this harness so every bash caller shares the same parsing semantics rather than re-deriving them.
+# This file keeps the rule it always stated; it just no longer owns the only copy of it.
+# shellcheck source=../_shared/fork-props.sh
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/../_shared" && pwd)/fork-props.sh"
 
-# fp_get <key> — read one key from $FORK_PROPERTIES, trimming inline `# comment` + whitespace.
-fp_get() {
-  [ -f "${FORK_PROPERTIES:-}" ] || return 1
-  grep -E "^$1=" "$FORK_PROPERTIES" 2>/dev/null | head -1 | cut -d= -f2- | sed 's/[[:space:]]*#.*$//; s/[[:space:]]*$//'
-}
+# health_resolve_sot <repo_root> — the harness-facing name for fp_file. Kept as a thin alias so the
+# 14 checks/*.sh that call it are untouched, and any caller-provided $FORK_PROPERTIES fixture path
+# still wins (that is what lets each canary point the checks at its own tree).
+health_resolve_sot() { fp_file "$1"; }
 
 # Colors — only when stdout is a tty.
 if [ -t 1 ]; then
@@ -78,7 +73,11 @@ wl_matches_any() {
   local val="$1" cat="$2" pat
   while IFS= read -r pat; do
     [ -n "$pat" ] || continue
-    printf '%s' "$val" | grep -qE "$pat" && return 0
+    # printf '%s\n' (NOT '%s'): an EMPTY $val must still present one empty LINE to grep, or the
+    # declared '^$' placeholder pattern can never match — grep sees zero lines and reports no match.
+    # That silently classified an unset field as "a foreign real-brand value" instead of a
+    # placeholder, which is the opposite verdict. Non-empty values are unaffected.
+    printf '%s\n' "$val" | grep -qE "$pat" && return 0
   done < <(wl_placeholders_load "$cat")
   return 1
 }
@@ -103,14 +102,54 @@ wl_example_load() {
   ' "$WL_PLACEHOLDERS_YAML"
 }
 
+# wl_identity_is_reference <app_id> <org_name> — return 0 when BOTH still carry the template's
+# COMMITTED Mifos reference identity, i.e. this checkout looks like the upstream template rather
+# than a rebranded fork.
+#
+# Deliberately NOT a mode switch. Mode is decided ONLY by TEMPLATE_SELF_BUILD (set explicitly by
+# quality-gate.yml from `github.repository`), because the safe default for anything that is not
+# provably the upstream repo is FORK mode — that is the direction that TELLS a fork to rebrand.
+# Inferring template mode locally would hand a real fork a silent pass on exactly the checks it
+# needs most. This predicate exists solely so product-health.sh can print an actionable hint when
+# a LOCAL run in the template checkout trips the directional identity checks.
+#
+# Requires BOTH fields: a half-rebranded fork (own appId, org.name still "Mifos Initiative") is a
+# genuine finding, and must not be talked out of its failure by the hint.
+wl_identity_is_reference() {
+  local app_id="$1" org_name="$2"
+  wl_matches_example "$app_id" bundle_id || return 1
+  wl_matches_example "$org_name" org_name || return 1
+  return 0
+}
+
 # wl_matches_example <value> <category> — return 0 if value IS the declared reference identity.
 wl_matches_example() {
   local val="$1" cat="$2" pat
   while IFS= read -r pat; do
     [ -n "$pat" ] || continue
-    printf '%s' "$val" | grep -qE "$pat" && return 0
+    # printf '%s\n' (NOT '%s'): an EMPTY $val must still present one empty LINE to grep, or the
+    # declared '^$' placeholder pattern can never match — grep sees zero lines and reports no match.
+    # That silently classified an unset field as "a foreign real-brand value" instead of a
+    # placeholder, which is the opposite verdict. Non-empty values are unaffected.
+    printf '%s\n' "$val" | grep -qE "$pat" && return 0
   done < <(wl_example_load "$cat")
   return 1
+}
+
+# wl_demos_stripped <repo_root> — return 0 when the template's demo showcase has been STRIPPED from this
+# checkout: core/store/module-packages.yaml declares demo rows and every one is `status: removed`.
+# That status is derived from disk and proven by core-package-ownership MP-7, so it is a fact, not a
+# flag a fork sets. On the template (and on a fork that kept the demos) the rows say `exists` and
+# this returns 1, so demo-showcase checks keep running there.
+wl_demos_stripped() {
+  local reg="${1:-.}/core/store/module-packages.yaml"
+  [ -f "$reg" ] || return 1
+  awk '
+    /^demo:[[:space:]]*$/ { in_demo=1; next }
+    /^[a-z_]+:/           { in_demo=0 }
+    in_demo && /id:/      { n++; if ($0 !~ /status:[[:space:]]*removed/) live++ }
+    END { exit (n > 0 && live == 0) ? 0 : 1 }
+  ' "$reg"
 }
 
 # Guard against direct execution — this is a library.

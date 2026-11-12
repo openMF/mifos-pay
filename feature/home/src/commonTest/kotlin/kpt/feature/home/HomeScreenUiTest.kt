@@ -23,7 +23,7 @@ import kotlin.test.Test
  *
  * This fork has no demo dashboard (`customizer --clean` empties the `homeBody` seam), so
  * `homeBody` is empty here too — production wires it via `cmp-navigation`'s
- * `BackboneRegistry.homeBody`. Asserts [TestTags.Home.SCREEN] — the root [Scaffold] testTag
+ * `ForkBackboneRegistry.homeBody`. Asserts [TestTags.Home.SCREEN] — the root [Scaffold] testTag
  * added to [HomeScreen].
  */
 @OptIn(ExperimentalTestApi::class)

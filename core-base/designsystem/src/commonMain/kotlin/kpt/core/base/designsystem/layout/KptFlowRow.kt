@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem.layout
 
@@ -18,8 +18,12 @@ import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.util.fastForEach
+import androidx.compose.ui.util.fastForEachIndexed
 import kotlin.math.max
 
+/**
+ * Row that wraps onto additional lines when content exceeds the available width.
+ */
 @Composable
 fun KptFlowRow(
     modifier: Modifier = Modifier,
@@ -81,22 +85,36 @@ fun KptFlowRow(
         val crossAxisLayoutSize = max(crossAxisSpace, constraints.minHeight)
 
         var crossAxisPosition = 0
-        crossAxisPositions.fastForEach { size ->
+        // Read crossAxisSIZES to build crossAxisPOSITIONS. Iterating the output list left it empty,
+        // so the `crossAxisPositions[sequenceIndex]` read below threw IndexOutOfBounds on the first
+        // row — this composable could not render any content at all. `KptFlowColumn`, otherwise an
+        // identical twin, has always read the right list here.
+        crossAxisSizes.fastForEach { size ->
             crossAxisPositions += crossAxisPosition
             crossAxisPosition += size
         }
 
         layout(mainAxisLayoutSize, crossAxisLayoutSize) {
             sequences.forEachIndexed { sequenceIndex, placeables ->
-                val childCrossAxisPosition = crossAxisPositions[sequenceIndex]
-                var childMainAxisPosition = 0
+                val rowCrossAxisSize = crossAxisSizes[sequenceIndex]
+                val rowCrossAxisPosition = crossAxisPositions[sequenceIndex]
 
-                placeables.fastForEach { placeable ->
+                // Honour the declared arrangement. Both parameters were previously accepted and
+                // ignored, so `horizontalArrangement = Arrangement.Center` laid out identically to
+                // `Arrangement.Start` — an API that silently does nothing is worse than one that
+                // does not offer the option.
+                val widths = IntArray(placeables.size) { placeables[it].width }
+                val positions = IntArray(placeables.size)
+                with(horizontalArrangement) {
+                    arrange(mainAxisLayoutSize, widths, layoutDirection, positions)
+                }
+
+                placeables.fastForEachIndexed { index, placeable ->
                     placeable.place(
-                        x = childMainAxisPosition,
-                        y = childCrossAxisPosition,
+                        x = positions[index],
+                        y = rowCrossAxisPosition +
+                            verticalAlignment.align(placeable.height, rowCrossAxisSize),
                     )
-                    childMainAxisPosition += placeable.width
                 }
             }
         }

@@ -9,10 +9,11 @@
  */
 package kpt.core.base.datastore.di
 
+import kpt.core.base.datastore.SecureSettingsFactory
 import org.koin.core.module.Module
 import org.koin.dsl.module
-import kpt.core.base.datastore.SecureSettingsFactory
 
+/** `datastoreBasePlatformModule` on Apple/native. */
 actual val datastoreBasePlatformModule: Module = module {
     single { SecureSettingsFactory() }
 }

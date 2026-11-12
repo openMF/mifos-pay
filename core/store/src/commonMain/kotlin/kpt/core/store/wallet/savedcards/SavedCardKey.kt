@@ -17,5 +17,7 @@ package kpt.core.store.wallet.savedcards
  * (`SavedCardDao.replacePage(clientId, entities)`) AND as the API path
  * parameter (`GET /datatables/saved_cards/{clientId}`), so per-client scoping
  * is enforced end-to-end.
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class SavedCardKey(val clientId: Long)

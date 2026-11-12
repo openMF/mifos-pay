@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	    App Group shared container for the Cappy home-screen widget (WidgetKit).
+	    The KMP app writes a widget snapshot here (cappy_widget_snapshot) + drains the
+	    widget's pending-action queue (cappy_widget_pending_actions). The CappyWidgets
+	    extension reads/appends via the SAME group. Both targets must carry this entitlement.
+	-->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.mobilebytesensei.cappy</string>
+	</array>
+</dict>
+</plist>

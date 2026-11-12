@@ -13,7 +13,12 @@ package org.mifos.lib.loan.component
 * Represents the specific categories of documents required for a loan application.
 */
 enum class DocumentType {
+    /** Bank statement supporting the applicant income. */
     BANK_STATEMENT,
+
+    /** Property ownership document, typically for collateral. */
     PROPERTY_DOCUMENT,
+
+    /** Applicant's signature. */
     SIGNATURE,
 }

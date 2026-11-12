@@ -9,19 +9,6 @@
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
-    <string name="feature_passcode_biometric_error_lockout">尝试次数过多。请稍候再试。</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">生物识别硬件暂时不可用，请稍后再试。</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">此设备未录入任何生物识别信息。请在系统设置中完成生物识别设置。</string>
-    <string name="feature_passcode_biometric_error_timeout">生物识别验证已超时，请重试。</string>
-    <string name="feature_passcode_biometric_error_no_space">存储空间不足，无法完成生物识别验证。</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">生物识别注册数据无效。请在应用设置中重新启用生物识别。</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">由于参数无效，无法启动生物识别验证。</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">由于参数无效，无法启动生物识别注册。</string>
-    <string name="feature_passcode_biometric_error_unknown">发生了意外的生物识别错误，请重试。</string>
-    <string name="feature_passcode_biometric_prompt_title">解锁 Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">验证您的身份以继续</string>
-    <string name="feature_passcode_biometric_prompt_description">使用您的指纹、人脸或设备凭据</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">取消</string>
 
     <!-- BiometricSetupScreen UI labels -->
     <string name="feature_passcode_biometric_setup_headline">保护您的应用</string>

@@ -11,20 +11,23 @@ package kpt.core.store.wallet.transferdetail
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.transferdetail.TransferDetailDao
 import kpt.core.database.wallet.transferdetail.toDomain
 import kpt.core.database.wallet.transferdetail.toEntity
-import org.mifospay.core.model.savingsaccount.TransferDetail
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.savingsaccount.TransferDetail
+import kpt.core.network.main.services.AccountTransfersService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 
-/** Room `@Entity(tableName = …)` for `TransferDetailEntity`. Shared with the DAO's writes. */
-private const val TRANSFER_DETAIL_TABLE = "wallet_transfer_details"
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
  * Build the SINGLE-ROW-PER-KEY read [Store] for account-transfer details
@@ -74,21 +77,22 @@ private const val TRANSFER_DETAIL_TABLE = "wallet_transfer_details"
  * `asScreenStream` consumer stays `ScreenState.Loading` until the network fetch
  * populates a row.
  */
+@StoreProvider(id = "transferDetail")
+@CacheKey(fn = "of", key = "wallet_transfer_details-{transferId}", params = ["transferId:Long"])
 fun provideTransferDetailStore(
-    selfManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfAccountTransfersService: AccountTransfersService,
     dao: TransferDetailDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<TransferDetailKey, TransferDetail> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: TransferDetailKey ->
         // Ktorfit returns Flow<TransferDetail> for getAccountTransfer — take the
         // first (and only) emission. The API path parameter is an Int.
-        selfManager.accountTransfersApi
+        selfAccountTransfersService
             .getAccountTransfer(key.transferId.toInt())
             .first()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: TransferDetailKey ->
-            daoFlow(TRANSFER_DETAIL_TABLE) { dao.observeById(key.transferId) }
+            run { dao.observeById(key.transferId) }
                 .map { row -> row?.toDomain() }
         },
         writer = { _: TransferDetailKey, detail: TransferDetail ->

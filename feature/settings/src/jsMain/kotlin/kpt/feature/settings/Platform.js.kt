@@ -9,5 +9,8 @@
  */
 package kpt.feature.settings
 
+/** Kotlin/JS actual of [getPlatform]. */
 actual fun getPlatform(): Platform = Platform.JS
+
+/** Kotlin/JS actual; dynamic theming is not supported. */
 actual fun supportsDynamicTheming(): Boolean = false

@@ -8,9 +8,9 @@
  * See https://github.com/openMF/mobile-wallet/blob/master/LICENSE.md
  */
 import com.mobilebytelabs.kmpflavors.KmpFlavorExtension
+import org.convention.forkProp
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -52,12 +52,12 @@ val appVersion: String = libs.versions.desktopPackageVersion.get()
 // in fork.properties must NOT ship a brand name. Last-resort default is the fork's OWN appName
 // (libs.versions.desktopAppName, always fork-set) — never the template's org (matches the fastlane
 // lanes' no-mifos-fallback). fork-identity.sh still FAILs CI if org.name is left at the template value.
-val forkProps = Properties().apply {
-    val f = rootProject.file("gradle/fork.properties")
-    if (f.exists()) f.inputStream().use { load(it) }
-}
-fun forkProp(key: String, default: String): String =
-    (forkProps.getProperty(key)?.trim().takeUnless { it.isNullOrEmpty() }) ?: default
+// Read through the ONE Gradle-side reader (org.convention.KptAppProfileProperties). Hoisted to top-level
+// vals because the consumers below sit inside nested DSL blocks whose receiver is not Project.
+val forkOrgName = forkProp("org.name", appName)
+val forkDescription = forkProp("app.description", "$appName desktop")
+val forkCopyright = forkProp("org.copyright", "© 2026 $forkOrgName. All rights reserved.")
+val forkMacCategory = forkProp("mac.app.category", "public.app-category.finance")
 
 // macOS CFBundleVersion (the *build* number, distinct from the marketing version).
 // TestFlight / App Store REJECT an upload whose CFBundleVersion is not strictly greater
@@ -99,9 +99,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Pkg, TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Deb)
             packageName = windowTitle
             packageVersion = appVersion
-            description = forkProp("app.description", "$appName desktop")
-            copyright = forkProp("org.copyright", "© 2026 ${forkProp("org.name", appName)}. All rights reserved.")
-            vendor = forkProp("org.name", appName)
+            description = forkDescription
+            copyright = forkCopyright
+            vendor = forkOrgName
             licenseFile.set(project.file("../LICENSE"))
             includeAllModules = true
 
@@ -113,7 +113,7 @@ compose.desktop {
                 dockName = windowTitle
                 // LSApplicationCategoryType — token-driven (fork.properties), else Compose writes "Unknown"
                 // and altool rejects with 90249. Per RULE-WORKSPACE-ORG-IDENTITY-001 WOI-3.
-                appCategory = forkProp("mac.app.category", "public.app-category.finance")
+                appCategory = forkMacCategory
                 iconFile.set(project.file("icons/ic_launcher.icns"))
                 // Mac App Store signing.
                 // MAC_SIGNING_IDENTITY: identity string passed by Fastlane lane via -P property.
@@ -148,7 +148,7 @@ compose.desktop {
                 val projectDirectory = layout.projectDirectory
                 provisioningProfile.set(
                     providers.environmentVariable("MAC_PROVISIONING_PROFILE_PATH")
-                        .map { projectDirectory.file(it) }
+                        .map { projectDirectory.file(it) },
                 )
                 notarization {
                     val providers = project.providers
@@ -178,6 +178,3 @@ compose.desktop {
         }
     }
 }
-
-
-

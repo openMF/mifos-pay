@@ -5,179 +5,153 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.model.user
 
 /**
- * Represents the languages supported by the app.
+ * Every language the app can be switched to, in the user's OWN language.
+ *
+ * GENERATED from core/registries/LOCALE_REGISTRY.yaml by
+ * `core/scripts/language-picker-sync.sh --write` — DO NOT HAND-EDIT. The selectable set is
+ * held EQUAL to the shipped locale set by LC-14 (RULE-IMPL-LOCALE-COVERAGE-001): a locale
+ * that has translated strings but no picker entry is unreachable, and a picker entry with
+ * no strings shows English. Add or remove languages in the registry, then re-run the sync.
+ *
+ * Enabled for mifos-x/kmp-project-template: 20 languages + system default.
+ * Resolved by core/scripts/locale-resolve.sh from locales.languages[].
+ *
+ * @property localeName platform locale tag (BCP-47) passed to the platform locale switcher;
+ *   `null` means "follow the system".
+ * @property text the language endonym — a picker must name a language in that language.
  */
 enum class LanguageConfig(
     val localeName: String?,
     val text: String,
 ) {
+    /** Follow the system locale. */
     DEFAULT(
         localeName = null,
         text = "System Default",
     ),
-    AFRIKAANS(
-        localeName = "af",
-        text = "Afrikaans",
-    ),
-    BELARUSIAN(
-        localeName = "be",
-        text = "Беларуская",
-    ),
-    BULGARIAN(
-        localeName = "bg",
-        text = "български",
-    ),
-    CATALAN(
-        localeName = "ca",
-        text = "català",
-    ),
-    CZECH(
-        localeName = "cs",
-        text = "čeština",
-    ),
-    DANISH(
-        localeName = "da",
-        text = "Dansk",
-    ),
-    GERMAN(
-        localeName = "de",
-        text = "Deutsch",
-    ),
-    GREEK(
-        localeName = "el",
-        text = "Ελληνικά",
-    ),
+
+    /** English — locale tag `en`. */
     ENGLISH(
         localeName = "en",
         text = "English",
     ),
-    ENGLISH_BRITISH(
-        localeName = "en-GB",
-        text = "English (British)",
-    ),
+
+    /** Español — locale tag `es`. */
     SPANISH(
         localeName = "es",
         text = "Español",
     ),
-    ESTONIAN(
-        localeName = "et",
-        text = "eesti",
+
+    /** 简体中文 — locale tag `zh-CN`. */
+    CHINESE_SIMPLIFIED(
+        localeName = "zh-CN",
+        text = "简体中文",
     ),
-    PERSIAN(
-        localeName = "fa",
-        text = "فارسی",
+
+    /** 繁體中文 — locale tag `zh-TW`. */
+    CHINESE_TRADITIONAL(
+        localeName = "zh-TW",
+        text = "繁體中文",
     ),
-    FINNISH(
-        localeName = "fi",
-        text = "suomi",
-    ),
-    FRENCH(
-        localeName = "fr",
-        text = "Français",
-    ),
+
+    /** हिन्दी — locale tag `hi`. */
     HINDI(
         localeName = "hi",
         text = "हिन्दी",
     ),
-    CROATIAN(
-        localeName = "hr",
-        text = "hrvatski",
+
+    /** العربية — locale tag `ar`. */
+    ARABIC(
+        localeName = "ar",
+        text = "العربية",
     ),
-    HUNGARIAN(
-        localeName = "hu",
-        text = "magyar",
+
+    /** Português (Brasil) — locale tag `pt-BR`. */
+    PORTUGUESE_BRAZIL(
+        localeName = "pt-BR",
+        text = "Português (Brasil)",
     ),
-    INDONESIAN(
-        localeName = "in",
-        text = "Bahasa Indonesia",
+
+    /** Русский — locale tag `ru`. */
+    RUSSIAN(
+        localeName = "ru",
+        text = "Русский",
     ),
-    ITALIAN(
-        localeName = "it",
-        text = "Italiano",
-    ),
-    HEBREW(
-        localeName = "iw",
-        text = "עברית",
-    ),
+
+    /** 日本語 — locale tag `ja`. */
     JAPANESE(
         localeName = "ja",
         text = "日本語",
     ),
+
+    /** Deutsch — locale tag `de`. */
+    GERMAN(
+        localeName = "de",
+        text = "Deutsch",
+    ),
+
+    /** Français — locale tag `fr`. */
+    FRENCH(
+        localeName = "fr",
+        text = "Français",
+    ),
+
+    /** 한국어 — locale tag `ko`. */
     KOREAN(
         localeName = "ko",
         text = "한국어",
     ),
-    LATVIAN(
-        localeName = "lv",
-        text = "Latvietis",
+
+    /** Italiano — locale tag `it`. */
+    ITALIAN(
+        localeName = "it",
+        text = "Italiano",
     ),
-    MALAYALAM(
-        localeName = "ml",
-        text = "മലയാളം",
-    ),
-    NORWEGIAN(
-        localeName = "nb",
-        text = "norsk (bokmål)",
-    ),
-    DUTCH(
-        localeName = "nl",
-        text = "Nederlands",
-    ),
-    POLISH(
-        localeName = "pl",
-        text = "Polski",
-    ),
-    PORTUGUESE_BRAZILIAN(
-        localeName = "pt-BR",
-        text = "Português do Brasil",
-    ),
-    PORTUGUESE(
-        localeName = "pt-PT",
-        text = "Português",
-    ),
-    ROMANIAN(
-        localeName = "ro",
-        text = "română",
-    ),
-    RUSSIAN(
-        localeName = "ru",
-        text = "русский",
-    ),
-    SLOVAK(
-        localeName = "sk",
-        text = "slovenčina",
-    ),
-    SWEDISH(
-        localeName = "sv",
-        text = "svenska",
-    ),
-    THAI(
-        localeName = "th",
-        text = "ไทย",
-    ),
+
+    /** Türkçe — locale tag `tr`. */
     TURKISH(
         localeName = "tr",
         text = "Türkçe",
     ),
-    UKRAINIAN(
-        localeName = "uk",
-        text = "українська",
+
+    /** Bahasa Indonesia — locale tag `in`. */
+    INDONESIAN(
+        localeName = "in",
+        text = "Bahasa Indonesia",
     ),
+
+    /** Tiếng Việt — locale tag `vi`. */
     VIETNAMESE(
         localeName = "vi",
         text = "Tiếng Việt",
     ),
-    CHINESE_SIMPLIFIED(
-        localeName = "zh-CN",
-        text = "中文（中国大陆）",
+
+    /** ไทย — locale tag `th`. */
+    THAI(
+        localeName = "th",
+        text = "ไทย",
     ),
-    CHINESE_TRADITIONAL(
-        localeName = "zh-TW",
-        text = "中文（台灣）",
+
+    /** Polski — locale tag `pl`. */
+    POLISH(
+        localeName = "pl",
+        text = "Polski",
+    ),
+
+    /** Nederlands — locale tag `nl`. */
+    DUTCH(
+        localeName = "nl",
+        text = "Nederlands",
+    ),
+
+    /** Українська — locale tag `uk`. */
+    UKRAINIAN(
+        localeName = "uk",
+        text = "Українська",
     ),
 }

@@ -65,7 +65,9 @@ platform :desktop do
         screenshots_path:                     mac_screenshots_path,
         platform:                             "osx",
         skip_binary_upload:                   true,
-        skip_submission:                      true,
+        # deliver has NO `skip_submission` (that is a pilot param) — passing it aborts with
+        # "invalid parameters to deliver". Not submitting == leaving submit_for_review at false.
+        submit_for_review:                    false,
         skip_app_version_update:              true,
         overwrite_screenshots:                true,
         ignore_language_directory_validation: true,

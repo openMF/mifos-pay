@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">చాలా ప్రయత్నాలు. దయచేసి వేచి ఉండి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">బయోమెట్రిక్ హార్డ్‌వేర్ తాత్కాలికంగా అందుబాటులో లేదు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.</string>
+    <string name="core_ui_biometric_error_not_enrolled">ఈ పరికరంలో ఏ బయోమెట్రిక్ నమోదు చేయబడలేదు. దయచేసి సిస్టమ్ సెట్టింగ్‌లలో బయోమెట్రిక్‌లను సెటప్ చేయండి.</string>
+    <string name="core_ui_biometric_error_timeout">బయోమెట్రిక్ ప్రామాణీకరణ గడువు ముగిసింది. దయచేసి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="core_ui_biometric_error_no_space">బయోమెట్రిక్ ప్రామాణీకరణను పూర్తి చేయడానికి తగినంత నిల్వ లేదు.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">బయోమెట్రిక్ నమోదు డేటా చెల్లదు. దయచేసి యాప్ సెట్టింగ్‌ల నుండి బయోమెట్రిక్‌లను తిరిగి ప్రారంభించండి.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">చెల్లని ఆర్గ్యుమెంట్‌ల కారణంగా బయోమెట్రిక్ ప్రామాణీకరణను ప్రారంభించలేకపోయాము.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">చెల్లని ఆర్గ్యుమెంట్‌ల కారణంగా బయోమెట్రిక్ నమోదును ప్రారంభించలేకపోయాము.</string>
+    <string name="core_ui_biometric_error_unknown">ఊహించని బయోమెట్రిక్ లోపం జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Payని అన్‌లాక్ చేయండి</string>
+    <string name="core_ui_biometric_prompt_subtitle">కొనసాగించడానికి మీ గుర్తింపును ధృవీకరించండి</string>
+    <string name="core_ui_biometric_prompt_description">మీ వేలిముద్ర, ముఖం, లేదా పరికర ఆధారాన్ని ఉపయోగించండి</string>
+    <string name="core_ui_biometric_prompt_negative_button">రద్దు చేయండి</string>
+</resources>

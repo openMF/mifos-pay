@@ -3,7 +3,13 @@
 # Fork-owned SoT — syncForkConfig / the release readiness gate reads this file.
 
 spdx: MIT
+# Canonical URL of the licence text, for the Snap/Flatpak metadata.
 license_url: https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+# Who holds copyright — rendered into the generated legal files and the desktop metadata.
 copyright_holder: Your Organization Name
+# The full notice line, e.g. "© 2026 <holder>". Authored rather than derived so a fork can
+# match whatever wording its legal team requires.
 copyright_notice: "© 2026 Your Organization Name. All rights reserved."
+# Where the source can be obtained. Required by the licence for a copyleft build, and shown
+# in the Linux store listing.
 source_url: https://github.com/openMF/kmp-project-template

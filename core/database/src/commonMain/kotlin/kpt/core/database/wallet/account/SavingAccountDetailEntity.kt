@@ -12,10 +12,11 @@ package kpt.core.database.wallet.account
 import androidx.room3.Entity
 import androidx.room3.Index
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single savings-account detail record — the Room mirror of the
- * `org.mifospay.core.model.savingsaccount.SavingAccountDetail` domain model.
+ * `kpt.core.model.savingsaccount.SavingAccountDetail` domain model.
  *
  * Stored in the `wallet_saving_account_details` table. One row per savings account
  * (SINGLE-ROW-PER-KEY archetype — the DAO's PK is [id] which doubles as the store's
@@ -31,11 +32,11 @@ import androidx.room3.PrimaryKey
  * ## Column mapping
  *
  * The domain `SavingAccountDetail` model has SIX nested `@Serializable` payloads —
- * [`DepositType`][org.mifospay.core.model.savingsaccount.DepositType],
- * [`Status`][org.mifospay.core.model.savingsaccount.Status],
- * [`Timeline`][org.mifospay.core.model.savingsaccount.Timeline],
- * [`Currency`][org.mifospay.core.model.savingsaccount.Currency],
- * [`Summary`][org.mifospay.core.model.savingsaccount.Summary],
+ * [`DepositType`][kpt.core.model.savingsaccount.DepositType],
+ * [`Status`][kpt.core.model.savingsaccount.Status],
+ * [`Timeline`][kpt.core.model.savingsaccount.Timeline],
+ * [`Currency`][kpt.core.model.savingsaccount.Currency],
+ * [`Summary`][kpt.core.model.savingsaccount.Summary],
  * and `List<Transaction>` — each persisted as a JSON string column (see
  * `SavingAccountDetailEntityMapper`) rather than as normalized relation tables.
  * Rationale: `SavingAccountDetail` is a single-record snapshot the app renders
@@ -69,7 +70,14 @@ import androidx.room3.PrimaryKey
  * @property transactionsJson JSON encoding of `List<Transaction>` — snapshot only.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property allowOverdraft Whether the account may go into overdraft.
+ * @property enforceMinRequiredBalance Whether the product's minimum required balance is enforced.
+ * @property lienAllowed Whether a lien may be placed on the account.
+ * @property withHoldTax Whether withholding tax applies to interest.
+ * @property isDormancyTrackingActive Whether dormancy tracking is active for the account.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_saving_account_details",
     indices = [

@@ -15,37 +15,25 @@ MS_APP_ID="${MS_APP_ID:?ms_app_id required}"
 # 1. Build app payload (createReleaseDistributable produces /app/<App>.app).
 ./gradlew :cmp-desktop:createReleaseDistributable -PflavorDimension="$FLAVOR"
 
-# 2. Stage MSIX layout: copy app payload + tokenized Package.appxmanifest (resolved from
-#    gradle/fork.properties — the fork's identity SoT bridge) into a single tree.
+# 2. Stage MSIX layout: app payload + this fork's AppxManifest.xml. The committed Package.appxmanifest
+#    is a template with neutral identity values; fork-identity.sh renders the fork's (from
+#    gradle/fork.properties) into the stage, so nothing under deployment/ is ever rewritten.
+ID="$(dirname "$0")/../../_shared/scripts/fork-identity.sh"
 STAGE="cmp-desktop/build/compose/binaries/main-release/msix-stage"
 APP_LAYOUT="cmp-desktop/build/compose/binaries/main-release/app"
 MANIFEST="$(dirname "$0")/Package.appxmanifest"
-OUTPUT="cmp-desktop/build/compose/binaries/main-release/msix/mifos.msix"
-FORK_PROPS="$(dirname "$0")/../../../gradle/fork.properties"
+# One name for the package, shared with the StoreBroker config's packagePath (it was mifos.msix here
+# while StoreBroker pointed at <project>.msix).
+OUTPUT="cmp-desktop/build/compose/binaries/main-release/msix/$(bash "$ID" msix-name)"
 mkdir -p "$STAGE" "$(dirname "$OUTPUT")"
 cp -R "$APP_LAYOUT/." "$STAGE/"
-
-fork_prop() {
-    grep -E "^$1=" "$FORK_PROPS" 2>/dev/null | head -1 | cut -d= -f2-
-}
-IDENTITY_NAME="$(fork_prop windows.msix.identity.name)"
-IDENTITY_PUBLISHER="$(fork_prop windows.msix.identity.publisher)"
-PUBLISHER_DISPLAY_NAME="$(fork_prop windows.msix.publisher.display.name)"
-APP_DISPLAY_NAME="$(fork_prop app.display.name)"
-APP_ID_NO_SPACES="$(printf '%s' "$APP_DISPLAY_NAME" | tr -d '[:space:]')"
-sed \
-    -e "s/__WINDOWS_MSIX_IDENTITY_NAME__/${IDENTITY_NAME}/g" \
-    -e "s/__WINDOWS_MSIX_IDENTITY_PUBLISHER__/${IDENTITY_PUBLISHER}/g" \
-    -e "s/__WINDOWS_MSIX_PUBLISHER_DISPLAY_NAME__/${PUBLISHER_DISPLAY_NAME}/g" \
-    -e "s/__APP_DISPLAY_NAME__/${APP_DISPLAY_NAME}/g" \
-    -e "s/__APP_ID_NO_SPACES__/${APP_ID_NO_SPACES}/g" \
-    -e "s/__APP_EXECUTABLE__/${APP_DISPLAY_NAME}.exe/g" \
-    "$MANIFEST" > "$STAGE/AppxManifest.xml"
+bash "$ID" appx "$MANIFEST" "$STAGE/AppxManifest.xml"
 
 # 3. Pack via MakeAppx.exe.
 "$MAKEAPPX" pack /d "$STAGE" /p "$OUTPUT" /overwrite
 
-# 4. Submit to Partner Center (StoreBroker config is at ./StoreBroker.config.json).
+# 4. Submit to Partner Center. The StoreBroker config is rendered for this fork, beside the package.
+bash "$ID" storebroker cmp-desktop/build/ms-store/StoreBroker.config.json
 # In CI we invoke microsoft/StoreBroker-Action; locally invoke `Submit-StoreBrokerSubmission`
 # via PowerShell. This bash path documents the contract; PS variant is preferred locally.
 echo "Submission step is wired through GH Action (CI) or PowerShell StoreBroker module (local)."

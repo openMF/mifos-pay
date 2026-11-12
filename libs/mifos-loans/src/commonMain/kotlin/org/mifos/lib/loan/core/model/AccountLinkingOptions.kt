@@ -11,6 +11,18 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the account linking options used in the loan application flow.
+ *
+ * @property accountNo Account number.
+ * @property clientId Identifier of the client.
+ * @property clientName Name of the client.
+ * @property currency Currency of the amount.
+ * @property fieldOfficerId Identifier of the field officer.
+ * @property id Unique identifier.
+ * @property productId Identifier of the loan product.
+ * @property productName Name of the loan product.
+ */
 @Serializable
 data class AccountLinkingOptions(
 

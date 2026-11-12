@@ -34,7 +34,8 @@ class CombineScreenStatesNArityTest {
             val item = awaitItem()
             assertIs<ScreenState.Content<Triple<Int, Int, Int>>>(item)
             assertEquals(Triple(1, 2, 3), item.data)
-            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band); assertFalse(item.freshnessSignal.isRefreshing)
+            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band)
+            assertFalse(item.freshnessSignal.isRefreshing)
             awaitComplete()
         }
     }
@@ -131,7 +132,8 @@ class CombineScreenStatesNArityTest {
             val item = awaitItem()
             assertIs<ScreenState.Content<Int>>(item)
             assertEquals(10, item.data)
-            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band); assertFalse(item.freshnessSignal.isRefreshing)
+            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band)
+            assertFalse(item.freshnessSignal.isRefreshing)
             awaitComplete()
         }
     }
@@ -208,7 +210,8 @@ class CombineScreenStatesNArityTest {
             val item = awaitItem()
             assertIs<ScreenState.Content<Int>>(item)
             assertEquals(15, item.data)
-            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band); assertFalse(item.freshnessSignal.isRefreshing)
+            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band)
+            assertFalse(item.freshnessSignal.isRefreshing)
             awaitComplete()
         }
     }
@@ -286,7 +289,8 @@ class CombineScreenStatesNArityTest {
             val item = awaitItem()
             assertIs<ScreenState.Content<Int>>(item)
             assertEquals(30, item.data)
-            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band); assertFalse(item.freshnessSignal.isRefreshing)
+            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band)
+            assertFalse(item.freshnessSignal.isRefreshing)
             awaitComplete()
         }
     }
@@ -320,7 +324,8 @@ class CombineScreenStatesNArityTest {
             val item = awaitItem()
             assertIs<ScreenState.Content<List<Any?>>>(item)
             assertEquals(listOf(1, 2, 3, 4, 5, 6), item.data)
-            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band); assertFalse(item.freshnessSignal.isRefreshing)
+            assertEquals(FreshnessBand.Fresh, item.freshnessSignal.band)
+            assertFalse(item.freshnessSignal.isRefreshing)
             awaitComplete()
         }
     }

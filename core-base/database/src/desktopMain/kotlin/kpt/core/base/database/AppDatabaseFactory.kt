@@ -72,6 +72,7 @@ class AppDatabaseFactory(
         return File(appDataDir, databaseName)
     }
 
+    /** Factory entry points. */
     companion object {
         /** Template-neutral default; forks override via constructor. */
         const val DEFAULT_DATABASE_DIR_NAME: String = "KptDatabase"

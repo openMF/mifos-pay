@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.platform.garbage
 
@@ -15,6 +15,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * Default [GarbageCollectionManager]: forwards to the platform [garbageCollector] on [dispatcher],
+ * keeping a single in-flight job so repeated calls coalesce instead of queueing pauses.
+ *
+ * [collector] is injectable so a test can assert the hint was issued without actually collecting.
+ */
 @Suppress("UnusedPrivateProperty")
 class GarbageCollectionManagerImpl(
     private val dispatcher: CoroutineDispatcher,

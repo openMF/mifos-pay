@@ -16,5 +16,7 @@ package kpt.core.store.wallet.invoice
  * (`InvoiceDao.replacePage(clientId, entities)`) AND as the API path parameter
  * (`GET /datatables/invoice/{clientId}`), so per-client scoping is enforced
  * end-to-end.
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class InvoiceKey(val clientId: Long)

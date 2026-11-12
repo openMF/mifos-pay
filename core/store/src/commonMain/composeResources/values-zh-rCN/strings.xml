@@ -2,9 +2,9 @@
 <!--
     Copyright 2026 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
@@ -23,5 +23,9 @@
     <string name="error_category_auth">会话已过期。请重新登录。</string>
     <string name="error_category_ratelimit">请求过多。请稍候再试。</string>
     <string name="error_category_server">服务器暂时出现问题。请稍后再试。</string>
+    <string name="error_category_timeout_connect">连接超时。请检查网络后重试。</string>
+    <string name="error_category_timeout_read">服务器响应时间过长。请稍后重试。</string>
+    <string name="error_category_quota">已达到配额上限。请升级或稍候继续。</string>
+    <string name="error_category_client">请求失败。请重试。</string>
     <string name="error_category_generic">出了点问题</string>
 </resources>

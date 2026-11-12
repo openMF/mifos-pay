@@ -1,0 +1,12 @@
+# Module names whose guide must NOT be named `<module>.md`, one per line (lower case).
+#
+# These are the organisation's community files (SECURITY.md, LICENSE, CODE_OF_CONDUCT.md …). The org's
+# repository ruleset asks a separate team to review any changed file with one of these names, at ANY
+# depth — so `docs/architecture/tree/core-base/security.md`, the guide for the `core-base/security`
+# module, made every template sync look like a change to the org's security policy. A module named
+# here gets its guide at `<module>-module.md` instead. Read by api-docs-gen.sh, scaffold.sh and
+# tree-scaffold.sh, so the page they write and the links they emit always agree.
+security
+license
+copying
+code_of_conduct

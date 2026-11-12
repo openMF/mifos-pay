@@ -14,6 +14,7 @@ import androidx.room3.Insert
 import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_autopay_bills` OFFLINE_LOCAL_ONLY table
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.Flow
  * Natural sort order is newest-first ([BillEntity.createdAt] descending) so the
  * bills list surfaces user's most recent additions at the top.
  */
+@DbDao
 @Dao
 interface BillDao {
 

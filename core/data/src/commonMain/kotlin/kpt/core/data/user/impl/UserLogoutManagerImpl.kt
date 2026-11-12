@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.data.user.impl
 
@@ -21,8 +21,14 @@ import kpt.core.data.user.LogoutEvent
 import kpt.core.data.user.LogoutReason
 import kpt.core.data.user.UserLogoutManager
 import kpt.core.data.util.bufferedMutableSharedFlow
-import kpt.core.datastore.UserPreferencesRepository
+import kpt.core.datastore.prefs.UserPreferencesRepository
 
+/**
+ * Default [UserLogoutManager]: clears every Store cache and draft row, then emits the logout event.
+ *
+ * Cache-clearing is the load-bearing half — a Store that survives logout would serve the previous
+ * user's data to the next one.
+ */
 class UserLogoutManagerImpl(
     private val repository: UserPreferencesRepository,
     private val storeCacheManager: StoreCacheManager,

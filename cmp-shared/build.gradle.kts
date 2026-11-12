@@ -7,9 +7,7 @@
  *
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
-@file:OptIn(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCacheApi::class)
 
-import org.jetbrains.kotlin.gradle.plugin.mpp.DisableCacheInKotlinVersion
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
@@ -19,8 +17,7 @@ plugins {
     // SKIE — Swift-friendly export of the ComposeApp framework (sealed classes,
     // suspend → async/await, Flow → AsyncSequence, default arguments). Applies to
     // the KMP `binaries.framework { }` export below; the XCFramework the iOS app
-    // consumes therefore ships the SKIE-enhanced Swift API. E6 (SwiftPM/XCFramework)
-    // migration off the Kotlin CocoaPods plugin — see 07-ios-swiftpm.md.
+    // consumes therefore ships the SKIE-enhanced Swift API. See 07-ios-swiftpm.md.
     alias(libs.plugins.skie)
     // worker-kmp v4.0.0 — applies @WorkerKmpApp/@WorkerKmpWorkers codegen pipeline.
     // KSP processor scans this module's commonMain for @WorkerKmpWorkers (see
@@ -40,14 +37,13 @@ skie {
 }
 
 kotlin {
-    // E6 — SwiftPM/XCFramework export (replaces the Kotlin CocoaPods plugin).
+    // E6 — SwiftPM/XCFramework export.
     // Assemble a single `ComposeApp.xcframework` from the iOS device + simulator
     // slices; the iOS app consumes it via `cmp-ios/Package.swift` (SwiftPM binary
     // target) + the flavor-aware `cmp-ios/scripts/embed-xcframework.sh` Xcode
     // Run-Script build phase. The `assembleComposeApp{Debug,Release}XCFramework`
     // (and umbrella `assembleComposeAppXCFramework`) Gradle tasks are registered
-    // automatically by this `XCFramework(...)` DSL — the deploy lanes call them
-    // instead of `pod install`.
+    // automatically by this `XCFramework(...)` DSL, and the deploy lanes call them.
     val xcf = XCFramework("ComposeApp")
     listOf(
         iosArm64(),
@@ -60,22 +56,6 @@ kotlin {
             // (kotlin:kgp:misconfiguration:incompatible-binary-configuration).
             optimized = buildType == NativeBuildType.RELEASE
             xcf.add(this)
-        }
-        // Kotlin 2.4.0's Native static-cache builder corrupts IR linkage for certain
-        // third-party klibs on iosArm64/iosSimulatorArm64 — first seen with
-        // compose-signature:1.0.1 ("Failed to build cache for ...klib"), now also with
-        // kotlinx-datetime 0.8.0 ("IrTypeAliasSymbolImpl is already bound. Signature:
-        // kotlinx.datetime/Instant" — its typealias-to-kotlin.time.Instant symbol gets
-        // double-registered when the per-library static cache is stale/rebuilt against a
-        // bumped klib version). Disabling the native cache for every binary of this target
-        // links the klib directly instead of through the broken cache path. The
-        // `kotlin.native.cacheKind.<target>` gradle property that used to do this was
-        // removed in 2.3.20; this per-binary DSL is its replacement.
-        iosTarget.binaries.configureEach {
-            disableNativeCache(
-                DisableCacheInKotlinVersion.`2_4_0`,
-                reason = "third-party klibs (compose-signature, kotlinx-datetime) fail static-cache build on Kotlin 2.4.0",
-            )
         }
     }
 
@@ -109,59 +89,14 @@ kotlin {
             implementation(libs.worker.compose.all)
             // Worker classes referenced from the @WorkerKmpWorkers annotation live here.
             implementation(projects.sync)
-            // DataSyncWorker's constructor params come from core:datastore (SyncStatePersister).
-            // The @WorkerKmpWorkers KSP codegen reads every worker ctor param type for Koin
+            // DataSyncWorker's constructor params come from core:data (CurrencyRepository,
+            // MacroIndicatorsRepository) + core:datastore (SyncStatePersister). The
+            // @WorkerKmpWorkers KSP codegen reads every worker ctor param type for Koin
             // autowiring, and KSP metadata resolution needs them on the DIRECT classpath
             // (transitive-via-:sync klibs are not resolved) — else "could not resolve type
             // of constructor parameter ...".
             implementation(projects.core.data)
             implementation(projects.core.datastore)
-
-            // Fork's KoinModules aggregator + MifosPayApp compose every feature/lib/domain/
-            // network module into a single graph. Declared here so `import
-            // org.mifospay.feature.*.di.*Module` + `import org.mifos.lib.loan.di.*`
-            // + `import org.mifospay.core.{common,domain,network}.di.*` resolve.
-            implementation(projects.core.common)
-            implementation(projects.core.domain)
-            implementation(projects.core.network)
-            // MifosPayApp wraps the PlatformAuthenticatorCompositionProvider + PasscodeManager
-            // biometrics/passcode seams directly.
-            implementation(libs.mifos.authenticator.biometrics)
-            implementation(libs.mifos.authenticator.passcode)
-            implementation(projects.feature.auth)
-            implementation(projects.feature.home)
-            implementation(projects.feature.settings)
-            implementation(projects.feature.faq)
-            implementation(projects.feature.editpassword)
-            implementation(projects.feature.profile)
-            implementation(projects.feature.history)
-            implementation(projects.feature.payments)
-            implementation(projects.feature.accounts)
-            implementation(projects.feature.beneficiary)
-            implementation(projects.feature.invoices)
-            implementation(projects.feature.kyc)
-            implementation(projects.feature.notification)
-            implementation(projects.feature.savedcards)
-            implementation(projects.feature.receipt)
-            implementation(projects.feature.standingInstruction)
-            implementation(projects.feature.transferIntrabank)
-            implementation(projects.feature.transferInterbank)
-            implementation(projects.feature.mpayQr)
-            implementation(projects.feature.mpayQrScan)
-            implementation(projects.feature.fastMpay)
-            implementation(projects.feature.merchants)
-            implementation(projects.feature.upiSetup)
-            implementation(projects.feature.passcode)
-            implementation(projects.feature.autopay)
-            implementation(projects.feature.sendMoney)
-            implementation(projects.feature.pocket)
-            implementation(projects.libs.mifosLoans)
-            implementation(projects.feature.finance)
-
-            // MifosAppState + HomeScreen tie to material3 window-size-class multiplatform;
-            // Preview annotations use org.jetbrains.compose.ui.tooling.preview.
-            implementation(libs.window.size)
-            implementation(compose.components.uiToolingPreview)
         }
 
         desktopMain.dependencies {
@@ -172,8 +107,7 @@ kotlin {
     }
 
     // NOTE — the flavor-aware `{flavor}{BuildType}` → Kotlin/Native build-type mapping
-    // that the removed CocoaPods `xcodeConfigurationToNativeBuildType[...]` block
-    // performed is now reproduced OUTSIDE Gradle, in the Xcode Run-Script build phase
+    // lives OUTSIDE Gradle, in the Xcode Run-Script build phase
     // `cmp-ios/scripts/embed-xcframework.sh`: it reads `$CONFIGURATION`
     // (`demoDebug` / `prodStaging` / `prodRelease` / …), maps a debuggable variant
     // → Debug and everything else → Release (identical semantics), then invokes the
@@ -185,4 +119,35 @@ compose.resources {
     publicResClass = true
     generateResClass = always
     packageOfResClass = "cmp.shared.generated.resources"
+}
+
+// ── XCFramework output hygiene ────────────────────────────────────────────────────────────────
+// `xcodebuild -create-xcframework` REFUSES to write into a slice directory that already exists:
+//     "ComposeApp.framework" couldn't be copied to "ios-arm64" because an item with the
+//      same name already exists.        (xcodebuild exit 70 → task FAILED)
+//
+// Observed once on 2026-09-08 while bumping KmpToolkit, when the task re-ran (inputs changed)
+// against an XCFramework left by a previous build. It did NOT reproduce afterwards — neither a
+// plain re-run nor `--rerun` against a populated output dir failed — so the exact trigger is
+// still unknown (most likely an output left behind by an interrupted assemble, which is a state
+// the up-to-date check cannot see).
+//
+// Rather than leave that to chance, clear the slice directory before the task builds it. This is
+// a `doFirst`, so it runs ONLY when the task actually executes — an UP-TO-DATE task keeps its
+// output untouched and the incremental build stays fast (RULE-BUILD-WARMTH-001). The delete
+// target is resolved as a Provider at configuration time, so it is configuration-cache safe.
+run {
+    val xcfRoot = layout.buildDirectory.dir("XCFrameworks")
+    tasks.matching { it.name.matches(Regex("assembleComposeApp(Debug|Release)XCFramework")) }
+        .configureEach {
+            val slice = name.removePrefix("assembleComposeApp").removeSuffix("XCFramework").lowercase()
+            val stale = xcfRoot.map { it.dir(slice).file("ComposeApp.xcframework") }
+            doFirst {
+                val f = stale.get().asFile
+                if (f.exists()) {
+                    logger.lifecycle("[xcframework] clearing stale output before -create-xcframework: $f")
+                    f.deleteRecursively()
+                }
+            }
+        }
 }

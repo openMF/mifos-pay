@@ -21,7 +21,7 @@ import kotlin.test.Test
  * regardless of what `profileBody` supplies (RULE-KMP-COMPOSE-UITEST-001 CU-1..CU-3).
  *
  * This fork has no demo profile body, so `profileBody` is empty here too — production wires it
- * via `cmp-navigation`'s `BackboneRegistry.profileBody`. Asserts the always-present root scaffold
+ * via `cmp-navigation`'s `ForkBackboneRegistry.profileBody`. Asserts the always-present root scaffold
  * node identified by [TestTags.Profile.SCREEN].
  */
 @OptIn(ExperimentalTestApi::class)

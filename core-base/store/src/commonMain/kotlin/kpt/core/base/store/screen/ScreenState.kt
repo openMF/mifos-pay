@@ -9,9 +9,9 @@
  */
 package kpt.core.base.store.screen
 
+import kpt.core.base.store.freshness.FreshnessSignal
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
-import kpt.core.base.store.freshness.FreshnessSignal
 
 /**
  * Unified UI state produced by [ScreenDataStream].
@@ -41,7 +41,12 @@ sealed interface ScreenState<out T> {
 
     /** Error occurred with no usable cached data. */
     data class Error(
+        /** The failure that produced this state. */
         val error: Throwable,
+        /**
+         * Whether it was a connectivity failure. Kept separate because offline has a different remedy than a server
+         * error, and a retry button that cannot succeed is worse than none.
+         */
         val isNetworkError: Boolean = false,
     ) : ScreenState<Nothing>
 

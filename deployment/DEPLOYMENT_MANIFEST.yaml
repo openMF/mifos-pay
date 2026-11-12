@@ -36,10 +36,17 @@
 # ═════════════════════════════════════════════════════════════════════════════
 
 schema_version: "1.0"
+# Which project this manifest belongs to, cross-checked against app-profile.
 project: kmp-project-template
+# Template version this manifest was authored against; a sync bumps it.
 template_version: "2026.5.0"
+# Default GitHub runner label for jobs that do not name one.
+# macOS targets override it — iOS and macOS cannot build on Linux.
 default_runner_ci: "ubuntu-latest"
 
+# Per-platform deploy targets, each with its canonical name, lane and ownership.
+# The SoT for the 18 targets: scripts/deployment-manifest-validate.sh fails when a target here
+# has no lane, or a lane exists with no target declared.
 platforms:
 
   android:

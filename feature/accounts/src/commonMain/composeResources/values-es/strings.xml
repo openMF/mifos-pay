@@ -43,8 +43,6 @@
         está
         registrado en MifosPay. \n3. La tarjeta SIM está en este dispositivo.
     </string>
-    <string name="delete_beneficiary_title">Eliminar beneficiario</string>
-    <string name="delete_beneficiary_subtitle">¿Estás seguro de que deseas eliminar a este beneficiario?</string>
 
     <string name="feature_accounts_savings_account">Cuenta de ahorros</string>
     <string name="feature_accounts_beneficiaries">Beneficiarios</string>
@@ -72,7 +70,6 @@
     <string name="feature_accounts_status_matured">Vencida</string>
 
     <string name="feature_accounts_default_account_updated">Cuenta predeterminada actualizada</string>
-    <string name="feature_accounts_beneficiary_deleted">Beneficiario eliminado</string>
     <string name="feature_accounts_beneficiary_added">Beneficiario agregado</string>
     <string name="feature_accounts_beneficiary_updated">Beneficiario actualizado</string>
 

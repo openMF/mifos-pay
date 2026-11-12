@@ -9,15 +9,12 @@
  */
 package kpt.core.store.wallet.biller
 
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.biller.BillerDao
 import kpt.core.database.wallet.biller.BillerEntity
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
-
-/** Room `@Entity(tableName = …)` for [BillerEntity]. Shared with the DAO's writes. */
-private const val BILLERS_TABLE = "wallet_autopay_billers"
 
 /**
  * Build the OFFLINE_LOCAL_ONLY [Store] for user-authored billers (GOAL D12 —
@@ -56,10 +53,11 @@ private const val BILLERS_TABLE = "wallet_autopay_billers"
  * billers. The cache manager's `Store.clear()` cascades to the SoT's
  * `deleteAll` lambda, which invokes [BillerDao.deleteAll].
  */
+@StoreProvider(id = "autoPayBillers")
 fun provideAutoPayBillerStore(dao: BillerDao): Store<Unit, List<BillerEntity>> = StoreFactory.createOfflineStore(
     sourceOfTruth = SourceOfTruth.of(
         reader = { _: Unit ->
-            daoFlow(BILLERS_TABLE) { dao.observeAll() }
+            run { dao.observeAll() }
         },
         writer = { _: Unit, billers: List<BillerEntity> -> dao.upsertAll(billers) },
         delete = { _: Unit -> dao.deleteAll() },

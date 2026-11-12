@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.dp
 import kpt.core.base.designsystem.component.progress.KptProgress
 import kpt.core.base.designsystem.component.progress.ProgressSize
 import kpt.core.base.store.error.ErrorCategory
-import kpt.core.base.store.paging.PagingScreenStream
 import kpt.core.base.store.error.categorize
+import kpt.core.base.store.paging.PagingScreenStream
 
 /**
  * Footer for paginated lists driven by a [PagingScreenStream]. Place as the last
@@ -167,6 +167,12 @@ internal data class LoadMoreFooterCopy(
     val icon: ImageVector,
 )
 
+/**
+ * Maps a paging failure to footer copy via its `ErrorCategory`, so an offline page-load reads
+ * "No internet" rather than a server message.
+ *
+ * A pure function for testability: the mapping is asserted without composing the footer.
+ */
 internal fun loadMoreFooterCopy(error: Throwable): LoadMoreFooterCopy =
     when (categorize(error)) {
         ErrorCategory.Network,

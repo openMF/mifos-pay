@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Te veel pogingen. Wacht en probeer het opnieuw.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Biometrische hardware is tijdelijk niet beschikbaar. Probeer het later opnieuw.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Er is geen biometrie geregistreerd op dit apparaat. Stel biometrie in via de systeeminstellingen.</string>
+    <string name="core_ui_biometric_error_timeout">Biometrische verificatie is verlopen. Probeer het opnieuw.</string>
+    <string name="core_ui_biometric_error_no_space">Onvoldoende opslagruimte om biometrische verificatie te voltooien.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Biometrische registratiegegevens zijn ongeldig. Schakel biometrie opnieuw in via de app-instellingen.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Kon biometrische verificatie niet starten vanwege ongeldige argumenten.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Kon biometrische registratie niet starten vanwege ongeldige argumenten.</string>
+    <string name="core_ui_biometric_error_unknown">Er is een onverwachte biometrische fout opgetreden. Probeer het opnieuw.</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay ontgrendelen</string>
+    <string name="core_ui_biometric_prompt_subtitle">Verifieer je identiteit om door te gaan</string>
+    <string name="core_ui_biometric_prompt_description">Gebruik je vingerafdruk, gezicht of apparaatgegevens</string>
+    <string name="core_ui_biometric_prompt_negative_button">Annuleren</string>
+</resources>

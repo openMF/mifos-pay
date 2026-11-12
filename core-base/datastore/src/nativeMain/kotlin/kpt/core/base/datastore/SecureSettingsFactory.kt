@@ -13,7 +13,9 @@ import com.russhwolf.settings.ExperimentalSettingsImplementation
 import com.russhwolf.settings.KeychainSettings
 import com.russhwolf.settings.Settings
 
+/** Apple/native implementation of `SecureSettingsFactory`. */
 actual class SecureSettingsFactory {
+    /** `create` on Apple/native. */
     @OptIn(ExperimentalSettingsImplementation::class)
     actual fun create(): Settings {
         return KeychainSettings(service = "kpt.secure")

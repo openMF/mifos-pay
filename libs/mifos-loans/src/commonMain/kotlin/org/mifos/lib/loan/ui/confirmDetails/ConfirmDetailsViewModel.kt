@@ -17,29 +17,28 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import mifos_pay.libs.mifos_loans.generated.resources.Res
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_error_server
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_error_submit_failed
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_applicant_name
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_disbursement_date
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_loan_product
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_principal_amount
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_label_purpose
-import mifos_pay.libs.mifos_loans.generated.resources.feature_apply_loan_status_success_tip
+import kpt.core.common.ScreenState
+import kpt.core.data.repository.UserVerificationRepository
+import kpt.core.ui.fork.utils.BaseViewModel
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 import org.mifos.lib.loan.core.model.LoanState
 import org.mifos.lib.loan.core.model.LoanTemplate
 import org.mifos.lib.loan.core.model.LoansPayload
+import org.mifos.lib.loan.generated.resources.Res
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_error_server
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_error_submit_failed
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_applicant_name
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_disbursement_date
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_loan_product
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_principal_amount
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_label_purpose
+import org.mifos.lib.loan.generated.resources.feature_apply_loan_status_success_tip
 import org.mifos.lib.loan.repository.LoansRepository
-import org.mifospay.core.common.ScreenState
-import org.mifospay.core.data.repository.UserVerificationRepository
-import org.mifospay.core.ui.utils.BaseViewModel
-
 /**
- * `SavedStateHandle` key written by `internalMifosPasscodeScreen` and read by
+ * `SavedStateHandle` key written by `internalPasscodeScreen` and read by
  * [ConfirmDetailsScreen] for the loan-application submission auth-gate round trip. Mirrors
- * [org.mifospay.feature.transfer.intrabank.confirm.INTRA_BANK_TRANSFER_VERIFICATION_KEY], but
+ * [kpt.feature.transfer.intrabank.confirm.INTRA_BANK_TRANSFER_VERIFICATION_KEY], but
  * with its own key so the two flows don't cross-fire.
  */
 const val LOAN_APPLICATION_VERIFICATION_KEY = "loan_application_verification_key"
@@ -50,7 +49,7 @@ const val LOAN_APPLICATION_VERIFICATION_KEY = "loan_application_verification_key
  * Owns the **passcode/biometric auth gate** required before submitting the application, mirroring
  * `TransferConfirmViewModel`:
  *  1. On [ConfirmDetailsAction.SubmitClicked], emits [ConfirmDetailsEvent.NavigateForPasscodeVerification].
- *     The screen responds by navigating to `internalMifosPasscodeScreen` with
+ *     The screen responds by navigating to `internalPasscodeScreen` with
  *     [LOAN_APPLICATION_VERIFICATION_KEY].
  *  2. The screen observes its own saved-state-handle for the round-trip boolean and re-dispatches
  *     it as [ConfirmDetailsAction.UpdateUserVerificationResult]. This VM resumes on the result.
@@ -323,7 +322,7 @@ internal sealed interface ConfirmDetailsEvent {
     data object NavigateBack : ConfirmDetailsEvent
 
     /**
-     * Tells the screen to push `internalMifosPasscodeScreen` with
+     * Tells the screen to push `internalPasscodeScreen` with
      * [LOAN_APPLICATION_VERIFICATION_KEY]. The screen is responsible for observing its own
      * saved-state-handle for the round-trip boolean and dispatching it back as
      * [ConfirmDetailsAction.UpdateUserVerificationResult].

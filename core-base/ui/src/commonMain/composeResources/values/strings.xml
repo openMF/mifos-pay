@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <!-- Dashboard freshness strip (DashboardProgressBar) — data staleness, not a load count. -->
+    <string name="dashboard_freshness_updated">Updated %1$s</string>
+    <string name="dashboard_freshness_updated_refreshing">Updated %1$s · refreshing…</string>
+    <string name="dashboard_freshness_loading">Loading…</string>
+    <!-- Form drafts (DraftResumeBanner, FormDraftBanner, FormDraftFailure). -->
+    <string name="draft_unsaved">You have an unsaved draft</string>
+    <string name="draft_pending">You have a saved draft. It will be sent when you are back online.</string>
+    <string name="draft_failed">You have a saved draft the server did not accept.</string>
+    <string name="draft_resume">Resume</string>
+    <string name="draft_discard">Discard</string>
+    <string name="draft_save">Save as draft</string>
+    <string name="draft_saved_offline">No connection. Saved as a draft — it will be sent when you are back online. You can find it in Settings › Sync &amp; Drafts.</string>
+    <string name="draft_saved">Saved as a draft. You can find it in Settings › Sync &amp; Drafts.</string>
+</resources>

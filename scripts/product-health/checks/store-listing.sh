@@ -36,9 +36,9 @@ for key in "${KEYS[@]}"; do
   val="$(fp_get "$key")"
   # printf (NOT echo): store copy carries literal '\n' paragraph breaks — echo would interpret them
   # into real newlines, and the empty-value marker '^$' would then false-match a blank paragraph line.
-  if [ -n "$MARKER_RE" ] && printf '%s' "$val" | grep -qiE "$MARKER_RE"; then
+  if [ -n "$MARKER_RE" ] && grep -qiE "$MARKER_RE" <<<"$val"; then
     leaked+=("$key")
-  elif [ -n "$REF_RE" ] && printf '%s' "$val" | grep -qiE "$REF_RE"; then
+  elif [ -n "$REF_RE" ] && grep -qiE "$REF_RE" <<<"$val"; then
     reference+=("$key")
   else
     authored+=("$key")

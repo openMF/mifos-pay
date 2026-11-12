@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">ยังไม่มีอะไรที่นี่</string>
+    <string name="screenstate_empty_message">เมื่อคุณมีข้อมูล ข้อมูลจะแสดงที่นี่</string>
+    <string name="screenstate_error_title">เกิดข้อผิดพลาด</string>
+    <string name="screenstate_error_retry">ลองอีกครั้ง</string>
+    <string name="screenstate_nonet_title">คุณออฟไลน์อยู่</string>
+    <string name="screenstate_nonet_message">เราจะลองใหม่เมื่อคุณเชื่อมต่ออีกครั้ง</string>
+    <string name="screenstate_nonet_retry">ลองใหม่ตอนนี้</string>
+    <string name="screenstate_captive_title">ลงชื่อเข้าใช้ Wi-Fi</string>
+    <string name="screenstate_captive_message">เครือข่ายของคุณต้องให้ลงชื่อเข้าใช้ก่อนเชื่อมต่อ</string>
+    <string name="screenstate_captive_action">เปิดหน้าลงชื่อเข้าใช้</string>
+    <string name="error_category_network">ไม่สามารถเข้าถึงเซิร์ฟเวอร์ ตรวจสอบการเชื่อมต่อของคุณ</string>
+    <string name="error_category_auth">เซสชันของคุณหมดอายุ โปรดลงชื่อเข้าใช้อีกครั้ง</string>
+    <string name="error_category_ratelimit">มีคำขอมากเกินไป โปรดรอแล้วลองใหม่</string>
+    <string name="error_category_server">เซิร์ฟเวอร์ของเรามีปัญหาชั่วคราว ลองอีกครั้งในอีกสักครู่</string>
+    <string name="error_category_timeout_connect">หมดเวลาเชื่อมต่อ ตรวจสอบการเชื่อมต่อแล้วลองใหม่</string>
+    <string name="error_category_timeout_read">เซิร์ฟเวอร์ตอบสนองช้าเกินไป โปรดลองใหม่ในอีกสักครู่</string>
+    <string name="error_category_quota">คุณใช้โควตาครบแล้ว อัปเกรดหรือรอเพื่อดำเนินการต่อ</string>
+    <string name="error_category_client">คำขอล้มเหลว โปรดลองใหม่</string>
+    <string name="error_category_generic">เกิดข้อผิดพลาด</string>
+</resources>

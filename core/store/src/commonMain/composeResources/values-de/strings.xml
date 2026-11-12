@@ -2,9 +2,9 @@
 <!--
     Copyright 2026 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
@@ -23,5 +23,9 @@
     <string name="error_category_auth">Ihre Sitzung ist abgelaufen. Bitte erneut anmelden.</string>
     <string name="error_category_ratelimit">Zu viele Anfragen. Bitte warten und erneut versuchen.</string>
     <string name="error_category_server">Unsere Server haben gerade Probleme. Bitte später erneut versuchen.</string>
+    <string name="error_category_timeout_connect">Zeitüberschreitung beim Verbinden. Bitte Verbindung prüfen und erneut versuchen.</string>
+    <string name="error_category_timeout_read">Server antwortet zu langsam. Bitte in Kürze erneut versuchen.</string>
+    <string name="error_category_quota">Kontingent erreicht. Bitte upgraden oder warten.</string>
+    <string name="error_category_client">Anfrage fehlgeschlagen. Bitte erneut versuchen.</string>
     <string name="error_category_generic">Etwas ist schiefgelaufen</string>
 </resources>

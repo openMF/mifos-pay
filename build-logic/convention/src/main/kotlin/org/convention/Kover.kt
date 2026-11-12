@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 package org.convention
 
 import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
@@ -7,7 +16,7 @@ import org.gradle.kotlin.dsl.configure
 /**
  * Configures the `kover` plugin with the [configure] lambda.
  *
- * Mirrors the [detektGradle] / [spotlessGradle] helpers in ProjectExtensions.kt
+ * Mirrors the [detektGradle] / [spotlessGradle] helpers in KptGradleExtensions.kt
  * so KoverConventionPlugin reads the same way as DetektConventionPlugin and
  * SpotlessConventionPlugin.
  */
@@ -30,13 +39,18 @@ internal fun Project.configureKoverRootReports() = koverGradle {
         filters {
             excludes {
                 classes(
-                    "*.di.*",                       // Koin / kotlin-inject DI modules
+                    // Koin / kotlin-inject DI modules
+                    "*.di.*",
                     "*.BuildConfig",
-                    "*ComposableSingletons*",       // Compose generated lambda holders
-                    "*_*Factory*",                  // Generated factories
+                    // Compose generated lambda holders
+                    "*ComposableSingletons*",
+                    // Generated factories
+                    "*_*Factory*",
                     "*\$ComposableLambda\$*",
-                    "*Preview*",                    // @Preview functions
-                    "*Test*",                       // test helpers themselves
+                    // @Preview functions
+                    "*Preview*",
+                    // test helpers themselves
+                    "*Test*",
                 )
                 packages(
                     "*.generated.*",

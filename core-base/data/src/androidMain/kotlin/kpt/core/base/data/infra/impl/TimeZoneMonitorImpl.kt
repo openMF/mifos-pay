@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.data.infra.impl
 
@@ -30,6 +30,7 @@ import kpt.core.base.common.manager.DispatcherManager
 import kpt.core.base.data.infra.TimeZoneMonitor
 import java.time.ZoneId
 
+/** Android implementation of `TimeZoneMonitorImpl`. */
 class TimeZoneMonitorImpl(
     private val context: Context,
     dispatchManager: DispatcherManager,

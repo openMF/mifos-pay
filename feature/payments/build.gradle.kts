@@ -24,6 +24,7 @@ kotlin {
 }
 
 compose.resources {
+    packageOfResClass = "kpt.feature.payments.generated.resources"
     publicResClass = true
     generateResClass = always
 }

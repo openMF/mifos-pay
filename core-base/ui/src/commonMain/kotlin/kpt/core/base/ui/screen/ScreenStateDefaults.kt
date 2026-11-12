@@ -59,25 +59,35 @@ import kpt.core.base.store.error.categorize
  */
 @Immutable
 data class ScreenStateDefaults(
+    /** How a loading state renders — spinner, skeleton or a branded animation. */
     val loading: ScreenStateLoading = ScreenStateLoading.Spinner,
+    /** How an empty state renders. Empty is a SUCCESSFUL read that returned nothing, never an error. */
     val empty: ScreenStateEmpty = ScreenStateEmpty(),
+    /** How an offline state renders, including the captive-portal variant. */
     val noNetwork: ScreenStateNoNetwork = ScreenStateNoNetwork(),
+    /** How a failure renders, including the retry affordance and the error→copy mapping. */
     val error: ScreenStateError = ScreenStateError(),
 )
 
 /** Configuration for the empty state. */
 @Immutable
 data class ScreenStateEmpty(
+    /** Illustration shown above the empty copy. */
     val visual: ScreenStateVisual = ScreenStateVisual.Vector(Icons.Default.Inbox),
+    /** Optional headline. Null renders [message] alone. */
     val title: String? = null,
+    /** Body copy explaining that nothing is here yet — not that something failed. */
     val message: String = "No data available",
+    /** Optional call to action, for an empty state the user can act on ("Add your first loan"). */
     val cta: ScreenStateCta? = null,
 )
 
 /** Configuration for the error state. */
 @Immutable
 data class ScreenStateError(
+    /** Illustration shown above the error copy. */
     val visual: ScreenStateVisual = ScreenStateVisual.Vector(Icons.Default.Error),
+    /** Optional headline. Null renders the mapped message alone. */
     val title: String? = null,
     /**
      * Translates a [Throwable] into a user-facing message. The default routes through
@@ -85,6 +95,7 @@ data class ScreenStateError(
      * Override per app via `ScreenStateError(messageFor = ::myMapper)`.
      */
     val messageFor: (Throwable) -> String = DefaultErrorMessageFor,
+    /** Label on the retry button. */
     val retryText: String = "Try again",
     /** Optional analytics callback fired exactly once per distinct error rendered. */
     val onShown: ((Throwable) -> Unit)? = null,
@@ -126,23 +137,34 @@ fun defaultErrorMessage(error: Throwable): String = when (val cat = categorize(e
  */
 @Immutable
 data class ScreenStateNoNetwork(
+    /** Illustration for a plain offline state. */
     val visual: ScreenStateVisual = ScreenStateVisual.Vector(Icons.Default.WifiOff),
+    /** Illustration for the captive-portal case, which is a different problem than being offline. */
     val captivePortalVisual: ScreenStateVisual = ScreenStateVisual.Vector(Icons.Default.CloudOff),
+    /** Copy for a plain offline state. */
     val message: String = "You're offline",
+    /** Copy for the captive-portal case — the network is reachable but wants a sign-in. */
     val captivePortalMessage: String = "Sign in to your WiFi network",
+    /** Label on the captive-portal CTA button. */
     val captivePortalActionText: String = "Open sign-in page",
     /**
      * Optional override for the captive-portal CTA. When `null` (the default),
      * [DefaultNoNetworkContent] provides the action via `rememberOpenCaptivePortalSignIn()`.
      */
     val captivePortalAction: (() -> Unit)? = null,
+    /** Label on the retry button. */
     val retryText: String = "Try again",
 )
 
 /** A primary call-to-action shown alongside an empty/error state. */
 @Immutable
 data class ScreenStateCta(
+    /**
+     * The button's label. Fork-supplied so an empty or error state can say "Add your first loan" rather than a generic
+     * "Retry".
+     */
     val label: String,
+    /** Invoked when the CTA is tapped. */
     val onClick: () -> Unit,
 )
 
@@ -151,10 +173,19 @@ sealed interface ScreenStateLoading {
     /** Centered Material 3 [androidx.compose.material3.CircularProgressIndicator]. */
     data object Spinner : ScreenStateLoading
 
-    /** Shimmer skeleton with [rowCount] placeholder rows. Implementation lands in Phase 2. */
+    /**
+     * Shimmer skeleton with [rowCount] placeholder rows. Implementation lands in Phase 2.
+     *
+     * @property rowCount placeholder rows to shimmer; match the real list so the layout does not
+     *   jump when content arrives.
+     */
     data class Skeleton(val rowCount: Int = 3) : ScreenStateLoading
 
-    /** Fully custom loading content. */
+    /**
+     * Fully custom loading content.
+     *
+     * @property content rendered in place of the library's loading state.
+     */
     data class Custom(val content: @Composable () -> Unit) : ScreenStateLoading
 }
 
@@ -163,12 +194,18 @@ sealed interface ScreenStateLoading {
  * here and a branch in [ScreenStateVisualRenderer].
  */
 sealed interface ScreenStateVisual {
-    /** Material icon or any [ImageVector]. */
+    /**
+     * Material icon or any [ImageVector].
+     *
+     * @property image the vector to draw.
+     */
     data class Vector(val image: ImageVector) : ScreenStateVisual
 
     /**
      * Arbitrary [Painter] (e.g., from `composeResources`). Lambda form so the painter
      * can be created with `painterResource(...)` inside a Composable scope.
+     *
+     * @property painter suspendable factory for the painter, invoked inside composition.
      */
     data class PainterRef(val painter: @Composable () -> Painter) : ScreenStateVisual
 
@@ -187,7 +224,11 @@ sealed interface ScreenStateVisual {
         val speed: Float = 1f,
     ) : ScreenStateVisual
 
-    /** Fully custom Composable — escape hatch for anything else. */
+    /**
+     * Fully custom Composable — escape hatch for anything else.
+     *
+     * @property content the composable rendered in place of a built-in visual.
+     */
     data class Custom(val content: @Composable () -> Unit) : ScreenStateVisual
 }
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Muitas tentativas. Aguarde e tente novamente.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">O hardware biométrico está temporariamente indisponível. Tente novamente mais tarde.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Nenhuma biometria cadastrada neste dispositivo. Configure a biometria nas configurações do sistema.</string>
+    <string name="core_ui_biometric_error_timeout">A autenticação biométrica expirou. Tente novamente.</string>
+    <string name="core_ui_biometric_error_no_space">Armazenamento insuficiente para concluir a autenticação biométrica.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Os dados de registro biométrico são inválidos. Ative a biometria novamente nas configurações do app.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Não foi possível iniciar a autenticação biométrica devido a argumentos inválidos.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Não foi possível iniciar o registro biométrico devido a argumentos inválidos.</string>
+    <string name="core_ui_biometric_error_unknown">Ocorreu um erro biométrico inesperado. Tente novamente.</string>
+    <string name="core_ui_biometric_prompt_title">Desbloquear Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Verifique sua identidade para continuar</string>
+    <string name="core_ui_biometric_prompt_description">Use sua digital, rosto ou credencial do dispositivo</string>
+    <string name="core_ui_biometric_prompt_negative_button">Cancelar</string>
+</resources>

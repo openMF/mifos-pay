@@ -11,6 +11,21 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the charge options used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property name Name.
+ * @property active Whether this entry is active.
+ * @property penalty Whether the charge is a penalty.
+ * @property currency Currency of the amount.
+ * @property amount Amount.
+ * @property chargeTimeType Charge time type.
+ * @property chargeAppliesTo Charge applies to.
+ * @property chargeCalculationType Charge calculation type.
+ * @property chargePaymentMode Charge payment mode.
+ * @property taxGroup Tax group.
+ */
 @Serializable
 data class ChargeOptions(
 

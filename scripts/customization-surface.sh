@@ -43,6 +43,8 @@ cs_parse_rules() {
       if (line ~ /default:[[:space:]]*true/) def="1"
       emit(); next
     }
+    # package-manifest directive — expanded by cs_expand_packages at this position
+    /^[[:space:]]*-[[:space:]]*packages:/ { emit(); print "@packages|"; next }
     # block form start — extract the QUOTED value (drops any trailing # comment)
     /^[[:space:]]*-[[:space:]]*glob:/ {
       emit()
@@ -84,8 +86,34 @@ cs_load_rules() {
     [ -z "$glob" ] && continue
     CS_RX+=("$(cs_glob_to_regex "$glob")")
     CS_OWNER+=("$owner"); CS_STRAT+=("$strat"); CS_DEF+=("$def"); CS_GLOB+=("$glob")
-  done < <(cs_parse_rules)
+  done < <(cs_parse_rules | cs_expand_packages)
   CS_LOADED=1
+}
+
+# Package-level ownership lives BESIDE each module, in its module-packages.yaml — the contract does
+# not restate it. A `- packages: module-packages` entry in the contract marks WHERE (in first-match
+# order) those rows apply; it expands into one `demo-showcase` rule per `demo:` id of each
+# core/<module>/module-packages.yaml → core/<module>/**/kpt/core/<module>/<id>/**.
+# (feature/module-packages.yaml lists whole demo MODULES, which are fork territory and never synced;
+# `feature/**` already owns them.) Manifests are found next to the contract being evaluated, so a
+# fork, a fixture and a scratch copy (ownership audit, surface report) each read their own.
+cs_expand_packages() {
+  local base line f mod id
+  base="$(dirname "$CS_CONTRACT")"
+  while IFS= read -r line; do
+    case "$line" in
+      "@packages|"*)
+        for f in "$base"/core/*/module-packages.yaml; do
+          [ -f "$f" ] || continue
+          mod="$(basename "$(dirname "$f")")"
+          while IFS= read -r id; do
+            [ -n "$id" ] && printf 'core/%s/**/kpt/core/%s/%s/**|demo-showcase||0\n' "$mod" "$mod" "$id"
+          done < <(awk '/^demo:[[:space:]]*$/{s=1; next} /^[a-z_]+:/{s=0}
+                        s && /id:/ {v=$0; sub(/.*id:[[:space:]]*/,"",v); sub(/[,}[:space:]].*/,"",v); print v}' "$f")
+        done ;;
+      *) printf '%s\n' "$line" ;;
+    esac
+  done
 }
 
 # ── --verify zero-match-rule guard (pure-white-label-store5-network E0/T2) ────────
@@ -145,12 +173,46 @@ cs_verify_zero_match() {
 
 # First matching rule → set globals CS_M_OWNER / CS_M_STRAT / CS_M_DEFAULT.
 # No subshell / no print (hot path — called once per tracked file in `verify`).
+# cs_load_roots — the paths the template SHIPS: SYNC_DIRS + SYNC_FILES from the engine itself
+# (single list, never duplicated). Empty when the engine is absent (bare checkouts / fixtures), in
+# which case the root check is skipped and the default stays template — the pre-2026-10-31 behaviour.
+CS_ROOTS_LOADED=0; CS_ROOTS=()
+cs_load_roots() {
+  [ "$CS_ROOTS_LOADED" = 1 ] && return
+  # The engine BESIDE the contract being evaluated — not CS_ROOT, which is always this reader's own
+  # repo. In a fork both are the fork's synced copies; in a fixture both are the fixture's.
+  local eng; eng="$(dirname "$CS_CONTRACT")/scripts/white-label/sync-dirs.sh"; local r
+  CS_ROOTS=()
+  if [ -f "$eng" ]; then
+    while IFS= read -r r; do [ -n "$r" ] && CS_ROOTS+=("$r"); done < <(
+      awk '/^SYNC_(DIRS|FILES)=\(/{on=1; next} on&&/^\)/{on=0} on{ if (match($0,/"[^"]+"/)) print substr($0,RSTART+1,RLENGTH-2) }' "$eng")
+  fi
+  CS_ROOTS_LOADED=1
+}
+
+# cs_under_root <path> — 0 iff <path> is a sync root or sits under one.
+cs_under_root() {
+  local p="$1" r
+  for r in ${CS_ROOTS[@]+"${CS_ROOTS[@]}"}; do   # bash-3.2-safe empty-array expansion (SP-4)
+    [ "$p" = "$r" ] || [[ "$p" == "$r/"* ]] && return 0
+  done
+  return 1
+}
+
+# cs_match_g <path> — first-match-wins ownership lookup. Sets CS_M_OWNER / CS_M_STRAT / CS_M_DEFAULT;
+# a default-rule match outside every sync root resolves `fork`.
 cs_match_g() {
   cs_load_rules
   local path="$1" i
   for i in "${!CS_RX[@]}"; do
     if [[ "$path" =~ ${CS_RX[$i]} ]]; then
       CS_M_OWNER="${CS_OWNER[$i]}"; CS_M_STRAT="${CS_STRAT[$i]}"; CS_M_DEFAULT="${CS_DEF[$i]}"
+      # The default rule claims only what the template SHIPS. Outside every sync root the path is
+      # fork territory (see the `**` rule's SYNC ROOTS note in customization-surface.yaml).
+      if [ "$CS_M_DEFAULT" = "1" ]; then
+        cs_load_roots
+        if [ "${#CS_ROOTS[@]}" -gt 0 ] && ! cs_under_root "$path"; then CS_M_OWNER="fork"; fi
+      fi
       return 0
     fi
   done
@@ -171,8 +233,12 @@ cs_match_g() {
   CS_M_OWNER="template"; CS_M_STRAT=""; CS_M_DEFAULT="1"
 }
 
+# Print the owner (template | fork | merge) for path $1.
 cs_resolve_owner()    { cs_match_g "$1"; printf '%s' "$CS_M_OWNER"; }
+# Print the merge strategy for path $1, meaningful only when the owner is `merge`.
 cs_resolve_strategy() { cs_match_g "$1"; printf '%s' "$CS_M_STRAT"; }
+# True when path $1 matched only the catch-all `**` rule — i.e. no rule claims it
+# explicitly, so it falls to the template-first default.
 cs_is_default()       { cs_match_g "$1"; [ "$CS_M_DEFAULT" = "1" ]; }
 
 # 3-way merge driver for a `merge`-owned file. This is the general merge strategy
@@ -190,22 +256,67 @@ cs_merge_3way() {
     echo "cs_merge_3way: need existing <ours> <base> <theirs>" >&2; return 2; }
   tmp="$(mktemp)"
   # -p prints the merged result (does not mutate inputs); exit = conflict count.
-  git merge-file -p "$ours" "$base" "$theirs" > "$tmp"; rc=$?
+  # Labelled markers: unlabelled, git names each side after its TEMP file (/var/folders/…/tmp.X), so
+  # whoever resolves a sync conflict cannot tell which side is the fork's and which the template's.
+  git merge-file -p -L "fork (ours)" -L "last-synced template (base)" -L "template (theirs)" \
+    "$ours" "$base" "$theirs" > "$tmp"; rc=$?
   if [ "$rc" -ge 128 ]; then rm -f "$tmp"; echo "cs_merge_3way: git merge-file error ($rc)" >&2; return 2; fi
   mv "$tmp" "$out"
   [ "$rc" -eq 0 ] && return 0 || return 1
 }
 
-# Semantic AndroidManifest union — the `manifest-union` strategy. A textual 3-way
-# spurious-conflicts when fork + template both insert permission lines at the same
-# spot, so union by android:name instead: take THEIRS (the template's structurally
-# updated manifest) and inject every <uses-permission>/<uses-feature> line present
-# in OURS whose android:name theirs lacks. Always clean (returns 0).
+# AndroidManifest merge — the `manifest-union` strategy.
+#   1. A real line 3-way first: with a base it keeps EVERY fork addition (activities, intent filters,
+#      <queries>, <meta-data>, providers) and takes the template's changes.
+#   2. Only when that conflicts — typically both sides inserting permission lines at the same spot —
+#      fall back to the permission union below: THEIRS plus every <uses-permission>/<uses-feature> of
+#      OURS whose android:name theirs lacks.
+#   3. Either way, every line the FORK added (in ours, not in base) must survive in the result, or the
+#      merge returns 1 with the 3-way's conflict markers. The union alone used to drop everything that
+#      was not a permission and still report success: mbs/reels-downloader lost 50 manifest entries
+#      (AdMob APPLICATION_ID, share/VIEW intent filters, PayCraft deep link, package queries).
 #
-#   cs_merge_manifest <ours> <theirs> [<out>]
+#   cs_merge_manifest <ours> <base> <theirs> [<out>]
 cs_merge_manifest() {
-  local ours="$1" theirs="$2" out="${3:-$1}" tmp add
-  [ -f "$ours" ] && [ -f "$theirs" ] || { echo "cs_merge_manifest: need <ours> <theirs>" >&2; return 2; }
+  local ours="$1" base="$2" theirs="$3" out="${4:-$1}" tmp add tw
+  [ -f "$ours" ] && [ -f "$theirs" ] || { echo "cs_merge_manifest: need <ours> <base> <theirs>" >&2; return 2; }
+  [ -f "$base" ] || base=/dev/null
+  tw="$(mktemp)"
+  if git merge-file -p "$ours" "$base" "$theirs" > "$tw" 2>/dev/null; then
+    mv "$tw" "$out"; return 0
+  fi
+  # Every conflict is two INSERTIONS at the same spot (empty base section) — the usual manifest case:
+  # both sides added elements after the same line. Keeping both is exactly right, so union them.
+  # (a file, not a pipe: under a caller's `pipefail` the pipe returned merge-file's conflict status)
+  git merge-file -p --diff3 "$ours" "$base" "$theirs" > "$tw" 2>/dev/null
+  if awk '/^[|]{7} /{b=1; next} /^=======$/{b=0; next} b{bad=1} END{exit bad}' "$tw"; then
+    git merge-file -p --union "$ours" "$base" "$theirs" > "$tw" 2>/dev/null
+    mv "$tw" "$out"; return 0
+  fi
+  cs_merge_manifest_union "$ours" "$theirs" "$out"
+  if ! cs_fork_lines_kept "$ours" "$base" "$out"; then
+    git merge-file -p -L "fork (ours)" -L "last-synced template (base)" -L "template (theirs)" \
+      "$ours" "$base" "$theirs" > "$tw" 2>/dev/null
+    mv "$tw" "$out"; return 1
+  fi
+  rm -f "$tw"; return 0
+}
+
+# cs_fork_lines_kept <ours> <base> <out> — every non-blank line the fork added survives in <out>.
+cs_fork_lines_kept() {
+  local l
+  while IFS= read -r l; do
+    [ -n "${l//[[:space:]]/}" ] || continue
+    grep -qxF -- "$l" "$2" 2>/dev/null && continue
+    grep -qF -- "$(printf '%s' "$l" | sed 's/^[[:space:]]*//')" "$3" || return 1
+  done < "$1"
+  return 0
+}
+
+# Permission union (the conflict fallback of cs_merge_manifest).
+#   cs_merge_manifest_union <ours> <theirs> <out>
+cs_merge_manifest_union() {
+  local ours="$1" theirs="$2" out="$3" tmp add
   local theirs_names; theirs_names="$(grep -oE 'android:name="[^"]*"' "$theirs" 2>/dev/null | sort -u)"
   # Extract each uses-permission/uses-feature ELEMENT (robust to one-per-line AND
   # multiple-per-line manifests); add the ones whose android:name theirs lacks.
@@ -269,6 +380,7 @@ cs_merge_strings() {
           buf = line
           # self-closed or closed on the same line → done
           if (line ~ /\/>/ || line ~ /<\/(string|string-array|plurals|bool|integer|color|dimen)>/) {
+            if (!(name in arr)) order[++n_order] = name
             arr[name] = buf; continue
           }
           depth = 1
@@ -278,6 +390,7 @@ cs_merge_strings() {
             else if (line ~ /<(string-array|plurals)[ >]/) depth++
             else if (line ~ /<\/string>/) depth--
           }
+          if (!(name in arr)) order[++n_order] = name
           arr[name] = buf
         }
       }
@@ -303,9 +416,11 @@ cs_merge_strings() {
         else              { print buf }
         next
       }
-      # Before the closing </resources>, append every fork-only entry.
+      # Before the closing </resources>, append every fork-only entry in the order the fork wrote them.
+      # Iterating the array itself is hash order: each sync re-shuffled the fork strings, so a file
+      # nobody edited changed on every run.
       if ($0 ~ /<\/resources>/) {
-        for (k in ourset) if (!(k in seen)) print ourset[k]
+        for (i = 1; i <= n_order; i++) if (!(order[i] in seen)) print ourset[order[i]]
       }
       print
     }
@@ -321,98 +436,76 @@ cs_merge_strings() {
 }
 
 # ── yaml-schema-merge (app-profile deep-merge) ───────────────────────────────
-# PLACEHOLDER classifier — a fork scalar is TEMPLATE-owned (loses on merge) when its
-# value still equals a template default OR its source line carries a `# PLACEHOLDER`
-# marker. Only a NON-placeholder fork value at an AppProfile::MAP identity/org/store
-# key path is allowed to win over the template.
+# A fork scalar still carrying a placeholder (a `# PLACEHOLDER` marker or a template-default value) is
+# not the fork's choice, so the template's value replaces it even without a base.
 CS_PLACEHOLDER_RE='(^|[[:space:]])#[[:space:]]*PLACEHOLDER|com\.example\.app|App Toolkit|https?://(demo|api|staging)\.example\.com|YOUR_|Your Organization|you@example\.com'
 
-# yaml-schema-merge — deep-merge <theirs=template> INTO <ours=fork>, key-path by key-path.
-#   template wins: the whole key STRUCTURE + every default + every new demo access-point
-#                  (any key the fork lacks is inherited from the template schema).
-#   fork wins:     any AppProfile::MAP identity/org/store scalar whose fork value is
-#                  NON-placeholder (classified via the MAP key set + CS_PLACEHOLDER_RE);
-#                  plus a fork's own rows in any UNION LIST win by identity, while template-only
-#                  rows are appended (union-by-identity). Union lists + their identity field:
-#                  network.access_points/id · core_store.stores/id · core_store.packages/id ·
-#                  core_store.cache_keys/name|fn · database.packages/id.
-#                  This was `access_points` ONLY: every other list came from the template wholesale,
-#                  so a fork that declared its own store, cache key, DAO or package silently LOST it
-#                  on the next sync — and the generated Kotlin then faithfully regenerated without it,
-#                  with no merge conflict to notice.
-# TRUE 3-WAY (diff3): the template supplies the schema/keys/defaults (THEIRS, emitted as the
-# structure), and the fork WINS every leaf it changed from the BASE — the template state the fork
-# LAST SYNCED FROM (.template-version#template_sha). That is: identity scalars (MAP) win as before,
-# AND any other key the fork customized (OURS[path] != BASE[path]) is PRESERVED, while keys the fork
-# left at the template default follow the template. So a fork's NON-identity customization survives a
-# sync (the 2-way overlay used to revert it to the new template default). `base` absent → falls back
-# to the identity-only 2-way (a never-synced fork has no ancestor). Union-by-identity unchanged.
+# yaml-schema-merge — TRUE 3-way merge of an app-profile YAML, built on the FORK's file.
+#
+# The fork's text is the output's base, so everything the fork wrote survives byte-for-byte: its values
+# (multi-line `|`/`>` blocks included), its comments, and keys the template does not have. The
+# template contributes only what CHANGED on its side since the last sync (`base`, the template at
+# .template-version#template_sha):
+#
+# WHO OWNS A KEY comes from the template's schema for the file, `<file>.schema.yaml` (e.g.
+# app-profile/app.schema.yaml), passed as $CS_YAML_SCHEMA. Its `keys:` map dotted paths to an owner;
+# the longest matching prefix wins, and `default:` covers the rest:
+#   template        the template's value always wins; a fork that deleted or edited it gets it back
+#   fork            the fork's value stays (rules below); the template only supplies what is missing
+#   union:<field>   a list merged by row identity (`union:name|fn` for several identity fields)
+# No schema → every key is `fork`, and the five built-in union lists below still union.
+#
+# Rules for a `fork` key:
+#   new key         template has it, base does not      → inserted after its nearest sibling, with the
+#                                                           comment lines directly above it
+#   deleted by fork base has it, fork does not           → stays deleted
+#   new default     fork == base, template != base      → the template's value replaces the fork's
+#   fork customized fork != base                         → the fork's value stays
+# Any owner:
+#   retired         base has it (the template shipped it), the template dropped it
+#                                                         → removed from the fork, even when the fork
+#                                                           changed its value — the template owned the
+#                                                           KEY. Each removal is reported on stderr with
+#                                                           the fork's value, so it is never silent.
+#   fork extension  neither base nor template has it    → left alone; it is the fork's own key
+#   union list      network.access_points/id · core_store.stores/id · core_store.packages/id ·
+#                   core_store.cache_keys/name|fn · database.packages/id (built in), plus any
+#                   `union:` the schema declares       → the fork's rows stay; a template row is
+#                                                           appended when its identity is new (in
+#                                                           neither the fork nor the base); a row the
+#                                                           template marks `owner: template` replaces the
+#                                                           fork's copy of that row
+# Values compare as whole subtrees with comments and trailing whitespace removed, so a block scalar or
+# a list is one value. An empty base (never synced, or a file added on both sides) means no change can
+# be attributed to the template: the fork's values all stay, template keys the fork lacks are added,
+# and placeholder values follow the template.
+#
+# This replaced an overlay that printed the TEMPLATE's file and copied back only the fork's one-line
+# scalars. Measured on a fork sync 2026-11-01: it handed the fork the template's demo store description,
+# release notes and review notes (all `|-`/`>-` blocks), emptied the fork's `org.links` map (the
+# template ships `links: {}`), dropped `security.signed_in_by_default: false` (a key the template only
+# documents) and every fork comment, all while reporting a clean merge.
 #   cs_merge_yaml_schema <ours=fork> <base> <theirs=template> [<out>]
 #   returns 0 merged-clean · 2 error
 cs_merge_yaml_schema() {
   local ours="$1" base="$2" theirs="$3" out="${4:-$1}"
   [ -f "$ours" ] && [ -f "$theirs" ] || {
     echo "cs_merge_yaml_schema: need <ours=fork> <base> <theirs=template>" >&2; return 2; }
-
-  # Load the identity/org/store yaml key paths the fork is allowed to win — the RHS
-  # (dotted yaml path) of every `"flat.key" => "dotted.path"` row in AppProfile::MAP.
-  local cfgrb="$CS_ROOT/deployment/_shared/config.rb"
-  local mapfile; mapfile="$(mktemp)"
-  if [ -f "$cfgrb" ]; then
-    awk -F'=>' '
-      /"[^"]+"[[:space:]]*=>[[:space:]]*"[^"]+"/ {
-        v=$2; sub(/#.*/,"",v); gsub(/[" ,]/,"",v); if (v!="") print v
-      }' "$cfgrb" > "$mapfile"
-  fi
-
-  # ── 3-WAY: a fork also WINS any leaf it CHANGED from the BASE (template @ last-synced sha), not just
-  # the MAP identity scalars — so a fork's non-identity customization survives. Append those dotted
-  # paths to the forkwins set (mapfile). Base absent (never-synced fork) → skip → identity-only 2-way.
-  if [ -f "$base" ]; then
-    awk '
-      function lead(s,   n){ n=0; while(substr(s,n+1,1)==" ") n++; return n }
-      function keyof(s,   t){ t=s; sub(/^[ ]+/,"",t); sub(/:.*/,"",t); return t }
-      function restof(s,   t){ t=s; sub(/^[ ]*[^:]+:/,"",t); sub(/^[ ]+/,"",t); sub(/[ \t]+#.*$/,"",t); sub(/[ \t]+$/,"",t); return t }
-      function pathpush(ind,k,   p,i){ while(sp>0 && sind[sp]>=ind) sp--; sp++; sind[sp]=ind; skey[sp]=k; p=skey[1]; for(i=2;i<=sp;i++) p=p"."skey[i]; return p }
-      FNR==1 { sp=0 }
-      FNR==NR {                                   # BASE pass — index scalar leaves by dotted path
-        if ($0 ~ /^[ ]*#/ || $0 ~ /^[ ]*$/) next; ind=lead($0); c=$0; sub(/^[ ]+/,"",c)
-        if (c ~ /^- /) next
-        if (c ~ /:/) { k=keyof($0); r=restof($0); p=pathpush(ind,k); if (r!="" && r !~ /^[|>]/) baseval[p]=r }
-        next
-      }
-      {                                           # OURS pass — emit paths the fork changed from base
-        if ($0 ~ /^[ ]*#/ || $0 ~ /^[ ]*$/) next; ind=lead($0); c=$0; sub(/^[ ]+/,"",c)
-        if (c ~ /^- /) next
-        if (c ~ /:/) { k=keyof($0); r=restof($0); p=pathpush(ind,k); if (r!="" && r !~ /^[|>]/ && (p in baseval) && baseval[p]!=r) print p }
-      }
-    ' "$base" "$ours" >> "$mapfile"
-  fi
-
+  local basef="$base"; [ -s "$base" ] || basef=/dev/null
   local tmp; tmp="$(mktemp)"
-  # Two-file awk: FIRST pass indexes the fork (scalar leaves by dotted path + its
-  # union lists); SECOND pass emits the template as the schema base, overlaying fork-won
-  # scalars and unioning every declared list by its identity field.
-  awk -v mapf="$mapfile" -v ph="$CS_PLACEHOLDER_RE" '
-    function spaces(n,   s){ s=""; while(n-->0) s=s" "; return s }
-    function lead(s,   n){ n=0; while(substr(s,n+1,1)==" ") n++; return n }
-    function keyof(s,   t){ t=s; sub(/^[ ]+/,"",t); sub(/:.*/,"",t); return t }
-    function restof(s,   t){ t=s; sub(/^[ ]*[^:]+:/,"",t); sub(/^[ ]+/,"",t); return t }
+  local schemaf="${CS_YAML_SCHEMA:-}"; [ -s "$schemaf" ] || schemaf=/dev/null
+  awk -v ph="$CS_PLACEHOLDER_RE" -v schemaf="$schemaf" -v hasbase="$([ -s "$base" ] && echo 1 || echo 0)" '
+    function lead(s,   n){ n=0; while (substr(s,n+1,1)==" ") n++; return n }
+    function keyof(s,   t){ t=s; sub(/^[ ]+/,"",t); sub(/[ ]*:.*/,"",t); return t }
+    function restof(s,   t){ t=s; sub(/^[ ]*[^:]+:/,"",t); sub(/^[ ]+/,"",t); return stripc(t) }
     function stripc(v,   t){ t=v; sub(/[ \t]+#.*$/,"",t); sub(/[ \t]+$/,"",t); return t }
-    function pathpush(ind,k,   p,i){
-      while (sp>0 && sind[sp]>=ind) sp--
-      sp++; sind[sp]=ind; skey[sp]=k
-      p=skey[1]; for (i=2;i<=sp;i++) p=p"."skey[i]
-      return p
-    }
-    # Identity field per union list. NOT every list keys on `id`: cache_keys are either a constant
-    # (`name`) or a builder (`fn`).
-    # Keyed on the FULL DOTTED PATH, not the leaf. Two different lists can share a leaf name —
-    # `core_store.packages` and `database.packages` both exist — and keying on the leaf made them
-    # share one fork buffer, so the second list emitted the rows of the first one as well. That is a
-    # duplicate row in app-profile, i.e. a duplicate generated declaration. Matching whole paths
-    # also means a NEW list named `packages` under a third parent is not silently swept in.
-    function union_spec(p){
+    function spaces(n,   s){ s=""; while (n-->0) s=s" "; return s }
+    function noise(s){ return (s ~ /^[ ]*#/ || s ~ /^[ ]*$/) }
+    function parentof(p,   q){ q=p; if (q !~ /\./) return ""; sub(/\.[^.]*$/,"",q); return q }
+    # Owner of a dotted path from the schema: the longest declared prefix, else `default:`, else fork.
+    function owner(p,   q){ q=p; while (q!="") { if (q in OWN) return OWN[q]; q=parentof(q) } return (DEF!="") ? DEF : "fork" }
+    function union_spec(p,   o){
+      o=owner(p); if (o ~ /^union:/) return substr(o,7)
       if (p=="network.access_points") return "id"
       if (p=="core_store.stores")     return "id"
       if (p=="core_store.packages")   return "id"
@@ -420,97 +513,147 @@ cs_merge_yaml_schema() {
       if (p=="database.packages")     return "id"
       return ""
     }
-    # Row identity, for BOTH yaml shapes this file mixes: block rows (`- id: main`, as
-    # access_points use) and inline maps (`- { id: alerts, owner: template }`, as every list added
-    # later uses). Matching only the block form is why generalising by key name alone is not enough.
+    # Row identity for block rows (`- id: main`) and inline maps (`- { id: x, owner: y }`).
     function rowid(c, spec,   n, arr, i, f, v){
-      if (spec=="*") { v=c; sub(/^-[ ]*/,"",v); return stripc(v) }
       n=split(spec, arr, "|")
       for (i=1;i<=n;i++) {
         f=arr[i]
-        if (match(c, "[{,][ ]*" f "[ ]*:[ ]*[^,}]+")) {          # inline map
-          v=substr(c, RSTART, RLENGTH); sub("^[{,][ ]*" f "[ ]*:[ ]*", "", v); return stripc(v)
-        }
-        if (match(c, "^-?[ ]*" f "[ ]*:")) {                      # block row / continuation
-          v=c; sub("^-?[ ]*" f "[ ]*:[ ]*", "", v); return stripc(v)
-        }
+        if (match(c, "[{,][ ]*" f "[ ]*:[ ]*[^,}]+")) { v=substr(c,RSTART,RLENGTH); sub("^[{,][ ]*" f "[ ]*:[ ]*","",v); return stripc(v) }
+        if (match(c, "^-?[ ]*" f "[ ]*:")) { v=c; sub("^-?[ ]*" f "[ ]*:[ ]*","",v); return stripc(v) }
       }
       return ""
     }
-    # flush the currently-buffered TEMPLATE list item, emitting it ONLY when its identity is not
-    # already provided by the fork (so template-only rows are appended, fork rows win).
-    function ap_flush(   i){
-      if (nib>0) {
-        if (!((apkey SUBSEP curid) in forkid)) for (i=1;i<=nib;i++) print ap_itembuf[i]
-        nib=0; curid=""
-      }
-    }
-    BEGIN { while ((getline k < mapf) > 0) if (k!="") forkwins[k]=1 }
-    FNR==1 { sp=0; ap=0 }   # reset the indentation stack + ap-state per input file
-
-    # ── FORK PASS — index scalar leaves + capture the access_points block ──
-    FNR==NR {
-      line=$0
-      if (line ~ /^[ ]*#/ || line ~ /^[ ]*$/) next
-      ind=lead(line); content=line; sub(/^[ ]+/,"",content)
-      if (ap) {
-        if (ind<=ap_ind) { ap=0 }              # dedent → end of this fork list
-        else {
-          forkbuf[apkey, ++nfb[apkey]]=line    # preserve the fork row verbatim
-          idv=rowid(content, union_spec(apkey))
-          if (idv!="") forkid[apkey, idv]=1
-          next
-        }
-      }
-      if (content ~ /^- /) next
-      if (content ~ /:/) {
-        k=keyof(line); r=restof(line); p=pathpush(ind,k)
-        if (union_spec(p)!="") { ap=1; ap_ind=ind; apkey=p; next }
-        if (r!="" && r !~ /^[|>]/) {           # scalar leaf
-          forkval[p]=stripc(r)
-          forkph[p]=(line ~ ph) ? 1 : 0
-        }
-      }
-      next
-    }
-
-    # ── TEMPLATE PASS — emit schema base, overlay fork identity, union access_points ──
+    # ── parse: every mapping key → its line range, indent, inline value and child order ──
+    # Lists and block scalars are opaque (one value); keys inside list rows are not paths.
     {
-      line=$0
-      if (line ~ /^[ ]*#/ || line ~ /^[ ]*$/) { if (ap) next; print line; next }
-      ind=lead(line); content=line; sub(/^[ ]+/,"",content)
-      if (ap) {
-        if (ind<=ap_ind) { ap_flush(); ap=0 }  # end of template list → fall through
-        else {
-          if (content ~ /^- /) {
-            ap_flush(); ap_itembuf[++nib]=line
-            idv=rowid(content, union_spec(apkey)); if (idv!="") curid=idv
-          } else {
-            ap_itembuf[++nib]=line
-            idv=rowid(content, union_spec(apkey)); if (idv!="") curid=idv
-          }
-          next
-        }
+      f = (FILENAME==ARGV[1]) ? "o" : (FILENAME==ARGV[2]) ? "b" : "t"
+      if (FNR==1) { sp=0; opq=-1 }
+      n[f]=FNR; L[f,FNR]=$0
+      if (noise($0)) next
+      ind=lead($0); c=$0; sub(/^[ ]+/,"",c)
+      if (opq>=0 && (ind>opq || (ind==opq && c ~ /^- /))) { for (i=1;i<=sp;i++) E[f,sk[i]]=FNR; next }
+      opq=-1
+      if (c ~ /^- / || c ~ /^-$/) {                  # a list directly under the key above
+        if (sp>0) { K[f,sk[sp]]="list"; opq=si[sp]; for (i=1;i<=sp;i++) E[f,sk[i]]=FNR }
+        next
       }
-      if (content ~ /:/) {
-        k=keyof(line); r=restof(line); p=pathpush(ind,k)
-        if (union_spec(p)!="") {
-          print line                            # the list header
-          for (i=1;i<=nfb[p];i++) print forkbuf[p, i]   # fork rows preserved (win by identity)
-          ap=1; ap_ind=ind; apkey=p; nib=0; curid=""
-          next
-        }
-        if (r!="" && r !~ /^[|>]/ && (p in forkwins) && (p in forkval) && forkph[p]==0) {
-          print spaces(ind) k ": " forkval[p]   # fork identity scalar wins
-          next
-        }
-      }
-      print line
+      if (c !~ /:/) { for (i=1;i<=sp;i++) E[f,sk[i]]=FNR; next }
+      while (sp>0 && si[sp]>=ind) sp--
+      k=keyof($0); p=(sp>0) ? sk[sp] "." k : k
+      sp++; sk[sp]=p; si[sp]=ind
+      S[f,p]=FNR; E[f,p]=FNR; I[f,p]=ind; R[f,p]=restof($0); has[f,p]=1
+      K[f,p] = (R[f,p] ~ /^[|>]/) ? "block" : (R[f,p]=="" ? "map" : "inline")
+      if (K[f,p]=="block") opq=ind
+      for (i=1;i<sp;i++) E[f,sk[i]]=FNR
+      par=(sp>1) ? sk[sp-1] : ""; nc[f,par]++; ch[f,par,nc[f,par]]=p
+      if (f=="t") { nt++; tord[nt]=p }
+      if (f=="o") { no++; oord[no]=p }
     }
-    END { if (ap) ap_flush() }
-  ' "$ours" "$theirs" > "$tmp"
-
-  rm -f "$mapfile"
+    BEGIN {
+      while ((getline sl < schemaf) > 0) {
+        if (sl ~ /^[ ]*#/ || sl ~ /^[ ]*$/) continue
+        if (sl ~ /^keys:/) { inkeys=1; continue }
+        if (sl ~ /^default:/) { DEF=sl; sub(/^default:[ ]*/,"",DEF); sub(/[ ]+#.*$/,"",DEF); inkeys=0; continue }
+        if (sl !~ /^ /) { inkeys=0; continue }
+        if (inkeys) { k=sl; sub(/^[ ]+/,"",k); v=k; sub(/[ ]*:.*/,"",k); sub(/^[^:]*:[ ]*/,"",v); sub(/[ ]+#.*$/,"",v); OWN[k]=v }
+      }
+    }
+    # A subtree with comments, blank lines and trailing whitespace removed, relative to its own indent.
+    function norm(f,p,   j,s,t){
+      s=""; for (j=S[f,p]; j<=E[f,p]; j++) { if (noise(L[f,j])) continue; t=stripc(L[f,j]); s=s substr(t, I[f,p]+1) "\n" }
+      return s
+    }
+    # The comment lines directly above a key (no blank line between) — they document it.
+    function cstart(f,p,   j){ j=S[f,p]; while (j>1 && L[f,j-1] ~ /^[ ]*#/) j--; return j }
+    function emit_range(f,a,z,delta,   j,s){
+      s=""; for (j=a;j<=z;j++) {
+        if (L[f,j] ~ /^[ ]*$/) { s=s "\n"; continue }
+        if (delta>=0) s=s spaces(delta) L[f,j] "\n"; else s=s substr(L[f,j], 1-delta) "\n"
+      }
+      return s
+    }
+    function under_done(p,   q){ q=p; while (q!="") { if (q in done) return 1; q=parentof(q) } return 0 }
+    END {
+      # 1. keys the template retired (first, so no insertion anchors on one)
+      if (hasbase) for (x=1;x<=no;x++) {
+        p=oord[x]; par=parentof(p)
+        if (has["t",p] || !has["b",p]) continue
+        if (par!="" && (!has["t",par] || K["t",par]!="map")) continue
+        if (norm("o",p)!=norm("b",p)) { v=L["o",S["o",p]]; sub(/^[ ]+/,"",v); printf "cs_merge_yaml_schema: retired key %s removed (fork had: %s)\n", p, v > "/dev/stderr" }
+        rep[cstart("o",p)]=E["o",p]; repl[cstart("o",p)]=""; del[p]=1
+      }
+      # 2. template paths, top-down
+      for (x=1;x<=nt;x++) {
+        p=tord[x]; if (under_done(p)) continue
+        par=parentof(p)
+        if (!has["o",p]) {
+          if (par!="" && !has["o",par]) continue
+          if (hasbase && has["b",p] && owner(p)!="template") { done[p]=1; continue }   # the fork deleted it
+          # anchor: the nearest preceding template sibling the fork has
+          anchor=0
+          for (i=1;i<=nc["t",par];i++) { q=ch["t",par,i]; if (q==p) break; if (has["o",q] && !(q in del)) anchor=E["o",q] }
+          if (anchor==0) {
+            if (par!="") anchor=S["o",par]
+            else anchor=(no>0) ? cstart("o", oord[1])-1 : n["o"]
+          }
+          newind = (par!="") ? I["o",par] + (I["t",p]-I["t",par]) : I["t",p]
+          ins[anchor]=ins[anchor] emit_range("t", cstart("t",p), E["t",p], newind-I["t",p])
+          done[p]=1; continue
+        }
+        spec=union_spec(p)
+        if (spec!="" && K["o",p]=="list" && K["t",p]=="list") {     # union by identity
+          rind=-1
+          # index the fork rows: identity → line range, so a template-owned row can be replaced whole
+          cur=""; frs=0; lastj=0
+          for (j=S["o",p]+1;j<=E["o",p];j++) {
+            c=L["o",j]; if (noise(c)) continue; ci=lead(c); c2=c; sub(/^[ ]+/,"",c2)
+            if (c2 ~ /^- / && (rind<0 || ci==rind)) { if (cur!="") { fs[p,cur]=frs; fe[p,cur]=lastj } rind=ci; frs=j; cur="" }
+            v=rowid(c2,spec); if (v!="") { fid[p,v]=1; if (cur=="") cur=v }
+            lastj=j
+          }
+          if (cur!="") { fs[p,cur]=frs; fe[p,cur]=lastj }
+          if (hasbase && has["b",p]) for (j=S["b",p]+1;j<=E["b",p];j++) { c=L["b",j]; if (noise(c)) continue; c2=c; sub(/^[ ]+/,"",c2); v=rowid(c2,spec); if (v!="") bid[p,v]=1 }
+          j=S["t",p]+1
+          while (j<=E["t",p]) {
+            c=L["t",j]; if (noise(c)) { j++; continue }
+            c2=c; sub(/^[ ]+/,"",c2)
+            if (c2 !~ /^- /) { j++; continue }
+            rs=j; tri=lead(c); id=""; j++
+            v=rowid(c2,spec); if (v!="") id=v
+            while (j<=E["t",p]) { c=L["t",j]; if (!noise(c)) { c3=c; sub(/^[ ]+/,"",c3); if (lead(c)<=tri) break; v=rowid(c3,spec); if (id=="" && v!="") id=v } j++ }
+            # A row the template OWNS (`owner: template`) follows the template, like a template-owned key.
+            tow=0; for (y=rs;y<j;y++) if (L["t",y] ~ /(^|[{,][ ]*|^[ ]*-?[ ]*)owner:[ ]*template([ ,}]|$)/) tow=1
+            if (tow && id!="" && ((p,id) in fs)) {
+              rep[fs[p,id]]=fe[p,id]; repl[fs[p,id]]=emit_range("t", rs, j-1, rind-tri); continue
+            }
+            if (id!="" && !((p,id) in fid) && !((p,id) in bid))
+              ins[E["o",p]]=ins[E["o",p]] emit_range("t", rs, j-1, (rind<0 ? I["o",p]+2 : rind)-tri)
+          }
+          done[p]=1; continue
+        }
+        if (owner(p)=="template") {                                   # template-owned: the template value, always
+          if (norm("o",p)!=norm("t",p)) { rep[S["o",p]]=E["o",p]; repl[S["o",p]]=emit_range("t", S["t",p], E["t",p], I["o",p]-I["t",p]) }
+          done[p]=1; continue
+        }
+        if (K["o",p]=="map" && K["t",p]=="map") continue              # descend: children decide
+        no_=norm("o",p); nt_=norm("t",p)
+        take=0
+        if (hasbase && has["b",p]) { nb_=norm("b",p); if (no_==nb_ && nt_!=nb_) take=1 }
+        else if (K["o",p]=="inline" && L["o",S["o",p]] ~ ph && no_!=nt_) take=1
+        if (take) { rep[S["o",p]]=E["o",p]; repl[S["o",p]]=emit_range("t", S["t",p], E["t",p], I["o",p]-I["t",p]) }
+        done[p]=1
+      }
+      # 3. emit the fork, applying replacements and insertions
+      if (0 in ins) printf "%s", ins[0]
+      j=1
+      while (j<=n["o"]) {
+        if (j in rep) { printf "%s", repl[j]; z=rep[j]; for (y=j; y<=z; y++) if (y in ins) printf "%s", ins[y]; j=z+1; continue }
+        print L["o",j]
+        if (j in ins) printf "%s", ins[j]
+        j++
+      }
+    }
+  ' "$ours" "$basef" "$theirs" > "$tmp" || { rm -f "$tmp"; echo "cs_merge_yaml_schema: merge failed" >&2; return 2; }
   mv "$tmp" "$out"
   return 0
 }
@@ -574,10 +717,13 @@ cs_merge_properties() {
   return 0
 }
 
+# Merge one `merge`-owned file by its contract strategy (customization-surface.yaml#strategy); an
+# undeclared strategy falls back to the line-based 3-way.
+#   cs_merge <strategy> <ours> <base> <theirs> [<out>]
 cs_merge() {
   local strat="$1" ours="$2" base="$3" theirs="$4" out="${5:-$2}"
   case "$strat" in
-    manifest-union)    cs_merge_manifest      "$ours" "$theirs" "$out" ;;
+    manifest-union)    cs_merge_manifest      "$ours" "$base" "$theirs" "$out" ;;
     include-union)     cs_merge_include_union "$ours" "$base" "$theirs" "$out" ;;
     yaml-schema-merge) cs_merge_yaml_schema   "$ours" "$base" "$theirs" "$out" ;;
     properties-3way)   cs_merge_properties    "$ours" "$base" "$theirs" "$out" ;;
@@ -591,6 +737,7 @@ cs_merge() {
 # Asserts each via cs_resolve_owner (no brittle count literal). Returns 0 iff all hold.
 cs_require_flip_preconditions() {
   local bad=0
+  # Flag one ownership row that does not resolve to the owner the boundary flip needs.
   _cs_expect() { # <path> <expected-owner>
     local got; got="$(cs_resolve_owner "$1")"
     [ "$got" = "$2" ] || { echo "❌ flip-precondition: $1 owner=$got, expected $2"; bad=1; }
@@ -600,7 +747,7 @@ cs_require_flip_preconditions() {
   # reclassification AND proves the generated-class row is present in the contract.
   _cs_expect "deployment/web/og-images/01_home.png"                generated
   _cs_expect "gradle.properties"                                   merge   # mixed fork-values + template-infra → key-level properties-3way (2026-08-20)
-  _cs_expect "secrets-manifest.yaml"                               fork
+  _cs_expect "secrets-manifest.yaml"                               generated
   _cs_expect "secrets/live/keystore.jks"                           fork
   _cs_expect "tests/anything.sh"                                   template
   # AppStoreRegistry.kt is GONE — stores are declared with @StoreProvider, and the generated
@@ -613,8 +760,8 @@ cs_require_flip_preconditions() {
   _cs_expect "core/model/src/commonMain/kotlin/kpt/core/model/invoice/Invoice.kt" fork
   _cs_expect "core/model/src/commonMain/kotlin/kpt/core/model/user/UserData.kt" template
   _cs_expect "core/model/src/commonMain/kotlin/kpt/core/model/banking/Loan.kt" demo-showcase
-  _cs_expect "core/store/src/commonMain/kotlin/kpt/core/store/config/ProjectErrorMapper.kt" fork
-  _cs_expect "core/store/src/commonMain/kotlin/kpt/core/store/config/ProjectScreenStateDefaults.kt" fork
+  _cs_expect "core/store/src/commonMain/kotlin/kpt/core/store/config/ForkErrorMapper.kt" fork
+  _cs_expect "core/store/src/commonMain/kotlin/kpt/core/store/config/ForkScreenStateDefaults.kt" fork
   # REAL paths, not short synthetic ones. These two asserted `template` only because the short form
   # missed every `**/kpt/core/store/**` rule and fell through to the `core/**` blanket — the fixture
   # was testing a path that does not exist. The real files are showcase stores, so demo-showcase.
@@ -623,10 +770,11 @@ cs_require_flip_preconditions() {
   # The module catch-all: a fork's own store package must not be claimed by the core/** blanket.
   _cs_expect "core/store/src/commonMain/kotlin/kpt/core/store/invoice/impl/InvoiceStore.kt" fork
   _cs_expect "core/store/src/commonMain/kotlin/kpt/core/store/prefs/impl/UserDataStore.kt" template
-  [ "$bad" -eq 0 ] && echo "✅ T1 flip preconditions hold (og-images generated · secrets-manifest/keystore + core/store Project* seams fork · core/model undeclared=fork · gradle.properties merge/properties-3way · tests/core-store-impl template)"
+  [ "$bad" -eq 0 ] && echo "✅ T1 flip preconditions hold (og-images generated · secrets-manifest/keystore + core/store Fork* seams fork · core/model undeclared=fork · gradle.properties merge/properties-3way · tests/core-store-impl template)"
   return "$bad"
 }
 
+# CLI entry point: dispatch --verify / resolve / merge / self-test.
 cs_main() {
   local cmd="${1:-}"; shift || true
   case "$cmd" in

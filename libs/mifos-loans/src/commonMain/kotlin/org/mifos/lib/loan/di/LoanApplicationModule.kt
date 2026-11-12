@@ -9,6 +9,9 @@
  */
 package org.mifos.lib.loan.di
 
+import kpt.core.common.ForkDispatchers
+import kpt.core.data.fork.util.ForkNetworkMonitorQualifier
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -25,8 +28,6 @@ import org.mifos.lib.loan.ui.providerWebView.LoanProviderWebViewViewModel
 import org.mifos.lib.loan.ui.selectLoanProvider.SelectLoanProviderViewModel
 import org.mifos.lib.loan.ui.selectLoanType.SelectLoanTypeViewModel
 import org.mifos.lib.loan.ui.uploadDocs.UploadDocsViewModel
-import org.mifospay.core.common.MifosDispatchers
-
 /**
  * Koin module for the `libs/mifos-loans` loan-application wizard.
  */
@@ -42,7 +43,7 @@ val LoanApplicationModule = module {
     // activation — swap any of the four entries below for a distinct adapter once one exists.
     single<DummyLoanProvider> { DummyLoanProvider() }
     single<FineractLoanProvider> {
-        FineractLoanProvider(get(), get(named(MifosDispatchers.IO.name)))
+        FineractLoanProvider(get(), get(named(ForkDispatchers.IO.name)))
     }
     single<LoanProviderRegistry> {
         val dummy = get<DummyLoanProvider>()
@@ -63,7 +64,15 @@ val LoanApplicationModule = module {
     viewModelOf(::LoanProviderWebViewViewModel)
     viewModelOf(::SelectLoanTypeViewModel)
     viewModelOf(::LoanProductDetailsViewModel)
-    viewModelOf(::LoanApplyViewModel)
+    viewModel {
+        LoanApplyViewModel(
+            savedStateHandle = get(),
+            loansRepository = get(),
+            selfServiceRepository = get(),
+            userPreferencesRepository = get(),
+            networkMonitor = get(ForkNetworkMonitorQualifier),
+        )
+    }
     viewModelOf(::UploadDocsViewModel)
     viewModelOf(::ConfirmDetailsViewModel)
 }

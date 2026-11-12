@@ -2,10 +2,10 @@
 
 Internal-contributor guide to the Store5 factory primitives module (91 Kotlin files,
 `commonMain`/`commonTest` only — pure Kotlin, no platform actuals). For how a **fork**
-consumes this module (branding hooks, `config/AppScreenStateDefaults`, `@StoreProvider`-declared stores), see
+consumes this module (branding hooks, `config/KptScreenStateDefaults`, `@StoreProvider`-declared stores), see
 [`../../core/store/CONSUMPTION.md`](../../core/store/CONSUMPTION.md) — this doc does not
 repeat that content. Architecture reference: [`docs/architecture/cross-cutting/store-data-api.md`](../../docs/architecture/cross-cutting/store-data-api.md);
-worked examples: [`docs/claude/store-implementation.md`](../../docs/claude/store-implementation.md).
+worked examples: [`docs/claude/store-implementation.md`](../../docs/architecture/tree/core/store-implementation.md).
 
 ## Purpose
 
@@ -89,7 +89,7 @@ emission sequence (see `ScreenDataStreamIntegrationTest.kt`, `CacheFirstSwrTest.
 - **Bookkeeper/outbox**: `RoomBookkeeper`/`RoomSubmitOutbox` are the only Room touch points — a new
   persisted infra type needs a matching `infra/impl/Room*` + `Fake*` test double, and must be added
   to `StoreCacheManagerImpl.clearAll()` or it leaks stale data across logout.
-- **Framework-shared — never fork-brand it.** Zero Compose, zero `AppScreenStateDefaults`, zero
+- **Framework-shared — never fork-brand it.** Zero Compose, zero `KptScreenStateDefaults`, zero
   fork qualifiers. Fork/project pressure (named `Store` qualifiers, branded error mapping,
   app-specific `FetchPolicy` defaults) goes into the project's own `core/store` (see
   `CONSUMPTION.md`), which depends on this module — never the reverse.

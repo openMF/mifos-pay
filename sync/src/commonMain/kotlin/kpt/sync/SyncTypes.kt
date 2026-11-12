@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:OptIn(ExperimentalUuidApi::class)
 
@@ -16,6 +16,11 @@ import kotlin.uuid.Uuid
 
 /** Unique-work names for the two `sync/` workers. */
 public const val DATA_SYNC_WORK_NAME: String = "kpt.sync.DataSyncWorker"
+
+/**
+ * Unique-work name PREFIX for scheduled notifications. A prefix, not a fixed name, because several notifications can
+ * be in flight and each needs its own unique-work slot.
+ */
 public const val NOTIFICATION_WORK_NAME_PREFIX: String = "kpt.sync.NotificationWorker"
 
 /**
@@ -23,7 +28,13 @@ public const val NOTIFICATION_WORK_NAME_PREFIX: String = "kpt.sync.NotificationW
  * quota request) or background (silent). On platforms other than Android the
  * distinction collapses to a single execution mode — see [WorkScheduler] KDoc.
  */
-public enum class WorkMode { Foreground, Background }
+public enum class WorkMode {
+    /** User-visible: posts a notification and requests expedited quota. */
+    Foreground,
+
+    /** Silent. The only mode that exists off Android. */
+    Background,
+}
 
 /**
  * Reified result handle of a [WorkScheduler] call. Returned by all enqueue +
@@ -31,7 +42,9 @@ public enum class WorkMode { Foreground, Background }
  * (e.g. data sync); null for one-off notification scheduling.
  */
 public data class WorkHandle(
+    /** The platform work id. */
     val id: Uuid,
+    /** The unique-work name, or null for a one-off enqueue that claimed no slot. */
     val uniqueName: String?,
 )
 
@@ -40,7 +53,22 @@ public data class WorkHandle(
  * `WorkInfo.State` in worker-kmp; collapsed to the user-meaningful slice
  * the [WorkScheduler.observeWork] caller cares about.
  */
-public enum class WorkStatus { Pending, Running, Succeeded, Failed, Cancelled }
+public enum class WorkStatus {
+    /** Enqueued, not yet started. */
+    Pending,
+
+    /** Executing now. */
+    Running,
+
+    /** Finished successfully — terminal. */
+    Succeeded,
+
+    /** Finished unsuccessfully after its retries — terminal. */
+    Failed,
+
+    /** Cancelled before finishing — terminal. */
+    Cancelled,
+}
 
 /**
  * Content for a one-off notification scheduled via [WorkScheduler.scheduleNotification].

@@ -1,4 +1,12 @@
-
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 import com.android.build.api.variant.KotlinMultiplatformAndroidComponentsExtension
 import org.convention.BASE_MODULE_NAMESPACE
 import org.convention.configureKotlinMultiplatform
@@ -15,7 +23,7 @@ import org.gradle.kotlin.dsl.dependencies
  * only handles the Android target; KGP registers KotlinMultiplatformExtension.
  * Android DSL configuration is done via KotlinMultiplatformAndroidComponentsExtension.finalizeDsl.
  */
-class KMPLibraryConventionPlugin: Plugin<Project> {
+class KMPLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
@@ -76,6 +84,21 @@ class KMPLibraryConventionPlugin: Plugin<Project> {
                     androidExt.minSdk = minSdkVersion
                     androidExt.namespace = moduleNamespace
                     androidExt.enableCoreLibraryDesugaring = true
+                    // Android host (JVM) unit tests are OPT-IN under the AGP-9 KMP library
+                    // plugin: without this, every module with a commonTest source set builds
+                    // its tests for desktop/ios/native and silently runs ZERO on Android,
+                    // emitting "the 'commonTest' source directory exists, but android host
+                    // tests are not enabled". Measured 2026-09-17: 31 such warnings across the
+                    // 25 core/core-base modules — commonTest was authored everywhere and never
+                    // executed on the app's primary production platform.
+                    androidExt.withHostTest {
+                        // android.jar in unit tests is stubs that throw by default; returning
+                        // defaults is what lets commonTest assertions run unmodified on Android.
+                        isReturnDefaultValues = true
+                        // CMP modules carry composeResources — without this their unit tests
+                        // cannot resolve a resource and fail at first access.
+                        isIncludeAndroidResources = true
+                    }
                     androidExt.androidResources {
                         // Official AGP-9 fix (JetBrains CMP-9547): the new
                         // `com.android.kotlin.multiplatform.library` plugin does NOT process
@@ -96,6 +119,32 @@ class KMPLibraryConventionPlugin: Plugin<Project> {
                     }
                 }
             }
+
+            // Compose UI tests cannot run as ANDROID HOST tests. `runComposeUiTest` routes through
+            // androidx.compose.ui.test.RobolectricIdlingStrategy, which reads
+            // `android.os.Build.FINGERPRINT.toLowerCase()` to detect Robolectric — and under a host
+            // test that field comes from the android.jar STUB and is null, so every such test dies
+            // with an NPE inside Compose's own harness, before reaching a single assertion.
+            //
+            // Measured 2026-09-17 across the whole repo: 899 tests run on android host, 30 failed,
+            // and the split was total — every failure was a `*UiTest` (24 classes) and NOT ONE
+            // `*UiTest` passed. So this excludes exactly the environmentally-impossible set and
+            // costs zero real coverage; the other 869 tests are the coverage android gains.
+            //
+            // These screens stay covered: the same `runComposeUiTest` sources execute on desktop,
+            // iOS and (for core:database) the browser web targets. Running them on android too
+            // would need Robolectric, which needs a JUnit4 `@RunWith` that multiplatform
+            // `commonTest` classes cannot carry.
+            tasks.withType(org.gradle.api.tasks.testing.Test::class.java)
+                .matching { it.name == "testAndroidHostTest" }
+                .configureEach {
+                    filter.excludeTestsMatching("*UiTest*")
+                    // A module whose android-host tests are ENTIRELY Compose UI tests (e.g.
+                    // :feature:showcase) is left with an empty set, and Gradle treats an
+                    // empty filter result as an error ("No tests found for given includes").
+                    // That is the expected outcome here, not a misconfiguration.
+                    filter.isFailOnNoMatchingTests = false
+                }
 
             dependencies {
                 add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())

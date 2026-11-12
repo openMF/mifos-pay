@@ -20,12 +20,15 @@ content_descriptors:
   medical_or_treatment_information: NONE
   contests: NONE
 
+# App Store age-rating answers. Apple derives the displayed rating from these, so an
+# overstated answer needlessly raises the app's age band.
 declarations:
   unrestricted_web_access: false
   gambling_or_contests: false
   made_for_kids: false
   loot_box_or_paid_random_items: false
 
+# The rating these declarations should produce — a check against a misread question.
 expected_rating:
   age_rating: "4+"
   notes: >

@@ -159,7 +159,7 @@ bash scripts/configure-release-environments.sh \
 5. Runs: `./gradlew :{package_name}:assembleRelease` (or `assembleDebug`)
 6. Uploads APK as artifact
 
-**⚠️ Known Issue:** `set +e` swallows versionFile errors. See [BUGS_AND_ISSUES.md](../docs/analysis/BUGS_AND_ISSUES.md#4-version-generation-task-may-fail-silently).
+**⚠️ Known Issue:** `set +e` swallows versionFile errors. See [BUGS_AND_ISSUES.md](../docs/architecture/tree/deployment/known-issues.md#4-version-generation-task-may-fail-silently).
 
 **Output Artifacts:**
 - `android-app` (all APKs from `**/build/outputs/apk/**/*.apk`)
@@ -191,7 +191,7 @@ bash scripts/configure-release-environments.sh \
 
 **⚠️ CRITICAL BUG:** The `tester_groups` input is **IGNORED**. Fastlane lane doesn't use it.
 - **Workaround:** Set `ENV['FIREBASE_GROUPS']` in workflow environment
-- See [BUGS_AND_ISSUES.md](../docs/analysis/BUGS_AND_ISSUES.md#1-firebase-tester-groups-parameter-ignored)
+- See [BUGS_AND_ISSUES.md](../docs/architecture/tree/deployment/known-issues.md#1-firebase-tester-groups-parameter-ignored)
 
 **Output Artifacts:**
 - `firebase-app` (all APKs)
@@ -242,7 +242,7 @@ bash scripts/configure-release-environments.sh \
 3. Calls: `bundle exec fastlane android promote_to_production`
 4. Cleans up secrets
 
-**⚠️ Known Issue:** No validation that beta release exists. See [BUGS_AND_ISSUES.md](../docs/analysis/BUGS_AND_ISSUES.md#5-production-promotion-has-no-validation).
+**⚠️ Known Issue:** No validation that beta release exists. See [BUGS_AND_ISSUES.md](../docs/architecture/tree/deployment/known-issues.md#5-production-promotion-has-no-validation).
 
 **Fastlane Lane Used:**
 - `promote_to_production` (line 151): Promotes beta → production
@@ -260,7 +260,6 @@ bash scripts/configure-release-environments.sh \
 **Inputs:**
 - `ios_package_name` (required): iOS module name (e.g., `cmp-ios`)
 - `build_type` (required): `Debug` or `Release`
-- `use_cocoapods` (default: `false`): Install CocoaPods dependencies
 - `shared_module` (required): Shared module path
 - For Release builds:
   - `appstore_key_id`, `appstore_issuer_id` (App Store Connect API)
@@ -294,7 +293,6 @@ bash scripts/configure-release-environments.sh \
 
 **Inputs:**
 - `ios_package_name` (required)
-- `use_cocoapods` (default: `false`)
 - `shared_module` (required)
 - App Store Connect API parameters (same as build-ios-app)
 - `firebase_creds` (required): Base64-encoded service account JSON
@@ -315,7 +313,7 @@ bash scripts/configure-release-environments.sh \
 
 **⚠️ CRITICAL BUG:** Same as Android - `tester_groups` input is ignored.
 - **Workaround:** Set `ENV['FIREBASE_GROUPS']`
-- See [BUGS_AND_ISSUES.md](../docs/analysis/BUGS_AND_ISSUES.md#1-firebase-tester-groups-parameter-ignored)
+- See [BUGS_AND_ISSUES.md](../docs/architecture/tree/deployment/known-issues.md#1-firebase-tester-groups-parameter-ignored)
 
 **Fastlane Lane Used:**
 - `deploy_on_firebase` (line 508): Increment version, build, upload
@@ -346,7 +344,7 @@ bash scripts/configure-release-environments.sh \
 
 **Version Sanitization:**
 - Gradle: `2026.1.1-beta.0.9+abc123` → App Store: `2026.1.9`
-- See [Version Handling Guide](../docs/claude/version-handling.md)
+- See [Version Handling Guide](../docs/architecture/tree/gradle/version-handling.md)
 
 **Output Artifacts:**
 - `testflight-app` (IPA)
@@ -555,7 +553,7 @@ Use `scripts/white-label/keystore.sh` to encode secrets:
 ./keystore-manager.sh view
 ```
 
-See [Secrets Management Guide](../docs/claude/secrets-management.md) for complete reference.
+See [Secrets Management Guide](../docs/architecture/tree/secrets/management.md) for complete reference.
 
 ---
 
@@ -588,7 +586,7 @@ env:
   FIREBASE_GROUPS: "my-tester-group"
 ```
 
-See [BUGS_AND_ISSUES.md](../docs/analysis/BUGS_AND_ISSUES.md#1-firebase-tester-groups-parameter-ignored)
+See [BUGS_AND_ISSUES.md](../docs/architecture/tree/deployment/known-issues.md#1-firebase-tester-groups-parameter-ignored)
 
 ---
 
@@ -614,7 +612,7 @@ See [BUGS_AND_ISSUES.md](../docs/analysis/BUGS_AND_ISSUES.md#1-firebase-tester-g
 
 **Cause:** Version generation from Gradle → Firebase → App Store requires sanitization
 
-**Fix:** Fastlane automatically sanitizes versions. See [Version Handling Guide](../docs/claude/version-handling.md).
+**Fix:** Fastlane automatically sanitizes versions. See [Version Handling Guide](../docs/architecture/tree/gradle/version-handling.md).
 
 ---
 
@@ -680,8 +678,8 @@ See [BUGS_AND_ISSUES.md](../docs/analysis/BUGS_AND_ISSUES.md#1-firebase-tester-g
 ---
 
 **Need more help?**
-- [Deployment Playbook](../docs/claude/deployment-playbook.md)
-- [Known Issues](../docs/analysis/BUGS_AND_ISSUES.md)
-- [GitHub Actions Deep Dive](../docs/claude/github-actions-deep-dive.md)
+- [Deployment Playbook](../docs/architecture/tree/deployment/playbook.md)
+- [Known Issues](../docs/architecture/tree/deployment/known-issues.md)
+- [GitHub Actions Deep Dive](../docs/architecture/tree/github/actions-deep-dive.md)
 
 [← Back to Main](../CLAUDE.md)

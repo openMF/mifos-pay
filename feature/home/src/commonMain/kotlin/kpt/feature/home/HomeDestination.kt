@@ -17,19 +17,22 @@ import androidx.navigation.navigation
 import kotlinx.serialization.Serializable
 import kpt.core.base.ui.nav.composableWithStayTransitions
 
+/** Type-safe navigation destination of the home graph. */
 @Serializable
 data object HomeDestination
 
+/** Type-safe route of the home screen. */
 @Serializable
 data object HomeRoute
 
+/** Navigates to the home destination, optionally with [navOptions]. */
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     navigate(HomeDestination, navOptions)
 }
 
 /**
  * The backbone home graph. [homeBody] is the fork-owned home content (default supplied by
- * `cmp-navigation`'s `BackboneRegistry.homeBody`); this template graph carries zero demo imports.
+ * `cmp-navigation`'s `ForkBackboneRegistry.homeBody`); this template graph carries zero demo imports.
  */
 fun NavGraphBuilder.homeGraph(
     onSettingsClick: () -> Unit,

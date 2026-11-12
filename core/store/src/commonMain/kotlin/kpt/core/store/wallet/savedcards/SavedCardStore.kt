@@ -11,20 +11,22 @@ package kpt.core.store.wallet.savedcards
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.savedcards.SavedCardDao
 import kpt.core.database.wallet.savedcards.toDomain
 import kpt.core.database.wallet.savedcards.toEntity
-import org.mifospay.core.model.savedcards.SavedCard
-import org.mifospay.core.network.FineractApiManager
+import kpt.core.model.savedcards.SavedCard
+import kpt.core.network.main.services.SavedCardService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 
-/** Room `@Entity(tableName = …)` for `SavedCardEntity`. Shared with the DAO's writes. */
-private const val SAVED_CARDS_TABLE = "wallet_saved_cards"
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
  * Build the LEDGER read [Store] for saved payment cards
@@ -69,18 +71,19 @@ private const val SAVED_CARDS_TABLE = "wallet_saved_cards"
  * their existing online repository methods and the server-echoed row appears
  * here on the next refresh cycle. There is no `Bookkeeper`.
  */
+@StoreProvider(id = "savedCards")
+@CacheKey(fn = "of", key = "wallet_saved_cards-{clientId}", params = ["clientId:Long"])
 fun provideSavedCardStore(
-    apiManager: FineractApiManager,
+    savedCardService: SavedCardService,
     dao: SavedCardDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<SavedCardKey, List<SavedCard>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: SavedCardKey ->
         // Ktorfit returns Flow<List<SavedCard>> — take the first (and only) emission.
-        apiManager.savedCardApi.getSavedCards(key.clientId).first()
+        savedCardService.getSavedCards(key.clientId).first()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: SavedCardKey ->
-            daoFlow(SAVED_CARDS_TABLE) { dao.observeByClient(key.clientId) }
+            run { dao.observeByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: SavedCardKey, cards: List<SavedCard> ->

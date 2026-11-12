@@ -5,45 +5,64 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.platform.update
 
 /**
- * Manages application update detection and processing.
+ * In-app update check, with real behaviour on every target.
  *
- * This interface abstracts platform-specific implementations for checking
- * and managing application updates. It provides methods to initiate update checks
- * and verify the state of previously initiated update processes.
+ * ## Why this is one commonMain contract now
+ * This used to be a per-target pair: a Play Core implementation in `androidMain` and a twin in
+ * `nonAndroidMain` whose two methods were empty bodies. iOS, desktop and web therefore had no
+ * update path at all, and no caller could tell — the calls compiled and silently did nothing.
  *
- * Platform-specific implementations of this interface typically integrate with:
- * - Google Play In-App Updates API on Android
- * - AppStoreKit on iOS
- * - Other platform-specific update mechanisms
+ * [AppUpdateManagerImpl] now delegates to the toolkit's `AppUpdate` engine, which ships real
+ * `actual`s for 11 targets, so one implementation is honest on all of them. A target the engine
+ * genuinely cannot serve says so through [UpdateOutcome.NotSupported] rather than by doing nothing.
  *
- * The update management process is essential for ensuring users have access to
- * the latest features, security patches, and performance improvements.
+ * ## Why these suspend
+ * The check is a network call on every target. The former signature was fire-and-forget, which is
+ * exactly what let a no-op twin pass for a working implementation.
  */
 interface AppUpdateManager {
 
-    /**
-     * Initiates a check for available application updates.
-     *
-     * This method communicates with the relevant app distribution platform to
-     * determine if a newer version of the application is available for download.
-     * The implementation may handle the entire update flow, including presenting
-     * update dialogs to the user and facilitating the download and installation
-     * process, depending on platform capabilities.
-     */
-    fun checkForAppUpdate()
+    /** Check for an update and, if one is available, start the flow. */
+    suspend fun checkForAppUpdate(): UpdateOutcome
 
     /**
-     * Verifies if there is an update process that was previously initiated but not completed.
-     *
-     * This method is typically called during application startup to determine if
-     * an update process needs to be resumed. Update processes may be interrupted
-     * by application termination, system restart, or other events, and this method
-     * allows the application to recover and continue the update process.
+     * Re-check after the app returns to the foreground, so an update the user backgrounded
+     * mid-flow is offered again. Call from the host's resume hook.
      */
-    fun checkForResumeUpdateState()
+    suspend fun checkForResumeUpdateState(): UpdateOutcome
+
+    /** Whether this target can perform an in-app update at all. */
+    fun isSupported(): Boolean
+}
+
+/** What an update check concluded. Flattened from the engine's richer result type. */
+sealed interface UpdateOutcome {
+
+    /** No update available — the user is current. */
+    data object UpToDate : UpdateOutcome
+
+    /** An update was available and the flow was started. */
+    data object UpdateStarted : UpdateOutcome
+
+    /** The user dismissed the update flow. */
+    data object Cancelled : UpdateOutcome
+
+    /**
+     * This target has no in-app update mechanism; [reason] says why.
+     *
+     * @property reason why this target has no in-app update mechanism. A diagnostic, not user-facing copy.
+     */
+    data class NotSupported(val reason: String) : UpdateOutcome
+
+    /**
+     * The check or the flow failed.
+     *
+     * @property message what failed, for logging — not user-facing copy.
+     */
+    data class Failed(val message: String) : UpdateOutcome
 }

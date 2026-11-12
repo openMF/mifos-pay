@@ -14,7 +14,6 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-
 // namespace auto-derives from baseNamespace + module path via kmp.library.convention.
 kotlin {
     sourceSets {
@@ -32,6 +31,9 @@ kotlin {
             implementation(projects.coreBase.ui)
             implementation(projects.coreBase.common)
             implementation(projects.coreBase.network)
+            // org.mifos.corebase.network (KtorHttpClient, ResultSuspendConverterFactory) moved from
+            // core-base/network (template-owned) to core/network at the 90ff6da6 template sync.
+            implementation(projects.core.network)
         }
 
         androidMain.dependencies {
@@ -70,4 +72,10 @@ dependencies {
     // convention on AGP-9 (iosArm64 + iosSimulatorArm64 only).
     add("kspIosArm64", libs.ktorfit.ksp)
     add("kspIosSimulatorArm64", libs.ktorfit.ksp)
+}
+
+compose.resources {
+    publicResClass = true
+    generateResClass = always
+    packageOfResClass = "org.mifos.lib.loan.generated.resources"
 }

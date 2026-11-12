@@ -41,8 +41,10 @@ internal fun createSQLiteWasmWorker(): Worker =
 internal fun createSqlJsWorker(): Worker =
     js("""new Worker(new URL("sql-js-worker/worker.js", import.meta.url))""")
 
+/** Web (WasmJS) implementation of `AppDatabaseFactory`. */
 class AppDatabaseFactory {
 
+    /** Opens (or creates) the app database for this target, at the platform's own storage location. */
     inline fun <reified T : RoomDatabase> createDatabase(
         databaseName: String,
     ): RoomDatabase.Builder<T> {
@@ -50,6 +52,7 @@ class AppDatabaseFactory {
             .setDriver(WebWorkerSQLiteDriver(createSQLiteWasmWorker()))
     }
 
+    /** An in-memory database for tests — discarded with the process, so each test starts clean. */
     inline fun <reified T : RoomDatabase> createInMemoryDatabase(): RoomDatabase.Builder<T> {
         return Room.inMemoryDatabaseBuilder<T>()
             .setDriver(WebWorkerSQLiteDriver(createSQLiteWasmWorker()))

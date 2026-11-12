@@ -17,6 +17,7 @@ import kotlin.math.roundToLong
 // Kotlin/JS and Kotlin/Native; these helpers cover the use cases we hit
 // in the UI: fixed decimal places + thousand separators.
 
+/** Formats this value rounded to [places] decimal places without grouping (KMP-safe replacement for String.format). */
 fun Double.formatDecimal(places: Int): String {
     val factor = 10.0.pow(places)
     val rounded = (this * factor).roundToLong() / factor
@@ -30,6 +31,7 @@ fun Double.formatDecimal(places: Int): String {
     return if (places == 0) "$sign$intPart" else "$sign$intPart.$padded"
 }
 
+/** Formats this value with [places] decimal places and comma thousands separators. */
 fun Double.formatGrouped(places: Int): String {
     val raw = formatDecimal(places)
     val negative = raw.startsWith('-')
@@ -41,6 +43,7 @@ fun Double.formatGrouped(places: Int): String {
     return (if (negative) "-" else "") + grouped + fracPart
 }
 
+/** Formats this value with comma thousands separators. */
 fun Long.formatGrouped(): String {
     val negative = this < 0
     val s = abs(this).toString()

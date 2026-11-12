@@ -11,10 +11,11 @@ package kpt.core.database.wallet.recentpayee
 
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a derived recent-payee — the Room mirror of the
- * `org.mifospay.core.model.account.RecentPayee` domain model.
+ * `kpt.core.model.account.RecentPayee` domain model.
  *
  * Stored in the `wallet_recent_payees` table. LEDGER-shaped but LOCAL-DERIVED
  * (GOAL D12 — OFFLINE_LOCAL_ONLY variant used to persist runtime-derived data):
@@ -58,6 +59,7 @@ import androidx.room3.Index
  * @property fetchedAtEpochMs Local derive-write timestamp — set by the repo for
  *   observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_recent_payees",
     primaryKeys = ["sourceAccountId", "clientId"],

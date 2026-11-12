@@ -15,15 +15,18 @@ import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.usePinned
 import platform.posix.memset
 
+/** Apple/native implementation of `SecureWiper`. */
 @OptIn(ExperimentalForeignApi::class)
 actual class SecureWiper actual constructor() {
 
+    /** `wipeSecureStorage` on Apple/native. */
     actual fun wipeSecureStorage() {
         Logger.w("SecureWiper") { "Secure storage wipe triggered" }
         // Consumer apps should delete Keychain items for service
         // "kpt.secure" and clear UserDefaults.
     }
 
+    /** `scrubMemory` on Apple/native. */
     actual fun scrubMemory(data: ByteArray) {
         data.usePinned { pinned ->
             memset(pinned.addressOf(0), 0, data.size.toULong())

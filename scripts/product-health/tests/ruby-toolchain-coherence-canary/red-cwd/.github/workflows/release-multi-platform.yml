@@ -1,0 +1,7 @@
+name: Release
+jobs:
+  release:
+    uses: openMF/mifos-x-actionhub/.github/workflows/release-multi-platform-v2.yaml@v1.0.64
+    with:
+      fastlane_mode:        pre-materialized
+      fastlane_cwd:         .

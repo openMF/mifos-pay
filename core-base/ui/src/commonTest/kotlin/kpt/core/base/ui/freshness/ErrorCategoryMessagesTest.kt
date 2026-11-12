@@ -9,10 +9,10 @@
  */
 package kpt.core.base.ui.freshness
 
+import kpt.core.base.store.error.ErrorCategory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import kpt.core.base.store.error.ErrorCategory
 
 /**
  * Locks the [ErrorCategory.toShortMessage] / [ErrorCategory.toLongMessage] contracts —

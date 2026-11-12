@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="app_name">KPT Design</string>
+    <string name="home">홈</string>
+    <string name="profile">프로필</string>
+    <string name="settings">설정</string>
+    <string name="not_connected">⚠️ 인터넷에 연결되어 있지 않습니다</string>
+    <string name="screenstate_empty_title">아직 아무것도 없습니다</string>
+    <string name="screenstate_empty_message">데이터가 생기면 여기에 표시됩니다.</string>
+    <string name="screenstate_error_title">문제가 발생했습니다</string>
+    <string name="screenstate_error_retry">다시 시도</string>
+    <string name="screenstate_nonet_title">오프라인 상태입니다</string>
+    <string name="screenstate_nonet_message">다시 연결되면 재시도합니다.</string>
+    <string name="screenstate_nonet_retry">지금 다시 시도</string>
+    <string name="screenstate_captive_title">Wi-Fi에 로그인</string>
+    <string name="screenstate_captive_message">연결하기 전에 네트워크 로그인이 필요합니다.</string>
+    <string name="screenstate_captive_action">로그인 페이지 열기</string>
+    <string name="error_category_network">서버에 연결할 수 없습니다. 연결 상태를 확인하세요.</string>
+    <string name="error_category_auth">세션이 만료되었습니다. 다시 로그인해 주세요.</string>
+    <string name="error_category_ratelimit">요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="error_category_server">서버에 일시적인 문제가 있습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="error_category_generic">문제가 발생했습니다</string>
+</resources>

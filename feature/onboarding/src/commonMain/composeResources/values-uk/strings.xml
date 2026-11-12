@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Пропустити</string>
+    <string name="feature_onboarding_skip_a11y">Перейти до налаштувань конфіденційності</string>
+    <string name="feature_onboarding_next">Далі</string>
+    <string name="feature_onboarding_page_of">Сторінка %1$d з %2$d</string>
+    <string name="feature_onboarding_overview_title">Усі фінансові інструменти в одному місці</string>
+    <string name="feature_onboarding_overview_body">Позики, рахунки, ставки й калькулятори зібрані разом — потрібна цифра завжди на відстані одного дотику.</string>
+    <string name="feature_onboarding_track_title">Не пропускайте терміни оплати</string>
+    <string name="feature_onboarding_track_body">Стежте за позиками й рахунками та отримуйте нагадування перед кожним платежем.</string>
+    <string name="feature_onboarding_offline_title">Немає зв’язку? Продовжуйте</string>
+    <string name="feature_onboarding_offline_body">Збережені дані залишаються на пристрої та доступні офлайн. Зміни синхронізуються, щойно ви знову будете онлайн.</string>
+    <string name="feature_onboarding_privacy_title">Допоможіть покращити застосунок</string>
+    <string name="feature_onboarding_privacy_lead">Обидві функції вимкнені, доки ви їх не ввімкнете. Дозвольте обидві одним дотиком або оберіть нижче — ви однаково зможете користуватися всім.</string>
+    <string name="feature_onboarding_analytics_label">Надсилати аналітику використання</string>
+    <string name="feature_onboarding_analytics_body">Які екрани й функції використовуються і як часто. Ніколи не те, що ви вводите чи зберігаєте.</string>
+    <string name="feature_onboarding_crash_label">Надсилати звіти про збої</string>
+    <string name="feature_onboarding_crash_body">У разі збою застосунку: помилка, версія застосунку та модель пристрою, щоб ми могли це виправити.</string>
+    <string name="feature_onboarding_no_personal_data">Ніщо з того, що ви вводите в застосунку, ніколи не надсилається.</string>
+    <string name="feature_onboarding_settings_later">Ви можете змінити це пізніше в налаштуваннях.</string>
+    <string name="feature_onboarding_connect_server">Налаштувати сервер</string>
+    <string name="feature_onboarding_agreement">Користуючись нашим сервісом, ви приймаєте такі документи: %1$s та %2$s.</string>
+    <string name="feature_onboarding_terms">Умови використання</string>
+    <string name="feature_onboarding_privacy_policy">Політика конфіденційності</string>
+    <string name="feature_onboarding_allow_get_started">Дозволити й почати</string>
+    <string name="feature_onboarding_continue_without">Продовжити без надсилання</string>
+    <string name="feature_onboarding_continue_choices">Продовжити з моїм вибором</string>
+    <string name="feature_onboarding_save_failed">Не вдалося зберегти ваш вибір. Спробуйте ще раз.</string>
+</resources>

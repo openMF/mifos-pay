@@ -11,14 +11,19 @@ package kpt.core.base.store.submit
 
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkStatus
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kpt.core.base.observability.CrashReporter
 import kpt.core.base.observability.CrashSeverity
 
@@ -78,14 +83,36 @@ class OfflineSubmitSyncer<P, R>(
      * batch — remaining entries continue to be retried.
      */
     fun start(): Job = scope.launch {
-        networkStatusFlow
+        val online = networkStatusFlow
             .map { status -> retryOnStatus.shouldRetry(status) }
             .distinctUntilChanged()
-            .filter { shouldRetry -> shouldRetry }
-            .collect { retryAll() }
+            .stateIn(this)
+        // Two triggers: coming online, and new PENDING entries while online (a Retry in Sync &
+        // Drafts, a draft kept a moment ago). `conflate` runs sweeps one at a time — triggers that
+        // arrive during a sweep fold into one more — so a sweep never races itself.
+        merge(
+            online.filter { it }.map { },
+            outbox.observePendingIds().distinctUntilChanged().filter { it.isNotEmpty() }.map { },
+        )
+            .conflate()
+            .collect { if (online.value) sweepUntilSettled() }
     }
 
-    private suspend fun retryAll() {
+    /**
+     * Sweep, and sweep again while any entry was put back for another attempt.
+     *
+     * The edge-trigger fires ONCE per reconnect, so before this a failed attempt was final: the
+     * entry went FAILED on the first exception — a transient one included (an HTTP/2 stream reset
+     * while the app was starting, device 2026-10-26) — and [retryPolicy] never got to retry it.
+     * Each later round still waits its entry's backoff first, so this cannot spin.
+     */
+    private suspend fun sweepUntilSettled() {
+        while (retryAll()) Unit
+    }
+
+    /** @return true when an entry was requeued and the sweep should run again. */
+    private suspend fun retryAll(): Boolean {
+        var requeued = false
         val pending = outbox.getAllPending()
         for (entry in pending) {
             // Cap: an entry that has already burned its attempts is terminally FAILED, not retried
@@ -107,10 +134,19 @@ class OfflineSubmitSyncer<P, R>(
                 submitBlock(entry.payload)
                 outbox.markSubmitted(entry.id)
             } catch (e: CancellationException) {
-                outbox.markFailed(entry.id, "cancelled")
+                // Cancelled = the connection went (collectLatest) or the scope ended — not the
+                // payload's fault. Back to PENDING so the next reconnect sends it; FAILED here
+                // stranded it for good.
+                withContext(NonCancellable) { outbox.requeue(entry.id, null) }
                 throw e
             } catch (e: Exception) {
-                outbox.markFailed(entry.id, e.message)
+                // attemptCount is the attempts made BEFORE this one (markRetrying bumped the row).
+                if (entry.attemptCount + 1 < retryPolicy.maxAttempts) {
+                    outbox.requeue(entry.id, e.message)
+                    requeued = true
+                } else {
+                    outbox.markFailed(entry.id, e.message)
+                }
                 // Surface retry-failure to the fork's crash-reporter (if wired) so production
                 // installs can spot recurring failures without polling the outbox table.
                 crashReporter?.recordException(
@@ -120,6 +156,7 @@ class OfflineSubmitSyncer<P, R>(
                 )
             }
         }
+        return requeued
     }
 }
 

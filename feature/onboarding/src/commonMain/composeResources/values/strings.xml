@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- Brand-neutral starter copy. A fork rewrites the intro pages (overview / track / offline) for its own app; the
+     privacy-page strings describe the consent behaviour and usually only need the product's wording. -->
+<resources>
+    <string name="feature_onboarding_skip">Skip</string>
+    <string name="feature_onboarding_skip_a11y">Skip to the privacy choices</string>
+    <string name="feature_onboarding_next">Next</string>
+    <string name="feature_onboarding_page_of">Page %1$d of %2$d</string>
+
+    <string name="feature_onboarding_overview_title">Your money tools, in one place</string>
+    <string name="feature_onboarding_overview_body">Loans, bills, rates and calculators sit side by side, so the number you need is always a tap away.</string>
+    <string name="feature_onboarding_track_title">Never miss a due date</string>
+    <string name="feature_onboarding_track_body">Keep track of loans and bills, and get a reminder before each payment is due.</string>
+    <string name="feature_onboarding_offline_title">No signal? Keep going</string>
+    <string name="feature_onboarding_offline_body">What you save stays on this device and works offline. Changes sync when you are back online.</string>
+
+    <string name="feature_onboarding_privacy_title">Help improve the app</string>
+    <string name="feature_onboarding_privacy_lead">Both are off unless you turn them on. Allow both in one tap, or choose below — you can still use everything.</string>
+    <string name="feature_onboarding_analytics_label">Share usage analytics</string>
+    <string name="feature_onboarding_analytics_body">Which screens and features are used, and how often. Never what you type or save.</string>
+    <string name="feature_onboarding_crash_label">Send crash reports</string>
+    <string name="feature_onboarding_crash_body">When the app crashes: the error, the app version and the device model, so we can fix it.</string>
+    <string name="feature_onboarding_no_personal_data">Nothing you enter in the app is ever sent.</string>
+    <string name="feature_onboarding_settings_later">You can change this later in Settings.</string>
+    <string name="feature_onboarding_connect_server">Set up your server</string>
+    <!-- %1$s = feature_onboarding_terms, %2$s = feature_onboarding_privacy_policy; each renders as an in-app link. -->
+    <string name="feature_onboarding_agreement">By using our service you accept our %1$s and %2$s.</string>
+    <string name="feature_onboarding_terms">Terms &amp; Conditions</string>
+    <string name="feature_onboarding_privacy_policy">Privacy Policy</string>
+
+    <string name="feature_onboarding_allow_get_started">Allow and get started</string>
+    <string name="feature_onboarding_continue_without">Continue without sharing</string>
+    <string name="feature_onboarding_continue_choices">Continue with my choices</string>
+    <string name="feature_onboarding_save_failed">Couldn't save your choices. Try again.</string>
+</resources>

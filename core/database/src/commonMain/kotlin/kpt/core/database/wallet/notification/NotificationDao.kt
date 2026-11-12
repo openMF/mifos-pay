@@ -15,6 +15,7 @@ import androidx.room3.OnConflictStrategy
 import androidx.room3.Query
 import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
+import kpt.core.base.database.annotation.DbDao
 
 /**
  * Data-access object for the `wallet_notifications` LEDGER table.
@@ -37,6 +38,7 @@ import kotlinx.coroutines.flow.Flow
  * Fineract `notifications/` endpoint (server-issued notification ids grow
  * monotonically).
  */
+@DbDao
 @Dao
 interface NotificationDao {
 

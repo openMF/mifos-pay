@@ -5,7 +5,8 @@
 # Apple Silicon compatibility
 --container-architecture linux/amd64
 
-# macOS jobs run natively on the host (Xcode + CocoaPods available on macOS dev machines)
+# macOS jobs run natively on the host (Xcode available on macOS dev machines; iOS is
+# SwiftPM/XCFramework since E6 — there is no Ruby package-manager toolchain to install)
 -P macos-latest=-self-hosted
 
 # Windows jobs run in ubuntu container (Gradle/KMP/WASM builds are platform-agnostic)

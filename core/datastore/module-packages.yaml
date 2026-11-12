@@ -24,7 +24,7 @@ schema_version: "1.0"
 #              one of those cases.
 #   template:  template-authored FRAMEWORK code. A clean fork KEEPS it and a sync full-copies it, so
 #              the fork keeps receiving fixes. Do not edit these packages in a fork; extend them
-#              through the module's `Project*` seam instead.
+#              through the module's `Fork*` seam instead.
 #   fork:      the fork's OWN packages. Never deleted, never synced over. A fork's package needs NO
 #              row at all — undeclared IS fork — so a row here is self-documenting only.
 #
@@ -54,9 +54,8 @@ module: datastore
 # Kept by a clean fork, full-copied by a sync.
 template:
   - { id: config, status: exists }          # the fork-extension seam — see config/README.md
-  - { id: di,    status: exists }           # DatastoreModule + the ProjectDatastoreModule fork seam
+  - { id: di,    status: exists }           # DatastoreModule + the ForkDatastoreModule fork seam
   - { id: prefs, status: exists }           # user + project preference repositories
 
 # THIS FORK's own packages. `/implement` registers here. Empty is normal on the template.
-fork:
-  - { id: infra, status: exists }         # fork datastore infrastructure (preferences plumbing)
+fork: []

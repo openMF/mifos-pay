@@ -22,19 +22,6 @@
     <string name="feature_passcode_biometric_setup_skip">Skip for Now</string>
 
     <!-- BiometricError messages (consumer-owned per library v2.3.0-beta contract) -->
-    <string name="feature_passcode_biometric_error_lockout">Too many attempts. Please wait and try again.</string>
-    <string name="feature_passcode_biometric_error_hardware_unavailable">Biometric hardware is temporarily unavailable. Please try again later.</string>
-    <string name="feature_passcode_biometric_error_not_enrolled">No biometrics are enrolled on this device. Please set up biometrics in system settings.</string>
-    <string name="feature_passcode_biometric_error_timeout">Biometric authentication timed out. Please try again.</string>
-    <string name="feature_passcode_biometric_error_no_space">Not enough storage to complete biometric authentication.</string>
-    <string name="feature_passcode_biometric_error_invalid_registration_data">Biometric registration data is invalid. Please re-enable biometrics from app settings.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_auth">Could not start biometric authentication due to invalid arguments.</string>
-    <string name="feature_passcode_biometric_error_invalid_arguments_registration">Could not start biometric registration due to invalid arguments.</string>
-    <string name="feature_passcode_biometric_error_unknown">An unexpected biometric error occurred. Please try again.</string>
 
     <!-- OS biometric prompt strings (caller-supplied per library v2.3.0-beta contract) -->
-    <string name="feature_passcode_biometric_prompt_title">Unlock Mifos Pay</string>
-    <string name="feature_passcode_biometric_prompt_subtitle">Verify your identity to continue</string>
-    <string name="feature_passcode_biometric_prompt_description">Use your fingerprint, face, or device credential</string>
-    <string name="feature_passcode_biometric_prompt_negative_button">Cancel</string>
 </resources>

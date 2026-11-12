@@ -34,19 +34,19 @@ import kotlinx.coroutines.flow.asSharedFlow
  */
 class FakeScreenDataStream<T> {
 
-    private val _stateFlow = MutableSharedFlow<ScreenState<T>>(
+    private val emittedStates = MutableSharedFlow<ScreenState<T>>(
         replay = 1,
         extraBufferCapacity = 16,
     )
-    private val _refreshTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
+    private val refreshTrigger = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
 
     /**
      * The underlying [ScreenDataStream] to pass to ViewModels under test.
      * Its [ScreenDataStream.state] is backed by this fake's emission channel.
      */
     val asStream: ScreenDataStream<T> = ScreenDataStream(
-        state = _stateFlow.asSharedFlow(),
-        refreshTrigger = _refreshTrigger,
+        state = emittedStates.asSharedFlow(),
+        refreshTrigger = refreshTrigger,
     )
 
     /** Convenience accessor for [asStream].state. */
@@ -54,9 +54,9 @@ class FakeScreenDataStream<T> {
 
     /** Emits [state] to all active collectors. Suspends if buffer is full. */
     suspend fun emit(state: ScreenState<T>) {
-        _stateFlow.emit(state)
+        emittedStates.emit(state)
     }
 
     /** Emits [state] without suspending. Returns false if the buffer is full. */
-    fun tryEmit(state: ScreenState<T>): Boolean = _stateFlow.tryEmit(state)
+    fun tryEmit(state: ScreenState<T>): Boolean = emittedStates.tryEmit(state)
 }

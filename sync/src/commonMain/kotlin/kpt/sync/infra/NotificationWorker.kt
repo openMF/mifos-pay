@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:OptIn(io.github.mobilebytelabs.worker.ExperimentalWorkerApi::class)
 
@@ -25,9 +25,15 @@ public class NotificationWorker(
     context: WorkerContext,
 ) : CoroutineWorker(context) {
 
+    /** Input-data keys. */
     public companion object {
+        /** Input-data key for the headline. */
         public const val KEY_TITLE: String = "kpt.sync.notification.title"
+
+        /** Input-data key for the body text. */
         public const val KEY_BODY: String = "kpt.sync.notification.body"
+
+        /** Input-data key for the Android channel id; ignored elsewhere. */
         public const val KEY_CHANNEL_ID: String = "kpt.sync.notification.channelId"
     }
 

@@ -50,8 +50,10 @@ internal fun createSQLiteWasmWorker(): Worker =
 internal fun createSqlJsWorker(): Worker =
     Worker(js("""new URL("sql-js-worker/worker.js", import.meta.url)"""))
 
+/** Web (JS) implementation of `AppDatabaseFactory`. */
 class AppDatabaseFactory {
 
+    /** Opens (or creates) the app database for this target, at the platform's own storage location. */
     inline fun <reified T : RoomDatabase> createDatabase(
         databaseName: String,
     ): RoomDatabase.Builder<T> {

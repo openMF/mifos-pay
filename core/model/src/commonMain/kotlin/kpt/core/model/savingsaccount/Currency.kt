@@ -1,0 +1,34 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.core.model.savingsaccount
+
+import kotlinx.serialization.Serializable
+
+/**
+ * Currency definition used by savings accounts.
+ *
+ * @property code ISO currency code.
+ * @property name Currency name.
+ * @property decimalPlaces Number of decimal places.
+ * @property inMultiplesOf Amounts must be multiples of this value.
+ * @property displaySymbol Symbol shown for the currency.
+ * @property nameCode Localisation key of the currency name.
+ * @property displayLabel Label shown for the currency.
+ */
+@Serializable
+data class Currency(
+    val code: String,
+    val name: String,
+    val decimalPlaces: Int,
+    val inMultiplesOf: Int? = null,
+    val displaySymbol: String,
+    val nameCode: String,
+    val displayLabel: String,
+)

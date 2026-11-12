@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import kotlinx.serialization.Serializable
-import template.core.base.ui.composableWithSlideTransitions
+import kpt.core.base.ui.nav.composableWithSlideTransitions
 
 /**
  * Type-safe navigation route for the loan provider selection screen — the new entry point of the

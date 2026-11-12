@@ -1,0 +1,344 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.core.data.repositoryImpl
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
+import kpt.core.base.store.infra.FetchedAtRepository
+import kpt.core.base.store.screen.FetchPolicy
+import kpt.core.base.store.screen.ScreenDataStream
+import kpt.core.base.store.screen.asScreenStream
+import kpt.core.common.DateHelper
+import kpt.core.common.ScreenState
+import kpt.core.common.asScreenStateFlow
+import kpt.core.data.fork.util.Constants
+import kpt.core.data.fork.util.parseFineractError
+import kpt.core.data.mapper.toAccount
+import kpt.core.data.mapper.toModel
+import kpt.core.data.mapper.toModelAccountType
+import kpt.core.data.mapper.toTransactionList
+import kpt.core.data.repository.SelfServiceRepository
+import kpt.core.model.account.Account
+import kpt.core.model.beneficiary.Beneficiary
+import kpt.core.model.beneficiary.BeneficiaryPayload
+import kpt.core.model.beneficiary.BeneficiaryUpdatePayload
+import kpt.core.model.client.Client
+import kpt.core.model.network.entity.Page
+import kpt.core.model.network.entity.authentication.AuthenticationPayload
+import kpt.core.model.network.entity.user.User
+import kpt.core.model.savingsaccount.Transaction
+import kpt.core.network.main.services.AccountTransfersService
+import kpt.core.network.main.services.AuthenticationService
+import kpt.core.network.main.services.BeneficiaryService
+import kpt.core.network.main.services.ClientService
+import kpt.core.network.main.services.SavingsAccountsService
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
+import kpt.core.store.wallet.WalletStoreTtl
+import kpt.core.store.wallet.beneficiary.BeneficiaryKey
+import kpt.core.store.wallet.history.TransactionKey
+import org.mobilenativefoundation.store.store5.Store
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
+
+/** Default [SelfServiceRepository] backed by the self-service API. */
+@OptIn(ExperimentalCoroutinesApi::class)
+@RepositoryBinding(binds = SelfServiceRepository::class)
+class SelfServiceRepositoryImpl(
+    @FromQualifier("selfservice") private val selfAuthenticationService: AuthenticationService,
+    @FromQualifier("selfservice") private val selfClientService: ClientService,
+    @FromQualifier("selfservice") private val selfSavingsAccountsService: SavingsAccountsService,
+    private val beneficiaryService: BeneficiaryService,
+    @FromQualifier("selfservice") private val selfAccountTransfersService: AccountTransfersService,
+    @FromQualifier("IO") private val dispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.History) private val historyStore: Store<TransactionKey, List<Transaction>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.Beneficiary) private val beneficiaryStore: Store<BeneficiaryKey, List<Beneficiary>>?,
+) : SelfServiceRepository {
+    override suspend fun loginSelf(payload: AuthenticationPayload): User {
+        return withContext(dispatcher) {
+            selfAuthenticationService.authenticate(payload)
+        }
+    }
+
+    override fun getSelfClientDetails(clientId: Long): Flow<ScreenState<Client>> {
+        return selfClientService
+            .getClient(clientId)
+            .map { it.toModel() }
+            .asScreenStateFlow()
+            .flowOn(dispatcher)
+    }
+
+    override suspend fun getSelfClientDetails(): Flow<ScreenState<Page<Client>>> {
+        return selfClientService.clients()
+            .map { it.toModel() }
+            .asScreenStateFlow(isEmpty = { it.pageItems.isEmpty() })
+            .flowOn(dispatcher)
+    }
+
+    override fun getSelfAccountTransactions(
+        accountId: Long,
+    ): Flow<List<Transaction>> {
+        return selfSavingsAccountsService
+            .getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
+            .map { it.toTransactionList() }
+            .flowOn(dispatcher)
+    }
+
+    override suspend fun getSelfAccountTransactionFromId(
+        accountId: Long,
+        transactionId: Long,
+    ): Flow<Transaction> {
+        val result = withContext(dispatcher) {
+            selfSavingsAccountsService.getSavingAccountTransaction(
+                accountId,
+                transactionId,
+            )
+        }
+
+        return result.map { it.toModel() }
+    }
+
+    override fun getSelfAccounts(clientId: Long): Flow<ScreenState<List<Account>>> {
+        return selfClientService
+            .getAccounts(clientId, Constants.SAVINGS)
+            .map { it.toAccount() }
+            .asScreenStateFlow(errorBodyParser = parseFineractError, isEmpty = { it.isEmpty() })
+            .flowOn(dispatcher)
+    }
+
+    override fun getActiveAccountsWithTransactionsPerAccount(
+        clientId: Long,
+        limit: Int?,
+    ): Flow<ScreenState<Map<Account, List<Transaction>>>> {
+        val accounts = selfClientService
+            .getAccounts(clientId, Constants.SAVINGS)
+            .map { entity -> entity.savingsAccounts.filter { it.status.active } }
+            .map { it.toAccount() }
+            .flowOn(dispatcher)
+
+        return accounts.flatMapLatest { accountList ->
+            val flows = accountList.map { account ->
+                getTransactions(listOf(account.id), limit)
+                    .map { transactions -> account to transactions }
+            }
+
+            combine(flows) { pairs ->
+                pairs.toMap()
+            }
+        }.asScreenStateFlow(isEmpty = { it.isEmpty() })
+    }
+
+    override fun getActiveAccounts(
+        clientId: Long,
+    ): Flow<ScreenState<List<Account>>> {
+        return selfClientService
+            .getAccounts(clientId, Constants.SAVINGS)
+            .map { entity -> entity.savingsAccounts.filter { it.status.active } }
+            .map { it.toAccount() }
+            .flowOn(dispatcher)
+            .asScreenStateFlow(isEmpty = { it.isEmpty() })
+    }
+
+    override fun getActiveAccountsWithAccountTransferTemplate(
+        clientId: Long,
+    ): Flow<ScreenState<List<Account>>> {
+        val accountsFlow = selfClientService
+            .getAccounts(clientId, Constants.SAVINGS)
+            .map { entity -> entity.savingsAccounts.filter { it.status.active } }
+            .flowOn(dispatcher)
+
+        val templateFlow = selfAccountTransfersService
+            .getAccountTransferTemplate()
+            .flowOn(dispatcher)
+
+        return accountsFlow.zip(templateFlow) { accounts, template ->
+            accounts
+                .toAccount()
+                .map { account ->
+                    val templateAccount = template.fromAccountOptions?.firstOrNull {
+                        it.accountNo == account.number
+                    }
+                    if (templateAccount == null) {
+                        account
+                    } else {
+                        account.copy(
+                            clientName = templateAccount.clientName ?: "",
+                            accountType = templateAccount.accountType?.toModelAccountType(),
+                            officeName = templateAccount.officeName,
+                            officeId = templateAccount.officeId,
+                        )
+                    }
+                }
+        }.asScreenStateFlow(isEmpty = { it.isEmpty() })
+    }
+
+    override fun getTransactions(accountId: List<Long>, limit: Int?): Flow<List<Transaction>> {
+        return accountId.asFlow().flatMapMerge { clientId ->
+            getSelfAccountTransactions(clientId)
+        }.scan(emptyList()) { acc, transactions ->
+            (acc + transactions).sortedByDescending { transaction ->
+                DateHelper.parseDateToMillis(transaction.date) ?: Long.MIN_VALUE
+            }.let { sortedList ->
+                limit?.let { sortedList.take(it) } ?: sortedList
+            }
+        }
+    }
+
+    override fun getTransactions(accountId: Long, limit: Int?): Flow<ScreenState<List<Transaction>>> {
+        return selfSavingsAccountsService
+            .getSavingsWithAssociations(accountId, Constants.TRANSACTIONS)
+            .map {
+                if (limit != null) {
+                    it.toTransactionList().take(limit)
+                } else {
+                    it.toTransactionList()
+                }
+            }
+            .flowOn(dispatcher)
+            .asScreenStateFlow(isEmpty = { it.isEmpty() })
+    }
+
+    // Phase-4 Batch-A LEDGER read — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
+    //
+    // See the interface KDoc for the shape contract. The impl below opens ONE
+    // ScreenDataStream per caller (each call gets its own refresh trigger, per
+    // asScreenStream's documented concurrent-subscriber behavior) and forwards
+    // the .state Flow through an optional client-side `take(limit)` map.
+    //
+    // Requires the three store-adapter dependencies (historyStore + NetworkMonitor
+    // + FetchedAtRepository). If any is null (test wiring), we IllegalState —
+    // production DI in RepositoryModule wires all three unconditionally.
+    override fun getTransactionsStream(
+        accountId: Long,
+        limit: Int?,
+        scope: CoroutineScope,
+    ): ScreenDataStream<List<Transaction>> {
+        val store = checkNotNull(historyStore) {
+            "getTransactionsStream requires the LEDGER Store5 wiring. Verify " +
+                "RepositoryModule bound AppStoreRegistry.History and injected it here."
+        }
+        val netMon = checkNotNull(storeNetworkMonitor) {
+            "getTransactionsStream requires kmptoolkit NetworkMonitor. Verify DataModule bound it."
+        }
+        val fetchedAtRepo = checkNotNull(fetchedAtRepository) {
+            "getTransactionsStream requires FetchedAtRepository. Verify DataModule bound it."
+        }
+        // TODO(limit): consumer applies take(limit) on Content
+        return store.asScreenStream(
+            key = TransactionKey(accountId),
+            networkMonitor = netMon,
+            fetchedAtRepository = fetchedAtRepo,
+            cacheKey = AppCacheKeys.History.of(accountId),
+            scope = scope,
+            isEmpty = { it.isEmpty() },
+            fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
+            ttl = WalletStoreTtl.HISTORY,
+        )
+    }
+
+    override fun getAccountsTransactions(
+        clientId: Long,
+    ): Flow<ScreenState<List<Transaction>>> {
+        return selfClientService
+            .getAccounts(clientId, Constants.SAVINGS)
+            .map { it.toAccount() }
+            .map { list -> list.filter { it.status.active } }
+            .map { list -> list.map { it.id } }
+            .flatMapLatest { accountIds ->
+                if (accountIds.isEmpty()) {
+                    flowOf(emptyList())
+                } else {
+                    getTransactions(accountId = accountIds, null)
+                        .filter { transactions -> transactions.isNotEmpty() }
+                }
+            }
+            .asScreenStateFlow(isEmpty = { it.isEmpty() })
+    }
+
+    override fun getBeneficiaryList(): Flow<ScreenState<List<Beneficiary>>> {
+        return beneficiaryService.beneficiaryList()
+            .asScreenStateFlow(isEmpty = { it.isEmpty() })
+            .flowOn(dispatcher)
+    }
+
+    // Phase-5 Batch-1 LEDGER read — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
+    //
+    // See the interface KDoc for the shape contract. Requires the store-adapter
+    // dependencies (beneficiaryStore + NetworkMonitor + FetchedAtRepository).
+    // If any is null (test wiring), we IllegalState — production DI in
+    // RepositoryModule wires all three unconditionally.
+    override fun getBeneficiaryListStream(
+        clientId: Long,
+        scope: CoroutineScope,
+    ): ScreenDataStream<List<Beneficiary>> {
+        val store = checkNotNull(beneficiaryStore) {
+            "getBeneficiaryListStream requires the `beneficiary` Store5 wiring. Verify " +
+                "RepositoryModule bound AppStoreRegistry.Beneficiary and injected it here."
+        }
+        val netMon = checkNotNull(storeNetworkMonitor) {
+            "getBeneficiaryListStream requires kmptoolkit NetworkMonitor. Verify DataModule bound it."
+        }
+        val fetchedAtRepo = checkNotNull(fetchedAtRepository) {
+            "getBeneficiaryListStream requires FetchedAtRepository. Verify DataModule bound it."
+        }
+        return store.asScreenStream(
+            key = BeneficiaryKey(clientId),
+            networkMonitor = netMon,
+            fetchedAtRepository = fetchedAtRepo,
+            cacheKey = AppCacheKeys.Beneficiary.of(clientId),
+            scope = scope,
+            isEmpty = { it.isEmpty() },
+            fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
+            ttl = WalletStoreTtl.BENEFICIARY,
+        )
+    }
+
+    override suspend fun createBeneficiary(
+        beneficiaryPayload: BeneficiaryPayload,
+    ) {
+        withContext(dispatcher) {
+            beneficiaryService.createBeneficiary(beneficiaryPayload)
+        }
+    }
+
+    override suspend fun updateBeneficiary(
+        beneficiaryId: Long,
+        payload: BeneficiaryUpdatePayload,
+    ) {
+        withContext(dispatcher) {
+            beneficiaryService.updateBeneficiary(beneficiaryId, payload)
+        }
+    }
+
+    override suspend fun deleteBeneficiary(beneficiaryId: Long) {
+        withContext(dispatcher) {
+            beneficiaryService.deleteBeneficiary(beneficiaryId)
+        }
+    }
+}

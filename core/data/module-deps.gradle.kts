@@ -25,8 +25,6 @@ dependencies {
     "commonMainApi"(project(":core:model"))
     "commonMainApi"(project(":core:network"))
 
-    "commonMainImplementation"(libs.findLibrary("jb-composeRuntime").get())
-    "commonMainImplementation"(libs.findLibrary("jb-composeComponentsResources").get())
     "commonMainImplementation"(libs.findLibrary("mifos-authenticator-biometrics").get())
     "commonMainImplementation"(libs.findLibrary("mifos-authenticator-passcode").get())
 }

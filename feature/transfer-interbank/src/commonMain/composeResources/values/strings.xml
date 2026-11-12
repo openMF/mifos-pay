@@ -14,7 +14,7 @@
     <string name="feature_send_interbank_select_your_account">Select Your Account</string>
     <string name="feature_send_interbank_choose_account_to_send">Choose the account you want to send money from</string>
     <string name="feature_send_interbank_no_accounts">No Accounts</string>
-    <string name="feature_send_interbank_no_accounts_available">You don\'t have any accounts available for transfer</string>
+    <string name="feature_send_interbank_no_accounts_available">You don't have any accounts available for transfer</string>
     <string name="feature_send_interbank_oops">Oops!</string>
 
     <!-- Search Recipient Screen -->

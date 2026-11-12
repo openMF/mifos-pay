@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 @file:OptIn(ExperimentalUuidApi::class)
 
@@ -24,6 +24,7 @@ import kpt.sync.DATA_SYNC_WORK_NAME
 import kpt.sync.NotificationContent
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.days
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -46,11 +47,16 @@ class DefaultWorkSchedulerTest {
             return fixedId
         }
 
+        val enqueuedPeriodic = mutableListOf<Pair<String, ExistingPeriodicWorkPolicy>>()
+
         override suspend fun enqueueUniquePeriodicWork(
             uniqueWorkName: String,
             existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy,
             request: PeriodicWorkRequest,
-        ): Uuid = fixedId
+        ): Uuid {
+            enqueuedPeriodic += uniqueWorkName to existingPeriodicWorkPolicy
+            return fixedId
+        }
 
         override suspend fun enqueueUniqueWork(
             uniqueWorkName: String,
@@ -92,6 +98,21 @@ class DefaultWorkSchedulerTest {
 
         assertEquals(null, handle.uniqueName, "one-off notifications are not unique work")
         assertEquals(1, wm.enqueuedOneTime.size, "exactly one one-time request enqueued")
+    }
+
+    @Test
+    fun schedulePeriodicNotification_enqueues_unique_periodic_work_that_updates_in_place() = runTest {
+        val wm = FakeWorkManager()
+
+        val handle = DefaultWorkScheduler(wm).schedulePeriodicNotification(
+            NotificationContent(title = "Daily", body = "New stories are waiting"),
+            interval = 1.days,
+            uniqueName = "daily-reminder",
+        )
+
+        assertEquals("daily-reminder", handle.uniqueName)
+        assertEquals(listOf("daily-reminder" to ExistingPeriodicWorkPolicy.UPDATE), wm.enqueuedPeriodic)
+        assertEquals(0, wm.enqueuedOneTime.size, "a periodic reminder is not a one-shot")
     }
 
     @Test

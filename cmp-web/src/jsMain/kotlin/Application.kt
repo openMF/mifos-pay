@@ -1,3 +1,12 @@
+/*
+ * Copyright 2026 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +19,9 @@ import cmp.shared.utils.initKoin
 import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kpt.core.base.datastore.SecureSettingsFactory
 import org.jetbrains.skiko.wasm.onWasmReady
 
 /*
@@ -20,9 +32,23 @@ import org.jetbrains.skiko.wasm.onWasmReady
  * 3. Creates a Compose viewport linked to the document body, where the UI is rendered.
  * 4. Invokes the `SharedApp` composable, which serves as the root of the app's UI.
  */
-@OptIn(ExperimentalComposeUiApi::class)
+/*
+ * Web secure storage (passcode, auth state) is AES-GCM encrypted under a NON-EXTRACTABLE WebCrypto
+ * key, and decrypting it is asynchronous. Koin builds the `secure` Settings from that store, so the
+ * warm-up must COMPLETE before initKoin() — otherwise the first read races the key load and the
+ * factory throws. See kpt.core.base.datastore.WebSecureStore.
+ */
+/** Browser entry point: warms the WebCrypto secure store, then starts Koin and mounts the Compose app. */
 fun main() {
+    MainScope().launch {
+        SecureSettingsFactory.warmUp()
+        startApp()
+    }
+}
 
+@OptIn(ExperimentalComposeUiApi::class)
+private fun startApp() {
+    installWebNetworkMonitor()
     initKoin() // Set up Koin for dependency injection.
 
     // Apply stored language preference on startup
@@ -62,7 +88,7 @@ fun main() {
                         // Note: This will reload the page, and locale selection depends on browser settings
                         // window.location.reload()
                     },
-                    onSplashScreenRemoved = {}
+                    onSplashScreenRemoved = {},
                 )
             }
         }

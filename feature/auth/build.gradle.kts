@@ -24,9 +24,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.domain)
-            implementation(projects.coreBase.ui)
-            implementation(projects.coreBase.platform)
-            implementation(projects.coreBase.store)
+            implementation(projects.core.platform)
+            implementation(projects.core.store)
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
             implementation(compose.foundation)
@@ -52,4 +51,8 @@ kotlin {
             implementation(libs.turbine)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "kpt.feature.auth.generated.resources"
 }

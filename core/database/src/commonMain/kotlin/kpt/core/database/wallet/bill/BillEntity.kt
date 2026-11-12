@@ -12,10 +12,11 @@ package kpt.core.database.wallet.bill
 import androidx.room3.Entity
 import androidx.room3.Index
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a user-defined bill — the Room mirror of the
- * `org.mifospay.core.model.autopay.Bill` domain model.
+ * `kpt.core.model.autopay.Bill` domain model.
  *
  * Stored in the `wallet_autopay_bills` table. Each row is a locally-authored
  * bill definition; there is NO server counterpart (GOAL D12 — OFFLINE_LOCAL_ONLY
@@ -36,8 +37,8 @@ import androidx.room3.PrimaryKey
  * bills without an id are impossible to persist (the mapper generates a stable
  * id at write time).
  *
- * Enums ([`RecurrencePattern`][org.mifospay.core.model.autopay.RecurrencePattern],
- * [`BillStatus`][org.mifospay.core.model.autopay.BillStatus]) persist as their
+ * Enums ([`RecurrencePattern`][kpt.core.model.autopay.RecurrencePattern],
+ * [`BillStatus`][kpt.core.model.autopay.BillStatus]) persist as their
  * `name` (TEXT) via the [`WalletTypeConverters`][kpt.core.database.wallet.converter.WalletTypeConverters]
  * `@ColumnTypeConverter` set.
  *
@@ -56,7 +57,11 @@ import androidx.room3.PrimaryKey
  * @property autoPayPaymentMethod / [autoPaySourceAccount] / [autoPayMaxAmount]
  *   AutoPay configuration fields.
  * @property createdAt / [updatedAt] Epoch-millis timestamps set by the mapper.
+ * @property autoPaySourceAccount Account debited by AutoPay, if configured.
+ * @property autoPayMaxAmount Maximum amount AutoPay may charge per payment, if configured.
+ * @property updatedAt Epoch-millis timestamp of the last update.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_autopay_bills",
     indices = [

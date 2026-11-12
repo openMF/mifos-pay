@@ -11,6 +11,15 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the loan collateral options used in the loan application flow.
+ *
+ * @property id Unique identifier.
+ * @property name Name.
+ * @property position Position in the ordering.
+ * @property description Description.
+ * @property active Whether this entry is active.
+ */
 @Serializable
 data class LoanCollateralOptions(
 

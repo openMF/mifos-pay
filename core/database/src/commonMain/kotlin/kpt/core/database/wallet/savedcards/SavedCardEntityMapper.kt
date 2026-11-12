@@ -12,8 +12,7 @@ package kpt.core.database.wallet.savedcards
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.savedcards.SavedCard
-
+import kpt.core.model.savedcards.SavedCard
 /**
  * Entity ↔ domain mapper for the `wallet_saved_cards` LEDGER table.
  *

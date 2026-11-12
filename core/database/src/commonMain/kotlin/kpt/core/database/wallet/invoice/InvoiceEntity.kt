@@ -11,10 +11,11 @@ package kpt.core.database.wallet.invoice
 
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single invoice — the Room mirror of the
- * `org.mifospay.core.model.datatables.invoice.Invoice` domain model.
+ * `kpt.core.model.datatables.invoice.Invoice` domain model.
  *
  * Stored in the `wallet_invoices` table. LEDGER shape — many rows per client,
  * page-keyed by [clientId]. The Fineract datatable API
@@ -57,6 +58,7 @@ import androidx.room3.Index
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_invoices",
     primaryKeys = ["id", "clientId"],

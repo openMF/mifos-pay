@@ -45,3 +45,14 @@ fun Project.resolveSecretPath(key: String): File {
     }
     return File(repoRoot, "build/secrets-unresolved/$key")
 }
+
+/**
+ * The trimmed text of a `kind: value` secret's file — [resolveSecretPath] (`secrets/live/` else the committed
+ * `secrets/sample/` fake) — or null when it is absent or blank. For build-time client keys compiled into
+ * BuildKonfig: the generated field reads the env var first (CI), then this. Read through
+ * [org.gradle.api.provider.ProviderFactory.fileContents] so the configuration cache tracks the file.
+ */
+fun Project.readSecretValue(key: String): String? {
+    val file = objects.fileProperty().fileValue(resolveSecretPath(key))
+    return providers.fileContents(file).asText.orNull?.trim()?.takeIf { it.isNotEmpty() }
+}

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.util
 
@@ -22,6 +22,7 @@ import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIApplicationOpenSettingsURLString
 
+/** Apple/native implementation of `ShareUtils`. */
 @Suppress("CAST_NEVER_SUCCEEDS")
 actual object ShareUtils {
 
@@ -32,6 +33,7 @@ actual object ShareUtils {
         ) ?: this
     }
 
+    /** `shareText` on Apple/native. */
     actual suspend fun shareText(text: String) {
         val currentViewController = UIApplication.sharedApplication().keyWindow?.rootViewController
         val activityViewController = UIActivityViewController(listOf(text), null)
@@ -42,6 +44,7 @@ actual object ShareUtils {
         )
     }
 
+    /** `shareImage` on Apple/native. */
     actual suspend fun shareImage(title: String, image: ImageBitmap) {
         image.asSkiaBitmap().readPixels()?.let {
             FileKit.saveImageToGallery(
@@ -51,6 +54,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `shareImage` on Apple/native. */
     actual suspend fun shareImage(title: String, byte: ByteArray) {
         FileKit.saveImageToGallery(
             bytes = byte,
@@ -58,6 +62,7 @@ actual object ShareUtils {
         )
     }
 
+    /** `openUrl` on Apple/native. */
     actual fun openUrl(url: String) {
         val nsUrl = NSURL.URLWithString(url)
         if (nsUrl != null) {
@@ -69,6 +74,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `openAppInfo` on Apple/native. */
     actual fun openAppInfo() {
         val url = NSURL.URLWithString(UIApplicationOpenSettingsURLString)
         if (url != null && UIApplication.sharedApplication.canOpenURL(url)) {
@@ -76,6 +82,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `callPhone` on Apple/native. */
     actual fun callPhone(number: String) {
         val url = NSURL.URLWithString("tel:$number")
         if (url != null && UIApplication.sharedApplication.canOpenURL(url)) {
@@ -83,6 +90,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `sendEmail` on Apple/native. */
     actual fun sendEmail(to: String, subject: String?, body: String?) {
         val encodedSubject = subject?.urlEncode() ?: ""
         val encodedBody = body?.urlEncode() ?: ""
@@ -97,6 +105,7 @@ actual object ShareUtils {
         }
     }
 
+    /** `sendViaSMS` on Apple/native. */
     actual fun sendViaSMS(number: String, message: String) {
         val encodedMessage = message.urlEncode()
         val smsUrl = if (number.isNotEmpty()) {
@@ -110,10 +119,12 @@ actual object ShareUtils {
         }
     }
 
+    /** `copyText` on Apple/native. */
     actual fun copyText(text: String) {
         platform.UIKit.UIPasteboard.generalPasteboard.string = text
     }
 
+    /** `shareApp` on Apple/native. */
     actual suspend fun shareApp(storeLink: String, message: String) {
         val shareContent = if (message.isNotEmpty()) {
             "$message\n$storeLink"

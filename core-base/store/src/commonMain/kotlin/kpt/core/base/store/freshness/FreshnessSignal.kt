@@ -27,9 +27,16 @@ import kotlin.time.Instant
  */
 @OptIn(ExperimentalTime::class)
 data class FreshnessSignal(
+    /** When this value last came from the source of truth, or null if it never has. */
     val lastSyncedAt: Instant?,
+    /** How long the value is considered fresh before it is shown as stale. */
     val ttl: Duration,
+    /**
+     * The most recent refresh failure, if the last attempt failed. Present alongside data, because stale content plus
+     * a failure is a different state than no content.
+     */
     val lastError: Throwable?,
+    /** The derived band the UI renders — computed from [lastSyncedAt] against [ttl]. */
     val band: FreshnessBand,
     /**
      * Request-state — true iff a background network refresh is currently in flight
@@ -41,6 +48,7 @@ data class FreshnessSignal(
      */
     val isRefreshing: Boolean = false,
 ) {
+    /** Signal presets. */
     companion object {
         /**
          * Convenience factory for the "never synced, no error" initial state.

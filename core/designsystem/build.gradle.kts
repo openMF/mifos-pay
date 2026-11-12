@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-
 kotlin {
     sourceSets {
         androidInstrumentedTest.dependencies {
@@ -24,6 +23,16 @@ kotlin {
         }
         commonMain.dependencies {
             api(projects.coreBase.designsystem)
+            // `api`, and deliberately from here: core:platform api-exposes core-base:platform, and
+            // every feature module already receives core:designsystem from CMPFeatureConventionPlugin.
+            // Routing it through this module means a feature can read the platform CompositionLocals
+            // — LocalShareManager, LocalUrlLauncher, LocalClipboardManager, LocalPdfManager and the
+            // rest — without declaring anything, and without adding another line to the convention
+            // plugin for every capability the toolkit grows.
+            //
+            // Without this the capabilities are bound in platformModule but unreachable from where
+            // forks actually write screens: 0 of 17 feature modules could see them.
+            api(projects.core.platform)
             // Theme wires LocalScreenStateDefaults from core/store so every screen
             // wrapped by KptTheme picks up the app's branded ScreenState defaults.
             implementation(projects.core.store)

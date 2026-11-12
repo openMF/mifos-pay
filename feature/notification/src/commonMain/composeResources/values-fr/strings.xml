@@ -11,8 +11,8 @@
 <resources>
     <string name="feature_notification_notifications">Notifications</string>
     <string name="feature_notification_error_oops">Oups!</string>
-    <string name="feature_notification_unexpected_error_subtitle">Une erreur inattendue s\'est produite. Veuillez réessayer.</string>
+    <string name="feature_notification_unexpected_error_subtitle">Une erreur inattendue s'est produite. Veuillez réessayer.</string>
     <string name="feature_notification_loading">Chargement</string>
     <string name="feature_notification_nothing_to_notify">Rien à notifier</string>
-    <string name="feature_notification_there_is_nothing_to_show">Il n\'y a rien à afficher</string>
+    <string name="feature_notification_there_is_nothing_to_show">Il n'y a rien à afficher</string>
 </resources>

@@ -11,25 +11,28 @@ package kpt.core.store.wallet.selfaccounts
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.FromQualifier
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.selfaccounts.SelfAccountDao
 import kpt.core.database.wallet.selfaccounts.toDomain
 import kpt.core.database.wallet.selfaccounts.toEntity
-import org.mifospay.core.model.account.Account
-import org.mifospay.core.model.network.entity.client.ClientAccountsEntity
-import org.mifospay.core.model.savingsaccount.SavingAccountEntity
-import org.mifospay.core.network.SelfServiceApiManager
+import kpt.core.model.account.Account
+import kpt.core.model.network.entity.client.ClientAccountsEntity
+import kpt.core.model.savingsaccount.SavingAccountEntity
+import kpt.core.network.main.services.ClientService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 
-/** Room `@Entity(tableName = …)` for `SelfAccountEntity`. Shared with the DAO's writes. */
-private const val SELF_ACCOUNTS_TABLE = "wallet_self_accounts"
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
- * `apiManager.clientsApi.getAccounts(clientId, "savingsAccounts")` `?fields=`
+ * `selfClientService.getAccounts(clientId, "savingsAccounts")` `?fields=`
  * value — pulls back only the savings-accounts bucket of a client's account
  * envelope. This mirrors `AccountRepositoryImpl.getSelfAccounts`'s
  * `Constants.SAVINGS` argument (kept inlined here because `core/store` cannot
@@ -84,28 +87,29 @@ private const val SAVINGS_FIELDS = "savingsAccounts"
  *
  * ## Inline `ClientAccountsEntity → List<Account>` mapper
  *
- * Mirrors `org.mifospay.core.data.mapper.AccountMapper#toAccount` (which lives in
+ * Mirrors `kpt.core.data.mapper.AccountMapper#toAccount` (which lives in
  * `core/data`, out of reach for a `core/store` module — `core/data` depends on
  * `core/store`, so a reverse import would circle). Kept private + minimal so
  * the store body is self-contained and the fetcher lambda doesn't need to reach
  * across module boundaries. Same pattern as `PocketStore`'s inline mappers.
  */
+@StoreProvider(id = "selfAccounts")
+@CacheKey(fn = "of", key = "wallet_self_accounts-{clientId}", params = ["clientId:Long"])
 fun provideSelfAccountsStore(
-    apiManager: SelfServiceApiManager,
+    @FromQualifier("selfservice") selfClientService: ClientService,
     dao: SelfAccountDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<SelfAccountsKey, List<Account>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: SelfAccountsKey ->
         // Ktorfit returns Flow<ClientAccountsEntity> for getAccounts — take the
         // first (and only) emission, then map via the inline mapper below.
-        apiManager.clientsApi
+        selfClientService
             .getAccounts(key.clientId, SAVINGS_FIELDS)
             .first()
             .toAccountsDomain()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: SelfAccountsKey ->
-            daoFlow(SELF_ACCOUNTS_TABLE) { dao.observeByClient(key.clientId) }
+            run { dao.observeByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: SelfAccountsKey, accounts: List<Account> ->
@@ -127,7 +131,7 @@ fun provideSelfAccountsStore(
 // ---------------------------------------------------------------------------
 // Inline ClientAccountsEntity → List<Account> mapper — private to this file.
 //
-// Mirrors `org.mifospay.core.data.mapper.AccountMapper#toAccount`. See the
+// Mirrors `kpt.core.data.mapper.AccountMapper#toAccount`. See the
 // `provideSelfAccountsStore` ## Inline mapper section for rationale. Keep the
 // two in lockstep if the domain model or the network entity grow fields.
 // ---------------------------------------------------------------------------

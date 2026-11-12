@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">تلاش‌های بیش از حد. لطفاً صبر کنید و دوباره تلاش کنید.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">سخت‌افزار زیست‌سنجی به‌طور موقت در دسترس نیست. لطفاً بعداً دوباره تلاش کنید.</string>
+    <string name="core_ui_biometric_error_not_enrolled">هیچ زیست‌سنجی در این دستگاه ثبت نشده است. لطفاً زیست‌سنجی را در تنظیمات سیستم راه‌اندازی کنید.</string>
+    <string name="core_ui_biometric_error_timeout">مهلت احراز هویت زیست‌سنجی به پایان رسید. لطفاً دوباره تلاش کنید.</string>
+    <string name="core_ui_biometric_error_no_space">فضای ذخیره‌سازی کافی برای تکمیل احراز هویت زیست‌سنجی وجود ندارد.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">داده‌های ثبت‌نام زیست‌سنجی نامعتبر است. لطفاً زیست‌سنجی را از تنظیمات برنامه دوباره فعال کنید.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">به دلیل آرگومان‌های نامعتبر، احراز هویت زیست‌سنجی شروع نشد.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">به دلیل آرگومان‌های نامعتبر، ثبت‌نام زیست‌سنجی شروع نشد.</string>
+    <string name="core_ui_biometric_error_unknown">یک خطای غیرمنتظره زیست‌سنجی رخ داد. لطفاً دوباره تلاش کنید.</string>
+    <string name="core_ui_biometric_prompt_title">باز کردن قفل Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">برای ادامه، هویت خود را تأیید کنید</string>
+    <string name="core_ui_biometric_prompt_description">از اثر انگشت، چهره، یا اعتبارنامه دستگاه خود استفاده کنید</string>
+    <string name="core_ui_biometric_prompt_negative_button">لغو</string>
+</resources>

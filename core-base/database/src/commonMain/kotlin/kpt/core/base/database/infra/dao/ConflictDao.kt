@@ -19,6 +19,7 @@ import kpt.core.base.database.infra.entity.ConflictEntity
 @Dao
 interface ConflictDao {
 
+    /** Records a conflict, returning its row id. */
     @Insert
     suspend fun insert(entity: ConflictEntity): Long
 
@@ -26,9 +27,11 @@ interface ConflictDao {
     @Query("SELECT * FROM framework_write_conflicts WHERE resolved = 0 ORDER BY recordedAtMs DESC")
     fun observePending(): Flow<List<ConflictEntity>>
 
+    /** One conflict by row id, or null once resolved and pruned. */
     @Query("SELECT * FROM framework_write_conflicts WHERE id = :id")
     suspend fun getById(id: Long): ConflictEntity?
 
+    /** Marks a conflict resolved. The row is kept so the inbox can show what was decided. */
     @Query("UPDATE framework_write_conflicts SET resolved = 1 WHERE id = :id")
     suspend fun markResolved(id: Long)
 }

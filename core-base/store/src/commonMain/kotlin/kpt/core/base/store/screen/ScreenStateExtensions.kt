@@ -9,8 +9,6 @@
  */
 package kpt.core.base.store.screen
 
-import kotlin.time.ExperimentalTime
-import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
@@ -21,6 +19,8 @@ import kpt.core.base.store.freshness.FreshnessBand
 import kpt.core.base.store.freshness.FreshnessSignal
 import kpt.core.base.store.submit.SubmitHandler
 import kpt.core.base.store.submit.SubmitState
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 /**
  * Transforms only [ScreenState.Content] data, passing through all other states unchanged.
@@ -317,9 +317,14 @@ private fun <R> resolveScreenStates(
     // surfaces isRefreshing = true on the combined signal so the refreshing banner shows.
     val combinedIsRefreshing = contents.any { it.freshnessSignal.isRefreshing }
     val worstBand = contents.maxOfOrNull { it.freshnessSignal.band.severityOrdinal() } ?: 0
-    val combinedFetchedAt: Instant? = if (contents.any { it.fetchedAt == null }) null
-        else contents.mapNotNull { it.fetchedAt }.minOrNull()
-    val combinedSignal = if (contents.isEmpty()) FreshnessSignal.initial() else {
+    val combinedFetchedAt: Instant? = if (contents.any { it.fetchedAt == null }) {
+        null
+    } else {
+        contents.mapNotNull { it.fetchedAt }.minOrNull()
+    }
+    val combinedSignal = if (contents.isEmpty()) {
+        FreshnessSignal.initial()
+    } else {
         contents.first().freshnessSignal.copy(
             band = bandFromOrdinal(worstBand),
             isRefreshing = combinedIsRefreshing,

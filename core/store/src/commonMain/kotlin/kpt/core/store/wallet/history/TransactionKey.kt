@@ -16,5 +16,7 @@ package kpt.core.store.wallet.history
  * The [accountId] doubles as the page key at the DAO layer
  * (`TransactionDao.replacePage(accountId, entities)`), so a fresh fetch for
  * account A never disturbs cached rows for account B.
+ *
+ * @property accountId Savings account id the cached data belongs to.
  */
 data class TransactionKey(val accountId: Long)

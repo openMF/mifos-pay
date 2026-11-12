@@ -9,11 +9,10 @@
  */
 package kpt.core.database.wallet.pocket
 
-import org.mifospay.core.model.enums.AccountType
-import org.mifospay.core.model.pocket.AccountStatus
-import org.mifospay.core.model.pocket.DetailedPocketAccount
-import org.mifospay.core.model.pocket.PocketAccount
-
+import kpt.core.model.enums.AccountType
+import kpt.core.model.pocket.AccountStatus
+import kpt.core.model.pocket.DetailedPocketAccount
+import kpt.core.model.pocket.PocketAccount
 /**
  * Entity ↔ domain mapper for the `wallet_pockets` LEDGER table.
  *
@@ -81,6 +80,7 @@ private fun decodeAccountType(name: String): AccountType =
 private fun decodeAccountStatus(name: String): AccountStatus =
     runCatching { AccountStatus.valueOf(name) }.getOrDefault(AccountStatus.UNKNOWN)
 
+/** Maps this account to a [PocketEntity] marked PENDING_LINK for [clientId], awaiting upload. */
 fun DetailedPocketAccount.toPendingLinkEntity(clientId: Long, fetchedAtEpochMs: Long): PocketEntity =
     PocketEntity(
         id = if (pocket.id == 0L) kotlin.random.Random.nextLong(Long.MIN_VALUE, -1L) else pocket.id,

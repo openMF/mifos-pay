@@ -9,10 +9,9 @@
  */
 package kpt.core.database.wallet.bill
 
-import org.mifospay.core.model.autopay.Bill
-import org.mifospay.core.model.autopay.BillStatus
-import org.mifospay.core.model.autopay.RecurrencePattern
-
+import kpt.core.model.autopay.Bill
+import kpt.core.model.autopay.BillStatus
+import kpt.core.model.autopay.RecurrencePattern
 /**
  * Entity ↔ domain mapper for the `wallet_autopay_bills` table.
  *

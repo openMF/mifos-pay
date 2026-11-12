@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transformWhile
 import kotlinx.coroutines.launch
-import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.store.infra.DecisionEngine
 import kpt.core.base.store.infra.FetchedAtRepository
+import org.mobilenativefoundation.store.store5.Store
 
 /**
  * Load-once variant of [asScreenStream] for edit/mutation screens.

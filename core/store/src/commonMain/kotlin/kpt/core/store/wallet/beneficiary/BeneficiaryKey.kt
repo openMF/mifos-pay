@@ -21,5 +21,7 @@ package kpt.core.store.wallet.beneficiary
  * query parameter (the list is scoped to the authenticated session on the
  * server); the key is used purely for cache scoping, and the mapper stamps
  * the [clientId] into each persisted row at write time.
+ *
+ * @property clientId Client id the cached data belongs to.
  */
 data class BeneficiaryKey(val clientId: Long)

@@ -1,0 +1,37 @@
+/*
+ * Copyright 2025 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.feature.payments.selectTransferType
+
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
+import androidx.navigation.compose.composable
+import kotlinx.serialization.Serializable
+
+/** Type-safe navigation route of the select-transfer-type screen. */
+@Serializable
+data object SelectTransferTypeRoute
+
+/** Navigates to the select-transfer-type screen. */
+fun NavController.navigateToSelectTransferType(navOptions: NavOptions? = null) =
+    navigate(SelectTransferTypeRoute, navOptions)
+
+/** Registers the select-transfer-type destination. */
+fun NavGraphBuilder.selectTransferTypeScreen(
+    onIntraBankTransferClick: () -> Unit,
+    onInterBankTransferClick: () -> Unit,
+) {
+    composable<SelectTransferTypeRoute> {
+        SelectTransferTypeScreen(
+            onIntraBankTransferClick = onIntraBankTransferClick,
+            onInterBankTransferClick = onInterBankTransferClick,
+        )
+    }
+}

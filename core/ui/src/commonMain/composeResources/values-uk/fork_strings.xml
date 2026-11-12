@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Забагато спроб. Зачекайте та спробуйте ще раз.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Біометричне обладнання тимчасово недоступне. Спробуйте пізніше.</string>
+    <string name="core_ui_biometric_error_not_enrolled">На цьому пристрої не зареєстровано біометрії. Налаштуйте біометрію в параметрах системи.</string>
+    <string name="core_ui_biometric_error_timeout">Час біометричної автентифікації вичерпано. Спробуйте ще раз.</string>
+    <string name="core_ui_biometric_error_no_space">Недостатньо місця у сховищі для завершення біометричної автентифікації.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Дані біометричної реєстрації недійсні. Повторно увімкніть біометрію в налаштуваннях додатка.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Не вдалося запустити біометричну автентифікацію через недійсні аргументи.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Не вдалося запустити біометричну реєстрацію через недійсні аргументи.</string>
+    <string name="core_ui_biometric_error_unknown">Сталася неочікувана біометрична помилка. Спробуйте ще раз.</string>
+    <string name="core_ui_biometric_prompt_title">Розблокувати Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Підтвердьте особу, щоб продовжити</string>
+    <string name="core_ui_biometric_prompt_description">Використовуйте відбиток пальця, обличчя або облікові дані пристрою</string>
+    <string name="core_ui_biometric_prompt_negative_button">Скасувати</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="feature_onboarding_skip">Atla</string>
+    <string name="feature_onboarding_skip_a11y">Gizlilik tercihlerine geç</string>
+    <string name="feature_onboarding_next">İleri</string>
+    <string name="feature_onboarding_page_of">Sayfa %1$d / %2$d</string>
+    <string name="feature_onboarding_overview_title">Para araçlarınız tek bir yerde</string>
+    <string name="feature_onboarding_overview_body">Krediler, faturalar, faiz oranları ve hesaplayıcılar yan yana; ihtiyacınız olan rakam her zaman bir dokunuş uzağınızda.</string>
+    <string name="feature_onboarding_track_title">Hiçbir ödeme tarihini kaçırmayın</string>
+    <string name="feature_onboarding_track_body">Kredilerinizi ve faturalarınızı takip edin, her ödemeden önce hatırlatma alın.</string>
+    <string name="feature_onboarding_offline_title">Sinyal yok mu? Devam edin</string>
+    <string name="feature_onboarding_offline_body">Kaydettikleriniz bu cihazda kalır ve çevrimdışı çalışır. Değişiklikler yeniden çevrimiçi olduğunuzda eşitlenir.</string>
+    <string name="feature_onboarding_privacy_title">Uygulamanın gelişmesine yardımcı olun</string>
+    <string name="feature_onboarding_privacy_lead">Siz açmadığınız sürece ikisi de kapalıdır. Tek dokunuşla ikisine de izin verin veya aşağıdan seçin — her özelliği yine de kullanabilirsiniz.</string>
+    <string name="feature_onboarding_analytics_label">Kullanım analizlerini paylaş</string>
+    <string name="feature_onboarding_analytics_body">Hangi ekranların ve özelliklerin ne sıklıkla kullanıldığı. Yazdıklarınız veya kaydettikleriniz asla dahil değildir.</string>
+    <string name="feature_onboarding_crash_label">Çökme raporları gönder</string>
+    <string name="feature_onboarding_crash_body">Uygulama çöktüğünde: düzeltebilmemiz için hata, uygulama sürümü ve cihaz modeli.</string>
+    <string name="feature_onboarding_no_personal_data">Uygulamaya girdiğiniz hiçbir şey asla gönderilmez.</string>
+    <string name="feature_onboarding_settings_later">Bunu daha sonra Ayarlar'dan değiştirebilirsiniz.</string>
+    <string name="feature_onboarding_connect_server">Sunucunuzu ayarlayın</string>
+    <string name="feature_onboarding_agreement">Hizmetimizi kullanarak %1$s ile %2$s metinlerimizi kabul etmiş olursunuz.</string>
+    <string name="feature_onboarding_terms">Şartlar ve Koşullar</string>
+    <string name="feature_onboarding_privacy_policy">Gizlilik Politikası</string>
+    <string name="feature_onboarding_allow_get_started">İzin ver ve başla</string>
+    <string name="feature_onboarding_continue_without">Paylaşmadan devam et</string>
+    <string name="feature_onboarding_continue_choices">Seçimlerimle devam et</string>
+    <string name="feature_onboarding_save_failed">Tercihleriniz kaydedilemedi. Lütfen tekrar deneyin.</string>
+</resources>

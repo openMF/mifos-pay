@@ -11,7 +11,6 @@ package kpt.core.base.store.screen
 
 import app.cash.turbine.test
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kpt.core.base.store.freshness.FreshnessBand
 import kpt.core.base.store.freshness.FreshnessSignal
@@ -22,7 +21,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
@@ -37,10 +35,12 @@ class StoreDataExtensionsTest {
     fun `skipMemoryData emits data from fetcher`() = runTest {
         var fetchCount = 0
         val store = StoreBuilder
-            .from<String, String>(fetcher = Fetcher.of { key ->
-                fetchCount++
-                "fetched:$key"
-            })
+            .from<String, String>(
+                fetcher = Fetcher.of { key ->
+                    fetchCount++
+                    "fetched:$key"
+                },
+            )
             .build()
 
         // skipMemoryData on an unprimed key must reach the fetcher (no cached data to fall back to).

@@ -1,0 +1,144 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.core.data.repositoryImpl
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.FromStore
+import kpt.core.base.data.annotation.RepositoryBinding
+import kpt.core.base.store.infra.FetchedAtRepository
+import kpt.core.base.store.screen.FetchPolicy
+import kpt.core.base.store.screen.ScreenDataStream
+import kpt.core.base.store.screen.asScreenStream
+import kpt.core.common.ScreenState
+import kpt.core.common.asScreenStateFlow
+import kpt.core.data.repository.StandingInstructionRepository
+import kpt.core.model.standinginstruction.SITemplate
+import kpt.core.model.standinginstruction.SIUpdatePayload
+import kpt.core.model.standinginstruction.StandingInstruction
+import kpt.core.model.standinginstruction.StandingInstructionPayload
+import kpt.core.network.main.services.StandingInstructionService
+import kpt.core.store.config.AppCacheKeys
+import kpt.core.store.config.AppStoreIds
+import kpt.core.store.wallet.WalletStoreTtl
+import kpt.core.store.wallet.standinginstruction.StandingInstructionKey
+import org.mobilenativefoundation.store.store5.Store
+import kpt.core.base.data.infra.NetworkMonitor as StoreNetworkMonitor
+
+/** Default [StandingInstructionRepository] backed by the standing-instruction API. */
+@RepositoryBinding(binds = StandingInstructionRepository::class)
+class StandingInstructionRepositoryImpl(
+    private val standingInstructionService: StandingInstructionService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+    // Cache wiring, resolved by the generated binding. Nullable: null keeps the network-only path.
+    @FromStore(AppStoreIds.StandingInstruction)
+    private val standingInstructionStore: Store<StandingInstructionKey, List<StandingInstruction>>?,
+    private val storeNetworkMonitor: StoreNetworkMonitor?,
+    private val fetchedAtRepository: FetchedAtRepository?,
+) : StandingInstructionRepository {
+    override fun getStandingInstructionTemplate(
+        fromOfficeId: Long,
+        fromClientId: Long,
+        fromAccountType: Long,
+    ): Flow<ScreenState<SITemplate>> {
+        return standingInstructionService
+            .getStandingInstructionTemplate(fromOfficeId, fromClientId, fromAccountType)
+            .asScreenStateFlow()
+            .flowOn(ioDispatcher)
+    }
+
+    override fun getAllStandingInstructions(
+        clientId: Long,
+    ): Flow<ScreenState<List<StandingInstruction>>> {
+        return standingInstructionService
+            .getAllStandingInstructions(clientId)
+            .map { it.pageItems }
+            .asScreenStateFlow(isEmpty = { it.isEmpty() })
+            .flowOn(ioDispatcher)
+    }
+
+    // Phase-5 Batch-3 LEDGER read — GOAL D13 (`createStore` + CACHE_FIRST_SWR).
+    //
+    // See the interface KDoc for the shape contract. Requires the three store-adapter
+    // dependencies (standingInstructionStore + NetworkMonitor + FetchedAtRepository).
+    // If any is null (test wiring), we IllegalState — production DI in
+    // RepositoryModule wires all three unconditionally.
+    override fun getAllStandingInstructionsStream(
+        clientId: Long,
+        scope: CoroutineScope,
+    ): ScreenDataStream<List<StandingInstruction>> {
+        val store = checkNotNull(standingInstructionStore) {
+            "getAllStandingInstructionsStream requires the `standingInstruction` Store5 wiring. Verify " +
+                "RepositoryModule bound AppStoreRegistry.StandingInstruction and injected it here."
+        }
+        val netMon = checkNotNull(storeNetworkMonitor) {
+            "getAllStandingInstructionsStream requires kmptoolkit NetworkMonitor. Verify DataModule bound it."
+        }
+        val fetchedAtRepo = checkNotNull(fetchedAtRepository) {
+            "getAllStandingInstructionsStream requires FetchedAtRepository. Verify DataModule bound it."
+        }
+        return store.asScreenStream(
+            key = StandingInstructionKey(clientId),
+            networkMonitor = netMon,
+            fetchedAtRepository = fetchedAtRepo,
+            cacheKey = AppCacheKeys.StandingInstruction.of(clientId),
+            scope = scope,
+            isEmpty = { it.isEmpty() },
+            fetchPolicy = FetchPolicy.CACHE_FIRST_SWR,
+            ttl = WalletStoreTtl.STANDING_INSTRUCTION,
+        )
+    }
+
+    override fun getStandingInstruction(
+        instructionId: Long,
+    ): Flow<ScreenState<StandingInstruction>> {
+        return standingInstructionService
+            .getStandingInstruction(instructionId)
+            .asScreenStateFlow()
+            .flowOn(ioDispatcher)
+    }
+
+    override suspend fun createStandingInstruction(
+        payload: StandingInstructionPayload,
+    ) {
+        withContext(ioDispatcher) {
+            standingInstructionService.createStandingInstruction(payload)
+        }
+    }
+
+    override suspend fun updateStandingInstruction(
+        instructionId: Long,
+        payload: SIUpdatePayload,
+    ) {
+        withContext(ioDispatcher) {
+            standingInstructionService.updateStandingInstruction(
+                instructionId = instructionId,
+                payload = payload,
+                command = "update",
+            )
+        }
+    }
+
+    override suspend fun deleteStandingInstruction(
+        instructionId: Long,
+    ) {
+        withContext(ioDispatcher) {
+            standingInstructionService.deleteStandingInstruction(
+                instructionId = instructionId,
+                command = "delete",
+            )
+        }
+    }
+}

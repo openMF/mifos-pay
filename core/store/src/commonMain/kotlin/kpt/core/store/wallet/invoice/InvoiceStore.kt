@@ -11,20 +11,22 @@ package kpt.core.store.wallet.invoice
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.invoice.InvoiceDao
 import kpt.core.database.wallet.invoice.toDomain
 import kpt.core.database.wallet.invoice.toEntity
-import org.mifospay.core.model.datatables.invoice.Invoice
-import org.mifospay.core.network.FineractApiManager
+import kpt.core.model.datatables.invoice.Invoice
+import kpt.core.network.main.services.InvoiceService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 
-/** Room `@Entity(tableName = …)` for `InvoiceEntity`. Shared with the DAO's writes. */
-private const val INVOICES_TABLE = "wallet_invoices"
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
  * Build the LEDGER read [Store] for invoices
@@ -78,18 +80,19 @@ private const val INVOICES_TABLE = "wallet_invoices"
  * against a warm invoices cache adds negligible caching value; if desired
  * later, add an `InvoiceDetailStore` mirroring `AccountDetailStore`'s shape).
  */
+@StoreProvider(id = "invoice")
+@CacheKey(fn = "of", key = "wallet_invoices-{clientId}", params = ["clientId:Long"])
 fun provideInvoiceStore(
-    apiManager: FineractApiManager,
+    invoiceService: InvoiceService,
     dao: InvoiceDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<InvoiceKey, List<Invoice>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: InvoiceKey ->
         // Ktorfit returns Flow<List<Invoice>> — take the first (and only) emission.
-        apiManager.invoiceApi.getInvoices(key.clientId).first()
+        invoiceService.getInvoices(key.clientId).first()
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: InvoiceKey ->
-            daoFlow(INVOICES_TABLE) { dao.observeByClient(key.clientId) }
+            run { dao.observeByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: InvoiceKey, invoices: List<Invoice> ->

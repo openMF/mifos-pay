@@ -11,10 +11,11 @@ package kpt.core.database.wallet.client
 
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single client-info record — the Room mirror of the
- * `org.mifospay.core.model.client.Client` domain model.
+ * `kpt.core.model.client.Client` domain model.
  *
  * Stored in the `wallet_client_details` table. One row per client
  * (SINGLE-ROW-PER-KEY archetype — the DAO's PK is [id] which doubles as the
@@ -61,7 +62,12 @@ import androidx.room3.PrimaryKey
  * @property legalFormJson JSON encoding of `ClientStatus` (legal form).
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property lastname Client last name.
+ * @property displayName Client display name.
+ * @property emailAddress Client email address.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_client_details",
 )

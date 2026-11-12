@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">嘗試次數過多。請稍候再試。</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">生物辨識硬體暫時無法使用，請稍後再試。</string>
+    <string name="core_ui_biometric_error_not_enrolled">此裝置尚未登錄任何生物辨識資料。請在系統設定中完成生物辨識設定。</string>
+    <string name="core_ui_biometric_error_timeout">生物辨識驗證已逾時，請再試一次。</string>
+    <string name="core_ui_biometric_error_no_space">儲存空間不足，無法完成生物辨識驗證。</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">生物辨識註冊資料無效。請在應用程式設定中重新啟用生物辨識。</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">由於參數無效，無法啟動生物辨識驗證。</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">由於參數無效，無法啟動生物辨識註冊。</string>
+    <string name="core_ui_biometric_error_unknown">發生了意外的生物辨識錯誤，請再試一次。</string>
+    <string name="core_ui_biometric_prompt_title">解鎖 Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">驗證您的身分以繼續</string>
+    <string name="core_ui_biometric_prompt_description">使用您的指紋、臉部或裝置憑證</string>
+    <string name="core_ui_biometric_prompt_negative_button">取消</string>
+</resources>

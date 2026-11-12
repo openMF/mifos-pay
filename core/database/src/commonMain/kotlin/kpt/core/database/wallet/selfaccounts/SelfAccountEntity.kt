@@ -11,10 +11,11 @@ package kpt.core.database.wallet.selfaccounts
 
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single "self account" (own savings account) — the Room
- * mirror of the `org.mifospay.core.model.account.Account` domain model.
+ * mirror of the `kpt.core.model.account.Account` domain model.
  *
  * Stored in the `wallet_self_accounts` table. LEDGER shape — many rows per
  * client, page-keyed by [clientId]. The Fineract endpoint
@@ -61,6 +62,7 @@ import androidx.room3.Index
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_self_accounts",
     primaryKeys = ["id", "clientId"],

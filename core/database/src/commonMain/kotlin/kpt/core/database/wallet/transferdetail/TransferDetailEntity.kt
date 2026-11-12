@@ -11,10 +11,11 @@ package kpt.core.database.wallet.transferdetail
 
 import androidx.room3.Entity
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single account-transfer detail record — the Room mirror of the
- * `org.mifospay.core.model.savingsaccount.TransferDetail` domain model.
+ * `kpt.core.model.savingsaccount.TransferDetail` domain model.
  *
  * Stored in the `wallet_transfer_details` table. One row per transfer
  * (SINGLE-ROW-PER-KEY archetype — the DAO's PK is [transferId] which doubles as the
@@ -40,6 +41,7 @@ import androidx.room3.PrimaryKey
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
  */
+@DbEntity
 @Entity(tableName = "wallet_transfer_details")
 data class TransferDetailEntity(
     @PrimaryKey val transferId: Long,

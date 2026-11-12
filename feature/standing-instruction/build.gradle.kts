@@ -20,14 +20,17 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            // Template idiom: ScreenDataStream (core-base/store) + ScreenContent
-            // (core-base/ui) so the screen consumes the store's pre-decided
+            // Template idiom: ScreenDataStream (core/store, which re-exports core-base/store) + ScreenContent
+            // (core/ui, which re-exports core-base/ui) so the screen consumes the store's pre-decided
             // ScreenState directly instead of a fork-ScreenState fold.
-            implementation(projects.coreBase.store)
-            implementation(projects.coreBase.ui)
-            // Fork addition: AddEditSIViewModel/SIDetailViewModel read org.mifospay.core.common
+            implementation(projects.core.store)
+            // Fork addition: AddEditSIViewModel/SIDetailViewModel read kpt.core.common
             // (ScreenState/CurrencyFormatter/DateHelper/getSerialized/setSerialized).
             implementation(projects.core.common)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "kpt.feature.standing.instruction.generated.resources"
 }

@@ -16,7 +16,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.coreBase.platform)
+            implementation(projects.core.platform)
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -51,7 +51,12 @@ kotlin {
         }
 
         commonTest.dependencies {
+            implementation(libs.multiplatform.settings.test)
             implementation(libs.turbine)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "kpt.feature.mpay.qr.scan.generated.resources"
 }

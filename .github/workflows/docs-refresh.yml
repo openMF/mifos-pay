@@ -1,0 +1,259 @@
+# .github/workflows/docs-refresh.yml — the POST-MERGE half: regenerate, propose, publish.
+#
+# CLAUDE.md already states the contract: "Changing the template? docs/architecture/ updates in the
+# SAME change." This is the half that runs AFTER a merge; the pull-request check lives in
+# docs-check.yml, split out so a PR shows one check rather than one result plus two skipped rows.
+#
+# push to dev  →  REFRESH + open a PR when drift exists. Never commits straight to the branch: dev is
+#                 protected (CLAUDE.md "NEVER commit directly to master or dev"), and a docs refresh
+#                 deserves the same review as any other change. Matches sync-dirs.yaml.
+#
+# This workflow does NOT trigger on pull_request, which is what keeps its two jobs — and their
+# `contents: write` / `pull-requests: write` / `deployments: write` scopes — off PR runs entirely.
+#
+# WHY IT ONLY NEEDS BASH
+# The generator lives in the TEMPLATE (scripts/docs/), not in the framework, precisely so this job
+# needs no framework checkout, no JDK, and no Gradle — and so every fork inherits the same capability.
+name: Docs · refresh and publish
+run-name: "📚 Docs refresh · ${{ github.ref_name }}"
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'core-base/**/*.kt'
+      - 'core/**/*.kt'
+      - 'core-base/*/build.gradle.kts'
+      - 'core/*/build.gradle.kts'
+      - 'feature/**'
+      - 'cmp-*/**'
+      - 'deployment/**'
+      - 'app-profile/**'
+      - 'build-logic/**'
+      - 'tools/**'
+      - 'sync/**'
+      - 'legal/**'
+      - 'gradle/**'
+      - 'scripts/**'
+      - 'tests/**'
+  workflow_dispatch:
+    inputs:
+      force_pr:
+        description: 'Open a PR even if no drift is detected'
+        type: boolean
+        default: false
+
+concurrency:
+  group: docs-refresh-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    name: Refresh and propose
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # A PAT is required for the PR to trigger downstream workflows; GITHUB_TOKEN-authored PRs
+          # do not. Same reason sync-dirs.yaml uses it.
+          token: ${{ secrets.PAT_TOKEN || github.token }}
+
+      - name: Regenerate the API reference
+        run: |
+          set -euo pipefail
+          chmod +x scripts/docs/*.sh
+          bash scripts/docs/refresh.sh
+
+      - name: Detect drift
+        id: drift
+        run: |
+          if [[ -n "$(git status --porcelain docs/)" ]]; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            echo "Pages refreshed:"
+            git status --short docs/
+            {
+              echo "### 📚 Docs refreshed"
+              echo
+              echo '```'
+              git status --short docs/
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "✅ already in step — nothing to propose" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Open Pull Request
+        if: steps.drift.outputs.has_changes == 'true' || inputs.force_pr
+        uses: peter-evans/create-pull-request@v8
+        with:
+          # Same fallback as the checkout above, and for the same reason it is not merely cosmetic:
+          # `PAT_TOKEN` is unset on this repo, so an unqualified reference here resolves to EMPTY and
+          # the step fails outright. It has never fired only because it is gated on drift being
+          # detected — the first real docs drift would have failed the run. A PAT is still preferred
+          # (a GITHUB_TOKEN-authored PR does not trigger downstream workflows, per the note above),
+          # but opening a PR that does not cascade beats not opening one at all.
+          token: ${{ secrets.PAT_TOKEN || github.token }}
+          branch: chore/docs-api-refresh
+          delete-branch: true
+          commit-message: "docs: refresh generated API reference from source"
+          title: "docs: refresh generated API reference from source"
+          body: |
+            Automated refresh of the generated API reference.
+
+            Produced by `scripts/docs/refresh.sh`, which regenerates the
+            `<!-- api-docs:begin … -->` blocks in `docs/architecture/modules/**` from the
+            KDoc and signatures in `core-base/**` and `core/**`, then rebuilds
+            `docs/_sidebar.md` from the page tree.
+
+            **What changed and why it is safe to merge:**
+            - only content BETWEEN the `api-docs` markers, plus the generated sidebar
+            - authored prose outside those markers is preserved byte-for-byte
+            - every block records the module's content hash, so `G-TEMPLATE-API-DOCS`
+              can prove the page is current rather than assuming it
+
+            Browse locally with `npx docsify-cli serve docs`.
+          labels: documentation
+
+  publish:
+    name: Publish to Cloudflare Pages
+    # Runs only after the docs on `dev` are current — publishing from a PR would race branches onto
+    # one site, and publishing before the refresh would ship the previous revision's API reference.
+    needs: refresh
+    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Resolve identity from the fork SoT
+        id: id
+        run: |
+          set -euo pipefail
+          # `fork.project.name` is the slug the whole build already keys on (it is what
+          # settings.gradle.kts uses for rootProject.name), so the Pages project cannot collide
+          # between forks of this template.
+          slug="$(grep -E '^fork\.project\.name=' gradle.properties | cut -d= -f2- | tr -d '[:space:]')"
+          [ -n "$slug" ] || slug="kmp-project-template"
+          echo "project=docs-$slug" >> "$GITHUB_OUTPUT"
+
+          # docs_domain is OPTIONAL. Unset → no custom domain, and the deploy still publishes to the
+          # free *.pages.dev URL. Never derived from app_id: a reversed package id is not a domain a
+          # fork owns, and guessing one hands out a link that does not resolve.
+          # Strip the trailing `# comment` BEFORE unquoting: without that the inline example in
+          # app.yaml was captured as part of the value and produced a nonsense host.
+          domain="$(grep -E '^[[:space:]]*docs_domain:' app-profile/app.yaml | head -1 \
+                    | cut -d: -f2- | sed -E 's/#.*$//' | tr -d '\"'\''[:space:]' || true)"
+          if [ -n "$domain" ]; then
+            echo "host=docs.$domain" >> "$GITHUB_OUTPUT"
+          else
+            echo "host=" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Pages project : docs-$slug"
+          echo "Custom domain : ${domain:+docs.$domain}${domain:+ }${domain:-<unset — publishing to *.pages.dev only>}"
+
+      - name: Is Cloudflare Pages configured?
+        id: cf
+        # A job-level `if:` on secrets is not an option here — act 0.2.88's schema validator rejects
+        # it (see the note in the refresh job), so the precondition lives in a step, same as there.
+        #
+        # This template is brand-neutral and most forks will never wire Cloudflare. Without this
+        # check the Deploy step below fails for every one of them, so a fresh fork's `dev` build is
+        # red on day one through no fault of its own. An unconfigured fork should SKIP publishing,
+        # not fail it — the docs still regenerate and the drift PR still opens.
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -n "${CF_TOKEN:-}" ] && [ -n "${CF_ACCOUNT:-}" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Cloudflare credentials present — publishing"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            # Name which half is missing: an empty secret is indistinguishable from an absent one in
+            # the Actions UI, and the failure this replaces ("it's necessary to set a
+            # CLOUDFLARE_API_TOKEN") gave no hint that the credential existed under another name.
+            {
+              echo "### 📄 Docs publish skipped"
+              echo
+              echo "Cloudflare Pages is not configured for this fork, so the site was not updated."
+              echo "Docs were still regenerated and any drift is proposed as a PR."
+              echo
+              echo "| secret | state |"
+              echo "|---|---|"
+              echo "| \`CLOUDFLARE_API_TOKEN\` | ${CF_TOKEN:+set}${CF_TOKEN:-**missing**} |"
+              echo "| \`CLOUDFLARE_ACCOUNT_ID\` | ${CF_ACCOUNT:+set}${CF_ACCOUNT:-**missing**} |"
+              echo
+              echo "To enable: add both repository secrets, then re-run. The Pages project is"
+              echo "created automatically on the first successful publish."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "⏭ Cloudflare not configured — skipping publish (not a failure)"
+          fi
+
+      - name: Refuse to publish stale docs
+        if: steps.cf.outputs.configured == 'true'
+        # The refresh job opens a PR rather than committing, so `dev` can still be behind while this
+        # runs. Publishing anyway would put an API reference on the public site that does not match
+        # the code it documents — the exact failure the whole gate exists to prevent.
+        run: |
+          set -euo pipefail
+          chmod +x scripts/docs/*.sh
+          bash scripts/docs/refresh.sh --check
+
+      - name: Deploy
+        if: steps.cf.outputs.configured == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # `pages deploy` does NOT create the project. With credentials valid but no project, it
+          # fails "Project not found ... does not match any of your existing projects [code:
+          # 8000007]" — which reads like a config error and is actually just a missing one-time
+          # resource. Creating it here keeps the whole site self-provisioning: a fork adds two
+          # secrets and the first run stands the site up.
+          #
+          # Non-fatal on purpose: `project create` exits non-zero when the project already exists,
+          # which is the steady state on every run after the first. Nothing is masked by ignoring
+          # it — if creation failed for a real reason (bad token scope, account mismatch), the
+          # deploy immediately below fails with the specific error, which is the better message.
+          preCommands: |
+            npx wrangler pages project create "${{ steps.id.outputs.project }}" \
+              --production-branch=main \
+              || echo "ℹ project create skipped — it already exists, or deploy below will report why"
+          command: >-
+            pages deploy docs
+            --project-name=${{ steps.id.outputs.project }}
+            --branch=main
+            --commit-dirty=true
+
+      - name: Summary
+        # Gated for the same reason the two steps above are: this writes "Docs published" to the
+        # run summary, which on an unconfigured fork would assert a publish that never happened.
+        # The skip path writes its own summary instead.
+        if: steps.cf.outputs.configured == 'true'
+        run: |
+          {
+            echo "### 📚 Docs published"
+            echo
+            echo "- Pages project: \`${{ steps.id.outputs.project }}\`"
+            if [ -n "${{ steps.id.outputs.host }}" ]; then
+              echo "- Custom domain: https://${{ steps.id.outputs.host }}"
+              echo
+              echo "> The custom domain is attached ONCE, in the Cloudflare dashboard or via"
+              echo "> \`wrangler pages domain add\`. A deploy does not create DNS, so the first"
+              echo "> publish lands on the \`*.pages.dev\` URL until that is done."
+            else
+              echo "- Custom domain: not set — publishing to the \`*.pages.dev\` URL."
+              echo
+              echo "> Set \`identity.docs_domain\` in \`app-profile/app.yaml\` to publish under"
+              echo "> \`docs.<your-domain>\`."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,86 @@
+/*
+ * Copyright 2024 Mifos Initiative
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ *
+ * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ */
+package kpt.core.data.repositoryImpl
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
+import kpt.core.base.data.annotation.FromQualifier
+import kpt.core.base.data.annotation.RepositoryBinding
+import kpt.core.common.ScreenStateStream
+import kpt.core.common.asScreenStateFlow
+import kpt.core.data.mapper.toEntity
+import kpt.core.data.repository.UserRepository
+import kpt.core.model.fork.user.NewUser
+import kpt.core.model.network.CommonResponse
+import kpt.core.model.network.GenericResponse
+import kpt.core.model.network.entity.UserWithRole
+import kpt.core.model.network.entity.user.UpdateUserEntityPassword
+import kpt.core.network.main.services.UserService
+/** Default [UserRepository] backed by the user API. */
+@RepositoryBinding(binds = UserRepository::class)
+class UserRepositoryImpl(
+    @FromQualifier("selfservice") private val selfUserService: UserService,
+    @FromQualifier("IO") private val ioDispatcher: CoroutineDispatcher,
+) : UserRepository {
+    override suspend fun getUsers(): ScreenStateStream<List<UserWithRole>> {
+        return selfUserService.users()
+            .asScreenStateFlow(isEmpty = { it.isEmpty() })
+            .flowOn(ioDispatcher)
+    }
+
+    override suspend fun getUser(): ScreenStateStream<UserWithRole> {
+        return selfUserService.getUser()
+            .asScreenStateFlow()
+            .flowOn(ioDispatcher)
+    }
+
+    override suspend fun createUser(newUser: NewUser): Int {
+        return withContext(ioDispatcher) {
+            selfUserService.createUser(newUser.toEntity()).resourceId
+        }
+    }
+
+    override suspend fun updateUser(
+        userId: Int,
+        updatedUser: NewUser,
+    ): ScreenStateStream<GenericResponse> {
+        return selfUserService
+            .updateUser(updatedUser.toEntity())
+            .asScreenStateFlow()
+            .flowOn(ioDispatcher)
+    }
+
+    override suspend fun updateUserPassword(
+        userId: Long,
+        password: String,
+    ) {
+        withContext(ioDispatcher) {
+            selfUserService.updateUserPassword(
+                updateUserEntity = UpdateUserEntityPassword(
+                    password,
+                    password,
+                ),
+            )
+        }
+    }
+
+    override suspend fun deleteUser(userId: Int): CommonResponse {
+        return withContext(ioDispatcher) {
+            selfUserService.deleteUser(userId)
+        }
+    }
+
+    override suspend fun assignClientToUser(userId: Int, clientId: Int) {
+        withContext(ioDispatcher) {
+            selfUserService.assignClientToUser(userId, mapOf("clients" to listOf(clientId)))
+        }
+    }
+}

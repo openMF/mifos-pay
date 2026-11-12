@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">Belum ada apa-apa di sini</string>
+    <string name="screenstate_empty_message">Saat Anda punya data, data akan muncul di sini.</string>
+    <string name="screenstate_error_title">Terjadi kesalahan</string>
+    <string name="screenstate_error_retry">Coba lagi</string>
+    <string name="screenstate_nonet_title">Anda sedang offline</string>
+    <string name="screenstate_nonet_message">Kami akan mencoba lagi saat Anda tersambung kembali.</string>
+    <string name="screenstate_nonet_retry">Coba sekarang</string>
+    <string name="screenstate_captive_title">Masuk ke Wi-Fi</string>
+    <string name="screenstate_captive_message">Jaringan Anda mengharuskan Anda masuk sebelum tersambung.</string>
+    <string name="screenstate_captive_action">Buka halaman masuk</string>
+    <string name="error_category_network">Tidak dapat menjangkau server. Periksa koneksi Anda.</string>
+    <string name="error_category_auth">Sesi Anda berakhir. Silakan masuk lagi.</string>
+    <string name="error_category_ratelimit">Terlalu banyak permintaan. Harap tunggu dan coba lagi.</string>
+    <string name="error_category_server">Server kami sedang bermasalah. Coba lagi sebentar lagi.</string>
+    <string name="error_category_timeout_connect">Waktu koneksi habis. Periksa koneksi Anda dan coba lagi.</string>
+    <string name="error_category_timeout_read">Server terlalu lama merespons. Coba lagi sebentar lagi.</string>
+    <string name="error_category_quota">Kuota Anda telah habis. Tingkatkan paket atau tunggu untuk melanjutkan.</string>
+    <string name="error_category_client">Permintaan gagal. Silakan coba lagi.</string>
+    <string name="error_category_generic">Terjadi kesalahan</string>
+</resources>

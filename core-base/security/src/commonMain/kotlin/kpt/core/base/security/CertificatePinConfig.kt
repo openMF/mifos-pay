@@ -21,6 +21,7 @@ package kpt.core.base.security
 data class CertificatePinConfig(
     val pins: Map<String, List<String>> = emptyMap(),
 ) {
+    /** Pin presets. */
     companion object {
         /** No-op default — consumer apps override with their domain pins. */
         fun default(): CertificatePinConfig = CertificatePinConfig()

@@ -9,10 +9,13 @@
  */
 package kpt.core.base.security
 
+/** Desktop (JVM) implementation of `BiometricAuthenticator`. */
 actual class BiometricAuthenticator actual constructor() {
 
+    /** `isAvailable` on Desktop (JVM). */
     actual fun isAvailable(): Boolean = false
 
+    /** `authenticate` on Desktop (JVM). */
     actual suspend fun authenticate(reason: String): BiometricResult {
         return BiometricResult.Unavailable
     }

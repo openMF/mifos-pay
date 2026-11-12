@@ -20,6 +20,4 @@ val libs = extensions.getByType<org.gradle.api.artifacts.VersionCatalogsExtensio
 
 dependencies {
     // Moved out of commonMain.dependencies in build.gradle.kts (template-owned, full-copied).
-    "commonMainImplementation"(libs.findLibrary("jb-composeRuntime").get())
-    "commonMainImplementation"(libs.findLibrary("jb-composeComponentsResources").get())
 }

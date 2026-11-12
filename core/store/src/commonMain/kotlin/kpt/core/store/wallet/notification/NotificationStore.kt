@@ -11,20 +11,22 @@ package kpt.core.store.wallet.notification
 
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kpt.core.base.database.invalidation.daoFlow
+import kpt.core.base.store.annotation.CacheKey
+import kpt.core.base.store.annotation.StoreProvider
 import kpt.core.base.store.infra.StoreFactory
 import kpt.core.database.wallet.notification.NotificationDao
 import kpt.core.database.wallet.notification.toDomain
 import kpt.core.database.wallet.notification.toEntity
-import org.mifospay.core.model.notification.Notification
-import org.mifospay.core.network.FineractApiManager
+import kpt.core.model.notification.Notification
+import kpt.core.network.main.services.NotificationService
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 
-/** Room `@Entity(tableName = …)` for `NotificationEntity`. Shared with the DAO's writes. */
-private const val NOTIFICATIONS_TABLE = "wallet_notifications"
+// Wall clock for fetched-at stamps. File-private rather than a defaulted provider parameter: store-ksp
+// injects every provider parameter with get(), which cannot resolve a function type.
+private val clock: () -> Long = { Clock.System.now().toEpochMilliseconds() }
 
 /**
  * `notificationApi.fetchNotifications(...)` `isRead` value. The pre-store
@@ -83,20 +85,21 @@ private const val IS_READ_FLAG: Boolean = true
  * flow through an online endpoint and appear here via the next refresh.
  * There is no `Bookkeeper`.
  */
+@StoreProvider(id = "notification")
+@CacheKey(fn = "of", key = "wallet_notifications-{clientId}", params = ["clientId:Long"])
 fun provideNotificationStore(
-    apiManager: FineractApiManager,
+    notificationService: NotificationService,
     dao: NotificationDao,
-    clock: () -> Long = { Clock.System.now().toEpochMilliseconds() },
 ): Store<NotificationKey, List<Notification>> = StoreFactory.createStore(
     fetcher = Fetcher.of { key: NotificationKey ->
         // Ktorfit returns Flow<NotificationPayload> — take the first emission,
         // strip to the pageItems list (parity with
         // NotificationRepositoryImpl.fetchNotifications).
-        apiManager.notificationApi.fetchNotifications(IS_READ_FLAG).first().pageItems
+        notificationService.fetchNotifications(IS_READ_FLAG).first().pageItems
     },
     sourceOfTruth = SourceOfTruth.of(
         reader = { key: NotificationKey ->
-            daoFlow(NOTIFICATIONS_TABLE) { dao.observeByClient(key.clientId) }
+            run { dao.observeByClient(key.clientId) }
                 .map { rows -> rows.map { it.toDomain() } }
         },
         writer = { key: NotificationKey, notifications: List<Notification> ->

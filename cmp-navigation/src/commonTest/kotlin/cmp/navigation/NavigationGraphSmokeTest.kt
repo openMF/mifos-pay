@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package cmp.navigation
 
@@ -23,7 +23,7 @@ import kotlin.test.assertNotNull
  * Catches the bug class where someone deletes / renames / mis-wires a route in
  * `:cmp-navigation` without a compile-time signal. The test exercises the
  * template-shell outer routes only — fork feature destinations live in
- * `:cmp-shared/.../MifosNavHost.kt` and are covered by fork-side tests.
+ * `:cmp-shared/.../ForkNavHost.kt` and are covered by fork-side tests.
  *
  * Phase 2 nav-chunk (skeleton): the template-demo route universe
  * (`kpt.feature.{bills,calculators,crypto,currencyrates,emicalculator,loans,

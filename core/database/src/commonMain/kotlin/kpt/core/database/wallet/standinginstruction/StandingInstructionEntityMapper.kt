@@ -10,8 +10,7 @@
 package kpt.core.database.wallet.standinginstruction
 
 import kotlinx.serialization.json.Json
-import org.mifospay.core.model.standinginstruction.StandingInstruction
-
+import kpt.core.model.standinginstruction.StandingInstruction
 /**
  * Entity ↔ domain mapper for the `wallet_standing_instructions` table.
  *

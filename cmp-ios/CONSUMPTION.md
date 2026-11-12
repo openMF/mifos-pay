@@ -14,7 +14,7 @@ hand-edited.
   `iosApp/Assets.xcassets/AppIcon.appiconset/AppIcon.png`.
 - **Signing** — Fastlane Match (adhoc for Firebase distribution, appstore for TestFlight/App
   Store) — configured via `scripts/ios/setup_ios_complete.sh`, not by editing project files. See
-  [`docs/ios/IOS_SETUP.md`](../docs/ios/IOS_SETUP.md).
+  [`docs/ios/IOS_SETUP.md`](../docs/architecture/tree/deployment/ios/setup.md).
 - **App UI code** — `ContentView.swift` / `iOSApp.swift` are a thin host; the actual UI is
   `ComposeApp` (Kotlin, from `cmp-shared` + `cmp-navigation`). You almost never edit Swift here —
   extend the Compose side instead.
@@ -35,7 +35,7 @@ Xcode's Run-Script phase does the framework build for you on every build/archive
 the `assembleComposeApp*XCFramework` Gradle tasks by hand except when resolving the SwiftPM
 `Package.swift` path directly (`./gradlew :cmp-shared:assembleComposeAppReleaseXCFramework`).
 
-See [`docs/ios/IOS_DEPLOYMENT.md`](../docs/ios/IOS_DEPLOYMENT.md) and
-[`docs/ios/IOS_DEPLOYMENT_CHECKLIST.md`](../docs/ios/IOS_DEPLOYMENT_CHECKLIST.md) for release lanes.
+See [`docs/ios/IOS_DEPLOYMENT.md`](../docs/architecture/tree/deployment/ios/deployment.md) and
+[`docs/ios/IOS_DEPLOYMENT_CHECKLIST.md`](../docs/architecture/tree/deployment/ios/checklist.md) for release lanes.
 
 Symbols: iOSApp, ContentView, ComposeView, ViewControllerKt.viewController

@@ -12,10 +12,11 @@ package kpt.core.database.wallet.transaction
 import androidx.room3.Entity
 import androidx.room3.Index
 import androidx.room3.PrimaryKey
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single financial transaction — the Room mirror of the
- * `org.mifospay.core.model.savingsaccount.Transaction` domain model.
+ * `kpt.core.model.savingsaccount.Transaction` domain model.
  *
  * Stored in the `wallet_transactions` table. Each row represents one transaction
  * on one savings account (LEDGER shape).
@@ -30,9 +31,9 @@ import androidx.room3.PrimaryKey
  * ## Column mapping
  *
  * The domain `Transaction` model has two nested nullable payloads —
- * [`Transaction.Transfer`][org.mifospay.core.model.savingsaccount.Transaction.Transfer]
+ * [`Transaction.Transfer`][kpt.core.model.savingsaccount.Transaction.Transfer]
  * and
- * [`Transaction.PaymentDetailData`][org.mifospay.core.model.savingsaccount.Transaction.PaymentDetailData].
+ * [`Transaction.PaymentDetailData`][kpt.core.model.savingsaccount.Transaction.PaymentDetailData].
  * Those are persisted as JSON strings in [transferJson] / [paymentDetailJson]
  * (see `TransactionEntityMapper`) rather than as normalized relation tables — the
  * two payloads are read-only from the app's perspective (server-echoed ledger detail)
@@ -69,7 +70,15 @@ import androidx.room3.PrimaryKey
  * @property paymentDetailJson Nullable JSON encoding of `Transaction.PaymentDetailData`.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future "stale-row eviction" prune.
+ *
+ * @property currencyName Currency name.
+ * @property currencyDecimalPlaces Currency decimal places.
+ * @property currencyInMultiplesOf Nullable minimum multiple the currency amount must be in.
+ * @property currencyDisplaySymbol Currency display symbol.
+ * @property currencyNameCode Currency name code.
+ * @property currencyDisplayLabel Currency display label.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_transactions",
     indices = [

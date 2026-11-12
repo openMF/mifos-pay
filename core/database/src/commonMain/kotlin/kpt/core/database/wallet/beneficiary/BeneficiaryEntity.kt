@@ -11,10 +11,11 @@ package kpt.core.database.wallet.beneficiary
 
 import androidx.room3.Entity
 import androidx.room3.Index
+import kpt.core.base.database.annotation.DbEntity
 
 /**
  * Persistent row for a single beneficiary — the Room mirror of the
- * `org.mifospay.core.model.beneficiary.Beneficiary` domain model.
+ * `kpt.core.model.beneficiary.Beneficiary` domain model.
  *
  * Stored in the `wallet_beneficiaries` table. LEDGER shape — many rows per client,
  * page-keyed by [clientId]. The Fineract `beneficiaryList()` endpoint returns the
@@ -50,7 +51,11 @@ import androidx.room3.Index
  *   `Beneficiary.AccountType` fields.
  * @property fetchedAtEpochMs Local cache-write timestamp — set by the store's writer
  *   for observability + a future stale-row prune.
+ *
+ * @property accountTypeCode Code of the beneficiary account type.
+ * @property accountTypeValue Display value of the beneficiary account type.
  */
+@DbEntity
 @Entity(
     tableName = "wallet_beneficiaries",
     primaryKeys = ["id", "clientId"],

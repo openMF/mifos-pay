@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.motion
 
@@ -42,6 +42,7 @@ object KptSharedAxis {
     @Composable
     fun enterForward(): EnterTransition = enterForward(MaterialTheme.motion)
 
+    /** Shared-axis enter for moving forward/deeper in a flow. */
     fun enterForward(motion: Motion): EnterTransition {
         val slide = motion.sharedAxisSlideDistance
         return slideInHorizontally(
@@ -54,6 +55,7 @@ object KptSharedAxis {
     @Composable
     fun exitForward(): ExitTransition = exitForward(MaterialTheme.motion)
 
+    /** Shared-axis exit for moving forward/deeper in a flow. */
     fun exitForward(motion: Motion): ExitTransition {
         val slide = motion.sharedAxisSlideDistance
         return slideOutHorizontally(
@@ -66,6 +68,7 @@ object KptSharedAxis {
     @Composable
     fun enterBack(): EnterTransition = enterBack(MaterialTheme.motion)
 
+    /** Shared-axis enter for moving back. */
     fun enterBack(motion: Motion): EnterTransition {
         val slide = motion.sharedAxisSlideDistance
         return slideInHorizontally(
@@ -78,6 +81,7 @@ object KptSharedAxis {
     @Composable
     fun exitBack(): ExitTransition = exitBack(MaterialTheme.motion)
 
+    /** Shared-axis exit for moving back. */
     fun exitBack(motion: Motion): ExitTransition {
         val slide = motion.sharedAxisSlideDistance
         return slideOutHorizontally(

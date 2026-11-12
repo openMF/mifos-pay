@@ -5,38 +5,40 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.designsystem
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kpt.core.base.designsystem.core.KptThemeProvider
-import kpt.core.base.designsystem.theme.KptTheme
 import kpt.core.base.designsystem.theme.KptThemeProviderImpl
 import kpt.core.base.designsystem.theme.LocalKptColors
 import kpt.core.base.designsystem.theme.LocalKptElevation
 import kpt.core.base.designsystem.theme.LocalKptShapes
 import kpt.core.base.designsystem.theme.LocalKptSpacing
 import kpt.core.base.designsystem.theme.LocalKptTypography
-import kpt.core.base.designsystem.theme.kptTheme
 
 /**
  * KptMaterialTheme provides Material3 integration for KptTheme.
  * This composable applies KptTheme values to MaterialTheme automatically,
  * making all Material3 components use KptTheme design tokens.
  *
- * @param theme KptThemeProvider instance containing design tokens
- * @param content The composable content that will have access to both KptTheme and MaterialTheme
+ * Inside [content], the Material3 accessors and the Kpt ones resolve to the same tokens, so a
+ * Material component and a Kpt component placed side by side cannot disagree:
  *
- * @sample KptMaterialThemeUsageExample
+ * ```
+ * KptMaterialTheme {
+ *     MaterialTheme.colorScheme.primary   // == KptTheme.colorScheme.primary
+ *     MaterialTheme.typography.titleLarge // == KptTheme.typography.titleLarge
+ *     KptTheme.spacing.md                 // Kpt-only tokens stay reachable
+ * }
+ * ```
+ *
+ * @param theme design tokens to apply.
+ * @param content content with access to both KptTheme and MaterialTheme.
  */
 @Composable
 fun KptMaterialTheme(
@@ -69,12 +71,17 @@ fun KptMaterialTheme(
  * KptMaterialTheme with dark theme support.
  * Provides automatic light/dark theme switching with Material3 integration.
  *
- * @param darkTheme Whether to use dark theme. Defaults to system preference.
- * @param lightTheme KptThemeProvider for light theme
- * @param darkTheme KptThemeProvider for dark theme
- * @param content The composable content that will have access to both KptTheme and MaterialTheme
+ * ```
+ * KptMaterialTheme(
+ *     lightTheme = kptTheme { colors { primary = Color.Blue } },
+ *     darkThemeProvider = kptTheme { colors { primary = Color.Cyan } },
+ * ) { /* switches with the system setting */ }
+ * ```
  *
- * @sample KptMaterialThemeWithDarkModeExample
+ * @param darkTheme whether to select the dark theme. Defaults to the system setting.
+ * @param lightTheme tokens used when [darkTheme] is false.
+ * @param darkThemeProvider tokens used when [darkTheme] is true.
+ * @param content content with access to both KptTheme and MaterialTheme.
  */
 @Composable
 fun KptMaterialTheme(
@@ -91,12 +98,26 @@ fun KptMaterialTheme(
 }
 
 /**
- * DSL builder for creating KptMaterialTheme with custom configuration
+ * Builds the theme from the dark-mode flag, for a palette that differs by more than a few colours.
+ *
+ * Prefer the [lightTheme]/[darkThemeProvider] overload when the two themes are independent values;
+ * this one earns its keep when both are derived from the same source:
+ *
+ * ```
+ * KptMaterialTheme(themeBuilder = { isDark ->
+ *     kptTheme { colors { primary = if (isDark) Color.Cyan else Color.Blue } }
+ * }) { /* content */ }
+ * ```
+ *
+ * @param themeBuilder produces the tokens for the given dark-mode flag. Composable, so it may read
+ *   other composition state.
+ * @param darkTheme the flag handed to [themeBuilder]. Defaults to the system setting.
+ * @param content content with access to both KptTheme and MaterialTheme.
  */
 @Composable
 fun KptMaterialTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     themeBuilder: @Composable (Boolean) -> KptThemeProvider,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
     val theme = themeBuilder(darkTheme)
@@ -105,80 +126,3 @@ fun KptMaterialTheme(
         content = content,
     )
 }
-
-// region Usage Examples (for documentation)
-
-/**
- * Example of basic KptMaterialTheme usage
- */
-@Composable
-private fun KptMaterialThemeUsageExample() {
-    KptMaterialTheme {
-        // All Material3 components will use KptTheme values
-        MaterialTheme.colorScheme.primary // = KptTheme.colorScheme.primary
-        MaterialTheme.typography.titleLarge // = KptTheme.typography.titleLarge
-        MaterialTheme.shapes.medium // = KptTheme.shapes.medium
-
-        // KptTheme values are also available directly
-        KptTheme.spacing.md
-        KptTheme.elevation.level2
-    }
-}
-
-/**
- * Example of KptMaterialTheme with dark mode support
- */
-@Composable
-private fun KptMaterialThemeWithDarkModeExample() {
-    val lightTheme = kptTheme {
-        colors {
-            primary = Color.Blue
-        }
-    }
-
-    val darkTheme = kptTheme {
-        colors {
-            primary = Color.Cyan
-        }
-    }
-
-    KptMaterialTheme(
-        lightTheme = lightTheme,
-        darkThemeProvider = darkTheme,
-    ) {
-        // Theme automatically switches based on system preference
-        // Material3 components inherit the appropriate theme
-    }
-}
-
-/**
- * Example of KptMaterialTheme with DSL builder
- */
-@Composable
-private fun KptMaterialThemeBuilderExample() {
-    KptMaterialTheme(
-        themeBuilder = { isDark ->
-            kptTheme {
-                colors {
-                    if (isDark) {
-                        primary = Color.Cyan
-                        background = Color.Black
-                    } else {
-                        primary = Color.Blue
-                        background = Color.White
-                    }
-                }
-                typography {
-                    titleLarge = titleLarge.copy(fontSize = 24.sp)
-                }
-                shapes {
-                    medium = Shapes().medium.copy(all = CornerSize(16.dp))
-                }
-            }
-        },
-    ) {
-        // Dynamic theme based on dark mode
-    }
-}
-
-// endregion

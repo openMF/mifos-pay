@@ -18,11 +18,17 @@ _toml() {
     | head -1 | grep -oE '"[^"]+"' | head -1 | tr -d '"'
 }
 
+# Reads through the ONE bash reader (scripts/_shared/fork-props.sh) rather than re-deriving the
+# parse. The previous inline version had head -1 but no inline-`#` strip, so `key=value  # note`
+# would have leaked the comment into a rendered legal document.
+# shellcheck source=../../scripts/_shared/fork-props.sh
+. "$REPO_ROOT/scripts/_shared/fork-props.sh"
+
+# Read one key from gradle/fork.properties via the shared fp_get reader.
+# Never parse fork.properties directly — scripts/_shared/fork-props.sh is the
+# single reader, enforced by product-health's fork-props-single-reader check.
 _prop() {
-  local key="$1"
-  local props="$REPO_ROOT/gradle/fork.properties"
-  [[ -f "$props" ]] || return 0
-  grep -E "^${key}=" "$props" 2>/dev/null | head -1 | cut -d= -f2-
+  FORK_PROPERTIES="$REPO_ROOT/gradle/fork.properties" fp_get "$1"
 }
 
 # ── App identity (from libs.versions.toml — never hardcode these) ─────────────

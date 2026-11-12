@@ -33,10 +33,8 @@ class DraftInventoryImpl(
         draftDao.observeAll().map { rows -> rows.map { it.toRecord() } }
 
     override suspend fun discard(id: Long) = draftDao.deleteById(id)
-    
 
     override suspend fun retry(id: Long) = draftDao.requeue(id, currentTimeMillis())
-    
 
     override suspend fun pruneExpired() = run {
         val thresholdMs = currentTimeMillis() - StoreCacheManager.DEFAULT_DRAFT_TTL_MS

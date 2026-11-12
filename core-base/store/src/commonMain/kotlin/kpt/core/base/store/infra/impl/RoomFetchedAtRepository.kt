@@ -5,13 +5,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.store.infra.impl
 
-import kpt.core.base.store.infra.FetchedAtRepository
 import kpt.core.base.database.infra.dao.FetchedAtDao
 import kpt.core.base.database.infra.entity.FetchedAtEntity
+import kpt.core.base.store.infra.FetchedAtRepository
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 

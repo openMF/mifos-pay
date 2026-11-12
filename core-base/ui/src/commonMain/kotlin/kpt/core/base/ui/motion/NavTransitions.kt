@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.ui.motion
 
@@ -16,7 +16,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 /**
- * `NavGraphBuilder.composable<T>(...)` wrapper that pre-wires Mifos's shared-axis
+ * `NavGraphBuilder.composable<T>(...)` wrapper that pre-wires the app's shared-axis
  * transitions for **forward/back navigation** in a single stack.
  *
  * Reads `MaterialTheme.motion` at graph-build time (`@Composable` extension) so the

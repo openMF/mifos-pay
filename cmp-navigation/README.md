@@ -17,10 +17,10 @@ The app-shell's DI aggregator + root navigation graph. Every platform entry poin
   (`authenticatedNavbarGraph`), then invokes the three registry seams below. Carries zero direct
   feature imports.
 - **`KoinModules`** (`di/KoinModules.kt`) — `allModules`, the full app DI graph (Security, Data,
-  Database, Firebase, Datastore, feature modules incl. `FeatureRegistry.featureKoinModules`, App,
+  Database, Firebase, Datastore, feature modules incl. `ForkFeatureRegistry.featureKoinModules`, App,
   Sync). Installed once by `cmp-shared`'s `initKoin()`.
-- **Registries** (`registry/`) — `FeatureRegistry`, `BackboneRegistry`, `TabRegistry`,
-  `AppInitializers`, `ShowcaseRegistry` — the fork's white-label extension seams. See
+- **Registries** (`registry/`) — `ForkFeatureRegistry`, `ForkBackboneRegistry`, `ForkTabRegistry`,
+  `ForkInitializers`, `ForkShowcaseRegistry` — the fork's white-label extension seams. See
   [`registry/README.md`](src/commonMain/kotlin/cmp/navigation/registry/README.md) for the full
   contract.
 - **`KptRootScaffold`** / `RememberKptNavController` (`ui/`) — the app-root Scaffold + `NavController`
@@ -33,8 +33,8 @@ The app-shell's DI aggregator + root navigation graph. Every platform entry poin
 model, common, datastore, firebase, platform) plus `core-base/security` (the DI aggregator's one
 sanctioned `core-base` exception) and the always-present backbone features (`feature/home`,
 `feature/profile`, `feature/settings`). Fork features attach via `feature-deps.gradle.kts` (applied
-at the bottom of `build.gradle.kts`) + the `FeatureRegistry` seam — never as a direct dependency
+at the bottom of `build.gradle.kts`) + the `ForkFeatureRegistry` seam — never as a direct dependency
 here.
 
 See also: [`FEATURE_AUTHORING.md`](../FEATURE_AUTHORING.md),
-[`docs/architecture/CUSTOMIZATION_SURFACE.md`](../docs/architecture/CUSTOMIZATION_SURFACE.md).
+[`docs/architecture/cross-cutting/customization-surface.md`](../docs/architecture/cross-cutting/customization-surface.md).

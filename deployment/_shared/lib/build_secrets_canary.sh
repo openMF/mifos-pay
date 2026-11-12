@@ -28,8 +28,11 @@ SRC_BS="$HERE/build_secrets.rb"
 [ -f "$SRC_BS" ] || { echo "FATAL: build_secrets.rb not found at $SRC_BS" >&2; exit 2; }
 
 PASS=0; FAIL=0
+# Record a passing assertion.
 ok()  { PASS=$((PASS+1)); printf '  ✅ %s\n' "$1"; }
+# Record a failing assertion and print what was expected.
 bad() { FAIL=$((FAIL+1)); printf '  ❌ %s\n' "$1"; }
+# Assert two values are equal. $1 label, $2 actual, $3 expected.
 eq()  { if [ "$2" = "$3" ]; then ok "$1"; else bad "$1 (want [$3] got [$2])"; fi; }
 
 # ── build a throwaway repo skeleton so build_secrets.rb's REPO_ROOT resolves here ──

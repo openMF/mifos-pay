@@ -11,6 +11,13 @@ package org.mifos.lib.loan.network.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Network response DTO for the type, as returned by the Fineract loans API.
+ *
+ * @property id Unique identifier.
+ * @property code Short code identifying the value.
+ * @property value Human-readable value.
+ */
 @Serializable
 data class TypeResponseDto(
     val id: Int? = null,

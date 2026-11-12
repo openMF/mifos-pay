@@ -22,11 +22,15 @@ kotlin {
 
             implementation(projects.core.common)
             implementation(projects.core.ui)
-            // org.mifospay.core.model.network.entity.Page (needed by AutoPayHistoryViewModel) comes
+            // kpt.core.model.network.entity.Page (needed by AutoPayHistoryViewModel) comes
             // transitively via core/data's api(core.model) re-export — features never depend on
             // core/network directly.
-            // Template idiom: SubmitHandler (core-base/store) for one-shot writes.
-            implementation(projects.coreBase.store)
+            // Template idiom: SubmitHandler (core/store, which re-exports core-base/store) for one-shot writes.
+            implementation(projects.core.store)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "kpt.feature.autopay.generated.resources"
 }

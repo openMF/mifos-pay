@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">아직 아무것도 없습니다</string>
+    <string name="screenstate_empty_message">데이터가 생기면 여기에 표시됩니다.</string>
+    <string name="screenstate_error_title">문제가 발생했습니다</string>
+    <string name="screenstate_error_retry">다시 시도</string>
+    <string name="screenstate_nonet_title">오프라인 상태입니다</string>
+    <string name="screenstate_nonet_message">다시 연결되면 재시도합니다.</string>
+    <string name="screenstate_nonet_retry">지금 다시 시도</string>
+    <string name="screenstate_captive_title">Wi-Fi에 로그인</string>
+    <string name="screenstate_captive_message">연결하기 전에 네트워크 로그인이 필요합니다.</string>
+    <string name="screenstate_captive_action">로그인 페이지 열기</string>
+    <string name="error_category_network">서버에 연결할 수 없습니다. 연결 상태를 확인하세요.</string>
+    <string name="error_category_auth">세션이 만료되었습니다. 다시 로그인해 주세요.</string>
+    <string name="error_category_ratelimit">요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="error_category_server">서버에 일시적인 문제가 있습니다. 잠시 후 다시 시도해 주세요.</string>
+    <string name="error_category_timeout_connect">연결 시간이 초과되었습니다. 연결을 확인한 후 다시 시도하세요.</string>
+    <string name="error_category_timeout_read">서버 응답이 너무 오래 걸립니다. 잠시 후 다시 시도하세요.</string>
+    <string name="error_category_quota">할당량에 도달했습니다. 계속하려면 업그레이드하거나 기다리세요.</string>
+    <string name="error_category_client">요청에 실패했습니다. 다시 시도하세요.</string>
+    <string name="error_category_generic">문제가 발생했습니다</string>
+</resources>

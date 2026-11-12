@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<resources>
+    <string name="screenstate_empty_title">Nada por aqui ainda</string>
+    <string name="screenstate_empty_message">Quando você tiver dados, eles aparecerão aqui.</string>
+    <string name="screenstate_error_title">Algo deu errado</string>
+    <string name="screenstate_error_retry">Tentar novamente</string>
+    <string name="screenstate_nonet_title">Você está offline</string>
+    <string name="screenstate_nonet_message">Tentaremos novamente quando você reconectar.</string>
+    <string name="screenstate_nonet_retry">Tentar agora</string>
+    <string name="screenstate_captive_title">Entre no Wi-Fi</string>
+    <string name="screenstate_captive_message">Sua rede exige que você entre antes de conectar.</string>
+    <string name="screenstate_captive_action">Abrir página de login</string>
+    <string name="error_category_network">Não foi possível acessar o servidor. Verifique sua conexão.</string>
+    <string name="error_category_auth">Sua sessão expirou. Entre novamente.</string>
+    <string name="error_category_ratelimit">Muitas solicitações. Aguarde e tente novamente.</string>
+    <string name="error_category_server">Nossos servidores estão instáveis. Tente daqui a pouco.</string>
+    <string name="error_category_timeout_connect">Tempo de conexão esgotado. Verifique sua conexão e tente novamente.</string>
+    <string name="error_category_timeout_read">O servidor demorou muito para responder. Tente novamente em breve.</string>
+    <string name="error_category_quota">Você atingiu sua cota. Faça upgrade ou aguarde para continuar.</string>
+    <string name="error_category_client">A solicitação falhou. Tente novamente.</string>
+    <string name="error_category_generic">Algo deu errado</string>
+</resources>

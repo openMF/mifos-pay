@@ -53,7 +53,7 @@ fun NavController.navigateToLoanApplicationGraph(clientId: Long, navOptions: Nav
  *  - [navigateForPasscodeVerification] and [onSubmitSuccess] are Confirm Details' own boundary
  *    callbacks — see [org.mifos.lib.loan.ui.confirmDetails.confirmDetailsScreen] for their exact
  *    contract. [navigateForPasscodeVerification] is expected to eventually be bound to
- *    `navController.navigateToInternalMifosPasscodeScreen(verificationKey)` by the caller.
+ *    `navController.navigateToInternalPasscodeScreen(verificationKey)` by the caller.
  *
  * Picking a provider on Select Loan Provider currently opens Loan Provider Website (rendering
  * that provider's, for now identical, test URL — see

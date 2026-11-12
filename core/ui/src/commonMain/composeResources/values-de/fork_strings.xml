@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Zu viele Versuche. Bitte warten Sie und versuchen Sie es erneut.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Die biometrische Hardware ist vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Auf diesem Gerät ist keine Biometrie eingerichtet. Bitte richten Sie die Biometrie in den Systemeinstellungen ein.</string>
+    <string name="core_ui_biometric_error_timeout">Die biometrische Authentifizierung ist abgelaufen. Bitte versuchen Sie es erneut.</string>
+    <string name="core_ui_biometric_error_no_space">Nicht genügend Speicher, um die biometrische Authentifizierung abzuschließen.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Die biometrischen Registrierungsdaten sind ungültig. Bitte aktivieren Sie die Biometrie in den App-Einstellungen erneut.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Die biometrische Authentifizierung konnte aufgrund ungültiger Argumente nicht gestartet werden.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Die biometrische Registrierung konnte aufgrund ungültiger Argumente nicht gestartet werden.</string>
+    <string name="core_ui_biometric_error_unknown">Ein unerwarteter biometrischer Fehler ist aufgetreten. Bitte versuchen Sie es erneut.</string>
+    <string name="core_ui_biometric_prompt_title">Mifos Pay entsperren</string>
+    <string name="core_ui_biometric_prompt_subtitle">Bestätigen Sie Ihre Identität, um fortzufahren</string>
+    <string name="core_ui_biometric_prompt_description">Verwenden Sie Ihren Fingerabdruck, Ihr Gesicht oder Ihre Geräteanmeldedaten</string>
+    <string name="core_ui_biometric_prompt_negative_button">Abbrechen</string>
+</resources>

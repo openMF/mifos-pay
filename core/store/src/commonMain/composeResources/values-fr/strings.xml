@@ -2,26 +2,30 @@
 <!--
     Copyright 2026 Mifos Initiative
 
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
-    If a copy of the MPL was not distributed with this file,
-    You can obtain one at https://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
     See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
 -->
 <resources>
     <string name="screenstate_empty_title">Rien à afficher</string>
-    <string name="screenstate_empty_message">Vos données apparaîtront ici dès qu\'elles seront disponibles.</string>
+    <string name="screenstate_empty_message">Vos données apparaîtront ici dès qu'elles seront disponibles.</string>
     <string name="screenstate_error_title">Une erreur est survenue</string>
     <string name="screenstate_error_retry">Réessayer</string>
     <string name="screenstate_nonet_title">Vous êtes hors ligne</string>
     <string name="screenstate_nonet_message">Nous réessaierons dès que vous serez reconnecté.</string>
     <string name="screenstate_nonet_retry">Réessayer maintenant</string>
     <string name="screenstate_captive_title">Connectez-vous au WiFi</string>
-    <string name="screenstate_captive_message">Votre réseau exige une connexion avant l\'accès.</string>
+    <string name="screenstate_captive_message">Votre réseau exige une connexion avant l'accès.</string>
     <string name="screenstate_captive_action">Ouvrir la page de connexion</string>
     <string name="error_category_network">Impossible de joindre le serveur. Vérifiez votre connexion.</string>
     <string name="error_category_auth">Votre session a expiré. Veuillez vous reconnecter.</string>
     <string name="error_category_ratelimit">Trop de requêtes. Veuillez patienter et réessayer.</string>
     <string name="error_category_server">Nos serveurs rencontrent un problème. Réessayez bientôt.</string>
+    <string name="error_category_timeout_connect">Délai de connexion dépassé. Vérifiez votre connexion et réessayez.</string>
+    <string name="error_category_timeout_read">Le serveur a mis trop de temps à répondre. Réessayez sous peu.</string>
+    <string name="error_category_quota">Quota atteint. Passez à une offre supérieure ou patientez.</string>
+    <string name="error_category_client">Échec de la requête. Veuillez réessayer.</string>
     <string name="error_category_generic">Une erreur est survenue</string>
 </resources>

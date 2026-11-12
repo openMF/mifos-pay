@@ -1,0 +1,13 @@
+---
+# Point the deployment bundle at the REPO-ROOT vendor tree.
+#
+# deployment/ is a second bundler app root (fastlane resolves lanes from a `fastlane/`
+# subdirectory of cwd, and the deploy lanes are invoked as `cd deployment && bundle exec
+# fastlane …`). Its Gemfile/Gemfile.lock are symlinks to the root ones, so both roots always
+# resolve the IDENTICAL gem set — but BUNDLE_PATH is relative to each app root, so each used to
+# materialize its own 135M vendor/bundle. Two copies of the same gems that can fall out of step:
+# a `bundle install` at the root leaves deployment/ on the previous fastlane until installed
+# separately (hit 2026-09-09 bumping fastlane 2.235.0 → 2.239.0).
+#
+# Committed on purpose: a gitignored .bundle/config would fix only the machine that wrote it.
+BUNDLE_PATH: "../vendor/bundle"

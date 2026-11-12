@@ -48,7 +48,10 @@ class DefaultMutationGatewayTest {
     fun onlineRequired_offline_isBlocked_andRunsNoEndpoint() = runTest {
         var endpointRan = false
         val gw = DefaultMutationGateway(isOnline = { false }, conflictInbox = FakeConflictInbox())
-        val spec = CommandSpec<Int, String>(payload = 1, endpoint = { endpointRan = true; "ok" })
+        val spec = CommandSpec<Int, String>(payload = 1, endpoint = {
+            endpointRan = true
+            "ok"
+        })
         val r = gw.command(spec, MutationPolicy.OnlineRequired)
         assertIs<MutationResult.Blocked>(r)
         assertEquals(BlockReason.OFFLINE, r.reason)

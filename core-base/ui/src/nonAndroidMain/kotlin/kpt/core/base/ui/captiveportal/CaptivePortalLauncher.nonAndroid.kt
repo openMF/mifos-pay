@@ -11,5 +11,6 @@ package kpt.core.base.ui.captiveportal
 
 import androidx.compose.runtime.Composable
 
+/** `rememberOpenCaptivePortalSignIn` on Non-Android targets. */
 @Composable
 actual fun rememberOpenCaptivePortalSignIn(): () -> Unit = { }

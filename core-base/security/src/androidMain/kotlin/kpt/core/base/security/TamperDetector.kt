@@ -13,16 +13,20 @@ import android.os.Build
 import android.os.Debug
 import java.io.File
 
+/** Android implementation of `TamperDetector`. */
 actual class TamperDetector actual constructor() {
 
+    /** `isDeviceCompromised` on Android. */
     actual fun isDeviceCompromised(): Boolean {
         return checkRootIndicators()
     }
 
+    /** `isDebuggerAttached` on Android. */
     actual fun isDebuggerAttached(): Boolean {
         return Debug.isDebuggerConnected() || Debug.waitingForDebugger()
     }
 
+    /** `isSignatureValid` on Android. */
     actual fun isSignatureValid(): Boolean {
         // Consumer apps should override with their release signature hash
         return true

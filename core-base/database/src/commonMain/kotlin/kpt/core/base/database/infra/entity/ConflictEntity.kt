@@ -20,12 +20,19 @@ import androidx.room3.PrimaryKey
  */
 @Entity(tableName = "framework_write_conflicts")
 data class ConflictEntity(
+    /** Row id, assigned by Room. */
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    /** Domain entity the conflict is on (`loans`, `bills`). */
     val entity: String,
+    /** Identity of the record that conflicted. */
     val entityKey: String,
+    /** The value the device tried to write, serialised — kept verbatim so the user's edit survives. */
     val localPayloadJson: String,
+    /** The value the server already held, serialised. */
     val serverPayloadJson: String,
+    /** Route to the form that can resolve this, or null when there is none. */
     val formRoute: String?,
+    /** When the conflict was recorded, epoch millis. */
     val recordedAtMs: Long,
     val resolved: Int = 0,
 )

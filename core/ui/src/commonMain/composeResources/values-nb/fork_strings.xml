@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">For mange forsøk. Vent og prøv igjen.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Biometrisk maskinvare er midlertidig utilgjengelig. Prøv igjen senere.</string>
+    <string name="core_ui_biometric_error_not_enrolled">Ingen biometri er registrert på denne enheten. Konfigurer biometri i systeminnstillingene.</string>
+    <string name="core_ui_biometric_error_timeout">Biometrisk autentisering ble tidsavbrutt. Prøv igjen.</string>
+    <string name="core_ui_biometric_error_no_space">Ikke nok lagringsplass til å fullføre biometrisk autentisering.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Biometriske registreringsdata er ugyldige. Aktiver biometri på nytt fra app-innstillingene.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Kunne ikke starte biometrisk autentisering på grunn av ugyldige argumenter.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Kunne ikke starte biometrisk registrering på grunn av ugyldige argumenter.</string>
+    <string name="core_ui_biometric_error_unknown">En uventet biometrisk feil oppstod. Prøv igjen.</string>
+    <string name="core_ui_biometric_prompt_title">Lås opp Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Bekreft identiteten din for å fortsette</string>
+    <string name="core_ui_biometric_prompt_description">Bruk fingeravtrykket, ansiktet eller enhetslegitimasjonen din</string>
+    <string name="core_ui_biometric_prompt_negative_button">Avbryt</string>
+</resources>

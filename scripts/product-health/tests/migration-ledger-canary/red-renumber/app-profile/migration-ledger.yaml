@@ -1,0 +1,46 @@
+# migration-ledger.yaml — the FORK's Room schema state. owner: fork, never synced.
+#
+# WHY THIS FILE EXISTS
+# Room's schema version is ONE monotonic integer and migrations are edges between consecutive
+# values, so two independent authors incrementing it will collide. The previous scheme
+# (`VERSION = TEMPLATE_BASE_VERSION + VERSION_OFFSET`) did not separate them — it relabelled a
+# shared counter. Concretely: a fork at base 13 + offset 1 ships v14; the template then adds its own
+# migration and bumps base to 14; the fork computes 15 while installed devices sit at 14, and Room
+# finds no 14 -> 15 edge. It only ever worked while exactly one side migrated.
+#
+# THE SPLIT
+#   app.yaml#migration_units[]   TEMPLATE-owned. WHAT the template can add, with a stable id and NO
+#                                version numbers. Full-copies on sync.
+#   this file                    FORK-owned. WHERE each unit landed in THIS fork's sequence.
+#
+# The two sides write to different files, so a template schema change is an append here, never a
+# merge conflict — the same separation that makes `feature-deps.gradle.kts` work.
+#
+# APPEND-ONLY. `./gradlew syncForkConfig` adds a row for any unit not already in `baseline_units` or
+# `migrations`, at this fork's next free version. It MUST NOT renumber an existing row: a shipped
+# `from`/`to` edge is a contract with every installed device, and renumbering strands them.
+
+# Effective Room schema version. Owned outright by this fork — the template does not contribute to it.
+version: 13
+
+# Units already folded into this fork's INITIAL schema. A fresh fork is created with the framework
+# tables in their current shape, so it needs no migration for them — it records them here instead.
+# `remove-demo.sh` sets this to every declared unit id when it resets a clean fork to v1.
+baseline_units: []
+
+# The applied sequence. `unit:` ties a row to its declaration; `from`/`to` are this fork's numbering.
+migrations:
+  # demo:begin — the template showcase's own history. A fresh fork has no installed users to migrate,
+  # so remove-demo.sh drops these AND resets `version` to 1: they move together or Room sees an edge
+  # past the database's own version.
+  - { from: 3,  to: 5,  unit: framework-fetched-at }
+  - { from: 4,  to: 5,  unit: framework-submit-drafts }
+  - { from: 5,  to: 6,  unit: demo-personal-watchlist }
+  - { from: 6,  to: 7,  unit: drafts-unique-key }
+  - { from: 7,  to: 8,  unit: demo-banking-tables }
+  # v9 was never shipped — v8->9 and v9->10 landed in one unreleased commit, collapsed to one hop.
+  - { from: 8,  to: 10, unit: demo-alerts-and-rates, spec: kpt.core.database.migrations.MigrationSpec8to10 }
+  - { from: 10, to: 11, unit: demo-cloud-todos }
+  - { from: 11, to: 12, unit: framework-write-conflicts }
+  - { from: 12, to: 13, unit: drafts-attempt-count }
+  # demo:end

@@ -17,8 +17,9 @@
    timeouts, an optional `Auth` plugin (`AuthProviders`), and optional certificate pinning via a
    `CertificatePinConfig` (from `core-base/security`).
 3. For Supabase access points, `SupabaseClientFactory.clientFor(id)` builds and caches one
-   `SupabaseConfigClient` per declared `SUPABASE`-kind `AccessPoint`, resolving the anon key through a
-   fork-supplied `anonKeyFor: (id) -> String` lambda (backed by secrets, never hardcoded).
+   `SupabaseConfigClient` per declared `SUPABASE`-kind `AccessPoint`, reading its publishable key from the generated
+   `AccessPoint.supabase` (a BuildKonfig read, never hardcoded); bound in `NetworkBaseModule`. Sign-in
+   is not built in: an app that needs it adds kmp-supabase-auth through `SupabaseExtrasProvider`.
 4. Responses needing `Result<Success, Error>` wrapping register `ResultSuspendConverterFactory` /
    `ResultFlowConverterFactory` on the `Ktorfit.Builder`.
 
@@ -28,6 +29,10 @@
   `CertificatePinConfig.pins` per-hostname (declared in `core-base/security`, consumed here).
 - Framework-owned, don't fork: the per-platform `KtorHttpClient.<platform>.kt` actuals,
   `DynamicBaseUrlPlugin` / `DynamicUrlConfigProvider` (runtime base-URL switching for `AppUrlTypes`).
+- Web CORS: `restClientConfig` installs the web relay for `NetworkPolicy.webCorsHostsFor(ap)` through
+  `NetworkPolicy.activeWebCorsRelay` (`WebCorsRelayPlugin`, exact or `*.` wildcard hosts; nothing in
+  `WebCorsMode.DIRECT`). Configure it in `app-profile/app.yaml#network.web_cors`, never here — see
+  `docs/architecture/tree/core-base/network.md` "Web CORS".
 - Never hardcode a base URL in a fetcher — it always resolves through the `AccessPointRegistry`, so one
   id can back REST or Supabase without call-site changes.
 

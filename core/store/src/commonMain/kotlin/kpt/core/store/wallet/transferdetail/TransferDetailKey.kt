@@ -16,5 +16,7 @@ package kpt.core.store.wallet.transferdetail
  * The [transferId] doubles as the primary key at the DAO layer
  * (`TransferDetailDao.upsert(entity(transferId = transferId))`), so a fresh fetch
  * for transfer A never disturbs cached detail rows for transfer B.
+ *
+ * @property transferId Account transfer id the cached detail belongs to.
  */
 data class TransferDetailKey(val transferId: Long)

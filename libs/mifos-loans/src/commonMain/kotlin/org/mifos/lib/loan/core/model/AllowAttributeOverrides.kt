@@ -11,6 +11,18 @@ package org.mifos.lib.loan.core.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Domain model of the allow attribute overrides used in the loan application flow.
+ *
+ * @property amortizationType Whether amortization type.
+ * @property interestType Whether interest type.
+ * @property transactionProcessingStrategyId Identifier of the repayment transaction processing strategy.
+ * @property interestCalculationPeriodType Whether interest calculation period type.
+ * @property inArrearsTolerance Amount tolerated in arrears before the loan is considered overdue.
+ * @property repaymentEvery Number of frequency units between repayments.
+ * @property graceOnPrincipalAndInterestPayment Whether grace on principal and interest payment.
+ * @property graceOnArrearsAgeing Grace days before arrears ageing starts.
+ */
 @Serializable
 data class AllowAttributeOverrides(
 

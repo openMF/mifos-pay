@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2026 Mifos Initiative
+
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+    If a copy of the MPL was not distributed with this file,
+    You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+-->
+<!-- The wallet's own core/ui strings. Biometric prompt and error copy shared by the passcode and settings features. -->
+<resources>
+    <string name="core_ui_biometric_error_lockout">Занадта шмат спроб. Калі ласка, пачакайце і паўтарыце спробу.</string>
+    <string name="core_ui_biometric_error_hardware_unavailable">Біяметрычнае абсталяванне часова недаступнае. Паспрабуйце пазней.</string>
+    <string name="core_ui_biometric_error_not_enrolled">На гэтай прыладзе не зарэгістравана ніякай біяметрыі. Калі ласка, наладзьце біяметрыю ў сістэмных параметрах.</string>
+    <string name="core_ui_biometric_error_timeout">Час біяметрычнай аўтэнтыфікацыі скончыўся. Паўтарыце спробу.</string>
+    <string name="core_ui_biometric_error_no_space">Недастаткова сховішча для завяршэння біяметрычнай аўтэнтыфікацыі.</string>
+    <string name="core_ui_biometric_error_invalid_registration_data">Дадзеныя рэгістрацыі біяметрыі несапраўдныя. Уключыце біяметрыю ў наладах праграмы зноў.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_auth">Не атрымалася запусціць біяметрычную аўтэнтыфікацыю праз несапраўдныя аргументы.</string>
+    <string name="core_ui_biometric_error_invalid_arguments_registration">Не атрымалася запусціць біяметрычную рэгістрацыю праз несапраўдныя аргументы.</string>
+    <string name="core_ui_biometric_error_unknown">Узнікла нечаканая біяметрычная памылка. Паўтарыце спробу.</string>
+    <string name="core_ui_biometric_prompt_title">Разблакаваць Mifos Pay</string>
+    <string name="core_ui_biometric_prompt_subtitle">Пацвердзіце сваю асобу, каб працягнуць</string>
+    <string name="core_ui_biometric_prompt_description">Выкарыстоўвайце адбітак пальца, твар або уліковыя дадзеныя прылады</string>
+    <string name="core_ui_biometric_prompt_negative_button">Адмяніць</string>
+</resources>

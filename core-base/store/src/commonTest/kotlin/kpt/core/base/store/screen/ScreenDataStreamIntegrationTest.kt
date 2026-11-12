@@ -15,10 +15,10 @@ import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkStatus
 import io.github.mobilebytelabs.kmptoolkit.networkmonitor.NetworkType
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.mobilenativefoundation.store.store5.Fetcher
-import org.mobilenativefoundation.store.store5.StoreBuilder
 import kpt.core.base.store.fixtures.FakeNetworkMonitor
 import kpt.core.base.store.infra.FakeFetchedAtRepository
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.StoreBuilder
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -142,7 +142,9 @@ class ScreenDataStreamIntegrationTest {
             advanceUntilIdle()
             // Drain until we see a non-Loading state
             var state: ScreenState<String> = awaitItem()
-            while (state is ScreenState.Loading) { state = awaitItem() }
+            while (state is ScreenState.Loading) {
+                state = awaitItem()
+            }
             assertIs<ScreenState.Empty>(state)
             cancelAndIgnoreRemainingEvents()
         }
@@ -154,10 +156,12 @@ class ScreenDataStreamIntegrationTest {
     fun cacheOnly_online_store_emits_without_network_call() = runTest(timeout = runTestTimeout) {
         var fetchCallCount = 0
         val store = StoreBuilder
-            .from<String, String>(fetcher = Fetcher.of { _ ->
-                fetchCallCount++
-                "from-network"
-            })
+            .from<String, String>(
+                fetcher = Fetcher.of { _ ->
+                    fetchCallCount++
+                    "from-network"
+                },
+            )
             .build()
 
         val network = FakeNetworkMonitor(NetworkStatus.Available(onlineInfo))
@@ -180,7 +184,9 @@ class ScreenDataStreamIntegrationTest {
 
         stream.state.test(timeout = turbineTimeout) {
             var state: ScreenState<String> = awaitItem()
-            while (state is ScreenState.Loading) { state = awaitItem() }
+            while (state is ScreenState.Loading) {
+                state = awaitItem()
+            }
             // CACHE_ONLY must not trigger new network fetches
             assertTrue(
                 fetchCallCount == callsAfterPrime,
@@ -225,7 +231,9 @@ class ScreenDataStreamIntegrationTest {
             // a blocking NoNetwork (see T2 + DecisionEngineTest). The reconnect below re-runs the
             // decision and fetches, moving the screen to Content.
             var state: ScreenState<String> = awaitItem()
-            while (state is ScreenState.Loading) { state = awaitItem() }
+            while (state is ScreenState.Loading) {
+                state = awaitItem()
+            }
             assertIs<ScreenState.Empty>(state)
 
             // Simulate reconnect — the fetcher becomes reachable at the same instant the monitor

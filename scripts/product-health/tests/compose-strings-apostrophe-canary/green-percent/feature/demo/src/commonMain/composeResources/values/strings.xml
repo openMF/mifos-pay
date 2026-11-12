@@ -1,0 +1,4 @@
+<resources>
+    <string name="rate">%1$s%</string>
+    <string name="tr">%%1$d ödendi</string>
+</resources>

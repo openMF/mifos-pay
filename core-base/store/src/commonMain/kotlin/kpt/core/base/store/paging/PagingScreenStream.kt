@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  *
- * See See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
+ * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
 package kpt.core.base.store.paging
 
@@ -20,16 +20,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.mobilenativefoundation.store.store5.Store
 import kpt.core.base.store.error.OfflineException
-import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.infra.DecisionEngine
 import kpt.core.base.store.infra.FetchedAtRepository
-import kpt.core.base.store.screen.ScreenStreamContext
-import org.koin.mp.KoinPlatform
 import kpt.core.base.store.screen.DataOrigin
+import kpt.core.base.store.screen.FetchPolicy
 import kpt.core.base.store.screen.ScreenState
+import kpt.core.base.store.screen.ScreenStreamContext
 import kpt.core.base.store.screen.StoreData
+import org.koin.mp.KoinPlatform
+import org.mobilenativefoundation.store.store5.Store
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -56,8 +56,11 @@ import kotlin.time.Instant
  */
 @OptIn(ExperimentalTime::class)
 class PagingScreenStream<T : Any> internal constructor(
+    /** The page-aware screen state, already accumulated across every loaded page. */
     val state: Flow<ScreenState<List<T>>>,
+    /** Whether another page exists — what the footer keys on to offer 'load more' versus end-of-list. */
     val hasMore: StateFlow<Boolean>,
+    /** Whether a page load is in flight, so the footer shows progress without a second state source. */
     val isLoadingMore: StateFlow<Boolean>,
     /** The most recent load-more error, or null. Cleared on next loadNextPage/refresh. */
     val loadMoreError: StateFlow<Throwable?>,
@@ -136,6 +139,9 @@ class PagingScreenStream<T : Any> internal constructor(
         }
     }
 
+    /**
+     * Retries the failed page load. An alias for refresh, so a footer retry and a pull-to-refresh do the same thing.
+     */
     fun retry() = refresh()
 
     internal fun loadInitialPage(refresh: Boolean = false) {
