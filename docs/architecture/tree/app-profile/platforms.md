@@ -1,9 +1,9 @@
 # `app-profile/platforms/`
 
 > Part of [`app-profile/`](../app-profile.md)  
-> **Measured:** 70 tracked files — 29× `.png`, 19× `.yaml`, 15× `.gitkeep`, 3× `.json`, 3× `.md`
+> **Measured:** 91 tracked files — 50× `.png`, 19× `.yaml`, 15× `.gitkeep`, 3× `.json`, 3× `.md`
 
-70 tracked files.
+91 tracked files.
 
 <!-- tree-scaffold:end -->
 ## Significance

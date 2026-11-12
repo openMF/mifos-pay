@@ -24,6 +24,5 @@
 <!-- tree-scaffold:end -->
 ## Significance
 
-In-repo libraries that are not features: self-contained units the app consumes like an external
-dependency. Today that is `mifos-loans`, the loan-application flow. A library here can move to its own
-repository without touching feature code.
+_Authored below this marker; regeneration never touches it. Say what this area is FOR,
+what breaks without it, and what a fork touches._

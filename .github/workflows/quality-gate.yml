@@ -22,7 +22,7 @@ on:
 jobs:
   demo-convention:
     name: Demo Convention
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       # Pure bash + grep + find — no Java/Gradle. Fails on any demo⇄framework
@@ -84,7 +84,7 @@ jobs:
 
   spotless:
     name: Spotless
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -94,7 +94,7 @@ jobs:
 
   detekt:
     name: Detekt
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -107,7 +107,7 @@ jobs:
 
   dependency-guard:
     name: Dependency Guard
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -117,7 +117,7 @@ jobs:
 
   coverage:
     name: Kover Coverage
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5

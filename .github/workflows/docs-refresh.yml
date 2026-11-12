@@ -53,7 +53,7 @@ permissions:
 jobs:
   refresh:
     name: Refresh and propose
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
@@ -126,7 +126,7 @@ jobs:
     # Runs only after the docs on `dev` are current — publishing from a PR would race branches onto
     # one site, and publishing before the refresh would ship the previous revision's API reference.
     needs: refresh
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       deployments: write

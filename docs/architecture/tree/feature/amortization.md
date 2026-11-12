@@ -29,10 +29,10 @@ Its cost scales with tenure: a 30-year loan is 360 rows. That is why the schedul
 despite being computed — a revisit is free, and `SCHEDULE_ROWS` is a crash key precisely because an
 out-of-memory failure here scales with that number.
 
-<!-- api-docs:begin module=feature/amortization sha=d45a2fe4984bc82319280e36a30e25bb8be34cad -->
+<!-- api-docs:begin module=feature/amortization sha=d460c41cb98fd1264e02e0c746eb7a889624db9e -->
 ## API reference
 
-_Generated from `feature/amortization` at tree `d45a2fe4984b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/amortization` at tree `d460c41cb98f` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -54,20 +54,6 @@ data class AmortizationScheduleRoute(val loanId: String)
 ```
 Route for one loan's amortization schedule.
 
-<details><summary>Used in the template — <code>feature/loans/src/commonMain/kotlin/kpt/feature/loans/navigation/LoansNavigation.kt:86</code></summary>
-
-```kotlin
-                },
-                onAmortizationClick = { loanId ->
-                    navController.navigate(AmortizationScheduleRoute(loanId))
-                },
-            )
-        }
-        composableWithPushTransitions<AddOrEditLoanRoute> { entry ->
-```
-
-</details>
-
 ```kotlin
 fun NavController.navigateToAmortizationSchedule(loanId: String)
 ```
@@ -76,7 +62,7 @@ Navigates to a loan's amortization schedule.
 ```kotlin
 fun NavGraphBuilder.amortizationScheduleDestination(navController: NavController)
 ```
-Registers the amortization-schedule destination.
+Registers the amortization-schedule destination. Other features open it through `navigateToAmortizationSchedule`, wired by the app shell.
 
 ### `feature/amortization/src/commonMain/kotlin/kpt/feature/amortization/ui/AmortizationScheduleScreen.kt`
 
@@ -85,7 +71,7 @@ fun AmortizationScheduleScreen(
 ```
 Month-by-month payment breakdown for one tracked loan.
 
-<details><summary>Used in the template — <code>feature/amortization/src/commonMain/kotlin/kpt/feature/amortization/navigation/AmortizationNavigation.kt:47</code></summary>
+<details><summary>Used in the template — <code>feature/amortization/src/commonMain/kotlin/kpt/feature/amortization/navigation/AmortizationNavigation.kt:50</code></summary>
 
 ```kotlin
     composableWithPushTransitions<AmortizationScheduleRoute> { entry ->
@@ -143,5 +129,5 @@ Append-only test-tag registry for the amortization feature. Consumed by Compose 
 
 ---
 
-_3 type(s), 5 function(s)/property(ies); 8 carry KDoc at source; 0 authored example(s); 4 live call site(s)._
+_3 type(s), 5 function(s)/property(ies); 8 carry KDoc at source; 0 authored example(s); 3 live call site(s)._
 <!-- api-docs:end -->

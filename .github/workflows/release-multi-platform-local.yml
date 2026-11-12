@@ -94,7 +94,7 @@ jobs:
   # matrix consumed by the `release` job's `strategy.matrix` below.
   resolve-variants:
     name: Resolve product flavors
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     outputs:
@@ -147,7 +147,7 @@ jobs:
     # repo's dev branch in workspaces/mifos-x/ and the next dispatch picks
     # it up. No tag-cut needed for iteration. This is the validation base for
     # the additive `flavor` / `build_type` inputs before Phase 6 cuts @v1.0.47.
-    uses: openMF/mifos-x-actionhub/.github/workflows/release-multi-platform-v2.yaml@v1.0.72
+    uses: openMF/mifos-x-actionhub/.github/workflows/release-multi-platform-v2.yaml@v1.0.73
     with:
       version_tag:          ${{ inputs.version_tag }}
       android_package_name: cmp-android

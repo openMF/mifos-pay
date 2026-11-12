@@ -56,6 +56,67 @@ Changing the server usually invalidates the session, so sign out on a change.
 
 Tests: `core/network/src/commonTest/.../config/{NetworkConfigRepositoryTest,NetworkConfigRequestTest,DynamicBaseUrlTest}.kt`.
 
+### Web CORS — relay by default, direct as an opt-in
+
+A browser refuses a cross-origin response unless the server allows the page's origin, and many API
+servers (banks, government data, Fineract behind a strict CORS filter) do not. `app-profile/app.yaml`
+decides how WEB builds deal with that; other platforms are unaffected (the plugin is a no-op there).
+
+```yaml
+network:
+  web_cors:
+    mode: relay      # relay (default) | direct
+    relay: /cors     # same-origin relay path, or an https:// external relay
+    hosts: []        # extra hosts beyond the access points; "*.example.com" = its subdomains
+```
+
+| mode | what the web client does | needs |
+|---|---|---|
+| `relay` (default; also when the block is absent) | a request whose FINAL host is on the allowlist goes to `<relay>/?<full url>` | a host that runs the relay — cmp-web's `_worker.js` on Cloudflare Pages; elsewhere it degrades to direct |
+| `direct` | nothing — the browser calls each server itself; no relay sees the traffic | every server must allow the site's origin |
+
+**One list.** `syncForkConfig` derives the allowlist — the host of every access point, each legacy
+`proxied_host`, and `web_cors.hosts` — into BOTH `AppAccessPoints.policy` (`webCorsMode`,
+`webCorsProxy`, `webCorsAllowlist`) and `cmp-web/src/{js,wasmJs}Main/resources/relay-allowlist.json`,
+the file the deployed worker relays. `network-access-points.sh` NAP-14 fails CI when the JSON drifts.
+
+**Where it runs.** `restClientConfig` passes `policy.activeWebCorsRelay` (null in direct mode) and
+`policy.webCorsHostsFor(ap)` to `setupDefaultHttpClient`, which installs `WebCorsRelayPlugin` on web.
+The plugin rewrites in the `Send` hook, after the whole request pipeline (`defaultRequest`,
+`DynamicBaseUrlPlugin`), so it matches the host a runtime network-config switch produced. A runtime host that is
+not an access point must be listed in `hosts` (a wildcard covers a family of servers), or it goes direct.
+
+**What the relay does** (`cmp-web/src/*Main/resources/_worker.js`): forwards GET/HEAD/POST/PUT/PATCH/
+DELETE with the body to an https allowlisted host only (403 otherwise — never an open proxy); drops
+Origin, Referer, Cookie, Host, client-IP and `CF-*`/`X-Forwarded-*` headers, so `Authorization` and
+tenant headers pass but the server sees no browser origin; strips `Set-Cookie`; marks authenticated
+responses `Cache-Control: no-store`; follows redirects itself, re-checking every hop against the
+allowlist. `webpack.config.d/dev-server-cors-relay.js` runs the same worker under the dev server.
+
+**Hosts without a worker — relay degrades to direct.** The worker tags EVERY answer it gives with
+`X-Kpt-Relay: 1` (`CORS_RELAY_HEADER`), its own 400/403/405/502 included. GitHub Pages serves static
+files only, so `/cors` returns the host's 404/405 page with no tag. For a same-origin relay the plugin
+treats an untagged answer as "no relay here": it replays the SAME request directly (safe for any
+method — nothing was forwarded; serialized bodies are replayable `OutgoingContent`) and marks the relay
+absent for the session (`CorsRelayAvailability`), so later calls go direct with no extra round trip. A
+TAGGED answer — the worker's 403, an upstream 4xx/5xx — is final and never retried. A network failure is
+retried directly only for an idempotent method (GET/HEAD/OPTIONS/PUT/DELETE — a POST may already have
+been forwarded), and the relay is marked absent only when that direct call succeeds, so going offline
+never disables it. An external https relay gets no fallback (its headers are not readable cross-origin,
+so a missing tag proves nothing). On such a host only servers that allow the site's origin work; host on
+Cloudflare Pages for the relay. Netlify and Vercel would need their own function implementing the same
+relay — none is provided.
+
+`proxied_host` on an access point still works (it adds that host to the allowlist) but is redundant in
+relay mode. The retired `network.web_cors_proxy` is still read when `web_cors` is absent, with a
+deprecation warning (`none` → direct); `template-migrations.yaml#web-cors-block` covers moving it.
+
+Tests: `core-base/network/src/commonTest/.../WebCorsRelayTest.kt` (matching, rewrite, direct mode,
+ordering after a runtime base-URL change, missing-relay fallback + memo, tagged answers final,
+network-failure retry rules), `build-logic/convention/src/test/kotlin/WebCorsConfigTest.kt`
+(parsing, validation, migration, generated JSON), `scripts/product-health/tests/web-cors-relay-canary/`
+(the worker itself).
+
 <!-- api-docs:begin module=core-base/network sha=7cb7e62e1ad119591c88d303ae9e58098c65844b -->
 ## API reference
 

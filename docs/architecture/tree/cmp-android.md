@@ -1,13 +1,13 @@
 # `cmp-android/`
 
 > **Kind:** Project area  
-> **Measured:** 47 tracked files — 17× `.xml`, 10× `.webp`, 7× `.kt`, 3× `.txt`, 2× `.md`
+> **Measured:** 52 tracked files — 17× `.xml`, 15× `.webp`, 7× `.kt`, 3× `.txt`, 2× `.md`
 
 ## Shape
 
 | Path | Files |
 |---|---:|
-| `cmp-android/src/` | 35 |
+| `cmp-android/src/` | 40 |
 | (files at the root) | 10 |
 | `cmp-android/dependencies/` | 2 |
 

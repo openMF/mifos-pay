@@ -40,3 +40,19 @@ screens re-deriving that order is how an app ends up showing onboarding to a sig
 fork contributes its own body, modules, destinations and tabs. The feature halves are DERIVED by
 `build-logic`'s generators; the `Fork*Module` seams stay listed by hand because they are core-layer
 seams, not features, and nothing under `feature/` declares them.
+
+**Features meet only here.** A feature module never depends on another feature module (nor on
+`core-base/`; it reaches `core-base` through the `core/` module that re-exports it). A feature whose
+screens open only each other declares a `@FeatureDestination` graph in its `navigation` package and the
+aggregate registers it. A screen that opens another feature's screen — or shows another feature's widget
+— takes that link as a callback or a composable slot, and `ForkFeatureRegistry.featureDestinations`
+wires it to the other feature's `navigateTo…` (the demo `loansGraph(navController, onAmortizationClick)`
+and `cryptoGraph(navController, coinAction)` are the pattern).
+
+**`ForkAppShell` owns the root.** `ComposeApp` renders `ForkAppShell.root` inside the theme; a fork with
+its own root (its own login, lock and tab shell) renders it there instead of editing `ComposeApp`. The
+platform locale switch reaches that root through `LocalAppLocaleHandler`, provided around it — so a fork
+language picker can apply a locale the template's `LanguageConfig` does not list. A fork that keeps the
+template's root but needs signed-out screens (sign-in, server setup) installs them through
+`ForkAppShell.rootDestinations`, which `RootNavScreen` adds beside splash and onboarding — outside the
+signed-in graph that `@FeatureDestination` registers onto.

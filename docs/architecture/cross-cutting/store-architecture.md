@@ -115,13 +115,18 @@ Under `CACHE_FIRST_SWR` the read path uses `refresh = false`, so **subscribing p
 at all**. Revalidation is a separate side-fetch guarded by three conditions:
 
 ```kotlin
-val isStale  = band == FreshnessBand.Stale || band == FreshnessBand.VeryStale
+val isStale  = band == FreshnessBand.Stale || band == FreshnessBand.VeryStale ||
+    storeData.isEmptyNeverFetched()
 val isOnline = networkStatusFlow.value is NetworkStatus.Available
 if (isOnline && isStale && !wasStale) { /* launch fresh(...) side-fetch */ }
 ```
 
 - **`isStale`** — a `Fresh`/`Initial` band means no fetch. Reopening a screen inside the TTL makes zero
-  network calls.
+  network calls. The one exception is an **empty value that did not come from the network** — a table
+  never filled. The mapper stamps the first cache emission as just-loaded, so its band reads `Fresh`, and
+  a SourceOfTruth that emits an empty list (not `null`) never makes Store5 fetch either; without this
+  clause the screen sits on Loading with no request made. Pinned by
+  `CacheFirstSwrTest.emptyNeverFetchedCacheFetchesOnce`.
 - **`!wasStale`** — edge-triggered: fires once on the transition, not on every emission.
 - **`isOnline`** — never fires a doomed fetch while offline; the reconnect trigger re-runs the gate.
 
