@@ -10,6 +10,7 @@
 #   new fork-owned seam in a directory that is new upstream too              → seeded
 #   new fork-owned file in a package the fork deleted (shipped at the last sync) → not seeded
 #   fork-owned Room schema (the fork's own lineage)                        → not seeded
+#   new fork-owned image (the fork's branding: launcher icon, store screenshot)  → not seeded
 set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(cd "$HERE/../.." && pwd)"
@@ -19,7 +20,7 @@ fail=0; pass() { echo "  ✅ $1"; }; bad() { echo "  ❌ $1"; fail=1; }
 
 F="$WORK/fork"; mkdir -p "$F/scripts/white-label"
 cp "$REPO/scripts/customization-surface.sh" "$F/scripts/"
-printf 'version: 1\nrules:\n  - glob: "spotless/license-header.txt"\n    owner: fork\n  - glob: "spotless/old-seam.txt"\n    owner: fork\n  - glob: "spotless/samplepkg/**"\n    owner: fork\n  - glob: "spotless/app/fork/**"\n    owner: fork\n  - glob: "spotless/schemas/**"\n    owner: fork\n  - glob: "**"\n    owner: template\n    default: true\n' > "$F/customization-surface.yaml"
+printf 'version: 1\nrules:\n  - glob: "spotless/license-header.txt"\n    owner: fork\n  - glob: "spotless/old-seam.txt"\n    owner: fork\n  - glob: "spotless/samplepkg/**"\n    owner: fork\n  - glob: "spotless/app/fork/**"\n    owner: fork\n  - glob: "spotless/schemas/**"\n    owner: fork\n  - glob: "spotless/brand/**"\n    owner: fork\n  - glob: "**"\n    owner: template\n    default: true\n' > "$F/customization-surface.yaml"
 printf 'SYNC_DIRS=(\n    "spotless"\n)\nSYNC_FILES=(\n)\n' > "$F/scripts/white-label/sync-dirs.sh"
 
 # git, run in the fixture repo with a fixed identity.
@@ -27,7 +28,7 @@ g() { git -C "$F" -c user.email=t@t -c user.name=t "$@"; }
 mkdir -p "$F/spotless/samplepkg"; echo keep > "$F/spotless/copyright.kt"; echo seam > "$F/spotless/old-seam.txt"; echo old > "$F/spotless/samplepkg/Old.kt"
 g init -q -b main; g add -A; g commit -q -m "last sync"; BASE="$(g rev-parse HEAD)"
 g checkout -q -b fork; g rm -q spotless/old-seam.txt; g rm -rq spotless/samplepkg; g commit -q -m "fork deletes its old seam + the sample package"
-g checkout -q -b tpl main; mkdir -p "$F/spotless/samplepkg/sub" "$F/spotless/schemas" "$F/spotless/app/fork"
+g checkout -q -b tpl main; mkdir -p "$F/spotless/samplepkg/sub" "$F/spotless/schemas" "$F/spotless/app/fork" "$F/spotless/brand"; echo png > "$F/spotless/brand/og-image.png"
 echo doc > "$F/spotless/samplepkg/README.md"; echo new > "$F/spotless/samplepkg/sub/New.kt"; echo {} > "$F/spotless/schemas/12.json"
 echo 'Copyright $YEAR $ORG_NAME' > "$F/spotless/license-header.txt"; echo 'fun onForkCreate() {}' > "$F/spotless/app/fork/Hooks.kt"
 g add -A; g commit -q -m "template: new fork seams"
@@ -60,6 +61,8 @@ grep -q 'sync_directory()' "$fnsrc" || { echo "  ❌ sync_directory not found in
   || bad "a package the fork deleted was re-seeded (spotless/samplepkg/)"
 [ ! -e "$F/spotless/schemas/12.json" ] && pass "a Room schema is not seeded into the fork's lineage" \
   || bad "a template schema was seeded (spotless/schemas/12.json)"
+[ ! -e "$F/spotless/brand/og-image.png" ] && pass "a fork-owned image (branding) is not seeded with the template's copy" \
+  || bad "the template's image was seeded into the fork's branding (spotless/brand/og-image.png)"
 
 # A seam the template ALREADY shipped at the fork's last sync, which the fork never had (the fork is older
 # than the seam). "Absent at the last sync" is false, yet nothing was ever removed — it must be seeded.

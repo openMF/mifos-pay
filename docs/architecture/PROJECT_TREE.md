@@ -7,10 +7,10 @@
 
 | Area | Files | Page |
 |---|---:|---|
-| `cmp-android/` | 52 | [`cmp-android/`](tree/cmp-android.md) |
+| `cmp-android/` | 47 | [`cmp-android/`](tree/cmp-android.md) |
 | `cmp-ios/` | 49 | [`cmp-ios/`](tree/cmp-ios.md) |
 | `cmp-desktop/` | 12 | [`cmp-desktop/`](tree/cmp-desktop.md) |
-| `cmp-web/` | 26 | [`cmp-web/`](tree/cmp-web.md) |
+| `cmp-web/` | 24 | [`cmp-web/`](tree/cmp-web.md) |
 | `cmp-shared/` | 9 | [`cmp-shared/`](tree/cmp-shared.md) |
 | `cmp-navigation/` | 80 | [`cmp-navigation/`](tree/cmp-navigation.md) |
 
@@ -38,7 +38,7 @@
 
 | Area | Files | Page |
 |---|---:|---|
-| `app-profile/` | 122 | [`app-profile/`](tree/app-profile.md) |
+| `app-profile/` | 96 | [`app-profile/`](tree/app-profile.md) |
 | `gradle/` | 6 | [`gradle/`](tree/gradle.md) |
 | `secrets/` | 56 | [`secrets/`](tree/secrets.md) |
 
@@ -58,7 +58,7 @@
 |---|---:|---|
 | `scripts/` | 500 | [`scripts/`](tree/scripts.md) |
 | `sync/` | 16 | [`sync/`](tree/sync.md) |
-| `tests/` | 28 | [`tests/`](tree/tests.md) |
+| `tests/` | 29 | [`tests/`](tree/tests.md) |
 
 ## Other
 

@@ -236,7 +236,9 @@ when a `template`/`merge` path is reachable by none of `SYNC_DIRS`, `SYNC_FILES`
 the fork never had, so the template's copy lands as its seed, even in a directory that is new too
 (`cmp/android/app/fork/ForkAndroidHooks.kt`, which `AndroidApp.onCreate` calls). It is dropped only
 when the fork deleted the package it sits in, the nearest directory the template already shipped.
-Room schemas and demo code are never seeded. Proof: `tests/customization-surface/seam-seed-test.sh`.
+Room schemas, demo code and images are never seeded: a fork-owned image is the fork's branding (launcher
+icons, store screenshots, web preview cards), and the template's copy would ship the template's look under
+the fork's name. Proof: `tests/customization-surface/seam-seed-test.sh`.
 
 The fork-owned seams inside the shells are `ForkWorkerDeclarations.kt` (cmp-shared) and `registry/**`
 (cmp-navigation).
