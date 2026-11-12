@@ -38,10 +38,6 @@ import io, os, re, subprocess, sys, collections
 
 ROOT, WRITE = sys.argv[1], sys.argv[2] == "1"
 OUT = "docs/architecture/tree"
-# A module named like an org community file has its guide at `<module>-module.md` (reserved-page-names.txt).
-RESERVED = {l.strip().lower() for l in open(os.path.join(ROOT, "scripts", "docs", "reserved-page-names.txt"))
-            if l.strip() and not l.startswith("#")}
-def page_stem(m): return m + "-module" if m.lower() in RESERVED else m
 MARK = "<!-- tree-scaffold:end -->"
 
 def git(*a):
@@ -210,10 +206,10 @@ def entry_points(area, kind, files):
             # A module's GUIDE is a page in this node's directory, written by scaffold.sh with a
             # generated API reference. Linked from the same row as its file count so the table is the
             # one place a reader goes, rather than a count here and a link three sections down.
-            guide = os.path.join(ROOT, OUT, area.lstrip("."), f"{page_stem(m)}.md")
+            guide = os.path.join(ROOT, OUT, area.lstrip("."), f"{m}.md")
             cell = f"{kt} Kotlin files"
             if os.path.isfile(guide):
-                cell += f" — [guide]({area.lstrip('.')}/{page_stem(m)}.md)"
+                cell += f" — [guide]({area.lstrip('.')}/{m}.md)"
             rows.append((f"`{area}:{m}`", cell))
     elif kind == "automation":
         for d in sorted({f.split("/")[1] for f in files if len(f.split("/")) > 2}):

@@ -60,7 +60,7 @@ One guide per module, named 1:1 with its training-corpus surface.
 - [`core-base/network`](tree/core-base/network.md)
 - [`core-base/observability`](tree/core-base/observability.md)
 - [`core-base/platform`](tree/core-base/platform.md)
-- [`core-base/security`](tree/core-base/security-module.md)
+- [`core-base/security`](tree/core-base/security.md)
 - [`core-base/store`](tree/core-base/store.md)
 - [`core-base/ui`](tree/core-base/ui.md)
 
