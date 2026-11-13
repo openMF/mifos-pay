@@ -85,9 +85,23 @@ if git -C "$TESTS_DIR" rev-parse --git-dir >/dev/null 2>&1; then
 fi
 
 fail=$(( ci1_fail | ci2_fail ))
+# The canaries are independent (each builds its fixtures in its own mktemp dir or only reads the tree),
+# so they run in PARALLEL, capped at the core count like product-health.sh, and report in a fixed
+# order. Serially they were the whole suite's wall time: 124 s of the template's run.
+jobs_max="$( (sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4) | head -1 )"
+case "$jobs_max" in (''|*[!0-9]*) jobs_max=4 ;; esac
+T="$(mktemp -d)"; trap 'rm -rf "$T"' EXIT
 for run in "${canaries[@]}"; do
   name="$(basename "$(dirname "$run")")"
-  out="$(bash "$run" 2>&1)"; rc=$?
+  while [ "$(jobs -r 2>/dev/null | wc -l | tr -d ' ')" -ge "$jobs_max" ]; do sleep 0.05; done
+  ( bash "$run" >"$T/$name.out" 2>&1; printf '%s' "$?" >"$T/$name.rc" ) &
+done
+wait
+for run in "${canaries[@]}"; do
+  name="$(basename "$(dirname "$run")")"
+  out="$(cat "$T/$name.out" 2>/dev/null)"; rc="$(cat "$T/$name.rc" 2>/dev/null)"
+  case "$rc" in (''|*[!0-9]*) rc=1; out="${out}
+no exit status recorded — the canary did not complete" ;; esac
   if [ "$rc" -eq 0 ]; then
     echo "  ✅ $name"
   else

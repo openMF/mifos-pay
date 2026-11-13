@@ -46,9 +46,13 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 buildTypes.configureEach {
                     // Mapping-file upload only when a Firebase backend is available + configured in
-                    // google-services.json — governed by the gate above.
+                    // google-services.json — governed by the gate above. Never for debug: it is not
+                    // minified, so there is no mapping to upload, and with upload on the plugin injects a
+                    // NEW mapping-file id on every build, which re-merges and repackages every Android
+                    // resource even when nothing changed (~45 s on each no-change debug build).
+                    val uploadsMapping = crashlyticsMappingUpload && name != "debug"
                     configure<CrashlyticsExtension> {
-                        mappingFileUploadEnabled = crashlyticsMappingUpload
+                        mappingFileUploadEnabled = uploadsMapping
                     }
                 }
             }

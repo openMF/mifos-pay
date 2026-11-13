@@ -26,7 +26,7 @@ else
 fi
 
 # ══ B-STATIC: self-update block present, guarded, precedes the branch dance ═════════════
-su="$(grep -n 'SYNC_DIRS_SELF_UPDATED=1 SYNC_PREBUILT_BRANCH=' "$SYNC" | head -1 | cut -d: -f1)"
+su="$(grep -n 'SYNC_DIRS_SELF_UPDATED=1 .*SYNC_PREBUILT_BRANCH=' "$SYNC" | head -1 | cut -d: -f1)"
 dance="$(grep -n 'git checkout -b "\$TEMP_BRANCH"' "$SYNC" | head -1 | cut -d: -f1)"
 if [ -n "$su" ] && [ -n "$dance" ] && [ "$su" -lt "$dance" ] \
    && grep -q 'exec bash "\$_self_rel"' "$SYNC" && grep -q 'SYNC_DIRS_SELF_UPDATED:-0' "$SYNC"; then
