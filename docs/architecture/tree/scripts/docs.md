@@ -1,7 +1,7 @@
 # `scripts/docs/`
 
 > Part of [`scripts/`](../scripts.md)  
-> **Measured:** 19 tracked files — 12× `.sh`, 4× `.awk`, 1× `.txt`, 1× `.kt`, 1× `.tsv`
+> **Measured:** 18 tracked files — 12× `.sh`, 4× `.awk`, 1× `.kt`, 1× `.tsv`
 
 ### Scripts
 

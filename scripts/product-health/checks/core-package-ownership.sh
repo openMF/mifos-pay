@@ -76,6 +76,10 @@ ledger_status() {
 }
 # shellcheck disable=SC1090
 . "$CS" 2>/dev/null || { echo "❌ cannot source customization-surface.sh"; exit 2; }
+# Parse the contract ONCE, here. Every lookup below runs as `$(cs_resolve_owner …)` — a subshell — so
+# a cache filled lazily inside one is thrown away and the rules were re-parsed on every call (~40 ms
+# each, 46 s for the template's tree).
+cs_load_rules; cs_load_roots
 
 for spec in $CORE_MODULES; do
   key="${spec%%:*}"; rest="${spec#*:}"; mod="${rest%%:*}"; demo_gone="${rest##*:}"

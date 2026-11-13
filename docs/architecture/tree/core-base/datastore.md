@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core-base/datastore sha=cad5bece825be7ce9289b46a296fdcda31031c51 -->
+<!-- api-docs:begin module=core-base/datastore sha=26d3c808422bdce6b6a5c2964eec58e0413abb69 -->
 ## API reference
 
-_Generated from `core-base/datastore` at tree `cad5bece825b` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core-base/datastore` at tree `26d3c808422b` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **framework-shared and read-only to generators** (D9). Everything below is
@@ -32,7 +32,7 @@ expect class SecureSettingsFactory
 ```
 Platform-specific factory that creates an encrypted `Settings` instance. Returns the standard `Settings` interface — zero API change for consumers.
 
-<details><summary>Used in the template — <code>core-base/datastore/src/androidMain/kotlin/kpt/core/base/datastore/SecureSettingsFactory.kt:19</code></summary>
+<details><summary>Used in the template — <code>core-base/datastore/src/androidMain/kotlin/kpt/core/base/datastore/SecureSettingsFactory.kt:20</code></summary>
 
 ```kotlin
 
@@ -41,7 +41,7 @@ actual class SecureSettingsFactory(private val context: Context) {
     /**
      * Android secure settings, backed by EncryptedSharedPreferences with a Keystore-held master key. Synchronous: the
      * key never leaves the Keystore but reads do not need to await it.
-     */
+     *
 ```
 
 </details>

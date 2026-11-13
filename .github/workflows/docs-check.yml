@@ -55,7 +55,7 @@ permissions:
 jobs:
   check:
     name: Docs are current with source
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
 

@@ -10,7 +10,7 @@
 | `cmp-android/` | 47 | [`cmp-android/`](tree/cmp-android.md) |
 | `cmp-ios/` | 49 | [`cmp-ios/`](tree/cmp-ios.md) |
 | `cmp-desktop/` | 12 | [`cmp-desktop/`](tree/cmp-desktop.md) |
-| `cmp-web/` | 25 | [`cmp-web/`](tree/cmp-web.md) |
+| `cmp-web/` | 24 | [`cmp-web/`](tree/cmp-web.md) |
 | `cmp-shared/` | 9 | [`cmp-shared/`](tree/cmp-shared.md) |
 | `cmp-navigation/` | 80 | [`cmp-navigation/`](tree/cmp-navigation.md) |
 
@@ -56,9 +56,9 @@
 
 | Area | Files | Page |
 |---|---:|---|
-| `scripts/` | 502 | [`scripts/`](tree/scripts.md) |
+| `scripts/` | 500 | [`scripts/`](tree/scripts.md) |
 | `sync/` | 16 | [`sync/`](tree/sync.md) |
-| `tests/` | 28 | [`tests/`](tree/tests.md) |
+| `tests/` | 29 | [`tests/`](tree/tests.md) |
 
 ## Other
 

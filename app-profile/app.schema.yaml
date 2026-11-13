@@ -20,5 +20,6 @@ default: fork
 # Dotted app.yaml path → owner. The longest matching prefix wins.
 keys:
   network.access_points: union:id   # the fork's endpoints + the template's shared/demo points
+  network.web_cors: fork            # relay mode / relay / extra hosts are the fork's call (retired: network.web_cors_proxy)
   module_packages: template         # the registry of per-module manifests; the template ships the modules
   media.root: template              # the media directory convention the generators read

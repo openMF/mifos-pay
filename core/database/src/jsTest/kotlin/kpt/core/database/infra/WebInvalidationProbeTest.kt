@@ -7,7 +7,7 @@
  *
  * See https://github.com/openMF/kmp-project-template/blob/main/LICENSE
  */
-package kpt.core.database.fork.infra
+package kpt.core.database.infra
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -64,12 +64,14 @@ class WebInvalidationProbeTest {
 
     @Test
     fun roomReEmitsAfterASingleWriteOnWeb() = runTest {
-        val dao = database.billReminderDao
+        val dao = database.draftDao
         val seen = mutableListOf<Int>()
-        val job = launch(Dispatchers.Default) { dao.count().collect { seen += it } }
+        val job = launch(Dispatchers.Default) {
+            dao.observeAllByFormKey(DRAFT_FORM_KEY).collect { seen += it.size }
+        }
         withContext(Dispatchers.Default) {
             settle()
-            dao.upsert(bill("S1"))
+            dao.insert(draft())
             assertEquals(1, awaitLast(seen) { it == 1 }, "single write never re-emitted: $seen")
         }
         job.cancel()
@@ -87,13 +89,15 @@ class WebInvalidationProbeTest {
      */
     @Test
     fun roomReEmitsAfterTwoRapidWritesOnWebWithoutTheBridge() = runTest {
-        val dao = database.billReminderDao
+        val dao = database.draftDao
         val seen = mutableListOf<Int>()
-        val job = launch(Dispatchers.Default) { dao.count().collect { seen += it } }
+        val job = launch(Dispatchers.Default) {
+            dao.observeAllByFormKey(DRAFT_FORM_KEY).collect { seen += it.size }
+        }
         withContext(Dispatchers.Default) {
             settle()
-            dao.upsert(bill("R1"))
-            dao.upsert(bill("R2"))
+            dao.insert(draft())
+            dao.insert(draft())
             assertEquals(2, awaitLast(seen) { it == 2 }, "rapid writes never reached 2: $seen")
         }
         job.cancel()
@@ -111,9 +115,11 @@ class WebInvalidationProbeTest {
      */
     @Test
     fun roomObservesFinalStateAfterAWriteBurstUnderLoopContention() = runTest {
-        val dao = database.billReminderDao
+        val dao = database.draftDao
         val seen = mutableListOf<Int>()
-        val job = launch(Dispatchers.Default) { dao.count().collect { seen += it } }
+        val job = launch(Dispatchers.Default) {
+            dao.observeAllByFormKey(DRAFT_FORM_KEY).collect { seen += it.size }
+        }
         val noise = launch(Dispatchers.Default) {
             while (true) {
                 delay(1)
@@ -121,7 +127,7 @@ class WebInvalidationProbeTest {
         }
         withContext(Dispatchers.Default) {
             settle()
-            repeat(BURST) { dao.upsert(bill("W$it")) }
+            repeat(BURST) { dao.insert(draft()) }
             assertEquals(
                 BURST,
                 awaitLast(seen) { it == BURST },
@@ -147,23 +153,9 @@ class WebInvalidationProbeTest {
         return seen.lastOrNull()
     }
 
-    private fun bill(id: String): BillReminderEntity = BillReminderEntity(
-        id = id,
-        name = "Probe $id",
-        amount = 100.0,
-        dueDay = 15,
-        recurrence = Recurrence.MONTHLY,
-        category = BillCategory.UTILITIES,
-        enabled = true,
-        reminderDaysBefore = 1,
-        createdAtMs = 1_000L,
-        updatedAtMs = 1_000L,
-    )
-
     /**
-     * The drafts-outbox path the bill-reminder probes above do NOT cover, on two axes at once: a
-     * **filtered** query whose row must LEAVE the result set, driven by an **UPDATE** rather than an
-     * insert. Everything above inserts rows into an unfiltered `count()`.
+     * The path the insert probes above do NOT cover: a row that must LEAVE the filtered result set,
+     * driven by an **UPDATE** rather than an insert.
      *
      * `observeAllByFormKey` selects `status IN ('PENDING','RETRYING','FAILED')` and backs the
      * Sync & Drafts screen; `markSubmitted` is a bare `UPDATE … SET status = 'SUBMITTED'`. If Room's

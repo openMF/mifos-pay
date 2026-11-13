@@ -30,10 +30,10 @@ It is a *tracker*, not a ledger: `principalRemaining`, `monthsRemaining` and `to
 user-maintained, not derived from a payment history. That is a deliberate scope line — a "log a payment"
 feature would recompute them, and until it exists the fields must not pretend to be computed.
 
-<!-- api-docs:begin module=feature/loans sha=22c8da3f13f14a956a3c37ee33ae240728e17a72 -->
+<!-- api-docs:begin module=feature/loans sha=2162b8db63706d1b98229ff178cccd8c6584be6a -->
 ## API reference
 
-_Generated from `feature/loans` at tree `22c8da3f13f1` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/loans` at tree `2162b8db6370` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -94,9 +94,9 @@ fun NavController.navigateToLoans(navOptions: NavOptions? = null)
 Navigates to the loans graph.
 
 ```kotlin
-fun NavGraphBuilder.loansGraph(navController: NavController)
+fun NavGraphBuilder.loansGraph(navController: NavController, onAmortizationClick: (loanId: String) -> Unit)
 ```
-Registers the loans nested graph.
+Registers the loans nested graph. Not `@FeatureDestination`: a loan's detail opens the amortization schedule, another feature, so the app shell registers this graph in `ForkFeatureRegistry` and supplies `onAmortizationClick`.
 
 ### `feature/loans/src/commonMain/kotlin/kpt/feature/loans/ui/AddOrEditLoanScreen.kt`
 
@@ -105,7 +105,7 @@ fun AddOrEditLoanScreen(
 ```
 Combined add/edit screen. `loanId == null` → add a brand-new loan. `loanId != null` → edit.
 
-<details><summary>Used in the template — <code>feature/loans/src/commonMain/kotlin/kpt/feature/loans/navigation/LoansNavigation.kt:92</code></summary>
+<details><summary>Used in the template — <code>feature/loans/src/commonMain/kotlin/kpt/feature/loans/navigation/LoansNavigation.kt:90</code></summary>
 
 ```kotlin
         composableWithPushTransitions<AddOrEditLoanRoute> { entry ->

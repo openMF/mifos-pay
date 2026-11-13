@@ -22,6 +22,12 @@ Declared in [`../../CONTRACT.yaml`](../../CONTRACT.yaml); that file is the machi
 
 _Authored prose below this marker is preserved by the scaffolder._
 
+`AppAccessPoints.policy` carries the web CORS policy generated from `app-profile/app.yaml#network.web_cors`
+(`webCorsMode`, `webCorsProxy`, `webCorsAllowlist`); the same allowlist is written to
+`cmp-web/src/{js,wasmJs}Main/resources/relay-allowlist.json` for the deployed relay. Declaring an access
+point is enough to put its host on the web relay allowlist. How the relay works and when to choose
+`direct`: [`core-base/network`](../core-base/network.md#web-cors--relay-by-default-direct-as-an-opt-in).
+
 <!-- api-docs:begin module=core/network sha=dcd08d2efad16528dbdfd782e71c2d667753b992 -->
 ## API reference
 

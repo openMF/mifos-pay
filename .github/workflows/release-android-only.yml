@@ -16,7 +16,7 @@ on:
 
 jobs:
   version:
-    runs-on: ${{ vars.CI_RUNNER_LINUX || 'ubuntu-26.04' }}
+    runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.c.outputs.tag }}
     steps:

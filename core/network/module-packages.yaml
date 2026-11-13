@@ -72,4 +72,4 @@ template:
 # The fork's own. Listed for documentation only — undeclared packages are fork too.
 fork:
   - { id: main,    status: exists }         # the fork's primary endpoint package
-  - { id: staging, status: exists }         # the fork's staging endpoint package
+  - { id: staging, status: missing }         # the fork's staging endpoint package

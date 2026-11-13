@@ -1215,11 +1215,11 @@ The Material 3 type scale — display through label, each in three sizes.
 ```kotlin
     }.toKptColorScheme()
 
-    val forkTypography = Typography().toKptTypography(fontFamily)
+    val mifosTypography = Typography().toKptTypography(fontFamily)
 
     val themeProvider = KptThemeProviderImpl(
         colors = colorScheme,
-        typography = forkTypography,
+        typography = mifosTypography,
 ```
 
 </details>
@@ -1847,11 +1847,11 @@ Default `KptThemeProvider`, composing the five default scales into one design la
 <details><summary>Used in the template — <code>core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/theme/KptTheme.kt:54</code></summary>
 
 ```kotlin
-    val forkTypography = Typography().toKptTypography(fontFamily)
+    val mifosTypography = Typography().toKptTypography(fontFamily)
 
     val themeProvider = KptThemeProviderImpl(
         colors = colorScheme,
-        typography = forkTypography,
+        typography = mifosTypography,
     )
 ```
 

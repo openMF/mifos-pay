@@ -49,19 +49,6 @@ fun AddToWatchlistStar(
 ```
 The embedded WRITE-side widget of the Personal Crypto Watchlist — a single star icon-button, NOT a navigable screen. Host it on any coin surface (`feature/crypto` CoinMarkets rows + Coin Detail) by passing the row's `coinId`.
 
-<details><summary>Used in the template — <code>feature/crypto/src/commonMain/kotlin/kpt/feature/crypto/ui/CoinMarketsScreen.kt:160</code></summary>
-
-```kotlin
-            // Embedded write-side widget — toggles this coin's watchlist membership.
-            // The IconButton consumes its own tap, so it does NOT trigger the row's nav onClick.
-            AddToWatchlistStar(coinId = coin.id)
-        }
-    }
-}
-```
-
-</details>
-
 ### `feature/add-to-watchlist/src/commonMain/kotlin/kpt/feature/addtowatchlist/ui/AddToWatchlistViewModel.kt`
 
 ```kotlin
@@ -111,5 +98,5 @@ Stable test tags for the embedded add-to-watchlist star toggle.
 
 ---
 
-_3 type(s), 3 function(s)/property(ies); 6 carry KDoc at source; 0 authored example(s); 3 live call site(s)._
+_3 type(s), 3 function(s)/property(ies); 6 carry KDoc at source; 0 authored example(s); 2 live call site(s)._
 <!-- api-docs:end -->

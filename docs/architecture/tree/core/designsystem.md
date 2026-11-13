@@ -14,10 +14,10 @@
 
 _Authored prose below this marker is preserved by the scaffolder._
 
-<!-- api-docs:begin module=core/designsystem sha=b6d1e61e782f8e6ca79f19fb0353bd127c0d8893 -->
+<!-- api-docs:begin module=core/designsystem sha=cbaa2720e05adaa74c810e201d492ee40298f404 -->
 ## API reference
 
-_Generated from `core/designsystem` at tree `b6d1e61e782f` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `core/designsystem` at tree `cbaa2720e05a` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 ### `core/designsystem/src/commonMain/kotlin/kpt/core/designsystem/chart/ChartTokens.kt`

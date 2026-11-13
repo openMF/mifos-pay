@@ -26,10 +26,10 @@ CoinGecko market list and coin detail — the **paging** showcase over a real re
 targeted refresh can evict one page rather than the whole list. The detail screen is reachable by deep
 link, which is why `CoinDetail` carries the market rank: a detail opened cold must not need the list.
 
-<!-- api-docs:begin module=feature/crypto sha=e15e64e71b34cfa7a075129d04da2214c1f91414 -->
+<!-- api-docs:begin module=feature/crypto sha=eada72807318fd2e06481242fee3b8eb453f2c48 -->
 ## API reference
 
-_Generated from `feature/crypto` at tree `e15e64e71b34` by `scripts/docs/api-docs-gen.sh`._
+_Generated from `feature/crypto` at tree `eada72807318` by `scripts/docs/api-docs-gen.sh`._
 _Do not hand-edit inside this block — re-run the generator. Authored prose belongs outside it._
 
 This module is **fork-owned and writable** — the opposite of `core-base/**`. It is published
@@ -72,7 +72,7 @@ fun NavController.navigateToCoinDetail(coinId: String, navOptions: NavOptions? =
 Navigates to one coin's detail.
 
 ```kotlin
-fun NavGraphBuilder.cryptoGraph(navController: NavController)
+fun NavGraphBuilder.cryptoGraph(
 ```
 Wires the crypto graph into the parent NavHost. Mirrors `RatesNavigation.ratesGraph` shape: a list destination whose row-tap navigates to a per-item detail destination inside the same `navigation<CryptoGraphRoute>` block.
 
@@ -86,11 +86,11 @@ What the detail screen can be asked to do.
 ### `feature/crypto/src/commonMain/kotlin/kpt/feature/crypto/ui/CoinMarketsRoute.kt`
 
 ```kotlin
-fun CoinMarketsRoute(onBackClick: () -> Unit, onCoinClick: (String) -> Unit)
+fun CoinMarketsRoute(
 ```
 Thin nav-facing wrapper around `CoinMarketsScreen`.
 
-<details><summary>Used in the template — <code>feature/crypto/src/commonMain/kotlin/kpt/feature/crypto/navigation/CryptoNavigation.kt:82</code></summary>
+<details><summary>Used in the template — <code>feature/crypto/src/commonMain/kotlin/kpt/feature/crypto/navigation/CryptoNavigation.kt:89</code></summary>
 
 ```kotlin
     navigation<CryptoGraphRoute>(startDestination = CoinMarketsListRoute) {
@@ -111,16 +111,16 @@ fun CoinMarketsScreen(
 ```
 CoinMarkets — CoinGecko-backed paged list.
 
-<details><summary>Used in the template — <code>feature/crypto/src/commonMain/kotlin/kpt/feature/crypto/ui/CoinMarketsRoute.kt:22</code></summary>
+<details><summary>Used in the template — <code>feature/crypto/src/commonMain/kotlin/kpt/feature/crypto/ui/CoinMarketsRoute.kt:26</code></summary>
 
 ```kotlin
-@Composable
-fun CoinMarketsRoute(onBackClick: () -> Unit, onCoinClick: (String) -> Unit) {
+    coinAction: @Composable (coinId: String) -> Unit = {},
+) {
     CoinMarketsScreen(
         onBackClick = onBackClick,
         onCoinClick = onCoinClick,
+        coinAction = coinAction,
     )
-}
 ```
 
 </details>

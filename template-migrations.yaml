@@ -210,3 +210,27 @@ migrations:
       syncs. Verify by building, then launching a fresh install and confirming first run opens onboarding
       once and back does not return to a second copy.
     blocking: false   # the include and edge cannot be dropped before the template's settings.gradle.kts lands; enforced inside the sync branch
+
+  - id: web-cors-block
+    order: 90
+    title: network.web_cors_proxy becomes the network.web_cors block; the web relay covers every access point
+    why: >
+      Web builds used to relay only hosts marked `proxied_host`, GET/HEAD only, so a server that refuses
+      browser origins on a POST (a sign-in) blocked the web app outright. `network.web_cors` (mode relay |
+      direct, relay, hosts) now relays every access point's host, all methods, from ONE generated
+      allowlist (cmp-web relay-allowlist.json) that the app and the deployed _worker.js share; _worker.js
+      becomes template-owned so relay fixes reach forks. The yaml merge removes the retired
+      `web_cors_proxy` key from a fork — a custom value (an https:// relay, or `none`) is lost unless it
+      is moved first. A fork left at `/cors` needs nothing: the new default is the same relay.
+    detect: >-
+      grep -qE '^[[:space:]]+web_cors_proxy:[[:space:]]*[^[:space:]#]' "$SRC/app-profile/app.yaml"
+      && ! grep -qE '^[[:space:]]+web_cors_proxy:[[:space:]]*/cors[[:space:]]*(#.*)?$' "$SRC/app-profile/app.yaml"
+    migrate: >
+      Before the sync, replace `web_cors_proxy: <value>` in app-profile/app.yaml with
+      `web_cors: { relay: <value> }` — or `web_cors: { mode: direct }` when the value was `none`.
+      syncForkConfig still reads the old key (with a deprecation warning) while the new block is absent.
+      If the fork edited cmp-web/src/*Main/resources/_worker.js, move those edits out first: the sync now
+      replaces it, and its allowlist comes from app.yaml (`web_cors.hosts`) instead of DEFAULT_PROXY_HOSTS
+      or the PROXY_ALLOWED_HOSTS Pages variable (still honoured, as an addition). Run syncForkConfig after
+      the sync and commit the regenerated relay-allowlist.json files.
+    blocking: true    # the merge drops a custom web_cors_proxy value; it must be moved before the sync
